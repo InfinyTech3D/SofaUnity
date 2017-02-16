@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 namespace SofaUnity
 {
     public class SofaContext : MonoBehaviour
@@ -11,6 +12,11 @@ namespace SofaUnity
         void Start()
         {
             Debug.Log("SofaContext::Start called.");
+            GL.wireframe = true;
+        }
+        void OnPreRender()
+        {
+            GL.wireframe = true;
         }
 
         // Update is called once per frame

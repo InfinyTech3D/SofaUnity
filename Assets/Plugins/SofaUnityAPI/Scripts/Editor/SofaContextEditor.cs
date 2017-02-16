@@ -18,6 +18,7 @@ public class SofaContextEditor : Editor
         GameObject go = new GameObject();
         go.AddComponent<SofaContext>();
         go.name = "SofaContext";
+        Debug.Log("CreateNew SofaContext");
         return go;
     }
 
@@ -42,7 +43,7 @@ public class SofaContextEditor : Editor
         // Add Sofa Logo
         GUIStyle logoGUIStyle = new GUIStyle();
         logoGUIStyle.border = new RectOffset(0, 0, 0, 0);
-        EditorGUILayout.LabelField(new GUIContent(SofaLogo), GUILayout.MinHeight(128.0f), GUILayout.ExpandWidth(true));
+        EditorGUILayout.LabelField(new GUIContent(SofaLogo), GUILayout.MinHeight(100.0f), GUILayout.ExpandWidth(true));
 
         //Color GUIBlue = new Color32(192, 219, 255, 255);
 
