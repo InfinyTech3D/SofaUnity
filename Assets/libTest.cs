@@ -45,6 +45,10 @@ public class libTest : MonoBehaviour {
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi)]
     public static extern void sofaPhysicsAPI_addCube(IntPtr obj, [MarshalAs(UnmanagedType.LPStr)] string lpString);
 
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi)]
+    public static extern string sofaPhysicsAPI_APIName(IntPtr obj);
+
+
     void Start()
     {
         Debug.Log("TOTO");
@@ -57,13 +61,13 @@ public class libTest : MonoBehaviour {
         m_simu = sofaPhysicsAPI_create();
         sofaPhysicsAPI_createScene(m_simu);
 
-        Debug.Log("Ttest1: " + sofaPhysicsAPI_getNumberObjects(m_simu));
+        Debug.Log("sofa_test1: " + sofaPhysicsAPI_getNumberObjects(m_simu));
         sofaPhysicsAPI_start(m_simu);
         //sofaPhysicsAPI_addCube(m_simu, "toto");
         sofaPhysicsAPI_step(m_simu);
         sofaPhysicsAPI_stop(m_simu);
         //classTest_addOffest(classA, 10);
-        //Debug.Log("test4: " + classTest_getCpt(classA));
+        //Debug.Log("sofa_test2: " + sofaPhysicsAPI_APIName(m_simu));
     }
     // Update is called once per frame
     void Update ()
