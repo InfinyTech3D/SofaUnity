@@ -24,5 +24,11 @@ namespace SofaUnity
             Debug.Log("SBaseObject::Awake called.");
         }
 
+        string m_nameId;
+        public string nameId
+        {
+            get { return m_nameId; }
+            set { m_nameId = value; }
+        }
     }
 }
