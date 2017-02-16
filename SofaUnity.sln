@@ -1,12 +1,30 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SofaUnity.Plugins", "SofaUnity.Plugins.csproj", "{50563960-C1D6-9842-BDDD-E4888A323BF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SofaUnity", "SofaUnity.csproj", "{60798B71-02F7-C818-4C4A-83E79DD86127}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SofaUnity.Editor.Plugins", "SofaUnity.Editor.Plugins.csproj", "{E9EAF2F8-33A6-47F9-910C-969E5F6107BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{50563960-C1D6-9842-BDDD-E4888A323BF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50563960-C1D6-9842-BDDD-E4888A323BF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50563960-C1D6-9842-BDDD-E4888A323BF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50563960-C1D6-9842-BDDD-E4888A323BF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60798B71-02F7-C818-4C4A-83E79DD86127}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60798B71-02F7-C818-4C4A-83E79DD86127}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60798B71-02F7-C818-4C4A-83E79DD86127}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60798B71-02F7-C818-4C4A-83E79DD86127}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9EAF2F8-33A6-47F9-910C-969E5F6107BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9EAF2F8-33A6-47F9-910C-969E5F6107BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9EAF2F8-33A6-47F9-910C-969E5F6107BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9EAF2F8-33A6-47F9-910C-969E5F6107BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
