@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using SofaUnityAPI;
 
@@ -9,7 +10,7 @@ namespace SofaUnity
     public class SofaContext : MonoBehaviour
     {
         SofaContextAPI m_impl;
-
+        
         void Awake()
         {
             Debug.Log("SofaContext::Awake called.");
@@ -39,11 +40,7 @@ namespace SofaUnity
         void FixedUpdate()
         {
             Debug.Log("SofaContext::Update called.");
-            m_impl.step();
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                m_impl.step();
-            }
+            m_impl.step();           
         }
 
         Vector3 m_gravity = new Vector3(0f, -9.8f, 0f);
@@ -77,6 +74,11 @@ namespace SofaUnity
                 //}
                 m_timeStep = value;
             }
+        }
+
+        public IntPtr getSimuContext()
+        {
+            return m_impl.getSimuContext();
         }
     }
 }

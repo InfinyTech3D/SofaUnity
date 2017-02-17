@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System.Runtime.InteropServices;
 
@@ -15,10 +13,17 @@ namespace SofaUnityAPI
         public SofaContextAPI()
         {
             m_native = sofaPhysicsAPI_create();
-            if (m_native == null)
+            if (m_native == IntPtr.Zero)
                 Debug.LogError("Error not sofaPhysicsAPI created!");
 
             sofaPhysicsAPI_createScene(m_native);
+
+            string name = sofaPhysicsAPI_APIName(m_native);
+            Debug.Log("API Name: " + name);
+
+            Debug.Log("API TEST Name: " + sofaPhysicsAPI_testName(m_native));
+            sofaPhysicsAPI_setTestName(m_native, "PROUT");
+            Debug.Log("API TEST Name after: " + sofaPhysicsAPI_testName(m_native));
         }
 
         public void Dispose()
@@ -81,6 +86,11 @@ namespace SofaUnityAPI
             sofaPhysicsAPI_setTimeStep(m_native, value);
         }
 
+        public IntPtr getSimuContext()
+        {
+            return m_native;
+        }
+
 
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern IntPtr sofaPhysicsAPI_create();
@@ -98,5 +108,16 @@ namespace SofaUnityAPI
         public static extern void sofaPhysicsAPI_setTimeStep(IntPtr obj, double value);
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern double sofaPhysicsAPI_timeStep(IntPtr obj);
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+//        [return: MarshalAs(UnmanagedType.LPStr)]
+        public static extern string sofaPhysicsAPI_APIName(IntPtr obj);
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern void sofaPhysicsAPI_setTestName(IntPtr obj, string name);
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern string sofaPhysicsAPI_testName(IntPtr obj);
+
     }
 }
