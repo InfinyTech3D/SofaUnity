@@ -54,7 +54,10 @@ public class SofaBox : IDisposable
     {
         Debug.Log("sofa_test3: " + sofaPhysicsAPI_getNumberObjects(m_simu));
         if (m_native == IntPtr.Zero) // first time create object only
-            sofaPhysicsAPI_addCube(m_native, "truc1");
+        { 
+            int res = sofaPhysicsAPI_addCube(m_simu, "truc1");
+            Debug.Log("res ADD: " + res);
+        }
         Debug.Log("sofa_test4: " + sofaPhysicsAPI_getNumberObjects(m_simu));
     }
 
@@ -63,7 +66,7 @@ public class SofaBox : IDisposable
 
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern void sofaPhysicsAPI_addCube(IntPtr obj, string name);
+    public static extern int sofaPhysicsAPI_addCube(IntPtr obj, string name);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern string sofaPhysicsAPI_APIName(IntPtr obj);
