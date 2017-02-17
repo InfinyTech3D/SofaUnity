@@ -9,16 +9,16 @@ namespace SofaUnityAPI
 
     public class SofaContextAPI : IDisposable
     {
-        internal IntPtr m_impl;
+        internal IntPtr m_native;
         bool m_isDisposed;
 
-        SofaContextAPI()
+        public SofaContextAPI()
         {
-            m_impl = sofaPhysicsAPI_create();
-            if (m_impl == null)
+            m_native = sofaPhysicsAPI_create();
+            if (m_native == null)
                 Debug.LogError("Error not sofaPhysicsAPI created!");
 
-            sofaPhysicsAPI_createScene(m_impl);
+            sofaPhysicsAPI_createScene(m_native);
         }
 
         public void Dispose()
@@ -53,19 +53,32 @@ namespace SofaUnityAPI
             get { return m_isDisposed; }
         }
 
-        public void animate()
+        public void start()
         {
-            sofaPhysicsAPI_start(m_impl);
+            Debug.Log("-- sofaPhysicsAPI_start called.");
+            sofaPhysicsAPI_start(m_native);
         }
 
         public void stop()
         {
-            sofaPhysicsAPI_stop(m_impl);
+            Debug.Log("-- sofaPhysicsAPI_stop called.");
+            sofaPhysicsAPI_stop(m_native);
         }
 
         public void step()
         {
-            sofaPhysicsAPI_step(m_impl);
+            Debug.Log("-- sofaPhysicsAPI_step called.");
+            sofaPhysicsAPI_step(m_native);
+        }
+
+        public double timeStep()
+        {
+            return sofaPhysicsAPI_timeStep(m_native);
+        }
+
+        public void setTimeStep(double value)
+        {
+            sofaPhysicsAPI_setTimeStep(m_native, value);
         }
 
 
@@ -80,5 +93,10 @@ namespace SofaUnityAPI
         public static extern void sofaPhysicsAPI_step(IntPtr obj);
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern void sofaPhysicsAPI_stop(IntPtr obj);
+
+        [DllImport("SofaAdvancePhysicsAPI")]
+        public static extern void sofaPhysicsAPI_setTimeStep(IntPtr obj, double value);
+        [DllImport("SofaAdvancePhysicsAPI")]
+        public static extern double sofaPhysicsAPI_timeStep(IntPtr obj);
     }
 }

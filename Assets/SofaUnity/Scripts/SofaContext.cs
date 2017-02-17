@@ -1,33 +1,49 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SofaUnityAPI;
 
 
 namespace SofaUnity
 {
     public class SofaContext : MonoBehaviour
     {
+        SofaContextAPI m_impl;
+
+        void Awake()
+        {
+            Debug.Log("SofaContext::Awake called.");
+            m_impl = new SofaContextAPI();
+        }
 
         // Use this for initialization
         void Start()
         {
             Debug.Log("SofaContext::Start called.");
             GL.wireframe = true;
+            m_impl.start();
         }
+
+        void OnDestroy()
+        {
+            m_impl.stop();
+            m_impl.Dispose();
+        }
+
         void OnPreRender()
         {
             GL.wireframe = true;
         }
 
         // Update is called once per frame
-        void Update()
+        void FixedUpdate()
         {
             Debug.Log("SofaContext::Update called.");
-        }
-
-        void Awake()
-        {
-            Debug.Log("SofaContext::Awake called.");
+            m_impl.step();
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                m_impl.step();
+            }
         }
 
         Vector3 m_gravity = new Vector3(0f, -9.8f, 0f);
@@ -36,6 +52,7 @@ namespace SofaUnity
             get { return m_gravity; }
             set
             {
+                
                 //if (_ddWorld != null)
                 //{
                 //    BulletSharp.Math.Vector3 grav = value.ToBullet();
