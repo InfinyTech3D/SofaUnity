@@ -53,34 +53,57 @@ public class SofaBox : IDisposable
         int[] quads = new int[nbrIndices];
         sofaPhysics3DObject_getQuads(m_simu, "truc1_node", quads);
 
-        int[] tris = new int[nbrIndices*2];
+        int resX = 5;
+        int resY = 5;
+        int resZ = 5;
 
-        for (int i = 0; i < nbrQuads; ++i)
+        int[] tris = new int[(resX - 1) * (resY - 1) * 2 * 3];
+        Debug.Log("nbrTri: " + (resX - 1) * (resY - 1) * 2 * 3);
+        int cptTri = 0;
+        for (int j = 0; j < resY - 1; ++j)
         {
-            //Debug.Log(i + " -> " + 
-            //    quads[i * 4] + " " +
-            //    quads[i * 4+1] + " " +
-            //    quads[i * 4+2] + " " +
-            //    quads[i * 4+3]);
+            int lvl = j * resX;
+            for (int i = 0; i < resX - 1; ++i)
+            {
+                tris[lvl + i] = lvl + i;
+                tris[lvl + i + 1] = lvl + i + resX;
+                tris[lvl + i + 2] = lvl + i + resX + 1;
 
-            tris[i * 6] = quads[i * 4];
-            tris[i * 6 + 1] = quads[i * 4 + 1];
-            tris[i * 6 + 2] = quads[i * 4 + 2];
+                tris[lvl + i + 3] = lvl + i;
+                tris[lvl + i + 4] = lvl + i + resX + 1;
+                tris[lvl + i + 5] = lvl + i + 1;
+            }
 
-            tris[i * 6 + 3] = quads[i * 4 + 2];
-            tris[i * 6 + 4] = quads[i * 4 + 3];
-            tris[i * 6 + 5] = quads[i * 4];
-
-            //Debug.Log(i + " -> " +
-            //    tris[i * 6] + " " +
-            //    tris[i * 6 + 1] + " " +
-            //    tris[i * 6 + 2]);
-
-            //Debug.Log(i + " -> " +
-            //    tris[i * 6 + 3] + " " +
-            //    tris[i * 6 + 4] + " " +
-            //    tris[i * 6 + 5]);
+            //tris[cptTri+1] = i+resY;
         }
+
+        //int[] tris = new int[nbrIndices*2];
+        //for (int i = 0; i < nbrQuads; ++i)
+        //{
+        //    //Debug.Log(i + " -> " + 
+        //    //    quads[i * 4] + " " +
+        //    //    quads[i * 4+1] + " " +
+        //    //    quads[i * 4+2] + " " +
+        //    //    quads[i * 4+3]);
+
+        //    tris[i * 6] = quads[i * 4];
+        //    tris[i * 6 + 1] = quads[i * 4 + 1];
+        //    tris[i * 6 + 2] = quads[i * 4 + 2];
+
+        //    tris[i * 6 + 3] = quads[i * 4 + 2];
+        //    tris[i * 6 + 4] = quads[i * 4 + 3];
+        //    tris[i * 6 + 5] = quads[i * 4];
+
+        //    //Debug.Log(i + " -> " +
+        //    //    tris[i * 6] + " " +
+        //    //    tris[i * 6 + 1] + " " +
+        //    //    tris[i * 6 + 2]);
+
+        //    //Debug.Log(i + " -> " +
+        //    //    tris[i * 6 + 3] + " " +
+        //    //    tris[i * 6 + 4] + " " +
+        //    //    tris[i * 6 + 5]);
+        //}
 
         return tris;
     }
@@ -114,13 +137,15 @@ public class SofaBox : IDisposable
         if (m_native != IntPtr.Zero)
         {
             int nbrV = sofaPhysicsAPI_getNbVertices(m_simu, "truc1_node");
-            var vertices = sofaPhysics3DObject_getVertices(m_simu, "truc1_node");
-            var normals = sofaPhysics3DObject_getNormals(m_simu, "truc1_node");
-
             //Debug.Log("vertices: " + nbrV);
             //Debug.Log("vert: " + mesh.vertices.Length);
             //Debug.Log("normals: " + normals.Length);
             //Debug.Log(vertices.Length);
+
+            float[] vertices = new float[nbrV * 3]; 
+            sofaPhysics3DObject_getVertices(m_simu, "truc1_node", vertices);
+            float[] normals = new float[nbrV * 3];
+            sofaPhysics3DObject_getNormals(m_simu, "truc1_node", normals);
 
             Vector3[] verts = mesh.vertices;
             Vector3[] norms = mesh.normals;
@@ -148,12 +173,12 @@ public class SofaBox : IDisposable
                     else
                     {
                         verts[i].x = vertices[i * 3];
-                        verts[i].z = vertices[i * 3 + 1];
-                        verts[i].y = vertices[i * 3 + 2];
+                        verts[i].y = vertices[i * 3 + 1];
+                        verts[i].z = vertices[i * 3 + 2];
 
                         norms[i].x = normals[i * 3];
-                        norms[i].z = normals[i * 3 + 1];
-                        norms[i].y = normals[i * 3 + 2];
+                        norms[i].y = normals[i * 3 + 1];
+                        norms[i].z = normals[i * 3 + 2];
                     }
                 }
             }
@@ -266,16 +291,16 @@ public class SofaBox : IDisposable
 
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern float[] sofaPhysics3DObject_getVertices(IntPtr obj, string name);
-
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern float[] sofaPhysics3DObject_getNormals(IntPtr obj, string name);
-
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysics3DObject_getQuads(IntPtr obj, string name, int [] arr);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysics3DObject_getTriangles(IntPtr obj, string name, int[] arr);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getVertices(IntPtr obj, string name, float[] arr);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getNormals(IntPtr obj, string name, float[] arr);
 
 
     [DllImport("SofaAdvancePhysicsAPI")]
