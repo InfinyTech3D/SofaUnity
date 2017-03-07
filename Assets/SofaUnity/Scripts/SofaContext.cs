@@ -23,6 +23,7 @@ namespace SofaUnity
             Debug.Log("SofaContext::Start called.");
             GL.wireframe = true;
             m_impl.start();
+            //this.transform.position = new Vector3(0, 10, 0);
         }
 
         void OnDestroy()

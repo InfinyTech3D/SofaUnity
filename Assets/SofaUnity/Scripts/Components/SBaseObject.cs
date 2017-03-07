@@ -32,7 +32,7 @@ namespace SofaUnity
             m_mesh = gameObject.GetComponent<MeshFilter>().mesh;
             m_meshRenderer = gameObject.GetComponent<MeshRenderer>();
 
-            gameObject.transform.position = new Vector3(1, 1, 1); ;
+          //  gameObject.transform.position = new Vector3(1, 1, 1); ;
         }        
 
         string m_nameId;
