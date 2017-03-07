@@ -148,12 +148,12 @@ public class SofaBox : IDisposable
                     else
                     {
                         verts[i].x = vertices[i * 3];
-                        verts[i].y = vertices[i * 3 + 1];
-                        verts[i].z = vertices[i * 3 + 2];
+                        verts[i].z = vertices[i * 3 + 1];
+                        verts[i].y = vertices[i * 3 + 2];
 
                         norms[i].x = normals[i * 3];
-                        norms[i].y = normals[i * 3 + 1];
-                        norms[i].z = normals[i * 3 + 2];
+                        norms[i].z = normals[i * 3 + 1];
+                        norms[i].y = normals[i * 3 + 2];
                     }
                 }
             }
