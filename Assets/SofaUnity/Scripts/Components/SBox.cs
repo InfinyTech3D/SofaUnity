@@ -74,7 +74,7 @@ namespace SofaUnity
 
             if (m_impl != null)
             {
-                m_mesh.vertices = m_impl.updateMesh(m_mesh.vertices);
+                m_impl.updateMesh(m_mesh);
                 //m_mesh.triangles = tris; 
                 m_mesh.triangles = m_impl.createTriangulation(m_mesh.vertices.Length);
 
@@ -105,7 +105,7 @@ namespace SofaUnity
 
             if (m_impl != null)
             {
-                m_mesh.vertices = m_impl.updateMesh(m_mesh.vertices);
+                m_impl.updateMesh(m_mesh);
             }
 
                 /*Vector3[] verts = m_mesh.vertices;

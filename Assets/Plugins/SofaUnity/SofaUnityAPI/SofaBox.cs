@@ -45,17 +45,16 @@ public class SofaBox : IDisposable
     }
 
     public int[] createTriangulation(int nbr)
-    {                  
-       int nbrQuads = sofaPhysics3DObject_getNbQuads(m_simu, "truc1_node");
+    {
+        int nbrQuads = sofaPhysics3DObject_getNbQuads(m_simu, "truc1_node");
 
-       Debug.Log("NbrQuad: " + nbrQuads);
+        //Debug.Log("NbrQuad: " + nbrQuads);
         int nbrIndices = nbrQuads * 4;
-       int[] quads = new int[nbrIndices];
-       sofaPhysics3DObject_getQuads(m_simu, "truc1_node", quads);
+        int[] quads = new int[nbrIndices];
+        sofaPhysics3DObject_getQuads(m_simu, "truc1_node", quads);
 
-       int[] tris = new int[nbrIndices*2];
-        Debug.Log("quad: " + quads.Length);
-        Debug.Log("tris: " + tris.Length);
+        int[] tris = new int[nbrIndices*2];
+
         for (int i = 0; i < nbrQuads; ++i)
         {
             //Debug.Log(i + " -> " + 
@@ -110,44 +109,58 @@ public class SofaBox : IDisposable
         return new int[] { };
     }
 
-    public Vector3[] updateMesh(Vector3[] verts)
+    public void updateMesh(Mesh mesh)
     {
         if (m_native != IntPtr.Zero)
         {
             int nbrV = sofaPhysicsAPI_getNbVertices(m_simu, "truc1_node");
             var vertices = sofaPhysics3DObject_getVertices(m_simu, "truc1_node");
+            var normals = sofaPhysics3DObject_getNormals(m_simu, "truc1_node");
 
-            Debug.Log("vertices: " + nbrV);
-            Debug.Log("vert: " + verts.Length);
+            //Debug.Log("vertices: " + nbrV);
+            //Debug.Log("vert: " + mesh.vertices.Length);
+            //Debug.Log("normals: " + normals.Length);
             //Debug.Log(vertices.Length);
+
+            Vector3[] verts = mesh.vertices;
+            Vector3[] norms = mesh.normals;
             bool first = false;
             if (verts.Length == 0)// first time
-            { 
-                verts = new Vector3[nbrV];
-                first = true;
-            }
-
-            if (vertices.Length == 0)
-                return verts;
-
-            for (int i = 0; i < verts.Length; ++i)
             {
-                // Debug.Log(i + " -> " + verts[i]);
-                // Debug.Log(i + " vert -> " + vertices[i]);
-                if (first)
-                {
-                    verts[i] = new Vector3(0, 0, 0);
-                }
-                else
-                {
-                    verts[i].x = vertices[i * 3];
-                    verts[i].y = vertices[i * 3 + 1];
-                    verts[i].z = vertices[i * 3 + 2];
-                }                
+                verts = new Vector3[nbrV];
+                norms = new Vector3[nbrV];
+                first = true;                
             }
-        }
 
-        return verts;
+
+            if (vertices.Length != 0 && normals.Length != 0)
+            {
+
+                for (int i = 0; i < verts.Length; ++i)
+                {
+                    // Debug.Log(i + " -> " + verts[i]);
+                    // Debug.Log(i + " vert -> " + vertices[i]);
+                    if (first)
+                    {
+                        verts[i] = new Vector3(0, 0, 0);
+                        norms[i] = new Vector3(0, 0, 0);
+                    }
+                    else
+                    {
+                        verts[i].x = vertices[i * 3];
+                        verts[i].y = vertices[i * 3 + 1];
+                        verts[i].z = vertices[i * 3 + 2];
+
+                        norms[i].x = normals[i * 3];
+                        norms[i].y = normals[i * 3 + 1];
+                        norms[i].z = normals[i * 3 + 2];
+                    }
+                }
+            }
+
+            mesh.vertices = verts;
+            mesh.normals = norms;
+        }
     }
 
     public void test()
@@ -190,16 +203,14 @@ public class SofaBox : IDisposable
 
     public void addCube()
     {
-        Debug.Log("sofa_test3: " + sofaPhysicsAPI_getNumberObjects(m_simu));
         if (m_native == IntPtr.Zero) // first time create object only
         { 
             int res = sofaPhysicsAPI_addCube(m_simu, "truc1");
-            Debug.Log("res ADD: " + res);
             if (res == 1) // cube added
             {
-                Debug.Log("cube Added!");
-                for (int i = 0; i < sofaPhysicsAPI_getNumberObjects(m_simu)+1; ++i)
-                    Debug.Log("obj found: " + i + " -> " + sofaPhysicsAPI_get3DObjectName(m_simu, i));
+                //Debug.Log("cube Added!");
+                //for (int i = 0; i < sofaPhysicsAPI_getNumberObjects(m_simu)+1; ++i)
+                //    Debug.Log("obj found: " + i + " -> " + sofaPhysicsAPI_get3DObjectName(m_simu, i));
 
                 m_native = sofaPhysicsAPI_get3DObject(m_simu, "truc1_node");
             //    Debug.Log("NbrV: " + sofaOutputMesh_getNbVertices(m_native));
@@ -211,11 +222,10 @@ public class SofaBox : IDisposable
                 Debug.LogError("Error Cube created can't be found!");
             else
             {
-                Debug.Log("cube found!");
+                //Debug.Log("cube found!");
               //  Debug.Log("NbrV: " + sofaOutputMesh_getNbVertices(m_native));
             }
         }
-        Debug.Log("sofa_test4: " + sofaPhysicsAPI_getNumberObjects(m_simu));
     }
 
 
@@ -257,6 +267,9 @@ public class SofaBox : IDisposable
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern float[] sofaPhysics3DObject_getVertices(IntPtr obj, string name);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern float[] sofaPhysics3DObject_getNormals(IntPtr obj, string name);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysics3DObject_getQuads(IntPtr obj, string name, int [] arr);
