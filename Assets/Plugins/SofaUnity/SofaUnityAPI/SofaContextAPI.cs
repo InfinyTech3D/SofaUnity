@@ -18,12 +18,12 @@ namespace SofaUnityAPI
 
             sofaPhysicsAPI_createScene(m_native);
 
-            string name = sofaPhysicsAPI_APIName(m_native);
+            //string name = sofaPhysicsAPI_APIName(m_native);
             //Debug.Log("API Name: " + name);
 
-            Debug.Log("API TEST Name: " + sofaPhysicsAPI_testName(m_native));
-            sofaPhysicsAPI_setTestName(m_native, "PROUT");
-            Debug.Log("API TEST Name after: " + sofaPhysicsAPI_testName(m_native));
+            //Debug.Log("API TEST Name: " + sofaPhysicsAPI_testName(m_native));
+            //sofaPhysicsAPI_setTestName(m_native, "PROUT");
+            //Debug.Log("API TEST Name after: " + sofaPhysicsAPI_testName(m_native));
         }
 
         public void Dispose()
@@ -72,7 +72,7 @@ namespace SofaUnityAPI
 
         public void step()
         {
-            Debug.Log("-- sofaPhysicsAPI_step called.");
+            //Debug.Log("-- sofaPhysicsAPI_step called.");
             sofaPhysicsAPI_step(m_native);
         }
 
