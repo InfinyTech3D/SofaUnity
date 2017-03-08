@@ -7,6 +7,7 @@ using SofaUnityAPI;
 
 namespace SofaUnity
 {
+    [ExecuteInEditMode]
     public class SofaContext : MonoBehaviour
     {
         SofaContextAPI m_impl;
@@ -14,7 +15,7 @@ namespace SofaUnity
         void Awake()
         {
             Debug.Log("SofaContext::Awake called.");
-            m_impl = new SofaContextAPI();
+            init();
         }
 
         // Use this for initialization
@@ -22,19 +23,36 @@ namespace SofaUnity
         {
             Debug.Log("SofaContext::Start called.");
             GL.wireframe = true;
-            m_impl.start();
+            
             //this.transform.position = new Vector3(0, 10, 0);
         }
 
+
         void OnDestroy()
         {
+            Debug.Log("SofaContext::OnDestroy called.");
+#if !UNITY_EDITOR
+            Debug.Log("SofaContext::OnDestroy stop called.");
             m_impl.stop();
-            m_impl.Dispose();
+            m_impl.Dispose();       
+#endif
         }
 
         void OnPreRender()
         {
             GL.wireframe = true;
+        }
+
+
+        void init()
+        {
+            Debug.Log("SofaContext::init called.");
+            if (m_impl == null)
+            {
+                Debug.Log("SofaContext::init Ok.");
+                m_impl = new SofaContextAPI();
+                m_impl.start();
+            }
         }
 
         // Update is called once per frame
@@ -79,6 +97,8 @@ namespace SofaUnity
 
         public IntPtr getSimuContext()
         {
+            if (m_impl == null)
+                init();
             return m_impl.getSimuContext();
         }
     }

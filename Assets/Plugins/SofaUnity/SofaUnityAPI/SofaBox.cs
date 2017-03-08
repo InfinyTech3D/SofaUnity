@@ -234,7 +234,7 @@ public class SofaBox : IDisposable
         {
             int nbrV = sofaPhysicsAPI_getNbVertices(m_simu, "truc1_node");
             //Debug.Log("vertices: " + nbrV);
-            //Debug.Log("vert: " + mesh.vertices.Length);
+            Debug.Log("vert: " + mesh.vertices.Length);
             //Debug.Log("normals: " + normals.Length);
             //Debug.Log(vertices.Length);
 
@@ -248,6 +248,7 @@ public class SofaBox : IDisposable
             bool first = false;
             if (verts.Length == 0)// first time
             {
+                Debug.Log("init");
                 verts = new Vector3[nbrV];
                 norms = new Vector3[nbrV];
                 first = true;                
@@ -297,7 +298,7 @@ public class SofaBox : IDisposable
             
             Debug.Log("NbrQuad: " + nbrQuads);
             int[] toto = new int[nbrQuads];
-            sofaPhysics3DObject_getQuads(m_simu, "truc1_node", toto);
+            sofaPhysics3DObject_getQuads(m_simu, "truc1_n   ode", toto);
             for (int i = 0; i < 10; ++i)
             {
                 Debug.Log(i + " => " + toto[i]);
