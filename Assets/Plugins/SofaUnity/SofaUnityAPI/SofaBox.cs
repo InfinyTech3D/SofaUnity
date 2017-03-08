@@ -57,25 +57,121 @@ public class SofaBox : IDisposable
         int resY = 5;
         int resZ = 5;
 
-        int[] tris = new int[(resX - 1) * (resY - 1) * 2 * 3];
+        int nbrTri = (resX - 1) * (resY - 1) * 4 + (resX - 1) * (resZ - 1) * 4 + (resY - 1) * (resZ - 1) * 4;
+        //int nbrTri = 2;
+        int[] tris = new int[nbrTri*3];
+
+        //tris[0] = 0;
+        //tris[1] = 5;
+        //tris[2] = 6;
+
+        //tris[3] = 0;
+        //tris[4] = 6;
+        //tris[5] = 1;
+
         Debug.Log("nbrTri: " + (resX - 1) * (resY - 1) * 2 * 3);
-        int cptTri = 0;
-        for (int j = 0; j < resY - 1; ++j)
+        int cpt = 0;
+        for (int k = 0; k < 2; ++k)
         {
-            int lvl = j * resX;
-            for (int i = 0; i < resX - 1; ++i)
+            int face = k * resX * resY * (resZ - 1);
+            for (int j = 0; j < resY - 1; ++j)
             {
-                tris[lvl + i] = lvl + i;
-                tris[lvl + i + 1] = lvl + i + resX;
-                tris[lvl + i + 2] = lvl + i + resX + 1;
+                int lvl = face + j * resX;
+                for (int i = 0; i < resX - 1; ++i)
+                {                    
+                    int id1 = cpt * 6 + 1;
+                    int id2 = cpt * 6 + 2;
+                    if (k != 0)
+                    {
+                        id1 = cpt * 6 + 2;
+                        id2 = cpt * 6 + 1;
+                    }
 
-                tris[lvl + i + 3] = lvl + i;
-                tris[lvl + i + 4] = lvl + i + resX + 1;
-                tris[lvl + i + 5] = lvl + i + 1;
+                    tris[cpt * 6] = lvl + i;
+                    tris[id1] = lvl + i + resX;
+                    tris[id2] = lvl + i + resX + 1;
+
+                    id1 += 3;
+                    id2 += 3;                  
+
+                    tris[cpt * 6 + 3] = lvl + i;
+                    tris[id1] = lvl + i + resX + 1;
+                    tris[id2] = lvl + i + 1;
+
+                    cpt++;
+                }                
             }
-
-            //tris[cptTri+1] = i+resY;
         }
+
+
+        
+        for (int i = 0; i < 2; ++i)
+        {
+            int face = i * (resX-1);
+
+            for (int k = 0; k < resZ - 1; ++k)
+            {
+                int lvl1 = face + k * resX * resY;
+                int lvl2 = face + (k + 1) * resX * resY;
+                for (int j = 0; j < resY - 1; ++j)
+                {
+                    int id1 = cpt * 6 + 1;
+                    int id2 = cpt * 6 + 2;
+                    if (i != 0)
+                    {
+                        id1 = cpt * 6 + 2;
+                        id2 = cpt * 6 + 1;
+                    }
+
+                    tris[cpt * 6] = lvl2 + j * resX;
+                    tris[id1] = lvl2 + (j + 1) * resX;
+                    tris[id2] = lvl1 + (j + 1) * resX;
+
+                    id1 += 3;
+                    id2 += 3;
+
+                    tris[cpt * 6 + 3] = lvl2 + j * resX;
+                    tris[id1] = lvl1 + (j + 1) * resX;
+                    tris[id2] = lvl1 + j * resX;
+                    cpt++;
+                }
+            }
+        }
+        
+
+        for (int j = 0; j < 2; ++j)
+        {
+            int face = j * resX * (resY - 1);
+
+            for (int k = 0; k < resZ - 1; ++k)
+            {
+                int lvl1 = face + k * resX * resY;
+                int lvl2 = face + (k + 1) * resX * resY;
+                for (int i = 0; i < resX - 1; ++i)
+                {
+                    int id1 = cpt * 6 + 1;
+                    int id2 = cpt * 6 + 2;
+                    if (j != 0)
+                    {
+                        id1 = cpt * 6 + 2;
+                        id2 = cpt * 6 + 1;
+                    }
+
+                    tris[cpt * 6] = lvl2 + i;
+                    tris[id1] = lvl1 + i;
+                    tris[id2] = lvl1 + (i + 1);
+
+                    id1 += 3;
+                    id2 += 3;
+
+                    tris[cpt * 6 + 3] = lvl2 + i;
+                    tris[id1] = lvl1 + (i + 1);
+                    tris[id2] = lvl2 + (i + 1);
+                    cpt++;
+                }
+            }
+        }
+
 
         //int[] tris = new int[nbrIndices*2];
         //for (int i = 0; i < nbrQuads; ++i)

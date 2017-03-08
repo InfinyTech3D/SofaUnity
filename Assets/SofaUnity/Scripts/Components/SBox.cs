@@ -48,6 +48,7 @@ namespace SofaUnity
             m_mesh = mf.mesh;
 
             m_mesh.name = "IMadeThis";
+            mr.material = new Material(Shader.Find("Diffuse"));
 
             //// create point data, [3] for 3 verticies of a simple triangle
             //Vector3[] verts = new Vector3[3];
@@ -79,7 +80,7 @@ namespace SofaUnity
                 m_mesh.triangles = m_impl.createTriangulation(m_mesh.vertices.Length);
 
                 m_impl.createQuads();
-                m_mesh.RecalculateNormals();
+                //m_mesh.RecalculateNormals();
             }
 
             //set the mesh up
