@@ -31,6 +31,8 @@ public class SGridEditor : Editor
 
         grid.poisson = EditorGUILayout.FloatField("Poisson Ratio", grid.poisson);
         EditorGUILayout.Separator();
+
+
     }
 
     

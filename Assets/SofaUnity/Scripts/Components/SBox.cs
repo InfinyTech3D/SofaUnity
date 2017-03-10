@@ -26,9 +26,12 @@ namespace SofaUnity
                 IntPtr _simu = context.getSimuContext();
                 if (_simu != IntPtr.Zero)
                 {
-                    m_impl = new SofaBox(_simu);
+                    m_impl = new SofaBox(_simu, context.objectcpt);
                     if (m_impl != null)
+                    {
                         m_impl.addCube();
+                        context.objectcpt = context.objectcpt + 1;
+                    }
                 }
             }
             else
@@ -98,6 +101,50 @@ namespace SofaUnity
                 }
                 */
                 //m_mesh.vertices = verts;
+        }
+
+        float m_mass = 1.0f;
+        public float mass
+        {
+            get { return m_mass; }
+            set {
+                if (value != m_mass)
+                {
+                    m_mass = value;
+                    if (m_impl != null)
+                        m_impl.setMass(m_mass);
+                }
+            }
+        }
+
+        float m_young = 300.0f;
+        public float young
+        {
+            get { return m_young; }
+            set
+            {
+                if (value != m_young)
+                {
+                    m_young = value;
+                    if (m_impl != null)
+                        m_impl.setYoungModulus(m_young);
+                }
+            }
+        }
+
+        float m_poisson = 1.0f;
+        public float poisson
+        {
+            get { return m_poisson; }
+            set
+            {
+                if (value != m_poisson)
+                {
+                    m_poisson = value;
+                    if (m_impl != null)
+                        m_impl.setPoissonRatio(m_poisson);
+                }
+            }
         }
 
 

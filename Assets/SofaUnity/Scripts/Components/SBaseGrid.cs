@@ -25,24 +25,7 @@ public class SBaseGrid : SBaseObject
         set { m_gridSize = value; }
     }
 
-    float m_mass = 1.0f;
-    public float mass
-    {
-        get { return m_mass; }
-        set { m_mass = value; }
-    }
+    
 
-    float m_young = 300.0f;
-    public float young
-    {
-        get { return m_young; }
-        set { m_young = value; }
-    }
-
-    float m_poisson = 1.0f;
-    public float poisson
-    {
-        get { return m_poisson; }
-        set { m_poisson = value; }
-    }
+    
 }
