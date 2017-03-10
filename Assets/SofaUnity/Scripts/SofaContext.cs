@@ -62,6 +62,13 @@ namespace SofaUnity
             m_impl.step();           
         }
 
+        int m_objectCpt = 0;
+        public int objectcpt
+        {
+            get { return m_objectCpt; }
+            set { m_objectCpt = value; }
+        }
+
         Vector3 m_gravity = new Vector3(0f, -9.8f, 0f);
         public Vector3 gravity
         {
