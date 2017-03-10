@@ -202,7 +202,24 @@ public class SofaBox : IDisposable
         }
     }
 
-    public void setTranslation(float value)
+    public void setTranslation(Vector3 values)
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            float[] trans = new float[3];
+            for (int i = 0; i < 3; ++i)
+                trans[i] = values[i];
+            int res = sofaPhysics3DObject_setVec3fValue(m_simu, m_name, "translation", trans);
+            Debug.Log("Change translation res: " + res);
+        }
+    }
+
+    public void setRotation(Vector3 values)
+    {
+
+    }
+
+    public void setScale(Vector3 values)
     {
 
     }
@@ -387,4 +404,6 @@ public class SofaBox : IDisposable
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysics3DObject_setFloatValue(IntPtr obj, string objectName, string dataName, float value);
 
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_setVec3fValue(IntPtr obj, string objectName, string dataName, float[] values);
 }

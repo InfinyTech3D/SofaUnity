@@ -12,6 +12,10 @@ namespace SofaUnity
     {
         internal SofaBox m_impl;
         public GameObject m_context;
+        internal Vector3 m_translation;
+        internal Vector3 m_rotation;
+        internal Vector3 m_scale;
+
 
         /// Mesh of this object
 		//private Mesh m_mesh;
@@ -79,6 +83,10 @@ namespace SofaUnity
         void Update()
         {
             Debug.Log("SBox::Update called.");
+
+            if (transform.hasChanged)
+                updateTransform();
+    
             if (Input.GetKeyDown(KeyCode.R))
             {
                 if (m_impl != null)
@@ -144,6 +152,34 @@ namespace SofaUnity
                     if (m_impl != null)
                         m_impl.setPoissonRatio(m_poisson);
                 }
+            }
+        }
+
+        void updateTransform()
+        {
+            transform.hasChanged = false;
+
+            if (m_impl == null)
+                return;
+
+            if (transform.position != m_translation)
+            {
+                m_translation = transform.position;
+                Debug.Log("Update pos");
+                Debug.Log(m_translation);
+                m_impl.setTranslation(m_translation);
+            }
+
+            //if (transform.rotation != m_rotation)
+            //{
+            //    m_rotation = transform.rotation;
+            //    m_impl.setRotation(m_rotation);
+            //}
+
+            if (transform.localScale != m_scale)
+            {
+                m_scale = transform.localScale;
+                m_impl.setScale(m_scale);
             }
         }
 
