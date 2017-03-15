@@ -14,7 +14,11 @@ namespace SofaUnity
         
         void Awake()
         {
+#if UNITY_EDITOR
             Debug.Log("SofaContext::Awake called.");
+#else
+            Debug.Log("SofaContext::Awake play called.");
+#endif
             init();
         }
 
@@ -48,10 +52,10 @@ namespace SofaUnity
         {
             Debug.Log("SofaContext::init called.");
             if (m_impl == null)
-            {
-                Debug.Log("SofaContext::init Ok.");
+            {                
                 m_impl = new SofaContextAPI();
                 m_impl.start();
+                Debug.Log("SofaContext::init Ok.");
             }
         }
 
@@ -69,7 +73,7 @@ namespace SofaUnity
             set { m_objectCpt = value; }
         }
 
-        Vector3 m_gravity = new Vector3(0f, -9.8f, 0f);
+        public Vector3 m_gravity = new Vector3(0f, -9.8f, 0f);
         public Vector3 gravity
         {
             get { return m_gravity; }
@@ -85,7 +89,7 @@ namespace SofaUnity
             }
         }
 
-        float m_timeStep = 0.02f; // ~ 1/60
+        public float m_timeStep = 0.02f; // ~ 1/60
         public float timeStep
         {
             get

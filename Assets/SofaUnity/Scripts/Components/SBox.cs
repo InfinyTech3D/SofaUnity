@@ -12,9 +12,7 @@ namespace SofaUnity
     {
         internal SofaBox m_impl;
         public GameObject m_context;
-        internal Vector3 m_translation;
-        internal Vector3 m_rotation;
-        internal Vector3 m_scale;
+
 
 
         /// Mesh of this object
@@ -22,7 +20,9 @@ namespace SofaUnity
 
         void Awake()
         {
-            Debug.Log("SBox::Awake called.");
+#if UNITY_EDITOR
+            Debug.Log("UNITY_EDITOR - SBox::Awake called.");
+
             m_context = GameObject.Find("SofaContext");
             if (m_context != null)
             {
@@ -45,6 +45,23 @@ namespace SofaUnity
             MeshFilter mf = gameObject.AddComponent<MeshFilter>();
             //to see it, we have to add a renderer
             MeshRenderer mr = gameObject.AddComponent<MeshRenderer>();
+#else
+            Debug.Log("UNITY_PLAY - SBox::Awake called.");
+#endif
+
+        }
+
+        void init()
+        {
+            if (m_impl == null)
+                return;
+
+            m_impl.setMass(m_mass);
+            m_impl.setYoungModulus(m_young);
+            m_impl.setPoissonRatio(m_poisson);
+
+            m_impl.setTranslation(m_translation);
+            m_impl.updateMesh(m_mesh);
         }
 
 
@@ -63,9 +80,11 @@ namespace SofaUnity
                 m_mesh = mf.mesh = meshCopy;                    //Assign the copy to the meshes
                 MeshRenderer mr = GetComponent<MeshRenderer>();
                 mr.material = new Material(Shader.Find("Diffuse"));
+                Debug.Log("SBox::Start editor mode.");
 #else
                 //do this in play mode
                 m_mesh = GetComponent<MeshFilter>().mesh;
+                Debug.Log("SBox::Start play mode.");
 #endif
 
                 m_mesh.name = "IMadeThis";                
@@ -76,6 +95,8 @@ namespace SofaUnity
                 m_mesh.triangles = m_impl.createTriangulation(m_mesh.vertices.Length);
                 m_impl.updateMesh(m_mesh);
                 //m_mesh.RecalculateNormals();
+
+                init();
             }
         }
 
@@ -111,7 +132,7 @@ namespace SofaUnity
                 //m_mesh.vertices = verts;
         }
 
-        float m_mass = 1.0f;
+        public float m_mass = 10.0f;
         public float mass
         {
             get { return m_mass; }
@@ -125,7 +146,7 @@ namespace SofaUnity
             }
         }
 
-        float m_young = 300.0f;
+        public float m_young = 800.0f;
         public float young
         {
             get { return m_young; }
@@ -140,7 +161,7 @@ namespace SofaUnity
             }
         }
 
-        float m_poisson = 1.0f;
+        public float m_poisson = 0.45f;
         public float poisson
         {
             get { return m_poisson; }
@@ -155,32 +176,54 @@ namespace SofaUnity
             }
         }
 
+        public Vector3 m_translation;
+        public Vector3 translation
+        {
+            get { return m_translation; }
+            set
+            {
+                if (value != m_translation)
+                {
+                    Vector3 diffTrans = value - m_translation;
+                    m_translation = value;
+                    if (m_impl != null)
+                    {
+                        m_impl.setTranslation(diffTrans);
+                        m_impl.updateMesh(m_mesh);
+                    }
+                }
+            }
+        }
+
+        public Vector3 m_rotation;
+        public Vector3 m_scale;
+
         void updateTransform()
         {
-            transform.hasChanged = false;
+            //transform.hasChanged = false;
 
-            if (m_impl == null)
-                return;
+            //if (m_impl == null)
+            //    return;
 
-            if (transform.position != m_translation)
-            {
-                m_translation = transform.position;
-                Debug.Log("Update pos");
-                Debug.Log(m_translation);
-                m_impl.setTranslation(m_translation);
-            }
-
-            //if (transform.rotation != m_rotation)
+            //if (transform.position != m_translation)
             //{
-            //    m_rotation = transform.rotation;
-            //    m_impl.setRotation(m_rotation);
+            //    m_translation = transform.position;
+            //    Debug.Log("Update pos");
+            //    Debug.Log(m_translation);
+            //    m_impl.setTranslation(m_translation);
             //}
 
-            if (transform.localScale != m_scale)
-            {
-                m_scale = transform.localScale;
-                m_impl.setScale(m_scale);
-            }
+            ////if (transform.rotation != m_rotation)
+            ////{
+            ////    m_rotation = transform.rotation;
+            ////    m_impl.setRotation(m_rotation);
+            ////}
+
+            //if (transform.localScale != m_scale)
+            //{
+            //    m_scale = transform.localScale;
+            //    m_impl.setScale(m_scale);
+            //}
         }
 
 

@@ -32,6 +32,8 @@ public class SGridEditor : Editor
         grid.poisson = EditorGUILayout.FloatField("Poisson Ratio", grid.poisson);
         EditorGUILayout.Separator();
 
+        grid.translation = EditorGUILayout.Vector3Field("Translation", grid.translation);
+        EditorGUILayout.Separator();
 
     }
 
