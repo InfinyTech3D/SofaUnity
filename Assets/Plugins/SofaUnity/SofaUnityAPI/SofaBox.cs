@@ -176,9 +176,8 @@ public class SofaBox : IDisposable
     {
         if (m_native != IntPtr.Zero)
         {
-            Debug.Log("Change Mass");
             int res = sofaPhysics3DObject_setFloatValue(m_simu, m_name, "totalMass", value);
-            Debug.Log("Change Mass res: " + res);
+            //Debug.Log("Change Mass res: " + res);
         }
     }
 
@@ -186,7 +185,6 @@ public class SofaBox : IDisposable
     {
         if (m_native != IntPtr.Zero)
         {
-            Debug.Log("Change youngModulus");
             int res = sofaPhysics3DObject_setFloatValue(m_simu, m_name, "youngModulus", value);
             Debug.Log("Change youngModulus res: " + res);
         }
@@ -196,7 +194,6 @@ public class SofaBox : IDisposable
     {
         if (m_native != IntPtr.Zero)
         {
-            Debug.Log("Change poissonRatio");
             int res = sofaPhysics3DObject_setFloatValue(m_simu, m_name, "poissonRatio", value);
             Debug.Log("Change poissonRatio res: " + res);
         }
@@ -230,7 +227,7 @@ public class SofaBox : IDisposable
         {
             int nbrV = sofaPhysicsAPI_getNbVertices(m_simu, m_name);
             //Debug.Log("vertices: " + nbrV);
-            Debug.Log("vert: " + mesh.vertices.Length);
+            //Debug.Log("vert: " + mesh.vertices.Length);
             //Debug.Log("normals: " + normals.Length);
             //Debug.Log(vertices.Length);
 
@@ -244,7 +241,7 @@ public class SofaBox : IDisposable
             bool first = false;
             if (verts.Length == 0)// first time
             {
-                Debug.Log("init");
+                //Debug.Log("init");
                 verts = new Vector3[nbrV];
                 norms = new Vector3[nbrV];
                 first = true;                
@@ -257,7 +254,7 @@ public class SofaBox : IDisposable
                 for (int i = 0; i < verts.Length; ++i)
                 {
                     // Debug.Log(i + " -> " + verts[i]);
-                    // Debug.Log(i + " vert -> " + vertices[i]);
+                     //Debug.Log(i + " vert -> " + vertices[i]);
                     if (first)
                     {
                         verts[i] = new Vector3(0, 0, 0);
@@ -285,11 +282,10 @@ public class SofaBox : IDisposable
     {
         if (m_native == IntPtr.Zero) // first time create object only
         {
-            Debug.Log("Add cube " + m_name);
             int res = sofaPhysicsAPI_addCube(m_simu, "cube_" + m_idObject);
             if (res == 1) // cube added
             {
-                Debug.Log("cube Added!");
+                Debug.Log("cube Added! " + m_name);
                 //for (int i = 0; i < sofaPhysicsAPI_getNumberObjects(m_simu)+1; ++i)
                 //    Debug.Log("obj found: " + i + " -> " + sofaPhysicsAPI_get3DObjectName(m_simu, i));
 
