@@ -83,6 +83,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Plugins\SofaUnity\SofaUnityAPI\SofaCylinder.cs" />
+    <Compile Include="Assets\Plugins\SofaUnity\SofaUnityAPI\SofaPlane.cs" />
+    <Compile Include="Assets\Plugins\SofaUnity\SofaUnityAPI\SofaSphere.cs" />
     <Compile Include="Assets\Plugins\SofaUnity\SofaUnityAPI\SofaBaseObject.cs" />
     <Compile Include="Assets\Plugins\SofaUnity\SofaUnityAPI\SofaBox.cs" />
     <Compile Include="Assets\Plugins\SofaUnity\SofaUnityAPI\SofaContextAPI.cs" />
