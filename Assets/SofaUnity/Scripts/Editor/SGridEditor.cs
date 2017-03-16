@@ -20,9 +20,9 @@ public class SGridEditor : Editor
     {
         SBox grid = (SBox)this.target;
 
-        grid.gridSize = EditorGUILayout.Vector3Field("Grid resolution", grid.gridSize);
+        grid.translation = EditorGUILayout.Vector3Field("Translation", grid.translation);
         EditorGUILayout.Separator();
-
+        
         grid.mass = EditorGUILayout.FloatField("Mass", grid.mass);
         EditorGUILayout.Separator();
 
@@ -31,10 +31,6 @@ public class SGridEditor : Editor
 
         grid.poisson = EditorGUILayout.FloatField("Poisson Ratio", grid.poisson);
         EditorGUILayout.Separator();
-
-        grid.translation = EditorGUILayout.Vector3Field("Translation", grid.translation);
-        EditorGUILayout.Separator();
-
     }
 
     
