@@ -59,6 +59,14 @@ public class SofaMeshObject : SofaBaseObject
 
     }
 
+    public virtual int[] createTriangulation()
+    {
+        //int nbrQuads = sofaPhysics3DObject_getNbQuads(m_simu, m_name);
+
+        int[] tris = new int[0];
+        return tris;
+    }
+
     public virtual void updateMesh(Mesh mesh)
     {
         if (m_native != IntPtr.Zero)

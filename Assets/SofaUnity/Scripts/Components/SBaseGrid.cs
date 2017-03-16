@@ -65,7 +65,7 @@ namespace SofaUnity
                 m_mesh.vertices = new Vector3[0];
                 m_impl.updateMesh(m_mesh);
                 //m_mesh.triangles = tris; 
-                m_mesh.triangles = m_impl.createTriangulation(m_mesh.vertices.Length);
+                m_mesh.triangles = m_impl.createTriangulation();
                 m_impl.updateMesh(m_mesh);
 
                 initMesh();

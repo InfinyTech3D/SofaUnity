@@ -17,7 +17,7 @@ public class SofaBox : SofaMeshObject
     }
 
 
-    public int[] createTriangulation(int nbr)
+    public override int[] createTriangulation()
     {        
         int nbrQuads = sofaPhysics3DObject_getNbQuads(m_simu, m_name);
 
