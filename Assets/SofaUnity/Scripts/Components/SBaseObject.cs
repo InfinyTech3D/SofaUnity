@@ -9,7 +9,7 @@ namespace SofaUnity
         /// Mesh of this object
 		protected Mesh m_mesh;
         /// Mesh renderer of this object
-        private MeshRenderer m_meshRenderer;
+        //private MeshRenderer m_meshRenderer;
 
         // Use this for initialization
         void Start()
@@ -26,11 +26,11 @@ namespace SofaUnity
         void Awake()
         {
             Debug.Log("SBaseObject::Awake called.");
-            gameObject.AddComponent<MeshFilter>();
-            gameObject.AddComponent<MeshRenderer>();
+            //gameObject.AddComponent<MeshFilter>();
+            //gameObject.AddComponent<MeshRenderer>();
 
-            m_mesh = gameObject.GetComponent<MeshFilter>().mesh;
-            m_meshRenderer = gameObject.GetComponent<MeshRenderer>();
+            //m_mesh = gameObject.GetComponent<MeshFilter>().mesh;
+            //m_meshRenderer = gameObject.GetComponent<MeshRenderer>();
 
           //  gameObject.transform.position = new Vector3(1, 1, 1); ;
         }        

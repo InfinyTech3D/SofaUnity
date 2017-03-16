@@ -15,7 +15,8 @@ public class SofaMeshObject : SofaBaseObject
         if (m_native != IntPtr.Zero)
         {
             int res = sofaPhysics3DObject_setFloatValue(m_simu, m_name, "totalMass", value);
-            //Debug.Log("Change Mass res: " + res);
+            if(log)
+                Debug.Log("Change Mass res: " + res);
         }
     }
 
@@ -24,7 +25,8 @@ public class SofaMeshObject : SofaBaseObject
         if (m_native != IntPtr.Zero)
         {
             int res = sofaPhysics3DObject_setFloatValue(m_simu, m_name, "youngModulus", value);
-            Debug.Log("Change youngModulus res: " + res);
+            if (log)
+                Debug.Log("Change youngModulus res: " + res);
         }
     }
 
@@ -33,7 +35,8 @@ public class SofaMeshObject : SofaBaseObject
         if (m_native != IntPtr.Zero)
         {
             int res = sofaPhysics3DObject_setFloatValue(m_simu, m_name, "poissonRatio", value);
-            Debug.Log("Change poissonRatio res: " + res);
+            if (log)
+                Debug.Log("Change poissonRatio res: " + res);
         }
     }
 
@@ -45,7 +48,8 @@ public class SofaMeshObject : SofaBaseObject
             for (int i = 0; i < 3; ++i)
                 trans[i] = values[i];
             int res = sofaPhysics3DObject_setVec3fValue(m_simu, m_name, "translation", trans);
-            Debug.Log("Change translation res: " + res);
+            if (log)
+                Debug.Log("Change translation res: " + res);
         }
     }
 

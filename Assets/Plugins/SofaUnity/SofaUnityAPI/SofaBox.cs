@@ -148,26 +148,20 @@ public class SofaBox : SofaMeshObject
 
         if (m_native == IntPtr.Zero) // first time create object only
         {
+            // Create the cube
             int res = sofaPhysicsAPI_addCube(m_simu, "cube_" + m_idObject);
             if (res == 1) // cube added
             {
                 Debug.Log("cube Added! " + m_name);
-                //for (int i = 0; i < sofaPhysicsAPI_getNumberObjects(m_simu)+1; ++i)
-                //    Debug.Log("obj found: " + i + " -> " + sofaPhysicsAPI_get3DObjectName(m_simu, i));
 
+                // Set created object to native pointer
                 m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name);
-                //    Debug.Log("NbrV: " + sofaOutputMesh_getNbVertices(m_native));
             }
 
             //    m_native = sofaPhysicsAPI_get3DObject(m_simu, "truc1");
 
             if (m_native == IntPtr.Zero)
                 Debug.LogError("Error Cube created can't be found!");
-            else
-            {
-                //Debug.Log("cube found!");
-                //  Debug.Log("NbrV: " + sofaOutputMesh_getNbVertices(m_native));
-            }
         }
     }
 

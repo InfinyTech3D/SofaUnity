@@ -11,6 +11,8 @@ public class SofaBaseObject : IDisposable
     protected string m_name;
     bool m_isDisposed;
 
+    protected bool log = false;
+
     public SofaBaseObject(IntPtr simu, int idObject)
     {
         m_simu = simu;

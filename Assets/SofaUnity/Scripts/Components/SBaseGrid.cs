@@ -12,11 +12,13 @@ namespace SofaUnity
     {
         protected SofaBox m_impl = null;
         protected SofaContext m_context = null;
+        protected bool m_log = false;
 
         void Awake()
         {
 #if UNITY_EDITOR
-            Debug.Log("UNITY_EDITOR - SBaseGrid::Awake");
+            if (m_log)
+                Debug.Log("UNITY_EDITOR - SBaseGrid::Awake");
 
             GameObject _contextObject = GameObject.Find("SofaContext");
             if (_contextObject != null)
@@ -33,12 +35,14 @@ namespace SofaUnity
                     Debug.LogError("SBaseGrid:: Object not created");
             }
             else
-                Debug.Log("SBaseGrid::No context.");
+                Debug.LogError("SBaseGrid::No context.");
 
             //createFakeCube();
-            MeshFilter mf = gameObject.AddComponent<MeshFilter>();
+            //MeshFilter mf = gameObject.AddComponent<MeshFilter>();
+            gameObject.AddComponent<MeshFilter>();
             //to see it, we have to add a renderer
-            MeshRenderer mr = gameObject.AddComponent<MeshRenderer>();
+            //MeshRenderer mr = gameObject.AddComponent<MeshRenderer>();
+            gameObject.AddComponent<MeshRenderer>();
 #else
             Debug.Log("UNITY_PLAY - SBox::Awake called.");
 #endif
@@ -46,7 +50,9 @@ namespace SofaUnity
 
         void Start()
         {
-            Debug.Log("UNITY_EDITOR - SBaseGrid::start");
+            if (m_log)
+                Debug.Log("UNITY_EDITOR - SBaseGrid::start");
+
             if (m_impl != null)
             {
 #if UNITY_EDITOR
@@ -57,11 +63,14 @@ namespace SofaUnity
                 m_mesh = mf.mesh = meshCopy;                    //Assign the copy to the meshes
                 MeshRenderer mr = GetComponent<MeshRenderer>();
                 mr.material = new Material(Shader.Find("Diffuse"));
-                Debug.Log("SBaseGrid::Start editor mode.");
+
+                if (m_log)
+                    Debug.Log("SBaseGrid::Start editor mode.");
 #else
                 //do this in play mode
                 m_mesh = GetComponent<MeshFilter>().mesh;
-                Debug.Log("SBox::Start play mode.");
+                if (m_log)
+                    Debug.Log("SBox::Start play mode.");
 #endif
 
                 m_mesh.name = "IMadeThis";
@@ -96,7 +105,9 @@ namespace SofaUnity
 
         protected virtual void updateImpl()
         {
-            Debug.Log("SBaseGrid::updateImpl called.");
+            if (m_log)
+                Debug.Log("SBaseGrid::updateImpl called.");
+
             if (m_impl != null)
                 m_impl.updateMesh(m_mesh);
         }

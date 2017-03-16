@@ -9,7 +9,6 @@ public class SGridEditor : Editor
     [MenuItem("GameObject/Create Other/SofaUnity/SBox")]
     public static GameObject CreateNew()
     {
-        Debug.Log("CreateNew CreateSCube");
         GameObject go = new GameObject();
         go.AddComponent<SBox>();
         go.name = "SBox";

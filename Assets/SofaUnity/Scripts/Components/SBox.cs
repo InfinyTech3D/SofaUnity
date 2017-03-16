@@ -27,7 +27,8 @@ namespace SofaUnity
         // Update is called once per frame
         void Update()
         {
-            Debug.Log("SBox::Update called.");
+            if (m_log)
+                Debug.Log("SBox::Update called.");
 
             /*Vector3[] verts = m_mesh.vertices;
             for (int i = 0; i < verts.Length; i++) {
