@@ -10,24 +10,27 @@ namespace SofaUnity
     [ExecuteInEditMode]
     public class SBaseGrid : SBaseObject
     {
-        protected SofaBox m_impl;
-        public GameObject m_context;
+        protected SofaBox m_impl = null;
+        protected SofaContext m_context = null;
 
         void Awake()
         {
 #if UNITY_EDITOR
             Debug.Log("UNITY_EDITOR - SBaseGrid::Awake");
 
-            m_context = GameObject.Find("SofaContext");
-            if (m_context != null)
+            GameObject _contextObject = GameObject.Find("SofaContext");
+            if (_contextObject != null)
             {
-                SofaContext context = m_context.GetComponent<SofaContext>();
-                IntPtr _simu = context.getSimuContext();
-                if (_simu != IntPtr.Zero)
-                {
-                    m_impl = new SofaBox(_simu, context.objectcpt);
-                    context.objectcpt = context.objectcpt + 1;                    
-                }
+                // get Sofa context
+                m_context = _contextObject.GetComponent<SofaContext>();
+
+                // really Create the gameObject linked to sofaObject
+                createObject();
+
+                if (m_impl != null)
+                    m_context.objectcpt = m_context.objectcpt + 1;
+                else
+                    Debug.LogError("SBaseGrid:: Object not created");
             }
             else
                 Debug.Log("SBaseGrid::No context.");
@@ -72,7 +75,12 @@ namespace SofaUnity
             }
         }
 
-        public virtual void initMesh()
+        protected virtual void createObject()
+        {
+            m_impl = null;
+        }
+
+        protected virtual void initMesh()
         {
             if (m_impl == null)
                 return;            
@@ -86,7 +94,7 @@ namespace SofaUnity
         }
 
 
-        public virtual void updateImpl()
+        protected virtual void updateImpl()
         {
             Debug.Log("SBaseGrid::updateImpl called.");
             if (m_impl != null)
