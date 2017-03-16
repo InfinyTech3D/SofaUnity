@@ -14,19 +14,16 @@ namespace SofaUnity
         
         void Awake()
         {
-#if UNITY_EDITOR
-            Debug.Log("SofaContext::Awake called.");
-#else
-            Debug.Log("SofaContext::Awake play called.");
-#endif
+            //Debug.Log("SofaContext::Awake called.");
+
             init();
         }
 
         // Use this for initialization
         void Start()
         {
-            Debug.Log("SofaContext::Start called.");
-            GL.wireframe = true;
+            //Debug.Log("SofaContext::Start called.");
+            //GL.wireframe = true;
             
             //this.transform.position = new Vector3(0, 10, 0);
         }
@@ -34,7 +31,6 @@ namespace SofaUnity
 
         void OnDestroy()
         {
-            Debug.Log("SofaContext::OnDestroy called.");
 #if !UNITY_EDITOR
             Debug.Log("SofaContext::OnDestroy stop called.");
             m_impl.stop();
@@ -50,19 +46,17 @@ namespace SofaUnity
 
         void init()
         {
-            Debug.Log("SofaContext::init called.");
             if (m_impl == null)
             {                
                 m_impl = new SofaContextAPI();
                 m_impl.start();
-                Debug.Log("SofaContext::init Ok.");
             }
         }
 
         // Update is called once per frame
         void FixedUpdate()
         {
-            Debug.Log("SofaContext::Update called.");
+            //Debug.Log("SofaContext::Update called.");
             m_impl.step();           
         }
 

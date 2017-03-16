@@ -18,7 +18,6 @@ public class SofaContextEditor : Editor
         GameObject go = new GameObject();
         go.AddComponent<SofaContext>();
         go.name = "SofaContext";
-        Debug.Log("CreateNew SofaContext");
         return go;
     }
 
