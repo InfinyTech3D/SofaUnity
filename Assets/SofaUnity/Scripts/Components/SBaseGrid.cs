@@ -26,11 +26,7 @@ namespace SofaUnity
                 if (_simu != IntPtr.Zero)
                 {
                     m_impl = new SofaBox(_simu, context.objectcpt);
-                    if (m_impl != null)
-                    {
-                        m_impl.addCube();
-                        context.objectcpt = context.objectcpt + 1;
-                    }
+                    context.objectcpt = context.objectcpt + 1;                    
                 }
             }
             else
