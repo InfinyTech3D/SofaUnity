@@ -10,6 +10,7 @@ namespace SofaUnity
 		protected Mesh m_mesh;
         /// Mesh renderer of this object
         //private MeshRenderer m_meshRenderer;
+        protected bool m_log = false;
 
         // Use this for initialization
         void Start()

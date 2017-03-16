@@ -30,12 +30,6 @@ namespace SofaUnity
             if (m_log)
                 Debug.Log("SBox::Update called.");
 
-            /*Vector3[] verts = m_mesh.vertices;
-            for (int i = 0; i < verts.Length; i++) {
-                verts[i].z += UnityEngine.Random.value-0.5f;
-            }
-            */
-            //m_mesh.vertices = verts;
             updateImpl();
         }
 

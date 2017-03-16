@@ -12,7 +12,7 @@ public class ThirdPersonCamera : MonoBehaviour
 
 	public Transform camTransform;
 
-	private Camera cam;
+	//private Camera cam;
 
 	private float m_currentX = -5.0f;
 	private float m_currentY = 0.0f;
@@ -32,7 +32,7 @@ public class ThirdPersonCamera : MonoBehaviour
 	void Start () 
 	{
 		camTransform = transform;
-		cam = Camera.main;
+		//cam = Camera.main;
 		m_leftButtonHold = false;
 
 		// init a static lookat for the moment.

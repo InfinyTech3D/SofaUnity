@@ -2,22 +2,12 @@
 using UnityEditor;
 using SofaUnity;
 
-[CustomEditor(typeof(SBox), true)]
+[CustomEditor(typeof(SBaseGrid), true)]
 public class SGridEditor : Editor
-{
-    [MenuItem("SofaUnity/SBox")]
-    [MenuItem("GameObject/Create Other/SofaUnity/SBox")]
-    public static GameObject CreateNew()
-    {
-        GameObject go = new GameObject();
-        go.AddComponent<SBox>();
-        go.name = "SBox";
-        return go;
-    }
-
+{    
     public override void OnInspectorGUI()
     {
-        SBox grid = (SBox)this.target;
+        SBaseGrid grid = (SBaseGrid)this.target;
 
         grid.translation = EditorGUILayout.Vector3Field("Translation", grid.translation);
         EditorGUILayout.Separator();

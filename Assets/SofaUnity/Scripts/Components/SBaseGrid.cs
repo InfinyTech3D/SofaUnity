@@ -10,9 +10,8 @@ namespace SofaUnity
     [ExecuteInEditMode]
     public class SBaseGrid : SBaseObject
     {
-        protected SofaBox m_impl = null;
-        protected SofaContext m_context = null;
-        protected bool m_log = false;
+        protected SofaMeshObject m_impl = null;
+        protected SofaContext m_context = null;        
 
         void Awake()
         {
