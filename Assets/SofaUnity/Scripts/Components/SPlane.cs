@@ -7,14 +7,14 @@ using SofaUnityAPI;
 namespace SofaUnity
 {
     [ExecuteInEditMode]
-    public class SPlane : SBaseGrid
+    public class SRigidPlane : SBaseGrid
     {
         /// Mesh of this object
         protected override void createObject()
         {
             IntPtr _simu = m_context.getSimuContext();
             if (_simu != IntPtr.Zero)
-                m_impl = new SofaPlane(_simu, m_context.objectcpt, false);
+                m_impl = new SofaPlane(_simu, m_context.objectcpt, true);
         }
 
         void init()
@@ -27,7 +27,7 @@ namespace SofaUnity
         void Update()
         {
             if (m_log)
-                Debug.Log("SPlane::Update called.");
+                Debug.Log("SRigidPlane::Update called.");
 
             updateImpl();
         }
