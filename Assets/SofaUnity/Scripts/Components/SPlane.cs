@@ -14,7 +14,7 @@ namespace SofaUnity
         {
             IntPtr _simu = m_context.getSimuContext();
             if (_simu != IntPtr.Zero)
-                m_impl = new SofaPlane(_simu, m_context.objectcpt);
+                m_impl = new SofaPlane(_simu, m_context.objectcpt, false);
         }
 
         void init()
