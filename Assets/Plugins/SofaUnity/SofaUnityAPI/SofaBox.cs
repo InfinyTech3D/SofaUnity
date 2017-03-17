@@ -149,7 +149,7 @@ public class SofaBox : SofaMeshObject
         if (m_native == IntPtr.Zero) // first time create object only
         {
             // Create the cube
-            int res = sofaPhysicsAPI_addCube(m_simu, "cube_" + m_idObject);
+            int res = sofaPhysicsAPI_addCube(m_simu, "cube_" + m_idObject, false);
             if (res == 1) // cube added
             {
                 Debug.Log("cube Added! " + m_name);
@@ -207,7 +207,7 @@ public class SofaBox : SofaMeshObject
 
     
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysicsAPI_addCube(IntPtr obj, string name);
+    public static extern int sofaPhysicsAPI_addCube(IntPtr obj, string name, bool isRigid);
 
 
     //[DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
