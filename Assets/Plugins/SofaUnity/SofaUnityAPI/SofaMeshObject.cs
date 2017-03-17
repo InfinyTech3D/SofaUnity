@@ -65,10 +65,41 @@ public class SofaMeshObject : SofaBaseObject
 
     public virtual int[] createTriangulation()
     {
-        //int nbrQuads = sofaPhysics3DObject_getNbQuads(m_simu, m_name);
+        int nbrTris = sofaPhysics3DObject_getNbTriangles(m_simu, m_name);
+        int nbrQuads = sofaPhysics3DObject_getNbQuads(m_simu, m_name);
 
-        int[] tris = new int[0];
-        return tris;
+        Debug.Log("createTriangulation: " + m_name);
+        Debug.Log("nbrTris: " + nbrTris);
+        Debug.Log("nbQuads: " + nbrQuads);
+
+        // get buffers
+        int[] quads = new int[nbrQuads*4];
+        sofaPhysics3DObject_getQuads(m_simu, m_name, quads);
+
+        int[] tris = new int[nbrTris * 3];
+        sofaPhysics3DObject_getTriangles(m_simu, m_name, tris);
+
+        // Create and fill unity triangles buffer
+        int[] trisOut = new int[nbrTris*3 + nbrQuads*6];
+
+        // fill triangles first
+        int nbrIntTri = nbrTris * 3;
+        for (int i = 0; i < nbrIntTri; ++i)
+            trisOut[i] = tris[i];
+
+        // Add quads splited as triangles
+        for (int i = 0; i < nbrQuads; ++i)
+        {
+            trisOut[nbrIntTri + i * 6] = quads[i * 4];
+            trisOut[nbrIntTri + i * 6 + 1] = quads[i * 4 + 1];
+            trisOut[nbrIntTri + i * 6 + 2] = quads[i * 4 + 2];
+
+            trisOut[nbrIntTri + i * 6 + 3] = quads[i * 4];
+            trisOut[nbrIntTri + i * 6 + 4] = quads[i * 4 + 2];
+            trisOut[nbrIntTri + i * 6 + 5] = quads[i * 4 + 3];
+        }
+
+        return trisOut;
     }
 
     public virtual void updateMesh(Mesh mesh)
