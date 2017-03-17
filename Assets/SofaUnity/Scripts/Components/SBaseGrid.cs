@@ -98,6 +98,8 @@ namespace SofaUnity
             m_impl.setPoissonRatio(m_poisson);
 
             m_impl.setTranslation(m_translation);
+            m_impl.setRotation(m_rotation);
+            m_impl.setScale(m_scale);
             m_impl.updateMesh(m_mesh);
         }
 
@@ -113,7 +115,7 @@ namespace SofaUnity
 
 
 
-        public Vector3 m_gridSize = new Vector3(10.0f, 10.0f, 10.0f);
+        public Vector3 m_gridSize = new Vector3(5.0f, 5.0f, 5.0f);
         public Vector3 gridSize
         {
             get { return m_gridSize; }
@@ -187,7 +189,42 @@ namespace SofaUnity
         }
 
         public Vector3 m_rotation;
-        public Vector3 m_scale;
+        public Vector3 rotation
+        {
+            get { return m_rotation; }
+            set
+            {
+                if (value != m_rotation)
+                {
+                    Vector3 diffRot = value - m_rotation;
+                    m_rotation = value;
+                    if (m_impl != null)
+                    {
+                        m_impl.setRotation(diffRot);
+                        m_impl.updateMesh(m_mesh);
+                    }
+                }
+            }
+        }
+
+        public Vector3 m_scale = new Vector3(1.0f, 1.0f, 1.0f);
+        public Vector3 scale
+        {
+            get { return m_scale; }
+            set
+            {
+                if (value != m_scale)
+                {
+                    Vector3 diffScale = value - m_scale;
+                    m_scale = value;
+                    if (m_impl != null)
+                    {
+                        m_impl.setScale(diffScale);
+                        m_impl.updateMesh(m_mesh);
+                    }
+                }
+            }
+        }
 
     }    
 }

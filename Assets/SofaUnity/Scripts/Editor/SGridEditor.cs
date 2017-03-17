@@ -11,7 +11,13 @@ public class SGridEditor : Editor
 
         grid.translation = EditorGUILayout.Vector3Field("Translation", grid.translation);
         EditorGUILayout.Separator();
-        
+
+        grid.rotation = EditorGUILayout.Vector3Field("Rotation", grid.rotation);
+        EditorGUILayout.Separator();
+
+        grid.scale = EditorGUILayout.Vector3Field("Scale", grid.scale);
+        EditorGUILayout.Separator();
+
         grid.mass = EditorGUILayout.FloatField("Mass", grid.mass);
         EditorGUILayout.Separator();
 

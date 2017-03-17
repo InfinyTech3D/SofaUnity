@@ -55,12 +55,28 @@ public class SofaMeshObject : SofaBaseObject
 
     public void setRotation(Vector3 values)
     {
-
+        if (m_native != IntPtr.Zero)
+        {
+            float[] trans = new float[3];
+            for (int i = 0; i < 3; ++i)
+                trans[i] = values[i];
+            int res = sofaPhysics3DObject_setVec3fValue(m_simu, m_name, "rotation", trans);
+            //if (log)
+            Debug.Log("Change rotation res: " + res);
+        }
     }
 
     public void setScale(Vector3 values)
     {
-
+        if (m_native != IntPtr.Zero)
+        {
+            float[] trans = new float[3];
+            for (int i = 0; i < 3; ++i)
+                trans[i] = values[i];
+            int res = sofaPhysics3DObject_setVec3fValue(m_simu, m_name, "scale", trans);
+            //if (log)
+                Debug.Log("Change scale res: " + res);
+        }
     }
 
     public virtual int[] createTriangulation()
@@ -91,12 +107,12 @@ public class SofaMeshObject : SofaBaseObject
         for (int i = 0; i < nbrQuads; ++i)
         {
             trisOut[nbrIntTri + i * 6] = quads[i * 4];
-            trisOut[nbrIntTri + i * 6 + 1] = quads[i * 4 + 1];
-            trisOut[nbrIntTri + i * 6 + 2] = quads[i * 4 + 2];
+            trisOut[nbrIntTri + i * 6 + 1] = quads[i * 4 + 2];
+            trisOut[nbrIntTri + i * 6 + 2] = quads[i * 4 + 1]; 
 
             trisOut[nbrIntTri + i * 6 + 3] = quads[i * 4];
-            trisOut[nbrIntTri + i * 6 + 4] = quads[i * 4 + 2];
-            trisOut[nbrIntTri + i * 6 + 5] = quads[i * 4 + 3];
+            trisOut[nbrIntTri + i * 6 + 4] = quads[i * 4 + 3]; 
+            trisOut[nbrIntTri + i * 6 + 5] = quads[i * 4 + 2];
         }
 
         return trisOut;
