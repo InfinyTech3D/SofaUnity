@@ -33,4 +33,33 @@ namespace SofaUnity
         }
 
     }
+
+
+    [ExecuteInEditMode]
+    public class SRigidSphere : SBaseGrid
+    {
+        /// Mesh of this object
+        protected override void createObject()
+        {
+            IntPtr _simu = m_context.getSimuContext();
+            if (_simu != IntPtr.Zero)
+                m_impl = new SofaSphere(_simu, m_context.objectcpt, true);
+        }
+
+        void init()
+        {
+
+        }
+
+
+        // Update is called once per frame
+        void Update()
+        {
+            if (m_log)
+                Debug.Log("SRigidSphere::Update called.");
+
+            //updateImpl();
+        }
+
+    }
 }
