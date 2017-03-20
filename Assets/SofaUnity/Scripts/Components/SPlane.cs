@@ -19,7 +19,23 @@ namespace SofaUnity
 
         void init()
         {
+            m_gridSize = new Vector3(10, 1, 10);
+        }
 
+        public override Vector3 gridSize
+        {
+            get { return m_gridSize; }
+            set
+            {
+                if (value != m_gridSize)
+                {
+                    m_gridSize = value;
+                    m_gridSize[1] = 1;
+
+                    if (m_impl != null)
+                        m_impl.setGridResolution(m_gridSize);
+                }
+            }
         }
 
 

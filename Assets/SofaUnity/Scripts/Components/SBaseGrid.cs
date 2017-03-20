@@ -115,11 +115,19 @@ namespace SofaUnity
 
 
 
-        public Vector3 m_gridSize = new Vector3(5.0f, 5.0f, 5.0f);
-        public Vector3 gridSize
+        public Vector3 m_gridSize = new Vector3(5, 5, 5);
+        public virtual Vector3 gridSize
         {
             get { return m_gridSize; }
-            set { m_gridSize = value; }
+            set
+            {
+                if (value != m_gridSize)
+                {
+                    m_gridSize = value;
+                    if (m_impl != null)
+                        m_impl.setGridResolution(m_gridSize);
+                }
+            }
         }
 
 
