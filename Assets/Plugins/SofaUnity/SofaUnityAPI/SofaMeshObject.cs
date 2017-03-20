@@ -79,6 +79,18 @@ public class SofaMeshObject : SofaBaseObject
         }
     }
 
+
+    public void setGridResolution(Vector3 values)
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            int[] grid = new int[3];
+            for (int i = 0; i < 3; ++i)
+                grid[i] = (int)values[i];
+            int res = sofaPhysics3DObject_setVec3iValue(m_simu, m_name, "grid", grid);            
+        }
+    }
+
     public virtual int[] createTriangulation()
     {
         int nbrTris = sofaPhysics3DObject_getNbTriangles(m_simu, m_name);
