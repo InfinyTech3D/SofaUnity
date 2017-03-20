@@ -3,7 +3,7 @@ using UnityEditor;
 using SofaUnity;
 
 [CustomEditor(typeof(SRigidPlane), true)]
-public class SRigidPlaneEditor : SGridEditor
+public class SRigidPlaneEditor : SRigidGridEditor
 {
     [MenuItem("SofaUnity/Sofa 3D Object/SRigidPlane")]
     [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SRigidPlane")]
@@ -21,7 +21,7 @@ public class SRigidPlaneEditor : SGridEditor
 
         SRigidPlane grid = (SRigidPlane)this.target;
 
-        grid.gridSize = EditorGUILayout.Vector3Field("Grid resolution", grid.gridSize);
-        EditorGUILayout.Separator();
+        //grid.gridSize = EditorGUILayout.Vector2Field("Grid Plane Resolution", grid.gridSize);
+        //EditorGUILayout.Separator();
     }
 }

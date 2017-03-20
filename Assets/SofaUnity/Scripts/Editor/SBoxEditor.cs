@@ -19,15 +19,15 @@ public class SBoxEditor : SGridEditor
     {
         base.OnInspectorGUI();
 
-        SBox grid = (SBox)this.target;
+        //SBox grid = (SBox)this.target;
 
-        grid.gridSize = EditorGUILayout.Vector3Field("Grid resolution", grid.gridSize);
-        EditorGUILayout.Separator();
+        //grid.gridSize = EditorGUILayout.Vector3Field("Grid resolution", grid.gridSize);
+        //EditorGUILayout.Separator();
     }
 }
 
 [CustomEditor(typeof(SRigidBox), true)]
-public class SRigidBoxEditor : SGridEditor
+public class SRigidBoxEditor : SRigidGridEditor
 {
     [MenuItem("SofaUnity/Sofa 3D Object/SRigidBox")]
     [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SRigidBox")]
@@ -43,10 +43,10 @@ public class SRigidBoxEditor : SGridEditor
     {
         base.OnInspectorGUI();
 
-        SRigidBox grid = (SRigidBox)this.target;
+        //SRigidBox grid = (SRigidBox)this.target;
 
-        grid.gridSize = EditorGUILayout.Vector3Field("Grid resolution", grid.gridSize);
-        EditorGUILayout.Separator();
+        //grid.gridSize = EditorGUILayout.Vector3Field("Grid resolution", grid.gridSize);
+        //EditorGUILayout.Separator();
     }
 }
 

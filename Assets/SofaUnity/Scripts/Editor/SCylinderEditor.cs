@@ -19,16 +19,16 @@ public class SCylinderEditor : SGridEditor
     {
         base.OnInspectorGUI();
 
-        SCylinder grid = (SCylinder)this.target;
+        //SCylinder grid = (SCylinder)this.target;
 
-        grid.gridSize = EditorGUILayout.Vector3Field("Grid resolution", grid.gridSize);
-        EditorGUILayout.Separator();
+        //grid.gridSize = EditorGUILayout.Vector3Field("Grid resolution", grid.gridSize);
+        //EditorGUILayout.Separator();
     }
 }
 
 
 [CustomEditor(typeof(SRigidCylinder), true)]
-public class SRigidCylinderEditor : SGridEditor
+public class SRigidCylinderEditor : SRigidGridEditor
 {
     [MenuItem("SofaUnity/Sofa 3D Object/SRigidCylinder")]
     [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SRigidCylinder")]
@@ -44,9 +44,9 @@ public class SRigidCylinderEditor : SGridEditor
     {
         base.OnInspectorGUI();
 
-        SRigidCylinder grid = (SRigidCylinder)this.target;
+        //SRigidCylinder grid = (SRigidCylinder)this.target;
 
-        grid.gridSize = EditorGUILayout.Vector3Field("Grid resolution", grid.gridSize);
-        EditorGUILayout.Separator();
+        //grid.gridSize = EditorGUILayout.Vector3Field("Grid resolution", grid.gridSize);
+        //EditorGUILayout.Separator();
     }
 }
