@@ -84,10 +84,12 @@ public class SofaMeshObject : SofaBaseObject
     {
         if (m_native != IntPtr.Zero)
         {
-            int[] grid = new int[3];
+            int[] gridSizes = new int[3];
             for (int i = 0; i < 3; ++i)
-                grid[i] = (int)values[i];
-            int res = sofaPhysics3DObject_setVec3iValue(m_simu, m_name, "grid", grid);            
+                gridSizes[i] = (int)values[i];
+            int res = sofaPhysics3DObject_setVec3iValue(m_simu, m_name, "gridSize", gridSizes);
+            //if (log)
+            Debug.Log("Change gridSize res: " + res);
         }
     }
 
