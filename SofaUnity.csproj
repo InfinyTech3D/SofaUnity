@@ -93,7 +93,10 @@
     <Compile Include="Assets\SofaUnity\Scripts\Components\SBaseObject.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\SBox.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\SCylinder.cs" />
-    <Compile Include="Assets\SofaUnity\Scripts\Components\SPlane.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Components\SRigidBox.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Components\SRigidCylinder.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Components\SRigidPlane.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Components\SRigidSphere.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\SSphere.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\SofaContext.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Tools\ThirdPersonCamera.cs" />
