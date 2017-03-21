@@ -7,14 +7,14 @@ using SofaUnityAPI;
 namespace SofaUnity
 {
     [ExecuteInEditMode]
-    public class SSphere : SBaseGrid
+    public class SRigidCylinder : SBaseGrid
     {
         /// Mesh of this object
         protected override void createObject()
         {
             IntPtr _simu = m_context.getSimuContext();
             if (_simu != IntPtr.Zero)
-                m_impl = new SofaSphere(_simu, m_context.objectcpt, false);
+                m_impl = new SofaCylinder(_simu, m_context.objectcpt, true);
         }
 
         void init()
@@ -27,9 +27,9 @@ namespace SofaUnity
         void Update()
         {
             if (m_log)
-                Debug.Log("SSphere::Update called.");
+                Debug.Log("SRigidCylinder::Update called.");
 
-            updateImpl();
+            //updateImpl();
         }
 
     }
