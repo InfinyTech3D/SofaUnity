@@ -52,6 +52,17 @@ public class SofaContextEditor : Editor
         context.timeStep = EditorGUILayout.FloatField("TimeStep", context.timeStep);
         EditorGUILayout.Separator();
 
+        if (GUILayout.Button("Load Scene"))
+        {
+            context.filename = EditorUtility.OpenFilePanel("Load file scene (*.scn)", "", "scn");
+            //context.filename = "C:/projects/sofa-dev/examples/Demos/TriangleSurfaceCutting.scn";
+            EditorGUILayout.Separator();
+        }
+
+        EditorGUILayout.LabelField("filename", context.filename);
+
+
+
         if (GUI.changed)
         {
             EditorUtility.SetDirty(context);

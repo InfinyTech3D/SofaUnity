@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System;
 using UnityEngine;
 using SofaUnityAPI;
@@ -50,6 +51,8 @@ namespace SofaUnity
             {                
                 m_impl = new SofaContextAPI();
                 m_impl.start();
+                if (m_filename != "")
+                    m_impl.loadScene(m_filename);
             }
         }
 
@@ -97,6 +100,38 @@ namespace SofaUnity
                 //    lateUpdateHelper.m_fixedTimeStep = value;
                 //}
                 m_timeStep = value;
+            }
+        }
+
+        public string m_filename = "";
+        public string filename
+        {
+            get { return m_filename; }
+            set
+            {
+                if (value != m_filename)
+                {
+                    if (File.Exists(value))
+                    {
+                        m_filename = value;
+                        if (m_impl != null)
+                        {
+                            m_impl.loadScene(m_filename);
+                            int res = m_impl.getNumberObjects();
+
+                            for (int i=0; i<res; ++i)
+                            {
+                                Debug.Log("add Object: " + i);
+                                GameObject go = new GameObject();
+                                go.AddComponent<SMesh>();
+                                go.name = "SMesh";
+                                go.transform.parent = this.gameObject.transform;
+                            }
+                        }
+                    }
+                    else
+                        Debug.LogError("Error file doesn't exist.");
+                }
             }
         }
 

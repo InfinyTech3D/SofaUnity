@@ -62,6 +62,7 @@ namespace SofaUnityAPI
         {
         //    Debug.Log("-- sofaPhysicsAPI_start called.");
             sofaPhysicsAPI_start(m_native);
+
         }
 
         public void stop()
@@ -91,11 +92,46 @@ namespace SofaUnityAPI
             return m_native;
         }
 
+        public void loadScene(string filename)
+        {
+            Debug.Log("Load filename: " + filename);
+            // C:\projects\sofa-dev\examples\Demos\TriangleSurfaceCutting.scn
+            if (m_native != IntPtr.Zero)
+            {
+                int res = sofaPhysicsAPI_loadScene(m_native, filename);
+                Debug.Log("Load filename: " + filename + " | res: " + res);
+
+                Debug.Log("Nb objects: " + sofaPhysicsAPI_getNumberObjects(m_native));
+
+                Debug.Log("Nb meshes: " + sofaPhysicsAPI_getNumberMeshes(m_native));
+
+            }
+        }
+
+        public int getNumberObjects()
+        {
+            int res = 0;
+            if (m_native != IntPtr.Zero)
+                res = sofaPhysicsAPI_getNumberObjects(m_native);
+
+            return res;
+        }
+
 
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern IntPtr sofaPhysicsAPI_create();
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern void sofaPhysicsAPI_createScene(IntPtr obj);
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int sofaPhysicsAPI_loadScene(IntPtr obj, string filename);
+
+        [DllImport("SofaAdvancePhysicsAPI")]
+        public static extern int sofaPhysicsAPI_getNumberObjects(IntPtr obj);
+
+        [DllImport("SofaAdvancePhysicsAPI")]
+        public static extern int sofaPhysicsAPI_getNumberMeshes(IntPtr obj);
+
 
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern void sofaPhysicsAPI_start(IntPtr obj);

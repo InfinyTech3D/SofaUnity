@@ -55,6 +55,11 @@ public class SofaBaseObject : IDisposable
         m_name = "baseObject" + m_idObject + "_node";
     }
 
+    public virtual void loadObject()
+    {
+
+    }
+
 
     // API to get objects and object Name
     //{
@@ -63,6 +68,10 @@ public class SofaBaseObject : IDisposable
 
     [DllImport("SofaAdvancePhysicsAPI")]
     public static extern int sofaPhysicsAPI_getNumberObjects(IntPtr obj);
+
+    [DllImport("SofaAdvancePhysicsAPI")]
+    public static extern int sofaPhysicsAPI_getNumberMeshes(IntPtr obj);
+    
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern string sofaPhysicsAPI_get3DObjectName(IntPtr obj, int id);

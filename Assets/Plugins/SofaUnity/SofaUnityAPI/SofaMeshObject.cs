@@ -10,6 +10,29 @@ public class SofaMeshObject : SofaBaseObject
 
     }
 
+    public override void loadObject()
+    {
+        //if (m_native != IntPtr.Zero)        
+        if (m_native == IntPtr.Zero) // first time create object only
+        {
+            m_name = sofaPhysicsAPI_get3DObjectName(m_simu, m_idObject);
+            Debug.Log("Node Name: " + m_name);
+            m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name);
+
+            if (m_native == IntPtr.Zero)
+                Debug.LogError("Error Mesh can't be found!");
+            else
+            {
+                int nbrTris = sofaPhysics3DObject_getNbTriangles(m_simu, m_name);
+                int nbrQuads = sofaPhysics3DObject_getNbQuads(m_simu, m_name);
+
+                Debug.Log("createTriangulation: " + m_name);
+                Debug.Log("nbrTris: " + nbrTris);
+                Debug.Log("nbQuads: " + nbrQuads);
+            }
+        }
+    }
+
     public void setMass(float value)
     {
         if (m_native != IntPtr.Zero)
