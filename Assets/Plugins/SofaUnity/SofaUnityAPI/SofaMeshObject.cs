@@ -16,19 +16,13 @@ public class SofaMeshObject : SofaBaseObject
         if (m_native == IntPtr.Zero) // first time create object only
         {
             m_name = sofaPhysicsAPI_get3DObjectName(m_simu, m_idObject);
-            Debug.Log("Node Name: " + m_name);
             m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name);
 
             if (m_native == IntPtr.Zero)
                 Debug.LogError("Error Mesh can't be found!");
             else
             {
-                int nbrTris = sofaPhysics3DObject_getNbTriangles(m_simu, m_name);
-                int nbrQuads = sofaPhysics3DObject_getNbQuads(m_simu, m_name);
-
-                Debug.Log("createTriangulation: " + m_name);
-                Debug.Log("nbrTris: " + nbrTris);
-                Debug.Log("nbQuads: " + nbrQuads);
+                Debug.Log("Load Node Name: " + m_name);
             }
         }
     }
@@ -84,8 +78,8 @@ public class SofaMeshObject : SofaBaseObject
             for (int i = 0; i < 3; ++i)
                 trans[i] = values[i];
             int res = sofaPhysics3DObject_setVec3fValue(m_simu, m_name, "rotation", trans);
-            //if (log)
-            Debug.Log("Change rotation res: " + res);
+            if (log)
+                Debug.Log("Change rotation res: " + res);
         }
     }
 
@@ -97,7 +91,7 @@ public class SofaMeshObject : SofaBaseObject
             for (int i = 0; i < 3; ++i)
                 trans[i] = values[i];
             int res = sofaPhysics3DObject_setVec3fValue(m_simu, m_name, "scale", trans);
-            //if (log)
+            if (log)
                 Debug.Log("Change scale res: " + res);
         }
     }
@@ -111,8 +105,8 @@ public class SofaMeshObject : SofaBaseObject
             for (int i = 0; i < 3; ++i)
                 gridSizes[i] = (int)values[i];
             int res = sofaPhysics3DObject_setVec3iValue(m_simu, m_name, "gridSize", gridSizes);
-            //if (log)
-            Debug.Log("Change gridSize res: " + res);
+            if (log)
+                Debug.Log("Change gridSize res: " + res);
         }
     }
 
@@ -121,9 +115,12 @@ public class SofaMeshObject : SofaBaseObject
         int nbrTris = sofaPhysics3DObject_getNbTriangles(m_simu, m_name);
         int nbrQuads = sofaPhysics3DObject_getNbQuads(m_simu, m_name);
 
-        Debug.Log("createTriangulation: " + m_name);
-        Debug.Log("nbrTris: " + nbrTris);
-        Debug.Log("nbQuads: " + nbrQuads);
+        if (log)
+        {
+            Debug.Log("createTriangulation: " + m_name);
+            Debug.Log("nbrTris: " + nbrTris);
+            Debug.Log("nbQuads: " + nbrQuads);
+        }
 
         // get buffers
         int[] quads = new int[nbrQuads*4];

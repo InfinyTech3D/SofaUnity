@@ -129,7 +129,7 @@ namespace SofaUnity
 
                             for (int i=0; i<res; ++i)
                             {
-                                Debug.Log("add Object: " + i);
+                                //Debug.Log("add Object: " + i);
                                 GameObject go = new GameObject();
                                 go.AddComponent<SMesh>();
                                 go.name = "SMesh";

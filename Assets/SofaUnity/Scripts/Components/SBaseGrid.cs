@@ -108,8 +108,12 @@ namespace SofaUnity
             if (m_log)
                 Debug.Log("SBaseGrid::updateImpl called.");
 
-            if (m_impl != null)
+            if (m_impl != null) {
                 m_impl.updateMesh(m_mesh);
+                //m_mesh.RecalculateNormals();
+                    }
+
+
         }
 
 
