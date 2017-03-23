@@ -53,6 +53,9 @@ namespace SofaUnity
                 m_impl.start();
                 if (m_filename != "")
                     m_impl.loadScene(m_filename);
+
+                m_impl.setTimeStep(m_timeStep);
+                m_impl.setGravity(m_gravity);
             }
         }
 
@@ -76,13 +79,12 @@ namespace SofaUnity
             get { return m_gravity; }
             set
             {
-                
-                //if (_ddWorld != null)
-                //{
-                //    BulletSharp.Math.Vector3 grav = value.ToBullet();
-                //    _ddWorld.SetGravity(ref grav);
-                //}
-                m_gravity = value;
+                if (m_gravity != value)
+                {
+                    m_gravity = value;
+                    if (m_impl != null)
+                        m_impl.setGravity(m_gravity);
+                }
             }
         }
 
@@ -95,6 +97,12 @@ namespace SofaUnity
             }
             set
             {
+                if (m_timeStep != value)
+                {
+                    m_timeStep = value;
+                    if (m_impl != null)
+                        m_impl.setTimeStep(m_timeStep);
+                }
                 //if (lateUpdateHelper != null)
                 //{
                 //    lateUpdateHelper.m_fixedTimeStep = value;

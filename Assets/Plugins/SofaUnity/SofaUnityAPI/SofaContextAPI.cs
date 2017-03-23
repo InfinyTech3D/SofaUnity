@@ -87,6 +87,14 @@ namespace SofaUnityAPI
             sofaPhysicsAPI_setTimeStep(m_native, value);
         }
 
+        public void setGravity(Vector3 gravity)
+        {
+            double[] grav = new double[3];
+            for (int i = 0; i < 3; ++i)
+                grav[i] = (double)gravity[i];
+            sofaPhysicsAPI_setGravity(m_native, grav);
+        }
+
         public IntPtr getSimuContext()
         {
             return m_native;
@@ -144,6 +152,14 @@ namespace SofaUnityAPI
         public static extern void sofaPhysicsAPI_setTimeStep(IntPtr obj, double value);
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern double sofaPhysicsAPI_timeStep(IntPtr obj);
+
+
+        [DllImport("SofaAdvancePhysicsAPI")]
+        public static extern void sofaPhysicsAPI_setGravity(IntPtr obj, double[] values);
+        [DllImport("SofaAdvancePhysicsAPI")]
+        public static extern int sofaPhysicsAPI_gravity(IntPtr obj, double[] values);
+        
+
 
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
 //        [return: MarshalAs(UnmanagedType.LPStr)]
