@@ -20,6 +20,35 @@ public class SofaSphere : SofaMeshObject
         return base.createTriangulation();
     }
 
+    public override void recomputeTriangles(Mesh mesh)
+    {
+        int[] triangles = mesh.triangles;
+        Vector3[] verts = mesh.vertices;
+        Vector3[] norms = mesh.normals;
+
+        int cpt = 0;
+        while (cpt< triangles.Length)
+        {
+            Vector3 AB = verts[triangles[cpt + 1]] - verts[triangles[cpt]];
+            Vector3 AC = verts[triangles[cpt + 2]] - verts[triangles[cpt]];
+
+            Vector3 AD = Vector3.Cross(AB, AC);
+            Vector3 norm = norms[triangles[cpt]];
+            float dot = Vector3.Dot(AD, norm);
+
+            if (dot <0) // need to inverse triangle
+            {
+                int tmp = triangles[cpt + 1];
+                triangles[cpt + 1] = triangles[cpt + 2];
+                triangles[cpt + 2] = tmp;
+            }
+
+            cpt = cpt + 3;
+        }
+
+        mesh.triangles = triangles;
+    }
+
     protected override void createObject()
     {
         m_name = "sphere_" + m_idObject + "_node";

@@ -197,9 +197,13 @@ public class SofaMeshObject : SofaBaseObject
                         verts[i].y = vertices[i * 3 + 1];
                         verts[i].z = vertices[i * 3 + 2];
 
-                        norms[i].x = normals[i * 3];
-                        norms[i].y = normals[i * 3 + 1];
-                        norms[i].z = normals[i * 3 + 2];
+                        if (norms[i][0] == 0 && norms[i][1] == 0 && norms[i][2] == 0)
+                        {
+                            Vector3 vec = Vector3.Normalize(verts[i]);
+                            norms[i].x = vec.x;// normals[i * 3];
+                            norms[i].y = vec.y; //normals[i * 3 + 1];
+                            norms[i].z = vec.z; //normals[i * 3 + 2];
+                        }
                     }
                 }
             }
@@ -207,6 +211,11 @@ public class SofaMeshObject : SofaBaseObject
             mesh.vertices = verts;
             mesh.normals = norms;
         }
+    }
+
+    public virtual void recomputeTriangles(Mesh mesh)
+    {
+       
     }
 
 

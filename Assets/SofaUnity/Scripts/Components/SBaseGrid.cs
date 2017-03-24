@@ -78,6 +78,7 @@ namespace SofaUnity
                 m_impl.updateMesh(m_mesh);
                 m_mesh.triangles = m_impl.createTriangulation();
                 m_impl.updateMesh(m_mesh);
+                m_impl.recomputeTriangles(m_mesh);
 
                 initMesh();
             }
