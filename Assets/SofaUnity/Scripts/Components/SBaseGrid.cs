@@ -24,6 +24,7 @@ namespace SofaUnity
             {
                 // get Sofa context
                 m_context = _contextObject.GetComponent<SofaContext>();
+                this.gameObject.transform.parent = _contextObject.transform;
 
                 // really Create the gameObject linked to sofaObject
                 createObject();
