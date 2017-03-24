@@ -2,53 +2,79 @@
 using UnityEngine;
 using UnityEditor.SceneManagement;
 using SofaUnity;
+using SofaScripts;
+
 
 public class Benchmark01Editor : Editor
 {
     [MenuItem("SofaUnity/Benchmarks/Benchmark01")]
     public static GameObject CreateNew()
     {
-        GameObject _contextObject = GameObject.Find("SofaContext");
-        if (_contextObject != null)
-        {
-            Debug.LogError("Already a context.");
+        if (!SofaScripts.Benchmarks.hasSofaContext())
             return null;
-        }            
 
         // Add sofa context first
-        GameObject context = new GameObject();
-        context.AddComponent<SofaContext>();
-        context.name = "SofaContext";
+        GameObject context = SofaScripts.Benchmarks.createSofaContext();
 
-        // Add a floor
-        GameObject floor = new GameObject();
-        floor.AddComponent<SRigidPlane>();
-        floor.name = "SRigidPlane";
-        SRigidPlane plane = floor.GetComponent<SRigidPlane>();
-        plane.m_gridSize[0] = 2;
-        plane.m_gridSize[1] = 2;
-        plane.m_gridSize[2] = 2;
-
-        plane.m_scale[0] = 50;
-        plane.m_scale[1] = 1;
-        plane.m_scale[2] = 50;
-
+        // Add a floor        
+        SofaScripts.Benchmarks.createFloor();
 
         // Add the cubes
         for (int i=0; i<5; ++i)
         {
             for (int j = 0; j < 5; ++j)
             {
-                GameObject cube = new GameObject();
-                cube.AddComponent<SBox>();
-                cube.name = "SBox_" + i + "_" + j;
+                GameObject cube = SofaScripts.Benchmarks.createCube("SBox_" + i + "_" + j);
                 SBox box = cube.GetComponent<SBox>();
-                Debug.Log(box.translation);
                 box.m_translation[0] = -15 + j * 2;
                 box.m_translation[1] = 6+i*2;
-                //box.translation = new Vector3(-15 + i * 2, 6, 0);
-                //go.transform.parent = this.gameObject.transform;
             }
+        }
+
+        return context;
+    }
+}
+
+
+public class Benchmark02Editor : Editor
+{
+    [MenuItem("SofaUnity/Benchmarks/Benchmark02")]
+    public static GameObject CreateNew()
+    {        
+        if (!SofaScripts.Benchmarks.hasSofaContext())
+            return null;
+
+        // Add sofa context first
+        GameObject context = SofaScripts.Benchmarks.createSofaContext();
+
+        // Add a floor        
+        SofaScripts.Benchmarks.createFloor();
+
+        // Add Spheres
+        for (int i = 0; i < 1; ++i)
+        {
+            GameObject obj = SofaScripts.Benchmarks.createSphere("SSphere_" + i);
+            SSphere objImpl = obj.GetComponent<SSphere>();
+            objImpl.m_translation[0] = -3;
+            objImpl.m_translation[1] = 6 + i * 2;
+        }
+
+        // Add Cubes
+        for (int i = 0; i < 1; ++i)
+        {
+            GameObject obj = SofaScripts.Benchmarks.createCube("SBox_" + i);
+            SBox objImpl = obj.GetComponent<SBox>();
+            objImpl.m_translation[0] = 0;
+            objImpl.m_translation[1] = 6 + i * 2;
+        }
+
+        // Add Cylinders
+        for (int i = 0; i < 1; ++i)
+        {
+            GameObject obj = SofaScripts.Benchmarks.createCylinder("SCylinder_" + i);
+            SCylinder objImpl = obj.GetComponent<SCylinder>();
+            objImpl.m_translation[0] = 3;
+            objImpl.m_translation[1] = 5.5f + i * 2;
         }
 
         return context;
