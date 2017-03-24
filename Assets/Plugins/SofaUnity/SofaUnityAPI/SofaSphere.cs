@@ -49,6 +49,17 @@ public class SofaSphere : SofaMeshObject
         mesh.triangles = triangles;
     }
 
+    public override void recomputeTexCoords(Mesh mesh)
+    {
+        Vector3[] verts = mesh.vertices;
+        Vector2[] uvs = new Vector2[verts.Length];
+
+        for (int i = 0; i < verts.Length; i++)
+            uvs[i] = new Vector2(verts[i].x + verts[i].y, verts[i].z + verts[i].y);
+
+        mesh.uv = uvs;
+    }
+
     protected override void createObject()
     {
         m_name = "sphere_" + m_idObject + "_node";

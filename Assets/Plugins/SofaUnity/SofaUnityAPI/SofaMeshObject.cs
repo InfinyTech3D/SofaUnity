@@ -224,6 +224,11 @@ public class SofaMeshObject : SofaBaseObject
        
     }
 
+    public virtual void recomputeTexCoords(Mesh mesh)
+    {
+
+    }
+
 
     // API to update Mesh
     //{
