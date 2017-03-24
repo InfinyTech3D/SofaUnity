@@ -204,6 +204,12 @@ public class SofaMeshObject : SofaBaseObject
                             norms[i].y = vec.y; //normals[i * 3 + 1];
                             norms[i].z = vec.z; //normals[i * 3 + 2];
                         }
+                        //else
+                        //{
+                        //    norms[i].x = normals[i * 3];
+                        //    norms[i].y = normals[i * 3 + 1];
+                        //    norms[i].z = normals[i * 3 + 2];
+                        //}
                     }
                 }
             }

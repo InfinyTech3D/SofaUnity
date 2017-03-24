@@ -51,7 +51,7 @@ public class Benchmark02Editor : Editor
         SofaScripts.Benchmarks.createFloor();
 
         // Add Spheres
-        for (int i = 0; i < 1; ++i)
+        for (int i = 0; i < 5; ++i)
         {
             GameObject obj = SofaScripts.Benchmarks.createSphere("SSphere_" + i);
             SSphere objImpl = obj.GetComponent<SSphere>();
@@ -60,7 +60,7 @@ public class Benchmark02Editor : Editor
         }
 
         // Add Cubes
-        for (int i = 0; i < 1; ++i)
+        for (int i = 0; i < 5; ++i)
         {
             GameObject obj = SofaScripts.Benchmarks.createCube("SBox_" + i);
             SBox objImpl = obj.GetComponent<SBox>();
@@ -69,7 +69,7 @@ public class Benchmark02Editor : Editor
         }
 
         // Add Cylinders
-        for (int i = 0; i < 1; ++i)
+        for (int i = 0; i < 5; ++i)
         {
             GameObject obj = SofaScripts.Benchmarks.createCylinder("SCylinder_" + i);
             SCylinder objImpl = obj.GetComponent<SCylinder>();

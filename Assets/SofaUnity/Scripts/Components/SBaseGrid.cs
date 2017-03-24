@@ -152,7 +152,7 @@ namespace SofaUnity
         }
 
 
-        public float m_young = 800.0f;
+        public float m_young = 1400.0f;
         public float young
         {
             get { return m_young; }
