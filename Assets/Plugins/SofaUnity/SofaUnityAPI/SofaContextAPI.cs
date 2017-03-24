@@ -70,7 +70,6 @@ namespace SofaUnityAPI
         {
             Debug.Log("-- sofaPhysicsAPI_stop called.");
             sofaPhysicsAPI_stop(m_native);
-            sofaPhysicsAPI_reset(m_native);
         }
 
         public void step()
