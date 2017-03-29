@@ -38,11 +38,13 @@ namespace SofaUnity
                 Debug.LogError("SBaseGrid::No context.");
 
             //createFakeCube();
-            //MeshFilter mf = gameObject.AddComponent<MeshFilter>();
-            gameObject.AddComponent<MeshFilter>();
+            MeshFilter mf = gameObject.GetComponent<MeshFilter>();
+            if (mf == null)
+                gameObject.AddComponent<MeshFilter>();
             //to see it, we have to add a renderer
-            //MeshRenderer mr = gameObject.AddComponent<MeshRenderer>();
-            gameObject.AddComponent<MeshRenderer>();
+            MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();
+            if (mr == null)
+                gameObject.AddComponent<MeshRenderer>();
 #else
             Debug.Log("UNITY_PLAY - SBox::Awake called.");
 #endif
