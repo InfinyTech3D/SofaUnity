@@ -45,6 +45,7 @@ namespace SofaUnity
             MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();
             if (mr == null)
                 gameObject.AddComponent<MeshRenderer>();
+
 #else
             Debug.Log("UNITY_PLAY - SBox::Awake called.");
 #endif
@@ -64,7 +65,6 @@ namespace SofaUnity
                 Mesh meshCopy = new Mesh();
                 m_mesh = mf.mesh = meshCopy;                    //Assign the copy to the meshes
                 MeshRenderer mr = GetComponent<MeshRenderer>();
-                mr.material = new Material(Shader.Find("Diffuse"));
 
                 if (m_log)
                     Debug.Log("SBaseGrid::Start editor mode.");
