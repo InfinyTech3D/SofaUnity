@@ -20,13 +20,13 @@ public class Benchmark01Editor : Editor
         SofaScripts.Benchmarks.createFloor();
 
         // Add the cubes
-        for (int i=0; i<5; ++i)
+        for (int i=0; i<2; ++i)
         {
-            for (int j = 0; j < 5; ++j)
+            for (int j = 0; j < 3; ++j)
             {
                 GameObject cube = SofaScripts.Benchmarks.createCube("SBox_" + i + "_" + j);
                 SBox box = cube.GetComponent<SBox>();
-                box.m_translation[0] = -15 + j * 2;
+                box.m_translation[0] = -2 + j * 2;
                 box.m_translation[1] = 6+i*2;
             }
         }

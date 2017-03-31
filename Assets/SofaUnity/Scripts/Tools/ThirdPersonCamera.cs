@@ -14,14 +14,14 @@ public class ThirdPersonCamera : MonoBehaviour
 
 	//private Camera cam;
 
-	private float m_currentX = -5.0f;
-	private float m_currentY = 0.0f;
+	private float m_currentX = -15.0f;
+	private float m_currentY = 10.0f;
 	private float m_sensivityX = 10.0f;
 	private float m_sensivityY = 10.0f;
 
-	float m_cameraDistanceMax = 1000f;
+	float m_cameraDistanceMax = 2000f;
 	float m_cameraDistanceMin = 30f;
-	float m_cameraDistance = 3000.0f;
+	float m_cameraDistance = 1000.0f;
 	float m_scrollSpeed = 200.0f;
 
 	float m_currentScale = 0.01f;
@@ -69,7 +69,7 @@ public class ThirdPersonCamera : MonoBehaviour
 	{
 		//if (Input.GetMouseButtonDown (0)) 
 
-		Vector3 dir = new Vector3 (0, 0, -m_cameraDistance);
+		Vector3 dir = new Vector3 (0, 0, m_cameraDistance);
 		Quaternion rotation = Quaternion.Euler (-m_currentY, m_currentX, 0);
 
 		//camTransform.position = lookAt.position + rotation * dir;
