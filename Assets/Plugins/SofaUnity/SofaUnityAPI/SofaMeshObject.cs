@@ -226,7 +226,24 @@ public class SofaMeshObject : SofaBaseObject
 
     public virtual void recomputeTexCoords(Mesh mesh)
     {
+        Vector3[] verts = mesh.vertices;
+        int nbrV = verts.Length;
 
+        float[] texCoords = new float[nbrV * 2];
+        Vector2[]  uv = new Vector2[nbrV];
+
+        sofaPhysics3DObject_getTexCoords(m_simu, m_name, texCoords);
+
+        for (int i = 0; i < nbrV; i++)
+        {
+            uv[i].x = texCoords[i * 2];
+            uv[i].y = texCoords[i * 2 + 1];
+
+            if(uv[i].x == 0.0 && uv[i].y == 0.0)
+                uv[i] = new Vector2(verts[i].x + verts[i].y, verts[i].z + verts[i].y);
+        }
+            
+        mesh.uv = uv;
     }
 
 
@@ -240,6 +257,9 @@ public class SofaMeshObject : SofaBaseObject
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysics3DObject_getNormals(IntPtr obj, string name, float[] arr);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getTexCoords(IntPtr obj, string name, float[] arr);
     //}
 
     // API to access Topology
