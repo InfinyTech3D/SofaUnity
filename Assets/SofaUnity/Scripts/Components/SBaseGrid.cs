@@ -44,7 +44,13 @@ namespace SofaUnity
             //to see it, we have to add a renderer
             MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();
             if (mr == null)
-                gameObject.AddComponent<MeshRenderer>();
+            {
+                mr = gameObject.AddComponent<MeshRenderer>();
+                mr.material = new Material(Shader.Find("Diffuse"));
+            }
+
+                //if (mr.material == null)
+                //    Debug.Log("TOTOTOTO");
 
 #else
             Debug.Log("UNITY_PLAY - SBox::Awake called.");
@@ -75,7 +81,7 @@ namespace SofaUnity
                     Debug.Log("SBox::Start play mode.");
 #endif
 
-                m_mesh.name = "IMadeThis";
+                m_mesh.name = "SofaGrid";
                 m_mesh.vertices = new Vector3[0];
                 m_impl.updateMesh(m_mesh);
                 m_mesh.triangles = m_impl.createTriangulation();
