@@ -16,7 +16,7 @@ namespace SofaUnity
         void Awake()
         {
             if (m_log)
-                Debug.Log("UNITY_EDITOR - SBaseGrid::Awake");
+                Debug.Log("UNITY_EDITOR - SMesh::Awake");
 
             GameObject _contextObject = GameObject.Find("SofaContext");
             if (_contextObject != null)
@@ -30,22 +30,24 @@ namespace SofaUnity
                 if (m_impl != null)
                     m_context.objectcpt = m_context.objectcpt + 1;
                 else
-                    Debug.LogError("SBaseGrid:: Object not created");
+                    Debug.LogError("SMesh:: Object not created");
             }
             else
-                Debug.LogError("SBaseGrid::No context.");
+                Debug.LogError("SMesh::No context.");
 
-            //MeshFilter mf = gameObject.AddComponent<MeshFilter>();
-            gameObject.AddComponent<MeshFilter>();
+            MeshFilter mf = gameObject.GetComponent<MeshFilter>();
+            if (mf == null)
+                gameObject.AddComponent<MeshFilter>();
             //to see it, we have to add a renderer
-            //MeshRenderer mr = gameObject.AddComponent<MeshRenderer>();
-            gameObject.AddComponent<MeshRenderer>();
+            MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();
+            if (mr == null)
+                mr = gameObject.AddComponent<MeshRenderer>();
         }
 
         void Start()
         {
             if (m_log)
-                Debug.Log("UNITY_EDITOR - SBaseGrid::start");
+                Debug.Log("UNITY_EDITOR - SMesh::start");
 
             if (m_impl != null)
             {
@@ -55,11 +57,9 @@ namespace SofaUnity
                 //Mesh meshCopy = Mesh.Instantiate(mf.sharedMesh) as Mesh;  //make a deep copy
                 Mesh meshCopy = new Mesh();
                 m_mesh = mf.mesh = meshCopy;                    //Assign the copy to the meshes
-                MeshRenderer mr = GetComponent<MeshRenderer>();
-                mr.material = new Material(Shader.Find("Diffuse"));
 
                 if (m_log)
-                    Debug.Log("SBaseGrid::Start editor mode.");
+                    Debug.Log("SMesh::Start editor mode.");
 #else
                 //do this in play mode
                 m_mesh = GetComponent<MeshFilter>().mesh;
@@ -67,11 +67,12 @@ namespace SofaUnity
                     Debug.Log("SBox::Start play mode.");
 #endif
 
-                m_mesh.name = "IMadeThis";
+                m_mesh.name = "SofaMesh";
                 m_mesh.vertices = new Vector3[0];
                 m_impl.updateMesh(m_mesh);
                 m_mesh.triangles = m_impl.createTriangulation();
                 m_impl.updateMesh(m_mesh);
+                m_impl.recomputeTexCoords(m_mesh);
 
                 //initMesh();
             }
@@ -106,7 +107,7 @@ namespace SofaUnity
         protected virtual void updateImpl()
         {
             if (m_log)
-                Debug.Log("SBaseGrid::updateImpl called.");
+                Debug.Log("SMesh::updateImpl called.");
 
             if (m_impl != null)
                 m_impl.updateMesh(m_mesh);
