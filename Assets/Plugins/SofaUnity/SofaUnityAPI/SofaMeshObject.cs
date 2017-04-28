@@ -57,6 +57,26 @@ public class SofaMeshObject : SofaBaseObject
         }
     }
 
+
+    public Vector3 getTranslation()
+    {
+        Vector3 values = new Vector3(0.0f, 0.0f, 0.0f);
+        if (m_native != IntPtr.Zero)
+        {
+            float[] trans = new float[3];
+            int res = sofaPhysics3DObject_getVec3fValue(m_simu, m_name, "translation", trans);
+
+            
+            for (int i = 0; i < 3; ++i)
+                values[i] = trans[i];
+            
+           // if (log)
+                Debug.Log("Change translation res: " + res + " value: " + values);
+
+        }
+        return values;
+    }
+
     public void setTranslation(Vector3 values)
     {
         if (m_native != IntPtr.Zero)
