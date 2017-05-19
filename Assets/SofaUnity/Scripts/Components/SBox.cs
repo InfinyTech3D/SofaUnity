@@ -16,6 +16,8 @@ namespace SofaUnity
             IntPtr _simu = m_context.getSimuContext();
             if (_simu != IntPtr.Zero)
                 m_impl = new SofaBox(_simu, m_context.objectcpt, false);
+
+            this.m_useTex = true;
         }
 
         void init()

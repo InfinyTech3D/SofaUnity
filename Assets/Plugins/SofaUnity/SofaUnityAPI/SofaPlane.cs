@@ -44,6 +44,28 @@ public class SofaPlane : SofaMeshObject
         }
     }
 
+    public override void recomputeTexCoords(Mesh mesh)
+    {
+        Vector3[] verts = mesh.vertices;
+        int nbrV = verts.Length;
+
+        float[] texCoords = new float[nbrV * 2];
+        Vector2[] uv = new Vector2[nbrV];
+
+        sofaPhysics3DObject_getTexCoords(m_simu, m_name, texCoords);
+
+        for (int i = 0; i < nbrV; i++)
+        {
+            uv[i].x = texCoords[i * 2];
+            uv[i].y = texCoords[i * 2 + 1];
+
+            if (uv[i].x == 0.0 && uv[i].y == 0.0)
+                uv[i] = new Vector2(1-(verts[i].x + verts[i].y), verts[i].z + verts[i].y);
+        }
+
+        mesh.uv = uv;
+    }
+
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_addPlane(IntPtr obj, string name, bool isRigid);
 

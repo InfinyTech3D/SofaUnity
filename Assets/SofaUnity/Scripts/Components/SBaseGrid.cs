@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using SofaUnity;
 using SofaUnityAPI;
@@ -11,7 +12,8 @@ namespace SofaUnity
     public class SBaseGrid : SBaseObject
     {
         protected SofaMeshObject m_impl = null;
-        protected SofaContext m_context = null;        
+        protected SofaContext m_context = null;
+        protected bool m_useTex = true;
 
         void Awake()
         {
@@ -47,10 +49,10 @@ namespace SofaUnity
             {
                 mr = gameObject.AddComponent<MeshRenderer>();
                 mr.material = new Material(Shader.Find("Diffuse"));
-            }
 
-                //if (mr.material == null)
-                //    Debug.Log("TOTOTOTO");
+                if (this.m_useTex)
+                    mr.material = Resources.Load("Materials/BoxSofa") as Material;
+            }
 
 #else
             Debug.Log("UNITY_PLAY - SBox::Awake called.");
@@ -80,6 +82,7 @@ namespace SofaUnity
                 if (m_log)
                     Debug.Log("SBox::Start play mode.");
 #endif
+
 
                 m_mesh.name = "SofaGrid";
                 m_mesh.vertices = new Vector3[0];

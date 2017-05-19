@@ -147,7 +147,24 @@ public class SofaBox : SofaMeshObject
         Vector2[] uvs = new Vector2[verts.Length];
 
         for (int i = 0; i < verts.Length; i++)
-            uvs[i] = new Vector2(verts[i].x + verts[i].y, verts[i].z + verts[i].y);
+        {
+            if (verts[i].z == 0.5 || verts[i].z == -0.5)
+                uvs[i] = new Vector2(1-(verts[i].x + 0.5f), (verts[i].y + 0.5f));
+
+            else if (verts[i].x == 0.5 || verts[i].x == -0.5) // along X fix
+                uvs[i] = new Vector2(1-(verts[i].z + 0.5f), verts[i].y + 0.5f);
+            else if (verts[i].y == 0.5 || verts[i].y == -0.5)
+                uvs[i] = new Vector2(1 - (verts[i].x + 0.5f), (verts[i].y + 0.5f));
+
+            //uvs[i] = new Vector2(verts[i].y + 0.5f, verts[i].z + 0.5f);
+            /*            if (verts[i].x == 0.5 || verts[i].x == -0.5) // along X fix
+                            uvs[i] = new Vector2(verts[i].y + 0.5f, verts[i].z + 0.5f);
+                        else if (verts[i].y == 0.5 || verts[i].y == -0.5)
+                            uvs[i] = new Vector2(verts[i].x + 0.5f, verts[i].z + 0.5f);
+                        else if (verts[i].z == 0.5 || verts[i].z == -0.5)
+                            uvs[i] = new Vector2(verts[i].x + 0.5f, verts[i].y + 0.5f);
+                            */
+        }
 
         mesh.uv = uvs;
     }
