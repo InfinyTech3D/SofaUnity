@@ -4,7 +4,7 @@
     <CollisionPipeline verbose="0" />
     <BruteForceDetection name="N2" />
     <CollisionResponse response="default" />
-    <MinProximityIntersection name="Proximity" alarmDistance="0.8" contactDistance="0.5" />
+    <MinProximityIntersection name="Proximity" alarmDistance="0.5" contactDistance="0.2" />
     <CollisionGroup />
     <Node name="SquareGravity">
         <EulerImplicit name="cg_odesolver" printLog="false" />
