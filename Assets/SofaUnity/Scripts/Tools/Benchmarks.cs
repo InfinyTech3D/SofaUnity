@@ -27,7 +27,18 @@ namespace SofaScripts
             return context;
         }
 
-        static public void createFloor()
+        static public void addThirdPartyCamera()
+        {
+            GameObject _camera = GameObject.Find("Main Camera");
+            if (_camera != null)
+            {
+                _camera.AddComponent<ThirdPersonCamera>();
+            }
+            else
+                Debug.Log("Camera not found");
+        }
+
+        static public GameObject createFloor()
         {
             GameObject floor = new GameObject();
             floor.AddComponent<SRigidPlane>();
@@ -37,9 +48,11 @@ namespace SofaScripts
             plane.m_gridSize[1] = 2;
             plane.m_gridSize[2] = 2;
 
-            plane.m_scale[0] = 50;
+            plane.m_scale[0] = 25;
             plane.m_scale[1] = 1;
-            plane.m_scale[2] = 50;
+            plane.m_scale[2] = 25;
+
+            return floor;
         }
 
 
@@ -66,7 +79,6 @@ namespace SofaScripts
             obj.name = name;
             return obj;
         }
-
 
     }
 }

@@ -15,12 +15,12 @@ public class ThirdPersonCamera : MonoBehaviour
 	//private Camera cam;
 
 	private float m_currentX = -15.0f;
-	private float m_currentY = 10.0f;
+	private float m_currentY = -10.0f;
 	private float m_sensivityX = 10.0f;
 	private float m_sensivityY = 10.0f;
 
 	float m_cameraDistanceMax = 2000f;
-	float m_cameraDistanceMin = 30f;
+	float m_cameraDistanceMin = 10f;
 	float m_cameraDistance = 1000.0f;
 	float m_scrollSpeed = 200.0f;
 
@@ -35,9 +35,10 @@ public class ThirdPersonCamera : MonoBehaviour
 		//cam = Camera.main;
 		m_leftButtonHold = false;
 
-		// init a static lookat for the moment.
-		m_lookAtStatic = new Vector3 (0, 200*m_currentScale, 0);
-		m_cameraDistance = m_cameraDistance * m_currentScale;
+        // init a static lookat for the moment.
+        //m_lookAtStatic = new Vector3 (0, 200*m_currentScale, 0);
+        m_lookAtStatic = new Vector3(4, 4, 0);
+        m_cameraDistance = m_cameraDistance * m_currentScale;
 	}
 	
 	// Update is called once per frame
@@ -61,7 +62,7 @@ public class ThirdPersonCamera : MonoBehaviour
 			m_currentY = Mathf.Clamp (m_currentY, Y_ANGLE_MIN, Y_ANGLE_MAX);
 		}
 
-		m_cameraDistance += Input.GetAxis("Mouse ScrollWheel") * m_scrollSpeed*m_currentScale;
+		m_cameraDistance -= Input.GetAxis("Mouse ScrollWheel") * m_scrollSpeed*m_currentScale;
 		m_cameraDistance = Mathf.Clamp(m_cameraDistance, m_cameraDistanceMin*m_currentScale, m_cameraDistanceMax*m_currentScale);
 	}
 
@@ -69,7 +70,7 @@ public class ThirdPersonCamera : MonoBehaviour
 	{
 		//if (Input.GetMouseButtonDown (0)) 
 
-		Vector3 dir = new Vector3 (0, 0, m_cameraDistance);
+		Vector3 dir = new Vector3 (0, 0, -m_cameraDistance);
 		Quaternion rotation = Quaternion.Euler (-m_currentY, m_currentX, 0);
 
 		//camTransform.position = lookAt.position + rotation * dir;

@@ -31,6 +31,9 @@ public class Benchmark01Editor : Editor
             }
         }
 
+        // Add camera
+        SofaScripts.Benchmarks.addThirdPartyCamera();
+
         return context;
     }
 }
@@ -46,9 +49,12 @@ public class Benchmark02Editor : Editor
 
         // Add sofa context first
         GameObject context = SofaScripts.Benchmarks.createSofaContext();
+        SofaContext _sofaContext = context.GetComponent<SofaContext>();
+        _sofaContext.timeStep = 0.01f;
 
         // Add a floor        
-        SofaScripts.Benchmarks.createFloor();
+        GameObject floor = SofaScripts.Benchmarks.createFloor();
+        SRigidPlane _sofaPlane = floor.GetComponent<SRigidPlane>();
 
         // Add Spheres
         for (int i = 0; i < 5; ++i)
@@ -76,6 +82,9 @@ public class Benchmark02Editor : Editor
             objImpl.m_translation[0] = 3;
             objImpl.m_translation[1] = 5.5f + i * 2;
         }
+
+        // Add camera
+        SofaScripts.Benchmarks.addThirdPartyCamera();
 
         return context;
     }
