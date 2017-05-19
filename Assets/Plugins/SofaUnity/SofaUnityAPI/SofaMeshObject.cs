@@ -244,6 +244,26 @@ public class SofaMeshObject : SofaBaseObject
        
     }
 
+    public int getNbTetrahedra()
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            int nbrTetra = sofaPhysics3DObject_getNbTetrahedra(m_simu, m_name);
+            return nbrTetra;
+        }
+        else
+            return 0;
+    }
+
+    public void getTetrahedra(int[] tetra)
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            sofaPhysics3DObject_getTetrahedra(m_simu, m_name, tetra);
+            Debug.Log("tetra found getTetrahedra: " + tetra[0] + " " + tetra[1] + " " + tetra[2] + " " + tetra[3]);
+        }
+    }
+
     public virtual void recomputeTexCoords(Mesh mesh)
     {
         Vector3[] verts = mesh.vertices;
@@ -295,5 +315,11 @@ public class SofaMeshObject : SofaBaseObject
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysics3DObject_getTriangles(IntPtr obj, string name, int[] arr);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getTetrahedra(IntPtr obj, string name, int[] arr);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getNbTetrahedra(IntPtr obj, string name);
     //}
 }
