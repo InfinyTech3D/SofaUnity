@@ -73,9 +73,7 @@ namespace SofaUnity
                 m_mesh.name = "SofaMesh";
                 m_mesh.vertices = new Vector3[0];
                 m_impl.updateMesh(m_mesh);
-                //m_mesh.triangles = m_impl.createTriangulation();
-                m_impl.updateMesh(m_mesh);
-                m_impl.recomputeTexCoords(m_mesh);
+               // m_mesh.triangles = m_impl.createTriangulation();
 
                 m_impl.getTranslation();
 
@@ -89,10 +87,14 @@ namespace SofaUnity
                         m_impl.getTetrahedra(m_tetra);
                         Debug.Log("Tetra: " + nbTetra);
                         Debug.Log("tetra found start: " + m_tetra[0] + " " + m_tetra[1] + " " + m_tetra[2] + " " + m_tetra[3]);
-
+                        m_mesh.triangles = this.computeForceField();
                     }
                 }
-                    
+
+                m_impl.updateMesh(m_mesh);
+                m_impl.recomputeTexCoords(m_mesh);
+
+
                 //initMesh();
             }
         }
@@ -232,6 +234,37 @@ namespace SofaUnity
             }
 
             GL.End();            
+        }
+
+        public int[] computeForceField()
+        {
+            int[] tris = new int[nbTetra * 12];
+
+            for (int i = 0; i < nbTetra; ++i)
+            {
+                int id0 = m_tetra[i * 4 + 0];
+                int id1 = m_tetra[i * 4 + 1];
+                int id2 = m_tetra[i * 4 + 2];
+                int id3 = m_tetra[i * 4 + 3];
+
+                tris[i * 12 + 0] = id0;
+                tris[i * 12 + 1] = id2;
+                tris[i * 12 + 2] = id1;
+
+                tris[i * 12 + 3] = id1;
+                tris[i * 12 + 4] = id2;
+                tris[i * 12 + 5] = id3;
+
+                tris[i * 12 + 6] = id2;
+                tris[i * 12 + 7] = id0;
+                tris[i * 12 + 8] = id3;
+
+                tris[i * 12 + 9] = id3;
+                tris[i * 12 + 10] = id0;
+                tris[i * 12 + 11] = id1;
+            }
+
+            return tris;
         }
     }
 }
