@@ -73,22 +73,26 @@ namespace SofaUnity
                 m_mesh.name = "SofaMesh";
                 m_mesh.vertices = new Vector3[0];
                 m_impl.updateMesh(m_mesh);
-               // m_mesh.triangles = m_impl.createTriangulation();
+                //m_mesh.triangles = m_impl.createTriangulation();
+                //m_impl.updateMesh(m_mesh);
+                //m_impl.recomputeTexCoords(m_mesh);
 
                 m_impl.getTranslation();
 
                 if (nbTetra == 0)
                 {
                     nbTetra = m_impl.getNbTetrahedra();
-                    if (nbTetra != 0)
+                    if (nbTetra > 0)
                     {
+                        Debug.Log("Tetra: " + nbTetra);
                         m_tetra = new int[nbTetra * 4];
 
                         m_impl.getTetrahedra(m_tetra);
-                        Debug.Log("Tetra: " + nbTetra);
                         Debug.Log("tetra found start: " + m_tetra[0] + " " + m_tetra[1] + " " + m_tetra[2] + " " + m_tetra[3]);
                         m_mesh.triangles = this.computeForceField();
                     }
+                    else
+                        m_mesh.triangles = m_impl.createTriangulation();
                 }
 
                 m_impl.updateMesh(m_mesh);

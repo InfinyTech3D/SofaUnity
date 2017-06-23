@@ -131,10 +131,20 @@ namespace SofaUnity
                             {
                                 string name = m_impl.getObjectName(i);
                                 string type = m_impl.getObjectType(i);
-                                Debug.Log("add Object: " + i);
+
                                 GameObject go = new GameObject();
-                                go.AddComponent<SMesh>();
-                                go.name = "SMesh - " + name;
+                                Debug.Log("add Object: " + i);
+                                if (type.Contains("SofaVisual"))
+                                {
+                                    go.AddComponent<SVisualMesh>();
+                                    go.name = "SVisualMesh - " + name;
+                                }
+                                else
+                                {
+                                    go.AddComponent<SMesh>();
+                                    go.name = "SMesh - " + name;
+                                }
+                                
                                 go.transform.parent = this.gameObject.transform;
                             }
                         }
