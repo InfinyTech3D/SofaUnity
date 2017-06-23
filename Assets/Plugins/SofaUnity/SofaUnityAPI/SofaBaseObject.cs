@@ -9,6 +9,7 @@ public class SofaBaseObject : IDisposable
 
     protected int m_idObject;
     protected string m_name;
+    protected string m_type;
     bool m_isDisposed;
     protected bool m_isRigid = false;
 
@@ -75,6 +76,9 @@ public class SofaBaseObject : IDisposable
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern string sofaPhysicsAPI_get3DObjectName(IntPtr obj, int id);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern string sofaPhysicsAPI_get3DObjectType(IntPtr obj, int id);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern IntPtr sofaPhysicsAPI_get3DObject(IntPtr obj, string name);
