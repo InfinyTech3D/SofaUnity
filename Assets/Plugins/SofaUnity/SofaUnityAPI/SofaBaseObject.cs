@@ -81,6 +81,9 @@ public class SofaBaseObject : IDisposable
     public static extern string sofaPhysicsAPI_get3DObjectType(IntPtr obj, int id);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern string sofa3DObject_getObjectType(IntPtr obj);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern IntPtr sofaPhysicsAPI_get3DObject(IntPtr obj, string name);
     //}
 

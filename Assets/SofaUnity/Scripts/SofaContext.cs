@@ -126,13 +126,15 @@ namespace SofaUnity
                         {
                             m_impl.loadScene(m_filename);
                             int res = m_impl.getNumberObjects();
-
+                            Debug.Log("getNumberObjects: " + res);
                             for (int i=0; i<res; ++i)
                             {
-                                //Debug.Log("add Object: " + i);
+                                string name = m_impl.getObjectName(i);
+                                string type = m_impl.getObjectType(i);
+                                Debug.Log("add Object: " + i);
                                 GameObject go = new GameObject();
                                 go.AddComponent<SMesh>();
-                                go.name = "SMesh";
+                                go.name = "SMesh - " + name;
                                 go.transform.parent = this.gameObject.transform;
                             }
                         }

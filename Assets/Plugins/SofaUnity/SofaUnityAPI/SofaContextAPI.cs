@@ -120,6 +120,28 @@ namespace SofaUnityAPI
             return res;
         }
 
+        public string getObjectName(int id)
+        {
+            if (m_native != IntPtr.Zero)
+            {
+                string name = sofaPhysicsAPI_get3DObjectName(m_native, id);
+                return name;
+            }
+            else
+                return "Error";
+        }
+
+        public string getObjectType(int id)
+        {
+            if (m_native != IntPtr.Zero)
+            {
+                string type = sofaPhysicsAPI_get3DObjectType(m_native, id);
+                return type;
+            }
+            else
+                return "Error";
+        }
+
 
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern IntPtr sofaPhysicsAPI_create();
@@ -134,6 +156,12 @@ namespace SofaUnityAPI
 
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern int sofaPhysicsAPI_getNumberMeshes(IntPtr obj);
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern string sofaPhysicsAPI_get3DObjectName(IntPtr obj, int id);
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern string sofaPhysicsAPI_get3DObjectType(IntPtr obj, int id);
 
 
         [DllImport("SofaAdvancePhysicsAPI")]
