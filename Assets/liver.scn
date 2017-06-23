@@ -23,7 +23,7 @@
         <FixedConstraint  name="FixedConstraint" indices="3 39 64" />
         <Node name="Visu" tags="Visual" gravity="0 -9.81 0">
             <OglModel  name="VisualModel" fileMesh="liver-smooth.obj" scale3d="2 2 2"/>
-            <BarycentricMapping name="visual mapping" input="@../dofs" output="@VisualModel" />
+            <IdentityMapping name="visual mapping" input="@../dofs" output="@VisualModel" />
         </Node>
 		
         <Node name="Surf" gravity="0 -9.81 0">
