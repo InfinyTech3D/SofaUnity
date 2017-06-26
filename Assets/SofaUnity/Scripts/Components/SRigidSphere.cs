@@ -7,7 +7,7 @@ using SofaUnityAPI;
 namespace SofaUnity
 {
     [ExecuteInEditMode]
-    public class SRigidSphere : SRigidMesh
+    public class SRigidSphere : SRigidGrid
     {
         /// Mesh of this object
         protected override void createObject()

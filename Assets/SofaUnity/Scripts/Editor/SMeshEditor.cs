@@ -59,7 +59,7 @@ public class SRigidMeshEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        SDeformableMesh mesh = (SDeformableMesh)this.target;
+        SRigidMesh mesh = (SRigidMesh)this.target;
 
         mesh.translation = EditorGUILayout.Vector3Field("Translation", mesh.translation);
         EditorGUILayout.Separator();
