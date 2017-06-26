@@ -15,7 +15,7 @@ namespace SofaUnity
             if (m_impl != null)
                 m_context.objectcpt = m_context.objectcpt + 1;
             else
-                Debug.LogError("SVisualMesh:: Object not created");
+                Debug.LogError("SSphere:: Object not created");
 
             IntPtr _simu = m_context.getSimuContext();
             if (_simu != IntPtr.Zero)
@@ -26,7 +26,7 @@ namespace SofaUnity
         protected override void updateImpl()
         {
             if (m_log)
-                Debug.Log("SVisualMesh::updateImpl called.");
+                Debug.Log("SSphere::updateImpl called.");
 
             if (m_impl != null)
             {

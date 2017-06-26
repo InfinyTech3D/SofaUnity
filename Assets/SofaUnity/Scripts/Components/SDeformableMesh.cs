@@ -68,7 +68,7 @@ namespace SofaUnity
             if (m_impl != null)
                 m_context.objectcpt = m_context.objectcpt + 1;
             else
-                Debug.LogError("SMesh:: Object not created");
+                Debug.LogError("SDeformableMesh:: Object not created");
 
             IntPtr _simu = m_context.getSimuContext();
             if (_simu != IntPtr.Zero)
@@ -82,7 +82,7 @@ namespace SofaUnity
         protected override void updateImpl()
         {
             if (m_log)
-                Debug.Log("SMesh::updateImpl called.");
+                Debug.Log("SDeformableMesh::updateImpl called.");
 
             if (m_impl != null)
             {

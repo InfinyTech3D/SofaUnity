@@ -17,7 +17,7 @@ namespace SofaUnity
         {
 #if UNITY_EDITOR
             if (m_log)
-                Debug.Log("UNITY_EDITOR - SBaseMesh::Awake");
+                Debug.Log("UNITY_EDITOR - SGrid::Awake");
 
             loadContext();
 
@@ -44,7 +44,7 @@ namespace SofaUnity
         private void Start()
         {
             if (m_log)
-                Debug.Log("UNITY_EDITOR - SBaseGrid::start");
+                Debug.Log("UNITY_EDITOR - SGrid::start");
 
             if (m_impl != null)
             {
@@ -57,7 +57,7 @@ namespace SofaUnity
                 MeshRenderer mr = GetComponent<MeshRenderer>();
 
                 if (m_log)
-                    Debug.Log("SBaseGrid::Start editor mode.");
+                    Debug.Log("SGrid::Start editor mode.");
 #else
                 //do this in play mode
                 m_mesh = GetComponent<MeshFilter>().mesh;
@@ -98,7 +98,7 @@ namespace SofaUnity
         protected override void updateImpl()
         {
             if (m_log)
-                Debug.Log("SBaseGrid::updateImpl called.");
+                Debug.Log("SGrid::updateImpl called.");
 
             if (m_impl != null) {
                 m_impl.updateMesh(m_mesh);
