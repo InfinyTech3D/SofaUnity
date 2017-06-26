@@ -7,7 +7,7 @@ public class SSphereEditor : SGridEditor
 {
     [MenuItem("SofaUnity/Sofa 3D Object/SSphere")]
     [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SSphere")]
-    public static GameObject CreateNew()
+    new public static GameObject CreateNew()
     {
         GameObject go = new GameObject();
         go.AddComponent<SSphere>();
@@ -18,11 +18,6 @@ public class SSphereEditor : SGridEditor
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-
-        //SSphere grid = (SSphere)this.target;
-
-        //grid.gridSize = EditorGUILayout.Vector3Field("Grid resolution", grid.gridSize);
-        //EditorGUILayout.Separator();
     }
 }
 
@@ -32,7 +27,7 @@ public class SRigidSphereEditor : SRigidGridEditor
 {
     [MenuItem("SofaUnity/Sofa 3D Object/SRigidSphere")]
     [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SRigidSphere")]
-    public static GameObject CreateNew()
+    new public static GameObject CreateNew()
     {
         GameObject go = new GameObject();
         go.AddComponent<SRigidSphere>();
@@ -43,10 +38,5 @@ public class SRigidSphereEditor : SRigidGridEditor
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-
-        //SRigidSphere grid = (SRigidSphere)this.target;
-
-        //grid.gridSize = EditorGUILayout.Vector3Field("Grid resolution", grid.gridSize);
-        //EditorGUILayout.Separator();
     }
 }

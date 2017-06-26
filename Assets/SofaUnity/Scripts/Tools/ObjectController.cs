@@ -4,10 +4,10 @@ using SofaUnity;
 
 public class ObjectController : MonoBehaviour
 {
-    SMesh m_mesh;
+    SBaseMesh m_mesh;
     void Start()
     {
-        m_mesh = GetComponent<SMesh>();
+        m_mesh = GetComponent<SBaseMesh>();
     }
 
     void FixedUpdate()

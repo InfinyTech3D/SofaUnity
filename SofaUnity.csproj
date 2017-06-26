@@ -89,17 +89,20 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\SofaUnity\Scripts\Components\SVisualMesh.cs" />
-    <Compile Include="Assets\SofaUnity\Scripts\Components\SBaseGrid.cs" />
-    <Compile Include="Assets\SofaUnity\Scripts\Components\SBaseObject.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Components\BaseObjects\SBaseMesh.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Components\BaseObjects\SBaseObject.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Components\SGrid.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\SBox.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\SCylinder.cs" />
-    <Compile Include="Assets\SofaUnity\Scripts\Components\SMesh.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Components\SDeformableMesh.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\SRigidBox.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\SRigidCylinder.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Components\SRigidGrid.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Components\SRigidMesh.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\SRigidPlane.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\SRigidSphere.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\SSphere.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Components\SVisualMesh.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\SofaContext.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Tools\Benchmarks.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Tools\CameraController.cs" />

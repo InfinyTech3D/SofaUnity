@@ -8,19 +8,19 @@ using System;
 namespace SofaUnity
 {
     [ExecuteInEditMode]
-    class SVisualMesh : SBaseMesh
+    public class SRigidMesh : SBaseMesh
     {
         private void Awake()
         {
             if (m_log)
-                Debug.Log("UNITY_EDITOR - SVisualMesh::Awake");
+                Debug.Log("UNITY_EDITOR - SRigidMesh::Awake");
 
             loadContext();
 
             MeshFilter mf = gameObject.GetComponent<MeshFilter>();
             if (mf == null)
                 gameObject.AddComponent<MeshFilter>();
-            
+
             //to see it, we have to add a renderer
             MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();
             if (mr == null)
@@ -45,7 +45,7 @@ namespace SofaUnity
             if (m_impl != null)
                 m_context.objectcpt = m_context.objectcpt + 1;
             else
-                Debug.LogError("SVisualMesh:: Object not created");
+                Debug.LogError("SRigidMesh:: Object not created");
 
             IntPtr _simu = m_context.getSimuContext();
             if (_simu != IntPtr.Zero)
@@ -58,7 +58,7 @@ namespace SofaUnity
         protected override void updateImpl()
         {
             if (m_log)
-                Debug.Log("SVisualMesh::updateImpl called.");
+                Debug.Log("SRigidMesh::updateImpl called.");
 
             if (m_impl != null)
             {

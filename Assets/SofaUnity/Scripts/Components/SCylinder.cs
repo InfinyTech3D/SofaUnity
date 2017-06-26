@@ -7,29 +7,32 @@ using SofaUnityAPI;
 namespace SofaUnity
 {
     [ExecuteInEditMode]
-    public class SCylinder : SBaseGrid
+    public class SCylinder : SGrid
     {
         /// Mesh of this object
         protected override void createObject()
         {
+            if (m_impl != null)
+                m_context.objectcpt = m_context.objectcpt + 1;
+            else
+                Debug.LogError("SVisualMesh:: Object not created");
+
             IntPtr _simu = m_context.getSimuContext();
             if (_simu != IntPtr.Zero)
                 m_impl = new SofaCylinder(_simu, m_context.objectcpt, false);
         }
 
-        void init()
-        {
-
-        }
-
-
         // Update is called once per frame
-        void Update()
+        protected override void updateImpl()
         {
             if (m_log)
-                Debug.Log("SCylinder::Update called.");
+                Debug.Log("SVisualMesh::updateImpl called.");
 
-            updateImpl();
+            if (m_impl != null)
+            {
+                m_impl.updateMesh(m_mesh);
+                m_mesh.RecalculateNormals();
+            }
         }
 
     }

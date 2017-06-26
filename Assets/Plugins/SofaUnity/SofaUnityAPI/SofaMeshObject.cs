@@ -144,6 +144,12 @@ public class SofaMeshObject : SofaBaseObject
             Debug.Log("nbQuads: " + nbrQuads);
         }
 
+        if (nbrTris < 0)
+            nbrTris = 0;
+
+        if (nbrQuads < 0)
+            nbrQuads = 0;
+
         // get buffers
         int[] quads = new int[nbrQuads*4];
         sofaPhysics3DObject_getQuads(m_simu, m_name, quads);

@@ -3,22 +3,22 @@ using UnityEditor;
 using SofaUnity;
 
 
-[CustomEditor(typeof(SMesh), true)]
-public class SMeshEditor : Editor
+[CustomEditor(typeof(SDeformableMesh), true)]
+public class SDeformableMeshEditor : Editor
 {
-    [MenuItem("SofaUnity/Sofa 3D Object/SMesh")]
-    [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SMesh")]
+    [MenuItem("SofaUnity/Sofa 3D Object/SDeformableMesh")]
+    [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SDeformableMesh")]
     public static GameObject CreateNew()
     {
         GameObject go = new GameObject();
-        go.AddComponent<SMesh>();
-        go.name = "SMesh";
+        go.AddComponent<SDeformableMesh>();
+        go.name = "SDeformableMesh";
         return go;
     }
 
     public override void OnInspectorGUI()
     {
-        SMesh mesh = (SMesh)this.target;
+        SDeformableMesh mesh = (SDeformableMesh)this.target;
 
         mesh.translation = EditorGUILayout.Vector3Field("Translation", mesh.translation);
         EditorGUILayout.Separator();
@@ -26,11 +26,48 @@ public class SMeshEditor : Editor
         mesh.rotation = EditorGUILayout.Vector3Field("Rotation", mesh.rotation);
         EditorGUILayout.Separator();
 
+        mesh.scale = EditorGUILayout.Vector3Field("Scale", mesh.scale);
+        EditorGUILayout.Separator();
+
+        mesh.mass = EditorGUILayout.FloatField("Mass", mesh.mass);
+        EditorGUILayout.Separator();
+
+        mesh.young = EditorGUILayout.FloatField("Young Modulus", mesh.young);
+        EditorGUILayout.Separator();
+
+        mesh.poisson = EditorGUILayout.FloatField("Poisson Ratio", mesh.poisson);
+        EditorGUILayout.Separator();
+
         mesh.drawFF = EditorGUILayout.Toggle("Show ForceField", mesh.drawFF);
+        EditorGUILayout.Separator();
+    }
+}
 
-        //SSphere mesh = (SSphere)this.target;
 
-        //mesh.gridSize = EditorGUILayout.Vector3Field("Grid resolution", grid.gridSize);
-        //EditorGUILayout.Separator();
+[CustomEditor(typeof(SRigidMesh), true)]
+public class SRigidMeshEditor : Editor
+{
+    [MenuItem("SofaUnity/Sofa 3D Object/SRigidMesh")]
+    [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SRigidMesh")]
+    public static GameObject CreateNew()
+    {
+        GameObject go = new GameObject();
+        go.AddComponent<SRigidMesh>();
+        go.name = "SRigidMesh";
+        return go;
+    }
+
+    public override void OnInspectorGUI()
+    {
+        SDeformableMesh mesh = (SDeformableMesh)this.target;
+
+        mesh.translation = EditorGUILayout.Vector3Field("Translation", mesh.translation);
+        EditorGUILayout.Separator();
+
+        mesh.rotation = EditorGUILayout.Vector3Field("Rotation", mesh.rotation);
+        EditorGUILayout.Separator();
+
+        mesh.scale = EditorGUILayout.Vector3Field("Scale", mesh.scale);
+        EditorGUILayout.Separator();
     }
 }
