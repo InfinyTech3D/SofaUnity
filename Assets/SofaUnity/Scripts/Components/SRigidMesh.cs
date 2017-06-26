@@ -42,17 +42,18 @@ namespace SofaUnity
 
         protected override void createObject()
         {
-            if (m_impl != null)
-                m_context.objectcpt = m_context.objectcpt + 1;
-            else
-                Debug.LogError("SRigidMesh:: Object not created");
-
             IntPtr _simu = m_context.getSimuContext();
             if (_simu != IntPtr.Zero)
             {
                 m_impl = new SofaMeshObject(_simu, m_context.objectcpt, false);
                 m_impl.loadObject();
             }
+
+            Debug.Log("SRigidMesh::createObject called.");
+            if (m_impl != null)
+                m_context.objectcpt = m_context.objectcpt + 1;
+            else
+                Debug.LogError("SRigidMesh:: Object not created");
         }
 
         protected override void updateImpl()

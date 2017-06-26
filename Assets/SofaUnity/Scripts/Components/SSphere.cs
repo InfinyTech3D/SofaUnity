@@ -12,14 +12,14 @@ namespace SofaUnity
         /// Mesh of this object
         protected override void createObject()
         {
+            IntPtr _simu = m_context.getSimuContext();
+            if (_simu != IntPtr.Zero)
+                m_impl = new SofaSphere(_simu, m_context.objectcpt, false);
+
             if (m_impl != null)
                 m_context.objectcpt = m_context.objectcpt + 1;
             else
                 Debug.LogError("SSphere:: Object not created");
-
-            IntPtr _simu = m_context.getSimuContext();
-            if (_simu != IntPtr.Zero)
-                m_impl = new SofaSphere(_simu, m_context.objectcpt, false);
         }
 
         // Update is called once per frame
