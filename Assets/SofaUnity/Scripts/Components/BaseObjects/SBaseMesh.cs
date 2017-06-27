@@ -26,9 +26,7 @@ namespace SofaUnity
 
             loadContext();
 
-            MeshFilter mf = gameObject.GetComponent<MeshFilter>();
-            if (mf == null)
-                gameObject.AddComponent<MeshFilter>();
+            awakePostProcess();
         }
 
 
@@ -55,7 +53,7 @@ namespace SofaUnity
                     Debug.Log("SBox::Start play mode.");
 #endif
 
-                initMesh();
+                initMesh(true);
             }
         }
 
@@ -68,10 +66,26 @@ namespace SofaUnity
         }
 
 
-        /// Method called by \sa Start() method. To be implemented by child class.
-        protected virtual void initMesh()
+        /// Method called by \sa Awake after the loadcontext method. To be implemented by child class.
+        protected virtual void awakePostProcess()
         {
+            MeshFilter mf = gameObject.GetComponent<MeshFilter>();
+            if (mf == null)
+                gameObject.AddComponent<MeshFilter>();
+        }
 
+        /// Method called by \sa Start() method. To be implemented by child class.
+        protected virtual void initMesh(bool toUpdate)
+        {
+            if (m_impl == null)
+                return;
+
+            m_impl.setTranslation(m_translation);
+            m_impl.setRotation(m_rotation);
+            m_impl.setScale(m_scale);
+
+            if (toUpdate)
+                m_impl.updateMesh(m_mesh);
         }
 
         /// Method called by \sa Update() method. To be implemented by child class.

@@ -10,16 +10,9 @@ namespace SofaUnity
     [ExecuteInEditMode]
     public class SRigidMesh : SBaseMesh
     {
-        private void Awake()
+        protected override void awakePostProcess()
         {
-            if (m_log)
-                Debug.Log("UNITY_EDITOR - SRigidMesh::Awake");
-
-            loadContext();
-
-            MeshFilter mf = gameObject.GetComponent<MeshFilter>();
-            if (mf == null)
-                gameObject.AddComponent<MeshFilter>();
+            base.awakePostProcess();
 
             //to see it, we have to add a renderer
             MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();
@@ -27,17 +20,21 @@ namespace SofaUnity
                 mr = gameObject.AddComponent<MeshRenderer>();
         }
 
-        protected override void initMesh()
+        protected override void initMesh(bool toUpdate)
         {
             if (m_impl == null)
                 return;
 
-            m_mesh.name = "SofaMesh";
+            base.initMesh(false);
+
+            m_mesh.name = "SofaRigidMesh";
             m_mesh.vertices = new Vector3[0];
             m_impl.updateMesh(m_mesh);
-            m_mesh.triangles = m_impl.createTriangulation();
-            m_impl.updateMesh(m_mesh);
+            m_mesh.triangles = m_impl.createTriangulation();            
             m_impl.recomputeTexCoords(m_mesh);
+
+            if(toUpdate)
+                m_impl.updateMesh(m_mesh);
         }
 
         protected override void createObject()

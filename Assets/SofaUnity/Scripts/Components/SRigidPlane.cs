@@ -22,26 +22,18 @@ namespace SofaUnity
                 Debug.LogError("SRigidPlane:: Object not created");
         }
 
-        protected override void initMesh()
+        protected override void initMesh(bool toUpdate)
         {
             if (m_impl == null)
                 return;
 
-            m_mesh.name = "SofaGrid";
-            m_mesh.vertices = new Vector3[0];
-            m_impl.updateMesh(m_mesh);
-            m_mesh.triangles = m_impl.createTriangulation();
-            m_impl.updateMesh(m_mesh);
-            m_impl.recomputeTriangles(m_mesh);
-            m_impl.recomputeTexCoords(m_mesh);
+            base.initMesh(false);
 
             m_gridSize = new Vector3(10, 1, 10);
-
-            m_impl.setTranslation(m_translation);
-            m_impl.setRotation(m_rotation);
-            m_impl.setScale(m_scale);
-            m_impl.updateMesh(m_mesh);
             m_impl.setGridResolution(m_gridSize);
+
+            if (toUpdate)
+                m_impl.updateMesh(m_mesh);
         }
 
         public override Vector3 gridSize

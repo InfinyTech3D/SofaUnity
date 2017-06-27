@@ -13,7 +13,7 @@ namespace SofaUnity
         protected int nbTetra = 0;
         protected int[] m_tetra;
 
-        protected override void initMesh()
+        protected override void initMesh(bool toUpdate)
         {
             if (m_impl == null)
                 return;
@@ -25,8 +25,7 @@ namespace SofaUnity
             //m_impl.updateMesh(m_mesh);
             //m_impl.recomputeTexCoords(m_mesh);
 
-            m_impl.getTranslation();
-
+            // Special part for tetra
             if (nbTetra == 0)
             {
                 nbTetra = m_impl.getNbTetrahedra();
@@ -43,24 +42,16 @@ namespace SofaUnity
                     m_mesh.triangles = m_impl.createTriangulation();
             }
 
-            m_impl.updateMesh(m_mesh);
+            
             m_impl.recomputeTexCoords(m_mesh);
+            //m_impl.recomputeTriangles(m_mesh);
 
+            m_impl.setMass(m_mass);
+            m_impl.setYoungModulus(m_young);
+            m_impl.setPoissonRatio(m_poisson);
 
-            m_impl.setTranslation(m_translation);
-            m_impl.setRotation(m_rotation);
-
-            /*
-             m_mesh.name = "SofaGrid";
-                m_mesh.vertices = new Vector3[0];
-                m_impl.updateMesh(m_mesh);
-                m_mesh.triangles = m_impl.createTriangulation();
-                m_impl.updateMesh(m_mesh);
-                m_impl.recomputeTriangles(m_mesh);
-                m_impl.recomputeTexCoords(m_mesh);
-             */
-
-            m_impl.updateMesh(m_mesh);
+            if (toUpdate)
+                m_impl.updateMesh(m_mesh);            
         }
 
         protected override void createObject()
