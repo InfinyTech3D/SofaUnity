@@ -42,13 +42,16 @@ namespace SofaUnity
                     m_mesh.triangles = m_impl.createTriangulation();
             }
 
-            
+            m_impl.updateMesh(m_mesh);
+
             m_impl.recomputeTexCoords(m_mesh);
-            //m_impl.recomputeTriangles(m_mesh);
+            m_impl.recomputeTriangles(m_mesh);
 
             m_impl.setMass(m_mass);
             m_impl.setYoungModulus(m_young);
             m_impl.setPoissonRatio(m_poisson);
+
+            base.initMesh(false);
 
             if (toUpdate)
                 m_impl.updateMesh(m_mesh);            

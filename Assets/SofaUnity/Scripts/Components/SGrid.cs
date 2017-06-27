@@ -20,13 +20,12 @@ namespace SofaUnity
             //to see it, we have to add a renderer
             MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();
             if (mr == null)
-            {
                 mr = gameObject.AddComponent<MeshRenderer>();
-                mr.material = new Material(Shader.Find("Diffuse"));
 
-                if (this.m_useTex)
-                    mr.material = Resources.Load("Materials/BoxSofa") as Material;
-            }
+            mr.material = new Material(Shader.Find("Diffuse"));
+
+            if (this.m_useTex)
+                mr.material = Resources.Load("Materials/BoxSofa") as Material;            
         }
 
         protected override void initMesh(bool toUpdate)
@@ -36,11 +35,9 @@ namespace SofaUnity
 
             base.initMesh(false);
 
-            m_mesh.name = "SofaGrid";
-           
-            m_impl.recomputeTriangles(m_mesh);                                  
+            m_mesh.name = "SofaGrid";          
             m_impl.setGridResolution(m_gridSize);
-            m_impl.recomputeTexCoords(m_mesh);
+
 
             if (toUpdate)
                 m_impl.updateMesh(m_mesh);

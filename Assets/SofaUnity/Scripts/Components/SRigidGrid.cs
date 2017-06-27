@@ -24,6 +24,7 @@ namespace SofaUnity
 
             if (this.m_useTex)
                 mr.material = Resources.Load("Materials/BoxSofa") as Material;
+            
         }
 
         protected override void initMesh(bool toUpdate)

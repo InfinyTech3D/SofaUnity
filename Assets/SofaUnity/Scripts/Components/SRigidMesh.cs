@@ -24,16 +24,18 @@ namespace SofaUnity
         {
             if (m_impl == null)
                 return;
-
-            base.initMesh(false);
-
+            
             m_mesh.name = "SofaRigidMesh";
             m_mesh.vertices = new Vector3[0];
             m_impl.updateMesh(m_mesh);
-            m_mesh.triangles = m_impl.createTriangulation();            
+            m_mesh.triangles = m_impl.createTriangulation();
+            m_impl.updateMesh(m_mesh);
+           // m_mesh.RecalculateNormals();
             m_impl.recomputeTexCoords(m_mesh);
 
-            if(toUpdate)
+            base.initMesh(false);
+
+            if (toUpdate)
                 m_impl.updateMesh(m_mesh);
         }
 
