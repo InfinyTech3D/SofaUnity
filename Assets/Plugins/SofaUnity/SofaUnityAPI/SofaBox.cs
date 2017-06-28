@@ -5,8 +5,8 @@ using System.Runtime.InteropServices;
 public class SofaBox : SofaMeshObject
 { 
 
-    public SofaBox(IntPtr simu, int idObject, bool isRigid) 
-        : base (simu, idObject, isRigid)        
+    public SofaBox(IntPtr simu, int idObject, string nameID, bool isRigid) 
+        : base (simu, idObject, nameID, isRigid)        
     {
 
     }
@@ -172,13 +172,14 @@ public class SofaBox : SofaMeshObject
 
     protected override void createObject()
     {
-        m_name = "cube_" + m_idObject + "_node";
+        Debug.Log("old name " + m_name);
+        //m_name = "cube_" + m_idObject + "_node";
 
         if (m_native == IntPtr.Zero) // first time create object only
         {
             // Create the cube
-            int res = sofaPhysicsAPI_addCube(m_simu, "cube_" + m_idObject, m_isRigid);
-
+            int res = sofaPhysicsAPI_addCube(m_simu, m_name, m_isRigid);
+            m_name += "_node";
             if (res == 1) // cube added
             {
                 Debug.Log("cube Added! " + m_name);

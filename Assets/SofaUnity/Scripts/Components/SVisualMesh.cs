@@ -43,7 +43,7 @@ namespace SofaUnity
             IntPtr _simu = m_context.getSimuContext();
             if (_simu != IntPtr.Zero)
             {
-                m_impl = new SofaMeshObject(_simu, m_context.objectcpt, false);
+                m_impl = new SofaMeshObject(_simu, m_context.objectcpt, m_nameId, false);
                 m_impl.loadObject();
             }
 

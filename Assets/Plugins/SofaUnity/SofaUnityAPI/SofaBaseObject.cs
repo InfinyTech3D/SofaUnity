@@ -15,10 +15,11 @@ public class SofaBaseObject : IDisposable
 
     protected bool log = false;
 
-    public SofaBaseObject(IntPtr simu, int idObject, bool isRigid)
+    public SofaBaseObject(IntPtr simu, int idObject, string nameID, bool isRigid)
     {
         m_simu = simu;
         m_idObject = idObject;
+        m_name = nameID;
         m_isRigid = isRigid;   
 
         createObject();
@@ -53,7 +54,7 @@ public class SofaBaseObject : IDisposable
 
     protected virtual void createObject()
     {
-        m_name = "baseObject" + m_idObject + "_node";
+        //m_name = "baseObject" + m_idObject + "_node";
     }
 
     public virtual void loadObject()

@@ -4,8 +4,8 @@ using System.Runtime.InteropServices;
 
 public class SofaPlane : SofaMeshObject
 {
-    public SofaPlane(IntPtr simu, int idObject, bool isRigid)
-        : base(simu, idObject, isRigid)
+    public SofaPlane(IntPtr simu, int idObject, string nameID, bool isRigid)
+        : base(simu, idObject, nameID, isRigid)
     {
 
     }
@@ -22,13 +22,11 @@ public class SofaPlane : SofaMeshObject
 
     protected override void createObject()
     {
-        m_name = "plane_" + m_idObject + "_node";
-
         if (m_native == IntPtr.Zero) // first time create object only
         {
             // Create the plane
-            int res = sofaPhysicsAPI_addPlane(m_simu, "plane_" + m_idObject, m_isRigid);
-
+            int res = sofaPhysicsAPI_addPlane(m_simu, m_name, m_isRigid);
+            m_name += "_node";
             if (res == 1) // plane added
             {
                 Debug.Log("plane Added! " + m_name);
