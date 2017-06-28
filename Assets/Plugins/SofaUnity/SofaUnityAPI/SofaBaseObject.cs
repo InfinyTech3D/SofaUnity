@@ -15,10 +15,10 @@ public class SofaBaseObject : IDisposable
 
     protected bool log = false;
 
-    public SofaBaseObject(IntPtr simu, string name, bool isRigid)
+    public SofaBaseObject(IntPtr simu, string idObject, bool isRigid)
     {
         //m_simu = simu;
-        m_name = name;
+        m_name = idObject;
         m_isRigid = isRigid;   
 
         //createObject();

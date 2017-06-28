@@ -141,7 +141,7 @@ namespace SofaUnity
                                 }
                                 else
                                 {
-                                    go.AddComponent<SRigidMesh>();
+                                    go.AddComponent<SDeformableMesh>();
                                     go.name = "SMesh - " + name;
                                 }
                                 

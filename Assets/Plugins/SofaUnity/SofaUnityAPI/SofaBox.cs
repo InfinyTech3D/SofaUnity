@@ -5,10 +5,10 @@ using System.Runtime.InteropServices;
 public class SofaBox : SofaMeshObject
 { 
 
-    public SofaBox(IntPtr simu, string name, bool isRigid)
-        : base (simu, name, isRigid)        
+    public SofaBox(IntPtr simu, string idObject, bool isRigid)
+        : base (simu, idObject, isRigid)        
     {
-        //m_simu = simu;
+        
     }
 
     ~SofaBox()

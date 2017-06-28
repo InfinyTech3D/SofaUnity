@@ -4,14 +4,10 @@ using System.Runtime.InteropServices;
 
 public class SofaMeshObject : SofaBaseObject
 {
-    public SofaMeshObject(IntPtr simu, string name, bool isRigid)
-        : base (simu, name, isRigid)
+    public SofaMeshObject(IntPtr simu, string idObject, bool isRigid)
+        : base (simu, idObject, isRigid)
     {
-        if (simu == IntPtr.Zero)
-            Debug.LogError("Error null pointer");
-        else
-            Debug.LogError("Ok pointer");
-        //m_simu = simu;
+        m_simu = simu;
     }
 
     public override void loadObject()
