@@ -9,9 +9,8 @@ public class SSphereEditor : SGridEditor
     [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SSphere")]
     new public static GameObject CreateNew()
     {
-        GameObject go = new GameObject();
+        GameObject go = new GameObject("SSphere");
         go.AddComponent<SSphere>();
-        go.name = "SSphere";
         return go;
     }
 
@@ -29,9 +28,8 @@ public class SRigidSphereEditor : SRigidGridEditor
     [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SRigidSphere")]
     new public static GameObject CreateNew()
     {
-        GameObject go = new GameObject();
+        GameObject go = new GameObject("SRigidSphere");
         go.AddComponent<SRigidSphere>();
-        go.name = "SRigidSphere";
         return go;
     }
 

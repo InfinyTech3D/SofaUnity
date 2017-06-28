@@ -10,9 +10,8 @@ public class SDeformableMeshEditor : Editor
     [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SDeformableMesh")]
     public static GameObject CreateNew()
     {
-        GameObject go = new GameObject();
+        GameObject go = new GameObject("SDeformableMesh");
         go.AddComponent<SDeformableMesh>();
-        go.name = "SDeformableMesh";
         return go;
     }
 
@@ -51,9 +50,8 @@ public class SRigidMeshEditor : Editor
     [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SRigidMesh")]
     public static GameObject CreateNew()
     {
-        GameObject go = new GameObject();
+        GameObject go = new GameObject("SRigidMesh");
         go.AddComponent<SRigidMesh>();
-        go.name = "SRigidMesh";
         return go;
     }
 

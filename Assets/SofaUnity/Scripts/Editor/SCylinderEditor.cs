@@ -9,9 +9,8 @@ public class SCylinderEditor : SGridEditor
     [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SCylinder")]
     new public static GameObject CreateNew()
     {
-        GameObject go = new GameObject();
+        GameObject go = new GameObject("SCylinder");
         go.AddComponent<SCylinder>();
-        go.name = "SCylinder";
         return go;
     }
 
@@ -29,9 +28,8 @@ public class SRigidCylinderEditor : SRigidGridEditor
     [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SRigidCylinder")]
     new public static GameObject CreateNew()
     {
-        GameObject go = new GameObject();
+        GameObject go = new GameObject("SRigidCylinder");
         go.AddComponent<SRigidCylinder>();
-        go.name = "SRigidCylinder";
         return go;
     }
 

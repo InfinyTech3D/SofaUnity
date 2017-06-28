@@ -15,9 +15,8 @@ public class SofaContextEditor : Editor
             Debug.LogError("The Scene already includes a SofaContext. Only one context is possible.");
             return null;
         }
-        GameObject go = new GameObject();
+        GameObject go = new GameObject("SofaContext");
         go.AddComponent<SofaContext>();
-        go.name = "SofaContext";
         return go;
     }
 

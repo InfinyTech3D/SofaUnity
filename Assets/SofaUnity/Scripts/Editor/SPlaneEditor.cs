@@ -9,9 +9,8 @@ public class SRigidPlaneEditor : SRigidGridEditor
     [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SRigidPlane")]
     new public static GameObject CreateNew()
     {
-        GameObject go = new GameObject();
+        GameObject go = new GameObject("SRigidPlane");
         go.AddComponent<SRigidPlane>();
-        go.name = "SRigidPlane";
         return go;
     }
 

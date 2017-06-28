@@ -9,9 +9,8 @@ public class SBoxEditor : SGridEditor
     [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SBox")]
     new public static GameObject CreateNew()
     {
-        GameObject go = new GameObject();
-        go.AddComponent<SBox>();
-        go.name = "SBox";
+        GameObject go = new GameObject("SBox");
+        go.AddComponent<SBox>();        
         return go;
     }
 
@@ -28,9 +27,8 @@ public class SRigidBoxEditor : SRigidGridEditor
     [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SRigidBox")]
     new public static GameObject CreateNew()
     {
-        GameObject go = new GameObject();
-        go.AddComponent<SRigidBox>();
-        go.name = "SRigidBox";
+        GameObject go = new GameObject("SRigidBox");
+        go.AddComponent<SRigidBox>();        
         return go;
     }
 
