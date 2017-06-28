@@ -49,10 +49,8 @@ namespace SofaUnity
             }
 
             Debug.Log("SRigidMesh::createObject called.");
-            if (m_impl != null)
+            if (m_impl == null)
                 m_context.objectcpt = m_context.objectcpt + 1;
-            else
-                Debug.LogError("SRigidMesh:: Object not created");
         }
 
         protected override void updateImpl()

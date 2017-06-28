@@ -16,9 +16,7 @@ namespace SofaUnity
             if (_simu != IntPtr.Zero)
                 m_impl = new SofaPlane(_simu, m_context.objectcpt, true);
 
-            if (m_impl != null)
-                m_context.objectcpt = m_context.objectcpt + 1;
-            else
+            if (m_impl == null)
                 Debug.LogError("SRigidPlane:: Object not created");
         }
 

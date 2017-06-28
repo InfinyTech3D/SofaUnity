@@ -47,9 +47,7 @@ namespace SofaUnity
                 m_impl.loadObject();
             }
 
-            if (m_impl != null)
-                m_context.objectcpt = m_context.objectcpt + 1;
-            else
+            if (m_impl == null)
                 Debug.LogError("SVisualMesh:: Object not created");
         }
 

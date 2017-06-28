@@ -19,9 +19,7 @@ namespace SofaUnity
 
             this.m_useTex = true;
 
-            if (m_impl != null)
-                m_context.objectcpt = m_context.objectcpt + 1;
-            else
+            if (m_impl == null)
                 Debug.LogError("SBox:: Object not created");
         }
 
