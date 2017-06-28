@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 public class SofaSphere : SofaMeshObject
 {
-    public SofaSphere(IntPtr simu, int idObject, bool isRigid)
+    public SofaSphere(IntPtr simu, string idObject, bool isRigid)
         : base(simu, idObject, isRigid)
     {
 
@@ -62,18 +62,17 @@ public class SofaSphere : SofaMeshObject
 
     protected override void createObject()
     {
-        m_name = "sphere_" + m_idObject + "_node";
 
         if (m_native == IntPtr.Zero) // first time create object only
         {
             // Create the sphere
-            int res = sofaPhysicsAPI_addSphere(m_simu, "sphere_" + m_idObject, m_isRigid);
+            int res = sofaPhysicsAPI_addSphere(m_simu, m_name, m_isRigid);
             if (res == 1) // sphere added
             {
                 Debug.Log("sphere Added! " + m_name);
 
                 // Set created object to native pointer
-                m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name);
+             //   m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name);
             }
 
             //    m_native = sofaPhysicsAPI_get3DObject(m_simu, "truc1");

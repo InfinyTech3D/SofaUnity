@@ -4,10 +4,10 @@ using System.Runtime.InteropServices;
 
 public class SofaMeshObject : SofaBaseObject
 {
-    public SofaMeshObject(IntPtr simu, int idObject, bool isRigid)
+    public SofaMeshObject(IntPtr simu, string idObject, bool isRigid)
         : base (simu, idObject, isRigid)
     {
-
+        m_simu = simu;
     }
 
     public override void loadObject()
@@ -15,8 +15,8 @@ public class SofaMeshObject : SofaBaseObject
         //if (m_native != IntPtr.Zero)        
         if (m_native == IntPtr.Zero) // first time create object only
         {
-            m_name = sofaPhysicsAPI_get3DObjectName(m_simu, m_idObject);
-            m_type = sofaPhysicsAPI_get3DObjectType(m_simu, m_idObject); // sofa3DObject_getObjectType(m_native);
+            //m_name = sofaPhysicsAPI_get3DObjectName(m_simu, m_idObject);
+            //m_type = sofaPhysicsAPI_get3DObjectType(m_simu, m_idObject); // sofa3DObject_getObjectType(m_native);
             m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name);
 
             if (m_native == IntPtr.Zero)
@@ -24,7 +24,6 @@ public class SofaMeshObject : SofaBaseObject
             else
             {
                 Debug.Log("Load Node Name: " + m_name);
-                Debug.Log("Load Node Type: " + m_type);
             }
         }
     }

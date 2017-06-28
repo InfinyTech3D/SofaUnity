@@ -13,16 +13,16 @@ namespace SofaUnity
         /// Mesh of this object
         protected override void createObject()
         {
+            Debug.Log("SBox::createObject: " + m_nameId);
+            
             IntPtr _simu = m_context.getSimuContext();
             if (_simu != IntPtr.Zero)
-                m_impl = new SofaBox(_simu, m_context.objectcpt, false);
+            {
+                Debug.Log("SBox::createObject: " + m_nameId);
+                m_impl = new SofaBox(_simu, m_nameId, false);
+            }
 
             this.m_useTex = true;
-
-            if (m_impl != null)
-                m_context.objectcpt = m_context.objectcpt + 1;
-            else
-                Debug.LogError("SBox:: Object not created");
         }
 
         // Update is called once per frame

@@ -14,12 +14,7 @@ namespace SofaUnity
         {
             IntPtr _simu = m_context.getSimuContext();
             if (_simu != IntPtr.Zero)
-                m_impl = new SofaSphere(_simu, m_context.objectcpt, true);
-
-            if (m_impl != null)
-                m_context.objectcpt = m_context.objectcpt + 1;
-            else
-                Debug.LogError("SRigidSphere:: Object not created");
+                m_impl = new SofaSphere(_simu, m_nameId, true);
         }
 
     }
