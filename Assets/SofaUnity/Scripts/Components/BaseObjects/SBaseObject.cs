@@ -34,7 +34,7 @@ namespace SofaUnity
           //  gameObject.transform.position = new Vector3(1, 1, 1); ;
         }        
        
-        string m_nameId;
+        protected string m_nameId;
         public string nameId
         {
             get { return m_nameId; }
@@ -53,7 +53,17 @@ namespace SofaUnity
                 m_context = _contextObject.GetComponent<SofaContext>();
 
                 this.transform.parent = _contextObject.gameObject.transform;
+                Debug.Log("this.name : " + this.name);
+                int pos = this.name.IndexOf("-");
+                if (pos != -1)
+                    m_nameId = this.name.Substring(pos + 1); // remove the space
+                else
+                    m_nameId = this.name;
+                                
+                m_nameId += "_" + m_context.objectcpt;
+                m_context.objectcpt = m_context.objectcpt + 1;
 
+                Debug.Log("m_nameId: " + m_nameId);
                 // really Create the gameObject linked to sofaObject
                 createObject();
 
