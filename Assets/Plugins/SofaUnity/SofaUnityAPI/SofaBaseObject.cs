@@ -7,21 +7,21 @@ public class SofaBaseObject : IDisposable
     protected IntPtr m_native = IntPtr.Zero;
     protected IntPtr m_simu = IntPtr.Zero;
 
-   // protected int m_idObject;
+    protected int m_idObject;
     protected string m_name;
-    //protected string m_type;
+    protected string m_type;
     bool m_isDisposed;
     protected bool m_isRigid = false;
 
     protected bool log = false;
 
-    public SofaBaseObject(IntPtr simu, string idObject, bool isRigid)
+    public SofaBaseObject(IntPtr simu, int idObject, bool isRigid)
     {
-        //m_simu = simu;
-        m_name = idObject;
+        m_simu = simu;
+        m_idObject = idObject;
         m_isRigid = isRigid;   
 
-        //createObject();
+        createObject();
     }
 
     ~SofaBaseObject()
@@ -53,7 +53,7 @@ public class SofaBaseObject : IDisposable
 
     protected virtual void createObject()
     {
-    //    m_name = "baseObject" + m_idObject + "_node";
+        m_name = "baseObject" + m_idObject + "_node";
     }
 
     public virtual void loadObject()

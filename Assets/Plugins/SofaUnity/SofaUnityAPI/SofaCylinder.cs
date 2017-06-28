@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 public class SofaCylinder : SofaMeshObject
 {
-    public SofaCylinder(IntPtr simu, string idObject, bool isRigid)
+    public SofaCylinder(IntPtr simu, int idObject, bool isRigid)
         : base(simu, idObject, isRigid)
     {
 
@@ -62,18 +62,18 @@ public class SofaCylinder : SofaMeshObject
 
     protected override void createObject()
     {
-        //m_name = "cylinder_" + m_idObject + "_node";
+        m_name = "cylinder_" + m_idObject + "_node";
 
         if (m_native == IntPtr.Zero) // first time create object only
         {
             // Create the cylinder
-            int res = sofaPhysicsAPI_addCylinder(m_simu, m_name, m_isRigid);
+            int res = sofaPhysicsAPI_addCylinder(m_simu, "cylinder_" + m_idObject, m_isRigid);
             if (res == 1) // cylinder added
             {
                 Debug.Log("cylinder Added! " + m_name);
 
                 // Set created object to native pointer
-              //  m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name);
+                m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name);
             }
 
             //    m_native = sofaPhysicsAPI_get3DObject(m_simu, "truc1");
