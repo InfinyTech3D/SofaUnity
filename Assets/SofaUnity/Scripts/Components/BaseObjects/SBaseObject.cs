@@ -57,13 +57,14 @@ namespace SofaUnity
                 Debug.Log("this.name : " + this.name);
                 int pos = this.name.IndexOf("-");
                 if (pos != -1)
-                    m_nameId = this.name.Substring(pos + 1); // remove the space
+                    m_nameId = this.name.Substring(pos + 1, this.name.Length - (pos + 1)); // remove the space
                 else
+                {
                     m_nameId = this.name;
+                    m_nameId += "_" + m_context.objectcpt;
+                }
 
-                m_nameId += "_" + m_context.objectcpt;                
                 Debug.Log("m_nameId: " + m_nameId);
-
 
                 // really Create the gameObject linked to sofaObject
                 createObject();
