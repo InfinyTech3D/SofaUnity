@@ -15,12 +15,13 @@ public class SofaBaseMesh : SofaBaseObject
         //if (m_native != IntPtr.Zero)        
         if (m_native == IntPtr.Zero) // first time create object only
         {
+
 //            m_name = sofaPhysicsAPI_get3DObjectName(m_simu, m_idObject);
 //            m_type = sofaPhysicsAPI_get3DObjectType(m_simu, m_idObject); // sofa3DObject_getObjectType(m_native);
             m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name);
 
             if (m_native == IntPtr.Zero)
-                Debug.LogError("Error Mesh can't be found!");
+                Debug.LogError("Error Mesh can't be found: " + m_name);
             else
             {
                 Debug.Log("Load Node Name: " + m_name);
