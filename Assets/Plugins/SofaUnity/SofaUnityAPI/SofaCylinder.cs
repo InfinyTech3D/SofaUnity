@@ -4,8 +4,8 @@ using System.Runtime.InteropServices;
 
 public class SofaCylinder : SofaMeshObject
 {
-    public SofaCylinder(IntPtr simu, int idObject, string nameID, bool isRigid)
-        : base(simu, idObject, nameID, isRigid)
+    public SofaCylinder(IntPtr simu, string nameID, bool isRigid)
+        : base(simu, nameID, isRigid)
     {
 
     }

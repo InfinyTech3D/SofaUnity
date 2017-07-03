@@ -14,7 +14,7 @@ namespace SofaUnity
         {
             IntPtr _simu = m_context.getSimuContext();
             if (_simu != IntPtr.Zero)
-                m_impl = new SofaCylinder(_simu, m_context.objectcpt, m_nameId, false);
+                m_impl = new SofaCylinder(_simu, m_nameId, false);
 
             if (m_impl == null)
                 Debug.LogError("SCylinder:: Object not created");

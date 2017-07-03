@@ -15,7 +15,7 @@ namespace SofaUnity
         {
             IntPtr _simu = m_context.getSimuContext();
             if (_simu != IntPtr.Zero)
-                m_impl = new SofaBox(_simu, m_context.objectcpt, m_nameId, true);
+                m_impl = new SofaBox(_simu, m_nameId, true);
 
             if (m_impl == null)
                 Debug.LogError("SRigidBox:: Object not created");

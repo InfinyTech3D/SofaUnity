@@ -7,7 +7,6 @@ public class SofaBaseObject : IDisposable
     protected IntPtr m_native = IntPtr.Zero;
     protected IntPtr m_simu = IntPtr.Zero;
 
-    protected int m_idObject;
     protected string m_name;
     protected string m_type;
     bool m_isDisposed;
@@ -15,10 +14,9 @@ public class SofaBaseObject : IDisposable
 
     protected bool log = false;
 
-    public SofaBaseObject(IntPtr simu, int idObject, string nameID, bool isRigid)
+    public SofaBaseObject(IntPtr simu, string nameID, bool isRigid)
     {
         m_simu = simu;
-        m_idObject = idObject;
         m_name = nameID;
         m_isRigid = isRigid;   
 

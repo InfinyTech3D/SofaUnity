@@ -39,12 +39,13 @@ namespace SofaUnity
         }
 
         protected override void createObject()
-        {            
+        {
             IntPtr _simu = m_context.getSimuContext();
             if (_simu != IntPtr.Zero)
             {
-                m_impl = new SofaMeshObject(_simu, m_context.objectcpt, m_nameId, false);
-                m_impl.loadObject();
+                m_impl = new SofaBox(_simu, m_nameId, false);
+                //m_impl = new SofaMeshObject(_simu, m_context.objectcpt, m_nameId, false);
+                //m_impl.loadObject();
             }
 
             if (m_impl == null)
