@@ -139,11 +139,18 @@ namespace SofaUnity
                                     go = new GameObject("SVisualMesh - " + name);
                                     go.AddComponent<SVisualMesh>();
                                 }
-                                else
+                                else if (type.Contains("SofaDeformable3DObject"))
                                 {
                                     go = new GameObject("SMesh - " + name);
                                     go.AddComponent<SDeformableMesh>();
                                 }
+                                else if (type.Contains("SofaRigid3DObject"))
+                                {
+                                    go = new GameObject("SMesh - " + name);
+                                    go.AddComponent<SRigidMesh>();
+                                }
+                                else
+                                    continue;
                                 
                                 go.transform.parent = this.gameObject.transform;
                             }
