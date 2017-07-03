@@ -17,7 +17,7 @@ namespace SofaUnity
         //private MeshRenderer m_meshRenderer;
 
         /// Pointer to the SOFA API object
-        protected SofaMeshObject m_impl = null;
+        protected SofaBaseMesh m_impl = null;
 
         private void Awake()
         {

@@ -2,9 +2,9 @@
 using System;
 using System.Runtime.InteropServices;
 
-public class SofaMeshObject : SofaBaseObject
+public class SofaBaseMesh : SofaBaseObject
 {
-    public SofaMeshObject(IntPtr simu, string nameID, bool isRigid)
+    public SofaBaseMesh(IntPtr simu, string nameID, bool isRigid)
         : base (simu, nameID, isRigid)
     {
 
@@ -134,16 +134,17 @@ public class SofaMeshObject : SofaBaseObject
 
     public virtual int[] createTriangulation()
     {
+        
         int nbrTris = sofaPhysics3DObject_getNbTriangles(m_simu, m_name);
         int nbrQuads = sofaPhysics3DObject_getNbQuads(m_simu, m_name);
 
-        if (log)
+       // if (log)
         {
             Debug.Log("createTriangulation: " + m_name);
             Debug.Log("nbrTris: " + nbrTris);
             Debug.Log("nbQuads: " + nbrQuads);
         }
-
+        
         if (nbrTris < 0)
             nbrTris = 0;
 
@@ -188,7 +189,7 @@ public class SofaMeshObject : SofaBaseObject
             //Debug.Log("vertices: " + nbrV);
             //Debug.Log("vert: " + mesh.vertices.Length);
             //Debug.Log("normals: " + normals.Length);
-            //Debug.Log(vertices.Length);
+            Debug.Log(nbrV);
 
             float[] vertices = new float[nbrV * 3];
             sofaPhysics3DObject_getVertices(m_simu, m_name, vertices);

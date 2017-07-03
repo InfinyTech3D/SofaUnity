@@ -2,7 +2,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-public class SofaBox : SofaMeshObject
+public class SofaBox : SofaBaseMesh
 { 
 
     public SofaBox(IntPtr simu, string nameID, bool isRigid) 
