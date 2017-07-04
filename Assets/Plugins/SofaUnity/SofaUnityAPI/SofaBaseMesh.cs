@@ -15,9 +15,6 @@ public class SofaBaseMesh : SofaBaseObject
         //if (m_native != IntPtr.Zero)        
         if (m_native == IntPtr.Zero) // first time create object only
         {
-
-//            m_name = sofaPhysicsAPI_get3DObjectName(m_simu, m_idObject);
-//            m_type = sofaPhysicsAPI_get3DObjectType(m_simu, m_idObject); // sofa3DObject_getObjectType(m_native);
             m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name);
 
             if (m_native == IntPtr.Zero)
@@ -139,7 +136,7 @@ public class SofaBaseMesh : SofaBaseObject
         int nbrTris = sofaPhysics3DObject_getNbTriangles(m_simu, m_name);
         int nbrQuads = sofaPhysics3DObject_getNbQuads(m_simu, m_name);
 
-       // if (log)
+        if (log)
         {
             Debug.Log("createTriangulation: " + m_name);
             Debug.Log("nbrTris: " + nbrTris);
@@ -187,15 +184,17 @@ public class SofaBaseMesh : SofaBaseObject
         if (m_native != IntPtr.Zero)
         {
             int nbrV = sofaPhysicsAPI_getNbVertices(m_simu, m_name);
-            //Debug.Log("vertices: " + nbrV);
-            //Debug.Log("vert: " + mesh.vertices.Length);
-            //Debug.Log("normals: " + normals.Length);
-            Debug.Log(nbrV);
+
+            if (log)
+                Debug.Log("vertices: " + nbrV);
 
             float[] vertices = new float[nbrV * 3];
-            sofaPhysics3DObject_getVertices(m_simu, m_name, vertices);
+            int resV = sofaPhysics3DObject_getVertices(m_simu, m_name, vertices);
             float[] normals = new float[nbrV * 3];
-            sofaPhysics3DObject_getNormals(m_simu, m_name, normals);
+            int resN = sofaPhysics3DObject_getNormals(m_simu, m_name, normals);
+
+            Debug.Log("resV: " + resV);
+            Debug.Log("resN: " + resN);
 
             Vector3[] verts = mesh.vertices;
             Vector3[] norms = mesh.normals;
@@ -276,21 +275,69 @@ public class SofaBaseMesh : SofaBaseObject
 
     public virtual void recomputeTexCoords(Mesh mesh)
     {
+        Debug.Log("recomputeTexCoords of: " + m_name);
+
         Vector3[] verts = mesh.vertices;
         int nbrV = verts.Length;
 
         float[] texCoords = new float[nbrV * 2];
         Vector2[]  uv = new Vector2[nbrV];
 
-        sofaPhysics3DObject_getTexCoords(m_simu, m_name, texCoords);
+        int res = sofaPhysics3DObject_getTexCoords(m_simu, m_name, texCoords);
+        if (log)
+            Debug.Log("res get Texcoords: " + res);
 
-        for (int i = 0; i < nbrV; i++)
+        if (res < 0)
         {
-            uv[i].x = texCoords[i * 2];
-            uv[i].y = texCoords[i * 2 + 1];
+            Vector3 min = new Vector3(100000, 100000, 100000);
+            Vector3 max = new Vector3(-100000, -100000, -100000);
+            
+            // Get min and max of the mesh
+            for (int i = 0; i < nbrV; i++)
+            {
+                Debug.Log("verts[i]: " + i + " -> " + verts[i]);
 
-            if(uv[i].x == 0.0 && uv[i].y == 0.0)
-                uv[i] = new Vector2(verts[i].x + verts[i].y, verts[i].z + verts[i].y);
+                if (verts[i].x > max.x)
+                    max.x = verts[i].x;
+                if (verts[i].y > max.y)
+                    max.y = verts[i].y;
+                if (verts[i].z > max.z)
+                    max.z = verts[i].z;
+
+                if (verts[i].x < min.x)
+                    min.x = verts[i].x;
+                if (verts[i].y < min.y)
+                    min.y = verts[i].y;
+                if (verts[i].z < min.z)
+                    min.z = verts[i].z;
+            }
+
+            Debug.Log("min: " + min);
+            Debug.Log("max: " + max);
+
+            float minXY = min.x + min.z;
+            float minYZ = min.y + min.z;
+
+            float rangeXY = 1/(max.x + max.z - minXY);
+            float rangeYZ = 1/(max.y + max.z - minYZ);
+            Debug.Log("rangeXY: " + rangeXY);
+            Debug.Log("rangeYZ: " + rangeYZ);
+
+            for (int i = 0; i < nbrV; i++)
+            {
+                uv[i] = new Vector2((verts[i].x + verts[i].z - minXY) * rangeXY,
+                    (verts[i].y + verts[i].z - minYZ) * rangeYZ);
+
+                Debug.Log("uv: " + i + " - > " + uv[i]);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < nbrV; i++)
+            {
+                uv[i].x = texCoords[i * 2];
+                uv[i].y = texCoords[i * 2 + 1];
+            }
         }
             
         mesh.uv = uv;

@@ -23,7 +23,6 @@ namespace SofaUnity
             m_impl.updateMesh(m_mesh);
             //m_mesh.triangles = m_impl.createTriangulation();
             //m_impl.updateMesh(m_mesh);
-            //m_impl.recomputeTexCoords(m_mesh);
 
             // Special part for tetra
             if (nbTetra == 0)
@@ -44,7 +43,6 @@ namespace SofaUnity
 
             m_impl.updateMesh(m_mesh);
 
-            m_impl.recomputeTexCoords(m_mesh);
             m_impl.recomputeTriangles(m_mesh);
 
             m_impl.setMass(m_mass);
