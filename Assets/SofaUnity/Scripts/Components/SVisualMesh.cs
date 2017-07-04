@@ -59,7 +59,7 @@ namespace SofaUnity
             if (m_impl != null)
             {
                 m_impl.updateMesh(m_mesh);
-                m_mesh.RecalculateNormals();
+                //m_mesh.RecalculateNormals();
             }
         }
     }

@@ -169,12 +169,12 @@ public class SofaBaseMesh : SofaBaseObject
         for (int i = 0; i < nbrQuads; ++i)
         {
             trisOut[nbrIntTri + i * 6] = quads[i * 4];
-            trisOut[nbrIntTri + i * 6 + 1] = quads[i * 4 + 2];
-            trisOut[nbrIntTri + i * 6 + 2] = quads[i * 4 + 1]; 
+            trisOut[nbrIntTri + i * 6 + 1] = quads[i * 4 + 1];
+            trisOut[nbrIntTri + i * 6 + 2] = quads[i * 4 + 2]; 
 
             trisOut[nbrIntTri + i * 6 + 3] = quads[i * 4];
-            trisOut[nbrIntTri + i * 6 + 4] = quads[i * 4 + 3]; 
-            trisOut[nbrIntTri + i * 6 + 5] = quads[i * 4 + 2];
+            trisOut[nbrIntTri + i * 6 + 4] = quads[i * 4 + 2]; 
+            trisOut[nbrIntTri + i * 6 + 5] = quads[i * 4 + 3];
         }
 
         return trisOut;
@@ -193,10 +193,10 @@ public class SofaBaseMesh : SofaBaseObject
             int resV = sofaPhysics3DObject_getVertices(m_simu, m_name, vertices);
             float[] normals = new float[nbrV * 3];
             int resN = sofaPhysics3DObject_getNormals(m_simu, m_name, normals);
-            if (log)
+            //if (log)
             {
-                Debug.Log("resV: " + resV);
-                Debug.Log("resN: " + resN);
+                Debug.Log(m_name + " - resV: " + resV);
+                Debug.Log(m_name + " - resN: " + resN);
             }
 
             Vector3[] verts = mesh.vertices;
@@ -210,42 +210,36 @@ public class SofaBaseMesh : SofaBaseObject
                 first = true;
             }
 
-
-            if (vertices.Length != 0 && normals.Length != 0)
+            if (vertices.Length != 0)
             {
-
                 for (int i = 0; i < verts.Length; ++i)
                 {
-                    // Debug.Log(i + " -> " + verts[i]);
-                    //Debug.Log(i + " vert -> " + vertices[i]);
                     if (first)
                     {
                         verts[i] = new Vector3(0, 0, 0);
                         norms[i] = new Vector3(0, 0, 0);
                     }
+
+                    verts[i].x = vertices[i * 3];
+                    verts[i].y = vertices[i * 3 + 1];
+                    verts[i].z = vertices[i * 3 + 2];
+
+                    if (resN < 0) // no normals
+                    {
+                        Vector3 vec = Vector3.Normalize(verts[i]);
+                        norms[i].x = vec.x;// normals[i * 3];
+                        norms[i].y = vec.y; //normals[i * 3 + 1];
+                        norms[i].z = vec.z; //normals[i * 3 + 2];
+                    }
                     else
                     {
-                        verts[i].x = vertices[i * 3];
-                        verts[i].y = vertices[i * 3 + 1];
-                        verts[i].z = vertices[i * 3 + 2];
-
-                        if (norms[i][0] == 0 && norms[i][1] == 0 && norms[i][2] == 0)
-                        {
-                            Vector3 vec = Vector3.Normalize(verts[i]);
-                            norms[i].x = vec.x;// normals[i * 3];
-                            norms[i].y = vec.y; //normals[i * 3 + 1];
-                            norms[i].z = vec.z; //normals[i * 3 + 2];
-                        }
-                        //else
-                        //{
-                        //    norms[i].x = normals[i * 3];
-                        //    norms[i].y = normals[i * 3 + 1];
-                        //    norms[i].z = normals[i * 3 + 2];
-                        //}
+                        norms[i].x = normals[i * 3];
+                        norms[i].y = normals[i * 3 + 1];
+                        norms[i].z = normals[i * 3 + 2];
                     }
                 }
             }
-
+            
             mesh.vertices = verts;
             mesh.normals = norms;
         }
