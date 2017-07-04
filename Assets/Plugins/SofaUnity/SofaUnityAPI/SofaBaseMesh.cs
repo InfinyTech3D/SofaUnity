@@ -23,7 +23,7 @@ public class SofaBaseMesh : SofaBaseObject
             {
                 Debug.Log("Load Node Name: " + m_name);
                 m_parent = sofaPhysicsAPI_getParentNodeName(m_simu, m_name);
-                Debug.Log("Parent Name: " + m_parent);
+                //Debug.Log("Parent Name: " + m_parent);
             }
         }
     }

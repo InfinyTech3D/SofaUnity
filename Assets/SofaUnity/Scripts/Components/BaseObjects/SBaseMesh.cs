@@ -97,7 +97,7 @@ namespace SofaUnity
         public string parentName()
         {
             if (m_impl == null)
-                return "None";
+                return "No impl";
             else
                 return m_impl.parent;
         }

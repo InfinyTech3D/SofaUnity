@@ -69,7 +69,11 @@ namespace SofaUnity
                 // really Create the gameObject linked to sofaObject
                 createObject();
 
+                // increment counter if loading scene
+                m_context.countCreated();
+
                 m_context.objectcpt = m_context.objectcpt + 1;
+                Debug.Log("m_context.objectcpt: " + m_context.objectcpt);
 
                 return true;
             }

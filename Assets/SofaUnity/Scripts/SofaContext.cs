@@ -12,7 +12,12 @@ namespace SofaUnity
     public class SofaContext : MonoBehaviour
     {
         SofaContextAPI m_impl;
-        
+        protected int m_nbrObject = 0;
+        public int nbrObject
+        {
+            get { return m_nbrObject; }
+        }
+
         void Awake()
         {
             //Debug.Log("SofaContext::Awake called.");
@@ -32,6 +37,11 @@ namespace SofaUnity
 
         void OnDestroy()
         {
+            Debug.Log("SofaContext::OnDestroy stop called.");
+            foreach (Transform child in transform)
+            {
+                //GameObject.Destroy(child.gameObject);
+            }
 #if !UNITY_EDITOR
             Debug.Log("SofaContext::OnDestroy stop called.");
             m_impl.stop();
@@ -48,14 +58,20 @@ namespace SofaUnity
         void init()
         {
             if (m_impl == null)
-            {                
+            {
+#if UNITY_EDITOR
                 m_impl = new SofaContextAPI();
                 m_impl.start();
                 if (m_filename != "")
+                {
+                    //loadFilename();
                     m_impl.loadScene(m_filename);
+                    recreateHiearchy();
+                }
 
                 m_impl.setTimeStep(m_timeStep);
                 m_impl.setGravity(m_gravity);
+#endif
             }
         }
 
@@ -123,40 +139,7 @@ namespace SofaUnity
                     {
                         m_filename = value;
                         if (m_impl != null)
-                        {
-                            m_impl.loadScene(m_filename);
-                            int res = m_impl.getNumberObjects();
-                            Debug.Log("getNumberObjects: " + res);
-                            for (int i=0; i<res; ++i)
-                            {
-                                string name = m_impl.getObjectName(i);
-                                string type = m_impl.getObjectType(i);
-
-                                GameObject go;
-                                Debug.Log("add Object: " + i);
-                                if (type.Contains("SofaVisual"))
-                                {
-                                    go = new GameObject("SVisualMesh - " + name);
-                                    go.AddComponent<SVisualMesh>();
-                                }
-                                else if (type.Contains("SofaDeformable3DObject"))
-                                {
-                                    go = new GameObject("SMesh - " + name);
-                                    go.AddComponent<SDeformableMesh>();
-                                }
-                                else if (type.Contains("SofaRigid3DObject"))
-                                {
-                                    go = new GameObject("SMesh - " + name);
-                                    go.AddComponent<SRigidMesh>();
-                                }
-                                else
-                                    continue;
-                                
-                                go.transform.parent = this.gameObject.transform;
-                            }
-
-                            recreateHiearchy();
-                        }
+                            loadFilename();
                     }
                     else
                         Debug.LogError("Error file doesn't exist.");
@@ -172,10 +155,53 @@ namespace SofaUnity
             return m_impl.getSimuContext();
         }
 
-        protected Dictionary<string, List<string> > hierarchy;
+        int cptCreated = 0;
+        public void countCreated()
+        {            
+            cptCreated++;            
+            if (cptCreated == m_nbrObject)
+                recreateHiearchy();
+        }
 
+
+        protected void loadFilename()
+        {
+            m_impl.loadScene(m_filename);
+            m_nbrObject = m_impl.getNumberObjects();
+            Debug.Log("getNumberObjects: " + m_nbrObject);
+            for (int i = 0; i < m_nbrObject; ++i)
+            {
+                string name = m_impl.getObjectName(i);
+                string type = m_impl.getObjectType(i);
+
+                GameObject go;
+                if (type.Contains("SofaVisual"))
+                {
+                    go = new GameObject("SVisualMesh - " + name);
+                    go.AddComponent<SVisualMesh>();
+                }
+                else if (type.Contains("SofaDeformable3DObject"))
+                {
+                    go = new GameObject("SMesh - " + name);
+                    go.AddComponent<SDeformableMesh>();
+                }
+                else if (type.Contains("SofaRigid3DObject"))
+                {
+                    go = new GameObject("SMesh - " + name);
+                    go.AddComponent<SRigidMesh>();
+                }
+                else
+                    continue;
+
+                go.transform.parent = this.gameObject.transform;
+            }
+            recreateHiearchy();
+        }
+
+        protected Dictionary<string, List<string> > hierarchy;
         protected void recreateHiearchy()
         {
+            Debug.Log("recreateHiearchy");
             if (m_impl == null)
                 return;
 
@@ -195,15 +221,16 @@ namespace SofaUnity
 
             foreach (KeyValuePair<string, List<string> > entry in hierarchy)
             {
+                Debug.Log("parent: " + entry.Key);
+                
                 if (entry.Key != "root")
                     moveChildren(entry.Key);
             }
-
+            hierarchy.Clear();
         }
 
         protected void moveChildren(string currentNode)
         {
-            Debug.Log("parent: " + currentNode);
             List<string> children = hierarchy[currentNode];
 
             // get parent
@@ -218,7 +245,11 @@ namespace SofaUnity
                 foreach (Transform child in transform)
                 {
                     if (child.name.Contains(childName))
+                    {
+                        Debug.Log("change transform");
                         child.transform.parent = parent.transform;
+                        break;
+                    }
                 }
             }
         }
