@@ -163,7 +163,6 @@ namespace SofaUnityAPI
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern string sofaPhysicsAPI_get3DObjectType(IntPtr obj, int id);
 
-
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern void sofaPhysicsAPI_start(IntPtr obj);
         [DllImport("SofaAdvancePhysicsAPI")]

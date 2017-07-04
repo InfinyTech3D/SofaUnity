@@ -94,6 +94,14 @@ namespace SofaUnity
 
         }
 
+        public string parentName()
+        {
+            if (m_impl == null)
+                return "None";
+            else
+                return m_impl.parent;
+        }
+
 
         public Vector3 m_translation;
         public Vector3 translation

@@ -22,7 +22,8 @@ public class SofaBaseMesh : SofaBaseObject
             else
             {
                 Debug.Log("Load Node Name: " + m_name);
-                //Debug.Log("Load Node Type: " + m_type);
+                m_parent = sofaPhysicsAPI_getParentNodeName(m_simu, m_name);
+                Debug.Log("Parent Name: " + m_parent);
             }
         }
     }
@@ -192,9 +193,11 @@ public class SofaBaseMesh : SofaBaseObject
             int resV = sofaPhysics3DObject_getVertices(m_simu, m_name, vertices);
             float[] normals = new float[nbrV * 3];
             int resN = sofaPhysics3DObject_getNormals(m_simu, m_name, normals);
-
-            Debug.Log("resV: " + resV);
-            Debug.Log("resN: " + resN);
+            if (log)
+            {
+                Debug.Log("resV: " + resV);
+                Debug.Log("resN: " + resN);
+            }
 
             Vector3[] verts = mesh.vertices;
             Vector3[] norms = mesh.normals;
@@ -275,8 +278,6 @@ public class SofaBaseMesh : SofaBaseObject
 
     public virtual void recomputeTexCoords(Mesh mesh)
     {
-        Debug.Log("recomputeTexCoords of: " + m_name);
-
         Vector3[] verts = mesh.vertices;
         int nbrV = verts.Length;
 
@@ -295,8 +296,6 @@ public class SofaBaseMesh : SofaBaseObject
             // Get min and max of the mesh
             for (int i = 0; i < nbrV; i++)
             {
-                Debug.Log("verts[i]: " + i + " -> " + verts[i]);
-
                 if (verts[i].x > max.x)
                     max.x = verts[i].x;
                 if (verts[i].y > max.y)
@@ -312,23 +311,24 @@ public class SofaBaseMesh : SofaBaseObject
                     min.z = verts[i].z;
             }
 
-            Debug.Log("min: " + min);
-            Debug.Log("max: " + max);
-
             float minXY = min.x + min.z;
             float minYZ = min.y + min.z;
 
             float rangeXY = 1/(max.x + max.z - minXY);
             float rangeYZ = 1/(max.y + max.z - minYZ);
-            Debug.Log("rangeXY: " + rangeXY);
-            Debug.Log("rangeYZ: " + rangeYZ);
+
+            if (log)
+            {
+                Debug.Log("min: " + min);
+                Debug.Log("max: " + max);
+                Debug.Log("rangeXY: " + rangeXY);
+                Debug.Log("rangeYZ: " + rangeYZ);
+            }
 
             for (int i = 0; i < nbrV; i++)
             {
                 uv[i] = new Vector2((verts[i].x + verts[i].z - minXY) * rangeXY,
                     (verts[i].y + verts[i].z - minYZ) * rangeYZ);
-
-                Debug.Log("uv: " + i + " - > " + uv[i]);
             }
         }
         else

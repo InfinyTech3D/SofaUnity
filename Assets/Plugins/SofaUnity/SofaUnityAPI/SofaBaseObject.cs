@@ -11,8 +11,15 @@ public class SofaBaseObject : IDisposable
     protected string m_type;
     bool m_isDisposed;
     protected bool m_isRigid = false;
-
     protected bool log = false;
+
+
+    protected string m_parent;
+    public string parent
+    {
+        get { return m_parent; }
+    }
+
 
     public SofaBaseObject(IntPtr simu, string nameID, bool isRigid)
     {
@@ -52,7 +59,7 @@ public class SofaBaseObject : IDisposable
 
     protected virtual void createObject()
     {
-        //m_name = "baseObject" + m_idObject + "_node";
+        //m_name = "baseObject" + m_idObject + "_node";        
     }
 
     public virtual void loadObject()
@@ -84,6 +91,11 @@ public class SofaBaseObject : IDisposable
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern IntPtr sofaPhysicsAPI_get3DObject(IntPtr obj, string name);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern string sofaPhysicsAPI_getParentNodeName(IntPtr obj, string name);
+
+
     //}
 
 

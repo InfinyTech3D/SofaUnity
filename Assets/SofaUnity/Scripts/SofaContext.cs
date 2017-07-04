@@ -154,6 +154,8 @@ namespace SofaUnity
                                 
                                 go.transform.parent = this.gameObject.transform;
                             }
+
+                            recreateHiearchy();
                         }
                     }
                     else
@@ -162,11 +164,65 @@ namespace SofaUnity
             }
         }
 
+
         public IntPtr getSimuContext()
         {
             if (m_impl == null)
                 init();
             return m_impl.getSimuContext();
         }
+
+        protected Dictionary<string, List<string> > hierarchy;
+
+        protected void recreateHiearchy()
+        {
+            if (m_impl == null)
+                return;
+
+            hierarchy = new Dictionary<string, List<string> >();
+            foreach (Transform child in transform)
+            {
+                SBaseMesh obj = child.GetComponent<SBaseMesh>();
+                if (hierarchy.ContainsKey(obj.parentName()))               
+                    hierarchy[obj.parentName()].Add(child.name);
+                else
+                {
+                    List<string> children = new List<string>();
+                    children.Add(child.name);
+                    hierarchy.Add(obj.parentName(), children);
+                }
+            }
+
+            foreach (KeyValuePair<string, List<string> > entry in hierarchy)
+            {
+                if (entry.Key != "root")
+                    moveChildren(entry.Key);
+            }
+
+        }
+
+        protected void moveChildren(string currentNode)
+        {
+            Debug.Log("parent: " + currentNode);
+            List<string> children = hierarchy[currentNode];
+
+            // get parent
+            Transform parent = this.transform;
+            foreach (Transform child in transform)
+                if (child.name.Contains(currentNode))
+                    parent = child;
+
+            foreach (string childName in children)
+            {
+                Debug.Log("  - : " + childName);
+                foreach (Transform child in transform)
+                {
+                    if (child.name.Contains(childName))
+                        child.transform.parent = parent.transform;
+                }
+            }
+        }
+
+            
     }
 }
