@@ -21,20 +21,21 @@
         <TetrahedralCorotationalFEMForceField template="Vec3d" name="FEM" method="large" poissonRatio="0.3" 
 		youngModulus="600" computeGlobalMatrix="0" />
         <FixedConstraint  name="FixedConstraint" indices="3 39 64" />
-        <Node name="Visu" tags="Visual" gravity="0 -9.81 0">
+		<Node name="VisuLiver" tags="Visual" gravity="0 -9.81 0">
             <OglModel  name="VisualModel" fileMesh="liver-smooth.obj" scale3d="2 2 2"/>
-            <IdentityMapping name="visual mapping" input="@../dofs" output="@VisualModel" />
+            <BarycentricMapping name="visual mapping" input="@../dofs" output="@VisualModel" />
         </Node>
 		
-        <Node name="Surf" gravity="0 -9.81 0">
+        <Node name="SurfLiver" gravity="0 -9.81 0">
             <SphereLoader filename="liver.sph" />
             <MechanicalObject name="spheres" position="@[-1].position" scale3d="2 2 2"/>
             <TSphereModel name="CollisionModel"  radius="1.6"/>
             <BarycentricMapping name="sphere mapping" input="@../dofs" output="@spheres" />
         </Node>
+		
 	</Node> 
 	
-	<Node name="tool" gravity="0 0 0">
+	<Node name="Tool" gravity="0 0 0">
 		<SparseGridRamification name="grid" n="4 8 4" fileTopology="C:\projects\unity3D\SofaUnity\Assets\Scenes/Surgery/tool2.obj" nbVirtualFinerLevels="3" finestConnectivity="0"/>
 		<MechanicalObject name="dofs" position="@grid.position"  tags="NoPicking" rotation2="140 0 0" translation2="-4 13 -3"/>
         <DiagonalMass  name="mass" massDensity="1" />
@@ -43,18 +44,18 @@
 		<UncoupledConstraintCorrection />
 		<FixedConstraint  name="FixedConstraint" indices="112 33 39 115 111 108 25 31 0 12 96 102" />
 
-		<Node name="VisuBody" tags="Visual" >
+		<Node name="VisuTool" tags="Visual" >
             <OglModel  name="VisualBody" fileMesh="Scenes/Surgery/tool2.obj"/>
             <BarycentricMapping input="@.." output="@VisualBody"/>
         </Node>
 		
-		<Node name="Collis">
+		<Node name="ColliTool">
             <MeshObjLoader name="loader" filename="Scenes/Surgery/tool2.obj"/>
             <Mesh src="@loader" />
             <MechanicalObject src="@loader" name="dofs" />
             <BarycentricMapping input="@.." output="@." />
 			
-				<Node name="Surf2">      
+				<Node name="SurfTool">      
 					<RegularGrid nx="3" ny="3" nz="3" xmin="-0.5" xmax="0.5" ymin="2" ymax="4" zmin="-0.5" zmax="0.5" drawEdges="0"/>		
 					<MechanicalObject name="spheres" />               
 					<TSphereModel name="CollisionModel" radius="0.5"/>
@@ -64,7 +65,8 @@
 	</Node>
 	
 	
-	<Node name="camera" gravity="0 0 0">
+	
+	<Node name="Camera" gravity="0 0 0">
 		<SparseGridRamification name="grid" n="4 8 4" fileTopology="C:\projects\unity3D\SofaUnity\Assets\Scenes/Surgery/tool2.obj" nbVirtualFinerLevels="3" finestConnectivity="0"/>
 		<MechanicalObject name="dofs" position="@grid.position"  tags="NoPicking" rotation2="160 0 -20" translation2="1.5 14 0.2"/>
         <DiagonalMass  name="mass" massDensity="1" />
@@ -72,18 +74,18 @@
 		
 		<UncoupledConstraintCorrection />
 		<FixedConstraint  name="FixedConstraint" indices="112 33 39 115 111 108 25 31 0 12 96 102" />
-		<Node name="VisuBody" tags="Visual" >
+		<Node name="VisuCamera" tags="Visual" >
             <OglModel  name="VisualBody" fileMesh="Scenes/Surgery/tool2.obj"/>
             <BarycentricMapping input="@.." output="@VisualBody"/>
         </Node>
 		
-		<Node name="Collis">
+		<Node name="ColliCamera">
             <MeshObjLoader name="loader" filename="Scenes/Surgery/tool2.obj"/>
             <Mesh src="@loader" />
             <MechanicalObject src="@loader" name="dofs" />
             <BarycentricMapping input="@.." output="@." />
 			
-				<Node name="Surf2">      
+				<Node name="SurfCamera">      
 					<RegularGrid nx="3" ny="3" nz="3" xmin="-0.5" xmax="0.5" ymin="2" ymax="4" zmin="-0.5" zmax="0.5" drawEdges="0"/>		
 					<MechanicalObject name="spheres" />               
 					<TSphereModel name="CollisionModel" radius="0.5"/>

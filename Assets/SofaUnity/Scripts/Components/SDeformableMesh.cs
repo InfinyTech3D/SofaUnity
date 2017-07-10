@@ -160,6 +160,7 @@ namespace SofaUnity
             int[] tris = new int[nbTetra * 12];
             Vector3[] verts = new Vector3[nbTetra * 4];//m_mesh.vertices;
             Vector3[] norms = new Vector3[nbTetra * 4];//m_mesh.normals;
+            Vector2[] uv = new Vector2[nbTetra * 4];
             mappingVertices = new Dictionary<int, int>();
 
             for (int i = 0; i < nbTetra; ++i)
@@ -180,11 +181,13 @@ namespace SofaUnity
                 // vert of new tetra reduce to the center of the tetra
                 for (int j = 0; j < 4; ++j)
                 {
-                    verts[id[j]] = vert[j];// (vert[j] - bary) * 0.5f;
+                    verts[id[j]] = vert[j];
                     norms[id[j]] = m_mesh.normals[old_id[j]];
                     mappingVertices.Add(id[j], old_id[j]);
                     // update tetra to store new ids
                     m_tetra[i * 4 + j] = id[j];
+                    uv[i * 4 + j].x = j / 4;
+                    uv[i * 4 + j].y = uv[i * 4 + j].x;
                 }
 
                 tris[i * 12 + 0] = id[0];
@@ -206,6 +209,7 @@ namespace SofaUnity
 
             m_mesh.vertices = verts;
             m_mesh.normals = norms;
+            m_mesh.uv = uv;
 
             return tris;
         }
