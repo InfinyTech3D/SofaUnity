@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System;
 using System.Runtime.InteropServices;
+using System.Collections;
+using System.Collections.Generic;
 
 public class SofaBaseMesh : SofaBaseObject
 {
@@ -186,8 +188,8 @@ public class SofaBaseMesh : SofaBaseObject
         {
             int nbrV = sofaPhysicsAPI_getNbVertices(m_simu, m_name);
 
-            if (log)
-                Debug.Log("vertices: " + nbrV);
+            //if (log)
+                //Debug.Log("vertices: " + nbrV);
 
             float[] vertices = new float[nbrV * 3];
             int resV = sofaPhysics3DObject_getVertices(m_simu, m_name, vertices);
@@ -210,9 +212,12 @@ public class SofaBaseMesh : SofaBaseObject
                 first = true;
             }
 
+            Debug.Log("   - verts size: " + verts.Length);
+            Debug.Log("   - vertices.Length: " + vertices.Length);
+
             if (vertices.Length != 0)
             {
-                for (int i = 0; i < verts.Length; ++i)
+                for (int i = 0; i < nbrV; ++i)
                 {
                     if (first)
                     {
@@ -242,6 +247,61 @@ public class SofaBaseMesh : SofaBaseObject
             
             mesh.vertices = verts;
             mesh.normals = norms;
+        }
+    }
+
+    public virtual void updateMeshTetra(Mesh mesh, Dictionary<int, int> mapping)
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            int nbrV = sofaPhysicsAPI_getNbVertices(m_simu, m_name);
+
+            //if (log)
+            //Debug.Log("vertices: " + nbrV);
+
+            float[] vertices = new float[nbrV * 3];
+            int resV = sofaPhysics3DObject_getVertices(m_simu, m_name, vertices);
+            float[] normals = new float[nbrV * 3];
+            int resN = sofaPhysics3DObject_getNormals(m_simu, m_name, normals);
+
+            Vector3[] verts = new Vector3[nbrV];
+            Vector3[] norms = new Vector3[nbrV];
+
+            Vector3[] vertsNew = mesh.vertices;
+            Vector3[] normsNew = mesh.normals;
+
+            if (vertices.Length != 0)
+            {
+                for (int i = 0; i < nbrV; ++i)
+                {
+                    verts[i].x = vertices[i * 3];
+                    verts[i].y = vertices[i * 3 + 1];
+                    verts[i].z = vertices[i * 3 + 2];
+
+                    if (resN < 0) // no normals
+                    {
+                        Vector3 vec = Vector3.Normalize(verts[i]);
+                        norms[i].x = vec.x;// normals[i * 3];
+                        norms[i].y = vec.y; //normals[i * 3 + 1];
+                        norms[i].z = vec.z; //normals[i * 3 + 2];
+                    }
+                    else
+                    {
+                        norms[i].x = normals[i * 3];
+                        norms[i].y = normals[i * 3 + 1];
+                        norms[i].z = normals[i * 3 + 2];
+                    }
+                }
+
+                foreach (KeyValuePair<int, int> id in mapping)
+                {
+                    vertsNew[id.Key] = verts[id.Value];
+                    normsNew[id.Key] = norms[id.Value];
+                }
+            }
+
+            mesh.vertices = vertsNew;
+            mesh.normals = normsNew;
         }
     }
 

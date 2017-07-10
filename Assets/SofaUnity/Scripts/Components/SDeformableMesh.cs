@@ -13,6 +13,16 @@ namespace SofaUnity
         protected int nbTetra = 0;
         protected int[] m_tetra;
 
+        protected override void awakePostProcess()
+        {
+            base.awakePostProcess();
+
+            //to see it, we have to add a renderer
+            MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();
+            if (mr == null)
+                mr = gameObject.AddComponent<MeshRenderer>();
+        }
+
         protected override void initMesh(bool toUpdate)
         {
             if (m_impl == null)
@@ -39,11 +49,9 @@ namespace SofaUnity
                 }
                 else
                     m_mesh.triangles = m_impl.createTriangulation();
-            }
+            }            
 
-            m_impl.updateMesh(m_mesh);
-
-            m_impl.recomputeTriangles(m_mesh);
+            //m_impl.recomputeTriangles(m_mesh);
 
             m_impl.setMass(m_mass);
             m_impl.setYoungModulus(m_young);
@@ -52,7 +60,12 @@ namespace SofaUnity
             base.initMesh(false);
 
             if (toUpdate)
-                m_impl.updateMesh(m_mesh);            
+            {
+                if (nbTetra > 0)
+                    updateTetraMesh();
+                else
+                    m_impl.updateMesh(m_mesh);
+            }
         }
 
         protected override void createObject()
@@ -76,12 +89,15 @@ namespace SofaUnity
 
             if (m_impl != null)
             {
-                m_impl.updateMesh(m_mesh);
-                m_mesh.RecalculateNormals();
+                if (nbTetra > 0)
+                    updateTetraMesh();
+                else
+                    m_impl.updateMesh(m_mesh);
+                //m_mesh.RecalculateNormals();
             }
 
-            if (m_drawFF)
-                drawForceField();
+           // if (m_drawFF)
+            //    drawForceField();
         }
                
 
@@ -137,35 +153,85 @@ namespace SofaUnity
             GL.End();            
         }
 
+
+        protected Dictionary<int, int> mappingVertices;
         public int[] computeForceField()
         {
             int[] tris = new int[nbTetra * 12];
+            Vector3[] verts = new Vector3[nbTetra * 4];//m_mesh.vertices;
+            Vector3[] norms = new Vector3[nbTetra * 4];//m_mesh.normals;
+            mappingVertices = new Dictionary<int, int>();
 
             for (int i = 0; i < nbTetra; ++i)
             {
-                int id0 = m_tetra[i * 4 + 0];
-                int id1 = m_tetra[i * 4 + 1];
-                int id2 = m_tetra[i * 4 + 2];
-                int id3 = m_tetra[i * 4 + 3];
+                int[] id = new int[4];
+                int[] old_id = new int[4];
+                Vector3[] vert = new Vector3[4];
 
-                tris[i * 12 + 0] = id0;
-                tris[i * 12 + 1] = id2;
-                tris[i * 12 + 2] = id1;
+                for (int j=0; j<4; ++j)
+                {
+                    id[j] = i * 4 + j;
+                    old_id[j] = m_tetra[i * 4 + j];
+                    vert[j] = m_mesh.vertices[old_id[j]];
+                }
 
-                tris[i * 12 + 3] = id1;
-                tris[i * 12 + 4] = id2;
-                tris[i * 12 + 5] = id3;
+                Vector3 bary = (vert[0] + vert[1] + vert[2] + vert[3]) / 4;
 
-                tris[i * 12 + 6] = id2;
-                tris[i * 12 + 7] = id0;
-                tris[i * 12 + 8] = id3;
+                // vert of new tetra reduce to the center of the tetra
+                for (int j = 0; j < 4; ++j)
+                {
+                    verts[id[j]] = vert[j];// (vert[j] - bary) * 0.5f;
+                    norms[id[j]] = m_mesh.normals[old_id[j]];
+                    mappingVertices.Add(id[j], old_id[j]);
+                    // update tetra to store new ids
+                    m_tetra[i * 4 + j] = id[j];
+                }
 
-                tris[i * 12 + 9] = id3;
-                tris[i * 12 + 10] = id0;
-                tris[i * 12 + 11] = id1;
+                tris[i * 12 + 0] = id[0];
+                tris[i * 12 + 1] = id[2];
+                tris[i * 12 + 2] = id[1];
+
+                tris[i * 12 + 3] = id[1];
+                tris[i * 12 + 4] = id[2];
+                tris[i * 12 + 5] = id[3];
+
+                tris[i * 12 + 6] = id[2];
+                tris[i * 12 + 7] = id[0];
+                tris[i * 12 + 8] = id[3];
+
+                tris[i * 12 + 9] = id[3];
+                tris[i * 12 + 10] = id[0];
+                tris[i * 12 + 11] = id[1];
             }
 
+            m_mesh.vertices = verts;
+            m_mesh.normals = norms;
+
             return tris;
+        }
+
+        public void updateTetraMesh()
+        {
+            // first update the vertices dissociated
+            m_impl.updateMeshTetra(m_mesh, mappingVertices);
+
+            // Compute the barycenters of each tetra and update the vertices
+            Vector3[] verts = m_mesh.vertices;
+            for (int i = 0; i < nbTetra; ++i)
+            {
+                Vector3 bary = new Vector3(0.0f, 0.0f, 0.0f);
+                int idI = i * 4;
+                // compute tetra barycenter
+                for (int j = 0; j < 4; ++j)
+                    bary += verts[m_tetra[idI + j]];
+                bary /= 4;
+
+                // reduce the tetra size according to the barycenter
+                for (int j = 0; j < 4; ++j)
+                    verts[m_tetra[idI + j]] = bary + (verts[m_tetra[idI + j]] - bary) * 0.7f;
+            }
+
+            m_mesh.vertices = verts;
         }
 
         public float m_mass = 10.0f;
