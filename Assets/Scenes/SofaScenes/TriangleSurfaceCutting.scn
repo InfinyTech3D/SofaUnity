@@ -9,7 +9,7 @@
     <Node name="SquareGravity_test">
         <EulerImplicit name="cg_odesolver" printLog="false" />
         <CGLinearSolver iterations="25" name="linear solver" tolerance="1.0e-9" threshold="1.0e-9" />
-        <MeshGmshLoader name="meshLoader" filename="./square3.msh" scale="10" createSubelements="true" />
+        <MeshGmshLoader name="meshLoader" filename="mesh/square3.msh" scale="10" createSubelements="true" />
         <TriangleSetTopologyContainer  name="Container" src="@meshLoader" tags=" " />
 		<TriangleSetTopologyModifier   name="Modifier" />
 		<TriangleSetTopologyAlgorithms name="TopoAlgo"   template="Vec3d" />
