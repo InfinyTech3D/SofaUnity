@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<Node name="root" gravity="0 -9.81 0" dt="0.01">
+    <VisualStyle displayFlags="showBehaviorModels showVisual" />
+    <DefaultPipeline name="default21" verbose="0" />
+    <BruteForceDetection name="N2" />
+    <DefaultContactManager name="default22" response="default" />
+    <MinProximityIntersection name="Proximity" alarmDistance="0.8" contactDistance="0.5" />
+    <DefaultCollisionGroupManager name="default23" />
+
+    <EulerImplicit name="cg_odesolver" printLog="false" />
+    <CGLinearSolver iterations="25" name="linear solver" tolerance="1.0e-9" threshold="1.0e-9" />
+
+
+    <Node name="fixed_beam" gravity="0 -9.81 0">
+		<RegularGridTopology name="grid" n="25 5 5" min="0 10 -0.5" max="10 11 0.5" computeHexaList="0"/>
+		<MechanicalObject template="Vec3d" name="Hexa" />
+        <DiagonalMass massDensity="10.0" />
+		<HexahedronFEMForceField template="Vec3d" name="FEM" method="large" poissonRatio="0.3" youngModulus="500" assembling="0" />
+		<BoxROI template="Vec3d" name="fix_constraint" box="-1 10.9 -0.6 11 11 0.6" indices="0" drawBoxes="0" />
+		<FixedConstraint template="Vec3d" name="default27" indices="@fix_constraint.indices" drawSize="0" />
+
+        <BoxROI template="Vec3d" name="attach_constraint" box="-0.1 9.9 -0.1 10.1 10.1 0.1" indices="0" drawBoxes="0" />
+
+		<Node name="Q">
+		    <QuadSetTopologyContainer  name="Container" />
+		    <QuadSetTopologyModifier   name="Modifier" />
+		    <QuadSetTopologyAlgorithms name="TopoAlgo"   template="Vec3d" />
+		    <QuadSetGeometryAlgorithms name="GeomAlgo"   template="Vec3d" />
+		    <Hexa2QuadTopologicalMapping input="@../grid" output="@Container" />
+		    <TriangleSet />
+
+   		    <Node name="Visu">
+    		    <OglModel name="Visual" color="blue" quads="@../Container.quads" />
+    		    <IdentityMapping input="@../../Hexa" output="@Visual" />
+		    </Node>
+	    </Node>
+    </Node>
+
+
+    <Node name="tissu">
+        <MeshGmshLoader name="meshLoader" filename="mesh/square3.msh" scale="10" 	createSubelements="true" />
+        <include href="Objects/TriangleSetTopology.xml" src="@meshLoader" />
+        <MechanicalObject />
+        <DiagonalMass massDensity="0.15" />
+        <FixedConstraint indices="0 1" />
+        <TriangularFEMForceField name="FEM" youngModulus="30" poissonRatio="0.3" method="large" />
+        <TriangularBendingSprings name="FEM-Bend" stiffness="10" damping="1.0" />
+        <TriangleSet />
+
+		<BoxROI template="Vec3d" name="attach_constraint" box="-0.1 -0.1 -0.1 10.1 0.1 0.1" indices="0" drawBoxes="0" />
+
+        <OglModel name="Visual" color="white" />
+        <IdentityMapping input="@." output="@Visual" />
+    </Node>
+
+
+    <Node name="moving_beam" gravity="0 -9.81 0">
+		<RegularGridTopology name="grid" n="25 5 5" min="0 -1 -0.5" max="10 0 0.5"  computeHexaList="0"/>
+		<MechanicalObject template="Vec3d" name="Hexa"/>
+		<UniformMass template="Vec3d" name="default25" mass="0.1" />
+		<TetrahedronFEMForceField template="Vec3d" name="FEM" method="large" poissonRatio="0.4" youngModulus="600" assembling="0" />
+
+		<BoxROI template="Vec3d" name="attach_constraint" box="-0.1 -0.1 -0.1 10.1 0.1 0.1" indices="0" drawBoxes="0" />
+
+		<Node name="Q">
+		    <QuadSetTopologyContainer  name="Container" />
+		    <QuadSetTopologyModifier   name="Modifier" />
+		    <QuadSetTopologyAlgorithms name="TopoAlgo"   template="Vec3d" />
+		    <QuadSetGeometryAlgorithms name="GeomAlgo"   template="Vec3d" />
+		    <Hexa2QuadTopologicalMapping input="@../grid" output="@Container" />
+		    <TriangleSet />
+		    <Node name="Visu">
+		        <OglModel name="Visual" color="blue" quads="@../Container.quads" />
+		        <IdentityMapping input="@../../Hexa" output="@Visual" />
+		    </Node>
+		</Node>
+	</Node>
+
+<AttachConstraint object1="@fixed_beam" object2="@tissu" twoWay="true" radius="0.0" indices1="274 273 272 271 270 269 268 267 266 265 264 263 262 261 260 259 258 257 256 255 254 253 252 251 250" indices2="1 26 25 24 23 22 21 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 0"/>
+
+
+<AttachConstraint object1="@tissu" object2="@moving_beam" twoWay="true" radius="0.0" indices1="3 72 71 70 69 68 67 66 65 64 63 62 61 60 59 58 57 56 55 54 53 52 51 50 2" indices2="350 351 352 353 354 355 356 357 358 359 360 361 362 363 364 365 366 367 368 369 370 371 372 373 374 "/>
+
+
+
+</Node>
