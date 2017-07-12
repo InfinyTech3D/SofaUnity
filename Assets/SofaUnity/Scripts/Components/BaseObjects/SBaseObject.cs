@@ -54,7 +54,6 @@ namespace SofaUnity
 
                 this.transform.parent = _contextObject.gameObject.transform;
 
-                Debug.Log("this.name : " + this.name);
                 int pos = this.name.IndexOf("-");
                 if (pos != -1)
                     m_nameId = this.name.Substring(pos + 2, this.name.Length - (pos + 2)); // remove the space
@@ -64,7 +63,8 @@ namespace SofaUnity
                     m_nameId += "_" + m_context.objectcpt;
                 }
 
-                Debug.Log("m_nameId: " + m_nameId);
+                if (m_log)
+                    Debug.Log("this.name : " + this.name + " - m_nameId: " + m_nameId);
 
                 // really Create the gameObject linked to sofaObject
                 createObject();
@@ -73,8 +73,7 @@ namespace SofaUnity
                 m_context.countCreated();
 
                 m_context.objectcpt = m_context.objectcpt + 1;
-                Debug.Log("m_context.objectcpt: " + m_context.objectcpt);
-
+                
                 return true;
             }
             else

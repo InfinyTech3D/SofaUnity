@@ -80,9 +80,9 @@ namespace SofaUnity
             if (m_impl == null)
                 return;
 
-            m_impl.setTranslation(m_translation);
-            m_impl.setRotation(m_rotation);
-            m_impl.setScale(m_scale);
+            m_impl.translation = m_translation;
+            m_impl.rotation = m_rotation;
+            m_impl.scale = m_scale;
 
             if (toUpdate)
                 m_impl.updateMesh(m_mesh);
@@ -116,7 +116,7 @@ namespace SofaUnity
                     m_translation = value;
                     if (m_impl != null)
                     {
-                        m_impl.setTranslation(diffTrans);
+                        m_impl.translation = diffTrans;
                         m_impl.updateMesh(m_mesh);
                     }
                 }
@@ -135,7 +135,7 @@ namespace SofaUnity
                     m_rotation = value;
                     if (m_impl != null)
                     {
-                        m_impl.setRotation(diffRot);
+                        m_impl.rotation = diffRot;
                         m_impl.updateMesh(m_mesh);
                     }
                 }
@@ -154,7 +154,7 @@ namespace SofaUnity
                     m_scale = value;
                     if (m_impl != null)
                     {
-                        m_impl.setScale(diffScale);
+                        m_impl.scale = diffScale;
                         m_impl.updateMesh(m_mesh);
                     }
                 }

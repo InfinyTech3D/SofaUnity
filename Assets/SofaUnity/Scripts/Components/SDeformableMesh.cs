@@ -53,9 +53,9 @@ namespace SofaUnity
 
             //m_impl.recomputeTriangles(m_mesh);
 
-            m_impl.setMass(m_mass);
-            m_impl.setYoungModulus(m_young);
-            m_impl.setPoissonRatio(m_poisson);
+            m_impl.mass = m_mass;
+            m_impl.youngModulus = m_young;
+            m_impl.poissonRatio = m_poisson;
 
             base.initMesh(false);
 
@@ -75,6 +75,7 @@ namespace SofaUnity
             {
                 m_impl = new SofaMesh(_simu, m_nameId, false);
                 m_impl.loadObject();
+                
             }
 
             if (m_impl == null)
@@ -248,7 +249,7 @@ namespace SofaUnity
                 {
                     m_mass = value;
                     if (m_impl != null)
-                        m_impl.setMass(m_mass);
+                        m_impl.mass  = m_mass;
                 }
             }
         }
@@ -264,7 +265,7 @@ namespace SofaUnity
                 {
                     m_young = value;
                     if (m_impl != null)
-                        m_impl.setYoungModulus(m_young);
+                        m_impl.youngModulus = m_young;
                 }
             }
         }
@@ -279,7 +280,7 @@ namespace SofaUnity
                 {
                     m_poisson = value;
                     if (m_impl != null)
-                        m_impl.setPoissonRatio(m_poisson);
+                        m_impl.poissonRatio = m_poisson;
                 }
             }
         }

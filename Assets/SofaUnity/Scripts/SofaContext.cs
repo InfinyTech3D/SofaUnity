@@ -201,7 +201,7 @@ namespace SofaUnity
         protected Dictionary<string, List<string> > hierarchy;
         protected void recreateHiearchy()
         {
-            Debug.Log("recreateHiearchy");
+            //Debug.Log("recreateHiearchy");
             if (m_impl == null)
                 return;
 
@@ -221,7 +221,7 @@ namespace SofaUnity
 
             foreach (KeyValuePair<string, List<string> > entry in hierarchy)
             {
-                Debug.Log("parent: " + entry.Key);
+                //Debug.Log("parent: " + entry.Key);
                 
                 if (entry.Key != "root")
                     moveChildren(entry.Key);
@@ -241,12 +241,12 @@ namespace SofaUnity
 
             foreach (string childName in children)
             {
-                Debug.Log("  - : " + childName);
+                //Debug.Log("  - : " + childName);
                 foreach (Transform child in transform)
                 {
                     if (child.name.Contains(childName))
                     {
-                        Debug.Log("change transform");
+                        //Debug.Log("change transform");
                         child.transform.parent = parent.transform;
                         break;
                     }

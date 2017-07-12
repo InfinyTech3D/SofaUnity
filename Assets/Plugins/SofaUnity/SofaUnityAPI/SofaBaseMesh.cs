@@ -12,6 +12,7 @@ public class SofaBaseMesh : SofaBaseObject
 
     }
 
+
     public override void loadObject()
     {
         //if (m_native != IntPtr.Zero)        
@@ -23,100 +24,48 @@ public class SofaBaseMesh : SofaBaseObject
                 Debug.LogError("Error Mesh can't be found: " + m_name);
             else
             {
-                Debug.Log("Load Node Name: " + m_name);
+                // Debug.Log("Load Node Name: " + m_name);
                 m_parent = sofaPhysicsAPI_getParentNodeName(m_simu, m_name);
-                //Debug.Log("Parent Name: " + m_parent);
             }
         }
     }
 
-    public void setMass(float value)
+
+    public float mass
     {
-        if (m_native != IntPtr.Zero)
-        {
-            int res = sofaPhysics3DObject_setFloatValue(m_simu, m_name, "totalMass", value);
-            if(log)
-                Debug.Log("Change Mass res: " + res);
-        }
+        get { return getFloatValue("totalMass"); }
+        set { setFloatValue("totalMass", value); }
     }
 
-    public void setYoungModulus(float value)
+    public float youngModulus
     {
-        if (m_native != IntPtr.Zero)
-        {
-            int res = sofaPhysics3DObject_setFloatValue(m_simu, m_name, "youngModulus", value);
-            if (log)
-                Debug.Log("Change youngModulus res: " + res);
-        }
+        get { return getFloatValue("youngModulus"); }
+        set { setFloatValue("youngModulus", value); }
     }
 
-    public void setPoissonRatio(float value)
+    public float poissonRatio
     {
-        if (m_native != IntPtr.Zero)
-        {
-            int res = sofaPhysics3DObject_setFloatValue(m_simu, m_name, "poissonRatio", value);
-            if (log)
-                Debug.Log("Change poissonRatio res: " + res);
-        }
+        get { return getFloatValue("poissonRatio"); }
+        set { setFloatValue("poissonRatio", value); }
     }
 
 
-    public Vector3 getTranslation()
+    public Vector3 translation
     {
-        Vector3 values = new Vector3(0.0f, 0.0f, 0.0f);
-        if (m_native != IntPtr.Zero)
-        {
-            float[] trans = new float[3];
-            int res = sofaPhysics3DObject_getVec3fValue(m_simu, m_name, "translation", trans);
-
-            
-            for (int i = 0; i < 3; ++i)
-                values[i] = trans[i];
-            
-           // if (log)
-                Debug.Log("Change translation res: " + res + " value: " + values);
-
-        }
-        return values;
+        get { return getVector3fValue("translation"); }
+        set { setVector3fValue("translation", value); }
     }
-
-    public void setTranslation(Vector3 values)
+    
+    public Vector3 rotation
     {
-        if (m_native != IntPtr.Zero)
-        {
-            float[] trans = new float[3];
-            for (int i = 0; i < 3; ++i)
-                trans[i] = values[i];
-            int res = sofaPhysics3DObject_setVec3fValue(m_simu, m_name, "translation", trans);
-            if (log)
-                Debug.Log("Change translation res: " + res);
-        }
+        get { return getVector3fValue("rotation"); }
+        set { setVector3fValue("rotation", value); }
     }
-
-    public void setRotation(Vector3 values)
+    
+    public Vector3 scale
     {
-        if (m_native != IntPtr.Zero)
-        {
-            float[] trans = new float[3];
-            for (int i = 0; i < 3; ++i)
-                trans[i] = values[i];
-            int res = sofaPhysics3DObject_setVec3fValue(m_simu, m_name, "rotation", trans);
-            if (log)
-                Debug.Log("Change rotation res: " + res);
-        }
-    }
-
-    public void setScale(Vector3 values)
-    {
-        if (m_native != IntPtr.Zero)
-        {
-            float[] trans = new float[3];
-            for (int i = 0; i < 3; ++i)
-                trans[i] = values[i];
-            int res = sofaPhysics3DObject_setVec3fValue(m_simu, m_name, "scale", trans);
-            if (log)
-                Debug.Log("Change scale res: " + res);
-        }
+        get { return getVector3fValue("scale"); }
+        set { setVector3fValue("scale", value); }
     }
 
 
@@ -188,14 +137,14 @@ public class SofaBaseMesh : SofaBaseObject
         {
             int nbrV = sofaPhysicsAPI_getNbVertices(m_simu, m_name);
 
-            //if (log)
-                //Debug.Log("vertices: " + nbrV);
+            if (log)
+                Debug.Log("vertices: " + nbrV);
 
             float[] vertices = new float[nbrV * 3];
             int resV = sofaPhysics3DObject_getVertices(m_simu, m_name, vertices);
             float[] normals = new float[nbrV * 3];
             int resN = sofaPhysics3DObject_getNormals(m_simu, m_name, normals);
-            //if (log)
+            if (log)
             {
                 Debug.Log(m_name + " - resV: " + resV);
                 Debug.Log(m_name + " - resN: " + resN);
@@ -212,8 +161,11 @@ public class SofaBaseMesh : SofaBaseObject
                 first = true;
             }
 
-            Debug.Log("   - verts size: " + verts.Length);
-            Debug.Log("   - vertices.Length: " + vertices.Length);
+            if (log)
+            {
+                Debug.Log("   - verts size: " + verts.Length);
+                Debug.Log("   - vertices.Length: " + vertices.Length);
+            }
 
             if (vertices.Length != 0)
             {
