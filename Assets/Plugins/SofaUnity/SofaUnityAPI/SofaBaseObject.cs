@@ -68,6 +68,79 @@ public class SofaBaseObject : IDisposable
     }
 
 
+    protected float getFloatValue(string param)
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            float[] val = new float[1];
+            int res = sofaPhysics3DObject_getFloatValue(m_simu, m_name, param, val);
+            if (res >= 0)
+                return val[0];
+            else
+                Debug.LogError("Error getting parameter: " + param +  " . Method Return: " + res);
+        }
+        else
+            Debug.LogError("Error getting parameter: " + param + " . Can't access Object Pointer m_native.");
+
+        return 0.0f;
+    }
+
+
+    protected void setFloatValue(string param, float value)
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            int res = sofaPhysics3DObject_setFloatValue(m_simu, m_name, param, value);
+
+            if (res < 0)
+                Debug.LogError("Error setting parameter: " + param + " . Method Return: " + res);
+        }
+        else
+            Debug.LogError("Error setting parameter: " + param + " . Can't access Object Pointer m_native.");
+    }
+
+
+    protected Vector3 getVector3fValue(string param)
+    {
+        Vector3 values = new Vector3(0.0f, 0.0f, 0.0f);
+        if (m_native != IntPtr.Zero)
+        {
+            float[] val = new float[3];
+            int res = sofaPhysics3DObject_getVec3fValue(m_simu, m_name, param, val);
+
+            if (res >= 0)
+            {
+                for (int i = 0; i < 3; ++i)
+                    values[i] = val[i];
+            }
+            else
+                Debug.LogError("Error getting parameter: " + param + " . Method Return: " + res);
+        }
+        else
+            Debug.LogError("Error getting parameter: " + param + " . Can't access Object Pointer m_native.");
+
+        return values;
+    }
+
+    protected void setVector3fValue(string param, Vector3 values)
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            float[] val = new float[3];
+            for (int i = 0; i < 3; ++i)
+                val[i] = values[i];
+
+            int res = sofaPhysics3DObject_setVec3fValue(m_simu, m_name, param, val);
+
+            if (res < 0)
+                Debug.LogError("Error setting parameter: " + param + " . Method Return: " + res);
+        }
+        else
+            Debug.LogError("Error setting parameter: " + param + " . Can't access Object Pointer m_native.");
+    }
+
+
+
     // API to get objects and object Name
     //{
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
@@ -111,12 +184,14 @@ public class SofaBaseObject : IDisposable
     public static extern int sofaPhysics3DObject_setVec3iValue(IntPtr obj, string objectName, string dataName, int[] values);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getFloatValue(IntPtr obj, string objectName, string dataName, float[] value);
+    
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysics3DObject_getVec3fValue(IntPtr obj, string objectName, string dataName, float[] values);
 
-    //[DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    //public static extern int sofaPhysics3DObject_getVec3iValue(IntPtr obj, string objectName, string dataName, float[] values);
-
-
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getVec3iValue(IntPtr obj, string objectName, string dataName, int[] values);
+    
     //}
 }
 
