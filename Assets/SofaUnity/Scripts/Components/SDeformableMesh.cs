@@ -49,10 +49,10 @@ namespace SofaUnity
                 }
                 else
                     m_mesh.triangles = m_impl.createTriangulation();
-            }            
+            }
 
             //m_impl.recomputeTriangles(m_mesh);
-
+            
             m_impl.mass = m_mass;
             m_impl.youngModulus = m_young;
             m_impl.poissonRatio = m_poisson;
@@ -75,7 +75,13 @@ namespace SofaUnity
             {
                 m_impl = new SofaMesh(_simu, m_nameId, false);
                 m_impl.loadObject();
-                
+
+                m_poisson = m_impl.poissonRatio;
+                m_mass = m_impl.mass;
+                m_young = m_impl.youngModulus;
+
+                // Set init value loaded from the scene.
+                base.createObject();
             }
 
             if (m_impl == null)

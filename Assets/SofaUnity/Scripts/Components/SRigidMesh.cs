@@ -46,6 +46,9 @@ namespace SofaUnity
             {
                 m_impl = new SofaMesh(_simu, m_nameId, false);
                 m_impl.loadObject();
+
+                // Set init value loaded from the scene.
+                base.createObject();
             }
 
             Debug.Log("SRigidMesh::createObject called.");

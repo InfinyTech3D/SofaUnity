@@ -102,7 +102,7 @@ public class SofaBaseObject : IDisposable
 
     protected Vector3 getVector3fValue(string param)
     {
-        Vector3 values = new Vector3(0.0f, 0.0f, 0.0f);
+        Vector3 values = new Vector3(-1.0f, -1.0f, -1.0f);
         if (m_native != IntPtr.Zero)
         {
             float[] val = new float[3];

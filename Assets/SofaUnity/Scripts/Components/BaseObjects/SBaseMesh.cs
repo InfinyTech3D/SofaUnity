@@ -22,7 +22,7 @@ namespace SofaUnity
         private void Awake()
         {
             if (m_log)
-                Debug.Log("UNITY_EDITOR - SBaseMesh::Awake");
+                Debug.Log("UNITY_EDITOR - SBaseMesh::Awake - " + m_nameId);
 
             loadContext();
 
@@ -33,7 +33,7 @@ namespace SofaUnity
         private void Start()
         {
             if (m_log)
-                Debug.Log("UNITY_EDITOR - SBaseMesh::start");
+                Debug.Log("UNITY_EDITOR - SBaseMesh::start - " + m_nameId);
 
             if (m_impl != null)
             {
@@ -74,16 +74,41 @@ namespace SofaUnity
                 gameObject.AddComponent<MeshFilter>();
         }
 
+        protected override void createObject()
+        {
+            m_initTranslation = m_impl.translation;
+            m_initRotation = m_impl.rotation;
+            m_initScale = m_impl.scale;
+
+            m_translation = m_initTranslation;
+            m_rotation = m_initRotation;
+            m_scale = m_initScale;
+
+        }
+
+
         /// Method called by \sa Start() method. To be implemented by child class.
         protected virtual void initMesh(bool toUpdate)
         {
             if (m_impl == null)
                 return;
 
-            m_impl.translation = m_translation;
-            m_impl.rotation = m_rotation;
-            m_impl.scale = m_scale;
-
+            if (m_translation != m_initTranslation)
+            {
+                m_impl.translation = m_translation;
+                Debug.Log("SBaseMesh::m_translation: " + m_translation + " - " + m_nameId);
+            }
+            if (m_rotation != m_initRotation)
+            {
+                m_impl.rotation = m_rotation;
+                Debug.Log("SBaseMesh::m_rotation: " + m_rotation + " - " + m_nameId);
+            }
+            if (m_scale != m_initScale)
+            {
+              //  m_impl.scale = m_scale;
+                Debug.Log("SBaseMesh::m_scale: " + m_scale + " - " + m_initScale  + " " + m_nameId);
+            }
+            
             if (toUpdate)
                 m_impl.updateMesh(m_mesh);
         }
@@ -112,7 +137,7 @@ namespace SofaUnity
                 if (value != m_translation)
                 {
                     Vector3 diffTrans = value - m_translation;
-                    Debug.Log("diffTrans: " + diffTrans);
+                    Debug.Log("diffTrans: " + diffTrans + " - " + m_nameId);
                     m_translation = value;
                     if (m_impl != null)
                     {
@@ -160,5 +185,9 @@ namespace SofaUnity
                 }
             }
         }
+
+        protected Vector3 m_initTranslation;
+        protected Vector3 m_initRotation;
+        protected Vector3 m_initScale;
     }
 }
