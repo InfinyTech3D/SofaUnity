@@ -102,28 +102,8 @@ namespace SofaUnity
                     m_impl.updateMesh(m_mesh);
                 //m_mesh.RecalculateNormals();
             }
-
-           // if (m_drawFF)
-            //    drawForceField();
         }
                
-
-        public bool m_drawFF = false;
-        public bool drawFF
-        {
-            get { return m_drawFF; }
-            set { m_drawFF = value;
-                Debug.Log("set ff!!");
-            }
-        }
-
-        //public Material mat;
-        //void OnPostRender()
-        //{
-        //    if (m_drawFF)
-        //        drawForceField();
-        //}
-
         public void drawForceField()
         {
             if (m_mesh.vertices.Length == 0)

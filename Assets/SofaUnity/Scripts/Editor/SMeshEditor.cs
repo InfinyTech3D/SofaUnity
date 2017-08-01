@@ -36,9 +36,6 @@ public class SDeformableMeshEditor : Editor
 
         mesh.poisson = EditorGUILayout.FloatField("Poisson Ratio", mesh.poisson);
         EditorGUILayout.Separator();
-
-        mesh.drawFF = EditorGUILayout.Toggle("Show ForceField", mesh.drawFF);
-        EditorGUILayout.Separator();
     }
 }
 

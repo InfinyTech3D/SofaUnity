@@ -51,7 +51,6 @@ namespace SofaUnity
                 base.createObject();
             }
 
-            Debug.Log("SRigidMesh::createObject called.");
             if (m_impl == null)
                 m_context.objectcpt = m_context.objectcpt + 1;
         }
