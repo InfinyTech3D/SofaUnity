@@ -282,6 +282,32 @@ public class SofaBaseMesh : SofaBaseObject
         }
     }
 
+    protected Vector3 m_min = new Vector3(100000, 100000, 100000);
+    protected Vector3 m_max = new Vector3(-100000, -100000, -100000);
+    public virtual void computeBoundingBox(Mesh mesh)
+    {
+        Vector3[] verts = mesh.vertices;
+        int nbrV = verts.Length;
+
+        // Get min and max of the mesh
+        for (int i = 0; i < nbrV; i++)
+        {
+            if (verts[i].x > m_max.x)
+                m_max.x = verts[i].x;
+            if (verts[i].y > m_max.y)
+                m_max.y = verts[i].y;
+            if (verts[i].z > m_max.z)
+                m_max.z = verts[i].z;
+
+            if (verts[i].x < m_min.x)
+                m_min.x = verts[i].x;
+            if (verts[i].y < m_min.y)
+                m_min.y = verts[i].y;
+            if (verts[i].z < m_min.z)
+                m_min.z = verts[i].z;
+        }
+    }
+
     public virtual void recomputeTexCoords(Mesh mesh)
     {
         Vector3[] verts = mesh.vertices;
@@ -296,37 +322,19 @@ public class SofaBaseMesh : SofaBaseObject
 
         if (res < 0)
         {
-            Vector3 min = new Vector3(100000, 100000, 100000);
-            Vector3 max = new Vector3(-100000, -100000, -100000);
+            this.computeBoundingBox(mesh);            
             
-            // Get min and max of the mesh
-            for (int i = 0; i < nbrV; i++)
-            {
-                if (verts[i].x > max.x)
-                    max.x = verts[i].x;
-                if (verts[i].y > max.y)
-                    max.y = verts[i].y;
-                if (verts[i].z > max.z)
-                    max.z = verts[i].z;
 
-                if (verts[i].x < min.x)
-                    min.x = verts[i].x;
-                if (verts[i].y < min.y)
-                    min.y = verts[i].y;
-                if (verts[i].z < min.z)
-                    min.z = verts[i].z;
-            }
+            float minXY = m_min.x + m_min.z;
+            float minYZ = m_min.y + m_min.z;
 
-            float minXY = min.x + min.z;
-            float minYZ = min.y + min.z;
-
-            float rangeXY = 1/(max.x + max.z - minXY);
-            float rangeYZ = 1/(max.y + max.z - minYZ);
+            float rangeXY = 1/(m_max.x + m_max.z - minXY);
+            float rangeYZ = 1/(m_max.y + m_max.z - minYZ);
 
             if (log)
             {
-                Debug.Log("min: " + min);
-                Debug.Log("max: " + max);
+                Debug.Log("min: " + m_min);
+                Debug.Log("max: " + m_max);
                 Debug.Log("rangeXY: " + rangeXY);
                 Debug.Log("rangeYZ: " + rangeYZ);
             }
