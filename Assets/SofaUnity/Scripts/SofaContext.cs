@@ -66,7 +66,12 @@ namespace SofaUnity
                 {
                     //loadFilename();
                     m_impl.loadScene(m_filename);
-                    recreateHiearchy();
+
+                    cptCreated = 0;
+                    m_nbrObject = m_impl.getNumberObjects();
+
+                   //Debug.Log("getNumberObjects: " + m_nbrObject);
+                    //recreateHiearchy();
                 }
 
                 m_impl.setTimeStep(m_timeStep);
@@ -158,7 +163,7 @@ namespace SofaUnity
         int cptCreated = 0;
         public void countCreated()
         {            
-            cptCreated++;            
+            cptCreated++;
             if (cptCreated == m_nbrObject)
                 recreateHiearchy();
         }
@@ -168,7 +173,9 @@ namespace SofaUnity
         {
             m_impl.loadScene(m_filename);
             m_nbrObject = m_impl.getNumberObjects();
-            Debug.Log("getNumberObjects: " + m_nbrObject);
+
+            //Debug.Log("getNumberObjects: " + m_nbrObject);
+            m_nbrObject += 1; // Add 1 fictive object to be sure this method exit before calling recreateHiearchy();
             for (int i = 0; i < m_nbrObject; ++i)
             {
                 string name = m_impl.getObjectName(i);
@@ -195,13 +202,13 @@ namespace SofaUnity
 
                 go.transform.parent = this.gameObject.transform;
             }
-            recreateHiearchy();
+            Debug.Log("loadFilename end");
+            countCreated();
         }
 
         protected Dictionary<string, List<string> > hierarchy;
         protected void recreateHiearchy()
         {
-            //Debug.Log("recreateHiearchy");
             if (m_impl == null)
                 return;
 
@@ -221,8 +228,10 @@ namespace SofaUnity
 
             foreach (KeyValuePair<string, List<string> > entry in hierarchy)
             {
-                //Debug.Log("parent: " + entry.Key);
-                
+                List<string> children = entry.Value;
+                //foreach (string childName in children)
+                //    Debug.Log("#### Hierarchy: parent: " + entry.Key + " - child: " + childName);
+
                 if (entry.Key != "root")
                     moveChildren(entry.Key);
             }
@@ -235,18 +244,26 @@ namespace SofaUnity
 
             // get parent
             Transform parent = this.transform;
+            bool found = false;
             foreach (Transform child in transform)
                 if (child.name.Contains(currentNode))
-                    parent = child;
+                {
+                    parent = child.transform;
+                    found = true;
+                    break;
+                }
+
+            if (!found)
+                Debug.LogError("Sofacontext::moveChildren parent node not found: " + currentNode);
+
 
             foreach (string childName in children)
             {
-                //Debug.Log("  - : " + childName);
                 foreach (Transform child in transform)
                 {
+//                    Debug.Log("name found: " + child.name + " current parent: " + child.transform.parent.name);
                     if (child.name.Contains(childName))
                     {
-                        //Debug.Log("change transform");
                         child.transform.parent = parent.transform;
                         break;
                     }
