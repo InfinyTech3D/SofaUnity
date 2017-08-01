@@ -14,7 +14,7 @@
 		<TriangleSetTopologyModifier   name="Modifier" />
 		<TriangleSetTopologyAlgorithms name="TopoAlgo"   template="Vec3d" />
 		<TriangleSetGeometryAlgorithms name="GeomAlgo"   template="Vec3d" />
-        <MechanicalObject  translation="10 0 0"/>
+        <MechanicalObject/>
         <DiagonalMass massDensity="0.15" />
         <FixedConstraint indices="0 1" />
         <TriangularFEMForceField name="FEM" youngModulus="60" poissonRatio="0.3" method="large" />
