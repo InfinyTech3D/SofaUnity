@@ -36,6 +36,7 @@ namespace SofaUnity
 
             m_mesh.name = "SofaRigidGrid";
             m_impl.setGridResolution(m_gridSize);
+            m_impl.recomputeTexCoords(m_mesh);
 
             if (toUpdate)
                 m_impl.updateMesh(m_mesh);

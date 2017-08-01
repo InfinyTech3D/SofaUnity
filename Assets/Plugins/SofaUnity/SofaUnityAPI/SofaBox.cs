@@ -146,24 +146,26 @@ public class SofaBox : SofaBaseMesh
         Vector3[] verts = mesh.vertices;
         Vector2[] uvs = new Vector2[verts.Length];
 
+        this.computeBoundingBox(mesh);
+
+        float rangeX = 1 / (m_max.x - m_min.x);
+        float rangeY = 1 / (m_max.y - m_min.y);
+        float rangeZ = 1 / (m_max.z - m_min.z);
+
         for (int i = 0; i < verts.Length; i++)
         {
-            if (verts[i].z == 0.5 || verts[i].z == -0.5)
-                uvs[i] = new Vector2(1-(verts[i].x + 0.5f), (verts[i].y + 0.5f));
-
-            else if (verts[i].x == 0.5 || verts[i].x == -0.5) // along X fix
-                uvs[i] = new Vector2(1-(verts[i].z + 0.5f), verts[i].y + 0.5f);
-            else if (verts[i].y == 0.5 || verts[i].y == -0.5)
-                uvs[i] = new Vector2(1 - (verts[i].x + 0.5f), (verts[i].y + 0.5f));
-
-            //uvs[i] = new Vector2(verts[i].y + 0.5f, verts[i].z + 0.5f);
-            /*            if (verts[i].x == 0.5 || verts[i].x == -0.5) // along X fix
-                            uvs[i] = new Vector2(verts[i].y + 0.5f, verts[i].z + 0.5f);
-                        else if (verts[i].y == 0.5 || verts[i].y == -0.5)
-                            uvs[i] = new Vector2(verts[i].x + 0.5f, verts[i].z + 0.5f);
-                        else if (verts[i].z == 0.5 || verts[i].z == -0.5)
-                            uvs[i] = new Vector2(verts[i].x + 0.5f, verts[i].y + 0.5f);
-                            */
+            if (verts[i].z == m_max.z)
+                uvs[i] = new Vector2((verts[i].x - m_min.x) * rangeX, (verts[i].y - m_min.y) * rangeY);
+            else if (verts[i].z == m_min.z)
+                uvs[i] = new Vector2((m_max.x - verts[i].x) * rangeX, (verts[i].y - m_min.y) * rangeY);
+            else if (verts[i].x == m_max.x)
+                uvs[i] = new Vector2((verts[i].z - m_min.z) * rangeZ, (verts[i].y - m_min.y) * rangeY);
+            else if (verts[i].x == m_min.x)
+                uvs[i] = new Vector2((m_max.z - verts[i].z) * rangeZ, (verts[i].y - m_min.y) * rangeY);
+            else if (verts[i].y == m_max.y)
+                uvs[i] = new Vector2((m_max.x - verts[i].x) * rangeX, (verts[i].z - m_min.z) * rangeZ);
+            else if (verts[i].y == m_min.y)
+                uvs[i] = new Vector2((verts[i].x - m_min.x) * rangeX, (verts[i].z - m_min.z) * rangeZ);
         }
 
         mesh.uv = uvs;

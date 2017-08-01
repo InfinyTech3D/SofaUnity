@@ -31,7 +31,6 @@ namespace SofaUnity
             m_mesh.triangles = m_impl.createTriangulation();
             m_impl.updateMesh(m_mesh);
            // m_mesh.RecalculateNormals();
-            m_impl.recomputeTexCoords(m_mesh);
 
             base.initMesh(false);
 
