@@ -1,18 +1,41 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using SofaUnity;
-using SofaUnityAPI;
+﻿using UnityEngine;
 using System;
 
 namespace SofaUnity
 {
+    /// <summary>
+    /// Specific class for a Visual Mesh, inherite from SBaseMesh 
+    /// This class will add a meshRenderer and create a SofaMesh API object to load the topology from Sofa Object.
+    /// </summary>
     [ExecuteInEditMode]
     class SVisualMesh : SBaseMesh
     {
+        /// Method called by @sa loadContext() method. To create the object when Sofa context has been found.
+        protected override void createObject()
+        {
+            // Get access to the sofaContext
+            IntPtr _simu = m_context.getSimuContext();
+            if (_simu != IntPtr.Zero)
+            {
+                // Create the API object for SofaMesh
+                m_impl = new SofaMesh(_simu, m_nameId, false);
 
+                // TODO: check if this is still needed (and why not in children)
+                m_impl.loadObject();
+
+                // Call SBaseMesh.createObject() to init value loaded from the scene.// Set init value loaded from the scene.
+                base.createObject();
+            }
+
+            if (m_impl == null)
+                Debug.LogError("SVisualMesh:: Object creation failed.");
+        }
+
+
+        /// Method called by @sa Awake() method. As post process method after creation.
         protected override void awakePostProcess()
         {
+            // Call SBaseMesh.awakePostProcess()
             base.awakePostProcess();
 
             //to see it, we have to add a renderer
@@ -21,6 +44,8 @@ namespace SofaUnity
                 mr = gameObject.AddComponent<MeshRenderer>();
         }
 
+
+        /// Method called by \sa Start() method to init the current object and impl. @param toUpdate indicate if updateMesh has to be called.
         protected override void initMesh(bool toUpdate)
         {
             if (m_impl == null)
@@ -38,22 +63,8 @@ namespace SofaUnity
                 m_impl.updateMesh(m_mesh);
         }
 
-        protected override void createObject()
-        {
-            IntPtr _simu = m_context.getSimuContext();
-            if (_simu != IntPtr.Zero)
-            {
-                m_impl = new SofaMesh(_simu, m_nameId, false);                
-                m_impl.loadObject();
 
-                // Set init value loaded from the scene.
-                base.createObject();
-            }
-
-            if (m_impl == null)
-                Debug.LogError("SVisualMesh:: Object not created");
-        }
-
+        /// Method called by @sa Update() method.
         protected override void updateImpl()
         {
             if (m_log)
@@ -62,7 +73,6 @@ namespace SofaUnity
             if (m_impl != null)
             {
                 m_impl.updateMesh(m_mesh);
-                //m_mesh.RecalculateNormals();
             }
         }
     }
