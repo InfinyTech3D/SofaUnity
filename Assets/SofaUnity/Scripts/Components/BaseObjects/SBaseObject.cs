@@ -31,8 +31,10 @@ namespace SofaUnity
             if (m_log)
                 Debug.Log("UNITY_EDITOR - SBaseMesh::Awake - " + m_nameId);
 
+            // First load the Sofa context and create the object.
             loadContext();
 
+            // Call a post process method for additional codes.
             awakePostProcess();
         }
 
@@ -55,14 +57,17 @@ namespace SofaUnity
             if (m_log)
                 Debug.Log("UNITY_EDITOR - SBaseObject::loadContext");
 
+            // Search for SofaContext
             GameObject _contextObject = GameObject.Find("SofaContext");
             if (_contextObject != null)
             {
-                // get Sofa context
+                // Get Sofa context
                 m_context = _contextObject.GetComponent<SofaContext>();
 
+                // By default place this object as child of SofaContext
                 this.transform.parent = _contextObject.gameObject.transform;
 
+                // Look for node a name. Remove unneeded parts of the name (like _Node)
                 int pos = this.name.IndexOf("-");
                 if (pos != -1)
                     m_nameId = this.name.Substring(pos + 2, this.name.Length - (pos + 2)); // remove the space
@@ -75,19 +80,20 @@ namespace SofaUnity
                 if (m_log)
                     Debug.Log("this.name : " + this.name + " - m_nameId: " + m_nameId);
 
-                // really Create the gameObject linked to sofaObject
+                // Really Create the gameObject linked to sofaObject
                 createObject();
 
-                // increment counter if loading scene
+                // Increment counter if objectis created from loading scene process
                 m_context.countCreated();
 
+                // Increment the context object counter for names.
                 m_context.objectcpt = m_context.objectcpt + 1;
 
                 return true;
             }
             else
             {
-                Debug.LogError("SMesh::No context.");
+                Debug.LogError("SBaseObject::loadContext - No SofaContext found.");
                 return false;
             }
         }
