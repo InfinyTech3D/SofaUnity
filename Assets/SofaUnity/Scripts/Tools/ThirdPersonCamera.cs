@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Script to Add to a Camera to control it using the mouse.
+/// </summary>
 public class ThirdPersonCamera : MonoBehaviour 
 {
 	// camera min/max angles
