@@ -4,28 +4,38 @@ using System.Runtime.InteropServices;
 
 namespace SofaUnityAPI
 {
-
+    /// <summary>
+    /// Main class of the Sofa plugin. This class handle all bindings to manage the Sofa simulation scene.
+    /// It will connect to the SofaPhysicsAPI. Get the list of object or start/stop the simulation.
+    /// </summary>
     public class SofaContextAPI : IDisposable
     {
+        /// Internal pointer to the SofaPhysicsAPI 
         internal IntPtr m_native;
+
+        // TODO: check if needed
         bool m_isDisposed;
 
+        /// Default constructor, will create the pointer to SofaPhysicsAPI
         public SofaContextAPI()
         {
+            // Create the application
             m_native = sofaPhysicsAPI_create();
             if (m_native == IntPtr.Zero)
-                Debug.LogError("Error not sofaPhysicsAPI created!");
+                Debug.LogError("Error no sofaPhysicsAPI found and created!");
 
+            // Create a simulation scene.
             sofaPhysicsAPI_createScene(m_native);
-
-            //string name = sofaPhysicsAPI_APIName(m_native);
-            //Debug.Log("API Name: " + name);
-
-            //Debug.Log("API TEST Name: " + sofaPhysicsAPI_testName(m_native));
-            //sofaPhysicsAPI_setTestName(m_native, "PROUT");
-            //Debug.Log("API TEST Name after: " + sofaPhysicsAPI_testName(m_native));
         }
 
+        /// Destructor
+        ~SofaContextAPI()
+        {
+            Dispose(false);
+        }
+
+
+        /// Dispose method to release the object
         public void Dispose()
         {
             Dispose(true);
@@ -38,56 +48,65 @@ namespace SofaUnityAPI
             {
                 m_isDisposed = true;
 
-                //if (!_preventDelete)
-                //{
-                //    IntPtr userPtr = btCollisionShape_getUserPointer(_native);
-                //    GCHandle.FromIntPtr(userPtr).Free();
+                // TODO: should call delete method in SofaPAPI first
 
-                //    btCollisionShape_delete(_native);
-                //}
+                // Free the App
+                GCHandle.FromIntPtr(m_native).Free();
             }
         }
 
-        ~SofaContextAPI()
-        {
-                Debug.Log("### ~SofaContextAPI");
-            Dispose(false);
-        }
-
+        /// Getter to the dispose parameter
         public bool isDisposed
         {
             get { return m_isDisposed; }
         }
 
+
+        /// Method to start the Sofa simulation
         public void start()
         {
-            Debug.Log("-- sofaPhysicsAPI_start called.");
             sofaPhysicsAPI_start(m_native);
-
         }
 
+        /// Method to stop the Sofa simulation
         public void stop()
         {
-            Debug.Log("-- sofaPhysicsAPI_stop called.");
             sofaPhysicsAPI_stop(m_native);
         }
 
+        /// Method to perform one steop the Sofa simulation
         public void step()
         {
-            //Debug.Log("-- sofaPhysicsAPI_step called.");
             sofaPhysicsAPI_step(m_native);
         }
 
-        public double timeStep()
+        /// Load the Sofa scene given by name @param filename
+        public void loadScene(string filename)
         {
-            return sofaPhysicsAPI_timeStep(m_native);
+            if (m_native != IntPtr.Zero)
+            {
+                int res = sofaPhysicsAPI_loadScene(m_native, filename);
+                Debug.Log("Load filename: " + filename + " | res: " + res);
+            }
+            else
+                Debug.LogError("Error can't load file, no sofaPhysicsAPI created!");
         }
 
-        public void setTimeStep(double value)
+
+        /// Get the Sofa simulation context
+        public IntPtr getSimuContext()
         {
-            sofaPhysicsAPI_setTimeStep(m_native, value);
+            return m_native;
         }
 
+        /// Getter/Setter of timestep
+        public double timeStep
+        {
+            get { return sofaPhysicsAPI_timeStep(m_native); }
+            set { sofaPhysicsAPI_setTimeStep(m_native, value); }
+        }
+        
+        /// Setter of gravity vector
         public void setGravity(Vector3 gravity)
         {
             double[] grav = new double[3];
@@ -95,22 +114,8 @@ namespace SofaUnityAPI
                 grav[i] = (double)gravity[i];
             sofaPhysicsAPI_setGravity(m_native, grav);
         }
-
-        public IntPtr getSimuContext()
-        {
-            return m_native;
-        }
-
-        public void loadScene(string filename)
-        {
-            // C:\projects\sofa-dev\examples\Demos\TriangleSurfaceCutting.scn
-            if (m_native != IntPtr.Zero)
-            {
-                int res = sofaPhysicsAPI_loadScene(m_native, filename);
-                Debug.Log("Load filename: " + filename + " | res: " + res);
-            }
-        }
-
+        
+        /// Get the number of object in the simulation scene
         public int getNumberObjects()
         {
             int res = 0;
@@ -120,6 +125,7 @@ namespace SofaUnityAPI
             return res;
         }
 
+        /// Get Sofa object name (used as Id) by its position id in the creation order
         public string getObjectName(int id)
         {
             if (m_native != IntPtr.Zero)
@@ -131,6 +137,7 @@ namespace SofaUnityAPI
                 return "Error";
         }
 
+        /// Get Sofa object type by its position id in the creation order
         public string getObjectType(int id)
         {
             if (m_native != IntPtr.Zero)
@@ -143,6 +150,7 @@ namespace SofaUnityAPI
         }
 
 
+        /// Bindings to the SofaAdvancePhysicsAPI methods
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern IntPtr sofaPhysicsAPI_create();
         [DllImport("SofaAdvancePhysicsAPI")]
@@ -186,7 +194,6 @@ namespace SofaUnityAPI
 
 
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-//        [return: MarshalAs(UnmanagedType.LPStr)]
         public static extern string sofaPhysicsAPI_APIName(IntPtr obj);
 
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]

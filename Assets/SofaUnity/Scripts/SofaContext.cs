@@ -74,7 +74,7 @@ namespace SofaUnity
                 {
                     m_timeStep = value;
                     if (m_impl != null)
-                        m_impl.setTimeStep(m_timeStep);
+                        m_impl.timeStep = m_timeStep;
                 }
             }
         }
@@ -164,7 +164,7 @@ namespace SofaUnity
                     m_nbrObject = m_impl.getNumberObjects();
                 }
 
-                m_impl.setTimeStep(m_timeStep);
+                m_impl.timeStep = m_timeStep;
                 m_impl.setGravity(m_gravity);
 #endif
             }
