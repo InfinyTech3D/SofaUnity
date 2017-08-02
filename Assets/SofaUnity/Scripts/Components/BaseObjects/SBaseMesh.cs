@@ -7,18 +7,58 @@ using System;
 
 namespace SofaUnity
 {
+    /// <summary>
+    /// Base class that design a Mesh GameObject mapped to a Sofa 3DObject.
+    /// This class inherite from @see SBaseObject and add the creation of Mesh and handle transformation
+    /// </summary>
     [ExecuteInEditMode]
     public class SBaseMesh : SBaseObject
     {
-        /// Mesh of this object
+        /// Member: Unity Mesh object of this GameObject
 		protected Mesh m_mesh;
 
-        /// Mesh renderer of this object
-        //private MeshRenderer m_meshRenderer;
-
-        /// Pointer to the SOFA API object
+        /// Pointer to the corresponding SOFA API object
         protected SofaBaseMesh m_impl = null;
 
+        /// Initial Translation from Sofa Object at init
+        protected Vector3 m_initTranslation;
+        /// Initial Rotation from Sofa Object at init
+        protected Vector3 m_initRotation;
+        /// Initial Scale from Sofa Object at init
+        protected Vector3 m_initScale;
+
+        /// Current Translation of this object (same as in Unity Editor and Sofa object)
+        public Vector3 m_translation;
+        /// Current Rotation of this object (same as in Unity Editor and Sofa object)
+        public Vector3 m_rotation;
+        /// Current Scale of this object (same as in Unity Editor and Sofa object)
+        public Vector3 m_scale = new Vector3(1.0f, 1.0f, 1.0f);
+
+
+        /// Method called by @sa loadContext() method. To create the object when Sofa context has been found.
+        protected override void createObject()
+        {
+            // Get initial transformation
+            m_initTranslation = m_impl.translation;
+            m_initRotation = m_impl.rotation;
+            m_initScale = m_impl.scale;
+
+            // Copy the initial transformation as the current one for init
+            m_translation = m_initTranslation;
+            m_rotation = m_initRotation;
+            m_scale = m_initScale;
+        }
+
+        /// Method called by \sa Awake after the loadcontext method.
+        protected override void awakePostProcess()
+        {
+            // Add a MeshFilter to the GameObject
+            MeshFilter mf = gameObject.GetComponent<MeshFilter>();
+            if (mf == null)
+                gameObject.AddComponent<MeshFilter>();
+        }
+
+        /// Method called at GameObject init (after creation or when starting play).
         private void Start()
         {
             if (m_log)
@@ -46,68 +86,33 @@ namespace SofaUnity
             }
         }
 
-        private void Update()
-        {
-            if (m_log)
-                Debug.Log("SBaseMesh::Update called.");
 
-            updateImpl();
-        }
-
-
-        /// Method called by \sa Awake after the loadcontext method. To be implemented by child class.
-        protected override void awakePostProcess()
-        {
-            MeshFilter mf = gameObject.GetComponent<MeshFilter>();
-            if (mf == null)
-                gameObject.AddComponent<MeshFilter>();
-        }
-
-        protected override void createObject()
-        {
-            m_initTranslation = m_impl.translation;
-            m_initRotation = m_impl.rotation;
-            m_initScale = m_impl.scale;
-
-            m_translation = m_initTranslation;
-            m_rotation = m_initRotation;
-            m_scale = m_initScale;
-
-        }
-
-
-        /// Method called by \sa Start() method. To be implemented by child class.
+        /// Method called by \sa Start() method to init the current object and impl. @param toUpdate indicate if updateMesh has to be called.
         protected virtual void initMesh(bool toUpdate)
         {
             if (m_impl == null)
                 return;
 
+            // Only apply transformation if different from init one (change from editor)
             if (m_translation != m_initTranslation)
-            {
                 m_impl.translation = m_translation;
-                Debug.Log("SBaseMesh::m_translation: " + m_translation + " - " + m_nameId);
-            }
+
             if (m_rotation != m_initRotation)
-            {
                 m_impl.rotation = m_rotation;
-                Debug.Log("SBaseMesh::m_rotation: " + m_rotation + " - " + m_nameId);
-            }
+
             if (m_scale != m_initScale)
             {
               //  m_impl.scale = m_scale;
                 Debug.Log("SBaseMesh::m_scale: " + m_scale + " - " + m_initScale  + " " + m_nameId);
             }
             
+            // Update the Sofa Object
             if (toUpdate)
                 m_impl.updateMesh(m_mesh);
         }
 
-        /// Method called by \sa Update() method. To be implemented by child class.
-        protected virtual void updateImpl()
-        {
 
-        }
-
+        /// Getter of parentName of this Sofa Object.
         public string parentName()
         {
             if (m_impl == null)
@@ -116,8 +121,7 @@ namespace SofaUnity
                 return m_impl.parent;
         }
 
-
-        public Vector3 m_translation;
+        /// Getter/Setter of current translation @see m_translation
         public Vector3 translation
         {
             get { return m_translation; }
@@ -126,7 +130,6 @@ namespace SofaUnity
                 if (value != m_translation)
                 {
                     Vector3 diffTrans = value - m_translation;
-                    Debug.Log("diffTrans: " + diffTrans + " - " + m_nameId);
                     m_translation = value;
                     if (m_impl != null)
                     {
@@ -137,7 +140,7 @@ namespace SofaUnity
             }
         }
 
-        public Vector3 m_rotation;
+        /// Getter/Setter of current rotation @see m_rotation
         public Vector3 rotation
         {
             get { return m_rotation; }
@@ -156,7 +159,7 @@ namespace SofaUnity
             }
         }
 
-        public Vector3 m_scale = new Vector3(1.0f, 1.0f, 1.0f);
+        /// Getter/Setter of current scale @see m_scale        
         public Vector3 scale
         {
             get { return m_scale; }
@@ -174,9 +177,5 @@ namespace SofaUnity
                 }
             }
         }
-
-        protected Vector3 m_initTranslation;
-        protected Vector3 m_initRotation;
-        protected Vector3 m_initScale;
     }
 }

@@ -41,13 +41,18 @@ namespace SofaUnity
         /// Method called at GameObject init (after creation or when starting play). To be implemented by child class.
         void Start()
         {
-            Debug.Log("SBaseObject::Start called.");
+            if (m_log)
+                Debug.Log("SBaseObject::Start called.");
         }
 
         /// Method called to update GameObject, called once per frame. To be implemented by child class.
         void Update()
         {
-            Debug.Log("SBaseObject::Update called.");
+            if (m_log)
+                Debug.Log("SBaseObject::Update called.");
+
+            // Call internal method that can be overwritten
+            updateImpl();
         }
 
 
@@ -106,6 +111,12 @@ namespace SofaUnity
 
         /// Method called by @sa Awake() method. As post process method after creation. To be implemented by child class.
         protected virtual void awakePostProcess()
+        {
+
+        }
+
+        /// Method called by @sa Update() method. To be implemented by child class.
+        protected virtual void updateImpl()
         {
 
         }
