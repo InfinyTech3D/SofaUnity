@@ -4,36 +4,16 @@ using UnityEngine;
 
 namespace SofaUnity
 {
+    /// <summary>
+    /// Base class to map a Sofa Object with a Unity GameObject
+    /// This class control the creation of the object as well as the link to the SofaContext 
+    /// </summary>
     public class SBaseObject : MonoBehaviour
-    {                
-        protected bool m_log = false;
-
+    {
+        /// Pointer to the Sofa context this GameObject belongs to.
         protected SofaContext m_context = null;
 
-        // Use this for initialization
-        void Start()
-        {
-            Debug.Log("SBaseObject::Start called.");
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            Debug.Log("SBaseObject::Update called.");
-        }
-
-        void Awake()
-        {
-            Debug.Log("SBaseObject::Awake called.");
-            //gameObject.AddComponent<MeshFilter>();
-            //gameObject.AddComponent<MeshRenderer>();
-
-            //m_mesh = gameObject.GetComponent<MeshFilter>().mesh;
-            //m_meshRenderer = gameObject.GetComponent<MeshRenderer>();
-
-          //  gameObject.transform.position = new Vector3(1, 1, 1); ;
-        }        
-       
+        /// Name of this GameObject
         protected string m_nameId;
         public string nameId
         {
@@ -41,6 +21,35 @@ namespace SofaUnity
             set { m_nameId = value; }
         }
 
+        /// Parameter to activate logging of this Sofa GameObject
+        protected bool m_log = false;
+
+
+        /// Method called at GameObject creation. Will search for SofaContext @sa loadContext() which call @sa createObject() . Then call @see awakePostProcess()
+        void Awake()
+        {
+            if (m_log)
+                Debug.Log("UNITY_EDITOR - SBaseMesh::Awake - " + m_nameId);
+
+            loadContext();
+
+            awakePostProcess();
+        }
+
+        /// Method called at GameObject init (after creation or when starting play). To be implemented by child class.
+        void Start()
+        {
+            Debug.Log("SBaseObject::Start called.");
+        }
+
+        /// Method called to update GameObject, called once per frame. To be implemented by child class.
+        void Update()
+        {
+            Debug.Log("SBaseObject::Update called.");
+        }
+
+
+        /// Method called to update GameObject, called once per frame. To be implemented by child class.
         protected bool loadContext()
         {
             if (m_log)
@@ -73,7 +82,7 @@ namespace SofaUnity
                 m_context.countCreated();
 
                 m_context.objectcpt = m_context.objectcpt + 1;
-                
+
                 return true;
             }
             else
@@ -83,8 +92,14 @@ namespace SofaUnity
             }
         }
 
-        /// Method called by \sa loadContext() method. To be implemented by child class.
+        /// Method called by @sa loadContext() method. To create the object when Sofa context has been found. To be implemented by child class.
         protected virtual void createObject()
+        {
+
+        }
+
+        /// Method called by @sa Awake() method. As post process method after creation. To be implemented by child class.
+        protected virtual void awakePostProcess()
         {
 
         }

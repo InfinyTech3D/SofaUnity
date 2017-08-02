@@ -19,17 +19,6 @@ namespace SofaUnity
         /// Pointer to the SOFA API object
         protected SofaBaseMesh m_impl = null;
 
-        private void Awake()
-        {
-            if (m_log)
-                Debug.Log("UNITY_EDITOR - SBaseMesh::Awake - " + m_nameId);
-
-            loadContext();
-
-            awakePostProcess();
-        }
-
-
         private void Start()
         {
             if (m_log)
@@ -67,7 +56,7 @@ namespace SofaUnity
 
 
         /// Method called by \sa Awake after the loadcontext method. To be implemented by child class.
-        protected virtual void awakePostProcess()
+        protected override void awakePostProcess()
         {
             MeshFilter mf = gameObject.GetComponent<MeshFilter>();
             if (mf == null)
