@@ -1,24 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
-using SofaUnity;
-using SofaUnityAPI;
-using System;
+
 
 namespace SofaUnity
 {
+    /// <summary>
+    /// Specific class for a Rigid Box Mesh, inherite from SRigidGrid 
+    /// This class will create a SofaBox API object to load the topology from Sofa Regular Grid Mesh.
+    /// </summary>
     [ExecuteInEditMode]
     public class SRigidBox : SRigidGrid
     {
-        /// Mesh of this object
+        /// Method called by @sa loadContext() method. To create the object when Sofa context has been found.
         protected override void createObject()
         {
+            // Get access to the sofaContext
             IntPtr _simu = m_context.getSimuContext();
-            if (_simu != IntPtr.Zero)
+            if (_simu != IntPtr.Zero) // Create the API object for Sofa Regular Grid Mesh
                 m_impl = new SofaBox(_simu, m_nameId, true);
 
             if (m_impl == null)
-                Debug.LogError("SRigidBox:: Object not created");
+                Debug.LogError("SRigidBox:: Object creation failed.");
         }
     }
 }
