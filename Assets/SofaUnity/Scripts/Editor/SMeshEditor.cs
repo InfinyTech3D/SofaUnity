@@ -3,9 +3,16 @@ using UnityEditor;
 using SofaUnity;
 
 
+/// <summary>
+/// Editor Class to define the creation and UI of SDeformableMesh GameObject
+/// </summary>
 [CustomEditor(typeof(SDeformableMesh), true)]
 public class SDeformableMeshEditor : Editor
 {
+    /// <summary>
+    ///  Add SDeformableMesh Object creation to the SofaUnity Menu
+    /// </summary>
+    /// <returns>Pointer to the SDeformableMesh GameObject</returns>
     [MenuItem("SofaUnity/Sofa 3D Object/SDeformableMesh")]
     [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SDeformableMesh")]
     public static GameObject CreateNew()
@@ -15,10 +22,15 @@ public class SDeformableMeshEditor : Editor
         return go;
     }
 
+
+    /// <summary>
+    /// Method to set the UI of the SDeformableMesh GameObject
+    /// </summary>
     public override void OnInspectorGUI()
     {
         SDeformableMesh mesh = (SDeformableMesh)this.target;
 
+        // Add Triansformation fields
         mesh.translation = EditorGUILayout.Vector3Field("Translation", mesh.translation);
         EditorGUILayout.Separator();
 
@@ -28,6 +40,8 @@ public class SDeformableMeshEditor : Editor
         mesh.scale = EditorGUILayout.Vector3Field("Scale", mesh.scale);
         EditorGUILayout.Separator();
 
+
+        // Add FEM fields
         mesh.mass = EditorGUILayout.FloatField("Mass", mesh.mass);
         EditorGUILayout.Separator();
 
@@ -40,9 +54,16 @@ public class SDeformableMeshEditor : Editor
 }
 
 
+/// <summary>
+/// Editor Class to define the creation and UI of SRigidMesh GameObject
+/// </summary>
 [CustomEditor(typeof(SRigidMesh), true)]
 public class SRigidMeshEditor : Editor
 {
+    /// <summary>
+    ///  Add SRigidMesh Object creation to the SofaUnity Menu
+    /// </summary>
+    /// <returns>Pointer to the SRigidMesh GameObject</returns>
     [MenuItem("SofaUnity/Sofa 3D Object/SRigidMesh")]
     [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SRigidMesh")]
     public static GameObject CreateNew()
@@ -52,10 +73,14 @@ public class SRigidMeshEditor : Editor
         return go;
     }
 
+    /// <summary>
+    /// Method to set the UI of the SRigidMesh GameObject
+    /// </summary>
     public override void OnInspectorGUI()
     {
         SRigidMesh mesh = (SRigidMesh)this.target;
 
+        // Add Triansformation fields
         mesh.translation = EditorGUILayout.Vector3Field("Translation", mesh.translation);
         EditorGUILayout.Separator();
 

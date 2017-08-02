@@ -1,11 +1,17 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using UnityEditor.SceneManagement;
 using SofaUnity;
 
+/// <summary>
+/// Editor Class to define the creation and UI of SofaContext GameObject
+/// </summary>
 [CustomEditor(typeof(SofaContext))]
 public class SofaContextEditor : Editor
 {
+    /// <summary>
+    ///  Add SofaContext Object creation to the SofaUnity Menu
+    /// </summary>
+    /// <returns>Pointer to the SofaContext GameObject</returns>
     [MenuItem("SofaUnity/SofaContext")]
     [MenuItem("GameObject/Create Other/SofaUnity/SofaContext")]  //right click menu
     public static GameObject CreateNew()
@@ -20,6 +26,9 @@ public class SofaContextEditor : Editor
         return go;
     }
 
+    /// <summary>
+    ///  Create Sofa logo for the Editor Menu
+    /// </summary>
     private static Texture2D m_sofaLogo;
     public static Texture2D SofaLogo
     {
@@ -34,6 +43,9 @@ public class SofaContextEditor : Editor
         }
     }
 
+    /// <summary>
+    /// Method to set the UI of the SofaContext GameObject
+    /// </summary>
     public override void OnInspectorGUI()
     {
         SofaContext context = (SofaContext)this.target;
@@ -43,30 +55,27 @@ public class SofaContextEditor : Editor
         logoGUIStyle.border = new RectOffset(0, 0, 0, 0);
         EditorGUILayout.LabelField(new GUIContent(SofaLogo), GUILayout.MinHeight(100.0f), GUILayout.ExpandWidth(true));
 
-        //Color GUIBlue = new Color32(192, 219, 255, 255);
-
+        // Add field for gravity
         context.gravity = EditorGUILayout.Vector3Field("Gravity", context.gravity);
         EditorGUILayout.Separator();
 
+        // Add field for timestep
         context.timeStep = EditorGUILayout.FloatField("TimeStep", context.timeStep);
         EditorGUILayout.Separator();
 
+        // Add Button to load a filename
         if (GUILayout.Button("Load Scene"))
         {
             context.filename = EditorUtility.OpenFilePanel("Load file scene (*.scn)", "", "scn");
-            //context.filename = "C:/projects/sofa-dev/examples/Demos/TriangleSurfaceCutting.scn";
             EditorGUILayout.Separator();
         }
-
+        // Label of the filename loaded
         EditorGUILayout.LabelField("filename", context.filename);
 
-
-
+        
         if (GUI.changed)
         {
             EditorUtility.SetDirty(context);
-            //EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
-            //Undo.RecordObject(pw, "Undo Physics World");
         }
     }
 }
