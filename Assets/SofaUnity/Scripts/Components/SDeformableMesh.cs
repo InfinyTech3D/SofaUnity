@@ -7,14 +7,60 @@ using System;
 
 namespace SofaUnity
 {
+    /// <summary>
+    /// Base class for a Deformable Mesh, inherite from SBaseMesh 
+    /// This class will add a meshRenderer and create a SofaMesh API object to load the topology from Sofa Object.
+    /// It will also try to create triangles mesh from tetra.
+    /// </summary>
     [ExecuteInEditMode]
     public class SDeformableMesh : SBaseMesh
     {
-        protected int nbTetra = 0;
-        protected int[] m_tetra;
+        /// Parameter to define the Mass of this deformable Object
+        public float m_mass = 10.0f;
+        /// Parameter to define the Young Modulus of this deformable Object
+        public float m_young = 1400.0f;
+        /// Parameter to define the Poisson Ratio of this deformable Object
+        public float m_poisson = 0.45f;
 
+        /// Member: if tetrahedron is detected, will gather the number of element
+        protected int nbTetra = 0;
+        /// Member: if tetrahedron is detected, will store the tetrahedron topology
+        protected int[] m_tetra;
+        /// Member: if tetrahedron is detected, will store the vertex mapping between triangulation and tetrahedron topology
+        protected Dictionary<int, int> mappingVertices;
+
+
+        /// Method called by @sa loadContext() method. To create the object when Sofa context has been found.
+        protected override void createObject()
+        {
+            // Get access to the sofaContext
+            IntPtr _simu = m_context.getSimuContext();
+            if (_simu != IntPtr.Zero)
+            {
+                // Create the API object for SofaMesh
+                m_impl = new SofaMesh(_simu, m_nameId, false);
+
+                // TODO: check if this is still needed (and why not in children)
+                m_impl.loadObject();
+
+                // Init the FEM parameter from scene.
+                m_poisson = m_impl.poissonRatio;
+                m_mass = m_impl.mass;
+                m_young = m_impl.youngModulus;
+
+                // Call SBaseMesh.createObject() to init value loaded from the scene.
+                base.createObject();
+            }
+
+            if (m_impl == null)
+                Debug.LogError("SDeformableMesh:: Object creation failed.");
+        }
+
+
+        /// Method called by @sa Awake() method. As post process method after creation.
         protected override void awakePostProcess()
         {
+            // Call SBaseMesh.awakePostProcess()
             base.awakePostProcess();
 
             //to see it, we have to add a renderer
@@ -23,6 +69,8 @@ namespace SofaUnity
                 mr = gameObject.AddComponent<MeshRenderer>();
         }
 
+
+        /// Method called by \sa Start() method to init the current object and impl. @param toUpdate indicate if updateMesh has to be called.
         protected override void initMesh(bool toUpdate)
         {
             if (m_impl == null)
@@ -40,11 +88,11 @@ namespace SofaUnity
                 nbTetra = m_impl.getNbTetrahedra();
                 if (nbTetra > 0)
                 {
-                    Debug.Log("Tetra: " + nbTetra);
+                    if (m_log)
+                        Debug.Log("Tetra found! Number: " + nbTetra);
                     m_tetra = new int[nbTetra * 4];
 
                     m_impl.getTetrahedra(m_tetra);
-                    Debug.Log("tetra found start: " + m_tetra[0] + " " + m_tetra[1] + " " + m_tetra[2] + " " + m_tetra[3]);
                     m_mesh.triangles = this.computeForceField();
                 }
                 else
@@ -52,7 +100,8 @@ namespace SofaUnity
             }
 
             //m_impl.recomputeTriangles(m_mesh);
-            
+
+            // Set the FEM parameters.
             m_impl.mass = m_mass;
             m_impl.youngModulus = m_young;
             m_impl.poissonRatio = m_poisson;
@@ -68,27 +117,8 @@ namespace SofaUnity
             }
         }
 
-        protected override void createObject()
-        {
-            IntPtr _simu = m_context.getSimuContext();
-            if (_simu != IntPtr.Zero)
-            {
-                m_impl = new SofaMesh(_simu, m_nameId, false);
-                m_impl.loadObject();
 
-                m_poisson = m_impl.poissonRatio;
-                m_mass = m_impl.mass;
-                m_young = m_impl.youngModulus;
-
-                // Set init value loaded from the scene.
-                base.createObject();
-            }
-
-            if (m_impl == null)
-                Debug.LogError("SDeformableMesh:: Object not created");
-        }
-
-
+        /// Method called by @sa Update() method.
         protected override void updateImpl()
         {
             if (m_log)
@@ -103,45 +133,8 @@ namespace SofaUnity
                 //m_mesh.RecalculateNormals();
             }
         }
-               
-        public void drawForceField()
-        {
-            if (m_mesh.vertices.Length == 0)
-                return;
 
-            GL.Begin(GL.TRIANGLES);
-
-            for (int i=0; i<nbTetra; ++i)
-            {
-                Vector3 v0 = m_mesh.vertices[m_tetra[i * 4 + 0]];
-                Vector3 v1 = m_mesh.vertices[m_tetra[i * 4 + 1]];
-                Vector3 v2 = m_mesh.vertices[m_tetra[i * 4 + 2]];
-                Vector3 v3 = m_mesh.vertices[m_tetra[i * 4 + 3]];
-
-             //   Debug.Log("v0: " + v0 + " v1: " + v1 );
-
-                GL.Vertex3(v0.x, v0.y, v0.z);
-                GL.Vertex3(v1.x, v1.y, v1.z);
-                GL.Vertex3(v2.x, v2.y, v2.z);
-
-                GL.Vertex3(v1.x, v1.y, v1.z);
-                GL.Vertex3(v2.x, v2.y, v2.z);
-                GL.Vertex3(v3.x, v3.y, v3.z);
-
-                GL.Vertex3(v2.x, v2.y, v2.z);
-                GL.Vertex3(v3.x, v3.y, v3.z);
-                GL.Vertex3(v0.x, v0.y, v0.z);
-
-                GL.Vertex3(v3.x, v3.y, v3.z);
-                GL.Vertex3(v0.x, v0.y, v0.z);
-                GL.Vertex3(v1.x, v1.y, v1.z);
-            }
-
-            GL.End();            
-        }
-
-
-        protected Dictionary<int, int> mappingVertices;
+        /// Method to compute the TetrahedronFEM topology and store it as triangle in Unity Mesh, will store the vertex mapping into @see mappingVertices
         public int[] computeForceField()
         {
             int[] tris = new int[nbTetra * 12];
@@ -201,6 +194,8 @@ namespace SofaUnity
             return tris;
         }
 
+
+        /// Method to update the TetrahedronFEM topology using the vertex mapping.
         public void updateTetraMesh()
         {
             // first update the vertices dissociated
@@ -225,7 +220,44 @@ namespace SofaUnity
             m_mesh.vertices = verts;
         }
 
-        public float m_mass = 10.0f;
+
+        /// Method to draw the Tetrahedron FEM (not used)
+        public void drawForceField()
+        {
+            if (m_mesh.vertices.Length == 0)
+                return;
+
+            GL.Begin(GL.TRIANGLES);
+
+            for (int i = 0; i < nbTetra; ++i)
+            {
+                Vector3 v0 = m_mesh.vertices[m_tetra[i * 4 + 0]];
+                Vector3 v1 = m_mesh.vertices[m_tetra[i * 4 + 1]];
+                Vector3 v2 = m_mesh.vertices[m_tetra[i * 4 + 2]];
+                Vector3 v3 = m_mesh.vertices[m_tetra[i * 4 + 3]];
+
+                GL.Vertex3(v0.x, v0.y, v0.z);
+                GL.Vertex3(v1.x, v1.y, v1.z);
+                GL.Vertex3(v2.x, v2.y, v2.z);
+
+                GL.Vertex3(v1.x, v1.y, v1.z);
+                GL.Vertex3(v2.x, v2.y, v2.z);
+                GL.Vertex3(v3.x, v3.y, v3.z);
+
+                GL.Vertex3(v2.x, v2.y, v2.z);
+                GL.Vertex3(v3.x, v3.y, v3.z);
+                GL.Vertex3(v0.x, v0.y, v0.z);
+
+                GL.Vertex3(v3.x, v3.y, v3.z);
+                GL.Vertex3(v0.x, v0.y, v0.z);
+                GL.Vertex3(v1.x, v1.y, v1.z);
+            }
+
+            GL.End();
+        }
+
+
+        /// Getter/Setter of current mass @see m_mass
         public float mass
         {
             get { return m_mass; }
@@ -240,8 +272,7 @@ namespace SofaUnity
             }
         }
 
-
-        public float m_young = 1400.0f;
+        /// Getter/Setter of current young @see m_young
         public float young
         {
             get { return m_young; }
@@ -256,7 +287,7 @@ namespace SofaUnity
             }
         }
 
-        public float m_poisson = 0.45f;
+        /// Getter/Setter of current poisson @see m_poisson
         public float poisson
         {
             get { return m_poisson; }
