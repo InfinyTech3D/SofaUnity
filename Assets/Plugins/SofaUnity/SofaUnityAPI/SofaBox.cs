@@ -2,21 +2,53 @@
 using System;
 using System.Runtime.InteropServices;
 
+/// <summary>
+/// Class used to handle bindings to the Sofa Cube object, using a RegularGrid.
+/// </summary>
 public class SofaBox : SofaBaseMesh
-{ 
-
+{
+    /// <summary>
+    /// Default constructor
+    /// </summary>
+    /// <param name="simu">Pointer to the SofaPhysicsAPI</param>
+    /// <param name="nameID">Name of this Object</param>
+    /// <param name="isRigid">Type rigid or deformable</param>
     public SofaBox(IntPtr simu, string nameID, bool isRigid) 
         : base (simu, nameID, isRigid)        
     {
 
     }
 
+    /// Destructor
     ~SofaBox()
     {
         Dispose(false);
     }
 
+    /// Implicit method to really create object and link to Sofa object. Called by SofaBaseObject constructor
+    protected override void createObject()
+    {
+        if (m_native == IntPtr.Zero) // first time create object only
+        {
+            // Create the cube
+            int res = sofaPhysicsAPI_addCube(m_simu, m_name, m_isRigid);
+            m_name += "_node";
+            if (res == 1) // cube added
+            {
+                if(log)
+                    Debug.Log("cube Added! " + m_name);
 
+                // Set created object to native pointer
+                m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name);
+            }
+
+            if (m_native == IntPtr.Zero)
+                Debug.LogError("Error Cube created can't be found!");
+        }
+    }
+
+
+    /// Method to create the triangulation from Sofa topology to Unity buffers
     public override int[] createTriangulation()
     {        
         int nbrQuads = sofaPhysics3DObject_getNbQuads(m_simu, m_name);
@@ -67,7 +99,6 @@ public class SofaBox : SofaBaseMesh
                 }                
             }
         }
-
 
         
         for (int i = 0; i < 2; ++i)
@@ -141,6 +172,7 @@ public class SofaBox : SofaBaseMesh
     }
 
 
+    /// Method to recompute the Tex coords according to mesh position and geometry.
     public override void recomputeTexCoords(Mesh mesh)
     {
         Vector3[] verts = mesh.vertices;
@@ -171,85 +203,8 @@ public class SofaBox : SofaBaseMesh
         mesh.uv = uvs;
     }
 
-
-    protected override void createObject()
-    {
-        Debug.Log("old name " + m_name);
-        //m_name = "cube_" + m_idObject + "_node";
-
-        if (m_native == IntPtr.Zero) // first time create object only
-        {
-            // Create the cube
-            int res = sofaPhysicsAPI_addCube(m_simu, m_name, m_isRigid);
-            m_name += "_node";
-            if (res == 1) // cube added
-            {
-                Debug.Log("cube Added! " + m_name);
-
-                // Set created object to native pointer
-                m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name);
-            }
-
-            //    m_native = sofaPhysicsAPI_get3DObject(m_simu, "truc1");
-
-            if (m_native == IntPtr.Zero)
-                Debug.LogError("Error Cube created can't be found!");
-        }
-    }
-
-    
-    public void test()
-    {
-        Debug.Log("sofa_test1: " + sofaPhysicsAPI_getNumberObjects(m_simu));
-        Debug.Log("NAME: " + sofaPhysicsAPI_APIName(m_simu));
-        if (m_native != IntPtr.Zero)
-        {
-            int nbrV = sofaPhysicsAPI_getNbVertices(m_simu, m_name);
-            int nbrQuads = sofaPhysics3DObject_getNbQuads(m_simu, m_name);
-
-            Debug.Log("NbrV: " + nbrV);
-            Debug.Log("NbrTri: " + sofaPhysics3DObject_getNbTriangles(m_simu, m_name));
-
-            Debug.Log("NbrQuad: " + nbrQuads);
-            int[] toto = new int[nbrQuads];
-            sofaPhysics3DObject_getQuads(m_simu, "truc1_n   ode", toto);
-            for (int i = 0; i < 10; ++i)
-            {
-                Debug.Log(i + " => " + toto[i]);
-            }
-
-
-            /*  var quads = sofaPhysics3DObject_getQuads(m_simu, m_name);
-              var vertices = sofaPhysics3DObject_getVertices(m_simu, m_name);
-              Debug.Log(quads.Length);
-              Debug.Log(vertices.Length);
-
-              for (int i = 0; i < nbrV; ++i)
-                  Debug.Log(i + " => " + vertices[i]);
-                  */
-            /*for (int i=0; i<nbrQuads; ++i)
-            {
-                Debug.Log(i + " => " + quads[i]);
-            }*/
-
-            //int toto[];
-            //Debug.Log("NbrVV: " + sofaPhysics3DObject_getNbVertices(m_native));
-        }
-    }
-
-    
+        
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_addCube(IntPtr obj, string name, bool isRigid);
-
-
-    //[DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    //public static extern IntPtr sofaPhysicsAPI_getOutputMesh(IntPtr obj, string name);
-
-    //[DllImport("SofaAdvancePhysicsAPI")]
-    //public static extern IntPtr sofaOutputMesh_getVertices(IntPtr obj);
-
-    
-    //[DllImport("SofaAdvancePhysicsAPI")]
-    //public static extern int sofaPhysics3DObject_getNbVertices(IntPtr obj);
 
 }

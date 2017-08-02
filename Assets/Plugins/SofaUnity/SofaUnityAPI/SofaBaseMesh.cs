@@ -4,15 +4,26 @@ using System.Runtime.InteropServices;
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// This is the base class representing Sofa Mesh Object, handling all bindings to Sofa 3D Object.
+/// It will connect to the SofaPhysicsAPI and prepar the link to specific mesh objects. 
+/// </summary>
 public class SofaBaseMesh : SofaBaseObject
 {
+    /// <summary>
+    /// Default constructor to create a Sofa Mesh
+    /// </summary>
+    /// <param name="simu">Pointer to the SofaPhysicsAPI</param>
+    /// <param name="nameID">Name of this Object</param>
+    /// <param name="isRigid">Type rigid or deformable</param>
     public SofaBaseMesh(IntPtr simu, string nameID, bool isRigid)
-        : base (simu, nameID, isRigid)
+        : base(simu, nameID, isRigid)
     {
 
     }
 
 
+    /// Implicit method load the object from the Sofa side.
     public override void loadObject()
     {
         //if (m_native != IntPtr.Zero)        
@@ -31,44 +42,59 @@ public class SofaBaseMesh : SofaBaseObject
     }
 
 
-    public float mass
+    /// BoundingBox min Value in 3D
+    protected Vector3 m_min = new Vector3(100000, 100000, 100000);
+    /// BoundingBox max Value in 3D
+    protected Vector3 m_max = new Vector3(-100000, -100000, -100000);
+
+    /// Method to compute the Mesh BoundingBox
+    public virtual void computeBoundingBox(Mesh mesh)
     {
-        get { return getFloatValue("totalMass"); }
-        set { setFloatValue("totalMass", value); }
+        Vector3[] verts = mesh.vertices;
+        int nbrV = verts.Length;
+
+        // Get min and max of the mesh
+        for (int i = 0; i < nbrV; i++)
+        {
+            if (verts[i].x > m_max.x)
+                m_max.x = verts[i].x;
+            if (verts[i].y > m_max.y)
+                m_max.y = verts[i].y;
+            if (verts[i].z > m_max.z)
+                m_max.z = verts[i].z;
+
+            if (verts[i].x < m_min.x)
+                m_min.x = verts[i].x;
+            if (verts[i].y < m_min.y)
+                m_min.y = verts[i].y;
+            if (verts[i].z < m_min.z)
+                m_min.z = verts[i].z;
+        }
     }
 
-    public float youngModulus
-    {
-        get { return getFloatValue("youngModulus"); }
-        set { setFloatValue("youngModulus", value); }
-    }
 
-    public float poissonRatio
-    {
-        get { return getFloatValue("poissonRatio"); }
-        set { setFloatValue("poissonRatio", value); }
-    }
-
-
+    /// Getter/Setter of the translation field
     public Vector3 translation
     {
         get { return getVector3fValue("translation"); }
         set { setVector3fValue("translation", value); }
     }
-    
+
+    /// Getter/Setter of the rotation field
     public Vector3 rotation
     {
         get { return getVector3fValue("rotation"); }
         set { setVector3fValue("rotation", value); }
     }
-    
+
+    /// Getter/Setter of the scale field
     public Vector3 scale
     {
         get { return getVector3fValue("scale"); }
         set { setVector3fValue("scale", value); }
     }
 
-
+    /// Setter of the grid resolution
     public void setGridResolution(Vector3 values)
     {
         if (m_native != IntPtr.Zero)
@@ -82,6 +108,30 @@ public class SofaBaseMesh : SofaBaseObject
         }
     }
 
+    /// Getter/Setter of the mass field
+    public float mass
+    {
+        get { return getFloatValue("totalMass"); }
+        set { setFloatValue("totalMass", value); }
+    }
+
+    /// Getter/Setter of the young Modulus field
+    public float youngModulus
+    {
+        get { return getFloatValue("youngModulus"); }
+        set { setFloatValue("youngModulus", value); }
+    }
+
+    /// Getter/Setter of the poisson Ratio field
+    public float poissonRatio
+    {
+        get { return getFloatValue("poissonRatio"); }
+        set { setFloatValue("poissonRatio", value); }
+    }
+
+
+    
+    /// Method to create the triangulation from Sofa topology to Unity buffers
     public virtual int[] createTriangulation()
     {
         
@@ -131,6 +181,8 @@ public class SofaBaseMesh : SofaBaseObject
         return trisOut;
     }
 
+
+    /// Method to update the Unity mesh buffers (vertices and normals) from sofa object side. Assume no topology change here.
     public virtual void updateMesh(Mesh mesh)
     {
         if (m_native != IntPtr.Zero)
@@ -202,6 +254,35 @@ public class SofaBaseMesh : SofaBaseObject
         }
     }
 
+    // TODO: check if still needed
+    public virtual void recomputeTriangles(Mesh mesh)
+    {
+
+    }
+
+
+    /// Method to get the number of tetrahedron in the current SOFA object
+    public int getNbTetrahedra()
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            int nbrTetra = sofaPhysics3DObject_getNbTetrahedra(m_simu, m_name);
+            return nbrTetra;
+        }
+        else
+            return 0;
+    }
+
+    /// Method to get the buffer of tetrahedra from the current SOFA object
+    public void getTetrahedra(int[] tetra)
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            sofaPhysics3DObject_getTetrahedra(m_simu, m_name, tetra);
+        }
+    }
+
+    /// Method to update the Unity mesh buffers (vertices and normals) from a tetrahedron topology object. Assume no topology change here.
     public virtual void updateMeshTetra(Mesh mesh, Dictionary<int, int> mapping)
     {
         if (m_native != IntPtr.Zero)
@@ -256,58 +337,9 @@ public class SofaBaseMesh : SofaBaseObject
             mesh.normals = normsNew;
         }
     }
-
-    public virtual void recomputeTriangles(Mesh mesh)
-    {
-       
-    }
-
-    public int getNbTetrahedra()
-    {
-        if (m_native != IntPtr.Zero)
-        {
-            int nbrTetra = sofaPhysics3DObject_getNbTetrahedra(m_simu, m_name);
-            return nbrTetra;
-        }
-        else
-            return 0;
-    }
-
-    public void getTetrahedra(int[] tetra)
-    {
-        if (m_native != IntPtr.Zero)
-        {
-            sofaPhysics3DObject_getTetrahedra(m_simu, m_name, tetra);
-            Debug.Log("tetra found getTetrahedra: " + tetra[0] + " " + tetra[1] + " " + tetra[2] + " " + tetra[3]);
-        }
-    }
-
-    protected Vector3 m_min = new Vector3(100000, 100000, 100000);
-    protected Vector3 m_max = new Vector3(-100000, -100000, -100000);
-    public virtual void computeBoundingBox(Mesh mesh)
-    {
-        Vector3[] verts = mesh.vertices;
-        int nbrV = verts.Length;
-
-        // Get min and max of the mesh
-        for (int i = 0; i < nbrV; i++)
-        {
-            if (verts[i].x > m_max.x)
-                m_max.x = verts[i].x;
-            if (verts[i].y > m_max.y)
-                m_max.y = verts[i].y;
-            if (verts[i].z > m_max.z)
-                m_max.z = verts[i].z;
-
-            if (verts[i].x < m_min.x)
-                m_min.x = verts[i].x;
-            if (verts[i].y < m_min.y)
-                m_min.y = verts[i].y;
-            if (verts[i].z < m_min.z)
-                m_min.z = verts[i].z;
-        }
-    }
-
+    
+    
+    /// Method to recompute the Tex coords according to mesh position and geometry.
     public virtual void recomputeTexCoords(Mesh mesh)
     {
         Vector3[] verts = mesh.vertices;

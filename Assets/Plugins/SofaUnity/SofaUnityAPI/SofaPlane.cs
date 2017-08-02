@@ -2,24 +2,30 @@
 using System;
 using System.Runtime.InteropServices;
 
+/// <summary>
+/// Class used to handle bindings to the Sofa Plane object, using a Regular Grid topology in 2D.
+/// </summary>
 public class SofaPlane : SofaBaseMesh
 {
+    /// <summary>
+    /// Default constructor
+    /// </summary>
+    /// <param name="simu">Pointer to the SofaPhysicsAPI</param>
+    /// <param name="nameID">Name of this Object</param>
+    /// <param name="isRigid">Type rigid or deformable</param>
     public SofaPlane(IntPtr simu, string nameID, bool isRigid)
         : base(simu, nameID, isRigid)
     {
 
     }
 
+    /// Destructor
     ~SofaPlane()
     {
         Dispose(false);
     }
 
-    public override int[] createTriangulation()
-    {
-        return base.createTriangulation();
-    }
-
+    /// Implicit method to really create object and link to Sofa object. Called by SofaBaseObject constructor
     protected override void createObject()
     {
         if (m_native == IntPtr.Zero) // first time create object only
@@ -29,19 +35,19 @@ public class SofaPlane : SofaBaseMesh
             m_name += "_node";
             if (res == 1) // plane added
             {
-                Debug.Log("plane Added! " + m_name);
+                if (log)
+                    Debug.Log("plane Added! " + m_name);
 
                 // Set created object to native pointer
                 m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name);
             }
-
-            //    m_native = sofaPhysicsAPI_get3DObject(m_simu, "truc1");
-
+            
             if (m_native == IntPtr.Zero)
                 Debug.LogError("Error plane created can't be found!");
         }
     }
 
+    /// Method to recompute the Tex coords according to mesh position and geometry.
     public override void recomputeTexCoords(Mesh mesh)
     {
         Vector3[] verts = mesh.vertices;

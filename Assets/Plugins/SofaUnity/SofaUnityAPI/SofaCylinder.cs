@@ -2,24 +2,53 @@
 using System;
 using System.Runtime.InteropServices;
 
+/// <summary>
+/// Class used to handle bindings to the Sofa Cylinder object, using a Cylindric Grid topology.
+/// </summary>
 public class SofaCylinder : SofaBaseMesh
 {
+    /// <summary>
+    /// Default constructor
+    /// </summary>
+    /// <param name="simu">Pointer to the SofaPhysicsAPI</param>
+    /// <param name="nameID">Name of this Object</param>
+    /// <param name="isRigid">Type rigid or deformable</param>
     public SofaCylinder(IntPtr simu, string nameID, bool isRigid)
         : base(simu, nameID, isRigid)
     {
 
     }
 
+    /// Destructor
     ~SofaCylinder()
     {
         Dispose(false);
     }
 
-    public override int[] createTriangulation()
+    /// Implicit method to really create object and link to Sofa object. Called by SofaBaseObject constructor
+    protected override void createObject()
     {
-        return base.createTriangulation();
+        if (m_native == IntPtr.Zero) // first time create object only
+        {
+            // Create the cylinder
+            int res = sofaPhysicsAPI_addCylinder(m_simu, m_name, m_isRigid);
+            m_name += "_node";
+            if (res == 1) // cylinder added
+            {
+                if (log)
+                    Debug.Log("cylinder Added! " + m_name);
+
+                // Set created object to native pointer
+                m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name);
+            }
+            
+            if (m_native == IntPtr.Zero)
+                Debug.LogError("Error cylinder created can't be found!");
+        }
     }
 
+
+    /// Method to recompute triangulation if needed in Grid.
     public override void recomputeTriangles(Mesh mesh)
     {
         int[] triangles = mesh.triangles;
@@ -49,6 +78,8 @@ public class SofaCylinder : SofaBaseMesh
         mesh.triangles = triangles;
     }
 
+
+    /// Method to recompute the Tex coords according to mesh position and geometry.
     public override void recomputeTexCoords(Mesh mesh)
     {
         Vector3[] verts = mesh.vertices;
@@ -59,28 +90,7 @@ public class SofaCylinder : SofaBaseMesh
 
         mesh.uv = uvs;
     }
-
-    protected override void createObject()
-    {
-        if (m_native == IntPtr.Zero) // first time create object only
-        {
-            // Create the cylinder
-            int res = sofaPhysicsAPI_addCylinder(m_simu, m_name, m_isRigid);
-            m_name += "_node";
-            if (res == 1) // cylinder added
-            {
-                Debug.Log("cylinder Added! " + m_name);
-
-                // Set created object to native pointer
-                m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name);
-            }
-
-            //    m_native = sofaPhysicsAPI_get3DObject(m_simu, "truc1");
-
-            if (m_native == IntPtr.Zero)
-                Debug.LogError("Error cylinder created can't be found!");
-        }
-    }
+       
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_addCylinder(IntPtr obj, string name, bool isRigid);
