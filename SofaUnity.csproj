@@ -91,17 +91,17 @@
   <ItemGroup>
     <Compile Include="Assets\SofaUnity\Scripts\Components\BaseObjects\SBaseMesh.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\BaseObjects\SBaseObject.cs" />
-    <Compile Include="Assets\SofaUnity\Scripts\Components\SBox.cs" />
-    <Compile Include="Assets\SofaUnity\Scripts\Components\SCylinder.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Components\DeformableGridObjects\SBox.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Components\DeformableGridObjects\SCylinder.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\SDeformableMesh.cs" />
-    <Compile Include="Assets\SofaUnity\Scripts\Components\SGrid.cs" />
-    <Compile Include="Assets\SofaUnity\Scripts\Components\SRigidBox.cs" />
-    <Compile Include="Assets\SofaUnity\Scripts\Components\SRigidCylinder.cs" />
-    <Compile Include="Assets\SofaUnity\Scripts\Components\SRigidGrid.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Components\DeformableGridObjects\SGrid.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Components\RigidGridObjects\SRigidBox.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Components\RigidGridObjects\SRigidCylinder.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Components\RigidGridObjects\SRigidGrid.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\SRigidMesh.cs" />
-    <Compile Include="Assets\SofaUnity\Scripts\Components\SRigidPlane.cs" />
-    <Compile Include="Assets\SofaUnity\Scripts\Components\SRigidSphere.cs" />
-    <Compile Include="Assets\SofaUnity\Scripts\Components\SSphere.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Components\RigidGridObjects\SRigidPlane.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Components\RigidGridObjects\SRigidSphere.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Components\DeformableGridObjects\SSphere.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\SVisualMesh.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\SofaContext.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Tools\Benchmarks.cs" />
@@ -110,7 +110,9 @@
     <Compile Include="Assets\SofaUnity\Scripts\Tools\PartScript.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Tools\ThirdPersonCamera.cs" />
     <Compile Include="Assets\libTest.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Tools\randomPosition.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
 </Project>
