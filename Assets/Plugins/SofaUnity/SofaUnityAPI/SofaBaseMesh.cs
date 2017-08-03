@@ -200,6 +200,8 @@ public class SofaBaseMesh : SofaBaseObject
             {
                 Debug.Log(m_name + " - resV: " + resV);
                 Debug.Log(m_name + " - resN: " + resN);
+                if (resN < 0 )
+                    Debug.Log("No normals found!");
             }
 
             Vector3[] verts = mesh.vertices;
@@ -254,8 +256,8 @@ public class SofaBaseMesh : SofaBaseObject
         }
     }
 
-    // TODO: check if still needed
-    public virtual void recomputeTriangles(Mesh mesh)
+    /// Post processing method to recompute topology if needed. Should be overwritten by child if needed only.
+    public virtual void recomputeTopology(Mesh mesh)
     {
 
     }
@@ -296,6 +298,11 @@ public class SofaBaseMesh : SofaBaseObject
             int resV = sofaPhysics3DObject_getVertices(m_simu, m_name, vertices);
             float[] normals = new float[nbrV * 3];
             int resN = sofaPhysics3DObject_getNormals(m_simu, m_name, normals);
+
+            if (resV < 0) {
+                Debug.LogError("SofaBaseMesh::updateMeshTetra: No vertices found, Error return: " + resV);
+                return;
+            }
 
             Vector3[] verts = new Vector3[nbrV];
             Vector3[] norms = new Vector3[nbrV];

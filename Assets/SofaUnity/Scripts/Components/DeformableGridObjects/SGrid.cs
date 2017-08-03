@@ -47,6 +47,10 @@ namespace SofaUnity
             m_mesh.name = "SofaGrid";
             // Set the grid resolution and update texCoords. 
             m_impl.setGridResolution(m_gridSize);
+
+            // Some grid need to recompute normals or topology
+            m_impl.recomputeTopology(m_mesh);
+
             if (this.m_useTex)
                 m_impl.recomputeTexCoords(m_mesh);
 

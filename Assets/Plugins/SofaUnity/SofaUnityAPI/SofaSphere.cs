@@ -49,7 +49,7 @@ public class SofaSphere : SofaBaseMesh
 
 
     /// Method to recompute triangulation if needed in Grid.
-    public override void recomputeTriangles(Mesh mesh)
+    public override void recomputeTopology(Mesh mesh)
     {
         int[] triangles = mesh.triangles;
         Vector3[] verts = mesh.vertices;
