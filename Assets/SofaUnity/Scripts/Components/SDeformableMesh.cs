@@ -156,8 +156,6 @@ namespace SofaUnity
                     vert[j] = m_mesh.vertices[old_id[j]];
                 }
 
-                Vector3 bary = (vert[0] + vert[1] + vert[2] + vert[3]) / 4;
-
                 // vert of new tetra reduce to the center of the tetra
                 for (int j = 0; j < 4; ++j)
                 {

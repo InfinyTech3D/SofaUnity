@@ -22,6 +22,8 @@ namespace SofaUnity
                 Debug.LogError("SRigidPlane:: Object creation failed.");
         }
 
+
+        /// Method called by \sa Start() method to init the current object and impl. @param toUpdate indicate if updateMesh has to be called.
         protected override void initMesh(bool toUpdate)
         {
             if (m_impl == null)
@@ -35,7 +37,7 @@ namespace SofaUnity
             // By default create a plane with Y normal.
             m_gridSize = new Vector3(10, 1, 10);
             m_impl.setGridResolution(m_gridSize);
-
+            
             if (toUpdate)
                 m_impl.updateMesh(m_mesh);
         }
