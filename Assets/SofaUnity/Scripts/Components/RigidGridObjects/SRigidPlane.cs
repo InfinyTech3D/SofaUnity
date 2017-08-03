@@ -27,6 +27,9 @@ namespace SofaUnity
             if (m_impl == null)
                 return;
 
+            // By default create a large plane
+            m_scale = new Vector3(40, 1, 40);
+
             base.initMesh(false);
 
             // By default create a plane with Y normal.

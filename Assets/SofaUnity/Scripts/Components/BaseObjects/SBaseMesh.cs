@@ -25,7 +25,7 @@ namespace SofaUnity
         /// Initial Rotation from Sofa Object at init
         protected Vector3 m_initRotation;
         /// Initial Scale from Sofa Object at init
-        protected Vector3 m_initScale;
+        protected Vector3 m_initScale = new Vector3(1.0f, 1.0f, 1.0f);
 
         /// Current Translation of this object (same as in Unity Editor and Sofa object)
         public Vector3 m_translation;
@@ -101,10 +101,7 @@ namespace SofaUnity
                 m_impl.rotation = m_rotation;
 
             if (m_scale != m_initScale)
-            {
-              //  m_impl.scale = m_scale;
-                Debug.Log("SBaseMesh::m_scale: " + m_scale + " - " + m_initScale  + " " + m_nameId);
-            }
+                m_impl.scale = m_scale;
             
             // Update the Sofa Object
             if (toUpdate)
