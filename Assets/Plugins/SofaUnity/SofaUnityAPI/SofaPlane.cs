@@ -47,27 +47,50 @@ public class SofaPlane : SofaBaseMesh
         }
     }
 
+
+    /// Post processing method to recompute topology if needed.
+    public override void recomputeTopology(Mesh mesh)
+    {
+        // recompute triangles to face up.
+        int[] triangles = mesh.triangles;
+        int nbrTri = triangles.Length/3;
+
+        for (int i=0; i<nbrTri; i++)
+        {
+            int buff = triangles[i * 3 + 1];
+            triangles[i * 3 + 1] = triangles[i * 3 + 2];
+            triangles[i * 3 + 2] = buff;
+        }
+
+        mesh.triangles = triangles;
+
+        // recompute normals to face up.
+        Vector3[] norms = mesh.normals;
+        for (int i = 0; i < norms.Length; i++)
+            norms[i] = new Vector3(0.0f, 1.0f, 0.0f);
+
+        mesh.normals = norms;
+    }
+
+
     /// Method to recompute the Tex coords according to mesh position and geometry.
     public override void recomputeTexCoords(Mesh mesh)
     {
         Vector3[] verts = mesh.vertices;
-        int nbrV = verts.Length;
+        Vector2[] uvs = new Vector2[verts.Length];
 
-        float[] texCoords = new float[nbrV * 2];
-        Vector2[] uv = new Vector2[nbrV];
+        this.computeBoundingBox(mesh);
 
-        sofaPhysics3DObject_getTexCoords(m_simu, m_name, texCoords);
+        // assume plane has normal on the Y value. To be done more generic in the future.
+        float rangeX = 1 / (m_max.x - m_min.x);
+        float rangeZ = 1 / (m_max.z - m_min.z);
 
-        for (int i = 0; i < nbrV; i++)
+        for (int i = 0; i < verts.Length; i++)
         {
-            uv[i].x = texCoords[i * 2];
-            uv[i].y = texCoords[i * 2 + 1];
-
-            if (uv[i].x == 0.0 && uv[i].y == 0.0)
-                uv[i] = new Vector2(1-(verts[i].x + verts[i].y), verts[i].z + verts[i].y);
+            uvs[i] = new Vector2((m_max.x - verts[i].x) * rangeX, (verts[i].z - m_min.z) * rangeZ);
         }
-
-        mesh.uv = uv;
+        
+        mesh.uv = uvs;
     }
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
