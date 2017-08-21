@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.5.1f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -93,15 +91,15 @@
     <Compile Include="Assets\SofaUnity\Scripts\Components\BaseObjects\SBaseObject.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\DeformableGridObjects\SBox.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\DeformableGridObjects\SCylinder.cs" />
-    <Compile Include="Assets\SofaUnity\Scripts\Components\SDeformableMesh.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\DeformableGridObjects\SGrid.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Components\DeformableGridObjects\SSphere.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\RigidGridObjects\SRigidBox.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\RigidGridObjects\SRigidCylinder.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\RigidGridObjects\SRigidGrid.cs" />
-    <Compile Include="Assets\SofaUnity\Scripts\Components\SRigidMesh.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\RigidGridObjects\SRigidPlane.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\RigidGridObjects\SRigidSphere.cs" />
-    <Compile Include="Assets\SofaUnity\Scripts\Components\DeformableGridObjects\SSphere.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Components\SDeformableMesh.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Components\SRigidMesh.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\SVisualMesh.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\SofaContext.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Tools\Benchmarks.cs" />
@@ -109,10 +107,8 @@
     <Compile Include="Assets\SofaUnity\Scripts\Tools\ObjectController.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Tools\PartScript.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Tools\ThirdPersonCamera.cs" />
-    <Compile Include="Assets\libTest.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Tools\randomPosition.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
 </Project>
