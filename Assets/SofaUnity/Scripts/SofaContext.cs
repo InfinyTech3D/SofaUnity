@@ -87,7 +87,7 @@ namespace SofaUnity
             {
                 if (value != m_filename)
                 {
-                    if (File.Exists(value))
+                    if (File.Exists(Application.dataPath+value))
                     {
                         m_filename = value;
                         if (m_impl != null)
@@ -157,11 +157,14 @@ namespace SofaUnity
                 if (m_filename != "")
                 {
                     // load the file
-                    m_impl.loadScene(m_filename);
+                    m_impl.loadScene(Application.dataPath + m_filename);
 
                     // Set counter of object creation to 0
                     cptCreated = 0;
                     m_nbrObject = m_impl.getNumberObjects();
+
+                    if (m_log)
+                        Debug.Log("init - m_nbrObject: " + m_nbrObject);
                 }
 
                 m_impl.timeStep = m_timeStep;
@@ -180,13 +183,15 @@ namespace SofaUnity
         /// Method to load a filename and create GameObject per Sofa object found.
         protected void loadFilename()
         {
-            m_impl.loadScene(m_filename);
+            m_impl.loadScene(Application.dataPath + m_filename);
             m_nbrObject = m_impl.getNumberObjects();
 
             if (m_log)
-                Debug.Log("getNumberObjects: " + m_nbrObject);
+                Debug.Log("loadFilename - getNumberObjects: " + m_nbrObject);
 
-            m_nbrObject += 1; // Add 1 fictive object to be sure this method exit before calling recreateHiearchy();
+            // Add 1 fictive object to be sure this method reach the end of the object creation loop
+            // before calling recreateHiearchy(); As the creation is asynchronous. call countCreated() at the end to compensate that +1.
+            m_nbrObject += 1; 
             for (int i = 0; i < m_nbrObject; ++i)
             {
                 string name = m_impl.getObjectName(i);
@@ -220,8 +225,9 @@ namespace SofaUnity
 
         /// Count the number of object created, when all created, will move them to recreate Sofa hierarchy.
         public void countCreated()
-        {
+        {            
             cptCreated++;
+            
             if (cptCreated == m_nbrObject)
                 recreateHiearchy();
         }

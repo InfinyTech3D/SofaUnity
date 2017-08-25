@@ -66,7 +66,8 @@ public class SofaContextEditor : Editor
         // Add Button to load a filename
         if (GUILayout.Button("Load Scene"))
         {
-            context.filename = EditorUtility.OpenFilePanel("Load file scene (*.scn)", "", "scn");
+            string absolutePath = EditorUtility.OpenFilePanel("Load file scene (*.scn)", "", "scn");
+            context.filename = absolutePath.Substring(Application.dataPath.Length);
             EditorGUILayout.Separator();
         }
         // Label of the filename loaded
