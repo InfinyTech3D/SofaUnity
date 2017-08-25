@@ -156,7 +156,15 @@ namespace SofaUnity
                 m_impl.start();
                 if (m_filename != "")
                 {
-                    // load the file
+                    if (!File.Exists(Application.dataPath + m_filename))
+                    {
+                        int pos = m_filename.IndexOf("Assets", 0);
+                        if (pos > 0)
+                        {
+                            m_filename = m_filename.Substring(pos + 6); // remove all path until Assets/
+                        }
+                    }
+                        // load the file
                     m_impl.loadScene(Application.dataPath + m_filename);
 
                     // Set counter of object creation to 0
