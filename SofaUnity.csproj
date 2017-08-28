@@ -87,6 +87,40 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\OVR\Scripts\OVRBoundary.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRCameraRig.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRCommon.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRDebugHeadController.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRDisplay.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRHaptics.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRHapticsClip.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRInput.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRLint.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRManager.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRMixedReality.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVROnCompleteListener.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVROverlay.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRPlatformMenu.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRPlugin.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRProfile.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRTouchpad.cs" />
+    <Compile Include="Assets\OVR\Scripts\OVRTracker.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRChromaticAberration.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRCubemapCapture.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRDebugInfo.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRGearVrController.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRGearVrControllerTest.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRGrabbable.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRGrabber.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRGridCube.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRModeParms.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRMonoscopic.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRPlayerController.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRRTOverlayConnector.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRResetOrientation.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRSceneSampleController.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRScreenFade.cs" />
+    <Compile Include="Assets\OVR\Scripts\Util\OVRWaitCursor.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\BaseObjects\SBaseMesh.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\BaseObjects\SBaseObject.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\DeformableGridObjects\SBox.cs" />
@@ -108,6 +142,18 @@
     <Compile Include="Assets\SofaUnity\Scripts\Tools\PartScript.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Tools\ThirdPersonCamera.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Tools\randomPosition.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\OVR\Editor\AndroidManifest.OVRSubmission.xml" />
+    <None Include="Assets\OVR\Plugins\placeholder.txt" />
+    <None Include="Assets\OVR\Resources\Alpha Premultiply.shader" />
+    <None Include="Assets\OVR\Resources\OVRMRCameraFrame.shader" />
+    <None Include="Assets\OVR\Resources\OVRMRClipPlane.shader" />
+    <None Include="Assets\OVR\Resources\Underlay Impostor.shader" />
+    <None Include="Assets\OVR\Resources\Underlay Transparent Occluder.shader" />
+    <None Include="Assets\OVR\Resources\Unlit Transparent Color.shader" />
+    <None Include="Assets\OVR\Shaders\OVRColorRampAlpha.shader" />
+    <None Include="Assets\OVR\Shaders\Unlit Crosshair.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
