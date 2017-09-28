@@ -38,7 +38,6 @@ public class DrawLaser : MonoBehaviour {
 	void Update () {
 
         var tip = transform.position;
-        Debug.Log(tip);
         var backwardsTip = new Vector3(tip.x, tip.y, tip.z + maxRayDistance);
 
         if (Physics.Raycast(tip, transform.forward, out touch, maxRayDistance, layerMask) || Physics.Raycast(backwardsTip, -transform.forward, out touch, maxRayDistance, layerMask))

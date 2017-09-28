@@ -27,7 +27,6 @@ public class CutHole : MonoBehaviour
     {
 
         var tip = transform.position;
-        var backwardsTip = new Vector3(tip.x, tip.y, tip.z + maxRayDistance);
 
         //version without handling backfaces
         if (!Physics.Raycast(tip, transform.forward, out touch, maxRayDistance, layerMask))
