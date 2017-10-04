@@ -99,8 +99,12 @@
     <Compile Include="Assets\SofaUnity\Scripts\Components\SRigidMesh.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Components\SVisualMesh.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Cutting\CutHole.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Cutting\CuttingTool.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Cutting\DrawLaser.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Cutting\LaserRay.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Cutting\MouseCut.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Cutting\RayCaster.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Cutting\TriangleCutter.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\SofaContext.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Tools\Benchmarks.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Tools\CameraController.cs" />
