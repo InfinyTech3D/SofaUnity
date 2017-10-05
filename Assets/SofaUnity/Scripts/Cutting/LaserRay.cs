@@ -63,6 +63,11 @@ public class LaserRay : RayCaster {
         lr.endColor = endColor;
         lr.startWidth = startWidth;
         lr.endWidth = endWidth;
+#if UNITY_5_5 || UNITY_5_4 || UNITY_5_3 || UNITY_5_2 || UNITY_5_1
+        lr.numPositions = 2;
+#else
         lr.positionCount = 2;
+#endif
+
     }
 }
