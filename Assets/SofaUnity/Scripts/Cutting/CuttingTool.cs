@@ -12,16 +12,17 @@ public class CuttingTool : RayCaster {
     public bool createCollider = false;
     [Tooltip("Used for constant collider creation. WARNING: Might be slow!")]
     public bool constantColliderUpdate = false;
-    private List<GameObject> hitObjects;
+    private List<GameObject> hitObjects = new List<GameObject>();
     [Tooltip("Value defining the depth of the cut.")]
     public float depth = 1f;
     [Tooltip("Value defining the width of the cut.")]
     public float width = 1f;
 
+    private List<Vector3> points = new List<Vector3>();
 
     // Use this for initialization
     void Start () {
-        hitObjects = new List<GameObject>();
+
     }
 	
 	// Update is called once per frame
@@ -30,7 +31,7 @@ public class CuttingTool : RayCaster {
         origin = transform.position;
         direction = transform.forward;
 
-        if (!CastRay())
+        if (!castRay())
             return;
         
         if (hit.triangleIndex != -1)
@@ -52,27 +53,20 @@ public class CuttingTool : RayCaster {
             if (!found)
                 hitObjects.Add(hitObject);
 
-            int hitTri = hit.triangleIndex;
+            //add new hit point
+            points.Add(hit.point);
 
-            //set area of the hit triangle to zero
-            emptyTriangle(hitTri);
+            if (points.Count == 2)
+                calculateArea();
+
+
         }
     }
 
-    //sets all 3 triangle vertices to the same vertex index so that the triangle does have zero area
-    //collider still remains the same unless one destroys the old and adds a new collider -> short lag
-    void emptyTriangle(int numTriangle)
+    private void calculateArea()
     {
-        Mesh mesh = hitObject.transform.GetComponent<MeshFilter>().mesh;
-        int[] newTriangles = mesh.triangles;
-        int triIndex = numTriangle * 3;
-        newTriangles[triIndex + 1] = mesh.triangles[triIndex];
-        newTriangles[triIndex + 2] = mesh.triangles[triIndex];
 
-        hitObject.transform.GetComponent<MeshFilter>().mesh.triangles = newTriangles;
-
-        if (constantColliderUpdate || createCollider)
-            resetCollider();
+        points.RemoveAt(0);
     }
 
     //resets the colliders to match their current mesh by destroying the old one and adding a new one

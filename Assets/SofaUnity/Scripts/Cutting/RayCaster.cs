@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //used for raycast functionality
-public class RayCaster : MonoBehaviour {
+public class RayCaster : MonoBehaviour
+{
 
     protected Vector3 origin;
     protected Vector3 direction;
@@ -11,24 +12,31 @@ public class RayCaster : MonoBehaviour {
     public float length = 1f;
     public LayerMask mask;
     public bool checkBackfaces = false;
+    private GameObject newTriangle;
+    protected bool gotHit = false;
+    private bool initialized = false;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
+    }
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update()
+    {
         origin = transform.position;
         direction = transform.forward;
-	}
+    }
 
-    public virtual bool CastRay()
+    //cast ray
+    public virtual bool castRay()
     {
         if (checkBackfaces)
-            return helpRay();
+            gotHit = helpRay();
         else
-            return Physics.Raycast(origin, direction, out hit, length, mask);
+            gotHit = Physics.Raycast(origin, direction, out hit, length, mask);
+
+        return gotHit;
     }
 
     //function to handle backfaces and faces close to others when raycasting -> might cause performance issues depending on distance
@@ -76,5 +84,63 @@ public class RayCaster : MonoBehaviour {
                 noMoreHits = true;
         }
         return hitRay;
+    }
+
+    //casts ray and highlights hit triangle
+    public virtual void highlightTriangle()
+    {
+        if (!castRay())
+        {
+            if (newTriangle != null)
+                newTriangle.SetActive(false);
+            return;
+        }
+
+        if (!initialized)
+            initializeHighlighter();
+
+        LineRenderer lr = newTriangle.GetComponent<LineRenderer>();
+
+        MeshCollider meshCollider = hit.collider as MeshCollider;
+
+        if (meshCollider == null || meshCollider.sharedMesh == null)
+            return;
+
+        Renderer rend = hit.transform.GetComponent<Renderer>();
+
+        Mesh mesh = meshCollider.sharedMesh;
+        Vector3[] vertices = mesh.vertices;
+        int[] triangles = mesh.triangles;
+        //Vector2[] uvs = mesh.uv;
+        Vector3 p0 = vertices[triangles[hit.triangleIndex * 3 + 0]];
+        Vector3 p1 = vertices[triangles[hit.triangleIndex * 3 + 1]];
+        Vector3 p2 = vertices[triangles[hit.triangleIndex * 3 + 2]];
+        Transform hitTransform = hit.collider.transform;
+        p0 = hitTransform.TransformPoint(p0);
+        p1 = hitTransform.TransformPoint(p1);
+        p2 = hitTransform.TransformPoint(p2);
+        Vector3[] trianglePoints = new Vector3[3] { p0, p1, p2 };
+
+        lr.SetPositions(trianglePoints);
+        //Debug.DrawLine(p0, p1);
+        //Debug.DrawLine(p1, p2);
+        //Debug.DrawLine(p2, p0);
+        newTriangle.SetActive(true);
+    }
+
+    public virtual void initializeHighlighter()
+    {
+        initialized = true;
+        newTriangle = new GameObject("Highlighter");
+        newTriangle.transform.parent = this.transform;
+        LineRenderer lr = newTriangle.AddComponent<LineRenderer>();
+        //lr.useWorldSpace = false;
+        lr.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
+        lr.startColor = Color.green;
+        lr.endColor = Color.green;
+        lr.startWidth = 1.5f;
+        lr.endWidth = 1.5f;
+        lr.positionCount = 3;
+        lr.loop = true;
     }
 }

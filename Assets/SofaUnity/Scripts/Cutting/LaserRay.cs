@@ -26,7 +26,7 @@ public class LaserRay : RayCaster {
     void Start () {
         laser = new GameObject("Laser");
         laser.transform.parent = transform;
-        InitializeLR();
+        initializeLR();
     }
 	
 	// Update is called once per frame
@@ -35,9 +35,11 @@ public class LaserRay : RayCaster {
         origin = transform.position;
         direction = transform.forward;
 
-        if (CastRay())
+        highlightTriangle();
+
+        if (gotHit)
         {
-            Draw(transform.position, hit.point);
+            draw(transform.position, hit.point);
             laser.SetActive(true);
         }
         else
@@ -46,14 +48,14 @@ public class LaserRay : RayCaster {
         }
     }
 
-    private void Draw(Vector3 start, Vector3 end)
+    private void draw(Vector3 start, Vector3 end)
     {
         lr.SetPosition(0, start);
         lr.SetPosition(1, end);
     }
 
 
-    private void InitializeLR()
+    private void initializeLR()
     {
         laser.AddComponent<LineRenderer>();
         lr = laser.GetComponent<LineRenderer>();

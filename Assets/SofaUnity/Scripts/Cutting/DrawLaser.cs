@@ -31,7 +31,7 @@ public class DrawLaser : MonoBehaviour {
     void Start () {
         laser = new GameObject("Laser");
         laser.transform.parent = transform;
-        InitializeRay();
+        initializeRay();
 	}
 	
 	// Update is called once per frame
@@ -42,7 +42,7 @@ public class DrawLaser : MonoBehaviour {
 
         if (Physics.Raycast(tip, transform.forward, out touch, maxRayDistance, layerMask) || Physics.Raycast(backwardsTip, -transform.forward, out touch, maxRayDistance, layerMask))
         {
-            Draw(tip, touch.point);
+            draw(tip, touch.point);
             laser.SetActive(true);
         }
         else
@@ -51,14 +51,14 @@ public class DrawLaser : MonoBehaviour {
         }
     }
 
-    private void Draw(Vector3 start, Vector3 end)
+    private void draw(Vector3 start, Vector3 end)
     {
         lr.SetPosition(0, start);
         lr.SetPosition(1, end);
     }
 
 
-    private void InitializeRay()
+    private void initializeRay()
     {
         laser.AddComponent<LineRenderer>();
         lr = laser.GetComponent<LineRenderer>();

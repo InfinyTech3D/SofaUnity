@@ -10,53 +10,60 @@ public class TriangleCutter : RayCaster
     public bool createCollider = false;
     [Tooltip("Used for constant collider creation. WARNING: Might be slow!")]
     public bool constantColliderUpdate = false;
-    private List<GameObject> hitObjects;
+    private List<GameObject> hitObjects = new List<GameObject>();
 
     // Use this for initialization
     void Start()
     {
-        hitObjects = new List<GameObject>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
         origin = transform.position;
         direction = transform.forward;
 
-        if (!CastRay())
+        //highlightTriangle();
+        castRay();
+
+        cutTriangles();
+
+        resetCollider();
+    }
+
+    public virtual void cutTriangles()
+    {
+        if (!gotHit || hit.triangleIndex == -1)
             return;
 
-        if (hit.triangleIndex != -1)
+        hitObject = hit.collider.gameObject;
+
+        bool found = false;
+
+        //save hit objects for collider creation/deletion
+        //don't add object if it is already in list
+        for (int i = 0; i < hitObjects.Count; i++)
         {
-            hitObject = hit.collider.gameObject;
-
-            bool found = false;
-
-            //save hit objects for collider creation/deletion
-            //don't add object if it is already in list
-            for (int i = 0; i < hitObjects.Count; i++)
+            if (hitObject == hitObjects[i])
             {
-                if (hitObject == hitObjects[i])
-                {
-                    found = true;
-                    break;
-                }
+                found = true;
+                break;
             }
-            if (!found)
-                hitObjects.Add(hitObject);
-
-            int hitTri = hit.triangleIndex;
-
-            //set area of the hit triangle to zero
-            emptyTriangle(hitTri);
         }
+
+        if (!found)
+            hitObjects.Add(hitObject);
+
+        int hitTri = hit.triangleIndex;
+
+        //set area of the hit triangle to zero
+        emptyTriangle(hitTri);
     }
 
     //sets all 3 triangle vertices to the same vertex index so that the triangle does have zero area
     //collider still remains the same unless one destroys the old and adds a new collider -> short lag
-    void emptyTriangle(int numTriangle)
+    public virtual void emptyTriangle(int numTriangle)
     {
         Mesh mesh = hitObject.transform.GetComponent<MeshFilter>().mesh;
         int[] newTriangles = mesh.triangles;
@@ -65,14 +72,14 @@ public class TriangleCutter : RayCaster
         newTriangles[triIndex + 2] = mesh.triangles[triIndex];
 
         hitObject.transform.GetComponent<MeshFilter>().mesh.triangles = newTriangles;
-
-        if (constantColliderUpdate || createCollider)
-            resetCollider();
     }
 
     //resets the colliders to match their current mesh by destroying the old one and adding a new one
-    public void resetCollider()
+    public virtual void resetCollider()
     {
+        if (!constantColliderUpdate && !createCollider)
+            return;
+
         for (int i = 0; i < hitObjects.Count; i++)
         {
             Destroy(hitObjects[i].GetComponent<MeshCollider>());
