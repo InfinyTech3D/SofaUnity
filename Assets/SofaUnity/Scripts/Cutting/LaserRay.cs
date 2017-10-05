@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class LaserRay : RayCaster {
 
@@ -15,6 +16,18 @@ public class LaserRay : RayCaster {
     public float startWidth = 1f;
     [SerializeField]
     public float endWidth = 0.5f;
+
+    protected override void createSofaRayCaster()
+    {
+        // Get access to the sofaContext
+        IntPtr _simu = m_sofaContext.getSimuContext();
+        if (_simu != IntPtr.Zero)
+        {
+            m_sofaRC = new SofaRayCaster(_simu);
+
+            base.createSofaRayCaster();
+        }
+    }
 
     void OnValidate()
     {
@@ -34,6 +47,12 @@ public class LaserRay : RayCaster {
 
         origin = transform.position;
         direction = transform.forward;
+
+        if (m_sofaRC != null)
+        {
+            int triId = m_sofaRC.castRay(origin, direction);
+        }
+
 
         highlightTriangle();
 
