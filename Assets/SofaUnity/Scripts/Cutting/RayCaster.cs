@@ -140,7 +140,11 @@ public class RayCaster : MonoBehaviour
         lr.endColor = Color.green;
         lr.startWidth = 1.5f;
         lr.endWidth = 1.5f;
+#if UNITY_5_5 || UNITY_5_4 || UNITY_5_3 || UNITY_5_2 || UNITY_5_1
+        lr.numPositions = 3;
+#else
         lr.positionCount = 3;
+#endif
         lr.loop = true;
     }
 }
