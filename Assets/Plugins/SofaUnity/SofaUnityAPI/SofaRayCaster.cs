@@ -7,6 +7,9 @@ public class SofaRayCaster : IDisposable
     public SofaRayCaster(IntPtr simu)
     {
         m_simu = simu;
+
+        if (m_simu != IntPtr.Zero)
+            sofaPhysicsAPI_createRayCaster(m_simu, 10);
     }
 
     // TODO: check if needed
@@ -40,4 +43,10 @@ public class SofaRayCaster : IDisposable
         return -1;
     }
 
+
+    [DllImport("SofaAdvancePhysicsAPI")]
+    public static extern int sofaPhysicsAPI_createRayCaster(IntPtr obj, float length);
+
+    [DllImport("SofaAdvancePhysicsAPI")]
+    public static extern int sofaPhysicsAPI_castRay(IntPtr obj, float[] origin, float[] direction);
 }
