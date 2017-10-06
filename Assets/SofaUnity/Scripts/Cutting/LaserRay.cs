@@ -51,6 +51,7 @@ public class LaserRay : RayCaster {
         if (m_sofaRC != null)
         {
             int triId = m_sofaRC.castRay(origin, direction);
+            Debug.Log("Sofa Collision triId " + triId);
         }
 
 

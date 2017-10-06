@@ -39,8 +39,18 @@ public class SofaRayCaster : IDisposable
 
     public int castRay(Vector3 origin, Vector3 direction)
     {
+        float[] ori = new float[3];
+        float[] dir = new float[3];
 
-        return -1;
+        for (int i = 0; i < 3; ++i)
+        {
+            ori[i] = origin[i];
+            dir[i] = direction[i];
+        }
+
+        int res = sofaPhysicsAPI_castRay(m_simu, ori, dir);
+
+        return res;
     }
 
 
