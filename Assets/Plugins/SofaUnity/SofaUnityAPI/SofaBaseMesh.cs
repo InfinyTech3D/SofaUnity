@@ -22,6 +22,9 @@ public class SofaBaseMesh : SofaBaseObject
 
     }
 
+    /// Booleen to warn mesh normals have to be inverted
+    public bool m_invertNormals = false;
+
 
     /// Implicit method load the object from the Sofa side.
     public override void loadObject()
@@ -223,6 +226,11 @@ public class SofaBaseMesh : SofaBaseObject
 
             if (vertices.Length != 0)
             {
+                int factor = 1;
+                if (m_invertNormals)
+                    factor = -1;
+
+
                 for (int i = 0; i < nbrV; ++i)
                 {
                     if (first)
@@ -238,15 +246,15 @@ public class SofaBaseMesh : SofaBaseObject
                     if (resN < 0) // no normals
                     {
                         Vector3 vec = Vector3.Normalize(verts[i]);
-                        norms[i].x = vec.x;// normals[i * 3];
-                        norms[i].y = vec.y; //normals[i * 3 + 1];
-                        norms[i].z = vec.z; //normals[i * 3 + 2];
+                        norms[i].x = vec.x * factor;// normals[i * 3];
+                        norms[i].y = vec.y * factor; //normals[i * 3 + 1];
+                        norms[i].z = vec.z * factor; //normals[i * 3 + 2];
                     }
                     else
                     {
-                        norms[i].x = normals[i * 3];
-                        norms[i].y = normals[i * 3 + 1];
-                        norms[i].z = normals[i * 3 + 2];
+                        norms[i].x = normals[i * 3] * factor;
+                        norms[i].y = normals[i * 3 + 1] * factor;
+                        norms[i].z = normals[i * 3 + 2] * factor;
                     }
                 }
             }

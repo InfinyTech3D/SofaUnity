@@ -34,6 +34,8 @@ namespace SofaUnity
         /// Current Scale of this object (same as in Unity Editor and Sofa object)
         public Vector3 m_scale = new Vector3(1.0f, 1.0f, 1.0f);
 
+        /// Booleen to warn mesh normals have to be inverted
+        public bool m_invertNormals = false;
 
         /// Method called by @sa loadContext() method. To create the object when Sofa context has been found.
         protected override void createObject()
@@ -102,7 +104,7 @@ namespace SofaUnity
 
             if (m_scale != m_initScale)
                 m_impl.scale = m_scale;
-            
+
             // Update the Sofa Object
             if (toUpdate)
                 m_impl.updateMesh(m_mesh);
@@ -116,6 +118,36 @@ namespace SofaUnity
                 return "No impl";
             else
                 return m_impl.parent;
+        }
+
+        public bool invertNormals
+        {
+            get { return m_invertNormals; }
+            set
+            {
+                m_invertNormals = value;
+                if (m_invertNormals)
+                {
+                    if (m_impl != null)
+                        m_impl.m_invertNormals = m_invertNormals;
+
+                    invertMeshNormals();
+                }
+            }
+        }
+
+        /// Method to invert normal by changing triangles orientation
+        public void invertMeshNormals()
+        {
+            Debug.Log("SMesh::invertMeshNormals.");
+            int[] triangles = m_mesh.GetTriangles(0);
+            for (int i = 0; i < triangles.Length; i += 3)
+            {
+                int temp = triangles[i + 0];
+                triangles[i + 0] = triangles[i + 1];
+                triangles[i + 1] = temp;
+            }
+            m_mesh.SetTriangles(triangles, 0);
         }
 
         /// Getter/Setter of current translation @see m_translation

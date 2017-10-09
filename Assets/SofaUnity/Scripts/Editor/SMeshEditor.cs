@@ -9,6 +9,8 @@ using SofaUnity;
 [CustomEditor(typeof(SDeformableMesh), true)]
 public class SDeformableMeshEditor : Editor
 {
+    bool normalBtn = false;
+
     /// <summary>
     ///  Add SDeformableMesh Object creation to the SofaUnity Menu
     /// </summary>
@@ -29,6 +31,10 @@ public class SDeformableMeshEditor : Editor
     public override void OnInspectorGUI()
     {
         SDeformableMesh mesh = (SDeformableMesh)this.target;
+
+        // Check box to change normals direction
+        normalBtn = EditorGUILayout.Toggle("Inverse Normals", normalBtn);
+        mesh.invertNormals = normalBtn;
 
         // Add Triansformation fields
         mesh.translation = EditorGUILayout.Vector3Field("Translation", mesh.translation);
@@ -60,6 +66,8 @@ public class SDeformableMeshEditor : Editor
 [CustomEditor(typeof(SRigidMesh), true)]
 public class SRigidMeshEditor : Editor
 {
+    bool normalBtn = false;
+
     /// <summary>
     ///  Add SRigidMesh Object creation to the SofaUnity Menu
     /// </summary>
@@ -80,6 +88,10 @@ public class SRigidMeshEditor : Editor
     {
         SRigidMesh mesh = (SRigidMesh)this.target;
 
+        // Check box to change normals direction
+        normalBtn = EditorGUILayout.Toggle("Inverse Normals", normalBtn);
+        mesh.invertNormals = normalBtn;
+
         // Add Triansformation fields
         mesh.translation = EditorGUILayout.Vector3Field("Translation", mesh.translation);
         EditorGUILayout.Separator();
@@ -89,5 +101,7 @@ public class SRigidMeshEditor : Editor
 
         mesh.scale = EditorGUILayout.Vector3Field("Scale", mesh.scale);
         EditorGUILayout.Separator();
+
+
     }
 }
