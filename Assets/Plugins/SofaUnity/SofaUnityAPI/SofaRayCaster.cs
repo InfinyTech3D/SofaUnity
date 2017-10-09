@@ -4,12 +4,15 @@ using System.Runtime.InteropServices;
 
 public class SofaRayCaster : IDisposable
 {
-    public SofaRayCaster(IntPtr simu)
+    public SofaRayCaster(IntPtr simu, float length)
     {
         m_simu = simu;
 
+        if (length < 1.0f)
+            length = 1.0f;
+
         if (m_simu != IntPtr.Zero)
-            sofaPhysicsAPI_createRayCaster(m_simu, 10);
+            sofaPhysicsAPI_createRayCaster(m_simu, length);
     }
 
     // TODO: check if needed

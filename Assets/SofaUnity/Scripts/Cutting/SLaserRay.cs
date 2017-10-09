@@ -16,7 +16,7 @@ public class SLaserRay : SRayCaster
         IntPtr _simu = m_sofaContext.getSimuContext();
         if (_simu != IntPtr.Zero)
         {
-            m_sofaRC = new SofaRayCaster(_simu);
+            m_sofaRC = new SofaRayCaster(_simu, length);
 
             base.createSofaRayCaster();
         }
