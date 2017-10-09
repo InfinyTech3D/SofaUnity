@@ -10,14 +10,13 @@ public class DrawLaser : MonoBehaviour {
     private RaycastHit touch;
     
     [SerializeField]
-    public Color startColor = Color.red;
+    public Color startColor = Color.green;
     [SerializeField]
     public Color endColor = Color.green;
     [SerializeField]
     public float startWidth = 1f;
     [SerializeField]
     public float endWidth = 0.5f;
-    public float maxRayDistance = 100f;
     private int layerMask;
 
     void OnValidate()
@@ -36,7 +35,7 @@ public class DrawLaser : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+        /*
         var tip = transform.position;
         var backwardsTip = new Vector3(tip.x, tip.y, tip.z + maxRayDistance);
 
@@ -48,13 +47,21 @@ public class DrawLaser : MonoBehaviour {
         else
         {
             laser.SetActive(false);
-        }
+        }*/
     }
 
-    private void draw(Vector3 start, Vector3 end)
+    public void draw(Vector3 start, Vector3 end)
     {
         lr.SetPosition(0, start);
         lr.SetPosition(1, end);
+    }
+
+    public void updateLaser()
+    {
+        lr.startColor = startColor;
+        lr.endColor = endColor;
+        lr.startWidth = startWidth;
+        lr.endWidth = endWidth;
     }
 
 
