@@ -17,6 +17,8 @@ public class LaserRay : RayCaster {
     [SerializeField]
     public float endWidth = 0.5f;
 
+    public bool m_isCutting = false;
+
     protected override void createSofaRayCaster()
     {
         // Get access to the sofaContext
@@ -51,7 +53,15 @@ public class LaserRay : RayCaster {
         if (m_sofaRC != null)
         {
             int triId = m_sofaRC.castRay(origin, direction);
-            Debug.Log("Sofa Collision triId " + triId);
+            if (triId < 10000)
+                Debug.Log("Sofa Collision triId " + triId);
+
+            if (Input.GetKey(KeyCode.C))
+            {
+                Debug.Log("middle button");
+                m_isCutting = !m_isCutting;
+                m_sofaRC.activateCuttingTool(m_isCutting);
+            }
         }
 
 
