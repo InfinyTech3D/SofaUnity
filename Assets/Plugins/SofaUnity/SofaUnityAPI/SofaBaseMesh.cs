@@ -262,6 +262,18 @@ public class SofaBaseMesh : SofaBaseObject
 
     }
 
+    public bool hasTopologyChanged()
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            bool value = sofaPhysicsAPI_hasTopologyChanged(m_simu);
+            Debug.Log("sofaPhysicsAPI_hasTopologyChanged " + value);
+            return value;
+        }
+        else
+            return false;
+    }
+
 
     /// Method to get the number of tetrahedron in the current SOFA object
     public int getNbTetrahedra()
@@ -431,5 +443,11 @@ public class SofaBaseMesh : SofaBaseObject
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysics3DObject_getNbTetrahedra(IntPtr obj, string name);
+
+    [DllImport("SofaAdvancePhysicsAPI")]
+    public static extern bool sofaPhysicsAPI_hasTopologyChanged(IntPtr obj);
+    [DllImport("SofaAdvancePhysicsAPI")]
+    public static extern int sofaPhysicsAPI_setTopologyChanged(IntPtr obj, bool value);
+
     //}
 }

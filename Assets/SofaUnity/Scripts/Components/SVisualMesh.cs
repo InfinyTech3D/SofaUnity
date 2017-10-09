@@ -72,6 +72,7 @@ namespace SofaUnity
 
             if (m_impl != null)
             {
+                m_impl.hasTopologyChanged();
                 m_impl.updateMesh(m_mesh);
             }
         }
