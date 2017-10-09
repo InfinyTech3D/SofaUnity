@@ -282,6 +282,16 @@ public class SofaBaseMesh : SofaBaseObject
             return false;
     }
 
+    public int setTopologyChange(bool value)
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            return sofaPhysicsAPI_setTopologyChanged(m_simu, value);
+        }
+        else
+            return -5;
+    }
+
 
     /// Method to get the number of tetrahedron in the current SOFA object
     public int getNbTetrahedra()
