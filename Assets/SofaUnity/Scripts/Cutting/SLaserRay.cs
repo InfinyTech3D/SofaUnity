@@ -16,7 +16,7 @@ public class SLaserRay : SRayCaster
         IntPtr _simu = m_sofaContext.getSimuContext();
         if (_simu != IntPtr.Zero)
         {
-            m_sofaRC = new SofaRayCaster(_simu, length);
+            m_sofaRC = new SofaRayCaster(_simu, "CuttingTool", length);
 
             base.createSofaRayCaster();
         }
@@ -36,7 +36,7 @@ public class SLaserRay : SRayCaster
         {
             int triId = m_sofaRC.castRay(origin, direction);
             //if (triId < 10000)
-              //  Debug.Log("Sofa Collision triId " + triId);
+                Debug.Log("Sofa Collision triId " + triId);
 
             if (Input.GetKey(KeyCode.C))
             {                

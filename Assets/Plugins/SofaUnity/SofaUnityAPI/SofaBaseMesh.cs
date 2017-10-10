@@ -274,7 +274,7 @@ public class SofaBaseMesh : SofaBaseObject
     {
         if (m_native != IntPtr.Zero)
         {
-            bool value = sofaPhysicsAPI_hasTopologyChanged(m_simu);
+            bool value = sofaPhysicsAPI_hasTopologyChanged(m_simu, m_name);
             Debug.Log("sofaPhysicsAPI_hasTopologyChanged " + value);
             return value;
         }
@@ -286,7 +286,7 @@ public class SofaBaseMesh : SofaBaseObject
     {
         if (m_native != IntPtr.Zero)
         {
-            return sofaPhysicsAPI_setTopologyChanged(m_simu, value);
+            return sofaPhysicsAPI_setTopologyChanged(m_simu, m_name, value);
         }
         else
             return -5;
@@ -462,10 +462,10 @@ public class SofaBaseMesh : SofaBaseObject
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysics3DObject_getNbTetrahedra(IntPtr obj, string name);
 
-    [DllImport("SofaAdvancePhysicsAPI")]
-    public static extern bool sofaPhysicsAPI_hasTopologyChanged(IntPtr obj);
-    [DllImport("SofaAdvancePhysicsAPI")]
-    public static extern int sofaPhysicsAPI_setTopologyChanged(IntPtr obj, bool value);
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern bool sofaPhysicsAPI_hasTopologyChanged(IntPtr obj, string name);
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysicsAPI_setTopologyChanged(IntPtr obj, string name, bool value);
 
     //}
 }

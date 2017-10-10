@@ -4,19 +4,25 @@ using System.Runtime.InteropServices;
 
 public class SofaRayCaster : IDisposable
 {
-    public SofaRayCaster(IntPtr simu, float length)
+    public SofaRayCaster(IntPtr simu, string nameID, float length)
     {
         m_simu = simu;
+        m_name = nameID;
 
         if (length < 1.0f)
             length = 1.0f;
 
+        int res = 0;
         if (m_simu != IntPtr.Zero)
-            sofaPhysicsAPI_createRayCaster(m_simu, length);
+            res = sofaPhysicsAPI_createRayCaster(m_simu, m_name, length);
+        Debug.Log("creation RAy: " + res);
     }
 
     // TODO: check if needed
     bool m_isDisposed;
+
+    /// Name of the Sofa object mapped to this Object.
+    protected string m_name;
 
     /// Pointer to the SofaPhysicsAPI 
     protected IntPtr m_simu = IntPtr.Zero;
@@ -45,7 +51,7 @@ public class SofaRayCaster : IDisposable
         if (m_simu == IntPtr.Zero)
             return -10;
 
-        int res = sofaPhysicsAPI_activateCutting(m_simu, value);
+        int res = sofaPhysicsAPI_activateCutting(m_simu, m_name, value);
 
         return res;
     }
@@ -64,18 +70,18 @@ public class SofaRayCaster : IDisposable
             dir[i] = direction[i];
         }
 
-        int res = sofaPhysicsAPI_castRay(m_simu, ori, dir);
+        int res = sofaPhysicsAPI_castRay(m_simu, m_name, ori, dir);
 
         return res;
     }
 
 
-    [DllImport("SofaAdvancePhysicsAPI")]
-    public static extern int sofaPhysicsAPI_createRayCaster(IntPtr obj, float length);
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysicsAPI_createRayCaster(IntPtr obj, string name, float length);
 
-    [DllImport("SofaAdvancePhysicsAPI")]
-    public static extern int sofaPhysicsAPI_castRay(IntPtr obj, float[] origin, float[] direction);
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysicsAPI_castRay(IntPtr obj, string name, float[] origin, float[] direction);
 
-    [DllImport("SofaAdvancePhysicsAPI")]
-    public static extern int sofaPhysicsAPI_activateCutting(IntPtr obj, bool value);
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysicsAPI_activateCutting(IntPtr obj, string name, bool value);
 }
