@@ -8,6 +8,14 @@ public class SLaserRay : SRayCaster
     private DrawLaser m_laserDraw = null;
 
     public bool m_isCutting = false;
+    
+    public enum LaserType
+    {
+        CuttingTool,
+        AttachTool
+    };
+
+    public LaserType m_laserType;
 
     protected override void createSofaRayCaster()
     {
@@ -15,8 +23,11 @@ public class SLaserRay : SRayCaster
         // Get access to the sofaContext
         IntPtr _simu = m_sofaContext.getSimuContext();
         if (_simu != IntPtr.Zero)
-        {
-            m_sofaRC = new SofaRayCaster(_simu, "CuttingTool", length);
+        {   
+            if (m_laserType == LaserType.CuttingTool)            
+                m_sofaRC = new SofaRayCaster(_simu, 0, "CuttingTool", length);
+            else
+                m_sofaRC = new SofaRayCaster(_simu, 1, "AttachTool", length);
 
             base.createSofaRayCaster();
         }

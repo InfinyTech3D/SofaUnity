@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 public class SofaRayCaster : IDisposable
 {
-    public SofaRayCaster(IntPtr simu, string nameID, float length)
+    public SofaRayCaster(IntPtr simu, int type, string nameID, float length)
     {
         m_simu = simu;
         m_name = nameID;
@@ -14,7 +14,12 @@ public class SofaRayCaster : IDisposable
 
         int res = 0;
         if (m_simu != IntPtr.Zero)
-            res = sofaPhysicsAPI_createRayCaster(m_simu, m_name, length);
+        {
+            if (type == 0)
+                res = sofaPhysicsAPI_createRayCaster(m_simu, m_name, length);
+            else
+                res = sofaPhysicsAPI_createAttachTool(m_simu, m_name, length);
+        }
         Debug.Log("creation RAy: " + res);
     }
 
@@ -84,4 +89,7 @@ public class SofaRayCaster : IDisposable
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_activateCutting(IntPtr obj, string name, bool value);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysicsAPI_createAttachTool(IntPtr obj, string name, float length);
 }
