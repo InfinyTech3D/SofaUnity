@@ -20,7 +20,7 @@ public class MouseCutter : TriangleCutter
         origin = ray.origin;
         direction = ray.direction;
 
-        highlightTriangle();
+        castRay();
 
         if (Input.GetMouseButton(2))
         {

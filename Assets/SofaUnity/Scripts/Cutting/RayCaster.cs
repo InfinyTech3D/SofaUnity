@@ -12,6 +12,7 @@ public class RayCaster : MonoBehaviour
     public float length = 1f;
     public LayerMask mask;
     public bool checkBackfaces = false;
+    public bool useHighlight = false;
     private GameObject newTriangle;
     protected bool gotHit = false;
     private bool initialized = false;
@@ -37,6 +38,9 @@ public class RayCaster : MonoBehaviour
             gotHit = helpRay();
         else
             gotHit = Physics.Raycast(origin, direction, out hit, length, mask);
+
+        if (useHighlight)
+            highlightTriangle();
 
         return gotHit;
     }
@@ -91,7 +95,7 @@ public class RayCaster : MonoBehaviour
     //casts ray and highlights hit triangle
     public virtual void highlightTriangle()
     {
-        if (!castRay())
+        if (!gotHit)
         {
             if (newTriangle != null)
                 newTriangle.SetActive(false);
