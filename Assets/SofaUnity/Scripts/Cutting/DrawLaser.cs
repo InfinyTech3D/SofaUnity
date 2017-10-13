@@ -14,9 +14,9 @@ public class DrawLaser : MonoBehaviour {
     [SerializeField]
     public Color endColor = Color.green;
     [SerializeField]
-    public float startWidth = 1f;
+    public float startWidth = 0.01f;
     [SerializeField]
-    public float endWidth = 0.5f;
+    public float endWidth = 0.005f;
     private int layerMask;
 
     void OnValidate()
