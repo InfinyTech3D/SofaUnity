@@ -77,6 +77,8 @@ public class SofaRayCaster : IDisposable
 
         int res = sofaPhysicsAPI_castRay(m_simu, m_name, ori, dir);
 
+        ori = null;
+        dir = null;
         return res;
     }
 
