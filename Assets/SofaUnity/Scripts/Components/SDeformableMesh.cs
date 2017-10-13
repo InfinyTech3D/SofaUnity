@@ -126,6 +126,22 @@ namespace SofaUnity
 
             if (m_impl != null)
             {
+                //if (m_impl.hasTopologyChanged())
+                //{
+                //    if (nbTetra > 0)
+                //    {
+                //        m_tetra = new int[nbTetra * 4];
+
+                //        m_impl.getTetrahedra(m_tetra);
+                //        m_mesh.triangles = this.computeForceField();
+                //    }
+                //    else
+                //        m_mesh.triangles = m_impl.createTriangulation();
+
+                //    m_impl.setTopologyChange(false);
+                //}
+
+
                 if (nbTetra > 0)
                     updateTetraMesh();
                 else
