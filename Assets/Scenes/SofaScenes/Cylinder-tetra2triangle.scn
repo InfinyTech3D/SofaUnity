@@ -9,18 +9,18 @@
     <Node name="TT">
         <EulerImplicit name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.1" />
         <CGLinearSolver iterations="25" name="linear solver" tolerance="1.0e-9" threshold="1.0e-9" />
-        <MeshGmshLoader name="loader" filename="./mesh/liver_fixed_origin.msh" />
-        <MechanicalObject src="@loader" name="Volume" scale3d="0.01 0.01 0.01" rotation="0 150 0"/>
+        <MeshGmshLoader name="loader" filename="./mesh/cylinder.msh" />
+        <MechanicalObject src="@loader" name="Volume" scale3d="100 100 100"/>
 
 		<TetrahedronSetTopologyContainer  name="Container" position="@Volume.position" src="@loader" tags=" "/>
 		<TetrahedronSetTopologyModifier   name="Modifier" />
 		<TetrahedronSetTopologyAlgorithms name="TopoAlgo"  template="Vec3d" />
 		<TetrahedronSetGeometryAlgorithms name="GeomAlgo"  template="Vec3d" />
 
-        <DiagonalMass massDensity="1.0" />
-        <BoxROI template="Vec3d" box="-0.15 -0.20 -0.20 0.20 0.20 0.20" drawBoxes="1" position="@Volume.rest_position" name="FixedROI"/>
-        <FixedConstraint indices="@FixedROI.indices" />
-        <TetrahedralCorotationalFEMForceField name="FEM" youngModulus="1300" poissonRatio="0.3" method="large" />		
+        <DiagonalMass massDensity="0.1" />
+        <FixedPlaneConstraint name="plane" direction="0 0 1" dmin="-0.1" dmax="0.1" />
+        <FixedConstraint indices="@plane.indices" />
+        <TetrahedralCorotationalFEMForceField name="FEM" youngModulus="1200" poissonRatio="0.3" method="large" />		
         <Node name="T">
             <TriangleSetTopologyContainer  name="Container" fileTopology="" tags=" " />
 			<TriangleSetTopologyModifier   name="Modifier" />

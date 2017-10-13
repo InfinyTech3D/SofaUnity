@@ -139,7 +139,6 @@ namespace SofaUnity
         /// Method to invert normal by changing triangles orientation
         public void invertMeshNormals()
         {
-            Debug.Log("SMesh::invertMeshNormals.");
             int[] triangles = m_mesh.GetTriangles(0);
             for (int i = 0; i < triangles.Length; i += 3)
             {

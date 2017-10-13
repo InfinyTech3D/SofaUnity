@@ -89,6 +89,7 @@ namespace SofaUnity
                 }
                 m_impl.updateMesh(m_mesh);
             }
+            
         }
     }
 }

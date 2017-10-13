@@ -183,8 +183,13 @@ namespace SofaUnity
 
         // Update is called once per fix frame
         void FixedUpdate()
+        {            
+                
+        }
+
+        void Update()
         {
-            m_impl.step();           
+            m_impl.step();
         }
 
 

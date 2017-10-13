@@ -47,7 +47,7 @@ public class SLaserRay : SRayCaster
         {
             int triId = m_sofaRC.castRay(origin, direction);
             //if (triId < 10000)
-                Debug.Log("Sofa Collision triId " + triId);
+            //    Debug.Log("Sofa Collision triId " + triId);
 
             if (Input.GetKey(KeyCode.C))
             {                

@@ -106,6 +106,7 @@ public class SofaBaseMesh : SofaBaseObject
             for (int i = 0; i < 3; ++i)
                 gridSizes[i] = (int)values[i];
             int res = sofaPhysics3DObject_setVec3iValue(m_simu, m_name, "gridSize", gridSizes);
+            gridSizes = null;
             if (log)
                 Debug.Log("Change gridSize res: " + res);
         }
@@ -180,6 +181,9 @@ public class SofaBaseMesh : SofaBaseObject
             trisOut[nbrIntTri + i * 6 + 4] = quads[i * 4 + 2]; 
             trisOut[nbrIntTri + i * 6 + 5] = quads[i * 4 + 3];
         }
+
+        quads = null;
+        tris = null;
 
         return trisOut;
     }
@@ -261,6 +265,9 @@ public class SofaBaseMesh : SofaBaseObject
             
             mesh.vertices = verts;
             mesh.normals = norms;
+
+            vertices = null;
+            normals = null;
         }
     }
 
@@ -275,7 +282,6 @@ public class SofaBaseMesh : SofaBaseObject
         if (m_native != IntPtr.Zero)
         {
             bool value = sofaPhysicsAPI_hasTopologyChanged(m_simu, m_name);
-            Debug.Log("sofaPhysicsAPI_hasTopologyChanged " + value);
             return value;
         }
         else
@@ -372,6 +378,8 @@ public class SofaBaseMesh : SofaBaseObject
 
             mesh.vertices = vertsNew;
             mesh.normals = normsNew;
+            vertices = null;
+            normals = null;
         }
     }
     
