@@ -275,7 +275,6 @@ public class SofaBaseMesh : SofaBaseObject
         if (m_native != IntPtr.Zero)
         {
             bool value = sofaPhysicsAPI_hasTopologyChanged(m_simu, m_name);
-            Debug.Log("sofaPhysicsAPI_hasTopologyChanged " + value);
             return value;
         }
         else
