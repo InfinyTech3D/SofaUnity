@@ -25,9 +25,9 @@ public class SLaserRay : SRayCaster
         if (_simu != IntPtr.Zero)
         {   
             if (m_laserType == LaserType.CuttingTool)            
-                m_sofaRC = new SofaRayCaster(_simu, 0, "CuttingTool", length);
+                m_sofaRC = new SofaRayCaster(_simu, 0, base.name, length);
             else
-                m_sofaRC = new SofaRayCaster(_simu, 1, "AttachTool", length);
+                m_sofaRC = new SofaRayCaster(_simu, 1, base.name, length);
 
             base.createSofaRayCaster();
         }
