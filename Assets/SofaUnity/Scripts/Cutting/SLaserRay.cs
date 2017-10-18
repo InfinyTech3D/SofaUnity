@@ -12,7 +12,8 @@ public class SLaserRay : SRayCaster
     public enum LaserType
     {
         CuttingTool,
-        AttachTool
+        AttachTool,
+        FixTool
     };
 
     public LaserType m_laserType;
@@ -24,10 +25,12 @@ public class SLaserRay : SRayCaster
         IntPtr _simu = m_sofaContext.getSimuContext();
         if (_simu != IntPtr.Zero)
         {   
-            if (m_laserType == LaserType.CuttingTool)            
+            if (m_laserType == LaserType.CuttingTool)
                 m_sofaRC = new SofaRayCaster(_simu, 0, base.name, length);
-            else
+            else if (m_laserType == LaserType.AttachTool)
                 m_sofaRC = new SofaRayCaster(_simu, 1, base.name, length);
+            else
+                m_sofaRC = new SofaRayCaster(_simu, 2, base.name, length);
 
             base.createSofaRayCaster();
         }
@@ -47,7 +50,7 @@ public class SLaserRay : SRayCaster
         {
             int triId = m_sofaRC.castRay(origin, direction);
             //if (triId < 10000)
-            //    Debug.Log("Sofa Collision triId " + triId);
+                Debug.Log("Sofa Collision triId " + triId);
 
             if (Input.GetKey(KeyCode.C))
             {                

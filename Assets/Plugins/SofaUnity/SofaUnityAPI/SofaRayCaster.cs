@@ -17,10 +17,12 @@ public class SofaRayCaster : IDisposable
         {
             if (type == 0)
                 res = sofaPhysicsAPI_createRayCaster(m_simu, m_name, length);
-            else
+            else if (type == 1)
                 res = sofaPhysicsAPI_createAttachTool(m_simu, m_name, length);
+            else
+                res = sofaPhysicsAPI_createFixConstraintTool(m_simu, m_name, length);
         }
-        Debug.Log("creation RAy: " + res);
+        Debug.Log("creation RAy: " + res + " type: " + type);
     }
 
     // TODO: check if needed
@@ -94,4 +96,7 @@ public class SofaRayCaster : IDisposable
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_createAttachTool(IntPtr obj, string name, float length);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysicsAPI_createFixConstraintTool(IntPtr obj, string name, float length);    
 }
