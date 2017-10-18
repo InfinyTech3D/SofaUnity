@@ -53,12 +53,12 @@ public class SofaRayCaster : IDisposable
         }
     }
 
-    public int activateCuttingTool(bool value)
+    public int activateTool(bool value)
     {
         if (m_simu == IntPtr.Zero)
             return -10;
 
-        int res = sofaPhysicsAPI_activateCutting(m_simu, m_name, value);
+        int res = sofaPhysicsAPI_activateTool(m_simu, m_name, value);
 
         return res;
     }
@@ -92,7 +92,7 @@ public class SofaRayCaster : IDisposable
     public static extern int sofaPhysicsAPI_castRay(IntPtr obj, string name, float[] origin, float[] direction);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysicsAPI_activateCutting(IntPtr obj, string name, bool value);
+    public static extern int sofaPhysicsAPI_activateTool(IntPtr obj, string name, bool value);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_createAttachTool(IntPtr obj, string name, float length);

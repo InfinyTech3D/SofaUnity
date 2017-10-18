@@ -55,7 +55,7 @@ public class SLaserRay : SRayCaster
             if (Input.GetKey(KeyCode.C))
             {                
                 m_isCutting = true;
-                m_sofaRC.activateCuttingTool(m_isCutting);
+                m_sofaRC.activateTool(m_isCutting);
                 if (m_laserDraw)
                 {
                     m_laserDraw.endColor = Color.red;
@@ -65,7 +65,7 @@ public class SLaserRay : SRayCaster
             else if (Input.GetKey(KeyCode.V))
             {
                 m_isCutting = false;
-                m_sofaRC.activateCuttingTool(m_isCutting);
+                m_sofaRC.activateTool(m_isCutting);
                 if (m_laserDraw)
                 {
                     m_laserDraw.endColor = Color.green;
