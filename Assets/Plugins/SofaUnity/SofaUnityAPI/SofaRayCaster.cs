@@ -22,7 +22,6 @@ public class SofaRayCaster : IDisposable
             else
                 res = sofaPhysicsAPI_createFixConstraintTool(m_simu, m_name, length);
         }
-        Debug.Log("creation RAy: " + res + " type: " + type);
     }
 
     // TODO: check if needed

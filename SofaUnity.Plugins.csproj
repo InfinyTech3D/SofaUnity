@@ -92,7 +92,11 @@
     <Compile Include="Assets\Plugins\SofaUnity\SofaUnityAPI\SofaSphere.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\LICENSE.txt" />
+    <None Include="Assets\OSPNative\LICENSE.txt" />
+    <None Include="Assets\OSPNative\THIRD_PARTY_NOTICES.txt" />
     <None Include="Assets\OVR\Editor\AndroidManifest.OVRSubmission.xml" />
+    <None Include="Assets\OVR\LICENSE.txt" />
     <None Include="Assets\OVR\Plugins\placeholder.txt" />
     <None Include="Assets\OVR\Resources\Alpha Premultiply.shader" />
     <None Include="Assets\OVR\Resources\OVRMRCameraFrame.shader" />
@@ -106,6 +110,32 @@
     <None Include="Assets\OVR\Resources\Unlit Transparent Color.shader" />
     <None Include="Assets\OVR\Shaders\OVRColorRampAlpha.shader" />
     <None Include="Assets\OVR\Shaders\Unlit Crosshair.shader" />
+    <None Include="Assets\OVR\THIRD_PARTY_NOTICES.txt" />
+    <None Include="Assets\OculusPlatform\LICENSE.txt" />
+    <None Include="Assets\OculusPlatform\THIRD_PARTY_NOTICES.txt" />
+    <None Include="Assets\OvrAvatar\Content\Materials\AvatarMaterialStateShader.cginc" />
+    <None Include="Assets\OvrAvatar\Content\Materials\AvatarSurfaceShader.shader" />
+    <None Include="Assets\OvrAvatar\Content\Materials\AvatarSurfaceShaderPBS.shader" />
+    <None Include="Assets\OvrAvatar\Content\Materials\AvatarSurfaceShaderSelfOccluding.shader" />
+    <None Include="Assets\OvrAvatar\LICENSE.txt" />
+    <None Include="Assets\OvrAvatar\Samples\SocialStarter\README.txt" />
+    <None Include="Assets\OvrAvatar\THIRD_PARTY_NOTICES.txt" />
+    <None Include="Assets\SteamVR\InteractionSystem\Core\Shaders\SeeThru.shader" />
+    <None Include="Assets\SteamVR\InteractionSystem\Core\Shaders\Silhouette.shader" />
+    <None Include="Assets\SteamVR\InteractionSystem\Hints\Shaders\ControllerButtonHints.shader" />
+    <None Include="Assets\SteamVR\InteractionSystem\Readme_InteractionSystem.txt" />
+    <None Include="Assets\SteamVR\InteractionSystem\Teleport\Shaders\Highlight.shader" />
+    <None Include="Assets\SteamVR\Resources\SteamVR_AlphaOut.shader" />
+    <None Include="Assets\SteamVR\Resources\SteamVR_ClearAll.shader" />
+    <None Include="Assets\SteamVR\Resources\SteamVR_ColorOut.shader" />
+    <None Include="Assets\SteamVR\Resources\SteamVR_Fade.shader" />
+    <None Include="Assets\SteamVR\Resources\SteamVR_SphericalProjection.shader" />
+    <None Include="Assets\SteamVR\readme.txt" />
+    <None Include="Assets\VRTK\Scripts\Internal\Shaders\AdaptiveQualityDebugVisualization.shader" />
+    <None Include="Assets\VRTK\Scripts\Internal\Shaders\TransparentFresnelBehind.shader" />
+    <None Include="Assets\VRTK\Scripts\Internal\Shaders\UIOverlay.shader" />
+    <None Include="Assets\VRTK\Scripts\Internal\Shaders\Unlit_TransparentColor.shader" />
+    <None Include="Assets\VRTK\Scripts\Internal\Shaders\VRTK_OutlineBasic.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
