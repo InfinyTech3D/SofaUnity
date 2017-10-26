@@ -161,8 +161,13 @@ namespace SofaUnity
                         int pos = m_filename.IndexOf("Assets", 0);
                         if (pos > 0)
                         {
-                            m_filename = m_filename.Substring(pos + 6); // remove all path until Assets/
+                            m_filename = m_filename.Substring(pos + 6); // remove all path until Assets/ to make it relative
                         }
+
+                        // Fix due to change of scene folder:
+                        int pos2 = m_filename.IndexOf("SofaUnity", 0);
+                        if (pos2 < 0)
+                            m_filename = "/SofaUnity/" + m_filename;
                     }
                         // load the file
                     m_impl.loadScene(Application.dataPath + m_filename);
