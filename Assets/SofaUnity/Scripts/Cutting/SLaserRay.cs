@@ -6,13 +6,32 @@ using VRTK;
 
 public class SLaserRay : SRayCaster
 {
-    private DrawLaser m_laserDraw = null;
-
     public bool m_isCutting = false;
     public Vector3 m_axisDirection = new Vector3(1.0f, 0.0f, 0.0f);
     public Vector3 m_translation = new Vector3(0.0f, 0.0f, 0.0f);
     Vector3 transLocal;
     bool logController = false;
+
+    // Laser object
+    public Material laserMat;
+    private GameObject laser;
+    private LineRenderer lr;
+
+    [SerializeField]
+    public Color startColor = Color.green;
+    [SerializeField]
+    public Color endColor = Color.green;
+    [SerializeField]
+    public float width = 0.15f;
+
+    // Light
+    private GameObject lightSource;
+    private Light light;
+
+    // Particle system
+    private ParticleSystem ps;
+    private bool psInitialized = false;
+    public Material particleMat;
 
     public enum LaserType
     {
@@ -27,12 +46,34 @@ public class SLaserRay : SRayCaster
         Grip
     };
 
+    void OnValidate()
+    {
+        //startWidth = Mathf.Max(0, startWidth);
+        //endWidth = Mathf.Max(0, endWidth);
+        width = Mathf.Max(0, width);
+    }
+
     public LaserType m_laserType;
     public ButtonType m_actionButton;
 
     protected override void createSofaRayCaster()
     {
-        m_laserDraw = transform.gameObject.AddComponent<DrawLaser>();
+        // Create Laser
+        laser = new GameObject("Laser");
+        laser.transform.parent = this.transform;
+        laser.transform.localPosition = new Vector3(-0.035f, -0.005f, 0.005f);
+        laser.transform.localRotation = Quaternion.identity;
+        laser.transform.localScale = Vector3.one;
+
+        // Create light source
+        lightSource = new GameObject("Light");
+        lightSource.transform.parent = laser.transform;
+        lightSource.transform.localPosition = Vector3.zero;
+        lightSource.transform.localRotation = Quaternion.identity;
+        lightSource.transform.localScale = Vector3.one;
+
+        initializeLaser();
+
         // Get access to the sofaContext
         IntPtr _simu = m_sofaContext.getSimuContext();
         if (_simu != IntPtr.Zero)
@@ -56,7 +97,8 @@ public class SLaserRay : SRayCaster
     void Start()
     {
         m_axisDirection.Normalize();
-        
+
+       
 
         if (GetComponent<VRTK_ControllerEvents>() == null)
         {
@@ -85,6 +127,13 @@ public class SLaserRay : SRayCaster
         direction = transform.forward * m_axisDirection[0] + transform.right * m_axisDirection[1] + transform.up * m_axisDirection[2];
         //direction = transform.forward;
 
+        //set light position a bit back to have better lighting
+        //lightSource.transform.position = end - (distance / 100) * transform.forward;
+        lightSource.transform.position = origin + transLocal; 
+
+        if (!psInitialized)
+            initializeParticles();
+
         if (m_sofaRC != null)
         {
             int triId = m_sofaRC.castRay(origin, direction);
@@ -92,29 +141,16 @@ public class SLaserRay : SRayCaster
             //    Debug.Log("Sofa Collision triId " + triId);
 
             if (Input.GetKey(KeyCode.C))
-            {                
-                m_isCutting = true;
-                m_sofaRC.activateTool(m_isCutting);
-                if (m_laserDraw)
-                {
-                    m_laserDraw.endColor = Color.red;
-                    m_laserDraw.updateLaser();
-                }
+            {
+                this.activeTool(true);
             }
             else if (Input.GetKey(KeyCode.V))
             {
-                m_isCutting = false;
-                m_sofaRC.activateTool(m_isCutting);
-                if (m_laserDraw)
-                {
-                    m_laserDraw.endColor = Color.green;
-                    m_laserDraw.updateLaser();
-                }
+                this.activeTool(false);
             }
         }
 
-        if(m_laserDraw)
-            m_laserDraw.draw(origin, origin + direction * length);
+        this.draw(origin, origin + direction * length);
     }
 
     private void DebugLogger(uint index, string button, string action, ControllerInteractionEventArgs e)
@@ -185,16 +221,87 @@ public class SLaserRay : SRayCaster
     {
         m_isCutting = value;
         m_sofaRC.activateTool(m_isCutting);
-        if (m_laserDraw)
-        {
-            if (value)
-                m_laserDraw.endColor = Color.red;
-            else
-                m_laserDraw.endColor = Color.green;
 
-            m_laserDraw.updateLaser();
-        }
+        if (value)
+            this.endColor = Color.red;
+        else
+            this.endColor = Color.green;
+
+        this.updateLaser();
     }
 
+    private void initializeLaser()
+    {
+        //create light
+        light = lightSource.AddComponent<Light>();
+        light = lightSource.GetComponent<Light>();
+        light.intensity = width * 10;
+        light.bounceIntensity = width * 10;
+        light.range = width / 4;
+        light.color = endColor;
+
+        //create linerenderer
+        laser.AddComponent<LineRenderer>();
+        lr = laser.GetComponent<LineRenderer>();
+        //lr.useWorldSpace = false;
+        //lr.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
+        lr.material = laserMat;
+        lr.startWidth = width;
+        lr.endWidth = width;
+
+#if UNITY_5_5 || UNITY_5_4 || UNITY_5_3 || UNITY_5_2 || UNITY_5_1
+        lr.numPositions = 2;
+#else
+        lr.positionCount = 2;
+#endif
+    }
+
+    private void initializeParticles()
+    {
+        //create particlesystem
+        //TODO: add scaling/size with laser width
+        ps = laser.AddComponent<ParticleSystem>();
+        ps = laser.GetComponent<ParticleSystem>();
+        var shape = ps.shape;
+        shape.angle = 0;
+        shape.radius = 0.1f;
+        var em = ps.emission;
+        em.rateOverTime = 8000;
+        var psmain = ps.main;
+        psmain.startSize = 0.8f;
+        psmain.startLifetime = 0.11f;
+        psmain.startSpeed = 100;
+        psmain.maxParticles = 1000;
+        psmain.startColor = new Color(1, 1, 1, 0.25f);
+        //var pscolor = ps.colorOverLifetime;
+        //pscolor.color = new ParticleSystem.MinMaxGradient(startColor, endColor);
+        var psrenderer = ps.GetComponent<ParticleSystemRenderer>();
+        psrenderer.material = particleMat;
+
+        psInitialized = true;
+    }
+
+    public void draw(Vector3 start, Vector3 end)
+    {
+        lr.SetPosition(0, start);
+        lr.SetPosition(1, end);
+    }
+
+    public void updateLaser()
+    {
+        lr.startColor = startColor;
+        lr.endColor = endColor;
+        lr.startWidth = width;
+        lr.endWidth = width;
+
+        ps = laser.GetComponent<ParticleSystem>();
+        var psmain = ps.main;
+        psmain.startColor = new Color(endColor.r, endColor.g, endColor.b, 0.25f); ;
+
+        light.color = endColor;
+        light.intensity = width * 100;
+        light.bounceIntensity = width * 3;
+        light.range = width / 2.5f;
+    }
 
 }
