@@ -384,6 +384,52 @@ public class SofaBaseMesh : SofaBaseObject
     }
     
     
+    private void computeStereographicsUV(Mesh mesh)
+    {
+        this.computeBoundingBox(mesh);
+
+        Vector3[] verts = mesh.vertices;
+        int nbrV = verts.Length;
+        Vector3[] vertsSphere = new Vector3[nbrV];
+
+        float[] texCoords = new float[nbrV * 2];
+        Vector2[] uv = new Vector2[nbrV];
+
+        // Compute max radius
+        Vector3 bbSizes = m_max - m_min;
+        float radius = bbSizes[0];
+        for (int i = 1; i < 3; i++)
+            if (bbSizes[i] > radius)
+                radius = bbSizes[i];
+        radius *= 0.5f; 
+
+        // compute center
+        Vector3 center = (m_max + m_min) * 0.5f;
+
+        // Project all point on a sphere
+        for (int i = 0; i < nbrV; i++)
+        {
+            Vector3 direction = verts[i] - center;
+            direction.Normalize();
+            vertsSphere[i] = center + direction * radius;
+        }
+
+        float rangeX = 1 / (m_max.x - m_min.x);
+        float rangeZ = 1 / (m_max.z - m_min.z);
+
+        // Project on UV map
+        
+        for (int i = 0; i < nbrV; i++)
+        {
+            uv[i] = new Vector2( (vertsSphere[i].x - m_min.x) * rangeX,
+                (vertsSphere[i].z - m_min.z) * rangeZ);
+        }
+        
+
+        mesh.uv = uv;
+    }    
+
+
     /// Method to recompute the Tex coords according to mesh position and geometry.
     public virtual void recomputeTexCoords(Mesh mesh)
     {
@@ -399,6 +445,39 @@ public class SofaBaseMesh : SofaBaseObject
 
         if (res < 0)
         {
+            //computeStereographicsUV(mesh);
+            //return;
+
+            this.computeBoundingBox(mesh);
+
+            int test = 40;
+            if (test > nbrV)
+                test = nbrV;
+
+            float dist = 0.0f;
+            for (int i = 1; i < test; i++)
+                dist = dist + (verts[i] - verts[i - 1]).magnitude;
+            dist /= test;
+            dist *= 0.25f; //arbitraty scale
+
+            float rangeX = 1 / (m_max.x - m_min.x);
+            float rangeZ = 1 / (m_max.z - m_min.z);
+
+            Vector3[] normals = mesh.normals;
+
+            for (int i = 0; i < nbrV; i++)
+            {
+                Vector3 norm = normals[i].normalized;
+
+                float zCoord = verts[i].z;
+                if (norm.z > 0.9)
+                    zCoord = zCoord - dist * normals[i].z;
+
+                uv[i] = new Vector2((verts[i].x - m_min.x) * rangeX,
+                    (zCoord - m_min.z) * rangeZ);
+            }
+
+            /*
             this.computeBoundingBox(mesh);            
             
 
@@ -421,6 +500,7 @@ public class SofaBaseMesh : SofaBaseObject
                 uv[i] = new Vector2((verts[i].x + verts[i].z - minXY) * rangeXY,
                     (verts[i].y + verts[i].z - minYZ) * rangeYZ);
             }
+            */
         }
         else
         {
