@@ -12,6 +12,8 @@ public class SLaserRay : SRayCaster
     Vector3 transLocal;
     bool logController = false;
 
+    public bool drawlaser = true;
+
     // Laser object
     public Material laserMat;
     private GameObject laser;
@@ -28,10 +30,15 @@ public class SLaserRay : SRayCaster
     private GameObject lightSource;
     private Light light;
 
-    // Particle system
+    // Light Particle system
     private ParticleSystem ps;
     private bool psInitialized = false;
     public Material particleMat;
+
+    // Smoke Particle system
+    private GameObject smokeObject;
+    private ParticleSystem smoke;
+
 
     public enum LaserType
     {
@@ -58,21 +65,31 @@ public class SLaserRay : SRayCaster
 
     protected override void createSofaRayCaster()
     {
-        // Create Laser
-        laser = new GameObject("Laser");
-        laser.transform.parent = this.transform;
-        laser.transform.localPosition = new Vector3(-0.035f, -0.005f, 0.005f);
-        laser.transform.localRotation = Quaternion.identity;
-        laser.transform.localScale = Vector3.one;
+        if (drawlaser)
+        {
+            // Create Laser
+            laser = new GameObject("Laser");
+            laser.transform.parent = this.transform;
+            laser.transform.localPosition = new Vector3(-0.035f, -0.005f, 0.005f);
+            laser.transform.localRotation = Quaternion.identity;
+            laser.transform.localScale = Vector3.one;
 
-        // Create light source
-        lightSource = new GameObject("Light");
-        lightSource.transform.parent = laser.transform;
-        lightSource.transform.localPosition = Vector3.zero;
-        lightSource.transform.localRotation = Quaternion.identity;
-        lightSource.transform.localScale = Vector3.one;
+            // Create light source
+            lightSource = new GameObject("Light");
+            lightSource.transform.parent = laser.transform;
+            lightSource.transform.localPosition = Vector3.zero;
+            lightSource.transform.localRotation = Quaternion.identity;
+            lightSource.transform.localScale = Vector3.one;
 
-        initializeLaser();
+            initializeLaser();
+
+            // Add smoke to tool
+            //smokeObject = new GameObject("Smoke");
+            //smokeObject.transform.parent = this.transform;
+            //smokeObject.AddComponent<ParticleSystem>();
+            //smoke = smokeObject.GetComponent<ParticleSystem>();
+        }
+        
 
         // Get access to the sofaContext
         IntPtr _simu = m_sofaContext.getSimuContext();
@@ -97,8 +114,6 @@ public class SLaserRay : SRayCaster
     void Start()
     {
         m_axisDirection.Normalize();
-
-       
 
         if (GetComponent<VRTK_ControllerEvents>() == null)
         {
@@ -129,9 +144,10 @@ public class SLaserRay : SRayCaster
 
         //set light position a bit back to have better lighting
         //lightSource.transform.position = end - (distance / 100) * transform.forward;
-        lightSource.transform.position = origin + transLocal; 
+        if (drawlaser)
+            lightSource.transform.position = origin + transLocal; 
 
-        if (!psInitialized)
+        if (!psInitialized && drawlaser)
             initializeParticles();
 
         if (m_sofaRC != null)
@@ -150,7 +166,8 @@ public class SLaserRay : SRayCaster
             }
         }
 
-        this.draw(origin, origin + direction * length);
+        if (drawlaser)
+            this.draw(origin, origin + direction * length);
     }
 
     private void DebugLogger(uint index, string button, string action, ControllerInteractionEventArgs e)
@@ -227,7 +244,8 @@ public class SLaserRay : SRayCaster
         else
             this.endColor = Color.green;
 
-        this.updateLaser();
+        if (drawlaser)
+            this.updateLaser();
     }
 
     private void initializeLaser()
@@ -240,6 +258,7 @@ public class SLaserRay : SRayCaster
         light.range = width / 4;
         light.color = endColor;
 
+        /*
         //create linerenderer
         laser.AddComponent<LineRenderer>();
         lr = laser.GetComponent<LineRenderer>();
@@ -254,6 +273,7 @@ public class SLaserRay : SRayCaster
 #else
         lr.positionCount = 2;
 #endif
+*/
     }
 
     private void initializeParticles()
@@ -283,16 +303,16 @@ public class SLaserRay : SRayCaster
 
     public void draw(Vector3 start, Vector3 end)
     {
-        lr.SetPosition(0, start);
-        lr.SetPosition(1, end);
+        //lr.SetPosition(0, start);
+        //lr.SetPosition(1, end);
     }
 
     public void updateLaser()
     {
-        lr.startColor = startColor;
-        lr.endColor = endColor;
-        lr.startWidth = width;
-        lr.endWidth = width;
+        //lr.startColor = startColor;
+        //lr.endColor = endColor;
+        //lr.startWidth = width;
+        //lr.endWidth = width;
 
         ps = laser.GetComponent<ParticleSystem>();
         var psmain = ps.main;
