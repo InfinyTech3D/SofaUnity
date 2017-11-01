@@ -7,11 +7,11 @@
     <MinProximityIntersection name="Proximity" alarmDistance="0.8" contactDistance="0.5" />
     <CollisionGroup />
     <!--  rotation="-40 150 80" translation="0 120 0" -->
-    <Node name="TT">
+    <Node name="FEM">
         <EulerImplicit name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.1" />
         <CGLinearSolver iterations="25" name="linear solver" tolerance="1.0e-9" threshold="1.0e-9" />
         <MeshGmshLoader name="loader" filename="./mesh/liver2.msh" />
-        <MechanicalObject src="@loader" name="Volume" scale3d="15 15 15" translation="4 120 0" rotation="150 0 -30"/>
+        <MechanicalObject src="@loader" name="Volume" scale3d="-15 15 15" translation="4 120 0" rotation="140 180 0"/>
 
 		<TetrahedronSetTopologyContainer  name="Container" position="@Volume.position" src="@loader" tags=" "/>
 		<TetrahedronSetTopologyModifier   name="Modifier" />
@@ -19,7 +19,7 @@
 		<TetrahedronSetGeometryAlgorithms name="GeomAlgo"  template="Vec3d" />
 
         <DiagonalMass massDensity="1.0" />
-        <BoxROI template="Vec3d" box="-5 110 -5 5 120 5" drawBoxes="1" position="@Volume.rest_position" name="FixedROI"/>
+        <BoxROI template="Vec3d" box="-10 110 -10 10 120 10" drawBoxes="1" position="@Volume.rest_position" name="FixedROI"/>
         <FixedConstraint indices="@FixedROI.indices" />
         <TetrahedralCorotationalFEMForceField name="FEM" youngModulus="1400" poissonRatio="0.3" method="large" />
         
@@ -33,7 +33,7 @@
 			<TriangularBendingSprings name="FEM-Bend" stiffness="800" damping="1.0" />
             <TriangleSet />
            
-            <Node name="Visu">
+            <Node name="Surface">
                 <OglModel name="Visual" color="blue" />
                 <IdentityMapping input="@../../Volume" output="@Visual" />
             </Node>

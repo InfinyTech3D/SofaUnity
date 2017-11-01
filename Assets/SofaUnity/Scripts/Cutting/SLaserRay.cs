@@ -286,12 +286,12 @@ public class SLaserRay : SRayCaster
         shape.angle = 0;
         shape.radius = 0.1f;
         var em = ps.emission;
-        em.rateOverTime = 8000;
+        em.rateOverTime = 1000;
         var psmain = ps.main;
         psmain.startSize = 0.8f;
         psmain.startLifetime = 0.11f;
         psmain.startSpeed = 100;
-        psmain.maxParticles = 1000;
+        psmain.maxParticles = 800;
         psmain.startColor = new Color(1, 1, 1, 0.25f);
         //var pscolor = ps.colorOverLifetime;
         //pscolor.color = new ParticleSystem.MinMaxGradient(startColor, endColor);
