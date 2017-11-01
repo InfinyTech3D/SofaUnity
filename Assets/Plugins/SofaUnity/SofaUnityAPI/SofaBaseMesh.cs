@@ -468,13 +468,13 @@ public class SofaBaseMesh : SofaBaseObject
             for (int i = 0; i < nbrV; i++)
             {
                 Vector3 norm = normals[i].normalized;
+                Vector3 vert = verts[i];
+                
+                if (norm.z > 0.8)
+                    vert = vert - dist * Vector3.one;
 
-                float zCoord = verts[i].z;
-                if (norm.z > 0.9)
-                    zCoord = zCoord - dist * normals[i].z;
-
-                uv[i] = new Vector2((verts[i].x - m_min.x) * rangeX,
-                    (zCoord - m_min.z) * rangeZ);
+                uv[i] = new Vector2((vert.x - m_min.x) * rangeX,
+                    (vert.z - m_min.z) * rangeZ);
             }
 
             /*

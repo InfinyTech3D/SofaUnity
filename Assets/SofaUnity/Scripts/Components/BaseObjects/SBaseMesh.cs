@@ -105,6 +105,12 @@ namespace SofaUnity
             if (m_scale != m_initScale)
                 m_impl.scale = m_scale;
 
+            if (m_invertNormals)
+            {
+                m_impl.m_invertNormals = m_invertNormals;
+                invertMeshNormals();
+            }
+
             // Update the Sofa Object
             if (toUpdate)
                 m_impl.updateMesh(m_mesh);
@@ -204,6 +210,22 @@ namespace SofaUnity
                     }
                 }
             }
+        }
+
+        public int nbVertices()
+        {
+            if (m_mesh)
+                return m_mesh.vertexCount;
+            else
+                return -1;
+        }
+
+        public int nbTriangles()
+        {
+            if (m_mesh)
+                return m_mesh.triangles.Length/3;
+            else
+                return -1;
         }
     }
 }

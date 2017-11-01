@@ -56,12 +56,7 @@ namespace SofaUnity
             m_mesh.name = "SofaVisualMesh";
             m_mesh.vertices = new Vector3[0];
             m_impl.updateMesh(m_mesh);
-            m_mesh.triangles = m_impl.createTriangulation();
-            if (m_invertNormals)
-            {
-                m_impl.m_invertNormals = m_invertNormals;
-                invertMeshNormals();
-            }
+            m_mesh.triangles = m_impl.createTriangulation();            
             m_impl.recomputeTexCoords(m_mesh);
 
             if (toUpdate)
