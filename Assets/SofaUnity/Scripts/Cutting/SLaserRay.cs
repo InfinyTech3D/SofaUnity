@@ -13,6 +13,7 @@ public class SLaserRay : SRayCaster
     bool logController = false;
 
     public bool drawlaser = true;
+    public bool drawRay = false;
 
     // Laser object
     public Material laserMat;
@@ -258,22 +259,23 @@ public class SLaserRay : SRayCaster
         light.range = width / 4;
         light.color = endColor;
 
-        /*
-        //create linerenderer
-        laser.AddComponent<LineRenderer>();
-        lr = laser.GetComponent<LineRenderer>();
-        //lr.useWorldSpace = false;
-        //lr.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
-        lr.material = laserMat;
-        lr.startWidth = width;
-        lr.endWidth = width;
+        if (drawRay)
+        {
+            //create linerenderer
+            laser.AddComponent<LineRenderer>();
+            lr = laser.GetComponent<LineRenderer>();
+            //lr.useWorldSpace = false;
+            //lr.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
+            lr.material = laserMat;
+            lr.startWidth = width;
+            lr.endWidth = width;
 
 #if UNITY_5_5 || UNITY_5_4 || UNITY_5_3 || UNITY_5_2 || UNITY_5_1
-        lr.numPositions = 2;
+            lr.numPositions = 2;
 #else
-        lr.positionCount = 2;
+            lr.positionCount = 2;
 #endif
-*/
+        }
     }
 
     private void initializeParticles()
@@ -303,16 +305,22 @@ public class SLaserRay : SRayCaster
 
     public void draw(Vector3 start, Vector3 end)
     {
-        //lr.SetPosition(0, start);
-        //lr.SetPosition(1, end);
+        if (drawRay)
+        {
+            lr.SetPosition(0, start);
+            lr.SetPosition(1, end);
+        }
     }
 
     public void updateLaser()
     {
-        //lr.startColor = startColor;
-        //lr.endColor = endColor;
-        //lr.startWidth = width;
-        //lr.endWidth = width;
+        if (drawRay)
+        {
+            lr.startColor = startColor;
+            lr.endColor = endColor;
+            lr.startWidth = width;
+            lr.endWidth = width;
+        }
 
         ps = laser.GetComponent<ParticleSystem>();
         var psmain = ps.main;
