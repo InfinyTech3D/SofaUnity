@@ -212,7 +212,7 @@ namespace SofaUnity
             }
         }
 
-        public int nbVertices()
+        public virtual int nbVertices()
         {
             if (m_mesh)
                 return m_mesh.vertexCount;
@@ -220,7 +220,7 @@ namespace SofaUnity
                 return -1;
         }
 
-        public int nbTriangles()
+        public virtual int nbTriangles()
         {
             if (m_mesh)
                 return m_mesh.triangles.Length/3;

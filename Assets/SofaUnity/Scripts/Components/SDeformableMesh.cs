@@ -29,6 +29,10 @@ namespace SofaUnity
         /// Member: if tetrahedron is detected, will store the vertex mapping between triangulation and tetrahedron topology
         protected Dictionary<int, int> mappingVertices;
 
+        
+        /// Initial number of vertices
+        int nbVert = 0;
+
 
         /// Method called by @sa loadContext() method. To create the object when Sofa context has been found.
         protected override void createObject()
@@ -126,21 +130,23 @@ namespace SofaUnity
 
             if (m_impl != null)
             {
-                //if (m_impl.hasTopologyChanged())
-                //{
-                //    if (nbTetra > 0)
-                //    {
-                //        m_tetra = new int[nbTetra * 4];
+                if (m_impl.hasTopologyChanged())
+                {
+                    nbTetra = m_impl.getNbTetrahedra();
+                    nbVert = m_impl.getNbVertices();
+                    //    if (nbTetra > 0)
+                    //    {
+                    //        m_tetra = new int[nbTetra * 4];
 
-                //        m_impl.getTetrahedra(m_tetra);
-                //        m_mesh.triangles = this.computeForceField();
-                //    }
-                //    else
-                //        m_mesh.triangles = m_impl.createTriangulation();
+                    //        m_impl.getTetrahedra(m_tetra);
+                    //        m_mesh.triangles = this.computeForceField();
+                    //    }
+                    //    else
+                    //        m_mesh.triangles = m_impl.createTriangulation();
 
-                //    m_impl.setTopologyChange(false);
-                //}
-
+                    //    m_impl.setTopologyChange(false);
+                    //}
+                }
 
                 if (nbTetra > 0)
                     updateTetraMesh();
@@ -158,6 +164,7 @@ namespace SofaUnity
             Vector3[] norms = new Vector3[nbTetra * 4];//m_mesh.normals;
             Vector2[] uv = new Vector2[nbTetra * 4];
             mappingVertices = new Dictionary<int, int>();
+            nbVert = m_mesh.vertices.Length;
 
             for (int i = 0; i < nbTetra; ++i)
             {
@@ -314,6 +321,16 @@ namespace SofaUnity
                         m_impl.poissonRatio = m_poisson;
                 }
             }
+        }
+
+        public override int nbVertices()
+        {
+            return nbVert;
+        }
+
+        public override int nbTriangles()
+        {
+            return nbTetra;
         }
     }
 }

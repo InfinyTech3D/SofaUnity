@@ -311,6 +311,18 @@ public class SofaBaseMesh : SofaBaseObject
             return 0;
     }
 
+    /// Method to get the number of vertices in the current SOFA object
+    public int getNbVertices()
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            int nbrTetra = sofaPhysicsAPI_getNbVertices(m_simu, m_name);
+            return nbrTetra;
+        }
+        else
+            return 0;
+    }
+
     /// Method to get the buffer of tetrahedra from the current SOFA object
     public void getTetrahedra(int[] tetra)
     {
