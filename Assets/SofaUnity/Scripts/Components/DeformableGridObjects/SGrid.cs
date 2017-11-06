@@ -28,10 +28,13 @@ namespace SofaUnity
             if (mr == null)
                 mr = gameObject.AddComponent<MeshRenderer>();
 
-            mr.material = new Material(Shader.Find("Diffuse"));
-
-            if (this.m_useTex)
-                mr.material = Resources.Load("Materials/BoxSofa") as Material;            
+            if (mr.sharedMaterial == null)
+            {
+                if (this.m_useTex)
+                    mr.sharedMaterial = Resources.Load("Materials/BoxSofa") as Material;
+                else
+                    mr.sharedMaterial = new Material(Shader.Find("Diffuse"));
+            }
         }
 
 
