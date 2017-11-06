@@ -286,11 +286,11 @@ public class SLaserRay : SRayCaster
         ps = laser.GetComponent<ParticleSystem>();
         var shape = ps.shape;
         shape.angle = 0;
-        shape.radius = 0.1f;
+        shape.radius = 0.2f;
         var em = ps.emission;
         em.rateOverTime = 1000;
         var psmain = ps.main;
-        psmain.startSize = 0.8f;
+        psmain.startSize = 1.0f;
         psmain.startLifetime = 0.11f;
         psmain.startSpeed = 100;
         psmain.maxParticles = 800;

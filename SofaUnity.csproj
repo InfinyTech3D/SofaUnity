@@ -300,6 +300,7 @@
     <Compile Include="Assets\SofaUnity\Scripts\Tools\Benchmarks.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Tools\CameraController.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Tools\ObjectController.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Tools\ObjectInfo.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Tools\PartScript.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Tools\ThirdPersonCamera.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Tools\randomPosition.cs" />
@@ -689,6 +690,8 @@
     <None Include="Assets\OvrAvatar\LICENSE.txt" />
     <None Include="Assets\OvrAvatar\Samples\SocialStarter\README.txt" />
     <None Include="Assets\OvrAvatar\THIRD_PARTY_NOTICES.txt" />
+    <None Include="Assets\SofaUnity\Shaders\UCLA GameLab Double-Sided Wireframe.shader" />
+    <None Include="Assets\SofaUnity\Shaders\UCLA GameLab Wireframe Functions.cginc" />
     <None Include="Assets\SteamVR\InteractionSystem\Core\Shaders\SeeThru.shader" />
     <None Include="Assets\SteamVR\InteractionSystem\Core\Shaders\Silhouette.shader" />
     <None Include="Assets\SteamVR\InteractionSystem\Hints\Shaders\ControllerButtonHints.shader" />
