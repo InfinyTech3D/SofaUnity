@@ -453,40 +453,57 @@ public class SofaBaseMesh : SofaBaseObject
 
         int res = sofaPhysics3DObject_getTexCoords(m_simu, m_name, texCoords);
         if (log)
-            Debug.Log("res get Texcoords: " + res);
+            Debug.Log("res get Texcoords: " + res);        
 
         if (res < 0)
         {
-            //computeStereographicsUV(mesh);
-            //return;
-
             this.computeBoundingBox(mesh);
+            Vector3[] normals = mesh.normals;
 
+            // test the orientation of the mesh
             int test = 40;
             if (test > nbrV)
                 test = nbrV;
 
             float dist = 0.0f;
+            Vector3 meanNorm = Vector3.zero;
             for (int i = 1; i < test; i++)
+            {
                 dist = dist + (verts[i] - verts[i - 1]).magnitude;
+                meanNorm += normals[i];
+            }
+
+            meanNorm /= test;
             dist /= test;
             dist *= 0.25f; //arbitraty scale
 
-            float rangeX = 1 / (m_max.x - m_min.x);
-            float rangeZ = 1 / (m_max.z - m_min.z);
+            int id0, id1, id3;
+            if (Mathf.Abs(meanNorm.x) > 0.8)
+            {
+                id0 = 1; id1 = 2; id3 = 0;
+            }
+            else if (Mathf.Abs(meanNorm.z) > 0.8)
+            {
+                id0 = 0; id1 = 1; id3 = 2;
+            }
+            else
+            {
+                id0 = 0; id1 = 2; id3 = 1;
+            }
 
-            Vector3[] normals = mesh.normals;
+            float range0 = 1 / (m_max[id0] - m_min[id0]);
+            float range1 = 1 / (m_max[id1] - m_min[id1]);
 
             for (int i = 0; i < nbrV; i++)
             {
                 Vector3 norm = normals[i].normalized;
                 Vector3 vert = verts[i];
                 
-                if (norm.z > 0.8)
+                if (norm[id3] > 0.8)
                     vert = vert - dist * Vector3.one;
 
-                uv[i] = new Vector2((vert.x - m_min.x) * rangeX,
-                    (vert.z - m_min.z) * rangeZ);
+                uv[i] = new Vector2((vert[id0] - m_min[id0]) * range0,
+                    (vert[id1] - m_min[id1]) * range1);
             }
 
             /*
