@@ -194,9 +194,10 @@ namespace SofaUnity
 
         void Update()
         {
-            m_impl.step();
-        }
+            if(UnityEditor.EditorApplication.isPlaying)
+                m_impl.step();
 
+        }
 
         /// Method to load a filename and create GameObject per Sofa object found.
         protected void loadFilename()
