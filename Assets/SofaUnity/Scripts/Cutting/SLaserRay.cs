@@ -37,7 +37,7 @@ public class SLaserRay : SRayCaster
     /// Booleen to draw the laser object
     public bool drawlaser = true;
     /// Laser material
-    public Material laserMat;
+    public Material laserMat = null;
     /// Laser GameObject
     protected GameObject laser;
     
@@ -80,6 +80,12 @@ public class SLaserRay : SRayCaster
             lightSource.transform.localScale = Vector3.one;
 
             initializeLaser();
+
+            // initialise for the first time the particule system
+            if (psInitialized == false && drawlaser)
+                initializeParticles();
+
+            this.activeTool(false);
         }
         
         // Get access to the sofaContext
@@ -114,11 +120,6 @@ public class SLaserRay : SRayCaster
         // update the light source
         if (drawlaser)
             lightSource.transform.position = origin + transLocal; 
-
-        // initialise for the first time the particule system
-        if (!psInitialized && drawlaser)
-            initializeParticles();
-
 
         if (m_sofaRC != null)
         {
@@ -174,7 +175,10 @@ public class SLaserRay : SRayCaster
             //create linerenderer
             laser.AddComponent<LineRenderer>();
             lr = laser.GetComponent<LineRenderer>();
-            lr.material = laserMat;
+            if (laserMat == null)
+                laserMat = Resources.Load("Materials/laser") as Material;
+ 
+            lr.sharedMaterial = laserMat;
             lr.startWidth = width;
             lr.endWidth = width;
 
@@ -189,6 +193,7 @@ public class SLaserRay : SRayCaster
     /// Internal method to create the laser particle system rendering
     private void initializeParticles()
     {
+        psInitialized = true;
         //create particlesystem
         //TODO: add scaling/size with laser width
         ps = laser.AddComponent<ParticleSystem>();
@@ -207,9 +212,10 @@ public class SLaserRay : SRayCaster
         //var pscolor = ps.colorOverLifetime;
         //pscolor.color = new ParticleSystem.MinMaxGradient(startColor, endColor);
         var psrenderer = ps.GetComponent<ParticleSystemRenderer>();
-        psrenderer.material = particleMat;
+        if (particleMat == null)
+            particleMat = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
 
-        psInitialized = true;
+        psrenderer.material = particleMat;        
     }
 
     /// Method to update the position of the laser to render
