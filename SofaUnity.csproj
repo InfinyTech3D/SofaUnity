@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>5.5.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -304,6 +306,7 @@
     <Compile Include="Assets\SofaUnity\Scripts\Tools\PartScript.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Tools\ThirdPersonCamera.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Tools\randomPosition.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\VRTools\SVRLaserRay.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_GazeTracker.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_LaserPointer.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_Teleporter.cs" />
@@ -690,8 +693,8 @@
     <None Include="Assets\OvrAvatar\LICENSE.txt" />
     <None Include="Assets\OvrAvatar\Samples\SocialStarter\README.txt" />
     <None Include="Assets\OvrAvatar\THIRD_PARTY_NOTICES.txt" />
-    <None Include="Assets\SofaUnity\Shaders\UCLA GameLab Double-Sided Wireframe.shader" />
-    <None Include="Assets\SofaUnity\Shaders\UCLA GameLab Wireframe Functions.cginc" />
+    <None Include="Assets\SofaUnity\Resources\Shaders\UCLA GameLab Double-Sided Wireframe.shader" />
+    <None Include="Assets\SofaUnity\Resources\Shaders\UCLA GameLab Wireframe Functions.cginc" />
     <None Include="Assets\SteamVR\InteractionSystem\Core\Shaders\SeeThru.shader" />
     <None Include="Assets\SteamVR\InteractionSystem\Core\Shaders\Silhouette.shader" />
     <None Include="Assets\SteamVR\InteractionSystem\Hints\Shaders\ControllerButtonHints.shader" />
@@ -709,6 +712,7 @@
     <None Include="Assets\VRTK\Scripts\Internal\Shaders\Unlit_TransparentColor.shader" />
     <None Include="Assets\VRTK\Scripts\Internal\Shaders\VRTK_OutlineBasic.shader" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
 </Project>

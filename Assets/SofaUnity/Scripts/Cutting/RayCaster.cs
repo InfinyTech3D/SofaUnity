@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//used for raycast functionality
+/// <summary>
+/// Base class inherite from MonoBehavior that design a Ray casting object.
+/// </summary>
 public class RayCaster : MonoBehaviour
 {
 

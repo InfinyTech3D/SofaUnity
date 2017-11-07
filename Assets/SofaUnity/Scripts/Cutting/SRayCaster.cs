@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// RayCaster class, inherite from RayCaster which is a MonoBehavior.
+/// This class will link to Sofa Ray casting system and will not use Unity raycasting.
+/// </summary>
 public class SRayCaster : RayCaster
 {
 
@@ -26,6 +30,7 @@ public class SRayCaster : RayCaster
             Debug.LogError("RayCaster::loadContext - No SofaContext found.");
         }
 
+        // Call internal method that will create a ray caster in Sofa.
         createSofaRayCaster();
     }
 
@@ -36,7 +41,7 @@ public class SRayCaster : RayCaster
 
     }
 
-
+    /// Method to display touched triangle. Not yet implemented from Sofa-Unity.
     public override void highlightTriangle()
     {
 

@@ -2,24 +2,47 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using VRTK;
 
+
+/// <summary>
+/// Specialisation of SRayCaster class
+/// Will comunicate with Sofa ray caster and allow several interaction using a ray:
+/// Grasping and fixing pointes and deleting elements.
+/// </summary>
 public class SLaserRay : SRayCaster
-{
-    public bool m_isCutting = false;
+{    
+    /// Direction of the laser ray in local coordinate 
     public Vector3 m_axisDirection = new Vector3(1.0f, 0.0f, 0.0f);
+    /// Translation of the origin of the laser ray from the origin of the GameObject in world coordinate
     public Vector3 m_translation = new Vector3(0.0f, 0.0f, 0.0f);
-    Vector3 transLocal;
-    bool logController = false;
 
-    public bool drawlaser = true;
+    /// Booleen to activate or not that tool
+    public bool m_isActivated = false;
+
+    /// Booleen to draw the effective ray sent to Sofa ray caster
     public bool drawRay = false;
 
-    // Laser object
-    public Material laserMat;
-    private GameObject laser;
-    private LineRenderer lr;
+    /// Enum that set the type of interaction to plug to this tool on sofa side
+    public enum LaserType
+    {
+        CuttingTool,
+        AttachTool,
+        FixTool
+    };
+    public LaserType m_laserType;
 
+
+    /// Laser object
+    /// {
+    /// Booleen to draw the laser object
+    public bool drawlaser = true;
+    /// Laser material
+    public Material laserMat;
+    /// Laser GameObject
+    private GameObject laser;
+    
+    /// Laser renderer
+    private LineRenderer lr;
     [SerializeField]
     public Color startColor = Color.green;
     [SerializeField]
@@ -27,43 +50,17 @@ public class SLaserRay : SRayCaster
     [SerializeField]
     public float width = 0.15f;
 
-    // Light
+    // Light emitted by the laser origin
     private GameObject lightSource;
     private Light light;
 
-    // Light Particle system
+    // Light Particle system following the lineRenderer
     private ParticleSystem ps;
     private bool psInitialized = false;
     public Material particleMat;
+    /// }
 
-    // Smoke Particle system
-    private GameObject smokeObject;
-    private ParticleSystem smoke;
-
-
-    public enum LaserType
-    {
-        CuttingTool,
-        AttachTool,
-        FixTool
-    };
-
-    public enum ButtonType
-    {
-        Trigger,
-        Grip
-    };
-
-    void OnValidate()
-    {
-        //startWidth = Mathf.Max(0, startWidth);
-        //endWidth = Mathf.Max(0, endWidth);
-        width = Mathf.Max(0, width);
-    }
-
-    public LaserType m_laserType;
-    public ButtonType m_actionButton;
-
+    /// Protected method that will really create the Sofa ray caster
     protected override void createSofaRayCaster()
     {
         if (drawlaser)
@@ -83,15 +80,8 @@ public class SLaserRay : SRayCaster
             lightSource.transform.localScale = Vector3.one;
 
             initializeLaser();
-
-            // Add smoke to tool
-            //smokeObject = new GameObject("Smoke");
-            //smokeObject.transform.parent = this.transform;
-            //smokeObject.AddComponent<ParticleSystem>();
-            //smoke = smokeObject.GetComponent<ParticleSystem>();
         }
         
-
         // Get access to the sofaContext
         IntPtr _simu = m_sofaContext.getSimuContext();
         if (_simu != IntPtr.Zero)
@@ -112,51 +102,35 @@ public class SLaserRay : SRayCaster
         return false;
     }
 
+    // Use this for initialization
     void Start()
     {
-        m_axisDirection.Normalize();
-
-        if (GetComponent<VRTK_ControllerEvents>() == null)
-        {
-            VRTK_Logger.Error(VRTK_Logger.GetCommonMessage(VRTK_Logger.CommonMessageKeys.REQUIRED_COMPONENT_MISSING_FROM_GAMEOBJECT, "SLaserRay", "VRTK_ControllerEvents", "the same"));
-            return;
-        }
-
-        //Setup controller event listeners
-        GetComponent<VRTK_ControllerEvents>().TriggerPressed += new ControllerInteractionEventHandler(DoTriggerPressed);
-        GetComponent<VRTK_ControllerEvents>().TriggerReleased += new ControllerInteractionEventHandler(DoTriggerReleased);
-
-        GetComponent<VRTK_ControllerEvents>().GripPressed += new ControllerInteractionEventHandler(DoGripPressed);
-        GetComponent<VRTK_ControllerEvents>().GripReleased += new ControllerInteractionEventHandler(DoGripReleased);
-
-        GetComponent<VRTK_ControllerEvents>().TriggerClicked += new ControllerInteractionEventHandler(DoTriggerClicked);
-        GetComponent<VRTK_ControllerEvents>().TriggerUnclicked += new ControllerInteractionEventHandler(DoTriggerUnclicked);
-
-        GetComponent<VRTK_ControllerEvents>().GripClicked += new ControllerInteractionEventHandler(DoGripClicked);
-        GetComponent<VRTK_ControllerEvents>().GripUnclicked += new ControllerInteractionEventHandler(DoGripUnclicked);
+        Debug.Log("SLaserRay::Start");
+        m_axisDirection.Normalize();        
     }
 
+    // Update is called once per frame
     void Update()
-    {                
-        transLocal = transform.TransformVector(m_translation);
+    {
+        // compute the direction and origin of the ray by adding object transform + additional manual transform
+        Vector3 transLocal = transform.TransformVector(m_translation);
         origin = transform.position + transLocal;
         direction = transform.forward * m_axisDirection[0] + transform.right * m_axisDirection[1] + transform.up * m_axisDirection[2];
-        //direction = transform.forward;
 
-        //set light position a bit back to have better lighting
-        //lightSource.transform.position = end - (distance / 100) * transform.forward;
+        // update the light source
         if (drawlaser)
             lightSource.transform.position = origin + transLocal; 
 
+        // initialise for the first time the particule system
         if (!psInitialized && drawlaser)
             initializeParticles();
 
+
         if (m_sofaRC != null)
         {
+            // get the id of the selected triangle. If < 0, no intersection
             int triId = m_sofaRC.castRay(origin, direction);
-            //if (triId < 10000)
-            //    Debug.Log("Sofa Collision triId " + triId);
-
+            
             if (Input.GetKey(KeyCode.C))
             {
                 this.activeTool(true);
@@ -167,78 +141,19 @@ public class SLaserRay : SRayCaster
             }
         }
 
+        // Update the laser drawing
         if (drawlaser)
             this.draw(origin, origin + direction * length);
     }
 
-    private void DebugLogger(uint index, string button, string action, ControllerInteractionEventArgs e)
-    {
-        if(logController)
-            VRTK_Logger.Info("SLaserRay::Controller on index '" + index + "' " + button + " has been " + action
-                + " with a pressure of " + e.buttonPressure + " / trackpad axis at: " + e.touchpadAxis + " (" + e.touchpadAngle + " degrees)");
-    }
 
-    private void DoTriggerPressed(object sender, ControllerInteractionEventArgs e)
+    /// Internal method to activate or not the tool, will also update the rendering
+    protected void activeTool(bool value)
     {
-        Debug.Log("SLaserRay TRIGGER pressed");
-        DebugLogger(VRTK_ControllerReference.GetRealIndex(e.controllerReference), "TRIGGER", "pressed", e);
-    }
+        m_isActivated = value;
 
-    private void DoTriggerReleased(object sender, ControllerInteractionEventArgs e)
-    {
-        DebugLogger(VRTK_ControllerReference.GetRealIndex(e.controllerReference), "TRIGGER", "released", e);
-    }
-
-    private void DoGripPressed(object sender, ControllerInteractionEventArgs e)
-    {
-        DebugLogger(VRTK_ControllerReference.GetRealIndex(e.controllerReference), "GRIP", "pressed", e);
-    }
-
-    private void DoGripReleased(object sender, ControllerInteractionEventArgs e)
-    {
-        DebugLogger(VRTK_ControllerReference.GetRealIndex(e.controllerReference), "GRIP", "released", e);
-    }
-
-    private void DoTriggerClicked(object sender, ControllerInteractionEventArgs e)
-    {
-        DebugLogger(VRTK_ControllerReference.GetRealIndex(e.controllerReference), "TRIGGER", "clicked", e);
-        if (m_actionButton == ButtonType.Trigger)
-        {
-            activeTool(true);
-        }
-    }
-
-    private void DoTriggerUnclicked(object sender, ControllerInteractionEventArgs e)
-    {
-        DebugLogger(VRTK_ControllerReference.GetRealIndex(e.controllerReference), "TRIGGER", "unclicked", e);
-        if (m_actionButton == ButtonType.Trigger)
-        {
-            activeTool(false);
-        }
-    }
-
-    private void DoGripClicked(object sender, ControllerInteractionEventArgs e)
-    {
-        DebugLogger(VRTK_ControllerReference.GetRealIndex(e.controllerReference), "GRIP", "clicked", e);
-        if (m_actionButton == ButtonType.Grip)
-        {
-            activeTool(true);
-        }
-    }
-
-    private void DoGripUnclicked(object sender, ControllerInteractionEventArgs e)
-    {
-        DebugLogger(VRTK_ControllerReference.GetRealIndex(e.controllerReference), "GRIP", "unclicked", e);
-        if (m_actionButton == ButtonType.Grip)
-        {
-            activeTool(false);
-        }
-    }
-
-    private void activeTool(bool value)
-    {
-        m_isCutting = value;
-        m_sofaRC.activateTool(m_isCutting);
+        if (m_sofaRC != null)
+            m_sofaRC.activateTool(m_isActivated);
 
         if (value)
             this.endColor = Color.red;
@@ -264,8 +179,6 @@ public class SLaserRay : SRayCaster
             //create linerenderer
             laser.AddComponent<LineRenderer>();
             lr = laser.GetComponent<LineRenderer>();
-            //lr.useWorldSpace = false;
-            //lr.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
             lr.material = laserMat;
             lr.startWidth = width;
             lr.endWidth = width;

@@ -192,9 +192,10 @@ namespace SofaUnity
                 
         }
 
+        // Update is called once per frame
         void Update()
         {
-            if(UnityEditor.EditorApplication.isPlaying)
+            if(UnityEditor.EditorApplication.isPlaying) // only if scene is playing
                 m_impl.step();
 
         }
