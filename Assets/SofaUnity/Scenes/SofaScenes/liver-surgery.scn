@@ -11,8 +11,6 @@
     <CGLinearSolver name="linear solver" iterations="25" tolerance="1e-09" threshold="1e-09" />
 	
     <Node name="Liver" gravity="0 0 0">
-	
-
         <MeshGmshLoader name="meshLoader" filename="mesh/liver.msh" scale3d="2 2 2"/>
         <TetrahedronSetTopologyContainer name="topo" src="@meshLoader" />
         <MechanicalObject name="dofs" src="@meshLoader"/>
@@ -36,7 +34,7 @@
 	</Node> 
 	
 	<Node name="Tool" gravity="0 0 0">
-		<SparseGridRamification name="grid" n="4 8 4" fileTopology="C:/projects/unity3D/SofaUnity/Assets/Scenes/SofaScenes/mesh/tool2.obj" nbVirtualFinerLevels="3" finestConnectivity="0"/>
+		<SparseGridRamification name="grid" n="4 8 4" fileTopology="C:/projects/unity3D/SofaUnity/Assets/SofaUnity/Scenes/SofaScenes/mesh/tool2.obj" nbVirtualFinerLevels="3" finestConnectivity="0"/>
 		<MechanicalObject name="dofs" position="@grid.position"  tags="NoPicking" rotation2="140 0 0" translation2="-4 13 -3"/>
         <DiagonalMass  name="mass" massDensity="1" />
         <HexahedronFEMForceField name="FEM" youngModulus="3000.0" poissonRatio="0.45" method="large" updateStiffnessMatrix="false" printLog="0" />
@@ -67,7 +65,7 @@
 	
 	
 	<Node name="Camera" gravity="0 0 0">
-		<SparseGridRamification name="grid" n="4 8 4" fileTopology="C:/projects/unity3D/SofaUnity/Assets/Scenes/SofaScenes/mesh/tool2.obj" nbVirtualFinerLevels="3" finestConnectivity="0"/>
+		<SparseGridRamification name="grid" n="4 8 4" fileTopology="C:/projects/unity3D/SofaUnity/Assets/SofaUnity/Scenes/SofaScenes/mesh/tool2.obj" nbVirtualFinerLevels="3" finestConnectivity="0"/>
 		<MechanicalObject name="dofs" position="@grid.position"  tags="NoPicking" rotation2="160 0 -20" translation2="1.5 14 0.2"/>
         <DiagonalMass  name="mass" massDensity="1" />
         <HexahedronFEMForceField name="FEM" youngModulus="1000.0" poissonRatio="0.3" method="large" updateStiffnessMatrix="false" printLog="0" />
