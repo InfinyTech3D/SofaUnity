@@ -9,8 +9,8 @@
     <Node name="TT">
         <EulerImplicit name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.1" />
         <CGLinearSolver iterations="25" name="linear solver" tolerance="1.0e-9" threshold="1.0e-9" />
-        <MeshGmshLoader name="loader" filename="./mesh/liver_fixed_origin.msh" />
-        <MechanicalObject src="@loader" name="Volume" scale3d="0.01 0.01 0.01" rotation="0 150 0"/>
+        <MeshGmshLoader name="loader" filename="./mesh/liver2.msh" />
+        <MechanicalObject src="@loader" name="Volume" scale3d="20 20 20" rotation="140 180 0"/>
 
 		<TetrahedronSetTopologyContainer  name="Container" position="@Volume.position" src="@loader" tags=" "/>
 		<TetrahedronSetTopologyModifier   name="Modifier" />
@@ -18,7 +18,7 @@
 		<TetrahedronSetGeometryAlgorithms name="GeomAlgo"  template="Vec3d" />
 
         <DiagonalMass massDensity="1.0" />
-        <BoxROI template="Vec3d" box="-0.15 -0.20 -0.20 0.20 0.20 0.20" drawBoxes="1" position="@Volume.rest_position" name="FixedROI"/>
+        <BoxROI template="Vec3d" box="0 -5 -5 10 5 5" drawBoxes="1" position="@Volume.rest_position" name="FixedROI"/>
         <FixedConstraint indices="@FixedROI.indices" />
         <TetrahedralCorotationalFEMForceField name="FEM" youngModulus="1300" poissonRatio="0.3" method="large" />		
         <Node name="T">
