@@ -277,6 +277,7 @@ public class SofaBaseMesh : SofaBaseObject
 
     }
 
+    /// Method to check if the topology of the mesh has changed.
     public bool hasTopologyChanged()
     {
         if (m_native != IntPtr.Zero)
@@ -288,6 +289,7 @@ public class SofaBaseMesh : SofaBaseObject
             return false;
     }
 
+    /// Method to set that the change of topology has well be handle.
     public int setTopologyChange(bool value)
     {
         if (m_native != IntPtr.Zero)
@@ -395,7 +397,8 @@ public class SofaBaseMesh : SofaBaseObject
         }
     }
     
-    
+
+    /// test method to compute UV with sphere projection
     private void computeStereographicsUV(Mesh mesh)
     {
         this.computeBoundingBox(mesh);
@@ -467,10 +470,11 @@ public class SofaBaseMesh : SofaBaseObject
 
             float dist = 0.0f;
             Vector3 meanNorm = Vector3.zero;
-            for (int i = 1; i < test; i++)
+            for (int i = 0; i < test; i++)
             {
-                dist = dist + (verts[i] - verts[i - 1]).magnitude;
-                meanNorm += normals[i];
+                int id = UnityEngine.Random.Range(1, nbrV);
+                dist = dist + (verts[id] - verts[id - 1]).magnitude;
+                meanNorm += normals[id];
             }
 
             meanNorm /= test;
@@ -504,32 +508,7 @@ public class SofaBaseMesh : SofaBaseObject
 
                 uv[i] = new Vector2((vert[id0] - m_min[id0]) * range0,
                     (vert[id1] - m_min[id1]) * range1);
-            }
-
-            /*
-            this.computeBoundingBox(mesh);            
-            
-
-            float minXY = m_min.x + m_min.z;
-            float minYZ = m_min.y + m_min.z;
-
-            float rangeXY = 1/(m_max.x + m_max.z - minXY);
-            float rangeYZ = 1/(m_max.y + m_max.z - minYZ);
-
-            if (log)
-            {
-                Debug.Log("min: " + m_min);
-                Debug.Log("max: " + m_max);
-                Debug.Log("rangeXY: " + rangeXY);
-                Debug.Log("rangeYZ: " + rangeYZ);
-            }
-
-            for (int i = 0; i < nbrV; i++)
-            {
-                uv[i] = new Vector2((verts[i].x + verts[i].z - minXY) * rangeXY,
-                    (verts[i].y + verts[i].z - minYZ) * rangeYZ);
-            }
-            */
+            }            
         }
         else
         {

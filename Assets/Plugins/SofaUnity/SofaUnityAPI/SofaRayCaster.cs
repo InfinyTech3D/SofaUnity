@@ -2,8 +2,18 @@
 using System;
 using System.Runtime.InteropServices;
 
+/// <summary>
+/// Class to create a ray caster in Sofa and comunicate with it.
+/// </summary>
 public class SofaRayCaster : IDisposable
 {
+    /// <summary>
+    /// default constuctor of the sofa ray caster
+    /// </summary>
+    /// <param name="simu">Pointer to the implicit sofaAPI</param>
+    /// <param name="type">type of tool to attach to this ray caster</param>
+    /// <param name="nameID">unique name id of this ray caster</param>
+    /// <param name="length">length of the ray</param>
     public SofaRayCaster(IntPtr simu, int type, string nameID, float length)
     {
         m_simu = simu;
@@ -52,6 +62,7 @@ public class SofaRayCaster : IDisposable
         }
     }
 
+    /// Method to activate or not the tool attached to the ray caster
     public int activateTool(bool value)
     {
         if (m_simu == IntPtr.Zero)
@@ -62,6 +73,7 @@ public class SofaRayCaster : IDisposable
         return res;
     }
 
+    /// Method to send a new ray. TODO: could maybe optimise here and send only if tool is activated
     public int castRay(Vector3 origin, Vector3 direction)
     {
         if (m_simu == IntPtr.Zero)

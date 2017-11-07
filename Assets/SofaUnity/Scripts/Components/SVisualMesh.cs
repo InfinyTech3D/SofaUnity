@@ -49,15 +49,15 @@ namespace SofaUnity
         protected override void initMesh(bool toUpdate)
         {
             if (m_impl == null)
-                return;
-
-            base.initMesh(false);
+                return;            
 
             m_mesh.name = "SofaVisualMesh";
             m_mesh.vertices = new Vector3[0];
             m_impl.updateMesh(m_mesh);
             m_mesh.triangles = m_impl.createTriangulation();            
             m_impl.recomputeTexCoords(m_mesh);
+
+            base.initMesh(false);
 
             if (toUpdate)
                 m_impl.updateMesh(m_mesh);
