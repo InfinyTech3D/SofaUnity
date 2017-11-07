@@ -130,6 +130,8 @@ namespace SofaUnity
 
             if (m_impl != null)
             {
+                // TODO: for the moment the recompute of tetra is too expensive. Only update the number of vertices and tetra
+                // Need to find another solution.
                 if (m_impl.hasTopologyChanged())
                 {
                     nbTetra = m_impl.getNbTetrahedra();
@@ -152,7 +154,6 @@ namespace SofaUnity
                     updateTetraMesh();
                 else
                     m_impl.updateMesh(m_mesh);
-                //m_mesh.RecalculateNormals();
             }
         }
 
@@ -323,11 +324,13 @@ namespace SofaUnity
             }
         }
 
+        /// public method that return the number of vertices, override base method by returning potentially the number of vertices from tetra topology.
         public override int nbVertices()
         {
             return nbVert;
         }
 
+        /// public method that return the number of elements, override base method by returning potentially the number of tetrahedra.
         public override int nbTriangles()
         {
             return nbTetra;

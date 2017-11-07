@@ -126,6 +126,7 @@ namespace SofaUnity
                 return m_impl.parent;
         }
 
+        /// Getter/Setter to @see m_invertNormals that order to change or not the mesh normals at load.
         public bool invertNormals
         {
             get { return m_invertNormals; }
@@ -212,6 +213,7 @@ namespace SofaUnity
             }
         }
 
+        /// Public method to get the number of vertices in then embedded mesh
         public virtual int nbVertices()
         {
             if (m_mesh)
@@ -220,6 +222,7 @@ namespace SofaUnity
                 return -1;
         }
 
+        /// Public method to get the number of triangles in then embedded mesh
         public virtual int nbTriangles()
         {
             if (m_mesh)

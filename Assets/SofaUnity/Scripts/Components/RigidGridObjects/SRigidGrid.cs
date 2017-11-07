@@ -27,6 +27,7 @@ namespace SofaUnity
             if (mr == null)
                 mr = gameObject.AddComponent<MeshRenderer>();
 
+            // Check if one material has already been set to the grid, otherwise apply default one.
             if (mr.sharedMaterial == null)
             {
                 if (this.m_useTex)
