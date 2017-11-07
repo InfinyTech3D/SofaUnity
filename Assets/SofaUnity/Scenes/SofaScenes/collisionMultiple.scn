@@ -83,9 +83,9 @@
         <MeshObjLoader name="loader" filename="./mesh/floor2b.obj" />
         <Mesh src="@loader" />
         <MechanicalObject src="@loader" dy="-10.25" scale="0.5" />
-        <Triangle name="Floor" simulated="0" moving="0" />
-        <Line name="Floor" simulated="0" moving="0" />
-        <Point name="Floor" simulated="0" moving="0" />
+        <Triangle name="TFloor" simulated="0" moving="0" />
+        <Line name="LFloor" simulated="0" moving="0" />
+        <Point name="PFloor" simulated="0" moving="0" />
 		<Node name="VisuFloor" tags="Visual">
 			<OglModel name="VisuFloor" filename="./mesh/floor2b.obj" scale="0.5"  dy="-10" />
 			<IdentityMapping input="@../" output="@VisuFloor" />
