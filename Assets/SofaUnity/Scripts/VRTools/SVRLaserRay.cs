@@ -21,7 +21,8 @@ class SVRLaserRay : SLaserRay
 
     void Start()
     {
-        Debug.Log("SVRLaserRay::Start");
+        m_axisDirection.Normalize();
+        
         if (GetComponent<VRTK_ControllerEvents>() == null)
         {
             VRTK_Logger.Error(VRTK_Logger.GetCommonMessage(VRTK_Logger.CommonMessageKeys.REQUIRED_COMPONENT_MISSING_FROM_GAMEOBJECT, "SLaserRay", "VRTK_ControllerEvents", "the same"));
@@ -40,6 +41,11 @@ class SVRLaserRay : SLaserRay
 
         GetComponent<VRTK_ControllerEvents>().GripClicked += new ControllerInteractionEventHandler(DoGripClicked);
         GetComponent<VRTK_ControllerEvents>().GripUnclicked += new ControllerInteractionEventHandler(DoGripUnclicked);
+
+        if(laser != null)
+        {
+            laser.transform.localPosition = new Vector3(-0.035f, -0.005f, 0.005f);
+        }
     }
 
     /// Debugger method for VR interaction

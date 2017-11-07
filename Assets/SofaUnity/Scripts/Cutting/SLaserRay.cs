@@ -39,10 +39,10 @@ public class SLaserRay : SRayCaster
     /// Laser material
     public Material laserMat;
     /// Laser GameObject
-    private GameObject laser;
+    protected GameObject laser;
     
     /// Laser renderer
-    private LineRenderer lr;
+    protected LineRenderer lr;
     [SerializeField]
     public Color startColor = Color.green;
     [SerializeField]
@@ -51,12 +51,12 @@ public class SLaserRay : SRayCaster
     public float width = 0.15f;
 
     // Light emitted by the laser origin
-    private GameObject lightSource;
-    private Light light;
+    protected GameObject lightSource;
+    protected Light light;
 
     // Light Particle system following the lineRenderer
-    private ParticleSystem ps;
-    private bool psInitialized = false;
+    protected ParticleSystem ps;
+    protected bool psInitialized = false;
     public Material particleMat;
     /// }
 
@@ -67,8 +67,8 @@ public class SLaserRay : SRayCaster
         {
             // Create Laser
             laser = new GameObject("Laser");
-            laser.transform.parent = this.transform;
-            laser.transform.localPosition = new Vector3(-0.035f, -0.005f, 0.005f);
+            laser.transform.parent = this.transform;            
+            laser.transform.localPosition = Vector3.zero;
             laser.transform.localRotation = Quaternion.identity;
             laser.transform.localScale = Vector3.one;
 
@@ -97,15 +97,9 @@ public class SLaserRay : SRayCaster
         }
     }
 
-    public override bool castRay()
-    {
-        return false;
-    }
-
     // Use this for initialization
     void Start()
     {
-        Debug.Log("SLaserRay::Start");
         m_axisDirection.Normalize();        
     }
 
@@ -164,6 +158,7 @@ public class SLaserRay : SRayCaster
             this.updateLaser();
     }
 
+    /// Internal method to create the laser line renderer and light
     private void initializeLaser()
     {
         //create light
@@ -191,6 +186,7 @@ public class SLaserRay : SRayCaster
         }
     }
 
+    /// Internal method to create the laser particle system rendering
     private void initializeParticles()
     {
         //create particlesystem
@@ -216,6 +212,7 @@ public class SLaserRay : SRayCaster
         psInitialized = true;
     }
 
+    /// Method to update the position of the laser to render
     public void draw(Vector3 start, Vector3 end)
     {
         if (drawRay)
@@ -225,6 +222,7 @@ public class SLaserRay : SRayCaster
         }
     }
 
+    /// Method to update the laser rendering when tool status change
     public void updateLaser()
     {
         if (drawRay)
