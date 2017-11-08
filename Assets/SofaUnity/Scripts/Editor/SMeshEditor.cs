@@ -48,13 +48,13 @@ public class SDeformableMeshEditor : Editor
 
 
         // Add FEM fields
-        mesh.mass = EditorGUILayout.FloatField("Mass", mesh.mass);
+        mesh.mass = EditorGUILayout.Slider("Mass", mesh.mass, 0, 1000);
         EditorGUILayout.Separator();
 
-        mesh.young = EditorGUILayout.FloatField("Young Modulus", mesh.young);
+        mesh.young = EditorGUILayout.Slider("Young Modulus", mesh.young, 0, 10000);
         EditorGUILayout.Separator();
 
-        mesh.poisson = EditorGUILayout.FloatField("Poisson Ratio", mesh.poisson);
+        mesh.poisson = EditorGUILayout.Slider("Poisson Ratio", mesh.poisson, 0, 0.49f);
         EditorGUILayout.Separator();
     }
 }

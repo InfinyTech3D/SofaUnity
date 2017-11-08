@@ -26,7 +26,7 @@ public class SofaRayCaster : IDisposable
         if (m_simu != IntPtr.Zero)
         {
             if (type == 0)
-                res = sofaPhysicsAPI_createRayCaster(m_simu, m_name, length);
+                res = sofaPhysicsAPI_createResectionTool(m_simu, m_name, length);
             else if (type == 1)
                 res = sofaPhysicsAPI_createAttachTool(m_simu, m_name, length);
             else
@@ -97,17 +97,17 @@ public class SofaRayCaster : IDisposable
 
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysicsAPI_createRayCaster(IntPtr obj, string name, float length);
+    public static extern int sofaPhysicsAPI_createResectionTool(IntPtr obj, string name, float length);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysicsAPI_createAttachTool(IntPtr obj, string name, float length);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysicsAPI_createFixConstraintTool(IntPtr obj, string name, float length);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_castRay(IntPtr obj, string name, float[] origin, float[] direction);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_activateTool(IntPtr obj, string name, bool value);
-
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysicsAPI_createAttachTool(IntPtr obj, string name, float length);
-
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysicsAPI_createFixConstraintTool(IntPtr obj, string name, float length);    
 }
