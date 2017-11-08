@@ -133,8 +133,21 @@ public class SofaBaseMesh : SofaBaseObject
         set { setFloatValue("poissonRatio", value); }
     }
 
+    /// Getter/Setter of the stiffness for all the springs of this mesh
+    public float stiffness
+    {
+        get { return getFloatValue("stiffness"); }
+        set { setFloatValue("stiffness", value); }
+    }
 
-    
+    /// Getter/Setter of the damping for all the springs of this mesh
+    public float damping
+    {
+        get { return getFloatValue("damping"); }
+        set { setFloatValue("damping", value); }
+    }
+
+
     /// Method to create the triangulation from Sofa topology to Unity buffers
     public virtual int[] createTriangulation()
     {

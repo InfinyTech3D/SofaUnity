@@ -21,6 +21,11 @@ namespace SofaUnity
         public float m_young = 1400.0f;
         /// Parameter to define the Poisson Ratio of this deformable Object
         public float m_poisson = 0.45f;
+        /// Parameter to define the uniform stiffness for all the springs of this deformable Object
+        public float m_stiffness = 1000.0f;
+        /// Parameter to define the uniform damping for all the springs of this deformable Object
+        public float m_damping = 1.0f;
+
 
         /// Member: if tetrahedron is detected, will gather the number of element
         protected int nbTetra = 0;
@@ -47,10 +52,15 @@ namespace SofaUnity
                 // TODO: check if this is still needed (and why not in children)
                 m_impl.loadObject();
 
-                // Init the FEM parameter from scene.
-                m_poisson = m_impl.poissonRatio;
-                m_mass = m_impl.mass;
-                m_young = m_impl.youngModulus;
+                // Init the FEM and spring parameter from scene.
+                if (!UnityEditor.EditorApplication.isPlaying)
+                {
+                    m_poisson = m_impl.poissonRatio;
+                    m_mass = m_impl.mass;
+                    m_young = m_impl.youngModulus;
+                    m_stiffness = m_impl.stiffness;
+                    m_damping = m_impl.damping;
+                }
 
                 // Call SBaseMesh.createObject() to init value loaded from the scene.
                 base.createObject();
@@ -105,13 +115,17 @@ namespace SofaUnity
 
             //m_impl.recomputeTriangles(m_mesh);
 
-            // Set the FEM parameters.
+            // Set the FEM and spring parameters.
             if (m_mass >= 0) // Otherwise means it has been unactivated from scene parsing
                 m_impl.mass = m_mass;
             if (m_young >= 0)
                 m_impl.youngModulus = m_young;
             if (m_poisson >= 0)
                 m_impl.poissonRatio = m_poisson;
+            if (m_stiffness >= 0)
+                m_impl.stiffness = m_stiffness;
+            if (m_damping >= 0)
+                m_impl.damping = m_damping;
 
             base.initMesh(false);
 
@@ -326,6 +340,37 @@ namespace SofaUnity
                 }
             }
         }
+
+        /// Getter/Setter of current poisson @see m_poisson
+        public float stiffness
+        {
+            get { return m_stiffness; }
+            set
+            {
+                if (value != m_stiffness)
+                {
+                    m_stiffness = value;
+                    if (m_impl != null)
+                        m_impl.stiffness = m_stiffness;
+                }
+            }
+        }
+
+        /// Getter/Setter of current poisson @see m_poisson
+        public float damping
+        {
+            get { return m_damping; }
+            set
+            {
+                if (value != m_damping)
+                {
+                    m_damping = value;
+                    if (m_impl != null)
+                        m_impl.damping = m_damping;
+                }
+            }
+        }
+
 
         /// public method that return the number of vertices, override base method by returning potentially the number of vertices from tetra topology.
         public override int nbVertices()

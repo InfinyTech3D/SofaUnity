@@ -65,6 +65,18 @@ public class SDeformableMeshEditor : Editor
             mesh.poisson = EditorGUILayout.Slider("Poisson Ratio", mesh.poisson, 0, 0.49f);
             EditorGUILayout.Separator();
         }
+
+        if (mesh.stiffness >= 0)
+        {
+            mesh.stiffness = EditorGUILayout.Slider("Stiffness", mesh.stiffness, 0, 10000);
+            EditorGUILayout.Separator();
+        }
+
+        if (mesh.damping >= 0)
+        {
+            mesh.damping = EditorGUILayout.Slider("Damping", mesh.damping, 0, 100);
+            EditorGUILayout.Separator();
+        }
     }
 }
 
