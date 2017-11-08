@@ -197,7 +197,6 @@ namespace SofaUnity
         {
             if(UnityEditor.EditorApplication.isPlaying) // only if scene is playing
                 m_impl.step();
-
         }
 
         /// Method to load a filename and create GameObject per Sofa object found.

@@ -86,10 +86,9 @@ namespace SofaUnityAPI
             if (m_native != IntPtr.Zero)
             {
                 int res = sofaPhysicsAPI_loadScene(m_native, filename);
-                Debug.Log("Load filename: " + filename + " | res: " + res);
             }
             else
-                Debug.LogError("Error can't load file, no sofaPhysicsAPI created!");
+                Debug.LogError("Error can't load file: " + filename + "no sofaPhysicsAPI created!");
         }
 
 

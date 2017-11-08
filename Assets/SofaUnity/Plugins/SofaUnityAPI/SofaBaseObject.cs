@@ -100,7 +100,8 @@ public class SofaBaseObject : IDisposable
             if (res >= 0)
                 return val[0];
             else
-                Debug.LogError("Error getting parameter: " + param +  " . Method Return: " + res);
+                //Debug.LogError("Error getting parameter: " + param +  " . Method Return: " + res);
+                return -1.0f;
         }
         else
             Debug.LogError("Error getting parameter: " + param + " . Can't access Object Pointer m_native.");

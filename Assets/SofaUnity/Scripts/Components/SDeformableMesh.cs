@@ -106,9 +106,12 @@ namespace SofaUnity
             //m_impl.recomputeTriangles(m_mesh);
 
             // Set the FEM parameters.
-            m_impl.mass = m_mass;
-            m_impl.youngModulus = m_young;
-            m_impl.poissonRatio = m_poisson;
+            if (m_mass >= 0) // Otherwise means it has been unactivated from scene parsing
+                m_impl.mass = m_mass;
+            if (m_young >= 0)
+                m_impl.youngModulus = m_young;
+            if (m_poisson >= 0)
+                m_impl.poissonRatio = m_poisson;
 
             base.initMesh(false);
 
