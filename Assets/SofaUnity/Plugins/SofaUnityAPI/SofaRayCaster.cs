@@ -19,7 +19,7 @@ public class SofaRayCaster : IDisposable
         m_simu = simu;
         m_name = nameID;
 
-        if (length < 1.0f)
+        if (length < 0.0f)
             length = 1.0f;
 
         int res = 0;
@@ -87,6 +87,9 @@ public class SofaRayCaster : IDisposable
             ori[i] = origin[i];
             dir[i] = direction[i];
         }
+
+        ori[0] = -ori[0];
+        dir[0] = -dir[0];
 
         int res = sofaPhysicsAPI_castRay(m_simu, m_name, ori, dir);
 

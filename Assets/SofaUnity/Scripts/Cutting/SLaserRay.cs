@@ -40,7 +40,9 @@ public class SLaserRay : SRayCaster
     public Material laserMat = null;
     /// Laser GameObject
     protected GameObject laser;
-    
+
+    public bool drawParticles = true;
+
     /// Laser renderer
     protected LineRenderer lr;
     [SerializeField]
@@ -196,7 +198,9 @@ public class SLaserRay : SRayCaster
         psInitialized = true;
         //create particlesystem
         //TODO: add scaling/size with laser width
-        ps = laser.AddComponent<ParticleSystem>();
+        if (drawParticles)
+        {
+            ps = laser.AddComponent<ParticleSystem>();
         ps = laser.GetComponent<ParticleSystem>();
         var shape = ps.shape;
         shape.angle = 0;
@@ -211,11 +215,13 @@ public class SLaserRay : SRayCaster
         psmain.startColor = new Color(1, 1, 1, 0.25f);
         //var pscolor = ps.colorOverLifetime;
         //pscolor.color = new ParticleSystem.MinMaxGradient(startColor, endColor);
-        var psrenderer = ps.GetComponent<ParticleSystemRenderer>();
-        if (particleMat == null)
-            particleMat = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
+        
+            var psrenderer = ps.GetComponent<ParticleSystemRenderer>();
+            if (particleMat == null)
+                particleMat = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
 
-        psrenderer.material = particleMat;        
+            psrenderer.material = particleMat;
+        }
     }
 
     /// Method to update the position of the laser to render
@@ -239,14 +245,17 @@ public class SLaserRay : SRayCaster
             lr.endWidth = width;
         }
 
-        ps = laser.GetComponent<ParticleSystem>();
-        var psmain = ps.main;
-        psmain.startColor = new Color(endColor.r, endColor.g, endColor.b, 0.25f); ;
-
-        light.color = endColor;
-        light.intensity = width * 100;
-        light.bounceIntensity = width * 3;
-        light.range = width / 2.5f;
+        if (drawParticles)
+        {
+            ps = laser.GetComponent<ParticleSystem>();
+            var psmain = ps.main;
+            psmain.startColor = new Color(endColor.r, endColor.g, endColor.b, 0.25f); ;
+        
+            light.color = endColor;
+            light.intensity = width * 100;
+            light.bounceIntensity = width * 3;
+            light.range = width / 2.5f;
+        }
     }
 
 }
