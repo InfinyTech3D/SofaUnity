@@ -42,6 +42,11 @@ namespace SofaUnity
             MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();
             if (mr == null)
                 mr = gameObject.AddComponent<MeshRenderer>();
+
+            if (mr.sharedMaterial == null)
+            {
+                    mr.sharedMaterial = new Material(Shader.Find("Diffuse"));
+            }
         }
 
 

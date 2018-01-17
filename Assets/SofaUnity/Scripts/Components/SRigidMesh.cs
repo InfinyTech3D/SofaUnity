@@ -46,6 +46,7 @@ namespace SofaUnity
             MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();
             if (mr == null)
                 mr = gameObject.AddComponent<MeshRenderer>();
+            mr.enabled = false;
         }
 
         /// Method called by \sa Start() method to init the current object and impl. @param toUpdate indicate if updateMesh has to be called.
