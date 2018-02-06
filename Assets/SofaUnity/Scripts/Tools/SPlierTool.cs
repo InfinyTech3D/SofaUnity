@@ -44,18 +44,36 @@ public class SPlierTool : MonoBehaviour
 
         if (_simu != IntPtr.Zero)
         {
-            m_sofaPlier = new SofaPliers(_simu, "pliers1", nameMord1, nameMord2, nameModel);
+            m_sofaPlier = new SofaPliers(_simu, name, nameMord1, nameMord2, nameModel);
         }
+    }
+
+    public bool clampSofaPlier()
+    {
+        int res = m_sofaPlier.closePliers();
+
+        if (res > 0)
+            return true;
+        else
+            return false;
+    }
+
+    public bool releaseSofaPlier()
+    {
+        m_sofaPlier.releasePliers();
+
+        return true;
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
+         //   new WaitForSeconds(5);
             m_sofaPlier.closePliers();
         }
         else if (Input.GetKeyUp(KeyCode.C))
-        {
+        {            
             m_sofaPlier.releasePliers();
         }
 

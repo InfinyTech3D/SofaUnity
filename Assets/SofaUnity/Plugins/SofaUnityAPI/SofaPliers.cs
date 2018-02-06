@@ -23,7 +23,7 @@ public class SofaPliers : IDisposable
         int res = 0;
         if (m_simu != IntPtr.Zero)
         {
-            res = sofaPhysicsAPI_createPliers(m_simu, m_nameMord1, m_nameMord2, m_nameModel);
+            res = sofaPhysicsAPI_createPliers(m_simu, m_name, m_nameMord1, m_nameMord2, m_nameModel);
         }
         Debug.Log("SofaPliers creation: " + nameID + " -> " + res);
     }
@@ -63,7 +63,7 @@ public class SofaPliers : IDisposable
         if (m_simu == IntPtr.Zero)
             return -10;
 
-        int res = sofaPhysicsAPI_closePliers(m_simu);
+        int res = sofaPhysicsAPI_closePliers(m_simu, m_name);
         Debug.Log("SofaPliers closePliers: " + m_name + " -> " + res);
         return res;
     }
@@ -73,22 +73,21 @@ public class SofaPliers : IDisposable
         if (m_simu == IntPtr.Zero)
             return -10;
 
-        int res = sofaPhysicsAPI_releasePliers(m_simu);
+        int res = sofaPhysicsAPI_releasePliers(m_simu, m_name);
 
         return res;        
     }
 
 
 
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysicsAPI_createPliers(IntPtr obj, string nameID, string nameMord1, string nameMord2, string nameModel);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysicsAPI_createPliers(IntPtr obj, string nameMord1, string nameMord2, string nameModel);
+    public static extern int sofaPhysicsAPI_closePliers(IntPtr obj, string nameID);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysicsAPI_closePliers(IntPtr obj);
-
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysicsAPI_releasePliers(IntPtr obj);
+    public static extern int sofaPhysicsAPI_releasePliers(IntPtr obj, string nameID);
 
 
 }
