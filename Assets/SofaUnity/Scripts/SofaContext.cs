@@ -260,7 +260,8 @@ namespace SofaUnity
             hierarchy = new Dictionary<string, List<string> >();
             foreach (Transform child in transform)
             {
-                SBaseMesh obj = child.GetComponent<SBaseMesh>();
+                SBaseObject obj = child.GetComponent<SBaseObject>();
+                Debug.Log("#### Hierarchy: parent: " + obj.parentName());
                 if (hierarchy.ContainsKey(obj.parentName()))               
                     hierarchy[obj.parentName()].Add(child.name);
                 else

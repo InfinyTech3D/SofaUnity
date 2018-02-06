@@ -118,7 +118,7 @@ namespace SofaUnity
 
 
         /// Getter of parentName of this Sofa Object.
-        public string parentName()
+        public override string parentName()
         {
             if (m_impl == null)
                 return "No impl";

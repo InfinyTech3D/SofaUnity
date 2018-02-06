@@ -120,5 +120,10 @@ namespace SofaUnity
         {
 
         }
+
+        public virtual string parentName()
+        {
+            return "No impl";
+        }
     }
 }
