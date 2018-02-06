@@ -91,7 +91,7 @@ public class SofaBaseObject : IDisposable
     /// </summary>
     /// <param name="param">field parameter requested</param>
     /// <returns></returns>
-    protected float getFloatValue(string param)
+    public float getFloatValue(string param)
     {
         if (m_native != IntPtr.Zero)
         {
@@ -116,7 +116,7 @@ public class SofaBaseObject : IDisposable
     /// </summary>
     /// <param name="param">field parameter to change</param>
     /// <param name="value">new value of the parameter</param>
-    protected void setFloatValue(string param, float value)
+    public void setFloatValue(string param, float value)
     {
         if (m_native != IntPtr.Zero)
         {
@@ -129,12 +129,96 @@ public class SofaBaseObject : IDisposable
             Debug.LogError("Error setting parameter: " + param + " . Can't access Object Pointer m_native.");
     }
 
+
+    public int getIntValue(string dataName)
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            int[] val = new int[1];
+            int res = sofaPhysics3DObject_getIntValue(m_simu, m_name, dataName, val);
+            if (res >= 0)
+                return val[0];
+        }
+
+        Debug.LogError("Error getting parameter: " + dataName);
+        return int.MinValue;
+    }
+
+    public void setIntValue(string dataName, int value)
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            int res = sofaPhysics3DObject_setIntValue(m_simu, m_name, dataName, value);
+            if (res < 0)
+                Debug.LogError("Error setting parameter: " + dataName + " . Method Return: " + res);
+        }
+        else
+            Debug.LogError("Error setting parameter: " + dataName + " . Can't access Object Pointer m_native.");
+    }
+
+
+    public bool getBoolValue(string dataName)
+    {
+        Debug.Log("Call getBoolValue " + dataName);
+        if (m_native != IntPtr.Zero)
+        {
+            bool[] val = new bool[1];
+            int res = sofaPhysics3DObject_getBoolValue(m_simu, m_name, dataName, val);
+            if (res >= 0)
+                return val[0];
+        }
+        
+        Debug.LogError("Error getting parameter: " + dataName);
+        return false;
+    }
+
+    public void setBoolValue(string dataName, bool value)
+    {
+        Debug.Log("Call setBoolValue " + dataName);
+        if (m_native != IntPtr.Zero)
+        {
+            int res = sofaPhysics3DObject_setBoolValue(m_simu, m_name, dataName, value);
+            if (res < 0)
+                Debug.LogError("Error setting parameter: " + dataName + " . Method Return: " + res);
+        }
+        else
+            Debug.LogError("Error setting parameter: " + dataName + " . Can't access Object Pointer m_native.");
+    }
+
+
+    public string getStringValue(string dataName)
+    {
+        Debug.Log("Call getStringValue " + dataName);
+        if (m_native != IntPtr.Zero)
+        {
+            string res = sofaPhysics3DObject_getStringValue(m_simu, m_name, dataName);
+            return res;
+        }
+
+        Debug.LogError("Error getting parameter: " + dataName);
+        return "Error getting parameter: " + dataName;
+    }
+
+    public void setStringValue(string dataName, string value)
+    {
+        Debug.Log("Call setStringValue " + dataName);
+        if (m_native != IntPtr.Zero)
+        {
+            int res = sofaPhysics3DObject_setStringValue(m_simu, m_name, dataName, value);
+            if (res < 0)
+                Debug.LogError("Error setting parameter: " + dataName + " . Method Return: " + res);
+        }
+        else
+            Debug.LogError("Error setting parameter: " + dataName + " . Can't access Object Pointer m_native.");
+    }
+
+
     /// <summary>
     /// Generic Method to get a 3D vector of Float of the parameter param
     /// </summary>
     /// <param name="param">field parameter requested</param>
     /// <returns></returns>
-    protected Vector3 getVector3fValue(string param)
+    public Vector3 getVector3fValue(string param)
     {
         Vector3 values = new Vector3(-1.0f, -1.0f, -1.0f);
         if (m_native != IntPtr.Zero)
@@ -161,7 +245,7 @@ public class SofaBaseObject : IDisposable
     /// </summary>
     /// <param name="param">field parameter to change</param>
     /// <param name="values">new value of the parameter</param>
-    protected void setVector3fValue(string param, Vector3 values)
+    public void setVector3fValue(string param, Vector3 values)
     {
         if (m_native != IntPtr.Zero)
         {
@@ -212,22 +296,47 @@ public class SofaBaseObject : IDisposable
     // API to set values to Sofa API
     //{
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_setFloatValue(IntPtr obj, string objectName, string dataName, float value);
+    public static extern string sofaPhysics3DObject_getStringValue(IntPtr obj, string objectName, string dataName);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_setVec3fValue(IntPtr obj, string objectName, string dataName, float[] values);
+    public static extern int sofaPhysics3DObject_setStringValue(IntPtr obj, string objectName, string dataName, string value);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_setVec3iValue(IntPtr obj, string objectName, string dataName, int[] values);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysics3DObject_getFloatValue(IntPtr obj, string objectName, string dataName, float[] value);
-    
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_setFloatValue(IntPtr obj, string objectName, string dataName, float value);
+
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getIntValue(IntPtr obj, string objectName, string dataName, int[] value);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_setIntValue(IntPtr obj, string objectName, string dataName, int value);
+
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getBoolValue(IntPtr obj, string objectName, string dataName, bool[] value);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_setBoolValue(IntPtr obj, string objectName, string dataName, bool value);
+
+
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysics3DObject_getVec3fValue(IntPtr obj, string objectName, string dataName, float[] values);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_getVec3iValue(IntPtr obj, string objectName, string dataName, int[] values);    
+    public static extern int sofaPhysics3DObject_setVec3fValue(IntPtr obj, string objectName, string dataName, float[] values);
+
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getVec3iValue(IntPtr obj, string objectName, string dataName, int[] values);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_setVec3iValue(IntPtr obj, string objectName, string dataName, int[] values);
+
+
     //}
 }
 
