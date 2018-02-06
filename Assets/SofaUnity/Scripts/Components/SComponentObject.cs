@@ -4,6 +4,7 @@ using UnityEngine;
 using SofaUnity;
 using SofaUnityAPI;
 using System;
+using System.Linq;
 
 namespace SofaUnity
 {
@@ -12,7 +13,22 @@ namespace SofaUnity
     {
         /// Pointer to the corresponding SOFA API object
         protected SofaComponent m_impl = null;
+        public SofaComponent impl
+        {
+            get { return m_impl; }
+        }
 
+
+        protected List<SData> m_datas = null;
+        public List<SData> datas
+        {
+            get { return m_datas; }
+        }
+        protected Dictionary<string, string> m_dataMap = null;
+        public Dictionary<string, string> dataMap
+        {
+            get { return m_dataMap; }
+        }
 
         /// Method called by @sa loadContext() method. To create the object when Sofa context has been found.
         protected override void createObject()
@@ -40,7 +56,23 @@ namespace SofaUnity
         /// Method called by \sa Awake after the loadcontext method.
         protected override void awakePostProcess()
         {
+            if (m_impl == null)
+                return;
 
+            string allData = m_impl.loadAllData();            
+            List<String> datas = allData.Split(';').ToList();
+            m_dataMap = new Dictionary<string, string>();
+            m_datas = new List<SData>();
+            foreach (String data in datas)
+            {
+                String[] values = data.Split(',');
+                if (values.GetLength(0) == 2)
+                {
+                    m_datas.Add(new SData(values[0], values[1], this));
+
+                    Debug.Log("Data: " + values[0] + " -> " + values[1]);
+                }
+            }
         }
 
         /// Method called at GameObject init (after creation or when starting play).

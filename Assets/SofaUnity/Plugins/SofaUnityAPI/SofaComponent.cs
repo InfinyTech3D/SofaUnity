@@ -31,14 +31,20 @@ public class SofaComponent : SofaBaseObject
                 Debug.LogError("Error Component can't be found: " + m_name);
             else
             {
-                Debug.Log("Load Node Name: " + m_name);
+                //Debug.Log("Load Node Name: " + m_name);
                 m_parent = sofaPhysicsAPI_getParentNodeName(m_simu, m_name);
             }
 
-            string allData = sofaPhysics3DObject_getDataFields(m_simu, m_name);
-            Debug.Log("allData: " + allData);
+            
         }
     }
+
+    public string loadAllData()
+    {
+        return sofaPhysics3DObject_getDataFields(m_simu, m_name);
+    }
+
+
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern string sofaPhysics3DObject_getDataFields(IntPtr obj, string name);

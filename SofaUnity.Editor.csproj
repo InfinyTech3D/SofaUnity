@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Editor:5</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2017.1.0f3</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -161,6 +163,7 @@
     <Compile Include="Assets\OvrAvatar\Editor\AvatarMaterialEditor.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Editor\Benchmarks\BenchmarksEditor.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Editor\SBoxEditor.cs" />
+    <Compile Include="Assets\SofaUnity\Scripts\Editor\SComponentEditor.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Editor\SCylinderEditor.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Editor\SGridEditor.cs" />
     <Compile Include="Assets\SofaUnity\Scripts\Editor\SMeshEditor.cs" />
