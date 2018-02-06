@@ -232,6 +232,11 @@ namespace SofaUnity
                     go = new GameObject("SMesh - " + name);
                     go.AddComponent<SRigidMesh>();
                 }
+                else if (type.Contains("SofaComponentObject"))
+                {
+                    go = new GameObject("SComponent - " + name);
+                    go.AddComponent<SComponentObject>();
+                }
                 else
                     continue;
 
