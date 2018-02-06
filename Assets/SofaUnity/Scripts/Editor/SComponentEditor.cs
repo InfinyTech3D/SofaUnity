@@ -29,6 +29,8 @@ public class SComponentEditor : Editor
             {
                 EditorGUILayout.Toggle(entry.nameID, _object.impl.getBoolValue(entry.nameID));
             }
+            else
+                EditorGUILayout.TextField(entry.nameID, "Unsopported type: "+ entry.getType());
         }
 
         //Dictionary<string, string> datas = _object.dataMap;
