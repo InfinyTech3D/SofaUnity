@@ -29,6 +29,10 @@ public class SComponentEditor : Editor
             {
                 EditorGUILayout.Toggle(entry.nameID, _object.impl.getBoolValue(entry.nameID));
             }
+            else if (entry.getType() == "Vec3d" || entry.getType() == "Vec3f")
+            {
+                EditorGUILayout.Vector3Field(entry.nameID, _object.impl.getVector3fValue(entry.nameID));
+            }
             else
                 EditorGUILayout.TextField(entry.nameID, "Unsopported type: "+ entry.getType());
         }

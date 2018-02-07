@@ -69,8 +69,6 @@ namespace SofaUnity
                 if (values.GetLength(0) == 2)
                 {
                     m_datas.Add(new SData(values[0], values[1], this));
-
-                    Debug.Log("Data: " + values[0] + " -> " + values[1]);
                 }
             }
         }

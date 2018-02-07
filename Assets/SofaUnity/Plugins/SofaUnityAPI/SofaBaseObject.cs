@@ -159,7 +159,6 @@ public class SofaBaseObject : IDisposable
 
     public bool getBoolValue(string dataName)
     {
-        Debug.Log("Call getBoolValue " + dataName);
         if (m_native != IntPtr.Zero)
         {
             bool[] val = new bool[1];
@@ -174,7 +173,6 @@ public class SofaBaseObject : IDisposable
 
     public void setBoolValue(string dataName, bool value)
     {
-        Debug.Log("Call setBoolValue " + dataName);
         if (m_native != IntPtr.Zero)
         {
             int res = sofaPhysics3DObject_setBoolValue(m_simu, m_name, dataName, value);
@@ -188,7 +186,6 @@ public class SofaBaseObject : IDisposable
 
     public string getStringValue(string dataName)
     {
-        Debug.Log("Call getStringValue " + dataName);
         if (m_native != IntPtr.Zero)
         {
             string res = sofaPhysics3DObject_getStringValue(m_simu, m_name, dataName);
@@ -201,7 +198,6 @@ public class SofaBaseObject : IDisposable
 
     public void setStringValue(string dataName, string value)
     {
-        Debug.Log("Call setStringValue " + dataName);
         if (m_native != IntPtr.Zero)
         {
             int res = sofaPhysics3DObject_setStringValue(m_simu, m_name, dataName, value);
