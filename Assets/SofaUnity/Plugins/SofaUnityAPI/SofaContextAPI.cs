@@ -91,6 +91,18 @@ namespace SofaUnityAPI
                 Debug.LogError("Error can't load file: " + filename + "no sofaPhysicsAPI created!");
         }
 
+        public void loadPlugin(string pluginName)
+        {
+            if (m_native != IntPtr.Zero)
+            {
+                sofaPhysicsAPI_initGlutGlew(m_native);
+                int res = sofaPhysicsAPI_loadPlugin(m_native, pluginName);
+                Debug.Log("Plugin loaded: " + pluginName + "| res: " + res);
+            }
+            else
+                Debug.LogError("Error can't load plugin: " + pluginName + "no sofaPhysicsAPI created!");
+        }
+
 
         /// Get the Sofa simulation context
         public IntPtr getSimuContext()
@@ -157,6 +169,12 @@ namespace SofaUnityAPI
 
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaPhysicsAPI_loadScene(IntPtr obj, string filename);
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int sofaPhysicsAPI_loadPlugin(IntPtr obj, string pluginName);
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int sofaPhysicsAPI_initGlutGlew(IntPtr obj);
 
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern int sofaPhysicsAPI_getNumberObjects(IntPtr obj);

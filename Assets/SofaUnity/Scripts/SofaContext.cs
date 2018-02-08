@@ -153,6 +153,7 @@ namespace SofaUnity
             {
 #if UNITY_EDITOR
                 m_impl = new SofaContextAPI();
+                m_impl.loadPlugin("C:/projects/sofa-build/bin/Release/ProjectiveXRay.dll");
                 m_impl.start();
                 if (m_filename != "")
                 {
