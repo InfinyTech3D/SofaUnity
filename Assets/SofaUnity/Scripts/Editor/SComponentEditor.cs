@@ -33,6 +33,24 @@ public class SComponentEditor : Editor
             {
                 EditorGUILayout.Vector3Field(entry.nameID, _object.impl.getVector3fValue(entry.nameID));
             }
+            else if (entry.getType() == "vector < float >" || entry.getType() == "vector<float>")
+            {
+                entry.dataSize = _object.impl.getVecfSize(entry.nameID);
+                EditorGUILayout.TextField(entry.nameID, "vector<float> size " + entry.dataSize);
+            }
+            else if (entry.getType() == "vector < int >" || entry.getType() == "vector<int>")
+            {
+                entry.dataSize = _object.impl.getVecfSize(entry.nameID);
+                EditorGUILayout.TextField(entry.nameID, "vector<int> size " + entry.dataSize);
+            }
+            else if (entry.getType() == "float")
+            {
+                EditorGUILayout.FloatField(entry.nameID, _object.impl.getFloatValue(entry.nameID));
+            }
+            else if (entry.getType() == "int")
+            {
+                EditorGUILayout.FloatField(entry.nameID, _object.impl.getIntValue(entry.nameID));
+            }
             else
                 EditorGUILayout.TextField(entry.nameID, "Unsopported type: "+ entry.getType());
         }

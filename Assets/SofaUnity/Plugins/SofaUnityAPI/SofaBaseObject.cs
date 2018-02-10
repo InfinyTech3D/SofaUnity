@@ -259,6 +259,71 @@ public class SofaBaseObject : IDisposable
     }
 
 
+    public int getVecfSize(string param)
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            int[] val = new int[1];
+            val[0] = -2;
+            int res = sofaPhysics3DObject_getVecfSize(m_simu, m_name, param, val);
+
+            if (res < 0)
+            {
+                Debug.LogError("Error getting parameter: " + param + " . Method Return: " + res);
+                return res;
+            }
+            else
+            {
+                Debug.Log(param + " | res: " + res + " | value: " + val[0]);
+                return val[0];
+            }
+        }
+        return -1;
+    }
+
+
+    public int getVeciSize(string param)
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            int[] val = new int[1];
+            int res = sofaPhysics3DObject_getVeciSize(m_simu, m_name, param, val);
+
+            if (res < 0)
+            {
+                Debug.LogError("Error getting parameter: " + param + " . Method Return: " + res);
+                return res;
+            }
+            else
+                return val[0];
+        }
+        return -1;
+    }
+
+    public int getVecfValue(string param, int size, float[] values)
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            Debug.Log("getVecfValue before: " + values[10]);
+            int res = sofaPhysics3DObject_getVecfValue(m_simu, m_name, param, size, values);
+            Debug.Log("getVecfValue after: " + values[10]);
+            return res;
+        }
+
+        return -1;
+    }
+
+    public int getVeciValue(string param, int size, int[] values)
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            int res = sofaPhysics3DObject_getVeciValue(m_simu, m_name, param, size, values);
+            return res;
+        }
+
+        return -1;
+    }
+
 
     // API to get objects and object Name
     //{
@@ -317,6 +382,19 @@ public class SofaBaseObject : IDisposable
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysics3DObject_setBoolValue(IntPtr obj, string objectName, string dataName, bool value);
+
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getVecfSize(IntPtr obj, string objectName, string dataName, int[] value);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getVeciSize(IntPtr obj, string objectName, string dataName, int[] value);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getVecfValue(IntPtr obj, string objectName, string dataName, int size, float[] values);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getVeciValue(IntPtr obj, string objectName, string dataName, int size, int[] values);
 
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]

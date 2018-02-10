@@ -94,7 +94,7 @@ namespace SofaUnity
                             loadFilename();
                     }
                     else
-                        Debug.LogError("Error file doesn't exist.");
+                        Debug.LogError("Error file doesn't exist: " + Application.dataPath + value);
                 }
             }
         }
@@ -153,7 +153,7 @@ namespace SofaUnity
             {
 #if UNITY_EDITOR
                 m_impl = new SofaContextAPI();
-                m_impl.loadPlugin("C:/projects/sofa-build/bin/Release/ProjectiveXRay.dll");
+                m_impl.loadPlugin("C:/projects/unity3D/SofaUnity/Assets/SofaUnity/Plugins/Native/x64/ProjectiveXRay.dll");
                 m_impl.start();
                 if (m_filename != "")
                 {

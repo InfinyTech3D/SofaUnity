@@ -19,7 +19,8 @@ namespace SofaUnity
         //readonly int m_size;
         //T[] values;
 
-     
+        public int dataSize = 0;
+
         public void init()
         {
 
