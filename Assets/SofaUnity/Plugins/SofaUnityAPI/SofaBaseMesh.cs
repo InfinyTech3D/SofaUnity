@@ -284,6 +284,61 @@ public class SofaBaseMesh : SofaBaseObject
         }
     }
 
+
+    public virtual void updateMeshVelocity(Mesh mesh)
+    {
+        if (m_native == IntPtr.Zero)
+            return;
+
+        int nbrV = sofaPhysicsAPI_getNbVertices(m_simu, m_name);
+
+        if (log)
+            Debug.Log("vertices: " + nbrV);
+
+        float[] velocities = new float[nbrV * 4];
+        int resV = sofaPhysics3DObject_getVelocities(m_simu, m_name, velocities);
+
+        if (resV < 0)
+        {
+            Debug.Log(m_name + " - resV: " + resV);
+            return;
+        }
+
+        Vector3[] verts = mesh.vertices;
+        if (verts.Length == 0)// first time
+            verts = new Vector3[nbrV];
+
+        if (log)
+        {
+            Debug.Log("   - verts size: " + verts.Length);
+            Debug.Log("   - vertices.Length: " + velocities.Length);
+        }
+
+        float dt = 0.2f;
+
+        if (velocities.Length != 0)
+        {
+            for (int i = 0; i < nbrV; ++i)
+            {
+                int id = (int)velocities[i * 4];
+                if (id == -1)
+                {
+                    //Debug.Log("Stop at: " + i);
+                    break;
+                }
+
+                verts[id].x = verts[id].x + dt * velocities[i * 4 + 1];
+                verts[id].y = verts[id].y + dt * velocities[i * 4 + 2];
+                verts[id].z = verts[id].z + dt * velocities[i * 4 + 3];
+            }
+        }
+
+        mesh.vertices = verts;
+
+        velocities = null;
+    }
+
+
     /// Post processing method to recompute topology if needed. Should be overwritten by child if needed only.
     public virtual void recomputeTopology(Mesh mesh)
     {
@@ -549,6 +604,9 @@ public class SofaBaseMesh : SofaBaseObject
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysics3DObject_getTexCoords(IntPtr obj, string name, float[] arr);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getVelocities(IntPtr obj, string name, float[] arr);
     //}
 
     // API to access Topology
