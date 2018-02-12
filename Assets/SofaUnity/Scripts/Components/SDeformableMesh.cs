@@ -166,12 +166,16 @@ namespace SofaUnity
 
                     //    m_impl.setTopologyChange(false);
                     //}
+                    if (nbTetra > 0)
+                        updateTetraMesh();
+                    else
+                        m_impl.updateMesh(m_mesh);
                 }
 
                 if (nbTetra > 0)
                     updateTetraMesh();
                 else
-                    m_impl.updateMesh(m_mesh);
+                    m_impl.updateMeshVelocity(m_mesh);
             }
         }
 

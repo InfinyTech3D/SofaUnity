@@ -30,7 +30,7 @@ namespace SofaUnity
 
             if (m_impl != null)
             {
-                m_impl.updateMesh(m_mesh);
+                m_impl.updateMeshVelocity(m_mesh);
                 m_mesh.RecalculateNormals(); // TODO check if needed
             }
         }

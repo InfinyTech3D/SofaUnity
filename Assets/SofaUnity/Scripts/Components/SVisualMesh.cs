@@ -86,8 +86,10 @@ namespace SofaUnity
                         invertMeshNormals();
                     }
                     m_impl.setTopologyChange(false);
+                    m_impl.updateMesh(m_mesh);
                 }
-                m_impl.updateMesh(m_mesh);
+                else
+                    m_impl.updateMeshVelocity(m_mesh);
             }
             
         }
