@@ -56,7 +56,7 @@ public class SofaCustomMesh : SofaBaseObject
 
     public void updateMesh()
     {
-        if (m_native == IntPtr.Zero)
+        if (m_native == IntPtr.Zero || m_mesh == null)
             return;
 
         Vector3[] vertices = m_mesh.vertices;
