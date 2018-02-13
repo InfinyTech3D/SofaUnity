@@ -38,12 +38,17 @@ namespace SofaUnityAPI
         /// Dispose method to release the object
         public void Dispose()
         {
+            Debug.Log("SofaContextAPI::Dispose");
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
         protected virtual void Dispose(bool disposing)
         {
+            Debug.Log("SofaContextAPI::Dispose2");
+          //  int freeGl = sofaPhysicsAPI_freeGlutGlew(m_native);
+            //Debug.Log("Glut free: " + freeGl);
+
             if (!m_isDisposed)
             {
                 m_isDisposed = true;
@@ -95,7 +100,8 @@ namespace SofaUnityAPI
         {
             if (m_native != IntPtr.Zero)
             {
-                sofaPhysicsAPI_initGlutGlew(m_native);
+                int initGl = sofaPhysicsAPI_initGlutGlew(m_native);
+                Debug.Log("Glut init: " + initGl);
                 int res = sofaPhysicsAPI_loadPlugin(m_native, pluginName);
                 Debug.Log("Plugin loaded: " + pluginName + "| res: " + res);
             }
@@ -175,6 +181,9 @@ namespace SofaUnityAPI
 
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaPhysicsAPI_initGlutGlew(IntPtr obj);
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int sofaPhysicsAPI_freeGlutGlew(IntPtr obj);
 
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern int sofaPhysicsAPI_getNumberObjects(IntPtr obj);

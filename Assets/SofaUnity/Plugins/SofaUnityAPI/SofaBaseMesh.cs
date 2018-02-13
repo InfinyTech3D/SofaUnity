@@ -300,7 +300,7 @@ public class SofaBaseMesh : SofaBaseObject
 
         if (resV < 0)
         {
-            Debug.Log(m_name + " - resV: " + resV);
+            //Debug.Log(m_name + " - resV: " + resV);
             return;
         }
 

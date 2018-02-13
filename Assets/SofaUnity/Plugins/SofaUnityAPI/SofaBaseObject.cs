@@ -304,9 +304,7 @@ public class SofaBaseObject : IDisposable
     {
         if (m_native != IntPtr.Zero)
         {
-            Debug.Log("getVecfValue before: " + values[10]);
             int res = sofaPhysics3DObject_getVecfValue(m_simu, m_name, param, size, values);
-            Debug.Log("getVecfValue after: " + values[10]);
             return res;
         }
 
