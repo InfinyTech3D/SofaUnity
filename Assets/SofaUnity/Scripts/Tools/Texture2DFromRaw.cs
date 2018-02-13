@@ -52,16 +52,16 @@ public class Texture2DFromRaw : MonoBehaviour
         if (rawImg != null && m_object != null)
         {
             int res = m_object.impl.getVecfSize(rawImg.nameID);
-            Debug.Log("value: " + res);
+            //Debug.Log("value: " + res);
 
             if (res > 0)
             {
                 if (m_texture == null)
                 {
-                    m_texture = new Texture2D(10, 10);
+                    m_texture = new Texture2D(600, 600);
                     m_rawData = new float[res];
-                    for (int i = 0; i < 100; i++)
-                        m_rawData[i] = 69;
+                    //for (int i = 0; i < 100; i++)
+                    //    m_rawData[i] = 69;
                     GetComponent<Renderer>().material.mainTexture = m_texture;
                 }
 
@@ -73,9 +73,9 @@ public class Texture2DFromRaw : MonoBehaviour
                     for (int x = 0; x < m_texture.width; x++)
                     {
                         //Color color = ((x & y) != 0 ? Color.white : Color.gray);
-                        float value = m_rawData[cpt]*10;
-                        if (firstTime)
-                            Debug.Log(cpt + " -> " + value);
+                        float value = m_rawData[cpt];
+                        //if (firstTime)
+                        //    Debug.Log(cpt + " -> " + value);
                         m_texture.SetPixel(x, y, new Vector4(value, value, value, 1));
                         ////m_texture.SetPixel(x, y, color);
                         cpt++;
@@ -84,8 +84,8 @@ public class Texture2DFromRaw : MonoBehaviour
                 m_texture.Apply();
                 GetComponent<Renderer>().material.mainTexture = m_texture;
 
-                if (firstTime)
-                    firstTime = false;
+                //if (firstTime)
+                //    firstTime = false;
             }
         }
     }
