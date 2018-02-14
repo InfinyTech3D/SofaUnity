@@ -45,8 +45,14 @@ namespace SofaUnityAPI
 
         protected virtual void Dispose(bool disposing)
         {
-            Debug.Log("SofaContextAPI::Dispose2");
-          //  int freeGl = sofaPhysicsAPI_freeGlutGlew(m_native);
+            if (m_native != IntPtr.Zero)
+            {
+                int resDel = sofaPhysicsAPI_delete(m_native);
+                m_native = IntPtr.Zero;
+                if (resDel < 0)
+                    Debug.LogError("SofaContextAPI::Dispose sofaPhysicsAPI_delete returns: " + resDel);
+            }
+            //  int freeGl = sofaPhysicsAPI_freeGlutGlew(m_native);
             //Debug.Log("Glut free: " + freeGl);
 
             if (!m_isDisposed)
@@ -172,6 +178,8 @@ namespace SofaUnityAPI
         public static extern IntPtr sofaPhysicsAPI_create();
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern void sofaPhysicsAPI_createScene(IntPtr obj);
+        [DllImport("SofaAdvancePhysicsAPI")]
+        public static extern int sofaPhysicsAPI_delete(IntPtr obj);
 
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaPhysicsAPI_loadScene(IntPtr obj, string filename);
