@@ -175,7 +175,7 @@ namespace SofaUnity
                 if (nbTetra > 0)
                     updateTetraMesh();
                 else
-                    m_impl.updateMeshVelocity(m_mesh);
+                    m_impl.updateMeshVelocity(m_mesh, m_context.timeStep);
             }
         }
 

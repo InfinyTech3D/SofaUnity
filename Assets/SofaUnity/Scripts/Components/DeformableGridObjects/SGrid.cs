@@ -70,7 +70,7 @@ namespace SofaUnity
                 Debug.Log("SGrid::updateImpl called.");
 
             if (m_impl != null) {
-                m_impl.updateMeshVelocity(m_mesh);
+                m_impl.updateMeshVelocity(m_mesh, m_context.timeStep);
                 //m_mesh.RecalculateNormals();
             }
         }

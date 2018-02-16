@@ -285,7 +285,7 @@ public class SofaBaseMesh : SofaBaseObject
     }
 
 
-    public virtual void updateMeshVelocity(Mesh mesh)
+    public virtual void updateMeshVelocity(Mesh mesh, float timestep)
     {
         if (m_native == IntPtr.Zero)
             return;
@@ -314,8 +314,6 @@ public class SofaBaseMesh : SofaBaseObject
             Debug.Log("   - vertices.Length: " + velocities.Length);
         }
 
-        float dt = 0.2f;
-
         if (velocities.Length != 0)
         {
             for (int i = 0; i < nbrV; ++i)
@@ -327,9 +325,9 @@ public class SofaBaseMesh : SofaBaseObject
                     break;
                 }
 
-                verts[id].x = verts[id].x + dt * velocities[i * 4 + 1];
-                verts[id].y = verts[id].y + dt * velocities[i * 4 + 2];
-                verts[id].z = verts[id].z + dt * velocities[i * 4 + 3];
+                verts[id].x = verts[id].x + timestep * velocities[i * 4 + 1];
+                verts[id].y = verts[id].y + timestep * velocities[i * 4 + 2];
+                verts[id].z = verts[id].z + timestep * velocities[i * 4 + 3];
             }
         }
 
