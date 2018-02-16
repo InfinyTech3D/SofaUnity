@@ -8,7 +8,7 @@ using System;
 public class SMechanicalObject : SBaseMesh
 {
     /// Pointer to the corresponding SOFA API object
-    protected SofaCustomMesh m_impl = null;
+    //protected SofaCustomMesh m_impl = null;
     public GameObject m_object;
     public bool activated = true;
 
@@ -18,23 +18,26 @@ public class SMechanicalObject : SBaseMesh
         // Get access to the sofaContext
         IntPtr _simu = m_context.getSimuContext();
 
-        //Mesh mesh = m_object.GetComponent<MeshFilter>().sharedMesh;
+        ////Mesh mesh = m_object.GetComponent<MeshFilter>().sharedMesh;
 
-        if (_simu != IntPtr.Zero) // Create the API object for Sofa Regular Grid Mesh
-            m_impl = new SofaCustomMesh(_simu, m_nameId, m_object);
+        //if (_simu != IntPtr.Zero) // Create the API object for Sofa Regular Grid Mesh
+        //    m_impl = new SofaCustomMesh(_simu, m_nameId, m_object);
 
-        if (m_impl == null)
-        {
-            Debug.LogError("SofaCustomMesh:: Object creation failed.");
-            return;
-        }
-        else
-        {
-            m_impl.createMesh();
-        }
+        //if (m_impl == null)
+        //{
+        //    Debug.LogError("SofaCustomMesh:: Object creation failed.");
+        //    return;
+        //}
+        //else
+        //{
+        //    m_impl.createMesh();
+        //}
     }
 
-
+    protected override void awakePostProcess()
+    {
+      
+    }
 
 
     // Use this for initialization
@@ -47,7 +50,7 @@ public class SMechanicalObject : SBaseMesh
 	void Update () {
 		if(activated)
         {
-            m_impl.updateMesh();
+            //m_impl.updateMesh();
         }
 	}
 }
