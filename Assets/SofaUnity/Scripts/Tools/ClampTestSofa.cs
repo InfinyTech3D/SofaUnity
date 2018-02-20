@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ClampTestSofa : MonoBehaviour
 {
-
+#if sleeveProject
     public ClampTool toolRef;
-
+#endif
     public SPlierTool sofaTool;
 
     private Animator animator { get { return GetComponent<Animator>(); } }
@@ -30,10 +30,11 @@ public class ClampTestSofa : MonoBehaviour
             Unclamp();
         }
 
+#if sleeveProject
         if (toolRef == null) return;
         transform.position = toolRef.sofaTransformRef.position;
         transform.rotation = toolRef.sofaTransformRef.rotation;
-
+#endif
     }
 
     public void Clamp()
