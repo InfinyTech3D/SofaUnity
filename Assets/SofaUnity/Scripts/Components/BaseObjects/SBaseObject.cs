@@ -21,6 +21,9 @@ namespace SofaUnity
             set { m_nameId = value; }
         }
 
+        protected bool m_isDirty = true;
+        public void setDirty() { m_isDirty = true; }
+
         /// Parameter to activate logging of this Sofa GameObject
         protected bool m_log = false;
 
@@ -52,7 +55,11 @@ namespace SofaUnity
                 Debug.Log("SBaseObject::Update called.");
 
             // Call internal method that can be overwritten
-            updateImpl();
+            if (m_isDirty)
+            {
+                updateImpl();
+                m_isDirty = false;
+            }
         }
 
 

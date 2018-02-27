@@ -40,6 +40,8 @@ namespace SofaUnity
         /// Dictionary storing the hierarchy of Sofa objects. Key = parent name, value = List of children names.
         protected Dictionary<string, List<string> > hierarchy;
 
+        List<SBaseObject> m_objects = null;
+
 
         /// Getter of current Sofa Context API, @see m_impl
         public IntPtr getSimuContext()
@@ -186,18 +188,36 @@ namespace SofaUnity
 #endif
             }
         }
-
+        
         // Update is called once per fix frame
         void FixedUpdate()
-        {            
-                
+        {
+
         }
+
+        private float nextUpdate = 0.0f;
 
         // Update is called once per frame
         void Update()
         {
-            if(UnityEditor.EditorApplication.isPlaying) // only if scene is playing
-                m_impl.step();
+            if (Time.time >= nextUpdate)
+            {
+                nextUpdate += m_timeStep;
+
+                if (UnityEditor.EditorApplication.isPlaying) // only if scene is playing
+                {
+                    m_impl.step();
+
+                    if (m_objects != null)
+                    {
+                        // Set all objects to dirty to force and update.
+                        foreach (SBaseObject child in m_objects)
+                        {
+                            child.setDirty();
+                        }
+                    }
+                }
+            }
         }
 
         /// Method to load a filename and create GameObject per Sofa object found.
@@ -264,10 +284,14 @@ namespace SofaUnity
                 return;
 
             hierarchy = new Dictionary<string, List<string> >();
+            m_objects = new List<SBaseObject>();
             foreach (Transform child in transform)
             {
                 SBaseObject obj = child.GetComponent<SBaseObject>();
-                Debug.Log("#### Hierarchy: parent: " + obj.parentName());
+                m_objects.Add(obj);
+
+                if (m_log)
+                    Debug.Log("#### Hierarchy: parent: " + obj.parentName());
                 if (hierarchy.ContainsKey(obj.parentName()))               
                     hierarchy[obj.parentName()].Add(child.name);
                 else
