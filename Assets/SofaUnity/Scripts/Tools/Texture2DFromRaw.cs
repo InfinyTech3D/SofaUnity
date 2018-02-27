@@ -101,7 +101,7 @@ public class Texture2DFromRaw : MonoBehaviour
                    // line = line + " || ";                    
                 }
                // Debug.Log(line);
-                Debug.Log("cpt1: " + cpt1);
+               // Debug.Log("cpt1: " + cpt1);
                 m_texture.Apply();
                 return;
             }
@@ -127,7 +127,7 @@ public class Texture2DFromRaw : MonoBehaviour
                     int id = (int)m_rawData[i];
                     if (id == -1)
                     {
-                        Debug.Log("Stop at: " + i*0.5);
+                       // Debug.Log("Stop at: " + i*0.5);
                         break;
                     }
 

@@ -274,7 +274,7 @@ public class SofaBaseObject : IDisposable
             }
             else
             {
-                Debug.Log(param + " | res: " + res + " | value: " + val[0]);
+                //Debug.Log(param + " | res: " + res + " | value: " + val[0]);
                 return val[0];
             }
         }
