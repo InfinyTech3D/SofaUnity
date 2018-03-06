@@ -33,15 +33,14 @@ public class SLaserRay : SRayCaster
 
 
     /// Laser object
-    /// {
-    /// Booleen to draw the laser object
-    public bool drawlaser = true;
+    /// {    
     /// Laser material
     public Material laserMat = null;
     /// Laser GameObject
     protected GameObject laser;
 
-    public bool drawParticles = true;
+    /// Booleen to draw the laser object
+    public bool drawLaserParticles = true;
 
     /// Laser renderer
     protected LineRenderer lr;
@@ -65,15 +64,15 @@ public class SLaserRay : SRayCaster
     /// Protected method that will really create the Sofa ray caster
     protected override void createSofaRayCaster()
     {
-        if (drawlaser)
-        {
-            // Create Laser
-            laser = new GameObject("Laser");
-            laser.transform.parent = this.transform;            
-            laser.transform.localPosition = Vector3.zero;
-            laser.transform.localRotation = Quaternion.identity;
-            laser.transform.localScale = Vector3.one;
+        // Create Laser
+        laser = new GameObject("Laser");
+        laser.transform.parent = this.transform;
+        laser.transform.localPosition = Vector3.zero;
+        laser.transform.localRotation = Quaternion.identity;
+        laser.transform.localScale = Vector3.one;
 
+        if (drawLaserParticles)
+        {
             // Create light source
             lightSource = new GameObject("Light");
             lightSource.transform.parent = laser.transform;
@@ -84,12 +83,15 @@ public class SLaserRay : SRayCaster
             initializeLaser();
 
             // initialise for the first time the particule system
-            if (psInitialized == false && drawlaser)
-                initializeParticles();
-
-            this.activeTool(false);
+            if (psInitialized == false)
+                initializeParticles();            
         }
-        
+
+        if (drawRay)
+            initialiseRay();
+
+        this.activeTool(false);
+
         // Get access to the sofaContext
         IntPtr _simu = m_sofaContext.getSimuContext();
         if (_simu != IntPtr.Zero)
@@ -120,7 +122,7 @@ public class SLaserRay : SRayCaster
         direction = transform.forward * m_axisDirection[0] + transform.right * m_axisDirection[1] + transform.up * m_axisDirection[2];
 
         // update the light source
-        if (drawlaser)
+        if (drawLaserParticles)
             lightSource.transform.position = origin + transLocal; 
 
         if (m_sofaRC != null)
@@ -139,8 +141,7 @@ public class SLaserRay : SRayCaster
         }
 
         // Update the laser drawing
-        if (drawlaser)
-            this.draw(origin, origin + direction * length);
+        this.draw(origin, origin + direction * length);
     }
 
 
@@ -157,8 +158,28 @@ public class SLaserRay : SRayCaster
         else
             this.endColor = Color.green;
 
-        if (drawlaser)
+        if (drawLaserParticles || drawRay)
             this.updateLaser();
+    }
+
+
+    private void initialiseRay()
+    {
+        //create linerenderer
+        laser.AddComponent<LineRenderer>();
+        lr = laser.GetComponent<LineRenderer>();
+        if (laserMat == null)
+            laserMat = Resources.Load("Materials/laser") as Material;
+
+        lr.sharedMaterial = laserMat;
+        lr.startWidth = width;
+        lr.endWidth = width;
+
+#if UNITY_5_5 || UNITY_5_4 || UNITY_5_3 || UNITY_5_2 || UNITY_5_1
+            lr.numPositions = 2;
+#else
+        lr.positionCount = 2;
+#endif
     }
 
     /// Internal method to create the laser line renderer and light
@@ -171,25 +192,6 @@ public class SLaserRay : SRayCaster
         light.bounceIntensity = width * 10;
         light.range = width / 4;
         light.color = endColor;
-
-        if (drawRay)
-        {
-            //create linerenderer
-            laser.AddComponent<LineRenderer>();
-            lr = laser.GetComponent<LineRenderer>();
-            if (laserMat == null)
-                laserMat = Resources.Load("Materials/laser") as Material;
- 
-            lr.sharedMaterial = laserMat;
-            lr.startWidth = width;
-            lr.endWidth = width;
-
-#if UNITY_5_5 || UNITY_5_4 || UNITY_5_3 || UNITY_5_2 || UNITY_5_1
-            lr.numPositions = 2;
-#else
-            lr.positionCount = 2;
-#endif
-        }
     }
 
     /// Internal method to create the laser particle system rendering
@@ -198,7 +200,7 @@ public class SLaserRay : SRayCaster
         psInitialized = true;
         //create particlesystem
         //TODO: add scaling/size with laser width
-        if (drawParticles)
+        if (drawLaserParticles)
         {
             ps = laser.AddComponent<ParticleSystem>();
         ps = laser.GetComponent<ParticleSystem>();
@@ -245,7 +247,7 @@ public class SLaserRay : SRayCaster
             lr.endWidth = width;
         }
 
-        if (drawParticles)
+        if (drawLaserParticles)
         {
             ps = laser.GetComponent<ParticleSystem>();
             var psmain = ps.main;
