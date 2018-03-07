@@ -77,6 +77,14 @@ public class SDeformableMeshEditor : Editor
             mesh.damping = EditorGUILayout.Slider("Damping", mesh.damping, 0, 100);
             EditorGUILayout.Separator();
         }
+
+        if (mesh.hasCollisionSphere())
+        {
+            mesh.radius = EditorGUILayout.Slider("Sphere radius", mesh.radius, 0.001f, 10);
+            mesh.stiffness = EditorGUILayout.Slider("Contact stiffness", mesh.stiffness, 1, 5000);
+            mesh.showCollisionSphere = EditorGUILayout.Toggle("Display Collision Spheres", mesh.showCollisionSphere);
+            EditorGUILayout.Separator();
+        }
     }
 }
 

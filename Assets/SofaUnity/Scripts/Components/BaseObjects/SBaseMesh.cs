@@ -37,6 +37,15 @@ namespace SofaUnity
         /// Booleen to warn mesh normals have to be inverted
         public bool m_invertNormals = false;
 
+        protected bool m_hasCollisionSphere = false;
+        protected bool m_showCollisionSphere = true;
+        public bool hasCollisionSphere() { return m_hasCollisionSphere; }
+
+        protected float m_radius = 1.0f;
+        protected float m_initRadius = 1.0f;
+        protected float m_stiffness = 100.0f;
+        protected float m_initStiffness = 100.0f;
+
         /// Method called by @sa loadContext() method. To create the object when Sofa context has been found.
         protected override void createObject()
         {
@@ -49,6 +58,17 @@ namespace SofaUnity
             m_translation = m_initTranslation;
             m_rotation = m_initRotation;
             m_scale = m_initScale;
+
+            // Copy info if collision
+            float test = m_impl.getFloatValue("radius");
+            if (test == float.MaxValue) // no sphere
+                m_hasCollisionSphere = false;
+            else
+            {
+                m_hasCollisionSphere = true;
+                m_initRadius = test;
+                m_initStiffness = m_impl.getFloatValue("contactStiffness");
+            }
         }
 
         /// Method called by \sa Awake after the loadcontext method.
@@ -110,6 +130,27 @@ namespace SofaUnity
                 m_impl.m_invertNormals = m_invertNormals;
                 invertMeshNormals();
             }
+
+            // Copy info if collision
+            float test = m_impl.getFloatValue("radius");
+            //Debug.Log("radius: " + test);
+            if (test == float.MaxValue) // no sphere
+                m_hasCollisionSphere = false;
+            else
+            {
+                m_hasCollisionSphere = true;
+                m_initRadius = test;
+                m_initStiffness = m_impl.getFloatValue("contactStiffness");
+            }
+
+            //if (m_hasCollisionSphere)
+            //{
+            //    if (m_initRadius != m_radius)
+            //        m_impl.setFloatValue("radius", m_radius);
+
+            //    if (m_initStiffness != m_stiffness)
+            //        m_impl.setFloatValue("contactStiffness", m_stiffness);
+            //}
 
             // Update the Sofa Object
             if (toUpdate)
@@ -229,6 +270,60 @@ namespace SofaUnity
                 return m_mesh.triangles.Length/3;
             else
                 return -1;
+        }
+
+
+        public float radius
+        {
+            get { return m_radius; }
+            set
+            {
+                if (value != m_radius)
+                {
+                    m_radius = value;
+                    //if (m_impl != null)
+                    //    m_impl.setFloatValue("radius", m_radius);
+                }
+                else
+                    m_radius = value;
+            }
+        }
+
+        public float stiffness
+        {
+            get { return m_stiffness; }
+            set
+            {
+                if (value != m_stiffness)
+                {
+                    m_stiffness = value;
+                    //if (m_impl != null)
+                    //    m_impl.setFloatValue("contactStiffness", m_stiffness);
+                }
+                else
+                    m_stiffness = value;
+            }
+        }
+
+        public bool showCollisionSphere
+        {
+            get { return m_showCollisionSphere; }
+            set { m_showCollisionSphere = value; }
+        }
+
+        void OnDrawGizmosSelected()
+        {
+
+            if (m_hasCollisionSphere && m_showCollisionSphere)
+            {
+
+                Gizmos.color = Color.yellow;
+                foreach (Vector3 vert in m_mesh.vertices)
+                {
+                    Gizmos.DrawSphere(this.transform.TransformPoint(vert), m_radius);
+                }
+            }
+            
         }
     }
 }
