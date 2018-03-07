@@ -7,7 +7,7 @@ public class ClampTestSofa : MonoBehaviour
 #if sleeveProject
     public ClampTool toolRef;
 #endif
-    public SPlierTool sofaTool;
+    public SPlierTool sofaTool = null;
 
     private Animator animator { get { return GetComponent<Animator>(); } }
 
@@ -16,14 +16,14 @@ public class ClampTestSofa : MonoBehaviour
     private void Start()
     {
         animator.speed = animSpeed;
+        sofaTool = this.GetComponent<SPlierTool>();
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            //   new WaitForSeconds(5);
-            Clamp();
+            StartCoroutine(Clamp());
         }
         else if (Input.GetKeyUp(KeyCode.C))
         {
@@ -37,11 +37,12 @@ public class ClampTestSofa : MonoBehaviour
 #endif
     }
 
-    public void Clamp()
+    public IEnumerator Clamp()
     {
+        yield return new WaitForSeconds(5);
         animator.SetBool("isClamped", true);
-
-        if(sofaTool)
+        
+        if (sofaTool)
             sofaTool.clampSofaPlier();
     }
     public void Unclamp()
