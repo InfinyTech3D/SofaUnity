@@ -106,8 +106,8 @@ public class SofaBaseObject : IDisposable
             }
         }
         else
-            Debug.LogError("Error getting parameter: " + param + " . Can't access Object Pointer m_native.");
-
+            Debug.LogError("Error getting parameter: " + param + " of object: " + m_name + " . Can't access Object Pointer m_native.");
+        
         return 0.0f;
     }
 
@@ -123,10 +123,10 @@ public class SofaBaseObject : IDisposable
             int res = sofaPhysics3DObject_setFloatValue(m_simu, m_name, param, value);
 
             if (res < 0)
-                Debug.LogError("Error setting parameter: " + param + " . Method Return: " + res);
+                Debug.LogError("Error setting parameter: " + param + " of object: " + m_name + " . Method Return: " + res);
         }
         else
-            Debug.LogError("Error setting parameter: " + param + " . Can't access Object Pointer m_native.");
+            Debug.LogError("Error setting parameter: " + param + " of object: " + m_name + " . Can't access Object Pointer m_native.");
     }
 
 
@@ -140,7 +140,7 @@ public class SofaBaseObject : IDisposable
                 return val[0];
         }
 
-        Debug.LogError("Error getting parameter: " + dataName);
+        Debug.LogError("Error getting parameter: " + dataName + " of object: " + m_name);
         return int.MinValue;
     }
 
@@ -150,10 +150,10 @@ public class SofaBaseObject : IDisposable
         {
             int res = sofaPhysics3DObject_setIntValue(m_simu, m_name, dataName, value);
             if (res < 0)
-                Debug.LogError("Error setting parameter: " + dataName + " . Method Return: " + res);
+                Debug.LogError("Error setting parameter: " + dataName + " in object: " + m_name + " . Method Return: " + res);
         }
         else
-            Debug.LogError("Error setting parameter: " + dataName + " . Can't access Object Pointer m_native.");
+            Debug.LogError("Error setting parameter: " + dataName + " in object: " + m_name + " . Can't access Object Pointer m_native.");
     }
 
 
@@ -167,7 +167,7 @@ public class SofaBaseObject : IDisposable
                 return val[0];
         }
         
-        Debug.LogError("Error getting parameter: " + dataName);
+        Debug.LogError("Error getting parameter: " + dataName + " of object: " + m_name);
         return false;
     }
 
@@ -177,10 +177,10 @@ public class SofaBaseObject : IDisposable
         {
             int res = sofaPhysics3DObject_setBoolValue(m_simu, m_name, dataName, value);
             if (res < 0)
-                Debug.LogError("Error setting parameter: " + dataName + " . Method Return: " + res);
+                Debug.LogError("Error setting parameter: " + dataName + " in object: " + m_name + " . Method Return: " + res);
         }
         else
-            Debug.LogError("Error setting parameter: " + dataName + " . Can't access Object Pointer m_native.");
+            Debug.LogError("Error setting parameter: " + dataName + " in object: " + m_name + " . Can't access Object Pointer m_native.");
     }
 
 
@@ -192,7 +192,7 @@ public class SofaBaseObject : IDisposable
             return res;
         }
 
-        Debug.LogError("Error getting parameter: " + dataName);
+        Debug.LogError("Error getting parameter: " + dataName + " of object: " + m_name);
         return "Error getting parameter: " + dataName;
     }
 
@@ -202,10 +202,10 @@ public class SofaBaseObject : IDisposable
         {
             int res = sofaPhysics3DObject_setStringValue(m_simu, m_name, dataName, value);
             if (res < 0)
-                Debug.LogError("Error setting parameter: " + dataName + " . Method Return: " + res);
+                Debug.LogError("Error setting parameter: " + dataName + " in object: " + m_name + " . Method Return: " + res);
         }
         else
-            Debug.LogError("Error setting parameter: " + dataName + " . Can't access Object Pointer m_native.");
+            Debug.LogError("Error setting parameter: " + dataName + " in object: " + m_name + " . Can't access Object Pointer m_native.");
     }
 
 
