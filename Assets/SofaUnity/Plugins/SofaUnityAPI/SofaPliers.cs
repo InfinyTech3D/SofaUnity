@@ -77,7 +77,15 @@ public class SofaPliers : IDisposable
 
         return res;        
     }
+    
 
+    public int getIdsGrabed(int[] ids)
+    {
+        if (m_simu == IntPtr.Zero)
+            return -10;
+
+        return sofaPhysicsAPI_idGrabed(m_simu, m_name, ids);
+    }
 
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
@@ -89,5 +97,6 @@ public class SofaPliers : IDisposable
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_releasePliers(IntPtr obj, string nameID);
 
-
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysicsAPI_idGrabed(IntPtr obj, string nameID, int[] ids);
 }
