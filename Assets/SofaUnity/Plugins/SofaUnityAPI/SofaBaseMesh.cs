@@ -402,7 +402,7 @@ public class SofaBaseMesh : SofaBaseObject
     }
 
     /// Method to update the Unity mesh buffers (vertices and normals) from a tetrahedron topology object. Assume no topology change here.
-    public virtual void updateMeshTetra(Mesh mesh, Dictionary<int, int> mapping, Vector3 scaleSofaToUnity)
+    public virtual void updateMeshTetra(Mesh mesh, Dictionary<int, int> mapping)
     {
         if (m_native != IntPtr.Zero)
         {
@@ -431,9 +431,9 @@ public class SofaBaseMesh : SofaBaseObject
             {
                 for (int i = 0; i < nbrV; ++i)
                 {
-                    verts[i].x = vertices[i * 3] * scaleSofaToUnity.x;
-                    verts[i].y = vertices[i * 3 + 1] * scaleSofaToUnity.y;
-                    verts[i].z = vertices[i * 3 + 2] * scaleSofaToUnity.z;
+                    verts[i].x = vertices[i * 3];
+                    verts[i].y = vertices[i * 3 + 1];
+                    verts[i].z = vertices[i * 3 + 2];
 
                     if (resN < 0) // no normals
                     {
