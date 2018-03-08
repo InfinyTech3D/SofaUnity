@@ -203,7 +203,7 @@ public class SofaBaseMesh : SofaBaseObject
 
 
     /// Method to update the Unity mesh buffers (vertices and normals) from sofa object side. Assume no topology change here.
-    public virtual void updateMesh(Mesh mesh, Vector3 scaleSofaToUnity)
+    public virtual void updateMesh(Mesh mesh)
     {
         if (m_native != IntPtr.Zero)
         {
@@ -247,6 +247,7 @@ public class SofaBaseMesh : SofaBaseObject
                 if (m_invertNormals)
                     factor = -1;
 
+                
 
                 for (int i = 0; i < nbrV; ++i)
                 {
@@ -255,10 +256,10 @@ public class SofaBaseMesh : SofaBaseObject
                         verts[i] = new Vector3(0, 0, 0);
                         norms[i] = new Vector3(0, 0, 0);
                     }
-
-                    verts[i].x = vertices[i * 3] * scaleSofaToUnity.x;
-                    verts[i].y = vertices[i * 3 + 1] * scaleSofaToUnity.y;
-                    verts[i].z = vertices[i * 3 + 2] * scaleSofaToUnity.z;
+                    
+                    verts[i].x = vertices[i * 3];
+                    verts[i].y = vertices[i * 3 + 1];
+                    verts[i].z = vertices[i * 3 + 2];
 
                     if (resN < 0) // no normals
                     {
@@ -274,8 +275,8 @@ public class SofaBaseMesh : SofaBaseObject
                         norms[i].z = normals[i * 3 + 2] * factor;
                     }
                 }
-            }
-            
+            }            
+
             mesh.vertices = verts;
             mesh.normals = norms;
 
@@ -285,7 +286,7 @@ public class SofaBaseMesh : SofaBaseObject
     }
 
 
-    public virtual void updateMeshVelocity(Mesh mesh, float timestep, Vector3 scaleSofaToUnity)
+    public virtual void updateMeshVelocity(Mesh mesh, float timestep)
     {
         if (m_native == IntPtr.Zero)
             return;
@@ -325,9 +326,9 @@ public class SofaBaseMesh : SofaBaseObject
                     break;
                 }
 
-                verts[id].x = verts[id].x + timestep * velocities[i * 4 + 1] * scaleSofaToUnity.x;
-                verts[id].y = verts[id].y + timestep * velocities[i * 4 + 2] * scaleSofaToUnity.y;
-                verts[id].z = verts[id].z + timestep * velocities[i * 4 + 3] * scaleSofaToUnity.z;
+                verts[id].x = verts[id].x + timestep * velocities[i * 4 + 1] ;
+                verts[id].y = verts[id].y + timestep * velocities[i * 4 + 2] ;
+                verts[id].z = verts[id].z + timestep * velocities[i * 4 + 3] ;
             }
         }
 

@@ -93,7 +93,7 @@ namespace SofaUnity
 
             m_mesh.name = "SofaMesh";
             m_mesh.vertices = new Vector3[0];
-            m_impl.updateMesh(m_mesh, m_context.getScaleSofaToUnity());
+            m_impl.updateMesh(m_mesh);
             //m_mesh.triangles = m_impl.createTriangulation();
             //m_impl.updateMesh(m_mesh);
 
@@ -135,7 +135,7 @@ namespace SofaUnity
                 if (nbTetra > 0)
                     updateTetraMesh();
                 else
-                    m_impl.updateMesh(m_mesh, m_context.getScaleSofaToUnity());
+                    m_impl.updateMesh(m_mesh);
             }
         }
 
@@ -169,13 +169,13 @@ namespace SofaUnity
                     if (nbTetra > 0)
                         updateTetraMesh();
                     else
-                        m_impl.updateMesh(m_mesh, m_context.getScaleSofaToUnity());
+                        m_impl.updateMesh(m_mesh);
                 }
 
                 if (nbTetra > 0)
                     updateTetraMesh();
                 else
-                    m_impl.updateMeshVelocity(m_mesh, m_context.timeStep, m_context.getScaleSofaToUnity());
+                    m_impl.updateMeshVelocity(m_mesh, m_context.timeStep);
             }
         }
 

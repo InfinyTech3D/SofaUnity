@@ -59,15 +59,15 @@ namespace SofaUnity
             m_mesh.name = "SofaRigidMesh";
             m_mesh.vertices = new Vector3[0];
             // TODO: check why 2 updateMesh
-            m_impl.updateMesh(m_mesh, m_context.getScaleSofaToUnity());
+            m_impl.updateMesh(m_mesh);
             m_mesh.triangles = m_impl.createTriangulation();
-            m_impl.updateMesh(m_mesh, m_context.getScaleSofaToUnity());
+            m_impl.updateMesh(m_mesh);
            // m_mesh.RecalculateNormals();
 
             base.initMesh(false);
 
             if (toUpdate)
-                m_impl.updateMesh(m_mesh, m_context.getScaleSofaToUnity());
+                m_impl.updateMesh(m_mesh);
         }
 
         /// Method called by @sa Update() method.
@@ -78,8 +78,8 @@ namespace SofaUnity
 
             if (m_impl != null)
             {
-                m_impl.updateMesh(m_mesh, m_context.getScaleSofaToUnity());
-             //   m_impl.updateMeshVelocity(m_mesh, m_context.timeStep, m_context.getScaleSofaToUnity());
+                m_impl.updateMesh(m_mesh);
+             //   m_impl.updateMeshVelocity(m_mesh, m_context.timeStep);
                 //m_mesh.RecalculateNormals(); // TODO: not sure it is needed anymore
             }
         }

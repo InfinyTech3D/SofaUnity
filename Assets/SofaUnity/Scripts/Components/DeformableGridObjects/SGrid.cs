@@ -59,7 +59,7 @@ namespace SofaUnity
                 m_impl.recomputeTexCoords(m_mesh);
 
             if (toUpdate)
-                m_impl.updateMesh(m_mesh, m_context.getScaleSofaToUnity());
+                m_impl.updateMesh(m_mesh);
         }
 
 
@@ -70,7 +70,7 @@ namespace SofaUnity
                 Debug.Log("SGrid::updateImpl called.");
 
             if (m_impl != null) {
-                m_impl.updateMeshVelocity(m_mesh, m_context.timeStep, m_context.getScaleSofaToUnity());
+                m_impl.updateMeshVelocity(m_mesh, m_context.timeStep);
                 //m_mesh.RecalculateNormals();
             }
         }

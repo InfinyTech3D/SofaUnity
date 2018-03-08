@@ -85,7 +85,7 @@ public class SofaRayCaster : IDisposable
         for (int i = 0; i < 3; ++i)
         {
             ori[i] = origin[i] * scaleUnityToSofa[i];
-            dir[i] = direction[i] * scaleUnityToSofa[i];
+            dir[i] = direction[i];
         }
 
         int res = sofaPhysicsAPI_castRay(m_simu, m_name, ori, dir);
