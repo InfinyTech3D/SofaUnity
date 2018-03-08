@@ -70,7 +70,7 @@ namespace SofaUnity
                 Debug.LogError("SDeformableMesh:: Object creation failed.");
         }
 
-
+        bool m_previousMRDisplay = true;
         /// Method called by @sa Awake() method. As post process method after creation.
         protected override void awakePostProcess()
         {
@@ -82,6 +82,7 @@ namespace SofaUnity
             if (mr == null)
                 mr = gameObject.AddComponent<MeshRenderer>();
             mr.enabled = false;
+            m_previousMRDisplay = false;
         }
 
 
@@ -146,37 +147,33 @@ namespace SofaUnity
             if (m_log)
                 Debug.Log("SDeformableMesh::updateImpl called.");
 
-            if (m_impl != null)
+            MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();            
+
+            if (m_impl != null && mr.enabled)
             {
                 // TODO: for the moment the recompute of tetra is too expensive. Only update the number of vertices and tetra
                 // Need to find another solution.
-                if (m_impl.hasTopologyChanged())
-                {
-                    nbTetra = m_impl.getNbTetrahedra();
-                    nbVert = m_impl.getNbVertices();
-                    //    if (nbTetra > 0)
-                    //    {
-                    //        m_tetra = new int[nbTetra * 4];
+                if (m_impl.hasTopologyChanged() )
+                {                    
+                    m_impl.setTopologyChange(false);
 
-                    //        m_impl.getTetrahedra(m_tetra);
-                    //        m_mesh.triangles = this.computeForceField();
-                    //    }
-                    //    else
-                    //        m_mesh.triangles = m_impl.createTriangulation();
-
-                    //    m_impl.setTopologyChange(false);
-                    //}
                     if (nbTetra > 0)
                         updateTetraMesh();
                     else
-                        m_impl.updateMesh(m_mesh);
+                        m_impl.updateMesh(m_mesh);                    
                 }
 
                 if (nbTetra > 0)
                     updateTetraMesh();
-                else
+                else if (mr.enabled == m_previousMRDisplay) // which is true
                     m_impl.updateMeshVelocity(m_mesh, m_context.timeStep);
+                else // pass from false to true.
+                {
+                    m_impl.updateMesh(m_mesh);
+                }
             }
+
+            m_previousMRDisplay = mr.enabled;
         }
 
         /// Method to compute the TetrahedronFEM topology and store it as triangle in Unity Mesh, will store the vertex mapping into @see mappingVertices
@@ -243,7 +240,7 @@ namespace SofaUnity
         public void updateTetraMesh()
         {
             // first update the vertices dissociated
-            m_impl.updateMeshTetra(m_mesh, mappingVertices, m_context.getScaleSofaToUnity());
+            m_impl.updateMeshTetra(m_mesh, mappingVertices);
 
             // Compute the barycenters of each tetra and update the vertices
             Vector3[] verts = m_mesh.vertices;
