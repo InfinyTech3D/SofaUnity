@@ -29,19 +29,27 @@ public class SPlierTool : MonoBehaviour
     /// Method called at GameObject creation. Will search for SofaContext @sa loadContext() which call @sa createObject() . Then call @see awakePostProcess()
     void Awake()
     {
+        bool contextOk = true;
         GameObject _contextObject = GameObject.Find("SofaContext");
         if (_contextObject != null)
         {
             // Get Sofa context
             m_sofaContext = _contextObject.GetComponent<SofaUnity.SofaContext>();
+            if (m_sofaContext == null)
+            {
+                Debug.LogError("RayCaster::loadContext - GetComponent<SofaUnity.SofaContext> failed.");
+                contextOk = false;
+            }
         }
         else
         {
             Debug.LogError("RayCaster::loadContext - No SofaContext found.");
+            contextOk = false;
         }
 
         // Call internal method that will create a ray caster in Sofa.
-        createSofaPlier();
+        if (contextOk)
+            createSofaPlier();
     }
 
     private void Start()

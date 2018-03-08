@@ -76,6 +76,12 @@ namespace SofaUnity
                 // Get Sofa context
                 m_context = _contextObject.GetComponent<SofaContext>();
 
+                if (m_context == null)
+                {
+                    Debug.LogError("SBaseObject::loadContext - GetComponent<SofaContext> failed.");
+                    return false;
+                }
+
                 // By default place this object as child of SofaContext
                 this.transform.parent = _contextObject.gameObject.transform;
 

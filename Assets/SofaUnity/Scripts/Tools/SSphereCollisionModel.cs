@@ -11,6 +11,9 @@ public class SSphereCollisionModel : MonoBehaviour
     /// Pointer to the Sofa context this GameObject belongs to.
     protected SofaContext m_context = null;
 
+    /// Pointer to the corresponding SOFA API object
+    protected SofaCustomMesh m_impl = null;
+
     [SerializeField]
     protected float m_radius = 1.0f;
     [SerializeField]
@@ -75,8 +78,7 @@ public class SSphereCollisionModel : MonoBehaviour
     }
 
 
-    /// Pointer to the corresponding SOFA API object
-    protected SofaCustomMesh m_impl = null;    
+ 
 
     protected List<Vector3> m_keyVertices = null;
     protected Vector3[] m_centers = null;
@@ -117,6 +119,12 @@ public class SSphereCollisionModel : MonoBehaviour
         {
             // Get Sofa context
             m_context = _contextObject.GetComponent<SofaContext>();
+
+            if (m_context == null)
+            {
+                Debug.LogError("Error SSphereCollisionModel::loadContext: Context not found");
+                return false;
+            }
 
             if (m_log)
                 Debug.Log("this.name : " + this.name);
