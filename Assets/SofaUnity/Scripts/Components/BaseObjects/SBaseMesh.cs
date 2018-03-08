@@ -38,13 +38,13 @@ namespace SofaUnity
         public bool m_invertNormals = false;
 
         protected bool m_hasCollisionSphere = false;
-        protected bool m_showCollisionSphere = true;
+        protected bool m_showCollisionSphere = false;
         public bool hasCollisionSphere() { return m_hasCollisionSphere; }
 
         protected float m_radius = 1.0f;
         protected float m_initRadius = 1.0f;
-        protected float m_stiffness = 100.0f;
-        protected float m_initStiffness = 100.0f;
+        protected float m_contactStiffness = 100.0f;
+        protected float m_initContactStiffness = 100.0f;
 
         /// Method called by @sa loadContext() method. To create the object when Sofa context has been found.
         protected override void createObject()
@@ -67,7 +67,7 @@ namespace SofaUnity
             {
                 m_hasCollisionSphere = true;
                 m_initRadius = test;
-                m_initStiffness = m_impl.getFloatValue("contactStiffness");
+                m_contactStiffness = m_impl.getFloatValue("contactStiffness");
             }
         }
 
@@ -140,7 +140,7 @@ namespace SofaUnity
             {
                 m_hasCollisionSphere = true;
                 m_initRadius = test;
-                m_initStiffness = m_impl.getFloatValue("contactStiffness");
+                m_contactStiffness = m_impl.getFloatValue("contactStiffness");
             }
 
             //if (m_hasCollisionSphere)
@@ -148,8 +148,8 @@ namespace SofaUnity
             //    if (m_initRadius != m_radius)
             //        m_impl.setFloatValue("radius", m_radius);
 
-            //    if (m_initStiffness != m_stiffness)
-            //        m_impl.setFloatValue("contactStiffness", m_stiffness);
+            //    if (m_contactStiffness != m_contactStiffness)
+            //        m_impl.setFloatValue("contactStiffness", m_contactStiffness);
             //}
 
             // Update the Sofa Object
@@ -289,19 +289,19 @@ namespace SofaUnity
             }
         }
 
-        public float stiffness
+        public float contactStiffness
         {
-            get { return m_stiffness; }
+            get { return m_contactStiffness; }
             set
             {
-                if (value != m_stiffness)
+                if (value != m_contactStiffness)
                 {
-                    m_stiffness = value;
+                    m_contactStiffness = value;
                     //if (m_impl != null)
-                    //    m_impl.setFloatValue("contactStiffness", m_stiffness);
+                    //    m_impl.setFloatValue("contactStiffness", m_contactStiffness);
                 }
                 else
-                    m_stiffness = value;
+                    m_contactStiffness = value;
             }
         }
 

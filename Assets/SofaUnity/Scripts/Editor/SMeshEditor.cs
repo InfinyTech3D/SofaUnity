@@ -81,7 +81,7 @@ public class SDeformableMeshEditor : Editor
         if (mesh.hasCollisionSphere())
         {
             mesh.radius = EditorGUILayout.Slider("Sphere radius", mesh.radius, 0.001f, 10);
-            mesh.stiffness = EditorGUILayout.Slider("Contact stiffness", mesh.stiffness, 1, 5000);
+            mesh.contactStiffness = EditorGUILayout.Slider("Spheree Contact stiffness", mesh.contactStiffness, 1, 5000);
             mesh.showCollisionSphere = EditorGUILayout.Toggle("Display Collision Spheres", mesh.showCollisionSphere);
             EditorGUILayout.Separator();
         }
