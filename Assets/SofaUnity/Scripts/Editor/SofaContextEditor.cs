@@ -23,6 +23,7 @@ public class SofaContextEditor : Editor
         }
         GameObject go = new GameObject("SofaContext");
         go.AddComponent<SofaContext>();
+
         return go;
     }
 

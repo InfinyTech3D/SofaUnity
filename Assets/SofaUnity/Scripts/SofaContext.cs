@@ -101,6 +101,36 @@ namespace SofaUnity
             }
         }
 
+        public Vector3 getScaleSofaToUnity()
+        {
+            return new Vector3(-this.transform.localScale.x, this.transform.localScale.y, this.transform.localScale.z);
+        }
+
+        public Vector3 getScaleUnityToSofa()
+        {
+            Vector3 scale = new Vector3(-this.transform.localScale.x, this.transform.localScale.y, this.transform.localScale.z);
+            for (int i = 0; i < 3; i++)
+                if (scale[i] != 0)
+                    scale[i] = 1 / scale[i];
+
+            return scale;
+        }
+
+        public float getFactorSofaToUnity()
+        {
+            Vector3 scale = this.transform.localScale;
+            float factor = (scale.x + scale.y + scale.z) / 3;
+            return factor;
+        }
+
+        public float getFactorUnityToSofa()
+        {
+            float factor = getFactorSofaToUnity();
+            if (factor != 0.0f) factor = 1 / factor;
+
+            return factor;
+        }
+
         /// Getter/Setter of current objectcpt @see m_objectCpt
         public int objectcpt
         {
@@ -126,7 +156,7 @@ namespace SofaUnity
         // Use this for initialization
         void Start()
         {
-
+            
         }
 
         /// Method called at GameObject destruction.
