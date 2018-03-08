@@ -102,7 +102,7 @@ public class SofaBaseObject : IDisposable
             else
             {
                 //Debug.LogError("Error getting parameter: " + param + " . Method Return: " + res);
-                return -1.0f;
+                return float.MaxValue;
             }
         }
         else

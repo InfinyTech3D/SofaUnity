@@ -48,31 +48,31 @@ public class SDeformableMeshEditor : Editor
 
 
         // Add FEM fields
-        if (mesh.mass >= 0)
+        if (mesh.mass != float.MaxValue)
         {
             mesh.mass = EditorGUILayout.Slider("Mass", mesh.mass, 0, 1000);
             EditorGUILayout.Separator();
         }
 
-        if (mesh.young >= 0)
+        if (mesh.young != float.MaxValue)
         {
             mesh.young = EditorGUILayout.Slider("Young Modulus", mesh.young, 0, 10000);
             EditorGUILayout.Separator();
         }
 
-        if (mesh.poisson >= 0)
+        if (mesh.poisson != float.MaxValue)
         {
             mesh.poisson = EditorGUILayout.Slider("Poisson Ratio", mesh.poisson, 0, 0.49f);
             EditorGUILayout.Separator();
         }
 
-        if (mesh.stiffness >= 0)
+        if (mesh.stiffness != float.MaxValue)
         {
             mesh.stiffness = EditorGUILayout.Slider("Stiffness", mesh.stiffness, 0, 10000);
             EditorGUILayout.Separator();
         }
 
-        if (mesh.damping >= 0)
+        if (mesh.damping != float.MaxValue)
         {
             mesh.damping = EditorGUILayout.Slider("Damping", mesh.damping, 0, 100);
             EditorGUILayout.Separator();

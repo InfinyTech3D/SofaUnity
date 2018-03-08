@@ -117,15 +117,15 @@ namespace SofaUnity
             //m_impl.recomputeTriangles(m_mesh);
 
             // Set the FEM and spring parameters.
-            if (m_mass >= 0) // Otherwise means it has been unactivated from scene parsing
+            if (m_mass != float.MaxValue) // Otherwise means it has been unactivated from scene parsing
                 m_impl.mass = m_mass;
-            if (m_young >= 0)
+            if (m_young != float.MaxValue)
                 m_impl.youngModulus = m_young;
-            if (m_poisson >= 0)
+            if (m_poisson != float.MaxValue)
                 m_impl.poissonRatio = m_poisson;
-            if (m_stiffness >= 0)
+            if (m_stiffness != float.MaxValue)
                 m_impl.stiffness = m_stiffness;
-            if (m_damping >= 0)
+            if (m_damping != float.MaxValue)
                 m_impl.damping = m_damping;
 
             base.initMesh(false);
