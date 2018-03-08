@@ -253,19 +253,20 @@ public class SSphereCollisionModel : MonoBehaviour
     {
         if (m_activated && m_impl != null)
         {
-            m_impl.updateMesh(this.transform, m_centers);
+            m_impl.updateMesh(this.transform, m_centers, m_context.getScaleUnityToSofa());
         }
     }
 
     void OnDrawGizmosSelected()
     {
-        if (m_centers == null)
+        if (m_centers == null || m_context == null)
             return;
 
         Gizmos.color = Color.yellow;
+        float factor = m_context.getFactorSofaToUnity();
         foreach (Vector3 vert in m_centers)
         {
-            Gizmos.DrawSphere(this.transform.TransformPoint(vert), m_radius);
+            Gizmos.DrawSphere(this.transform.TransformPoint(vert), m_radius * factor);
         }
     }
 }

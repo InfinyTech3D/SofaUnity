@@ -58,7 +58,7 @@ namespace SofaUnity
                 m_impl.recomputeTexCoords(m_mesh);
 
             if (toUpdate)
-                m_impl.updateMesh(m_mesh);
+                m_impl.updateMesh(m_mesh, m_context.getScaleSofaToUnity());
         }
 
         /// Getter/Setter to the @see m_gridSize

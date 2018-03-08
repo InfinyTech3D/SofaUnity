@@ -128,7 +128,7 @@ public class SLaserRay : SRayCaster
         if (m_sofaRC != null)
         {
             // get the id of the selected triangle. If < 0, no intersection
-            int triId = m_sofaRC.castRay(origin, direction);
+            int triId = m_sofaRC.castRay(origin, direction, m_sofaContext.getScaleUnityToSofa());
             
             if (Input.GetKey(KeyCode.C))
             {

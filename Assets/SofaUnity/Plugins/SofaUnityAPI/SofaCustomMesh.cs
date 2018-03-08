@@ -60,7 +60,7 @@ public class SofaCustomMesh : SofaBaseObject
     
 
 
-    public void updateMesh(Transform trans, Vector3[] vertices)
+    public void updateMesh(Transform trans, Vector3[] vertices, Vector3 scaleUnityToSofa)
     {
         if (m_native == IntPtr.Zero)
             return;
@@ -72,9 +72,9 @@ public class SofaCustomMesh : SofaBaseObject
         for (int i = 0; i < nbrV; i++)
         {
             Vector3 vert = trans.TransformPoint(vertices[i]);
-            val[i * 3] = -vert.x;
-            val[i * 3 + 1] = vert.y;
-            val[i * 3 + 2] = vert.z;
+            val[i * 3] = vert.x * scaleUnityToSofa.x;
+            val[i * 3 + 1] = vert.y * scaleUnityToSofa.y;
+            val[i * 3 + 2] = vert.z * scaleUnityToSofa.z;
         }
 
         int resUpdate = sofaPhysics3DObject_setVertices(m_simu, m_name, val);

@@ -154,7 +154,7 @@ namespace SofaUnity
 
             // Update the Sofa Object
             if (toUpdate)
-                m_impl.updateMesh(m_mesh);
+                m_impl.updateMesh(m_mesh, m_context.getScaleSofaToUnity());
         }
 
 
@@ -210,7 +210,7 @@ namespace SofaUnity
                     if (m_impl != null)
                     {
                         m_impl.translation = diffTrans;
-                        m_impl.updateMesh(m_mesh);
+                        m_impl.updateMesh(m_mesh, m_context.getScaleSofaToUnity());
                     }
                 }
             }
@@ -229,7 +229,7 @@ namespace SofaUnity
                     if (m_impl != null)
                     {
                         m_impl.rotation = diffRot;
-                        m_impl.updateMesh(m_mesh);
+                        m_impl.updateMesh(m_mesh, m_context.getScaleSofaToUnity());
                     }
                 }
             }
@@ -248,7 +248,7 @@ namespace SofaUnity
                     if (m_impl != null)
                     {
                         m_impl.scale = diffScale;
-                        m_impl.updateMesh(m_mesh);
+                        m_impl.updateMesh(m_mesh, m_context.getScaleSofaToUnity());
                     }
                 }
             }

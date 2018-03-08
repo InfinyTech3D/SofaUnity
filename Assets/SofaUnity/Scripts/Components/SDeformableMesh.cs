@@ -93,7 +93,7 @@ namespace SofaUnity
 
             m_mesh.name = "SofaMesh";
             m_mesh.vertices = new Vector3[0];
-            m_impl.updateMesh(m_mesh);
+            m_impl.updateMesh(m_mesh, m_context.getScaleSofaToUnity());
             //m_mesh.triangles = m_impl.createTriangulation();
             //m_impl.updateMesh(m_mesh);
 
@@ -135,7 +135,7 @@ namespace SofaUnity
                 if (nbTetra > 0)
                     updateTetraMesh();
                 else
-                    m_impl.updateMesh(m_mesh);
+                    m_impl.updateMesh(m_mesh, m_context.getScaleSofaToUnity());
             }
         }
 
@@ -169,13 +169,13 @@ namespace SofaUnity
                     if (nbTetra > 0)
                         updateTetraMesh();
                     else
-                        m_impl.updateMesh(m_mesh);
+                        m_impl.updateMesh(m_mesh, m_context.getScaleSofaToUnity());
                 }
 
                 if (nbTetra > 0)
                     updateTetraMesh();
                 else
-                    m_impl.updateMeshVelocity(m_mesh, m_context.timeStep);
+                    m_impl.updateMeshVelocity(m_mesh, m_context.timeStep, m_context.getScaleSofaToUnity());
             }
         }
 
@@ -243,7 +243,7 @@ namespace SofaUnity
         public void updateTetraMesh()
         {
             // first update the vertices dissociated
-            m_impl.updateMeshTetra(m_mesh, mappingVertices);
+            m_impl.updateMeshTetra(m_mesh, mappingVertices, m_context.getScaleSofaToUnity());
 
             // Compute the barycenters of each tetra and update the vertices
             Vector3[] verts = m_mesh.vertices;

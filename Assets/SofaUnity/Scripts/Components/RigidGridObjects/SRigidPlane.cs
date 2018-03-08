@@ -39,7 +39,7 @@ namespace SofaUnity
             m_impl.setGridResolution(m_gridSize);
             
             if (toUpdate)
-                m_impl.updateMesh(m_mesh);
+                m_impl.updateMesh(m_mesh, m_context.getScaleSofaToUnity());
         }
 
 
