@@ -123,9 +123,9 @@ namespace SofaUnityAPI
         }
 
         /// Getter/Setter of timestep
-        public double timeStep
+        public float timeStep
         {
-            get { return sofaPhysicsAPI_timeStep(m_native); }
+            get { return (float)sofaPhysicsAPI_timeStep(m_native); }
             set { sofaPhysicsAPI_setTimeStep(m_native, value); }
         }
         
@@ -137,7 +137,29 @@ namespace SofaUnityAPI
                 grav[i] = (double)gravity[i];
             sofaPhysicsAPI_setGravity(m_native, grav);
         }
-        
+
+        public Vector3 getGravity()
+        {
+            Vector3 gravity = new Vector3(0.0f, 0.0f, 0.0f);
+            if (m_native != IntPtr.Zero)
+            {
+                double[] grav = new double[3];
+                int res = sofaPhysicsAPI_gravity(m_native, grav);
+
+                if (res >= 0)
+                {
+                    for (int i = 0; i < 3; ++i)
+                        gravity[i] = (float)grav[i];
+                }
+                else
+                    Debug.LogError("Error in method getGravity(). Method Return: " + res);
+            }
+            else
+                Debug.LogError("Error in method getGravity(). Can't access Object Pointer m_native.");
+            
+            return gravity;
+        }
+
         /// Get the number of object in the simulation scene
         public int getNumberObjects()
         {

@@ -202,7 +202,7 @@ namespace SofaUnity
                         if (pos2 < 0)
                             m_filename = "/SofaUnity/" + m_filename;
                     }
-                        // load the file
+                    // load the file
                     m_impl.loadScene(Application.dataPath + m_filename);
 
                     // Set counter of object creation to 0
@@ -211,10 +211,15 @@ namespace SofaUnity
 
                     if (m_log)
                         Debug.Log("init - m_nbrObject: " + m_nbrObject);
-                }
 
-                m_impl.timeStep = m_timeStep;
-                m_impl.setGravity(m_gravity);
+                    //m_timeStep = m_impl.timeStep;
+                    //m_gravity = m_impl.getGravity();
+                }
+                //else
+                //{
+                    m_impl.timeStep = m_timeStep;
+                    m_impl.setGravity(m_gravity);
+                //}
 #endif
             }
         }
