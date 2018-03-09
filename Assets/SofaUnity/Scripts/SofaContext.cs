@@ -25,6 +25,7 @@ namespace SofaUnity
         public Vector3 m_gravity = new Vector3(0f, -9.8f, 0f);
         /// Parameter: Float representing the simulation timestep to use.
         public float m_timeStep = 0.02f; // ~ 1/60
+
         /// Parameter: String representing the Path to the Sofa scene.
         public string m_filename = "";
 
@@ -48,6 +49,12 @@ namespace SofaUnity
         {
             if (m_impl == null)
                 init();
+
+            if (m_impl == null) // still null
+            {
+                Debug.LogError("Error: SofaContext has not be created. method getSimuContext return IntPtr.Zero");
+                return IntPtr.Zero;
+            }
             return m_impl.getSimuContext();
         }
 
@@ -119,7 +126,7 @@ namespace SofaUnity
         public float getFactorSofaToUnity()
         {
             Vector3 scale = this.transform.localScale;
-            float factor = (scale.x + scale.y + scale.z) / 3;
+            float factor = (Math.Abs(scale.x) + Math.Abs(scale.y) + Math.Abs(scale.z)) / 3;
             return factor;
         }
 
@@ -185,7 +192,7 @@ namespace SofaUnity
             {
 #if UNITY_EDITOR
                 m_impl = new SofaContextAPI();
-                m_impl.loadPlugin("C:/projects/unity3D/SofaUnity/Assets/SofaUnity/Plugins/Native/x64/ProjectiveXRay.dll");
+                //m_impl.loadPlugin("C:/projects/unity3D/SofaUnity/Assets/SofaUnity/Plugins/Native/x64/ProjectiveXRay.dll");
                 m_impl.start();
                 if (m_filename != "")
                 {
@@ -347,8 +354,8 @@ namespace SofaUnity
                         Debug.Log("#### Hierarchy: parent: " + entry.Key + " - child: " + childName);
                 }
 
-                if (entry.Key != "root")
-                moveChildren(entry.Key);
+                if (entry.Key != "root" && entry.Key != "No impl")
+                    moveChildren(entry.Key);
             }
             hierarchy.Clear();
         }
