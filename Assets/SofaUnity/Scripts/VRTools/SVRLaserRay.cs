@@ -2,9 +2,9 @@
 //#define USING_VRTK
 using UnityEngine;
 
-#if USING_VRTK
+//#if USING_VRTK
 using VRTK;
-#endif
+//#endif
 
 /// <summary>
 /// Specialisation of SLaserRay class
@@ -26,7 +26,7 @@ class SVRLaserRay : SLaserRay
     {
         m_axisDirection.Normalize();
 
-#if USING_VRTK
+//#if USING_VRTK
         if (GetComponent<VRTK_ControllerEvents>() == null)
         {
             VRTK_Logger.Error(VRTK_Logger.GetCommonMessage(VRTK_Logger.CommonMessageKeys.REQUIRED_COMPONENT_MISSING_FROM_GAMEOBJECT, "SLaserRay", "VRTK_ControllerEvents", "the same"));
@@ -45,14 +45,14 @@ class SVRLaserRay : SLaserRay
 
         GetComponent<VRTK_ControllerEvents>().GripClicked += new ControllerInteractionEventHandler(DoGripClicked);
         GetComponent<VRTK_ControllerEvents>().GripUnclicked += new ControllerInteractionEventHandler(DoGripUnclicked);
-#endif
+//#endif
         if(laser != null)
         {
             laser.transform.localPosition = new Vector3(-0.035f, -0.005f, 0.005f);
         }
     }
 
-#if USING_VRTK
+//#if USING_VRTK
     /// Debugger method for VR interaction
     private void DebugLogger(uint index, string button, string action, ControllerInteractionEventArgs e)
     {
@@ -118,5 +118,5 @@ class SVRLaserRay : SLaserRay
             activeTool(false);
         }
     }
-#endif
+//#endif
 }

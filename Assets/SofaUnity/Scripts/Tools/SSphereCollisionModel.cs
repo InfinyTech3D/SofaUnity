@@ -6,6 +6,7 @@ using SofaUnityAPI;
 using System;
 using UnityEditor;
 
+[ExecuteInEditMode]
 public class SSphereCollisionModel : MonoBehaviour
 {
     /// Pointer to the Sofa context this GameObject belongs to.
@@ -99,7 +100,7 @@ public class SSphereCollisionModel : MonoBehaviour
     void Awake()
     {
         if (m_log)
-            Debug.Log("UNITY_EDITOR - SBaseMesh::Awake - " + this.name);
+            Debug.Log("UNITY_EDITOR - SSphereCollisionModel::Awake - " + this.name);
 
         // First load the Sofa context and create the object.
         loadContext();
@@ -111,7 +112,7 @@ public class SSphereCollisionModel : MonoBehaviour
     protected bool loadContext()
     {
         if (m_log)
-            Debug.Log("UNITY_EDITOR - SBaseObject::loadContext");
+            Debug.Log("UNITY_EDITOR - SSphereCollisionModel::loadContext");
 
         // Search for SofaContext
         GameObject _contextObject = GameObject.Find("SofaContext");
@@ -152,6 +153,9 @@ public class SSphereCollisionModel : MonoBehaviour
     /// Method called by @sa loadContext() method. To create the object when Sofa context has been found.
     protected virtual void createObject()
     {
+        if (m_log)
+            Debug.Log("UNITY_EDITOR - SSphereCollisionModel::createObject");
+
         // Get access to the sofaContext
         IntPtr _simu = m_context.getSimuContext();
 
@@ -166,7 +170,7 @@ public class SSphereCollisionModel : MonoBehaviour
     }
 
     protected virtual void awakePostProcess()
-    {        
+    {
         Mesh m_mesh = this.GetComponent<MeshFilter>().sharedMesh;
         Vector3[] vertices = m_mesh.vertices;
         m_keyVertices = new List<Vector3>();
@@ -203,15 +207,16 @@ public class SSphereCollisionModel : MonoBehaviour
 
     protected void computeSphereCenters()
     {
-        //Debug.Log("keyVertices.Count: " + m_keyVertices.Count);
         if (m_keyVertices == null)
         {
             awakePostProcess();
             return;
         }
-
+        //Debug.Log("keyVertices.Count: " + m_keyVertices.Count);
         Vector3[] buffer = m_keyVertices.ToArray();
         List<Vector3> bufferTotal = new List<Vector3>();
+
+        float contextFactor = m_context.getFactorUnityToSofa();
         for (int i=0; i< buffer.Length; ++i)
         {
             bufferTotal.Add(buffer[i]);
@@ -223,7 +228,8 @@ public class SSphereCollisionModel : MonoBehaviour
                 float dist = dir.magnitude;
 
                 dist = dist * 10;
-                int interpol = (int)Math.Floor(dist / m_factor);
+                
+                int interpol = (int)Math.Floor((dist * contextFactor) / m_factor);
                 
                 if (interpol > 1)
                 {
@@ -240,7 +246,9 @@ public class SSphereCollisionModel : MonoBehaviour
             }
         }
 
-        Debug.Log("bufferTotal.Count: " + bufferTotal.Count);
+        if (m_log)
+            Debug.Log("bufferTotal.Count: " + bufferTotal.Count);
+
         m_centers = new Vector3[bufferTotal.Count];
         int cpt = 0;
         foreach (Vector3 vert in bufferTotal)
@@ -272,6 +280,7 @@ public class SSphereCollisionModel : MonoBehaviour
 
         Gizmos.color = Color.yellow;
         float factor = m_context.getFactorSofaToUnity();
+        
         foreach (Vector3 vert in m_centers)
         {
             Gizmos.DrawSphere(this.transform.TransformPoint(vert), m_radius * factor);

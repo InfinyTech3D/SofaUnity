@@ -7,6 +7,7 @@ using System;
 /// <summary>
 /// Base class inherite from MonoBehavior that design a Ray casting object.
 /// </summary>
+//[ExecuteInEditMode]
 public class SPlierTool : MonoBehaviour
 {
     private Animator animator { get { return GetComponent<Animator>(); } }
@@ -49,7 +50,7 @@ public class SPlierTool : MonoBehaviour
 
         // Call internal method that will create a ray caster in Sofa.
         if (contextOk)
-            createSofaPlier();
+            StartCoroutine(createSofaPlier());
     }
 
     private void Start()
@@ -58,14 +59,16 @@ public class SPlierTool : MonoBehaviour
     }
 
     /// Method called by @sa loadContext() method. To create the object when Sofa context has been found. To be implemented by child class.
-    protected virtual void createSofaPlier()
+    protected virtual IEnumerator createSofaPlier()
     {
         // Get access to the sofaContext
-        IntPtr _simu = m_sofaContext.getSimuContext();
+        yield return new WaitForSeconds(1);
 
+        IntPtr _simu = m_sofaContext.getSimuContext();
         if (_simu != IntPtr.Zero && Mord_UP != null && Mord_Down != null && Model != null && ModelVisu != null)
         {
-            SBaseMesh mesh = Model.GetComponent<SBaseMesh>();           
+            SBaseMesh mesh = Model.GetComponent<SBaseMesh>();
+
             m_sofaPlier = new SofaPliers(_simu, name, Mord_UP.name, Mord_Down.name, mesh.nameId);
         }
     }
@@ -141,11 +144,12 @@ public class SPlierTool : MonoBehaviour
 
         modelMesh = ModelVisu.GetComponent<MeshFilter>().sharedMesh;
         Vector3[] vertices = modelMesh.vertices;
+        float factor = m_sofaContext.getFactorSofaToUnity();
 
         for (int i = 0; i < m_nbrGrabed; i++)
         {
             Vector3 vert = new Vector3(vertices[m_idGrabed[i]].x, vertices[m_idGrabed[i]].y, vertices[m_idGrabed[i]].z);
-            Gizmos.DrawWireSphere(ModelVisu.transform.TransformPoint(vert), 0.1f);
+            Gizmos.DrawWireSphere(ModelVisu.transform.TransformPoint(vert), 0.1f * factor);
         }
         
     }
