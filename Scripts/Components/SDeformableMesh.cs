@@ -15,6 +15,10 @@ namespace SofaUnity
     [ExecuteInEditMode]
     public class SDeformableMesh : SBaseMesh
     {
+        ////////////////////////////////////////////
+        /////          Object members          /////
+        ////////////////////////////////////////////
+
         /// Parameter to define the Mass of this deformable Object
         public float m_mass = 10.0f;
         /// Parameter to define the Young Modulus of this deformable Object
@@ -38,6 +42,15 @@ namespace SofaUnity
         /// Initial number of vertices
         int nbVert = 0;
 
+        /// Bool to store the last MeshFilter status. Allow to know if mesh is renderer or not.
+        bool m_previousMRDisplay = true;
+
+
+
+
+        ////////////////////////////////////////////
+        /////       Object creation API        /////
+        ////////////////////////////////////////////
 
         /// Method called by @sa loadContext() method. To create the object when Sofa context has been found.
         protected override void createObject()
@@ -70,7 +83,7 @@ namespace SofaUnity
                 Debug.LogError("SDeformableMesh:: Object creation failed.");
         }
 
-        bool m_previousMRDisplay = true;
+        
         /// Method called by @sa Awake() method. As post process method after creation.
         protected override void awakePostProcess()
         {
@@ -85,6 +98,107 @@ namespace SofaUnity
             m_previousMRDisplay = false;
         }
 
+
+
+
+        ////////////////////////////////////////////
+        /////        Object members API        /////
+        ////////////////////////////////////////////
+
+        /// Getter/Setter of current mass @see m_mass
+        public float mass
+        {
+            get { return m_mass; }
+            set
+            {
+                if (value != m_mass)
+                {
+                    m_mass = value;
+                    if (m_impl != null)
+                        m_impl.mass = m_mass;
+                }
+            }
+        }
+
+        /// Getter/Setter of current young @see m_young
+        public float young
+        {
+            get { return m_young; }
+            set
+            {
+                if (value != m_young)
+                {
+                    m_young = value;
+                    if (m_impl != null)
+                        m_impl.youngModulus = m_young;
+                }
+            }
+        }
+
+        /// Getter/Setter of current poisson @see m_poisson
+        public float poisson
+        {
+            get { return m_poisson; }
+            set
+            {
+                if (value != m_poisson)
+                {
+                    m_poisson = value;
+                    if (m_impl != null)
+                        m_impl.poissonRatio = m_poisson;
+                }
+            }
+        }
+
+        /// Getter/Setter of current poisson @see m_poisson
+        public float stiffness
+        {
+            get { return m_stiffness; }
+            set
+            {
+                if (value != m_stiffness)
+                {
+                    m_stiffness = value;
+                    if (m_impl != null)
+                        m_impl.stiffness = m_stiffness;
+                }
+            }
+        }
+
+        /// Getter/Setter of current poisson @see m_poisson
+        public float damping
+        {
+            get { return m_damping; }
+            set
+            {
+                if (value != m_damping)
+                {
+                    m_damping = value;
+                    if (m_impl != null)
+                        m_impl.damping = m_damping;
+                }
+            }
+        }
+
+
+        /// public method that return the number of vertices, override base method by returning potentially the number of vertices from tetra topology.
+        public override int nbVertices()
+        {
+            return nbVert;
+        }
+
+        /// public method that return the number of elements, override base method by returning potentially the number of tetrahedra.
+        public override int nbTriangles()
+        {
+            return nbTetra;
+        }
+
+
+
+
+        ////////////////////////////////////////////
+        /////       Object behavior API        /////
+        ////////////////////////////////////////////
 
         /// Method called by \sa Start() method to init the current object and impl. @param toUpdate indicate if updateMesh has to be called.
         protected override void initMesh(bool toUpdate)
@@ -176,6 +290,7 @@ namespace SofaUnity
             m_previousMRDisplay = mr.enabled;
         }
 
+
         /// Method to compute the TetrahedronFEM topology and store it as triangle in Unity Mesh, will store the vertex mapping into @see mappingVertices
         public int[] computeForceField()
         {
@@ -260,131 +375,7 @@ namespace SofaUnity
 
             m_mesh.vertices = verts;
         }
-
-
-        /// Method to draw the Tetrahedron FEM (not used)
-        public void drawForceField()
-        {
-            if (m_mesh.vertices.Length == 0)
-                return;
-
-            GL.Begin(GL.TRIANGLES);
-
-            for (int i = 0; i < nbTetra; ++i)
-            {
-                Vector3 v0 = m_mesh.vertices[m_tetra[i * 4 + 0]];
-                Vector3 v1 = m_mesh.vertices[m_tetra[i * 4 + 1]];
-                Vector3 v2 = m_mesh.vertices[m_tetra[i * 4 + 2]];
-                Vector3 v3 = m_mesh.vertices[m_tetra[i * 4 + 3]];
-
-                GL.Vertex3(v0.x, v0.y, v0.z);
-                GL.Vertex3(v1.x, v1.y, v1.z);
-                GL.Vertex3(v2.x, v2.y, v2.z);
-
-                GL.Vertex3(v1.x, v1.y, v1.z);
-                GL.Vertex3(v2.x, v2.y, v2.z);
-                GL.Vertex3(v3.x, v3.y, v3.z);
-
-                GL.Vertex3(v2.x, v2.y, v2.z);
-                GL.Vertex3(v3.x, v3.y, v3.z);
-                GL.Vertex3(v0.x, v0.y, v0.z);
-
-                GL.Vertex3(v3.x, v3.y, v3.z);
-                GL.Vertex3(v0.x, v0.y, v0.z);
-                GL.Vertex3(v1.x, v1.y, v1.z);
-            }
-
-            GL.End();
-        }
-
-
-        /// Getter/Setter of current mass @see m_mass
-        public float mass
-        {
-            get { return m_mass; }
-            set
-            {
-                if (value != m_mass)
-                {
-                    m_mass = value;
-                    if (m_impl != null)
-                        m_impl.mass  = m_mass;
-                }
-            }
-        }
-
-        /// Getter/Setter of current young @see m_young
-        public float young
-        {
-            get { return m_young; }
-            set
-            {
-                if (value != m_young)
-                {
-                    m_young = value;
-                    if (m_impl != null)
-                        m_impl.youngModulus = m_young;
-                }
-            }
-        }
-
-        /// Getter/Setter of current poisson @see m_poisson
-        public float poisson
-        {
-            get { return m_poisson; }
-            set
-            {
-                if (value != m_poisson)
-                {
-                    m_poisson = value;
-                    if (m_impl != null)
-                        m_impl.poissonRatio = m_poisson;
-                }
-            }
-        }
-
-        /// Getter/Setter of current poisson @see m_poisson
-        public float stiffness
-        {
-            get { return m_stiffness; }
-            set
-            {
-                if (value != m_stiffness)
-                {
-                    m_stiffness = value;
-                    if (m_impl != null)
-                        m_impl.stiffness = m_stiffness;
-                }
-            }
-        }
-
-        /// Getter/Setter of current poisson @see m_poisson
-        public float damping
-        {
-            get { return m_damping; }
-            set
-            {
-                if (value != m_damping)
-                {
-                    m_damping = value;
-                    if (m_impl != null)
-                        m_impl.damping = m_damping;
-                }
-            }
-        }
-
-
-        /// public method that return the number of vertices, override base method by returning potentially the number of vertices from tetra topology.
-        public override int nbVertices()
-        {
-            return nbVert;
-        }
-
-        /// public method that return the number of elements, override base method by returning potentially the number of tetrahedra.
-        public override int nbTriangles()
-        {
-            return nbTetra;
-        }
+        
     }
 }
 

@@ -8,9 +8,18 @@ using System.Linq;
 
 namespace SofaUnity
 {
+    /// <summary>
+    /// Base class that design a SComponentObject mapped to a SofaComponent listener object.
+    /// The SofaComponent allows to get all Data of a component that is listened. 
+    /// This class inherite from @see SBaseObject and add the creation of Mesh and handle transformation
+    /// </summary>
     [ExecuteInEditMode]
     public class SComponentObject : SBaseObject
     {
+        ////////////////////////////////////////////
+        /////        Object members API        /////
+        ////////////////////////////////////////////
+
         /// Pointer to the corresponding SOFA API object
         protected SofaComponent m_impl = null;
         public SofaComponent impl
@@ -18,17 +27,26 @@ namespace SofaUnity
             get { return m_impl; }
         }
 
-
+        /// List of Data parsed
         protected List<SData> m_datas = null;
         public List<SData> datas
         {
             get { return m_datas; }
         }
+
+        /// Map of the Data parsed. Key is the dataName of the Data, value is the type of this Data.
         protected Dictionary<string, string> m_dataMap = null;
         public Dictionary<string, string> dataMap
         {
             get { return m_dataMap; }
         }
+
+
+
+
+        ////////////////////////////////////////////
+        /////       Object creation API        /////
+        ////////////////////////////////////////////
 
         /// Method called by @sa loadContext() method. To create the object when Sofa context has been found.
         protected override void createObject()
@@ -76,6 +94,13 @@ namespace SofaUnity
                 }
             }
         }
+
+
+
+
+        ////////////////////////////////////////////
+        /////       Object behavior API        /////
+        ////////////////////////////////////////////
 
         /// Method called at GameObject init (after creation or when starting play).
         void Start()

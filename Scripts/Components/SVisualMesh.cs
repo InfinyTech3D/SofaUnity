@@ -10,6 +10,10 @@ namespace SofaUnity
     [ExecuteInEditMode]
     class SVisualMesh : SBaseMesh
     {
+        ////////////////////////////////////////////
+        /////       Object creation API        /////
+        ////////////////////////////////////////////
+
         /// Method called by @sa loadContext() method. To create the object when Sofa context has been found.
         protected override void createObject()
         {
@@ -50,6 +54,12 @@ namespace SofaUnity
         }
 
 
+
+
+        ////////////////////////////////////////////
+        /////       Object behavior API        /////
+        ////////////////////////////////////////////
+        
         /// Method called by \sa Start() method to init the current object and impl. @param toUpdate indicate if updateMesh has to be called.
         protected override void initMesh(bool toUpdate)
         {

@@ -14,11 +14,15 @@ namespace SofaUnity
     [ExecuteInEditMode]
     public class SBaseMesh : SBaseObject
     {
-        /// Member: Unity Mesh object of this GameObject
-		protected Mesh m_mesh;
+        ////////////////////////////////////////////
+        /////          Object members          /////
+        ////////////////////////////////////////////
 
+        /// Member: Unity Mesh object of this GameObject
+        protected Mesh m_mesh;
         /// Pointer to the corresponding SOFA API object
         protected SofaBaseMesh m_impl = null;
+
 
         /// Initial Translation from Sofa Object at init
         protected Vector3 m_initTranslation;
@@ -34,17 +38,32 @@ namespace SofaUnity
         /// Current Scale of this object (same as in Unity Editor and Sofa object)
         public Vector3 m_scale = new Vector3(1.0f, 1.0f, 1.0f);
 
+
         /// Booleen to warn mesh normals have to be inverted
         public bool m_invertNormals = false;
 
+        /// Booleen to store info if object has collision sphere
         protected bool m_hasCollisionSphere = false;
+        /// Booleen to show collision sphere
         protected bool m_showCollisionSphere = false;
-        public bool hasCollisionSphere() { return m_hasCollisionSphere; }
 
+
+        /// Current collision sphere radius 
         protected float m_radius = 1.0f;
-        protected float m_initRadius = 1.0f;
+        /// Current collision sphere contact stiffness
         protected float m_contactStiffness = 100.0f;
+
+        /// Initial sphere radius from Sofa Object at init
+        protected float m_initRadius = 1.0f;
+        /// Initial contact stiffness from Sofa Object at init
         protected float m_initContactStiffness = 100.0f;
+
+
+
+
+        ////////////////////////////////////////////
+        /////       Object creation API        /////
+        ////////////////////////////////////////////
 
         /// Method called by @sa loadContext() method. To create the object when Sofa context has been found.
         protected override void createObject()
@@ -59,7 +78,7 @@ namespace SofaUnity
             m_rotation = m_initRotation;
             m_scale = m_initScale;
 
-            // Copy info if collision
+            // Copy info if mesh has collision
             float test = m_impl.getFloatValue("radius");
             if (test == float.MaxValue) // no sphere
                 m_hasCollisionSphere = false;
@@ -71,6 +90,7 @@ namespace SofaUnity
             }
         }
 
+
         /// Method called by \sa Awake after the loadcontext method.
         protected override void awakePostProcess()
         {
@@ -79,6 +99,13 @@ namespace SofaUnity
             if (mf == null)
                 gameObject.AddComponent<MeshFilter>();
         }
+
+
+
+
+        ////////////////////////////////////////////
+        /////       Object behavior API        /////
+        ////////////////////////////////////////////
 
         /// Method called at GameObject init (after creation or when starting play).
         private void Start()
@@ -158,6 +185,12 @@ namespace SofaUnity
         }
 
 
+
+
+        ////////////////////////////////////////////
+        /////        Object members API        /////
+        ////////////////////////////////////////////
+
         /// Getter of parentName of this Sofa Object.
         public override string parentName()
         {
@@ -167,35 +200,6 @@ namespace SofaUnity
                 return m_impl.parent;
         }
 
-        /// Getter/Setter to @see m_invertNormals that order to change or not the mesh normals at load.
-        public bool invertNormals
-        {
-            get { return m_invertNormals; }
-            set
-            {
-                m_invertNormals = value;
-                if (m_invertNormals)
-                {
-                    if (m_impl != null)
-                        m_impl.m_invertNormals = m_invertNormals;
-
-                    invertMeshNormals();
-                }
-            }
-        }
-
-        /// Method to invert normal by changing triangles orientation
-        public void invertMeshNormals()
-        {
-            int[] triangles = m_mesh.GetTriangles(0);
-            for (int i = 0; i < triangles.Length; i += 3)
-            {
-                int temp = triangles[i + 0];
-                triangles[i + 0] = triangles[i + 1];
-                triangles[i + 1] = temp;
-            }
-            m_mesh.SetTriangles(triangles, 0);
-        }
 
         /// Getter/Setter of current translation @see m_translation
         public Vector3 translation
@@ -253,6 +257,38 @@ namespace SofaUnity
                 }
             }
         }
+        
+
+        /// Getter/Setter to @see m_invertNormals that order to change or not the mesh normals at load.
+        public bool invertNormals
+        {
+            get { return m_invertNormals; }
+            set
+            {
+                m_invertNormals = value;
+                if (m_invertNormals)
+                {
+                    if (m_impl != null)
+                        m_impl.m_invertNormals = m_invertNormals;
+
+                    invertMeshNormals();
+                }
+            }
+        }
+
+        /// Method to invert normal by changing triangles orientation
+        public void invertMeshNormals()
+        {
+            int[] triangles = m_mesh.GetTriangles(0);
+            for (int i = 0; i < triangles.Length; i += 3)
+            {
+                int temp = triangles[i + 0];
+                triangles[i + 0] = triangles[i + 1];
+                triangles[i + 1] = temp;
+            }
+            m_mesh.SetTriangles(triangles, 0);
+        }
+
 
         /// Public method to get the number of vertices in then embedded mesh
         public virtual int nbVertices()
@@ -267,12 +303,17 @@ namespace SofaUnity
         public virtual int nbTriangles()
         {
             if (m_mesh)
-                return m_mesh.triangles.Length/3;
+                return m_mesh.triangles.Length / 3;
             else
                 return -1;
         }
 
 
+
+        /// Method to knwo if mesh has collision
+        public bool hasCollisionSphere() { return m_hasCollisionSphere; }
+
+        /// Getter/Setter to @see m_radius
         public float radius
         {
             get { return m_radius; }
@@ -289,6 +330,7 @@ namespace SofaUnity
             }
         }
 
+        /// Getter/Setter to @see m_contactStiffness
         public float contactStiffness
         {
             get { return m_contactStiffness; }
@@ -304,16 +346,19 @@ namespace SofaUnity
                     m_contactStiffness = value;
             }
         }
-
+        
+        /// Getter/Setter to @see m_showCollisionSphere that allow to show collision sphere.
         public bool showCollisionSphere
         {
             get { return m_showCollisionSphere; }
             set { m_showCollisionSphere = value; }
         }
 
+
+
+        /// Method to draw objects for debug only
         void OnDrawGizmosSelected()
         {
-
             if (m_hasCollisionSphere && m_showCollisionSphere)
             {
 

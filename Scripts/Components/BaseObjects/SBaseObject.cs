@@ -5,15 +5,23 @@ using UnityEngine;
 namespace SofaUnity
 {
     /// <summary>
-    /// Base class to map a Sofa Object with a Unity GameObject
-    /// This class control the creation of the object as well as the link to the SofaContext 
+    /// Base class to map a Sofa3DObject with a Unity GameObject
+    /// This class control the creation of the Sofa3DObject as well as the link to the SofaContext 
     /// </summary>
     public class SBaseObject : MonoBehaviour
     {
+        ////////////////////////////////////////////
+        /////        Object members API        /////
+        ////////////////////////////////////////////
+
         /// Pointer to the Sofa context this GameObject belongs to.
         protected SofaContext m_context = null;
 
-        /// Name of this GameObject
+        /// Parameter to activate logging of this Sofa GameObject
+        protected bool m_log = false;
+
+
+        /// Name of the Sofa3DObject mapped to this Unity GameObject
         protected string m_nameId;
         public string nameId
         {
@@ -21,12 +29,22 @@ namespace SofaUnity
             set { m_nameId = value; }
         }
 
+        /// bool to store the status of this GameObject. Used to update the mesh if is dirty.
         protected bool m_isDirty = true;
         public void setDirty() { m_isDirty = true; }
 
-        /// Parameter to activate logging of this Sofa GameObject
-        protected bool m_log = false;
+        /// Method to get the parent node name of this object.
+        public virtual string parentName()
+        {
+            return "No impl";
+        }
 
+
+
+        
+        ////////////////////////////////////////////
+        /////       Object creation API        /////
+        ////////////////////////////////////////////
 
         /// Method called at GameObject creation. Will search for SofaContext @sa loadContext() which call @sa createObject() . Then call @see awakePostProcess()
         void Awake()
@@ -41,28 +59,7 @@ namespace SofaUnity
             awakePostProcess();
         }
 
-        /// Method called at GameObject init (after creation or when starting play). To be implemented by child class.
-        void Start()
-        {
-            if (m_log)
-                Debug.Log("SBaseObject::Start called.");
-        }
-
-        /// Method called to update GameObject, called once per frame. To be implemented by child class.
-        void Update()
-        {
-            if (m_log)
-                Debug.Log("SBaseObject::Update called.");
-
-            // Call internal method that can be overwritten
-            if (m_isDirty)
-            {
-                updateImpl();
-                m_isDirty = false;
-            }
-        }
-
-
+            
         /// Method called to update GameObject, called once per frame. To be implemented by child class.
         protected bool loadContext()
         {
@@ -116,11 +113,13 @@ namespace SofaUnity
             }
         }
 
+
         /// Method called by @sa loadContext() method. To create the object when Sofa context has been found. To be implemented by child class.
         protected virtual void createObject()
         {
 
         }
+
 
         /// Method called by @sa Awake() method. As post process method after creation. To be implemented by child class.
         protected virtual void awakePostProcess()
@@ -128,15 +127,40 @@ namespace SofaUnity
 
         }
 
+        
+
+
+        ////////////////////////////////////////////
+        /////       Object behavior API        /////
+        ////////////////////////////////////////////
+
+        /// Method called at GameObject init (after creation or when starting play). To be implemented by child class.
+        void Start()
+        {
+            if (m_log)
+                Debug.Log("SBaseObject::Start called.");
+        }
+        
+
+        /// Method called to update GameObject, called once per frame. To be implemented by child class.
+        void Update()
+        {
+            if (m_log)
+                Debug.Log("SBaseObject::Update called.");
+
+            // Call internal method that can be overwritten. Only if dirty
+            if (m_isDirty)
+            {
+                updateImpl();
+                m_isDirty = false;
+            }
+        }
+
+
         /// Method called by @sa Update() method. To be implemented by child class.
         protected virtual void updateImpl()
         {
 
-        }
-
-        public virtual string parentName()
-        {
-            return "No impl";
-        }
+        }        
     }
 }
