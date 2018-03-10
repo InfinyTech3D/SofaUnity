@@ -4,11 +4,13 @@ using System.Runtime.InteropServices;
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// SofaComponent class that will be linked to a SofacomponentListener Object which allow to listen to all Data of a target component.
+/// It will connect to the SofaPhysicsAPI. 
+/// </summary>
 public class SofaComponent : SofaBaseObject
 {
-    /// <summary>
-    /// Default constructor to create a Sofa Mesh
-    /// </summary>
+    /// <summary> Default constructor to create a  </summary>
     /// <param name="simu">Pointer to the SofaPhysicsAPI</param>
     /// <param name="nameID">Name of this Object</param>
     /// <param name="isRigid">Type rigid or deformable</param>
@@ -39,6 +41,8 @@ public class SofaComponent : SofaBaseObject
         }
     }
 
+
+    /// Method to get all data listen by this component as a json unique string.
     public string loadAllData()
     {
         if (m_native != IntPtr.Zero)
@@ -48,6 +52,10 @@ public class SofaComponent : SofaBaseObject
     }
 
 
+
+    /////////////////////////////////////////////////////////////////////////////////////////
+    ////////////          Communication API to sofaPhysicsAdvanceAPI         ////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern string sofaPhysics3DObject_getDataFields(IntPtr obj, string name);

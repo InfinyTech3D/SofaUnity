@@ -90,7 +90,12 @@ public class SofaCylinder : SofaBaseMesh
 
         mesh.uv = uvs;
     }
-       
+
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////
+    ////////////          Communication API to sofaPhysicsAdvanceAPI         ////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_addCylinder(IntPtr obj, string name, bool isRigid);

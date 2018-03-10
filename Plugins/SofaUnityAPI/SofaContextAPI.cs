@@ -85,13 +85,14 @@ namespace SofaUnityAPI
             sofaPhysicsAPI_stop(m_native);
         }
 
-        /// Method to perform one steop the Sofa simulation
+        /// Method to perform one step of simulation in Sofa
         public void step()
         {
             sofaPhysicsAPI_step(m_native);
         }
 
-        /// Load the Sofa scene given by name @param filename
+        /// <summary> Load the Sofa scene given by name @param filename. </summary>
+        /// <param name="filename"> Path to the filename. </param>
         public void loadScene(string filename)
         {
             if (m_native != IntPtr.Zero)
@@ -102,6 +103,8 @@ namespace SofaUnityAPI
                 Debug.LogError("Error can't load file: " + filename + "no sofaPhysicsAPI created!");
         }
 
+        /// <summary> Method to load a specific sofa plugin. </summary>
+        /// <param name="pluginName"> Path to the plugin. </param>
         public void loadPlugin(string pluginName)
         {
             if (m_native != IntPtr.Zero)
@@ -129,6 +132,7 @@ namespace SofaUnityAPI
             set { sofaPhysicsAPI_setTimeStep(m_native, value); }
         }
         
+
         /// Setter of gravity vector
         public void setGravity(Vector3 gravity)
         {
@@ -195,26 +199,40 @@ namespace SofaUnityAPI
         }
 
 
-        /// Bindings to the SofaAdvancePhysicsAPI methods
+        /////////////////////////////////////////////////////////////////////////////////////////
+        //////////          API to Communication with SofaAdvancePhysicsAPI         /////////////
+        /////////////////////////////////////////////////////////////////////////////////////////
+
+        /// Bindings to the SofaAdvancePhysicsAPI creation/destruction methods
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern IntPtr sofaPhysicsAPI_create();
-        [DllImport("SofaAdvancePhysicsAPI")]
-        public static extern void sofaPhysicsAPI_createScene(IntPtr obj);
+
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern int sofaPhysicsAPI_delete(IntPtr obj);
+
+
+        /// Bindings to create or load an existing simulation scene
+        [DllImport("SofaAdvancePhysicsAPI")]
+        public static extern void sofaPhysicsAPI_createScene(IntPtr obj);
 
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaPhysicsAPI_loadScene(IntPtr obj, string filename);
 
+
+        /// Binding to load a plugin
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaPhysicsAPI_loadPlugin(IntPtr obj, string pluginName);
 
+
+        /// Bindings to hangle glew creation/destruction
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaPhysicsAPI_initGlutGlew(IntPtr obj);
 
       //  [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
       //  public static extern int sofaPhysicsAPI_freeGlutGlew(IntPtr obj);
 
+
+        /// Bindings to communicate with the simulation tree
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern int sofaPhysicsAPI_getNumberObjects(IntPtr obj);
 
@@ -227,6 +245,8 @@ namespace SofaUnityAPI
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern string sofaPhysicsAPI_get3DObjectType(IntPtr obj, int id);
 
+
+        /// Bindings to communicate with the simulation loop
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern void sofaPhysicsAPI_start(IntPtr obj);
         [DllImport("SofaAdvancePhysicsAPI")]
@@ -236,11 +256,11 @@ namespace SofaUnityAPI
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern void sofaPhysicsAPI_reset(IntPtr obj);
 
+
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern void sofaPhysicsAPI_setTimeStep(IntPtr obj, double value);
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern double sofaPhysicsAPI_timeStep(IntPtr obj);
-
 
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern void sofaPhysicsAPI_setGravity(IntPtr obj, double[] values);
@@ -248,7 +268,7 @@ namespace SofaUnityAPI
         public static extern int sofaPhysicsAPI_gravity(IntPtr obj, double[] values);
         
 
-
+        /// Bindings tests
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern string sofaPhysicsAPI_APIName(IntPtr obj);
 

@@ -3,13 +3,11 @@ using System;
 using System.Runtime.InteropServices;
 
 /// <summary>
-/// Class to create a ray caster in Sofa and comunicate with it.
+/// Class to create a ray caster in SofaAdvancePhysicsAPI and to comunicate with it.
 /// </summary>
 public class SofaRayCaster : IDisposable
 {
-    /// <summary>
-    /// default constuctor of the sofa ray caster
-    /// </summary>
+    /// <summary> Default constuctor of the sofa ray caster. </summary>
     /// <param name="simu">Pointer to the implicit sofaAPI</param>
     /// <param name="type">type of tool to attach to this ray caster</param>
     /// <param name="nameID">unique name id of this ray caster</param>
@@ -73,7 +71,7 @@ public class SofaRayCaster : IDisposable
         return res;
     }
 
-    /// Method to send a new ray. TODO: could maybe optimise here and send only if tool is activated
+    /// Method to send a new ray. TODO: could be optimise here and send only if tool is activated
     public int castRay(Vector3 origin, Vector3 direction, Vector3 scaleUnityToSofa)
     {
         if (m_simu == IntPtr.Zero)
@@ -96,6 +94,12 @@ public class SofaRayCaster : IDisposable
     }
 
 
+
+    /////////////////////////////////////////////////////////////////////////////////////////
+    //////////      Communication API to SofaAdvancePhysicsAPI ray caster     ///////////////
+    /////////////////////////////////////////////////////////////////////////////////////////
+
+    /// API to create a specific ray caster tool.
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_createResectionTool(IntPtr obj, string name, float length);
 
@@ -105,9 +109,12 @@ public class SofaRayCaster : IDisposable
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_createFixConstraintTool(IntPtr obj, string name, float length);
 
+    /// Binding to activate or desactivate the tool.
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysicsAPI_activateTool(IntPtr obj, string name, bool value);
+
+    /// Binding to propagate the ray position and direction.
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_castRay(IntPtr obj, string name, float[] origin, float[] direction);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysicsAPI_activateTool(IntPtr obj, string name, bool value);
 }

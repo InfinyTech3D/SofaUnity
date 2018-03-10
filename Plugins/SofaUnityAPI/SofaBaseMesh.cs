@@ -5,14 +5,12 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// This is the base class representing Sofa Mesh Object, handling all bindings to Sofa 3D Object.
+/// Base class representing Sofa Mesh Object, handling all bindings to Sofa 3D Mesh Object.
 /// It will connect to the SofaPhysicsAPI and prepar the link to specific mesh objects. 
 /// </summary>
 public class SofaBaseMesh : SofaBaseObject
 {
-    /// <summary>
-    /// Default constructor to create a Sofa Mesh
-    /// </summary>
+    /// <summary> Default constructor to create a Sofa 3D Mesh. </summary>
     /// <param name="simu">Pointer to the SofaPhysicsAPI</param>
     /// <param name="nameID">Name of this Object</param>
     /// <param name="isRigid">Type rigid or deformable</param>
@@ -29,18 +27,17 @@ public class SofaBaseMesh : SofaBaseObject
     /// Implicit method load the object from the Sofa side.
     public override void loadObject()
     {
-        //if (m_native != IntPtr.Zero)        
-        if (m_native == IntPtr.Zero) // first time create object only
+        // first time create object only
+        if (m_native == IntPtr.Zero) 
         {
+            // Create object first
             m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name);
 
+            // Check if creation failed otherwise get parent name
             if (m_native == IntPtr.Zero)
                 Debug.LogError("Error Mesh can't be found: " + m_name);
             else
-            {
-                // Debug.Log("Load Node Name: " + m_name);
                 m_parent = sofaPhysicsAPI_getParentNodeName(m_simu, m_name);
-            }
         }
     }
 
@@ -148,19 +145,27 @@ public class SofaBaseMesh : SofaBaseObject
     }
 
 
+    /// Method to get the number of vertices in the current SOFA object
+    public int getNbVertices()
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            int nbrV = sofaPhysicsAPI_getNbVertices(m_simu, m_name);
+            return nbrV;
+        }
+        else
+            return 0;
+    }
+
+
     /// Method to create the triangulation from Sofa topology to Unity buffers
     public virtual int[] createTriangulation()
     {
-        
         int nbrTris = sofaPhysics3DObject_getNbTriangles(m_simu, m_name);
         int nbrQuads = sofaPhysics3DObject_getNbQuads(m_simu, m_name);
 
         if (log)
-        {
-            Debug.Log("createTriangulation: " + m_name);
-            Debug.Log("nbrTris: " + nbrTris);
-            Debug.Log("nbQuads: " + nbrQuads);
-        }
+            Debug.Log("createTriangulation: " + m_name + " | nbrTris: " + nbrTris + " | nbQuads: " + nbrQuads);
         
         if (nbrTris < 0)
             nbrTris = 0;
@@ -195,6 +200,7 @@ public class SofaBaseMesh : SofaBaseObject
             trisOut[nbrIntTri + i * 6 + 5] = quads[i * 4 + 3];
         }
 
+        // Force future deletion
         quads = null;
         tris = null;
 
@@ -202,52 +208,45 @@ public class SofaBaseMesh : SofaBaseObject
     }
 
 
-    /// Method to update the Unity mesh buffers (vertices and normals) from sofa object side. Assume no topology change here.
+    /// Method to update the Unity mesh buffers (vertices and normals) from sofa object side. Assume topology hadn't changed by default.
+    /// If topology has change, createTriangulation method need to be called before this method.
     public virtual void updateMesh(Mesh mesh)
     {
         if (m_native != IntPtr.Zero)
         {
             int nbrV = sofaPhysicsAPI_getNbVertices(m_simu, m_name);
 
-            if (log)
-                Debug.Log("vertices: " + nbrV);
+            if (nbrV < 0)
+                return; 
 
+            // get access to sofa buffers
             float[] vertices = new float[nbrV * 3];
             int resV = sofaPhysics3DObject_getVertices(m_simu, m_name, vertices);
             float[] normals = new float[nbrV * 3];
             int resN = sofaPhysics3DObject_getNormals(m_simu, m_name, normals);
+
             if (log)
-            {
-                Debug.Log(m_name + " - resV: " + resV);
-                Debug.Log(m_name + " - resN: " + resN);
-                if (resN < 0 )
-                    Debug.Log("No normals found!");
-            }
+                Debug.Log(m_name + " | Number of vertices: " + nbrV + " | resV: " + resV + " | resN: " + resN);
+
 
             Vector3[] verts = mesh.vertices;
             Vector3[] norms = mesh.normals;
             bool first = false;
             if (verts.Length == 0)// first time
             {
-                //Debug.Log("init");
                 verts = new Vector3[nbrV];
                 norms = new Vector3[nbrV];
                 first = true;
             }
 
             if (log)
-            {
-                Debug.Log("   - verts size: " + verts.Length);
-                Debug.Log("   - vertices.Length: " + vertices.Length);
-            }
+                Debug.Log(m_name + " | Number of vertices: " + nbrV + " | verts.Length: " + verts.Length + " | vertices.Lengt: " + vertices.Length);
 
             if (vertices.Length != 0)
             {
                 int factor = 1;
                 if (m_invertNormals)
                     factor = -1;
-
-                
 
                 for (int i = 0; i < nbrV; ++i)
                 {
@@ -264,9 +263,9 @@ public class SofaBaseMesh : SofaBaseObject
                     if (resN < 0) // no normals
                     {
                         Vector3 vec = Vector3.Normalize(verts[i]);
-                        norms[i].x = vec.x * factor;// normals[i * 3];
-                        norms[i].y = vec.y * factor; //normals[i * 3 + 1];
-                        norms[i].z = vec.z * factor; //normals[i * 3 + 2];
+                        norms[i].x = vec.x * factor;
+                        norms[i].y = vec.y * factor;
+                        norms[i].z = vec.z * factor;
                     }
                     else
                     {
@@ -286,6 +285,8 @@ public class SofaBaseMesh : SofaBaseObject
     }
 
 
+    /// Method to update the Unity mesh vertex buffer only from sofa object side. Assume topology hadn't changed by default.
+    /// If topology has change, createTriangulation method need to be called before this method.
     public virtual void updateMeshVelocity(Mesh mesh, float timestep)
     {
         if (m_native == IntPtr.Zero)
@@ -293,38 +294,30 @@ public class SofaBaseMesh : SofaBaseObject
 
         int nbrV = sofaPhysicsAPI_getNbVertices(m_simu, m_name);
 
-        if (log)
-            Debug.Log("vertices: " + nbrV);
-
         float[] velocities = new float[nbrV * 4];
         int resV = sofaPhysics3DObject_getVelocities(m_simu, m_name, velocities);
 
-        if (resV < 0)
-        {
-            //Debug.Log(m_name + " - resV: " + resV);
+        if (log)
+            Debug.Log(m_name + " | Number of vertices: " + nbrV + " | resV: " + resV);
+
+        if (resV < 0 || nbrV <= 0)
             return;
-        }
 
         Vector3[] verts = mesh.vertices;
         if (verts.Length == 0)// first time
             verts = new Vector3[nbrV];
 
         if (log)
-        {
-            Debug.Log("   - verts size: " + verts.Length);
-            Debug.Log("   - vertices.Length: " + velocities.Length);
-        }
+            Debug.Log(m_name + " | Number of vertices: " + nbrV + " | verts.Length: " + verts.Length + " | vertices.Lengt: " + velocities.Length);
+
 
         if (velocities.Length != 0)
         {
             for (int i = 0; i < nbrV; ++i)
             {
                 int id = (int)velocities[i * 4];
-                if (id == -1)
-                {
-                    //Debug.Log("Stop at: " + i);
+                if (id == -1) // Means no more data to copy in the buffer
                     break;
-                }
 
                 verts[id].x = verts[id].x + timestep * velocities[i * 4 + 1] ;
                 verts[id].y = verts[id].y + timestep * velocities[i * 4 + 2] ;
@@ -334,17 +327,18 @@ public class SofaBaseMesh : SofaBaseObject
 
         mesh.vertices = verts;
 
+        // Force future deletion
         velocities = null;
     }
 
 
-    /// Post processing method to recompute topology if needed. Should be overwritten by child if needed only.
+    /// Post processing method to recompute topology internally if needed. Should be overwritten by child if needed only.
     public virtual void recomputeTopology(Mesh mesh)
     {
 
     }
 
-    /// Method to check if the topology of the mesh has changed.
+    /// Method to check if the topology of this mesh has changed since last update.
     public bool hasTopologyChanged()
     {
         if (m_native != IntPtr.Zero)
@@ -356,7 +350,7 @@ public class SofaBaseMesh : SofaBaseObject
             return false;
     }
 
-    /// Method to set that the change of topology has well be handle.
+    /// Method to set that the change of topology of this mesh has well be handle in this update.
     public int setTopologyChange(bool value)
     {
         if (m_native != IntPtr.Zero)
@@ -380,18 +374,7 @@ public class SofaBaseMesh : SofaBaseObject
             return 0;
     }
 
-    /// Method to get the number of vertices in the current SOFA object
-    public int getNbVertices()
-    {
-        if (m_native != IntPtr.Zero)
-        {
-            int nbrTetra = sofaPhysicsAPI_getNbVertices(m_simu, m_name);
-            return nbrTetra;
-        }
-        else
-            return 0;
-    }
-
+    
     /// Method to get the buffer of tetrahedra from the current SOFA object
     public void getTetrahedra(int[] tetra)
     {
@@ -400,6 +383,7 @@ public class SofaBaseMesh : SofaBaseObject
             sofaPhysics3DObject_getTetrahedra(m_simu, m_name, tetra);
         }
     }
+
 
     /// Method to update the Unity mesh buffers (vertices and normals) from a tetrahedron topology object. Assume no topology change here.
     public virtual void updateMeshTetra(Mesh mesh, Dictionary<int, int> mapping)
@@ -590,48 +574,66 @@ public class SofaBaseMesh : SofaBaseObject
     }
 
 
-    // API to update Mesh
-    //{
+
+    /////////////////////////////////////////////////////////////////////////////////////////
+    ///////////            API to Communication with mesh geometry           ////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////
+
+    /// Get number of vertices in the object
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_getNbVertices(IntPtr obj, string name);
 
+    /// Binding to access to the position buffer
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysics3DObject_getVertices(IntPtr obj, string name, float[] arr);
 
+    /// Binding to access to the velocity buffer
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getVelocities(IntPtr obj, string name, float[] arr);
+
+    /// Binding to access to the normal buffer
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysics3DObject_getNormals(IntPtr obj, string name, float[] arr);
 
+    /// Binding to access to the texcoord buffer
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysics3DObject_getTexCoords(IntPtr obj, string name, float[] arr);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_getVelocities(IntPtr obj, string name, float[] arr);
-    //}
 
-    // API to access Topology
-    //{
+
+    /////////////////////////////////////////////////////////////////////////////////////////
+    ///////////            API to Communication with mesh topology           ////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////
+
+    /// Binding to Triangles API
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysics3DObject_getNbTriangles(IntPtr obj, string name);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_getQuads(IntPtr obj, string name, int[] arr);
+    public static extern int sofaPhysics3DObject_getTriangles(IntPtr obj, string name, int[] arr);
 
+
+    /// Binding to Quads API
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysics3DObject_getNbQuads(IntPtr obj, string name);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_getTriangles(IntPtr obj, string name, int[] arr);
+    public static extern int sofaPhysics3DObject_getQuads(IntPtr obj, string name, int[] arr);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_getTetrahedra(IntPtr obj, string name, int[] arr);
 
+    /// Binding to Tetra API
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysics3DObject_getNbTetrahedra(IntPtr obj, string name);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getTetrahedra(IntPtr obj, string name, int[] arr);
+
+
+    /// Binding to Topology change API
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern bool sofaPhysicsAPI_hasTopologyChanged(IntPtr obj, string name);
+
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_setTopologyChanged(IntPtr obj, string name, bool value);
 
-    //}
 }

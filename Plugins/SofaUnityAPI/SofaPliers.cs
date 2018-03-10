@@ -3,15 +3,18 @@ using System;
 using System.Runtime.InteropServices;
 
 /// <summary>
-/// Class to create a ray caster in Sofa and comunicate with it.
+/// SofaPliers Class is used to create a specific Plier tool on Sofa side and comunicate with it.
+/// the plier is composed of 2 jaws each one represented by a mesh. The last object is the object to interact with.
+/// Can only interact with a single physical object for the moment.
 /// </summary>
 public class SofaPliers : IDisposable
 {
-    /// <summary>
-    /// default constuctor of the sofa ray caster
-    /// </summary>
+    /// <summary> Default constuctor of the SofaPliers. </summary>
     /// <param name="simu">Pointer to the implicit sofaAPI</param>
-    /// <param name="nameID">unique name id of this ray caster</param>
+    /// <param name="nameID">unique name id sofaPlier</param>
+    /// <param name="nameMord1">Model name of the 1st plier jaw</param>
+    /// <param name="nameMord2">Model name of the 2nd plier jaw</param>
+    /// <param name="nameModel">model name to interact with</param>
     public SofaPliers(IntPtr simu, string nameID, string nameMord1, string nameMord2, string nameModel)
     {
         m_simu = simu;
@@ -24,8 +27,14 @@ public class SofaPliers : IDisposable
         if (m_simu != IntPtr.Zero)
         {
             res = sofaPhysicsAPI_createPliers(m_simu, m_name, m_nameMord1, m_nameMord2, m_nameModel);
+            if (res < 0)
+                Debug.LogError("SofaPliers creation: " + m_name + " returns error: " + res
+                    + " | m_nameMord1: " + m_nameMord1
+                    + " | m_nameMord2: " + m_nameMord2
+                    + " | m_nameModel: " + m_nameModel);
         }
-        Debug.Log("SofaPliers creation: " + nameID + " -> " + res);
+        else
+            Debug.LogError("SofaPliers creation: " + nameID + " failed. Can't access Object Pointer simulation.");
     }
 
     // TODO: check if needed
@@ -33,12 +42,18 @@ public class SofaPliers : IDisposable
 
     /// Name of the Sofa object mapped to this Object.
     protected string m_name;
+    /// Name of the 1st plier jaw
     protected string m_nameMord1;
+    /// Name of the 2nd plier jaw
     protected string m_nameMord2;
+    /// Name of the physical model to interact with
     protected string m_nameModel;
 
     /// Pointer to the SofaPhysicsAPI 
     protected IntPtr m_simu = IntPtr.Zero;
+
+    /// Parameter to activate internal logging
+    protected bool log = false;
 
 
     /// Memory free method
@@ -57,28 +72,40 @@ public class SofaPliers : IDisposable
         }
     }
 
-    /// Method to activate or not the tool attached to the ray caster
+
+    /// <summary> Method to activate the plier when it is being closed.</summary>
+    /// <returns> The number of vertices being grabed. Return negative value if encountered an error.</returns>
     public int closePliers()
     {
         if (m_simu == IntPtr.Zero)
             return -10;
 
         int res = sofaPhysicsAPI_closePliers(m_simu, m_name);
-        Debug.Log("SofaPliers closePliers: " + m_name + " -> " + res);
+        if(log)
+            Debug.Log("SofaPliers closePliers: " + m_name + " -> return: " + res);
+
         return res;
     }
 
+
+    /// Method to release the plier when it is being opened.
+    /// <returns> Negative value if encountered an error.</returns>
     public int releasePliers()
     {
         if (m_simu == IntPtr.Zero)
             return -10;
 
         int res = sofaPhysicsAPI_releasePliers(m_simu, m_name);
+        if (log)
+            Debug.Log("SofaPliers releasePliers: " + m_name + " -> return: " + res);
 
         return res;        
     }
-    
 
+
+    /// <summary> Method to get the vertex ids grabed by the plier.</summary>
+    /// <param name="ids"> Buffer used to exchange the vertex ids.</param>
+    /// <returns> Negative value if encountered an error.</returns>
     public int getIdsGrabed(int[] ids)
     {
         if (m_simu == IntPtr.Zero)
@@ -87,6 +114,10 @@ public class SofaPliers : IDisposable
         return sofaPhysicsAPI_idGrabed(m_simu, m_name, ids);
     }
 
+
+    /////////////////////////////////////////////////////////////////////////////////////////
+    ///////////      Communication API to set/get basic values into Sofa     ////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_createPliers(IntPtr obj, string nameID, string nameMord1, string nameMord2, string nameModel);
