@@ -180,7 +180,6 @@ namespace SofaUnity
             }
         }
 
-
         /// public method that return the number of vertices, override base method by returning potentially the number of vertices from tetra topology.
         public override int nbVertices()
         {
@@ -232,15 +231,15 @@ namespace SofaUnity
             //m_impl.recomputeTriangles(m_mesh);
 
             // Set the FEM and spring parameters.
-            if (m_mass != float.MaxValue) // Otherwise means it has been unactivated from scene parsing
+            if (m_mass != float.MinValue) // Otherwise means it has been unactivated from scene parsing
                 m_impl.mass = m_mass;
-            if (m_young != float.MaxValue)
+            if (m_young != float.MinValue)
                 m_impl.youngModulus = m_young;
-            if (m_poisson != float.MaxValue)
+            if (m_poisson != float.MinValue)
                 m_impl.poissonRatio = m_poisson;
-            if (m_stiffness != float.MaxValue)
+            if (m_stiffness != float.MinValue)
                 m_impl.stiffness = m_stiffness;
-            if (m_damping != float.MaxValue)
+            if (m_damping != float.MinValue)
                 m_impl.damping = m_damping;
 
             base.initMesh(false);

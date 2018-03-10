@@ -80,7 +80,7 @@ namespace SofaUnity
 
             // Copy info if mesh has collision
             float test = m_impl.getFloatValue("radius");
-            if (test == float.MaxValue) // no sphere
+            if (test == float.MinValue) // no sphere
                 m_hasCollisionSphere = false;
             else
             {
@@ -161,7 +161,7 @@ namespace SofaUnity
             // Copy info if collision
             float test = m_impl.getFloatValue("radius");
             //Debug.Log("radius: " + test);
-            if (test == float.MaxValue) // no sphere
+            if (test == float.MinValue) // no sphere
                 m_hasCollisionSphere = false;
             else
             {
