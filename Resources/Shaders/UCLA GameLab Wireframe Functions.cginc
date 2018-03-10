@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 //Algorithms and shaders based on code from this journal
 //http://cgg-journal.com/2008-2/06/index.html
 
@@ -35,7 +37,7 @@ sampler2D _MainTex;			// Texture used for the line
 UCLAGL_v2g UCLAGL_vert(appdata_base v)
 {
 	UCLAGL_v2g output;
-	output.pos =  mul(UNITY_MATRIX_MVP, v.vertex);
+	output.pos =  UnityObjectToClipPos(v.vertex);
 	output.uv = TRANSFORM_TEX (v.texcoord, _MainTex);//v.texcoord;
 
 	return output;
