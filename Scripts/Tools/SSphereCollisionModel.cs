@@ -6,95 +6,52 @@ using SofaUnityAPI;
 using System;
 using UnityEditor;
 
+/// <summary>
+/// Base class inherite from MonoBehavior that design allow to create a set of sphere collision models
+/// This class is a work in progress. 
+/// It allows from a Unity GameObject geometry to generate a set of sphere that approximate the object.
+/// The spheres are mapped into collision models in Sofa
+/// </summary>
 [ExecuteInEditMode]
 public class SSphereCollisionModel : MonoBehaviour
 {
+    ////////////////////////////////////////////
+    /////          Object members          /////
+    ////////////////////////////////////////////
+
     /// Pointer to the Sofa context this GameObject belongs to.
     protected SofaContext m_context = null;
 
     /// Pointer to the corresponding SOFA API object
     protected SofaCustomMesh m_impl = null;
 
-    [SerializeField]
-    protected float m_radius = 1.0f;
-    [SerializeField]
-    protected float m_factor = 1.0f;
-    [SerializeField]
-    protected bool m_activated = true;
-
-    [SerializeField]
-    protected float m_stiffness = 100.0f;
-
-    public float factor
-    {
-        get { return m_factor; }
-        set
-        {
-            if (value != m_factor)
-            {
-                m_factor = value;
-                computeSphereCenters();
-            }
-            else
-                m_factor = value;            
-        }
-    }
-
-    public float radius
-    {
-        get { return m_radius; }
-        set
-        {
-            if (value != m_radius)
-            {
-                m_radius = value;
-                if (m_impl != null)
-                    m_impl.setFloatValue("radius", m_radius);
-            }
-            else
-                m_radius = value;
-        }
-    }
-
-    public bool activated
-    {
-        get { return m_activated; }
-        set { m_activated = value; }
-    }
-
-    public float stiffness
-    {
-        get { return m_stiffness; }
-        set
-        {
-            if (value != m_stiffness)
-            {
-                m_stiffness = value;
-                if (m_impl != null)
-                    m_impl.setFloatValue("contactStiffness", m_stiffness);
-            }
-            else
-                m_stiffness = value;
-        }
-    }
-
-
- 
-
-    protected List<Vector3> m_keyVertices = null;
-    protected Vector3[] m_centers = null;
-    public int nbrSpheres
-    {
-        get {
-            if (m_centers != null)
-                return m_centers.Length;
-            else
-                return 0;
-        }
-    }
 
     /// Parameter to activate logging of this Sofa GameObject
     protected bool m_log = false;
+
+    /// Booleen to activate/unactivate the collision
+    [SerializeField] protected bool m_activated = true;
+    /// Discretisation factor to compute the number of sphere to create on the object.
+    [SerializeField] protected float m_factor = 1.0f;
+
+    /// Collision sphere radius
+    [SerializeField] protected float m_radius = 1.0f;
+    /// Collision sphere contact stiffness
+    [SerializeField] protected float m_stiffness = 100.0f;
+
+    
+    /// List of unique vertex that discribe the GameObject geometry
+    protected List<Vector3> m_keyVertices = null;
+
+    /// array of vertex corresponding to the sphere centers
+    protected Vector3[] m_centers = null;
+    
+
+
+
+    ////////////////////////////////////////////
+    /////       Object creation API        /////
+    ////////////////////////////////////////////
 
     /// Method called at GameObject creation. Will search for SofaContext @sa loadContext() which call @sa createObject() . Then call @see awakePostProcess()
     void Awake()
@@ -108,6 +65,7 @@ public class SSphereCollisionModel : MonoBehaviour
         // Call a post process method for additional codes.
         awakePostProcess();
     }
+
 
     protected bool loadContext()
     {
@@ -148,8 +106,7 @@ public class SSphereCollisionModel : MonoBehaviour
         }    
     }
 
-   
-
+    
     /// Method called by @sa loadContext() method. To create the object when Sofa context has been found.
     protected virtual void createObject()
     {
@@ -195,6 +152,12 @@ public class SSphereCollisionModel : MonoBehaviour
     }
 
 
+
+
+    ////////////////////////////////////////////
+    /////       Object behavior API        /////
+    ////////////////////////////////////////////
+
     // Use this for initialization
     void Start()
     {
@@ -205,6 +168,17 @@ public class SSphereCollisionModel : MonoBehaviour
         }
     }
 
+    
+    // Update is called once per frame
+    void Update()
+    {
+        if (m_activated && m_impl != null)
+        {
+            m_impl.updateMesh(this.transform, m_centers, m_context.getScaleUnityToSofa());
+        }
+    }
+
+    /// Method to compute the centers according to the @see m_keyVertices and @sa m_factor
     protected void computeSphereCenters()
     {
         if (m_keyVertices == null)
@@ -217,29 +191,29 @@ public class SSphereCollisionModel : MonoBehaviour
         List<Vector3> bufferTotal = new List<Vector3>();
 
         float contextFactor = m_context.getFactorUnityToSofa();
-        for (int i=0; i< buffer.Length; ++i)
+        for (int i = 0; i < buffer.Length; ++i)
         {
             bufferTotal.Add(buffer[i]);
             Vector3 pointA = this.transform.TransformPoint(buffer[i]);
-            for (int j = i+1; j < buffer.Length; ++j)
+            for (int j = i + 1; j < buffer.Length; ++j)
             {
                 Vector3 pointB = this.transform.TransformPoint(buffer[j]);
                 Vector3 dir = pointB - pointA;
                 float dist = dir.magnitude;
 
                 dist = dist * 10;
-                
+
                 int interpol = (int)Math.Floor((dist * contextFactor) / m_factor);
-                
+
                 if (interpol > 1)
                 {
-                    float interval = (dist*0.1f) / interpol;
+                    float interval = (dist * 0.1f) / interpol;
                     //Debug.Log("dist: " + dist + " | interpol: " + interpol + " | from " + dist / m_factor + " | interval: " + interval);
-                    
+
                     dir.Normalize();
                     for (int k = 1; k < interpol; k++)
-                    {                        
-                        Vector3 newPoint = pointA + dir * interval * k;                        
+                    {
+                        Vector3 newPoint = pointA + dir * interval * k;
                         bufferTotal.Add(this.transform.InverseTransformPoint(newPoint));
                     }
                 }
@@ -264,15 +238,81 @@ public class SSphereCollisionModel : MonoBehaviour
 
 
 
-    // Update is called once per frame
-    void Update()
+    ////////////////////////////////////////////
+    /////        Object members API        /////
+    ////////////////////////////////////////////
+
+    /// Getter/Setter of the parameter @see m_activated  
+    public bool activated
     {
-        if (m_activated && m_impl != null)
+        get { return m_activated; }
+        set { m_activated = value; }
+    }
+
+    /// Getter/Setter of the parameter @see m_factor       
+    public float factor
+    {
+        get { return m_factor; }
+        set
         {
-            m_impl.updateMesh(this.transform, m_centers, m_context.getScaleUnityToSofa());
+            if (value != m_factor)
+            {
+                m_factor = value;
+                computeSphereCenters();
+            }
+            else
+                m_factor = value;
         }
     }
 
+    /// Getter/Setter of the parameter @see m_radius     
+    public float radius
+    {
+        get { return m_radius; }
+        set
+        {
+            if (value != m_radius)
+            {
+                m_radius = value;
+                if (m_impl != null)
+                    m_impl.setFloatValue("radius", m_radius);
+            }
+            else
+                m_radius = value;
+        }
+    }
+
+    /// Getter/Setter of the parameter @see m_stiffness     
+    public float stiffness
+    {
+        get { return m_stiffness; }
+        set
+        {
+            if (value != m_stiffness)
+            {
+                m_stiffness = value;
+                if (m_impl != null)
+                    m_impl.setFloatValue("contactStiffness", m_stiffness);
+            }
+            else
+                m_stiffness = value;
+        }
+    }
+
+
+    /// Get the number of spheres
+    public int nbrSpheres
+    {
+        get
+        {
+            if (m_centers != null)
+                return m_centers.Length;
+            else
+                return 0;
+        }
+    }
+
+    /// Method to draw debug information like the vertex being grabed
     void OnDrawGizmosSelected()
     {
         if (m_centers == null || m_context == null)

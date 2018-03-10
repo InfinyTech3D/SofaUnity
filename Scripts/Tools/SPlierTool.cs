@@ -5,27 +5,48 @@ using SofaUnity;
 using System;
 
 /// <summary>
-/// Base class inherite from MonoBehavior that design a Ray casting object.
+/// Base class inherite from MonoBehavior that design a Plier tool.
+/// This class is a work in progress. And need to have GameObject for each plier jaw as well as a target object.
 /// </summary>
 //[ExecuteInEditMode]
 public class SPlierTool : MonoBehaviour
 {
-    private Animator animator { get { return GetComponent<Animator>(); } }
-
-    private float animSpeed = 0.1f;
+    ////////////////////////////////////////////
+    /////          Object members          /////
+    ////////////////////////////////////////////
 
     /// Pointer to the Sofa context this GameObject belongs to.
     protected SofaUnity.SofaContext m_sofaContext = null;
-
     /// Pointer to the corresponding SOFA API object
     protected SofaPliers m_sofaPlier = null;
+    
+
+    /// Pointer to the unity GameObject corresponding to the upper jaw
     public GameObject Mord_UP = null;
+    /// Pointer to the unity GameObject corresponding to the lower jaw
     public GameObject Mord_Down = null;
+    /// Pointer to the unity GameObject to interact with
     public GameObject Model = null;
+    /// Pointer to the unity GameObject that correspond to the visual object to interact with (could be similar to Model)
     public GameObject ModelVisu = null;
+
+    /// Mesh renderer of the ModelVisu GameObject
     protected Mesh modelMesh = null;
 
+
+    /// speed factor of the plier animation
+    private float animSpeed = 0.1f;
+    
+    /// Number of vertex grabed by the plier
+    protected int m_nbrGrabed = 0;
+    /// Buffer of vertex id grabed by the plier
     protected int[] m_idGrabed = null;
+
+
+
+    ////////////////////////////////////////////
+    /////       Object creation API        /////
+    ////////////////////////////////////////////
 
     /// Method called at GameObject creation. Will search for SofaContext @sa loadContext() which call @sa createObject() . Then call @see awakePostProcess()
     void Awake()
@@ -53,15 +74,11 @@ public class SPlierTool : MonoBehaviour
             StartCoroutine(createSofaPlier());
     }
 
-    private void Start()
-    {
-        animator.speed = animSpeed;
-    }
 
     /// Method called by @sa loadContext() method. To create the object when Sofa context has been found. To be implemented by child class.
     protected virtual IEnumerator createSofaPlier()
     {
-        // Get access to the sofaContext
+        // Get access to the sofaContext // TODO remove this HACK: All components need to be created before the SofaPlier
         yield return new WaitForSeconds(1);
 
         IntPtr _simu = m_sofaContext.getSimuContext();
@@ -73,7 +90,35 @@ public class SPlierTool : MonoBehaviour
         }
     }
 
-    protected int m_nbrGrabed = 0;
+
+
+
+    ////////////////////////////////////////////
+    /////       Object behavior API        /////
+    ////////////////////////////////////////////
+
+    private void Start()
+    {
+        animator.speed = animSpeed;
+    }
+
+    private Animator animator { get { return GetComponent<Animator>(); } }
+
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            StartCoroutine(Clamp());
+        }
+        else if (Input.GetKeyDown(KeyCode.V))
+        {
+            StartCoroutine(Unclamp());
+        }
+    }
+
+
+    /// Real method to activate the clamping in Sofa object
     public bool clampSofaPlier()
     {
         if (m_sofaPlier == null)
@@ -99,6 +144,7 @@ public class SPlierTool : MonoBehaviour
         }
     }
 
+    /// Real method to rlease the clamping in Sofa object
     public bool releaseSofaPlier()
     {
         if (m_sofaPlier == null)
@@ -110,19 +156,8 @@ public class SPlierTool : MonoBehaviour
         return true;
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            StartCoroutine(Clamp());
-        }
-        else if (Input.GetKeyDown(KeyCode.V))
-        {
-            StartCoroutine(Unclamp());
-        }
-
-    }
-
+    
+    /// Method to activate the clamping animation and call the plier clamping computation
     public IEnumerator Clamp()
     {
         animator.SetBool("isClamped", true);
@@ -130,6 +165,7 @@ public class SPlierTool : MonoBehaviour
         clampSofaPlier();
     }
 
+    /// Method to activate the unclamping animation and call the plier release computation
     public IEnumerator Unclamp()
     {
         animator.SetBool("isClamped", false);
@@ -137,6 +173,8 @@ public class SPlierTool : MonoBehaviour
         releaseSofaPlier();
     }
 
+
+    /// Method to draw debug information like the vertex being grabed
     void OnDrawGizmosSelected()
     {
         if (m_idGrabed == null || ModelVisu == null)
