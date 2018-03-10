@@ -59,7 +59,11 @@ namespace SofaUnity
             if (m_impl == null)
                 return;
 
-            string allData = m_impl.loadAllData();            
+            string allData = m_impl.loadAllData();
+
+            if (allData == "None")
+                return;
+                      
             List<String> datas = allData.Split(';').ToList();
             m_dataMap = new Dictionary<string, string>();
             m_datas = new List<SData>();

@@ -41,7 +41,10 @@ public class SofaComponent : SofaBaseObject
 
     public string loadAllData()
     {
-        return sofaPhysics3DObject_getDataFields(m_simu, m_name);
+        if (m_native != IntPtr.Zero)
+            return sofaPhysics3DObject_getDataFields(m_simu, m_name);
+        else
+            return "None";
     }
 
 
