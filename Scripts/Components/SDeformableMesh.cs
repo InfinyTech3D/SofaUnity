@@ -43,7 +43,7 @@ namespace SofaUnity
         int nbVert = 0;
 
         /// Bool to store the last MeshFilter status. Allow to know if mesh is renderer or not.
-        bool m_previousMRDisplay = true;
+        protected bool m_previousMRDisplay = true;
 
 
 

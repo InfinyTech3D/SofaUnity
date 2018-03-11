@@ -36,6 +36,9 @@ namespace SofaUnity
                 else
                     mr.sharedMaterial = new Material(Shader.Find("Diffuse"));
             }
+
+            mr.enabled = true;
+            m_previousMRDisplay = true;
         }
 
 
@@ -73,6 +76,17 @@ namespace SofaUnity
                 m_impl.updateMeshVelocity(m_mesh, m_context.timeStep);
                 //m_mesh.RecalculateNormals();
             }
+        }
+
+
+        /// Method to check which deformable parameters coubld be set in the GUI
+        protected void checkDeformableParameters()
+        {
+            m_poisson = m_impl.poissonRatio;
+            m_mass = m_impl.mass;
+            m_young = m_impl.youngModulus;
+            m_stiffness = m_impl.stiffness;
+            m_damping = m_impl.damping;
         }
 
 

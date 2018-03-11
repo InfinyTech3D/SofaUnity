@@ -50,7 +50,7 @@ namespace SofaUnity
             MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();
             if (mr == null)
                 mr = gameObject.AddComponent<MeshRenderer>();
-            mr.enabled = false;
+            mr.enabled = true;
         }
 
 
@@ -89,7 +89,7 @@ namespace SofaUnity
 
             if (m_impl != null)
             {
-                m_impl.updateMesh(m_mesh);
+                //m_impl.updateMesh(m_mesh);
              //   m_impl.updateMeshVelocity(m_mesh, m_context.timeStep);
                 //m_mesh.RecalculateNormals(); // TODO: not sure it is needed anymore
             }
