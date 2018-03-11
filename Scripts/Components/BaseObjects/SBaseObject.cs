@@ -58,6 +58,9 @@ namespace SofaUnity
             // First load the Sofa context and create the object.
             loadContext();
 
+            // init the parameters from the sofa object
+            initParameters();
+
             // Call a post process method for additional codes.
             awakePostProcess();
 
@@ -122,6 +125,13 @@ namespace SofaUnity
 
         /// Method called by @sa loadContext() method. To create the object when Sofa context has been found. To be implemented by child class.
         protected virtual void createObject()
+        {
+
+        }
+
+
+        /// called by @sa Awake method. To store value from sofa object
+        protected virtual void initParameters()
         {
 
         }

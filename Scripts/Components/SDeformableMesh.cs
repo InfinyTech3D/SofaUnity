@@ -30,6 +30,17 @@ namespace SofaUnity
         /// Parameter to define the uniform damping for all the springs of this deformable Object
         public float m_damping = 1.0f;
 
+        /// Parameter to define the Mass of this deformable Object
+        public float m_init_mass = 10.0f;
+        /// Parameter to define the Young Modulus of this deformable Object
+        public float m_init_young = 1400.0f;
+        /// Parameter to define the Poisson Ratio of this deformable Object
+        public float m_init_poisson = 0.45f;
+        /// Parameter to define the uniform stiffness for all the springs of this deformable Object
+        public float m_init_stiffness = 1000.0f;
+        /// Parameter to define the uniform damping for all the springs of this deformable Object
+        public float m_init_damping = 1.0f;
+
 
         /// Member: if tetrahedron is detected, will gather the number of element
         protected int nbTetra = 0;
@@ -83,7 +94,27 @@ namespace SofaUnity
                 Debug.LogError("SDeformableMesh:: Object creation failed.");
         }
 
-        
+
+        /// Method to check which deformable parameters coubld be set in the GUI
+        protected override void initParameters()
+        {
+            m_init_poisson = m_impl.poissonRatio;
+            m_init_mass = m_impl.mass;
+            m_init_young = m_impl.youngModulus;
+            m_init_stiffness = m_impl.stiffness;
+            m_init_damping = m_impl.damping;
+
+            if (!UnityEditor.EditorApplication.isPlaying)
+            {
+                m_poisson = m_impl.poissonRatio;
+                m_mass = m_impl.mass;
+                m_young = m_impl.youngModulus;
+                m_stiffness = m_impl.stiffness;
+                m_damping = m_impl.damping;
+            }
+        }
+
+
         /// Method called by @sa Awake() method. As post process method after creation.
         protected override void awakePostProcess()
         {

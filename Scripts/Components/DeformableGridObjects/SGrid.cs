@@ -79,17 +79,6 @@ namespace SofaUnity
         }
 
 
-        /// Method to check which deformable parameters coubld be set in the GUI
-        protected void checkDeformableParameters()
-        {
-            m_poisson = m_impl.poissonRatio;
-            m_mass = m_impl.mass;
-            m_young = m_impl.youngModulus;
-            m_stiffness = m_impl.stiffness;
-            m_damping = m_impl.damping;
-        }
-
-
         /// Getter/Setter to the @see m_gridSize
         public virtual Vector3 gridSize
         {

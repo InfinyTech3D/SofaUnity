@@ -18,8 +18,8 @@ namespace SofaUnity
             if (_simu != IntPtr.Zero) // Create the API object for Sofa Cylinder Grid Mesh
                 m_impl = new SofaCylinder(_simu, m_nameId, false);
 
-            if (!UnityEditor.EditorApplication.isPlaying)
-                checkDeformableParameters();
+            //if (!UnityEditor.EditorApplication.isPlaying)
+            //    initDeformableParameters();
 
             if (m_impl == null)
                 Debug.LogError("SCylinder:: Object creation failed.");
