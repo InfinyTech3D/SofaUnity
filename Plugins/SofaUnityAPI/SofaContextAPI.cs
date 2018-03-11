@@ -47,20 +47,18 @@ namespace SofaUnityAPI
         {
             if (m_native != IntPtr.Zero)
             {
-                //int resDel = sofaPhysicsAPI_delete(m_native);
-                //m_native = IntPtr.Zero;
-                //if (resDel < 0)
-                //    Debug.LogError("SofaContextAPI::Dispose sofaPhysicsAPI_delete returns: " + resDel);
+                int resDel = sofaPhysicsAPI_delete(m_native);
+                m_native = IntPtr.Zero;
+                if (resDel < 0)
+                    Debug.LogError("Error: SofaContextAPI::Dispose sofaPhysicsAPI_delete method returns: " + resDel);
+                Debug.Log("res del:" + resDel);
             }
-            //  int freeGl = sofaPhysicsAPI_freeGlutGlew(m_native);
-            //Debug.Log("Glut free: " + freeGl);
-
+           
             if (!m_isDisposed)
             {
                 m_isDisposed = true;
 
                 // TODO: should call delete method in SofaPAPI first
-
                 // Free the App
                 GCHandle.FromIntPtr(m_native).Free();
             }
@@ -109,16 +107,43 @@ namespace SofaUnityAPI
         {
             if (m_native != IntPtr.Zero)
             {
-                int initGl = sofaPhysicsAPI_initGlutGlew(m_native);
-                Debug.Log("Glut init: " + initGl);
                 int res = sofaPhysicsAPI_loadPlugin(m_native, pluginName);
-                Debug.Log("Plugin loaded: " + pluginName + "| res: " + res);
+                if (res < 0)
+                    Debug.LogError("Plugin loaded: " + pluginName + " method returns error: " + res);
             }
             else
-                Debug.LogError("Error can't load plugin: " + pluginName + "no sofaPhysicsAPI created!");
+                Debug.LogError("Error: can't load plugin: " + pluginName + "no sofaPhysicsAPI created!");
         }
 
 
+        /// Method to request load of glut and glew into Sofa software.
+        public void initGlutGlew()
+        {
+            if (m_native != IntPtr.Zero)
+            {
+                int initGl = sofaPhysicsAPI_initGlutGlew(m_native);
+                if (initGl < 0)
+                    Debug.LogError("Error: loading glut/glew in Sofa. Method returns error: " + initGl);
+            }
+            else
+                Debug.LogError("Error can't load glut/glew no sofaPhysicsAPI created!");
+        }
+
+
+        /// Method to request load of glut and glew into Sofa software.
+        public void freeGlutGlew()
+        {
+            if (m_native != IntPtr.Zero)
+            {
+                int freeGl = sofaPhysicsAPI_freeGlutGlew(m_native);
+                if (freeGl < 0)
+                    Debug.LogError("Error: free glut/glew in Sofa. Method returns error: " + freeGl);
+            }
+            else
+                Debug.LogError("Error can't free glut/glew no sofaPhysicsAPI found!");
+        }
+
+        
         /// Get the Sofa simulation context
         public IntPtr getSimuContext()
         {
@@ -228,8 +253,8 @@ namespace SofaUnityAPI
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaPhysicsAPI_initGlutGlew(IntPtr obj);
 
-      //  [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-      //  public static extern int sofaPhysicsAPI_freeGlutGlew(IntPtr obj);
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int sofaPhysicsAPI_freeGlutGlew(IntPtr obj);
 
 
         /// Bindings to communicate with the simulation tree
