@@ -29,8 +29,10 @@ public class SDeformableMeshEditor : Editor
     /// Method to set the UI of the SDeformableMesh GameObject
     /// </summary>
     public override void OnInspectorGUI()
-    {
+    {     
         SDeformableMesh mesh = (SDeformableMesh)this.target;
+        if (mesh.isAwake() == false)
+            return;
 
         // Check box to change normals direction
         normalBtn = EditorGUILayout.Toggle("Inverse Normals", normalBtn);
@@ -116,6 +118,8 @@ public class SRigidMeshEditor : Editor
     public override void OnInspectorGUI()
     {
         SRigidMesh mesh = (SRigidMesh)this.target;
+        if (mesh.isAwake() == false)
+            return;
 
         // Check box to change normals direction
         normalBtn = EditorGUILayout.Toggle("Inverse Normals", normalBtn);

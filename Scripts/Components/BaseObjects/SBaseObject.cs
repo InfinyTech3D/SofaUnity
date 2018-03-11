@@ -20,6 +20,9 @@ namespace SofaUnity
         /// Parameter to activate logging of this Sofa GameObject
         protected bool m_log = false;
 
+        /// Parameter storing the fact that the object is fully init
+        protected bool m_isAwake = false;
+        public bool isAwake() { return m_isAwake; }
 
         /// Name of the Sofa3DObject mapped to this Unity GameObject
         protected string m_nameId;
@@ -57,6 +60,9 @@ namespace SofaUnity
 
             // Call a post process method for additional codes.
             awakePostProcess();
+
+            // Store the fact that awake has finished.
+            m_isAwake = true;
         }
 
             
