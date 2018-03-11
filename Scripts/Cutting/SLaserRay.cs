@@ -126,10 +126,7 @@ public class SLaserRay : SRayCaster
             lightSource.transform.position = origin + transLocal; 
 
         if (m_sofaRC != null)
-        {
-            // get the id of the selected triangle. If < 0, no intersection
-            int triId = m_sofaRC.castRay(origin, direction, m_sofaContext.getScaleUnityToSofa());
-            
+        {                        
             if (Input.GetKey(KeyCode.C))
             {
                 this.activeTool(true);
@@ -138,6 +135,11 @@ public class SLaserRay : SRayCaster
             {
                 this.activeTool(false);
             }
+
+            int triId = -1;
+            // get the id of the selected triangle. If < 0, no intersection
+            if (m_isActivated)
+                triId = m_sofaRC.castRay(origin, direction, m_sofaContext.getScaleUnityToSofa());
         }
 
         // Update the laser drawing
