@@ -112,6 +112,7 @@ namespace SofaUnity
 
                 // Increment the context object counter for names.
                 m_context.objectcpt = m_context.objectcpt + 1;
+                m_context.registerObject(this);
 
                 return true;
             }

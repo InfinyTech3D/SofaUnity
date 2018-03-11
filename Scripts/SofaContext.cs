@@ -151,13 +151,21 @@ namespace SofaUnity
             get { return m_nbrObject; }
         }
 
-
+        public void registerObject(SBaseObject obj)
+        {
+            if (m_objects == null)
+                m_objects = new List<SBaseObject>();
+            m_objects.Add(obj);
+        }
 
         /// Method called at GameObject creation.
         void Awake()
         {
             // Call the init method to create the Sofa Context
             init();
+
+            if (m_objects == null)
+                m_objects = new List<SBaseObject>();
         }
 
         // Use this for initialization
@@ -192,7 +200,6 @@ namespace SofaUnity
             {
 #if UNITY_EDITOR
                 m_impl = new SofaContextAPI();
-                //m_impl.loadPlugin("C:/projects/unity3D/SofaUnity/Assets/SofaUnity/Plugins/Native/x64/ProjectiveXRay.dll");
                 m_impl.start();
                 if (m_filename != "")
                 {
@@ -326,11 +333,10 @@ namespace SofaUnity
                 return;
 
             hierarchy = new Dictionary<string, List<string> >();
-            m_objects = new List<SBaseObject>();
+            
             foreach (Transform child in transform)
             {
                 SBaseObject obj = child.GetComponent<SBaseObject>();
-                m_objects.Add(obj);
 
                 if (m_log)
                     Debug.Log("#### Hierarchy: parent: " + obj.parentName());
