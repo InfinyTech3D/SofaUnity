@@ -308,21 +308,28 @@ public class SofaBaseMesh : SofaBaseObject
             verts = new Vector3[nbrV];
 
         if (log)
-            Debug.Log(m_name + " | Number of vertices: " + nbrV + " | verts.Length: " + verts.Length + " | vertices.Lengt: " + velocities.Length);
+            Debug.Log(m_name + " | Number of vertices: " + nbrV + " | verts.Length: " + verts.Length + " | velocities.Lengt: " + velocities.Length);
 
 
         if (velocities.Length != 0)
         {
+            int cpt = nbrV;
             for (int i = 0; i < nbrV; ++i)
             {
                 int id = (int)velocities[i * 4];
-                if (id == -1) // Means no more data to copy in the buffer
+                if (id == -1){ // Means no more data to copy in the buffer
+                    cpt = i;
                     break;
-
+                }
+                
                 verts[id].x = verts[id].x + timestep * velocities[i * 4 + 1] ;
                 verts[id].y = verts[id].y + timestep * velocities[i * 4 + 2] ;
                 verts[id].z = verts[id].z + timestep * velocities[i * 4 + 3] ;
             }
+
+            if (log)
+                Debug.Log(m_name + " update stop at: " + cpt + " of: " + nbrV);
+
         }
 
         mesh.vertices = verts;
