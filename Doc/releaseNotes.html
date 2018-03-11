@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="icon" href="./img/favicon.gif" />
+<link rel="stylesheet" type="text/css" href="sofaUnity.css">
+</head>
+<body>
+
+<!-- Menu -->
+<div class="sidenav">
+  <img src="./img/sofa_sprite.png" width="210"/>
+  <br><br>
+  <br><br>
+  <a href="./index.html">SofaUnity</a>
+  <a href="./description.html">Description</a>
+  <a href="./installation.html">Installation</a>
+  <a href="./features.html">Features Available</a>
+  <a href="./examples.html">Examples</a>
+  <a href="./releaseNotes.html">Release Notes</a>
+  <a href="./download.html">Download</a>
+</div>
+
+<!-- content -->
+
+<div class="main">
+  <h1>Sofa-Unity Plugin v0.2</h1>
+    
+  <table style="width:100%" class="tableNotes">
+    <tr>
+      <td class="tableNotesTitle"><h3>Enhancements</h3></td>
+      <td class="tableNotesTitle"><h3>Fixes</h3></td>
+    </tr>
+    <tr>
+      <td>
+      <ul>    
+        <li>Add support of topology changes.</li>        
+        <li>Add VR support and demo scene of Sofa in VR.</li>
+        <li>Upgrade most of the materials with good normal maps.</li>
+        <li>Add ray casting methods to interact with Sofa 3D models. 
+        Interactions possible are element resections, vertex grasping and fix constraint</li>
+        <li>Add Springs support in Unity Editor.</li>
+      </ul>
+      </td>
+      <td>
+      <ul>    
+        <li>Major bug of performance, reduce by 4 the cost of simulation in the unity scene.</li>
+        <li>Bug of bad texture coordinate computation.</li>
+        <li>Material of all the demo scenes.</li>
+        <li>Bug of FEM parameters not found.</li>
+        <li>Add value ranges for the FEM and springs parameters.</li>
+      </ul>
+      </td>
+    </tr>
+  </table>
+  
+  <br>
+  <br>
+  <table style="width:100%" class="tableNotes">
+    <tr>
+      <td class="tableNotesTitle"><h3>Known bugs</h3></td>
+      <td class="tableNotesTitle"><h3>Other limitations</h3></td>
+    </tr>
+    <tr>
+      <td>
+      <ul>    
+        <li>Cylinder shape has holes.</li>
+        <li>Changing Grid resolution doesn’t work.</li>
+        <li>Display of Tetrahedron FEM slow down the application.</li>
+        <li>All Sofa scene loaded by SofaContext needs to have relative paths to the meshes.</li>
+      </ul>
+      </td>
+      <td>
+      <ul>    
+        <li>Not possible to interact with mesh in the Unity 3D view.</li>
+        <li>Only some FEM can be control inside Unity Editor.</li>
+      </ul>
+      </td>
+    </tr>
+  </table>
+  
+  <br>
+  <br>
+  <h1>Sofa-Unity Plugin v0.1</h1>
+
+  <table style="width:100%" class="tableNotes">
+    <tr>
+      <td class="tableNotesTitle"><h3>Enhancements</h3></td>
+      <td class="tableNotesTitle"><h3>Fixes</h3></td>
+    </tr>
+    <tr>
+      <td>
+        <ul>    
+        <li>No logs as it is the first version</li>
+        </ul>
+      </td>
+      <td>
+        <ul>    
+        <li>No logs as it is the first version</li>
+        </ul>
+      </td>
+    </tr>
+  </table>
+  
+  <br>
+  <br>
+  <table style="width:100%" class="tableNotes">
+    <tr>
+      <td class="tableNotesTitle"><h3>Known bugs</h3></td>
+      <td class="tableNotesTitle"><h3>Other limitations</h3></td>
+    </tr>
+    <tr>
+      <td>
+      <ul>    
+        <li>Cylinder shape has holes.</li>
+        <li>Changing Grid resolution doesn’t work.</li>
+        <li>Display of Tetrahedron FEM slow down the application.</li>
+        <li>All Sofa scene loaded by SofaContext needs to have relative paths to the meshes.</li>
+      </ul>
+      </td>
+      <td>
+      <ul>    
+        <li>Not possible to interact with mesh in the Unity 3D view.</li>
+        <li>Only TriangularFEM and TetrahedronFEM forcefield bindings are handle.</li>
+      </ul>
+      </td>
+    </tr>
+  </table>
+  
+  <br>
+  <br>
+</div>
+
+<div class="footer2">
+  <p><b>Author:</b> Erik Pernod</p>
+  <p><b>Last Update:</b> 2017-13-09</p>
+  <p><b>Contact information:</b> <a href="mailto:erik.pernod@gmail.com"> erik.pernod@gmail.com</a></p>
+</div>
+</body>
+</html> 

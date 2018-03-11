@@ -1,0 +1,84 @@
+body {
+    font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+    height: 100%;
+    width: 220px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #3f658c;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.sidenav a {
+    padding: 8px 6px 8px 32px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #000;
+    display: block;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.main {
+    margin-left: 220px; /* Same as the width of the sidenav */
+}
+
+.footer{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin-left: 210px;
+
+    padding: 1px 10px 1px 0px;
+    background-color: #06417e;
+    color: #c6c6c6;
+    text-align: right;
+    
+}
+
+.footer2{
+    position: relative;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin-left: 210px;
+    margin-right: -8px;
+    margin-bottom: 0px;
+    padding: 1px 10px 1px 0px;
+    background-color: #06417e;
+    color: #c6c6c6;
+    text-align: right;
+}
+
+.footer a {
+    color: #9fceff;
+}
+
+.footer2 a {
+    color: #9fceff;
+}
+
+.tableNotes {
+    border: 1px solid black;
+    text-align: left;
+}
+
+.tableNotesTitle {
+    border: 1px solid black;
+    text-align: center;
+    background-color: #6a98c8;
+}
+
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}

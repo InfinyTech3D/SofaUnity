@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="sofaUnity.css">
+<link rel="icon" href="./img/favicon.gif" />
+</head>
+<body>
+
+<!-- Menu -->
+<div class="sidenav">
+  <img src="./img/sofa_sprite.png" width="210"/>
+  <br><br>
+  <br><br>
+  <a href="./index.html">SofaUnity</a>
+  <a href="./description.html">Description</a>
+  <a href="./installation.html">Installation</a>
+  <a href="./features.html">Features Available</a>
+  <a href="./examples.html">Examples</a>
+  <a href="./releaseNotes.html">Release Notes</a>
+  <a href="./download.html">Download</a>
+</div>
+
+<!-- content -->
+
+<div class="main">
+  <h1>Installation</h1>
+  <ol>
+    <li>Install Unity3D version: 5.5.1 (version used for development) or higher. </li>
+    <li>Create a new 3D project.</li>
+    <li>In Unity3D Editor, use Assets -> Import Package -> Custom Package and load the package <strong>SofaUnityPlugin.unitypackage</strong></li>
+    <br>
+    <li><strong>Know Bugs for this version:</strong> An absolute path is needed in one of the Demo scene. Edit the file: Assets/Scenes/SofaScenes/caduceus.scn and change line 18 to have fileTopology="{YourProjectDir}/Assets/Scenes/SofaScenes/mesh/snake_body.obj"</li>
+  </ol>
+  <br>
+  
+  <h1>Compatibility</h1>
+  <ul>
+    <li>Requires Unity3D version: 5.5.1 or higher. </li>
+    <li>Provides, as Native plugin, SOFA version: <a href="https://www.sofa-framework.org/about/news/sofa-v17-06-has-been-released/">17.06</a></li>
+    <li>Environment: Currently supported only on Windows7 64bits.</li>
+  </ul>
+  
+  <br>
+  <h1>VR asset</h1>
+  <p>To use the scene that combine Sofa and Virtual Reality, several assets are needed:
+  <ul>    
+    <li>OculusPlatform</li>
+    <li>OSPNative</li>
+    <li>OVR</li>
+    <li>OVRAudioManager</li>
+    <li>OvrAvatar</li>    
+    <li>SteamVR</li>
+    <li>VRTK</li>    
+  </ul>
+
+  <p>Then, in the script <i>SVRLaserRay.cs</i> uncomment the line: "//#define USING_VRTK"
+
+</div>
+
+<div class="footer">
+  <p><strong>Author:</strong> Erik Pernod</p>
+  <p><strong>Last Update:</strong> 2017-13-09</p>
+  <p><strong>Contact information:</strong> <a href="mailto:erik.pernod@gmail.com">
+  erik.pernod@gmail.com</a>.</p>
+</div>
+     
+</body>
+</html> 
