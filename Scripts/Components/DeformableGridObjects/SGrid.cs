@@ -73,7 +73,9 @@ namespace SofaUnity
                 Debug.Log("SGrid::updateImpl called.");
 
             if (m_impl != null) {
-                m_impl.updateMeshVelocity(m_mesh, m_context.timeStep);
+                // TODO: need to find why velocity doesn't work for grid
+                //m_impl.updateMeshVelocity(m_mesh, m_context.timeStep);
+                m_impl.updateMesh(m_mesh);
                 //m_mesh.RecalculateNormals();
             }
         }

@@ -18,9 +18,6 @@ namespace SofaUnity
             if (_simu != IntPtr.Zero) // Create the API object for Sofa Cylinder Grid Mesh
                 m_impl = new SofaCylinder(_simu, m_nameId, false);
 
-            //if (!UnityEditor.EditorApplication.isPlaying)
-            //    initDeformableParameters();
-
             if (m_impl == null)
                 Debug.LogError("SCylinder:: Object creation failed.");
         }
@@ -33,7 +30,9 @@ namespace SofaUnity
 
             if (m_impl != null)
             {
-                m_impl.updateMeshVelocity(m_mesh, m_context.timeStep);
+                // TODO: need to find why velocity doesn't work for grid
+                //m_impl.updateMeshVelocity(m_mesh, m_context.timeStep);
+                m_impl.updateMesh(m_mesh);
                 m_mesh.RecalculateNormals(); // TODO check if needed
             }
         }
