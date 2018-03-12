@@ -197,7 +197,13 @@ namespace SofaUnity
             if (m_impl == null)
                 return "No impl";
             else
-                return m_impl.parent;
+            {
+                string p = m_impl.parent;
+                if (p == null)
+                    p = "root";
+
+                return p;
+            }
         }
 
 
