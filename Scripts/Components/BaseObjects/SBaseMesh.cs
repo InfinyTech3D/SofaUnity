@@ -86,7 +86,9 @@ namespace SofaUnity
             {
                 m_hasCollisionSphere = true;
                 m_initRadius = test;
+                m_radius = test;
                 m_contactStiffness = m_impl.getFloatValue("contactStiffness");
+                m_initContactStiffness = m_impl.getFloatValue("contactStiffness");
             }
         }
 
