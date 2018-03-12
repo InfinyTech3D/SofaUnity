@@ -23,8 +23,72 @@
 <!-- content -->
 
 <div class="main">
+<h1>Sofa-Unity Plugin v0.3</h1>
+    Release date: 2018-03-12<br><br>
+  <table style="width:100%" class="tableNotes">
+    <tr>
+      <td class="tableNotesTitle"><h3>Enhancements</h3></td>
+      <td class="tableNotesTitle"><h3>Fixes</h3></td>
+    </tr>
+    <tr>
+      <td>
+      <ul>
+        <li>Add Sphere Collision script that map sphere collision model on a Unity Mesh filter.</li>
+        <li>Add SComponentObject that is linked to a SofaComponentListener. It allows to listen to all Sofa Data of the target component.</li>
+        <li>Add a 2DTexture Raw component that allows to display a texture from raw data coming from Sofa. </li>
+		<li>Add new demo scenes: Christmas and tissue_fall. </li>
+		<br>
+		<li>Improve the communication of Data of basic type: Bool, float, int, vector3<float>, vector3<int>, vector<float>, vector<int> and string.</li>
+		<li>Improve the update rate: Only call simulation step every dt, like a fix update based on the dt. Update all component at the same rate.</li>
+		<li>Improve the copy of mesh positions by using sparse vector with only vertices that have changed.</li>
+		<li>Improve the cutting with ray. Delete now a zone instead of only one tetra.</li>
+        <li>Disable the mesh rendering of Deformable or Rigid mesh by default. Only update the component if rendering is activated.</li>
+      </ul>
+      </td>
+      <td>
+      <ul>    
+        <li>Major bug on the sofa object hierarchy creation.</li>
+        <li>Major bug on memory leak. The sofa plugin was not well released when ending the simulation.</li>
+        <li>Error Data listening that were not present in sofa objects.</li>
+        <li>Bug of scale between unity and sofa that was messing up the ray casting for example.</li>
+      </ul>
+      </td>
+    </tr>
+  </table>
+  
+  <br>
+  <br>
+  <table style="width:100%" class="tableNotes">
+    <tr>
+      <td class="tableNotesTitle"><h3>Known bugs</h3></td>
+      <td class="tableNotesTitle"><h3>Other limitations</h3></td>
+    </tr>
+    <tr>
+      <td>
+      <ul>  
+	    <li>Parameters set in the components GUI are replaced by sofa scene file value after runtime.</li>
+        <li>Cylinder shape has holes.</li>
+        <li>Changing Grid resolution doesn’t work.</li>
+        <li>Display of Tetrahedron FEM slow down the application.</li>
+        <li>All Sofa scene loaded by SofaContext needs to have relative paths to the meshes.</li>
+      </ul>
+      </td>
+      <td>
+      <ul>    
+        <li>Not possible to interact with mesh in the Unity 3D view.</li>
+        <li>Only some FEM can be control inside Unity Editor.</li>
+      </ul>
+      </td>
+    </tr>
+  </table>
+  
+  
+  
+  <br>
+  <br>
+  <br>
   <h1>Sofa-Unity Plugin v0.2</h1>
-    
+    Release date: 2017-11-14<br><br>
   <table style="width:100%" class="tableNotes">
     <tr>
       <td class="tableNotesTitle"><h3>Enhancements</h3></td>
@@ -78,10 +142,13 @@
     </tr>
   </table>
   
+  
+  
+  <br>
   <br>
   <br>
   <h1>Sofa-Unity Plugin v0.1</h1>
-
+	Release date: 2017-08-03<br><br>
   <table style="width:100%" class="tableNotes">
     <tr>
       <td class="tableNotesTitle"><h3>Enhancements</h3></td>

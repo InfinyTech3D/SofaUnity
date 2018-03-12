@@ -186,8 +186,16 @@ public class SSphereCollisionModel : MonoBehaviour
             awakePostProcess();
             return;
         }
+
         //Debug.Log("keyVertices.Count: " + m_keyVertices.Count);
         Vector3[] buffer = m_keyVertices.ToArray();
+
+        if (buffer.Length > 10000) // too much spheres
+        {
+            Debug.LogWarning("This factor create too many spheres: " + buffer.Length + " Change the factor.");
+            return;
+        }
+
         List<Vector3> bufferTotal = new List<Vector3>();
 
         float contextFactor = m_context.getFactorUnityToSofa();
