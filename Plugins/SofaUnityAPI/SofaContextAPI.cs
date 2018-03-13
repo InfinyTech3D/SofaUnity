@@ -50,8 +50,7 @@ namespace SofaUnityAPI
                 int resDel = sofaPhysicsAPI_delete(m_native);
                 m_native = IntPtr.Zero;
                 if (resDel < 0)
-                    Debug.LogError("Error: SofaContextAPI::Dispose sofaPhysicsAPI_delete method returns: " + resDel);
-                Debug.Log("res del:" + resDel);
+                    Debug.LogError("Error: SofaContextAPI::Dispose sofaPhysicsAPI_delete method returns: " + resDel);                
             }
            
             if (!m_isDisposed)
