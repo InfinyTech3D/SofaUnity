@@ -32,7 +32,7 @@ public class SSphereCollisionModel : MonoBehaviour
     /// Booleen to activate/unactivate the collision
     [SerializeField] protected bool m_activated = true;
     /// Discretisation factor to compute the number of sphere to create on the object.
-    [SerializeField] protected float m_factor = 1.0f;
+    [SerializeField] protected float m_factor = 50.0f;
 
     /// Collision sphere radius
     [SerializeField] protected float m_radius = 1.0f;
@@ -190,12 +190,6 @@ public class SSphereCollisionModel : MonoBehaviour
         //Debug.Log("keyVertices.Count: " + m_keyVertices.Count);
         Vector3[] buffer = m_keyVertices.ToArray();
 
-        if (buffer.Length > 10000) // too much spheres
-        {
-            Debug.LogWarning("This factor create too many spheres: " + buffer.Length + " Change the factor.");
-            return;
-        }
-
         List<Vector3> bufferTotal = new List<Vector3>();
 
         float contextFactor = m_context.getFactorUnityToSofa();
@@ -238,6 +232,13 @@ public class SSphereCollisionModel : MonoBehaviour
             m_centers[cpt] = vert;
             cpt++;
         }
+
+        if (cpt > 1000) // too much spheres
+        {
+            Debug.LogWarning("This factor create too many spheres: " + cpt + " Change the factor.");
+            return;
+        }
+
 
         if (m_impl != null)
             m_impl.setNumberOfVertices(bufferTotal.Count);
