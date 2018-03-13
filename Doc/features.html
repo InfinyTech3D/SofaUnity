@@ -15,6 +15,9 @@
   <a href="./description.html">Description</a>
   <a href="./installation.html">Installation</a>
   <a href="./features.html">Features Available</a>
+  <a href="./features_objects.html" align="right"><font size="3">Object Creation</font></a>
+  <a href="./features_scene.html" align="right"><font size="3">SOFA scene parsing</font></a>
+  <a href="./features_mix.html" align="right"><font size="3">Mix methods</font></a>
   <a href="./examples.html">Examples</a>
   <a href="./releaseNotes.html">Release Notes</a>
   <a href="./download.html">Download</a>
@@ -24,84 +27,18 @@
 
 <div class="main">
   <h1>Features available</h1>
-  <p>In this first version of the plugin SOFA-Unity3D, two approaches are possible. See below. </p>
-  <br>
-  
-  <h2>Object Creation in Unity3D</h2>
-  <p>Several types of geometry can be directly created as GameObject in Unity3D using the interface. They can be placed and transformed in 3D. Here is the list:</p>
-  
-  <table style="width:80%">
-  <tr>
-    <td>
-        <ul>
-          <li><strong>SSphere / SRigidSphere:</strong></li>
-          <li><strong>SBox / SRigidBox:</strong></li>
-          <li><strong>SCylinder / SRigidCylinder:</strong></li>
-          <li><strong>SRigidPlane:</strong></li>
-        </ul>
-    </td>
-    <td>
-        3D Sphere, available in Rigid or Deformable mode.<br>
-        3D Box, available in Rigid or Deformable mode.<br>
-        3D Cylinder, available in Rigid or Deformable mode.<br>
-        2D Plane, available only in Rigid mode.
-    </td>  
-  </tr>  
-  </table>
-    
-  <p>Rigid mode means the object will be simulated in the scene and will collide but won’t move or deform. Whereas the deformable objects will collide and are modelized using Tetrahedral Finite Element Method. It is thus possible to set their mass, resolution and FEM parameters.</p>
-  
-  In this approach, only basic collision detection using primitive to primitive intersection is used.
-  <br><br>
-  <center>
-  <img src="./img/falling_cube.jpg" width="80%"/>
-  <br>Example of SBox falling on a SRigidPlane
-  <br><a href="https://www.youtube.com/watch?v=b9peVOtxUIY">Youtube demo movie: Sofa in Unity - 3D Physical Objects Simulation</a>
-  </center>
-
-  <br><br>
-  <h2>SOFA scene parsing</h2>
-  <p>The second approach is to load an existing Sofa scene inside a SofaContext. Every node of the Sofa scene will be transposed as either a SDeformableMesh, SRigidMesh or a SVisualMesh.</p>
-  <p>As in first approach, SDeformableMesh object are modelized with Finite Element Method and have physical properties whereas SRigidMesh only collide. SVisualMesh provides a mapping to SOFA VisualModel. It can represent either a simulated mesh or only a 3D visual object. 
-Each GameObject will have its own Mesh Renderer. See the Liver example below:</p>
-  <center>
-    <table style="width:80%" align="center">
-      <tr>
-        <td>
-            <img src="./img/visual.jpg" width="100%"/>
-        </td>
-        <td>
-            <img src="./img/FEM.jpg" width="100%"/><br>        
-        </td>
-      </tr>
-      <tr>
-        <td>
-            <center>SViualMesh rendering.</center>
-        </td>
-        <td>
-            <center>SMesh rendering (Display the FEM).</center>
-        </td> 
-      </tr>  
-    </table>
-  </center>
-
-  <br>
-  <br>
-  
-  <h2>Combination of both methods</h2>
-  <p>Finally, it is also possible to combine both approach if the SOFA scene is compatible with the collision pipeline of the first approach.</p>
-
-
-
-<center>
-  <img src="./img/cloth.jpg" width="80%"/>
-  <br>Interaction of a SRigidSphere GameObject with soft tissue simulated in Sofa
-  <br><a href="https://www.youtube.com/watch?v=PPZkoKf1nUc">Youtube demo movie: Sofa in Unity - 3D Cloth Simulation</a>
-  </center>
-    <br>
-    <br>
+  The SofaUnity plugin allows to use Sofa simulation engine inside Unity3D from several approaches. <br>
+  <ul>
+    <li>Either by replacing the basic geometry shapes from Unity. See the section: <a href="./features_objects.html"><font size="3">Object Creation</font></a></li>
+    <li>By loading existing simulation scene (*.scn) from Sofa with several writting rules. See the section: <a href="./features_scene.html"><font size="3">SOFA scene parsing</font></a></li>
+    <li>Or by mixing the methods and using a simulation scene plus some other objects created in Unity. See the section: <a href="./features_mix.html"><font size="3">Mix methods</font></a></li>
+  </ul>
 </div>
-
+<br>
+<br>
+<br>
+<br>
+<br>
 <div class="footer2">
   <p><b>Author:</b> Erik Pernod</p>
   <p><b>Last Update:</b> 2017-13-09</p>
