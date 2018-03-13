@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="icon" href="./img/favicon.gif" />
+<link rel="stylesheet" type="text/css" href="sofaUnity.css">
+</head>
+<body>
+
+<!-- Menu -->
+<div class="sidenav">
+  <img src="./img/sofa_sprite.png" width="210"/>
+  <br><br>
+  <br><br>
+  <a href="./index.html">SofaUnity</a>
+  <a href="./description.html">Description</a>
+  <a href="./installation.html">Installation</a>
+  <a href="./features.html">Features Available</a>
+  <a href="./features_objects.html" align="right"><font size="3">Object Creation</font></a>
+  <a href="./features_scene.html" align="right"><font size="3">SOFA scene parsing</font></a>
+  <a href="./features_mix.html" align="right"><font size="3">Mix methods</font></a>
+  <a href="./examples.html">Examples</a>
+  <a href="./releaseNotes.html">Release Notes</a>
+  <a href="./download.html">Download</a>
+</div>
+
+<!-- content -->
+
+<div class="main">
+  <h1>SOFA simulation scene parsing</h1>
+  
+  <h2>SofaContext creation</h2>
+  The second approach is to load an existing Sofa simulation scene inside a SofaContext. This is an XML scene with .scn extension.<br>
+  As in previous section, the first step is always to create the object: <strong>SofaContext</strong>. This Unity GameObject represent the Sofa simulation root object.<br>
+  All other object to be simulated in Sofa will be child of this Root object.
+  <br>
+  <br>
+  The inspector of the SofaContext gameObject allows to change the gravity in the scene as well as the simulation timestep. <strong>Those values won't be loaded from the Sofa scene</strong>.  
+  <br>
+  Then use the <strong>Load Scene button</strong> to import a file. 
+  <br>
+  <br>
+  <img src="./img/sofaContextinspector.jpg"/>
+  <br>
+  <br>
+  <br>It is <strong>Very important to not use the Transform parameters from unity GameObjects</strong>.<br>  
+  Otherwise the world geometric axis from Sofa and Unity won't match any more. All transform information should be done in the Sofa Simulation scene using the <strong>MechanicalObject</strong> component: <br>
+  <br>
+  For example: <i> MechanicalObject src="@loader" name="Volume" scale3d="20 20 20" rotation="140 180 0" translation="0 10 0"</i>  
+  <br>
+  <br>
+  <strong>The only parameter that can be used is the Unity <i>scale of the SofaContext GameObject</i></strong>. Taking back the previous example, if the Sofa scene was defining a cube of size 1x1x1.<br>
+  <i>scale3d="20 20 20"</i> will create a cube of size 20x20x20 in Unity. <br>
+  Setting up in Unity the <strong>SofaContext Transform</strong> Scale to "0.05 0.05 0.05" will give back a cube of size 1x1x1 in Unity world.
+  <br>
+  <br>
+  Last thing important to notice is that Unity and Sofa have the X axis inverted. Thus to have the same view of the scene from Sofa and Unity, Scale "-1 1 1" should be applyed in the SofaContext.
+  <br>
+  <br>
+  <br>  
+  <h2>SOFA scene parsing</h2>
+  <p>Every node of the Sofa scene will be transposed as either a SDeformableMesh, SRigidMesh or a SVisualMesh.</p>
+  <p>As in first approach, SDeformableMesh object are modelized with Finite Element Method and have physical properties whereas SRigidMesh only collide. SVisualMesh provides a mapping to SOFA VisualModel. It can represent either a simulated mesh or only a 3D visual object. 
+Each GameObject will have its own Mesh Renderer. See the Liver example below:</p>
+  <center>
+    <table style="width:80%" align="center">
+      <tr>
+        <td>
+            <img src="./img/visual.jpg" width="100%"/>
+        </td>
+        <td>
+            <img src="./img/FEM.jpg" width="100%"/><br>        
+        </td>
+      </tr>
+      <tr>
+        <td>
+            <center>SViualMesh rendering.</center>
+        </td>
+        <td>
+            <center>SMesh rendering (Display the FEM).</center>
+        </td> 
+      </tr>  
+    </table>
+  </center>
+
+  <br>
+  <br>
+    
+  <h2>SOFA scene writting rules</h2>
+  <br>
+  To decompose the Sofa simulation scene into Unity GameObject, it is important to follow several rules while writting the *scn file.<br>
+  <br>
+  To have a <b>SDeformableMesh</b> Object you should have a &lt; Node /&gt; including a <i>MechanicalObject</i> as well as a <i>FEM</i>, <i>topology</i> and a <i>mass</i>. 
+  <br>
+  The <i>OglModel</i> should be in another &lt; Node /&gt; to have a <b>SVisualMesh</b> object. Thus, every &lt; Node /&gt; with only a <i>OglModel</i> will be mapped as a <b>SVisualMesh</b> whereas every node with only a <i>MechanicalObject</i> and a <i>topology</i> will be mapped as a <b>SRigidMesh</b>.
+  <br>
+  <br>
+  Do not hesitate to have a look at the *.scn files inside the <u>SofaUnity/Scenes/SofaScenes/</u> to have examples corresponding at the SofaUnity demo scenes.
+  <br>
+  <br>
+  Here is the Sofa simulation scene example of the Liver from above.
+  <br>
+  <br>
+  <img src="./img/xml_example.jpg"/>
+</div>
+
+<div class="footer2">
+  <p><b>Author:</b> Erik Pernod</p>
+  <p><b>Last Update:</b> 2017-13-09</p>
+  <p><b>Contact information:</b> <a href="mailto:erik.pernod@gmail.com"> erik.pernod@gmail.com</a></p>
+</div>
+
+</body>
+</html> 
