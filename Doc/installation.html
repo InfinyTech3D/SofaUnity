@@ -29,7 +29,11 @@
     <li>Create a new 3D project.</li>
     <li>In Unity3D Editor, use Assets -> Import Package -> Custom Package and load the package <strong>SofaUnityPlugin.unitypackage</strong></li>
     <br>
-    <li><strong>Know Bugs for this version:</strong> An absolute path is needed in one of the Demo scene. Edit the file: Assets/Scenes/SofaScenes/caduceus.scn and change line 18 to have fileTopology="{YourProjectDir}/Assets/Scenes/SofaScenes/mesh/snake_body.obj"</li>
+	<li><strong>Know Bug: </strong>After importing the asset, you might have this error: <strong>DllNotFoundException: SofaAdvancePhysicsAPI
+SofaUnityAPI.SofaContextAPI..ctor () (at Assets/SofaUnity/Plugins/SofaUnityAPI/SofaContextAPI.cs:23)</strong></li>
+<br> To resolve it, search for the file <strong>SofaAdvancePhysicsAPI.dll</strong> in the Unity project browser, then in its inspector <strong>click on reset</strong>. Finally, in the main menu of Unity <strong>click Assets->Reimport All</strong>. 
+<br><br>
+    <li><strong>Know Bugs for this version:</strong> An absolute path is needed in one of the Demo scene. Edit the file: Assets/Scenes/SofaScenes/caduceus.scn and change line 18 to have fileTopology="{YourProjectDir}/Assets/Scenes/SofaScenes/mesh/snake_body.obj"</li>	
   </ol>
   <br>
   
@@ -59,7 +63,7 @@
 
 <div class="footer">
   <p><strong>Author:</strong> Erik Pernod</p>
-  <p><strong>Last Update:</strong> 2017-13-09</p>
+  <p><b>Last Update:</b> 2018-03-13</p>
   <p><strong>Contact information:</strong> <a href="mailto:erik.pernod@gmail.com">
   erik.pernod@gmail.com</a>.</p>
 </div>
