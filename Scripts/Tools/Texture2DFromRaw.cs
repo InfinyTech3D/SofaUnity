@@ -12,7 +12,7 @@ public class Texture2DFromRaw : MonoBehaviour
     ////////////////////////////////////////////
 
     /// GameObject having the SComponentObject that is listening the raw img Data
-    public GameObject target;
+    public GameObject m_target = null;
     /// SComponentObject that is listening the raw img Data 
     protected SComponentObject m_object = null;
 
@@ -44,7 +44,10 @@ public class Texture2DFromRaw : MonoBehaviour
 
     public void Start()
     {
-        m_object = target.GetComponent<SComponentObject>();
+        if (m_target == null)
+            return;
+
+        m_object = m_target.GetComponent<SComponentObject>();
         foreach (SData entry in m_object.datas)
         {
             if (entry.nameID == dataName)
