@@ -30,6 +30,9 @@ public class SPlierTool : MonoBehaviour
     /// Pointer to the unity GameObject that correspond to the visual object to interact with (could be similar to Model)
     public GameObject ModelVisu = null;
 
+    /// stiffness value of the plier forcefields
+    public float m_stiffness = 300;
+
     /// Mesh renderer of the ModelVisu GameObject
     protected Mesh modelMesh = null;
 
@@ -86,7 +89,7 @@ public class SPlierTool : MonoBehaviour
         {
             SBaseMesh mesh = Model.GetComponent<SBaseMesh>();
 
-            m_sofaPlier = new SofaPliers(_simu, name, Mord_UP.name, Mord_Down.name, mesh.nameId);
+            m_sofaPlier = new SofaPliers(_simu, name, Mord_UP.name, Mord_Down.name, mesh.nameId, m_stiffness);
         }
     }
 

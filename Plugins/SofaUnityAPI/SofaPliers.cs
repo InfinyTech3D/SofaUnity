@@ -15,7 +15,7 @@ public class SofaPliers : IDisposable
     /// <param name="nameMord1">Model name of the 1st plier jaw</param>
     /// <param name="nameMord2">Model name of the 2nd plier jaw</param>
     /// <param name="nameModel">model name to interact with</param>
-    public SofaPliers(IntPtr simu, string nameID, string nameMord1, string nameMord2, string nameModel)
+    public SofaPliers(IntPtr simu, string nameID, string nameMord1, string nameMord2, string nameModel, float stiffness)
     {
         m_simu = simu;
         m_name = nameID;
@@ -26,7 +26,7 @@ public class SofaPliers : IDisposable
         int res = 0;
         if (m_simu != IntPtr.Zero)
         {
-            res = sofaPhysicsAPI_createPliers(m_simu, m_name, m_nameMord1, m_nameMord2, m_nameModel);
+            res = sofaPhysicsAPI_createPliers(m_simu, m_name, m_nameMord1, m_nameMord2, m_nameModel, stiffness);
             if (res < 0)
                 Debug.LogError("SofaPliers creation: " + m_name + " returns error: " + res
                     + " | m_nameMord1: " + m_nameMord1
@@ -120,7 +120,7 @@ public class SofaPliers : IDisposable
     /////////////////////////////////////////////////////////////////////////////////////////
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysicsAPI_createPliers(IntPtr obj, string nameID, string nameMord1, string nameMord2, string nameModel);
+    public static extern int sofaPhysicsAPI_createPliers(IntPtr obj, string nameID, string nameMord1, string nameMord2, string nameModel, float stiffness);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_closePliers(IntPtr obj, string nameID);
