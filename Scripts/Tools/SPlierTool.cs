@@ -118,6 +118,10 @@ public class SPlierTool : MonoBehaviour
         {
             StartCoroutine(Unclamp());
         }
+        else if (Input.GetKeyDown(KeyCode.B))
+        {
+            Cut();
+        }
     }
 
 
@@ -174,6 +178,29 @@ public class SPlierTool : MonoBehaviour
         animator.SetBool("isClamped", false);
         yield return new WaitForSeconds(1);
         releaseSofaPlier();
+    }
+
+    public void Cut()
+    {
+        if(m_sofaPlier == null)
+            return;
+
+        Debug.Log("Start cut");
+        //Debug.Log("transform.position: " + transform.position);
+        //Debug.Log("transform.forward: " + transform.forward); // z
+        //Debug.Log("transform.up: " + transform.up);// y
+        //Debug.Log("transform.up: " + transform.right); // -x
+        int res = m_sofaPlier.cutPliers(transform.position * m_sofaContext.getFactorUnityToSofa(), -transform.right, transform.up, transform.forward, 1 * m_sofaContext.getFactorUnityToSofa());
+
+        if (res > 0 && res < 1000)
+        {
+            m_idGrabed = null;
+            m_nbrGrabed = res;
+
+            m_idGrabed = new int[m_nbrGrabed];
+            int resIds = m_sofaPlier.getIdsGrabed(m_idGrabed);
+        }
+        Debug.Log("Cut : " + res + " - "  + m_idGrabed[0] + " " + m_idGrabed[1]);
     }
 
 
