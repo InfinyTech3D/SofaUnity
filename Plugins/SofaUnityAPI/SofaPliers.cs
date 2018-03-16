@@ -102,6 +102,37 @@ public class SofaPliers : IDisposable
         return res;        
     }
 
+    public int cutPliers(Vector3 origin, Vector3 xAxis, Vector3 yAxis, Vector3 zAxis, float length)
+    {
+        float[] _ori = new float[3];
+        float[] _xAxis = new float[3];
+        float[] _yAxis = new float[3];
+        float[] _zAxis = new float[3];
+
+        for (int i=0; i<3; i++)
+        {
+            _ori[i] = origin[i];
+            _xAxis[i] = xAxis[i];
+            _yAxis[i] = yAxis[i];
+            _zAxis[i] = zAxis[i];
+        }
+
+        _ori[0] *= -1;
+        _xAxis[0] *= -1;
+        _yAxis[0] *= -1;
+        _zAxis[0] *= -1;
+
+        Debug.Log("SofaCut:");
+        Debug.Log("length: " + length);
+        Debug.Log("_ori: " + _ori[0] + " , " + _ori[1] + " , " + _ori[2]);
+        Debug.Log("_xAxis: " + _xAxis[0] + " , " + _xAxis[1] + " , " + _xAxis[2]);
+        Debug.Log("_yAxis: " + _yAxis[0] + " , " + _yAxis[1] + " , " + _yAxis[2]);
+        Debug.Log("_zAxis: " + _zAxis[0] + " , " + _zAxis[1] + " , " + _zAxis[2]);
+
+        int res = sofaPhysicsAPI_cutPliers(m_simu, m_name, _ori, _xAxis, _yAxis, _zAxis, length);
+        return res;
+    }
+
 
     /// <summary> Method to get the vertex ids grabed by the plier.</summary>
     /// <param name="ids"> Buffer used to exchange the vertex ids.</param>
@@ -130,4 +161,10 @@ public class SofaPliers : IDisposable
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_idGrabed(IntPtr obj, string nameID, int[] ids);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysicsAPI_cutPliers(IntPtr obj, string nameID, float[] origin, float[] xAxis, float[] yAxis, float[] zAxis, float length);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysicsAPI_pathCutPliers(IntPtr obj, string nameID, float[] origin, float[] xAxis, float[] yAxis, float[] zAxis, float length);    
 }
