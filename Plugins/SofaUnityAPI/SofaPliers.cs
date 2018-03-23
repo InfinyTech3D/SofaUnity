@@ -133,6 +133,30 @@ public class SofaPliers : IDisposable
         return res;
     }
 
+    public int cutPliersPath(Vector3 origin, Vector3 xAxis, Vector3 yAxis, Vector3 zAxis, float length)
+    {
+        float[] _ori = new float[3];
+        float[] _xAxis = new float[3];
+        float[] _yAxis = new float[3];
+        float[] _zAxis = new float[3];
+
+        for (int i = 0; i < 3; i++)
+        {
+            _ori[i] = origin[i];
+            _xAxis[i] = xAxis[i];
+            _yAxis[i] = yAxis[i];
+            _zAxis[i] = zAxis[i];
+        }
+
+        _ori[0] *= -1;
+        _xAxis[0] *= -1;
+        _yAxis[0] *= -1;
+        _zAxis[0] *= -1;
+
+        int res = sofaPhysicsAPI_pathCutPliers(m_simu, m_name, _ori, _xAxis, _yAxis, _zAxis, length);
+        return res;
+    }
+
 
     /// <summary> Method to get the vertex ids grabed by the plier.</summary>
     /// <param name="ids"> Buffer used to exchange the vertex ids.</param>

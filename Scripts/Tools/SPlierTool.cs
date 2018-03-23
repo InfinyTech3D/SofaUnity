@@ -122,6 +122,10 @@ public class SPlierTool : MonoBehaviour
         {
             Cut();
         }
+        else if (Input.GetKeyDown(KeyCode.N))
+        {
+            testCutPath();
+        }
     }
 
 
@@ -190,8 +194,21 @@ public class SPlierTool : MonoBehaviour
         //Debug.Log("transform.forward: " + transform.forward); // z
         //Debug.Log("transform.up: " + transform.up);// y
         //Debug.Log("transform.up: " + transform.right); // -x
-        int res = m_sofaPlier.cutPliers(transform.position * m_sofaContext.getFactorUnityToSofa(), -transform.right, transform.up, transform.forward, 1 * m_sofaContext.getFactorUnityToSofa());
 
+        animator.SetBool("isClamped", false);
+        releaseSofaPlier();
+        int res = m_sofaPlier.cutPliers(transform.position * m_sofaContext.getFactorUnityToSofa(), -transform.right, transform.up, transform.forward, 1 * m_sofaContext.getFactorUnityToSofa());       
+    }
+
+    public void testCutPath()
+    {
+        if (m_sofaPlier == null)
+            return;
+
+        animator.SetBool("isClamped", false);
+        releaseSofaPlier();
+        int res = m_sofaPlier.cutPliersPath(transform.position * m_sofaContext.getFactorUnityToSofa(), -transform.right, transform.up, transform.forward, 1 * m_sofaContext.getFactorUnityToSofa());
+       
         if (res > 0 && res < 1000)
         {
             m_idGrabed = null;
@@ -199,8 +216,8 @@ public class SPlierTool : MonoBehaviour
 
             m_idGrabed = new int[m_nbrGrabed];
             int resIds = m_sofaPlier.getIdsGrabed(m_idGrabed);
-        }
-        Debug.Log("Cut : " + res + " - "  + m_idGrabed[0] + " " + m_idGrabed[1]);
+            //Debug.Log("Cut : " + res + " - " + m_idGrabed[0] + " " + m_idGrabed[1]);
+        }       
     }
 
 
