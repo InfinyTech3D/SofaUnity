@@ -97,6 +97,7 @@ namespace SofaUnity
                     }
                     m_impl.setTopologyChange(false);
                     m_impl.updateMesh(m_mesh);
+                    m_mesh.RecalculateNormals();
                 }
                 else
                     m_impl.updateMeshVelocity(m_mesh, m_context.timeStep);
