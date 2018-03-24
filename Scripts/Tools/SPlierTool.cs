@@ -33,6 +33,9 @@ public class SPlierTool : MonoBehaviour
     /// stiffness value of the plier forcefields
     public float m_stiffness = 300;
 
+    /// length of cut
+    public float m_cutLength = 0.15f;
+
     /// Mesh renderer of the ModelVisu GameObject
     protected Mesh modelMesh = null;
 
@@ -197,7 +200,7 @@ public class SPlierTool : MonoBehaviour
 
         animator.SetBool("isClamped", false);
         releaseSofaPlier();
-        int res = m_sofaPlier.cutPliers(transform.position * m_sofaContext.getFactorUnityToSofa(), -transform.right, transform.up, transform.forward, 1 * m_sofaContext.getFactorUnityToSofa());       
+        int res = m_sofaPlier.cutPliers(transform.position * m_sofaContext.getFactorUnityToSofa(), -transform.right, transform.up, transform.forward, m_cutLength * m_sofaContext.getFactorUnityToSofa());       
     }
 
     public void testCutPath()
@@ -207,7 +210,7 @@ public class SPlierTool : MonoBehaviour
 
         animator.SetBool("isClamped", false);
         releaseSofaPlier();
-        int res = m_sofaPlier.cutPliersPath(transform.position * m_sofaContext.getFactorUnityToSofa(), -transform.right, transform.up, transform.forward, 1 * m_sofaContext.getFactorUnityToSofa());
+        int res = m_sofaPlier.cutPliersPath(transform.position * m_sofaContext.getFactorUnityToSofa(), -transform.right, transform.up, transform.forward, m_cutLength * m_sofaContext.getFactorUnityToSofa());
        
         if (res > 0 && res < 1000)
         {
@@ -224,7 +227,7 @@ public class SPlierTool : MonoBehaviour
     /// Method to draw debug information like the vertex being grabed
     void OnDrawGizmosSelected()
     {
-        if (m_idGrabed == null || ModelVisu == null)
+        if (m_idGrabed == null || ModelVisu == null || m_sofaContext == null)
             return;
 
         modelMesh = ModelVisu.GetComponent<MeshFilter>().sharedMesh;
