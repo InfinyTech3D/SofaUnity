@@ -4,7 +4,6 @@ using UnityEngine;
 using SofaUnity;
 using SofaUnityAPI;
 using System;
-using UnityEditor;
 
 /// <summary>
 /// Base class inherite from MonoBehavior that design allow to create a set of sphere collision models

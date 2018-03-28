@@ -77,7 +77,7 @@ namespace SofaUnity
                 m_impl.loadObject();
 
                 // Init the FEM and spring parameter from scene.
-                if (!UnityEditor.EditorApplication.isPlaying)
+                if (!Application.isPlaying)
                 {
                     m_poisson = m_impl.poissonRatio;
                     m_mass = m_impl.mass;
@@ -104,7 +104,7 @@ namespace SofaUnity
             m_init_stiffness = m_impl.stiffness;
             m_init_damping = m_impl.damping;
 
-            if (!UnityEditor.EditorApplication.isPlaying)
+            if (!Application.isPlaying)
             {
                 m_poisson = m_impl.poissonRatio;
                 m_mass = m_impl.mass;
