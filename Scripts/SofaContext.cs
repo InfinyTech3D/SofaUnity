@@ -198,7 +198,6 @@ namespace SofaUnity
         {
             if (m_impl == null)
             {
-#if UNITY_EDITOR
                 m_impl = new SofaContextAPI();
                 m_impl.start();
                 if (m_filename != "")
@@ -234,7 +233,6 @@ namespace SofaUnity
                     m_impl.timeStep = m_timeStep;
                     m_impl.setGravity(m_gravity);
                 //}
-#endif
             }
         }
         
@@ -253,7 +251,7 @@ namespace SofaUnity
             {
                 nextUpdate += m_timeStep;
 
-                if (UnityEditor.EditorApplication.isPlaying) // only if scene is playing
+                if (Application.isPlaying) // only if scene is playing
                 {
                     m_impl.step();
 
