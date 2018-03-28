@@ -82,7 +82,7 @@ public class SPlierTool : MonoBehaviour
 
 
     /// Method called by @sa loadContext() method. To create the object when Sofa context has been found. To be implemented by child class.
-    protected virtual IEnumerator createSofaPlier()
+    public virtual IEnumerator createSofaPlier()
     {
         // Get access to the sofaContext // TODO remove this HACK: All components need to be created before the SofaPlier
         yield return new WaitForSeconds(1);
