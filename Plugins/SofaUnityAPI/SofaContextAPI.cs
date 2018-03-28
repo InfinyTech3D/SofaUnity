@@ -37,8 +37,7 @@ namespace SofaUnityAPI
 
         /// Dispose method to release the object
         public void Dispose()
-        {
-            Debug.Log("SofaContextAPI::Dispose");
+        {            
             Dispose(true);
             GC.SuppressFinalize(this);
         }
@@ -49,17 +48,9 @@ namespace SofaUnityAPI
             {
                 int resDel = sofaPhysicsAPI_delete(m_native);
                 m_native = IntPtr.Zero;
+
                 if (resDel < 0)
                     Debug.LogError("Error: SofaContextAPI::Dispose sofaPhysicsAPI_delete method returns: " + resDel);                
-            }
-           
-            if (!m_isDisposed)
-            {
-                m_isDisposed = true;
-
-                // TODO: should call delete method in SofaPAPI first
-                // Free the App
-                GCHandle.FromIntPtr(m_native).Free();
             }
         }
 
