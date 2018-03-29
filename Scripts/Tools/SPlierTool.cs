@@ -41,7 +41,8 @@ public class SPlierTool : MonoBehaviour
 
 
     /// speed factor of the plier animation
-    private float animSpeed = 0.1f;
+    [SerializeField]
+    public float animSpeed = 0.1f;
     
     /// Number of vertex grabed by the plier
     protected int m_nbrGrabed = 0;
@@ -175,7 +176,7 @@ public class SPlierTool : MonoBehaviour
     public IEnumerator Clamp()
     {
         animator.SetBool("isClamped", true);
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(animSpeed);
         clampSofaPlier();
     }
 
@@ -183,7 +184,7 @@ public class SPlierTool : MonoBehaviour
     public IEnumerator Unclamp()
     {
         animator.SetBool("isClamped", false);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(animSpeed);
         releaseSofaPlier();
     }
 
