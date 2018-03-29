@@ -111,6 +111,7 @@ public class SPlierTool : MonoBehaviour
 
     private Animator animator { get { return GetComponent<Animator>(); } }
 
+    public float moveSpeed = 0.01f;
 
     void Update()
     {
@@ -130,6 +131,18 @@ public class SPlierTool : MonoBehaviour
         {
             testCutPath();
         }
+        else if (Input.GetKey(KeyCode.R))
+            transform.position += transform.up * moveSpeed;
+        else if (Input.GetKey(KeyCode.F))
+            transform.position -= transform.up * moveSpeed;
+        else if (Input.GetKey(KeyCode.D))
+            transform.position -= transform.forward * moveSpeed;
+        else if (Input.GetKey(KeyCode.G))
+            transform.position += transform.forward * moveSpeed;
+        else if (Input.GetKey(KeyCode.E))
+            transform.position -= transform.right * moveSpeed;
+        else if (Input.GetKey(KeyCode.T))
+            transform.position += transform.right * moveSpeed;
     }
 
 
