@@ -64,6 +64,9 @@ public class SofaContextEditor : Editor
         context.timeStep = EditorGUILayout.FloatField("TimeStep", context.timeStep);
         EditorGUILayout.Separator();
 
+        // Add field for simulation
+        context.IsSofaUpdating = EditorGUILayout.Toggle("Activate Simulation", context.IsSofaUpdating);
+
         // Add Button to load a filename
         if (GUILayout.Button("Load Scene"))
         {
