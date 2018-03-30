@@ -122,12 +122,12 @@ public class SofaPliers : IDisposable
         _yAxis[0] *= -1;
         _zAxis[0] *= -1;
 
-        Debug.Log("SofaCut:");
-        Debug.Log("length: " + length);
-        Debug.Log("_ori: " + _ori[0] + " , " + _ori[1] + " , " + _ori[2]);
-        Debug.Log("_xAxis: " + _xAxis[0] + " , " + _xAxis[1] + " , " + _xAxis[2]);
-        Debug.Log("_yAxis: " + _yAxis[0] + " , " + _yAxis[1] + " , " + _yAxis[2]);
-        Debug.Log("_zAxis: " + _zAxis[0] + " , " + _zAxis[1] + " , " + _zAxis[2]);
+        //Debug.Log("SofaCut:");
+        //Debug.Log("length: " + length);
+        //Debug.Log("_ori: " + _ori[0] + " , " + _ori[1] + " , " + _ori[2]);
+        //Debug.Log("_xAxis: " + _xAxis[0] + " , " + _xAxis[1] + " , " + _xAxis[2]);
+        //Debug.Log("_yAxis: " + _yAxis[0] + " , " + _yAxis[1] + " , " + _yAxis[2]);
+        //Debug.Log("_zAxis: " + _zAxis[0] + " , " + _zAxis[1] + " , " + _zAxis[2]);
 
         int res = sofaPhysicsAPI_cutPliers(m_simu, m_name, _ori, _xAxis, _yAxis, _zAxis, length);
         return res;
