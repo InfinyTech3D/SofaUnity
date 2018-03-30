@@ -51,7 +51,7 @@ public class SPlierTool : MonoBehaviour
     /// Buffer of vertex id grabed by the plier
     protected int[] m_idGrabed = null;
 
-
+    private int cutStep = 0;
 
     ////////////////////////////////////////////
     /////       Object creation API        /////
@@ -132,7 +132,7 @@ public class SPlierTool : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.N))
         {
-            testCutPath();
+            oneCut();
         }
         else if (Input.GetKey(KeyCode.R))
             transform.position += transform.up * moveSpeed;
@@ -163,8 +163,6 @@ public class SPlierTool : MonoBehaviour
             int resIds = m_sofaPlier.getIdsGrabed(m_idGrabed);
             if (resIds < 0)
                 m_idGrabed = null;
-            else
-                Debug.Log(m_idGrabed[0] + " " + m_idGrabed[1]);
 
             return true;
         }
@@ -184,6 +182,7 @@ public class SPlierTool : MonoBehaviour
         m_sofaPlier.releasePliers();
         m_idGrabed = null;
         m_nbrGrabed = 0;
+        cutStep = 0;
         return true;
     }
 
@@ -204,50 +203,38 @@ public class SPlierTool : MonoBehaviour
         releaseSofaPlier();
     }
 
-    private int cutStep = 0;
-    public IEnumerator oneCut()
+    
+    public void oneCut()
     {
-        Debug.Log("oneCut: " + cutStep);
-        yield return new WaitForSeconds(0.01f);
+        if (cutStep == 5)
+            return;
 
-        int res = m_sofaPlier.cutPliers(transform.position * m_sofaContext.getFactorUnityToSofa(), -transform.right, transform.up, transform.forward, m_cutLength * m_sofaContext.getFactorUnityToSofa() * (cutStep+1) * 0.1f);
         cutStep++;
-        Debug.Log("oneCut: res: " + res);
+        Debug.Log("Start OneCut: " + cutStep + " / 5");
+
+        int res = m_sofaPlier.cutPliers(transform.position * m_sofaContext.getFactorUnityToSofa(), -transform.right, transform.up, transform.forward, m_cutLength * m_sofaContext.getFactorUnityToSofa() * (cutStep * 0.2f));        
 
         if (res == 40000) {
             Debug.Log("CUT END!!!");
-            yield break; 
+            cutFinished = true;
         }
-
-        if (cutStep == 9)
-        {
-            animator.SetBool("isClamped", false);
-            releaseSofaPlier();
-            yield break;
-        }
-
-        StartCoroutine(oneCut());
     }
 
+    // perform full cut
     public void Cut()
     {
         if(m_sofaPlier == null)
             return;
 
-        Debug.Log("Start cut");
-        cutStep = 0;
+        Debug.Log("Start full cut");
 
-        StartCoroutine(oneCut());
-        //Debug.Log("transform.position: " + transform.position);
-        //Debug.Log("transform.forward: " + transform.forward); // z
-        //Debug.Log("transform.up: " + transform.up);// y
-        //Debug.Log("transform.up: " + transform.right); // -x
+        int res = m_sofaPlier.cutPliers(transform.position * m_sofaContext.getFactorUnityToSofa(), -transform.right, transform.up, transform.forward, m_cutLength * m_sofaContext.getFactorUnityToSofa());
 
-        animator.SetBool("isClamped", false);
-        releaseSofaPlier();
-        
-        //if (res == 40000)
-        //    Debug.Log("CUT END!!!");
+        if (res == 40000)
+        {
+            Debug.Log("CUT END!!!");
+            cutFinished = true;
+        }
     }
 
     public void testCutPath()
