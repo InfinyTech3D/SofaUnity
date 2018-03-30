@@ -36,6 +36,8 @@ public class SPlierTool : MonoBehaviour
     /// length of cut
     public float m_cutLength = 0.15f;
 
+    public bool cutFinished = false;
+
     /// Mesh renderer of the ModelVisu GameObject
     protected Mesh modelMesh = null;
 
@@ -107,6 +109,7 @@ public class SPlierTool : MonoBehaviour
     private void Start()
     {
         animator.speed = animSpeed;
+        cutFinished = false;
     }
 
     private Animator animator { get { return GetComponent<Animator>(); } }
@@ -189,7 +192,7 @@ public class SPlierTool : MonoBehaviour
     public IEnumerator Clamp()
     {
         animator.SetBool("isClamped", true);
-        yield return new WaitForSeconds(animSpeed);
+        yield return new WaitForSeconds(0.1f);
         clampSofaPlier();
     }
 
@@ -197,7 +200,7 @@ public class SPlierTool : MonoBehaviour
     public IEnumerator Unclamp()
     {
         animator.SetBool("isClamped", false);
-        yield return new WaitForSeconds(animSpeed);
+        yield return new WaitForSeconds(0.1f);
         releaseSofaPlier();
     }
 
