@@ -35,6 +35,7 @@ public class SPlierTool : MonoBehaviour
 
     /// length of cut
     public float m_cutLength = 0.15f;
+    public int nbrMaxcut = 4;
 
     public bool cutFinished = false;
 
@@ -206,13 +207,13 @@ public class SPlierTool : MonoBehaviour
     
     public void oneCut()
     {
-        if (cutStep == 5)
+        if (cutStep == nbrMaxcut)
             return;
 
         cutStep++;
-        Debug.Log("Start OneCut: " + cutStep + " / 5");
+        Debug.Log("Start OneCut: " + cutStep + " / " + nbrMaxcut);
 
-        int res = m_sofaPlier.cutPliers(transform.position * m_sofaContext.getFactorUnityToSofa(), -transform.right, transform.up, transform.forward, m_cutLength * m_sofaContext.getFactorUnityToSofa() * (cutStep * 0.2f));        
+        int res = m_sofaPlier.cutPliers(transform.position * m_sofaContext.getFactorUnityToSofa(), -transform.right, transform.up, transform.forward, m_cutLength * m_sofaContext.getFactorUnityToSofa() * (cutStep * 1/ nbrMaxcut));        
 
         if (res == 40000) {
             Debug.Log("CUT END!!!");
