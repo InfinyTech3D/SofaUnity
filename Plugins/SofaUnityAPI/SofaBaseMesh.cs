@@ -287,10 +287,13 @@ public class SofaBaseMesh : SofaBaseObject
 
     /// Method to update the Unity mesh vertex buffer only from sofa object side. Assume topology hadn't changed by default.
     /// If topology has change, createTriangulation method need to be called before this method.
-    public virtual void updateMeshVelocity(Mesh mesh, float timestep)
+    public virtual int updateMeshVelocity(Mesh mesh, float timestep)
     {
         if (m_native == IntPtr.Zero)
-            return;
+            return 0;
+
+        bool highMov = false;
+        float threshold = 5000;
 
         int nbrV = sofaPhysicsAPI_getNbVertices(m_simu, m_name);
 
@@ -301,7 +304,7 @@ public class SofaBaseMesh : SofaBaseObject
             Debug.Log(m_name + " | Number of vertices: " + nbrV + " | resV: " + resV);
 
         if (resV < 0 || nbrV <= 0)
-            return;
+            return 0;
 
         Vector3[] verts = mesh.vertices;
         if (verts.Length == 0)// first time
@@ -325,6 +328,12 @@ public class SofaBaseMesh : SofaBaseObject
                 verts[id].x = verts[id].x + timestep * velocities[i * 4 + 1] ;
                 verts[id].y = verts[id].y + timestep * velocities[i * 4 + 2] ;
                 verts[id].z = verts[id].z + timestep * velocities[i * 4 + 3] ;
+
+                if(velocities[i * 4 + 1] > threshold || velocities[i * 4 + 2] > threshold || velocities[i * 4 + 3] > threshold)
+                {
+                    Debug.Log("BIG MOVE");
+                    highMov = true;
+                }
             }
 
             if (log)
@@ -336,6 +345,10 @@ public class SofaBaseMesh : SofaBaseObject
 
         // Force future deletion
         velocities = null;
+        if (highMov)
+            return -1;
+        else
+            return 1;
     }
 
 

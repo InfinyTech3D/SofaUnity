@@ -73,6 +73,30 @@ public class SofaPliers : IDisposable
     }
 
 
+    public int unactivePliers()
+    {
+        if (m_simu == IntPtr.Zero)
+            return -10;
+
+        int res = sofaPhysicsAPI_unactivePliers(m_simu, m_name);
+        if (log)
+            Debug.Log("SofaPliers closePliers: " + m_name + " -> return: " + res);
+
+        return res;
+    }
+
+    public int reactivePliers()
+    {
+        if (m_simu == IntPtr.Zero)
+            return -10;
+
+        int res = sofaPhysicsAPI_reactivePliers(m_simu, m_name);
+        if (log)
+            Debug.Log("SofaPliers closePliers: " + m_name + " -> return: " + res);
+
+        return res;
+    }
+
     /// <summary> Method to activate the plier when it is being closed.</summary>
     /// <returns> The number of vertices being grabed. Return negative value if encountered an error.</returns>
     public int closePliers()
@@ -179,6 +203,12 @@ public class SofaPliers : IDisposable
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_closePliers(IntPtr obj, string nameID);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysicsAPI_unactivePliers(IntPtr obj, string nameID);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysicsAPI_reactivePliers(IntPtr obj, string nameID);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_releasePliers(IntPtr obj, string nameID);

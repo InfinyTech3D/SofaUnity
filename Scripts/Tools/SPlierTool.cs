@@ -111,11 +111,14 @@ public class SPlierTool : MonoBehaviour
     {
         animator.speed = animSpeed;
         cutFinished = false;
+        breakProcedure = false;
     }
 
     private Animator animator { get { return GetComponent<Animator>(); } }
 
     public float moveSpeed = 0.01f;
+
+    private bool breakProcedure = false;
 
     void Update()
     {
@@ -147,6 +150,20 @@ public class SPlierTool : MonoBehaviour
             transform.position -= transform.right * moveSpeed;
         else if (Input.GetKey(KeyCode.T))
             transform.position += transform.right * moveSpeed;
+
+        if (m_sofaContext != null)
+        {
+            if(m_sofaContext.breakerActivated && !breakProcedure)
+            {
+                breakProcedure = true;
+                m_sofaPlier.unactivePliers();
+            }
+            else if(!m_sofaContext.breakerActivated && breakProcedure)
+            {
+                breakProcedure = false;
+                m_sofaPlier.reactivePliers();
+            }
+        }
     }
 
 
