@@ -41,6 +41,9 @@ namespace SofaUnity
         /// Dictionary storing the hierarchy of Sofa objects. Key = parent name, value = List of children names.
         protected Dictionary<string, List<string> > hierarchy;
 
+        /// Booleen to update sofa simulation
+        public bool IsSofaUpdating = true;
+
         List<SBaseObject> m_objects = null;
 
 
@@ -138,6 +141,15 @@ namespace SofaUnity
             return factor;
         }
 
+        public bool breakerActivated = false;
+        private int cptBreaker = 0;
+        private int countDownBreaker = 10;
+        public void breakerProcedure()
+        {
+            breakerActivated = true;
+            cptBreaker = 0;
+        }
+
         /// Getter/Setter of current objectcpt @see m_objectCpt
         public int objectcpt
         {
@@ -171,7 +183,8 @@ namespace SofaUnity
         // Use this for initialization
         void Start()
         {
-            
+            breakerActivated = false;
+            cptBreaker = 0;
         }
 
         /// Method called at GameObject destruction.
@@ -242,11 +255,13 @@ namespace SofaUnity
 
         }
 
-        private float nextUpdate = 0.0f;
+        private float nextUpdate = 0.0f;        
 
         // Update is called once per frame
         void Update()
         {
+            if (!IsSofaUpdating) return;
+
             if (Time.time >= nextUpdate)
             {
                 nextUpdate += m_timeStep;
@@ -262,6 +277,14 @@ namespace SofaUnity
                         {
                             child.setDirty();
                         }
+                    }
+
+
+                    cptBreaker++;
+                    if (cptBreaker == countDownBreaker)
+                    {
+                        cptBreaker = 0;
+                        breakerActivated = false;
                     }
                 }
             }

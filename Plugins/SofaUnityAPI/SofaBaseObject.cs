@@ -372,6 +372,68 @@ public class SofaBaseObject : IDisposable
     }
 
 
+
+    /// <summary> Generic method to get size of a Data< vector<float> > field. </summary>
+    /// <param name="dataName"> Name of the Data field requested. </param>
+    /// <returns> size of the Data vector. Return negative value if field not found or error encountered. </returns>
+    public int getVecofVec3fSize(string dataName)
+    {
+        if (checkNativePointerForGetData(dataName))
+        {
+            int[] val = new int[1];
+            val[0] = -2;
+            int res = sofaPhysics3DObject_getVecofVec3fSize(m_simu, m_name, dataName, val);
+
+            if (res < 0)
+            {
+                Debug.LogError("Error getting parameter: " + dataName + " in object: " + m_name + " . Method Return: " + res);
+                return res;
+            }
+            else
+                return val[0];
+        }
+
+        return -1;
+    }
+
+
+    /// <summary> Generic method to get values of a Data< vector<float> > field. </summary>
+    /// <param name="dataName"> Name of the Data field requested. </param>
+    /// <param name="size"> Size of the Data vector. </param>
+    /// <param name="values"> Values of the Data vector field returned. </param>
+    /// <returns> Int error code. Negative value if method failed, 0 otherwise. </returns>
+    public int getVecofVec3fValue(string dataName, int size, float[] values)
+    {
+        if (checkNativePointerForGetData(dataName))
+        {
+            int res = sofaPhysics3DObject_getVecofVec3fValue(m_simu, m_name, dataName, size, values);
+            return res;
+        }
+
+        return -1;
+    }
+
+
+    /// <summary> Generic method to set values of a Data< vector<float> > field. </summary>
+    /// <param name="dataName"> Name of the Data field requested. </param>
+    /// <param name="size"> Size of the Data vector. </param>
+    /// <param name="values"> New values to set to the Data vector field. </param>
+    /// <returns> Int error code. Negative value if method failed, 0 otherwise. </returns>
+    public int setVecofVec3fValue(string dataName, int size, float[] values)
+    {
+        if (checkNativePointerForSetData(dataName))
+        {
+            int res = sofaPhysics3DObject_setVecofVec3fValue(m_simu, m_name, dataName, size, values);
+            return res;
+        }
+
+        return -1;
+    }
+
+
+
+
+
     /// <summary> Method to check pointer of the Sofa object. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <returns> True if pointer is valid otherwise return false. </returns>
@@ -498,4 +560,14 @@ public class SofaBaseObject : IDisposable
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysics3DObject_setVeciValue(IntPtr obj, string objectName, string dataName, int size, int[] values);
 
+
+    /// Vector <vec3f> API, need to get the size before set/get: size the number of vec3f
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getVecofVec3fSize(IntPtr obj, string objectName, string dataName, int[] value);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_setVecofVec3fValue(IntPtr obj, string objectName, string dataName, int size, float[] values);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getVecofVec3fValue(IntPtr obj, string objectName, string dataName, int size, float[] values);
 }

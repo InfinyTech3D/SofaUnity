@@ -100,7 +100,11 @@ namespace SofaUnity
                     m_mesh.RecalculateNormals();
                 }
                 else
-                    m_impl.updateMeshVelocity(m_mesh, m_context.timeStep);
+                {
+                    int res = m_impl.updateMeshVelocity(m_mesh, m_context.timeStep);
+                    if (res == -1)
+                        m_context.breakerProcedure();
+                }
             }
             
         }
