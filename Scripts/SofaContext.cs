@@ -228,6 +228,9 @@ namespace SofaUnity
                         if (pos2 < 0)
                             m_filename = "/SofaUnity/" + m_filename;
                     }
+                    m_impl.initGlutGlew();
+                    m_impl.loadPlugin("C:/projects/unity3D/SofaUnity/Assets/SofaUnity/Plugins/Native/x64/ProjectiveXRay.dll");
+
                     // load the file
                     m_impl.loadScene(Application.dataPath + m_filename);
 
