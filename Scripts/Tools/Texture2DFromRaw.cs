@@ -23,12 +23,12 @@ public class Texture2DFromRaw : MonoBehaviour
     protected int texHeight = 400;
 
     /// Name of the Data containing the raw data
-    public string dataName = "";
+    public string dataName = "outputImage";
     /// Pointer to the Data containing the raw data
     protected SData rawImg = null;
 
     /// Name of the Data containing the raw diff data
-    public string dataName2 = "";
+    public string dataName2 = "outputImageDiff";
     /// Pointer to the Data containing the raw diff data
     protected SData rawImgDiff = null;
 
@@ -45,8 +45,15 @@ public class Texture2DFromRaw : MonoBehaviour
     public void Start()
     {
         if (m_target == null)
-            return;
+        {
+            // if null look for the the default component name
+            m_target = GameObject.Find("SComponent - XRayViewer");
 
+            // If still null, exit
+            if (m_target == null)
+                return;
+        }
+            
         m_object = m_target.GetComponent<SComponentObject>();
         foreach (SData entry in m_object.datas)
         {
