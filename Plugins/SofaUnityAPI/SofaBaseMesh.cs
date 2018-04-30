@@ -331,7 +331,8 @@ public class SofaBaseMesh : SofaBaseObject
 
                 if(velocities[i * 4 + 1] > threshold || velocities[i * 4 + 2] > threshold || velocities[i * 4 + 3] > threshold)
                 {
-                    Debug.Log("BIG MOVE");
+                    if (log)
+                        Debug.Log("BIG MOVE");
                     highMov = true;
                 }
             }
