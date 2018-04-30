@@ -88,8 +88,6 @@ public class Texture2DFromRaw : MonoBehaviour
                     m_rawData = new float[res];
                     GetComponent<Renderer>().material.mainTexture = m_texture;
                 }
-                //for (int i = 0; i < 100; i++)
-                //    m_rawData[i] = 69;
                 
 
                 int resValue = m_object.impl.getVecfValue(rawImg.nameID, res, m_rawData);
