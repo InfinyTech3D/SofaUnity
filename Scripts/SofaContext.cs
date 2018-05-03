@@ -190,20 +190,23 @@ namespace SofaUnity
         /// Method called at GameObject destruction.
         void OnDestroy()
         {
+           // if(m_log)
+               // Debug.Log("SofaContext::OnDestroy stop called.");
+
+            //foreach (Transform child in transform)
+            //{
+            //    //GameObject.Destroy(child.gameObject);
+            //}
+
             if(m_log)
                 Debug.Log("SofaContext::OnDestroy stop called.");
-
-            foreach (Transform child in transform)
+            if (m_impl != null)
             {
-                //GameObject.Destroy(child.gameObject);
+                if (m_log)
+                    Debug.Log("SofaContext::OnDestroy stop now.");
+                m_impl.stop();
+                m_impl.Dispose();
             }
-#if !UNITY_EDITOR
-            if(m_log)
-                Debug.Log("SofaContext::OnDestroy stop called.");
-
-            m_impl.stop();
-            m_impl.Dispose();       
-#endif
         }
 
         /// Internal Method to init the SofaContext object
