@@ -31,27 +31,22 @@ namespace SofaUnityAPI
         /// Destructor
         ~SofaContextAPI()
         {
-         //   Dispose(false);
+           // Dispose(false);
         }
 
 
         /// Dispose method to release the object
         public void Dispose()
-        {            
-            //Dispose(true);
-            //GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
         {
-            //if (m_native != IntPtr.Zero)
-            //{
-            //    int resDel = sofaPhysicsAPI_delete(m_native);
-            //    m_native = IntPtr.Zero;
-            //    Debug.Log("Error: SofaContextAPI::Dispose sofaPhysicsAPI_delete method returns: " + resDel);
-            //    if (resDel < 0)
-            //        Debug.LogError("Error: SofaContextAPI::Dispose sofaPhysicsAPI_delete method returns: " + resDel);
-            //}
+            if (m_native != IntPtr.Zero)
+            {
+                int resDel = sofaPhysicsAPI_delete(m_native);
+                m_native = IntPtr.Zero;
+                if (false)
+                    Debug.Log("Error: SofaContextAPI::Dispose sofaPhysicsAPI_delete method returns: " + resDel);
+                if (resDel < 0)
+                    Debug.LogError("Error: SofaContextAPI::Dispose sofaPhysicsAPI_delete method returns: " + resDel);
+            }
         }
 
         /// Getter to the dispose parameter
