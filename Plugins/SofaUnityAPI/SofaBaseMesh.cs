@@ -296,6 +296,8 @@ public class SofaBaseMesh : SofaBaseObject
         float threshold = 5000;
 
         int nbrV = sofaPhysicsAPI_getNbVertices(m_simu, m_name);
+        if (nbrV < 0)
+            return 0;
 
         float[] velocities = new float[nbrV * 4];
         int resV = sofaPhysics3DObject_getVelocities(m_simu, m_name, velocities);
