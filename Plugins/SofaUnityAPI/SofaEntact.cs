@@ -69,7 +69,7 @@ public class SofaEntact : IDisposable
 
     public int numberOfTools()
     {
-        int res = sofaPhysicsAPI_entactLeftToolHoming(m_simu, m_name);
+        int res = sofaPhysicsAPI_getNumberOfTools(m_simu, m_name);
         if (log)
             Debug.Log("Sofa Number of tools detected: " + m_name + " -> return: " + res);
 
