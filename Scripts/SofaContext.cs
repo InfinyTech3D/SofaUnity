@@ -209,12 +209,25 @@ namespace SofaUnity
             }
         }
 
+        void loadPlugins()
+        {           
+            string pluginPath = "";
+            if (Application.isEditor)
+                pluginPath = "/SofaUnity/Plugins/Native/x64/";
+            else
+                pluginPath = "/Plugins/";
+
+        }
+
         /// Internal Method to init the SofaContext object
         void init()
         {
             if (m_impl == null)
             {
                 m_impl = new SofaContextAPI();
+
+                loadPlugins();
+
                 m_impl.start();
                 if (m_filename != "")
                 {
@@ -230,6 +243,12 @@ namespace SofaUnity
                         int pos2 = m_filename.IndexOf("SofaUnity", 0);
                         if (pos2 < 0)
                             m_filename = "/SofaUnity/" + m_filename;
+                    }
+
+                    if (!File.Exists(Application.dataPath + m_filename)) // still not found
+                    {
+                        Debug.LogError("Error file can't be found: " + Application.dataPath + m_filename);
+                        return;
                     }
                     // load the file
                     m_impl.loadScene(Application.dataPath + m_filename);
