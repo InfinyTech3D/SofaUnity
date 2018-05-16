@@ -210,10 +210,16 @@ namespace SofaUnity
         }
 
         void loadPlugins()
-        {
+        {           
+            string pluginPath = "";
+            if (Application.isEditor)
+                pluginPath = "/SofaUnity/Plugins/Native/x64/";
+            else
+                pluginPath = "/Plugins/";
+
             m_impl.initGlutGlew();
-            m_impl.loadPlugin(Application.dataPath + "/SofaUnity/Plugins/Native/x64/ProjectiveXRay.dll");
-            m_impl.loadPlugin(Application.dataPath + "/SofaUnity/Plugins/Native/x64/Entact.dll");
+            m_impl.loadPlugin(Application.dataPath + pluginPath + "ProjectiveXRay.dll");
+            m_impl.loadPlugin(Application.dataPath + pluginPath + "Entact.dll");
         }
 
         /// Internal Method to init the SofaContext object
@@ -243,6 +249,12 @@ namespace SofaUnity
                         int pos2 = m_filename.IndexOf("SofaUnity", 0);
                         if (pos2 < 0)
                             m_filename = "/SofaUnity/" + m_filename;
+                    }
+
+                    if (!File.Exists(Application.dataPath + m_filename)) // still not found
+                    {
+                        Debug.LogError("Error file can't be found: " + Application.dataPath + m_filename);
+                        return;
                     }
 
                     // load the file

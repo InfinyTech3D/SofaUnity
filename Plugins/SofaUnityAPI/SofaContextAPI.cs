@@ -93,7 +93,7 @@ namespace SofaUnityAPI
             if (m_native != IntPtr.Zero)
             {
                 int res = sofaPhysicsAPI_loadPlugin(m_native, pluginName);
-                if (res < 0)
+                if (res < 1)
                     Debug.LogError("Plugin loaded: " + pluginName + " method returns error: " + res);
             }
             else
