@@ -74,6 +74,18 @@ namespace SofaUnityAPI
             sofaPhysicsAPI_step(m_native);
         }
 
+        /// Method to perform one async step of simulation in Sofa
+        public bool asyncStep()
+        {
+            return sofaPhysicsAPI_asyncStep(m_native);
+        }
+
+        /// Method to query the Sofa physics simulation for the asynch step completion
+        public bool isAsyncStepCompleted()
+        {
+            return sofaPhysicsAPI_isAsyncStepCompleted(m_native);
+        }        
+
         /// <summary> Load the Sofa scene given by name @param filename. </summary>
         /// <param name="filename"> Path to the filename. </param>
         public void loadScene(string filename)
@@ -265,7 +277,11 @@ namespace SofaUnityAPI
         public static extern void sofaPhysicsAPI_stop(IntPtr obj);
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern void sofaPhysicsAPI_reset(IntPtr obj);
-
+        [DllImport("SofaAdvancePhysicsAPI")]
+        public static extern bool sofaPhysicsAPI_asyncStep(IntPtr obj);
+        [DllImport("SofaAdvancePhysicsAPI")]
+        public static extern bool sofaPhysicsAPI_isAsyncStepCompleted(IntPtr obj);
+        
 
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern void sofaPhysicsAPI_setTimeStep(IntPtr obj, double value);
