@@ -23,7 +23,7 @@ namespace SofaUnity
         }
 
         // Update is called once per frame
-        protected override void updateImpl()
+        public override void updateImpl()
         {
             if (m_log)
                 Debug.Log("SCylinder::updateImpl called.");

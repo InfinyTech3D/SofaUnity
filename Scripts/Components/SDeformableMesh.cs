@@ -286,7 +286,7 @@ namespace SofaUnity
 
 
         /// Method called by @sa Update() method.
-        protected override void updateImpl()
+        public override void updateImpl()
         {
             if (m_log)
                 Debug.Log("SDeformableMesh::updateImpl called.");

@@ -168,14 +168,14 @@ namespace SofaUnity
             // Call internal method that can be overwritten. Only if dirty
             if (m_isDirty)
             {
-                updateImpl();
+                //updateImpl();
                 m_isDirty = false;
             }
         }
 
 
         /// Method called by @sa Update() method. To be implemented by child class.
-        protected virtual void updateImpl()
+        public virtual void updateImpl()
         {
 
         }        

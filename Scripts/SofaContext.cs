@@ -209,6 +209,7 @@ namespace SofaUnity
             }
         }
 
+
         void loadPlugins()
         {           
             string pluginPath = "";
@@ -287,33 +288,80 @@ namespace SofaUnity
         private float nextUpdate = 0.0f;        
 
         // Update is called once per frame
+        //void Update()
+        //{
+        //    if (!IsSofaUpdating) return;
+
+        //    if (Time.time >= nextUpdate)
+        //    {
+        //        nextUpdate += m_timeStep;
+
+        //        if (Application.isPlaying) // only if scene is playing
+        //        {
+        //            m_impl.step();
+
+        //            if (m_objects != null)
+        //            {
+        //                // Set all objects to dirty to force and update.
+        //                foreach (SBaseObject child in m_objects)
+        //                {
+        //                    child.setDirty();
+        //                }
+        //            }
+
+
+        //            cptBreaker++;
+        //            if (cptBreaker == countDownBreaker)
+        //            {
+        //                cptBreaker = 0;
+        //                breakerActivated = false;
+        //            }
+        //        }
+        //    }
+        //}
+
+        // Update is called once per frame
         void Update()
         {
             if (!IsSofaUpdating) return;
 
-            if (Time.time >= nextUpdate)
+            //if (Time.time >= nextUpdate)
             {
-                nextUpdate += m_timeStep;
+                //nextUpdate += m_timeStep;
 
                 if (Application.isPlaying) // only if scene is playing
                 {
-                    m_impl.step();
+                    Debug.Log(Time.deltaTime);
 
-                    if (m_objects != null)
+                    // if physics simulation async step is still running do not wait and return the control to Unity
+                    if (m_impl.isAsyncStepCompleted())
                     {
-                        // Set all objects to dirty to force and update.
-                        foreach (SBaseObject child in m_objects)
+                        // physics simulation step completed and is not running
+                        // perform data synchronization safely (no need of synchronization locks)                        
+                        if (m_objects != null)
                         {
-                            child.setDirty();
+                            // Set all objects to dirty to force and update.
+                            foreach (SBaseObject child in m_objects)
+                            {
+                                //child.setDirty();
+                                child.updateImpl();
+                            }
                         }
+
+
+                        cptBreaker++;
+                        if (cptBreaker == countDownBreaker)
+                        {
+                            cptBreaker = 0;
+                            breakerActivated = false;
+                        }
+
+                        // run a new physics simulation async step
+                        m_impl.asyncStep();
                     }
-
-
-                    cptBreaker++;
-                    if (cptBreaker == countDownBreaker)
+                    else
                     {
-                        cptBreaker = 0;
-                        breakerActivated = false;
+                        Debug.Log("isAsyncStepCompleted: NO ");
                     }
                 }
             }
