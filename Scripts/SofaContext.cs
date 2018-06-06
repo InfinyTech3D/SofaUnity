@@ -287,7 +287,7 @@ namespace SofaUnity
 
         private float nextUpdate = 0.0f;
 
-        private bool testAsync = false;
+        private bool testAsync = true;
 
         // Update is called once per frame
         void Update()
@@ -331,39 +331,38 @@ namespace SofaUnity
 
         protected void updateImplASync()
         {
-            //if (Time.time >= nextUpdate)
+            if (Time.time >= nextUpdate)
             {
-                //nextUpdate += m_timeStep;
+                nextUpdate += m_timeStep;
 
-                if (Application.isPlaying) // only if scene is playing
+                //Debug.Log(Time.deltaTime);
+
+                // if physics simulation async step is still running do not wait and return the control to Unity
+                //if (m_impl.isAsyncStepCompleted())
                 {
-                    //Debug.Log(Time.deltaTime);
-
-                    // if physics simulation async step is still running do not wait and return the control to Unity
-                    if (m_impl.isAsyncStepCompleted())
+                    Debug.Log("isAsyncStepCompleted: YES ");
+                    
+                    // physics simulation step completed and is not running
+                    // perform data synchronization safely (no need of synchronization locks)                        
+                    if (m_objects != null)
                     {
-                        Debug.Log("isAsyncStepCompleted: YES ");
-
-                        // physics simulation step completed and is not running
-                        // perform data synchronization safely (no need of synchronization locks)                        
-                        if (m_objects != null)
+                        // Set all objects to dirty to force and update.
+                        foreach (SBaseObject child in m_objects)
                         {
-                            // Set all objects to dirty to force and update.
-                            foreach (SBaseObject child in m_objects)
-                            {
-                                //child.setDirty();
-                                child.updateImpl();
-                            }
+                            //child.setDirty();
+                            //child.updateImpl();
+                            Debug.Log(child.name);
                         }
+                    }
 
-                        // run a new physics simulation async step
-                        m_impl.asyncStep();
-                    }
-                    else
-                    {
-                        Debug.Log("isAsyncStepCompleted: NO ");
-                    }
+                    //m_impl.step();
+                    // run a new physics simulation async step
+                    m_impl.asyncStep();
                 }
+                //else
+                //{
+                //    Debug.Log("isAsyncStepCompleted: NO ");
+                //}
             }
         }
 
