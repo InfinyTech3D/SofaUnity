@@ -285,46 +285,52 @@ namespace SofaUnity
 
         }
 
-        private float nextUpdate = 0.0f;        
+        private float nextUpdate = 0.0f;
 
-        // Update is called once per frame
-        //void Update()
-        //{
-        //    if (!IsSofaUpdating) return;
-
-        //    if (Time.time >= nextUpdate)
-        //    {
-        //        nextUpdate += m_timeStep;
-
-        //        if (Application.isPlaying) // only if scene is playing
-        //        {
-        //            m_impl.step();
-
-        //            if (m_objects != null)
-        //            {
-        //                // Set all objects to dirty to force and update.
-        //                foreach (SBaseObject child in m_objects)
-        //                {
-        //                    child.setDirty();
-        //                }
-        //            }
-
-
-        //            cptBreaker++;
-        //            if (cptBreaker == countDownBreaker)
-        //            {
-        //                cptBreaker = 0;
-        //                breakerActivated = false;
-        //            }
-        //        }
-        //    }
-        //}
+        private bool testAsync = false;
 
         // Update is called once per frame
         void Update()
         {
-            if (!IsSofaUpdating) return;
+            // only if scene is playing or if sofa is running
+            if (IsSofaUpdating == false || Application.isPlaying == false) return; 
 
+            if (testAsync)
+                updateImplASync();
+            else
+                updateImplSync();
+
+            // counter if need to freeze the simulation for several iterations
+            cptBreaker++;
+            if (cptBreaker == countDownBreaker)
+            {
+                cptBreaker = 0;
+                breakerActivated = false;
+            }
+        }
+
+
+        protected void updateImplSync()
+        {
+            if (Time.time >= nextUpdate)
+            {
+                nextUpdate += m_timeStep;
+
+                m_impl.step();
+
+                if (m_objects != null)
+                {
+                    // Set all objects to dirty to force and update.
+                    foreach (SBaseObject child in m_objects)
+                    {
+                        child.setDirty();
+                    }
+                }
+            }
+        }
+
+        protected void updateImplASync()
+        {
             //if (Time.time >= nextUpdate)
             {
                 //nextUpdate += m_timeStep;
@@ -350,14 +356,6 @@ namespace SofaUnity
                             }
                         }
 
-
-                        cptBreaker++;
-                        if (cptBreaker == countDownBreaker)
-                        {
-                            cptBreaker = 0;
-                            breakerActivated = false;
-                        }
-
                         // run a new physics simulation async step
                         m_impl.asyncStep();
                     }
@@ -368,6 +366,7 @@ namespace SofaUnity
                 }
             }
         }
+
 
         /// Method to load a filename and create GameObject per Sofa object found.
         protected void loadFilename()

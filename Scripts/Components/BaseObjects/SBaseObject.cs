@@ -168,7 +168,7 @@ namespace SofaUnity
             // Call internal method that can be overwritten. Only if dirty
             if (m_isDirty)
             {
-                //updateImpl();
+                updateImpl();
                 m_isDirty = false;
             }
         }
