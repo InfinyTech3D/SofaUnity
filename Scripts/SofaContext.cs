@@ -331,11 +331,13 @@ namespace SofaUnity
 
                 if (Application.isPlaying) // only if scene is playing
                 {
-                    Debug.Log(Time.deltaTime);
+                    //Debug.Log(Time.deltaTime);
 
                     // if physics simulation async step is still running do not wait and return the control to Unity
                     if (m_impl.isAsyncStepCompleted())
                     {
+                        Debug.Log("isAsyncStepCompleted: YES ");
+
                         // physics simulation step completed and is not running
                         // perform data synchronization safely (no need of synchronization locks)                        
                         if (m_objects != null)
