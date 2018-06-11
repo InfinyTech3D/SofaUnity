@@ -350,7 +350,7 @@ namespace SofaUnity
                         foreach (SBaseObject child in m_objects)
                         {
                             //child.setDirty();
-                            //child.updateImpl();
+                            child.updateImpl();
                             Debug.Log(child.name);
                         }
                     }

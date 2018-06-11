@@ -258,9 +258,6 @@ namespace SofaUnityAPI
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern int sofaPhysicsAPI_getNumberObjects(IntPtr obj);
 
-        [DllImport("SofaAdvancePhysicsAPI")]
-        public static extern int sofaPhysicsAPI_getNumberMeshes(IntPtr obj);
-
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern string sofaPhysicsAPI_get3DObjectName(IntPtr obj, int id);
 
