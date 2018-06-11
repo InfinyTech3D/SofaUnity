@@ -74,8 +74,18 @@ public class Texture2DFromRaw : MonoBehaviour
     protected bool initDiff = false;
     public void Update()
     {
+
+    }
+
+    /// Method called by @sa Update() method. To be implemented by child class.
+    public virtual void updateImpl()
+    {
+        Debug.Log("Texture2DFromRaw::updateImpl");
+
         if (m_object != null)
         {
+            Debug.Log("Texture2DFromRaw::updateImpl:   m_object != null ");
+
             if (m_texture == null && rawImg != null) // first time create init texture
             {
                 int res = m_object.impl.getVecfSize(rawImg.nameID);
@@ -88,19 +98,19 @@ public class Texture2DFromRaw : MonoBehaviour
                     m_rawData = new float[res];
                     GetComponent<Renderer>().material.mainTexture = m_texture;
                 }
-                
+
 
                 int resValue = m_object.impl.getVecfValue(rawImg.nameID, res, m_rawData);
                 int cpt = 0;
                 int cpt1 = 0;
                 //var line = "";
                 for (int y = 0; y < m_texture.height; y++)
-                {                    
+                {
                     for (int x = 0; x < m_texture.width; x++)
                     {
                         //Color color = ((x & y) != 0 ? Color.white : Color.gray);
                         float value = m_rawData[cpt];
-                       // line = line + value + " ";
+                        // line = line + value + " ";
                         //if (cpt<1000)
                         //Debug.Log(cpt + " -> " + value);
 
@@ -112,15 +122,15 @@ public class Texture2DFromRaw : MonoBehaviour
                         cpt++;
                     }
 
-                   // line = line + " || ";                    
+                    // line = line + " || ";                    
                 }
-               // Debug.Log(line);
-               // Debug.Log("cpt1: " + cpt1);
+                // Debug.Log(line);
+                // Debug.Log("cpt1: " + cpt1);
                 m_texture.Apply();
                 return;
             }
 
-            
+
             if (m_texture != null && rawImgDiff != null) // second time, init diff image (used for optimisation as sparse data)
             {
                 int resDiff = m_object.impl.getVecfSize(rawImgDiff.nameID);
@@ -141,7 +151,7 @@ public class Texture2DFromRaw : MonoBehaviour
                     int id = (int)m_rawData[i];
                     if (id == -1)
                     {
-                       // Debug.Log("Stop at: " + i*0.5);
+                        // Debug.Log("Stop at: " + i*0.5);
                         break;
                     }
 
@@ -154,4 +164,5 @@ public class Texture2DFromRaw : MonoBehaviour
             }
         }
     }
+
 }
