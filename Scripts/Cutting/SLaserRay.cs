@@ -110,7 +110,11 @@ public class SLaserRay : SRayCaster
     // Use this for initialization
     void Start()
     {
-        m_axisDirection.Normalize();        
+        m_axisDirection.Normalize();
+        if (m_sofaContext.testAsync == true)
+            m_sofaContext.registerCaster(this);
+        else
+            automaticCast = true;
     }
 
     // Update is called once per frame
@@ -123,19 +127,19 @@ public class SLaserRay : SRayCaster
 
         // update the light source
         if (drawLaserParticles)
-            lightSource.transform.position = origin + transLocal; 
+            lightSource.transform.position = origin + transLocal;
 
-        if (m_sofaRC != null)
-        {                        
-            if (Input.GetKey(KeyCode.C))
-            {
-                this.activeTool(true);
-            }
-            else if (Input.GetKey(KeyCode.V))
-            {
-                this.activeTool(false);
-            }
+        if (Input.GetKey(KeyCode.C))
+        {
+            this.activeTool(true);
+        }
+        else if (Input.GetKey(KeyCode.V))
+        {
+            this.activeTool(false);
+        }
 
+        if (automaticCast && m_sofaRC != null)
+        {
             int triId = -1;
             // get the id of the selected triangle. If < 0, no intersection
             if (m_isActivated)
@@ -144,6 +148,21 @@ public class SLaserRay : SRayCaster
 
         // Update the laser drawing
         this.draw(origin, origin + direction * length);
+    }
+
+    public override void updateImpl()
+    {
+        Vector3 transLocal = transform.TransformVector(m_translation);
+        origin = transform.position + transLocal;
+        direction = transform.forward * m_axisDirection[0] + transform.right * m_axisDirection[1] + transform.up * m_axisDirection[2];
+
+        if (m_sofaRC != null)
+        {
+            int triId = -1;
+            // get the id of the selected triangle. If < 0, no intersection
+            if (m_isActivated)
+                triId = m_sofaRC.castRay(origin, direction, m_sofaContext.getScaleUnityToSofa());
+        }
     }
 
 

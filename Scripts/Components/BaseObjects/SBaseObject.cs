@@ -20,6 +20,8 @@ namespace SofaUnity
         /// Parameter to activate logging of this Sofa GameObject
         protected bool m_log = false;
 
+        protected bool directChild = true;
+
         /// Parameter storing the fact that the object is fully init
         protected bool m_isAwake = false;
         public bool isAwake() { return m_isAwake; }
@@ -89,7 +91,8 @@ namespace SofaUnity
                 }
 
                 // By default place this object as child of SofaContext
-                this.transform.parent = _contextObject.gameObject.transform;
+                if (this.directChild)
+                    this.transform.parent = _contextObject.gameObject.transform;
 
                 // Look for node a name. Remove unneeded parts of the name (like _Node)
                 int pos = this.name.IndexOf("-");
@@ -175,7 +178,7 @@ namespace SofaUnity
 
 
         /// Method called by @sa Update() method. To be implemented by child class.
-        protected virtual void updateImpl()
+        public virtual void updateImpl()
         {
 
         }        

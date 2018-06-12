@@ -20,7 +20,7 @@ namespace SofaUnityAPI
         public SofaContextAPI()
         {
             // Create the application
-            m_native = sofaPhysicsAPI_create();
+            m_native = sofaPhysicsAPI_create(2);
             if (m_native == IntPtr.Zero)
                 Debug.LogError("Error no sofaPhysicsAPI found and created!");
 
@@ -73,6 +73,18 @@ namespace SofaUnityAPI
         {
             sofaPhysicsAPI_step(m_native);
         }
+
+        /// Method to perform one async step of simulation in Sofa
+        public bool asyncStep()
+        {
+            return sofaPhysicsAPI_asyncStep(m_native);
+        }
+
+        /// Method to query the Sofa physics simulation for the asynch step completion
+        public bool isAsyncStepCompleted()
+        {
+            return sofaPhysicsAPI_isAsyncStepCompleted(m_native);
+        }        
 
         /// <summary> Load the Sofa scene given by name @param filename. </summary>
         /// <param name="filename"> Path to the filename. </param>
@@ -215,7 +227,7 @@ namespace SofaUnityAPI
 
         /// Bindings to the SofaAdvancePhysicsAPI creation/destruction methods
         [DllImport("SofaAdvancePhysicsAPI")]
-        public static extern IntPtr sofaPhysicsAPI_create();
+        public static extern IntPtr sofaPhysicsAPI_create(int nbrThread);
 
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern int sofaPhysicsAPI_delete(IntPtr obj);
@@ -246,9 +258,6 @@ namespace SofaUnityAPI
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern int sofaPhysicsAPI_getNumberObjects(IntPtr obj);
 
-        [DllImport("SofaAdvancePhysicsAPI")]
-        public static extern int sofaPhysicsAPI_getNumberMeshes(IntPtr obj);
-
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern string sofaPhysicsAPI_get3DObjectName(IntPtr obj, int id);
 
@@ -265,7 +274,11 @@ namespace SofaUnityAPI
         public static extern void sofaPhysicsAPI_stop(IntPtr obj);
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern void sofaPhysicsAPI_reset(IntPtr obj);
-
+        [DllImport("SofaAdvancePhysicsAPI")]
+        public static extern bool sofaPhysicsAPI_asyncStep(IntPtr obj);
+        [DllImport("SofaAdvancePhysicsAPI")]
+        public static extern bool sofaPhysicsAPI_isAsyncStepCompleted(IntPtr obj);
+        
 
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern void sofaPhysicsAPI_setTimeStep(IntPtr obj, double value);

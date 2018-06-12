@@ -46,6 +46,8 @@ namespace SofaUnity
 
         List<SBaseObject> m_objects = null;
 
+        List<SRayCaster> m_casters = null;
+
 
         /// Getter of current Sofa Context API, @see m_impl
         public IntPtr getSimuContext()
@@ -170,6 +172,13 @@ namespace SofaUnity
             m_objects.Add(obj);
         }
 
+        public void registerCaster(SRayCaster obj)
+        {
+            if (m_casters == null)
+                m_casters = new List<SRayCaster>();
+            m_casters.Add(obj);
+        }
+
         /// Method called at GameObject creation.
         void Awake()
         {
@@ -277,40 +286,99 @@ namespace SofaUnity
 
         }
 
-        private float nextUpdate = 0.0f;        
+        private float nextUpdate = 0.0f;
+
+        public bool testAsync = true;
 
         // Update is called once per frame
         void Update()
         {
-            if (!IsSofaUpdating) return;
+            // only if scene is playing or if sofa is running
+            if (IsSofaUpdating == false || Application.isPlaying == false) return; 
 
+            if (testAsync)
+                updateImplASync();
+            else
+                updateImplSync();
+
+            // counter if need to freeze the simulation for several iterations
+            cptBreaker++;
+            if (cptBreaker == countDownBreaker)
+            {
+                cptBreaker = 0;
+                breakerActivated = false;
+            }
+        }
+
+
+        protected void updateImplSync()
+        {
             if (Time.time >= nextUpdate)
             {
                 nextUpdate += m_timeStep;
 
-                if (Application.isPlaying) // only if scene is playing
-                {
-                    m_impl.step();
+                m_impl.step();
 
+                if (m_objects != null)
+                {
+                    // Set all objects to dirty to force and update.
+                    foreach (SBaseObject child in m_objects)
+                    {
+                        child.setDirty();
+                    }
+                }
+            }
+        }
+
+        protected void updateImplASync()
+        {
+            if (Time.time >= nextUpdate)
+            {
+                nextUpdate += m_timeStep;
+
+                //Debug.Log(Time.deltaTime);
+
+                // if physics simulation async step is still running do not wait and return the control to Unity
+                if (m_impl.isAsyncStepCompleted())
+                {
+                   // Debug.Log("isAsyncStepCompleted: YES ");
+                    
+                    // physics simulation step completed and is not running
+                    // perform data synchronization safely (no need of synchronization locks)                        
                     if (m_objects != null)
                     {
                         // Set all objects to dirty to force and update.
                         foreach (SBaseObject child in m_objects)
                         {
-                            child.setDirty();
+                            //child.setDirty();
+                            child.updateImpl();
+                            //Debug.Log(child.name);
                         }
                     }
 
-
-                    cptBreaker++;
-                    if (cptBreaker == countDownBreaker)
+                    // update the ray casters
+                    if (m_casters != null)
                     {
-                        cptBreaker = 0;
-                        breakerActivated = false;
+                        // Set all objects to dirty to force and update.
+                        foreach (SRayCaster child in m_casters)
+                        {
+                            //child.setDirty();
+                            child.updateImpl();
+                            //Debug.Log(child.name);
+                        }
                     }
+
+                    //m_impl.step();
+                    // run a new physics simulation async step
+                    m_impl.asyncStep();
                 }
+                //else
+                //{
+                //    Debug.Log("isAsyncStepCompleted: NO ");
+                //}
             }
         }
+
 
         /// Method to load a filename and create GameObject per Sofa object found.
         protected void loadFilename()
