@@ -94,10 +94,6 @@ public class Texture2DFromRaw : SBaseObject
 
     protected bool firstTime = true;
     protected bool initDiff = false;
-    public void Update()
-    {
-
-    }
 
     /// Method called by @sa Update() method. To be implemented by child class.
     public override void updateImpl()
