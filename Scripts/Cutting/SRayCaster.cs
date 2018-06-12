@@ -15,6 +15,8 @@ public class SRayCaster : RayCaster
     /// Pointer to the corresponding SOFA API object
     protected SofaRayCaster m_sofaRC = null;
 
+    public bool automaticCast = false;
+
 
     /// Method called at GameObject creation. Will search for SofaContext @sa loadContext() which call @sa createObject() . Then call @see awakePostProcess()
     void Awake()
@@ -43,6 +45,11 @@ public class SRayCaster : RayCaster
 
     /// Method to display touched triangle. Not yet implemented from Sofa-Unity.
     public override void highlightTriangle()
+    {
+
+    }
+
+    public virtual void updateImpl()
     {
 
     }

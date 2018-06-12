@@ -46,6 +46,8 @@ namespace SofaUnity
 
         List<SBaseObject> m_objects = null;
 
+        List<SRayCaster> m_casters = null;
+
 
         /// Getter of current Sofa Context API, @see m_impl
         public IntPtr getSimuContext()
@@ -170,6 +172,13 @@ namespace SofaUnity
             m_objects.Add(obj);
         }
 
+        public void registerCaster(SRayCaster obj)
+        {
+            if (m_casters == null)
+                m_casters = new List<SRayCaster>();
+            m_casters.Add(obj);
+        }
+
         /// Method called at GameObject creation.
         void Awake()
         {
@@ -287,7 +296,7 @@ namespace SofaUnity
 
         private float nextUpdate = 0.0f;
 
-        private bool testAsync = true;
+        public bool testAsync = true;
 
         // Update is called once per frame
         void Update()
@@ -338,9 +347,9 @@ namespace SofaUnity
                 //Debug.Log(Time.deltaTime);
 
                 // if physics simulation async step is still running do not wait and return the control to Unity
-                //if (m_impl.isAsyncStepCompleted())
+                if (m_impl.isAsyncStepCompleted())
                 {
-                    Debug.Log("isAsyncStepCompleted: YES ");
+                   // Debug.Log("isAsyncStepCompleted: YES ");
                     
                     // physics simulation step completed and is not running
                     // perform data synchronization safely (no need of synchronization locks)                        
@@ -348,6 +357,18 @@ namespace SofaUnity
                     {
                         // Set all objects to dirty to force and update.
                         foreach (SBaseObject child in m_objects)
+                        {
+                            //child.setDirty();
+                            child.updateImpl();
+                            //Debug.Log(child.name);
+                        }
+                    }
+
+                    // update the ray casters
+                    if (m_casters != null)
+                    {
+                        // Set all objects to dirty to force and update.
+                        foreach (SRayCaster child in m_casters)
                         {
                             //child.setDirty();
                             child.updateImpl();
