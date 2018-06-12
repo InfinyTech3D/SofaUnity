@@ -104,13 +104,13 @@ public class Texture2DFromRaw : SBaseObject
     {        
         if (m_object != null)
         {            
-            if (/*m_texture == null && */ rawImg != null) // first time create init texture
+            if (m_texture == null && rawImg != null) // first time create init texture
             {
-                Debug.Log("Texture2DFromRaw::updateImpl:   m_object != null ");
+                //Debug.Log("Texture2DFromRaw::updateImpl:   m_object != null ");
                 int res = m_object.impl.getVecfSize(rawImg.nameID);
                 if (res == 0)
                 {
-                    Debug.Log("Texture2DFromRaw image size is 0");
+                    Debug.LogError("Texture2DFromRaw image size is 0");
                     return;
                 }
 
@@ -133,8 +133,8 @@ public class Texture2DFromRaw : SBaseObject
                         //Color color = ((x & y) != 0 ? Color.white : Color.gray);
                         float value = m_rawData[cpt];
                         // line = line + value + " ";
-                        if (cpt<1000)
-                            Debug.Log(cpt + " -> " + value);
+                        //if (cpt<1000)
+                        //    Debug.Log(cpt + " -> " + value);
 
                         if (value == 1)
                             cpt1++;
