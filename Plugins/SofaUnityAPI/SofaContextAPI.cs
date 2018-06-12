@@ -20,7 +20,7 @@ namespace SofaUnityAPI
         public SofaContextAPI()
         {
             // Create the application
-            m_native = sofaPhysicsAPI_create();
+            m_native = sofaPhysicsAPI_create(1);
             if (m_native == IntPtr.Zero)
                 Debug.LogError("Error no sofaPhysicsAPI found and created!");
 
@@ -227,7 +227,7 @@ namespace SofaUnityAPI
 
         /// Bindings to the SofaAdvancePhysicsAPI creation/destruction methods
         [DllImport("SofaAdvancePhysicsAPI")]
-        public static extern IntPtr sofaPhysicsAPI_create();
+        public static extern IntPtr sofaPhysicsAPI_create(int nbrThread);
 
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern int sofaPhysicsAPI_delete(IntPtr obj);
