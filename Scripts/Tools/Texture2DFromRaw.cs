@@ -5,7 +5,7 @@ using SofaUnity;
 /// Script that create a 2D texture from a raw data.
 /// work in progress.
 /// </summary>
-public class Texture2DFromRaw : MonoBehaviour
+public class Texture2DFromRaw : SBaseObject
 {
     ////////////////////////////////////////////
     /////          Object members          /////
@@ -36,11 +36,15 @@ public class Texture2DFromRaw : MonoBehaviour
     protected float[] m_rawData = null;
 
 
-    
+
 
     ////////////////////////////////////////////
     /////       Object behavior API        /////
     ////////////////////////////////////////////
+    void Awake()
+    {
+        // override the default SBaseObject Awake
+    }
 
     public void Start()
     {
@@ -67,6 +71,24 @@ public class Texture2DFromRaw : MonoBehaviour
                 rawImgDiff = entry;
             }
         }
+
+        // find SofaContext and register this object
+        GameObject _contextObject = GameObject.Find("SofaContext");
+        if (_contextObject != null)
+        {
+            // Get Sofa context
+            SofaContext _sofaContext = _contextObject.GetComponent<SofaUnity.SofaContext>();
+            if (_sofaContext == null)
+            {
+                Debug.LogError("Texture2DFromRaw::loadContext - GetComponent<SofaUnity.SofaContext> failed.");
+            }
+            else
+                _sofaContext.registerObject(this);
+        }
+        else
+        {
+            Debug.LogError("Texture2DFromRaw::loadContext - No SofaContext found.");
+        }
     }
 
 
@@ -78,25 +100,25 @@ public class Texture2DFromRaw : MonoBehaviour
     }
 
     /// Method called by @sa Update() method. To be implemented by child class.
-    public virtual void updateImpl()
-    {
-        Debug.Log("Texture2DFromRaw::updateImpl");
-
+    public override void updateImpl()
+    {        
         if (m_object != null)
-        {
-            Debug.Log("Texture2DFromRaw::updateImpl:   m_object != null ");
-
-            if (m_texture == null && rawImg != null) // first time create init texture
+        {            
+            if (/*m_texture == null && */ rawImg != null) // first time create init texture
             {
+                Debug.Log("Texture2DFromRaw::updateImpl:   m_object != null ");
                 int res = m_object.impl.getVecfSize(rawImg.nameID);
                 if (res == 0)
+                {
+                    Debug.Log("Texture2DFromRaw image size is 0");
                     return;
+                }
 
                 if (m_texture == null)
                 {
                     m_texture = new Texture2D(texWidth, texHeight);
                     m_rawData = new float[res];
-                    GetComponent<Renderer>().material.mainTexture = m_texture;
+                    GetComponent<Renderer>().material.mainTexture = m_texture;                    
                 }
 
 
@@ -111,8 +133,8 @@ public class Texture2DFromRaw : MonoBehaviour
                         //Color color = ((x & y) != 0 ? Color.white : Color.gray);
                         float value = m_rawData[cpt];
                         // line = line + value + " ";
-                        //if (cpt<1000)
-                        //Debug.Log(cpt + " -> " + value);
+                        if (cpt<1000)
+                            Debug.Log(cpt + " -> " + value);
 
                         if (value == 1)
                             cpt1++;

@@ -351,7 +351,7 @@ namespace SofaUnity
                         {
                             //child.setDirty();
                             child.updateImpl();
-                            Debug.Log(child.name);
+                            //Debug.Log(child.name);
                         }
                     }
 
