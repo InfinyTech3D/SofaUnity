@@ -8,7 +8,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: Stomac
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _METALLICGLOSSMAP _NORMALMAP _PARALLAXMAP
+  m_ShaderKeywords: _METALLICGLOSSMAP _NORMALMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -19,7 +19,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: cb9218814131b494bb874d830c98eba5, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6721cd1a23e832741b504980447866b3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -36,14 +36,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 4, y: 4}
-        m_Offset: {x: -0.75, y: 0.1}
+        m_Scale: {x: 2, y: 2}
+        m_Offset: {x: 0.45, y: 0.04}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: bab49dd026c73754b8da93be5613244e, type: 3}
-        m_Scale: {x: 4, y: 4}
-        m_Offset: {x: -0.75, y: 0.1}
+        m_Texture: {fileID: 2800000, guid: e329586040105b645ad95c925e16b251, type: 3}
+        m_Scale: {x: 2, y: 2}
+        m_Offset: {x: 0.45, y: 0.04}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: 9826f737efcfbfe4cb07afa491dff3d6, type: 3}
+        m_Texture: {fileID: 2800000, guid: 2ed8278fe8983eb47a03e70bf3e7e6e6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -51,26 +51,26 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
-        m_Texture: {fileID: 2800000, guid: 9826f737efcfbfe4cb07afa491dff3d6, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BumpScale: -0.06
+    - _BumpScale: 1.49
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _GlossMapScale: 0.785
+    - _GlossMapScale: 0.931
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _Parallax: 0.0679
+    - _Parallax: 0.054
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.745283, g: 0.745283, b: 0.745283, a: 1}
+    - _Color: {r: 0.7264151, g: 0.7161356, b: 0.7161356, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
