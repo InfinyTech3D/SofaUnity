@@ -20,7 +20,7 @@ namespace SofaUnityAPI
         public SofaContextAPI()
         {
             // Create the application
-            m_native = sofaPhysicsAPI_create(2);
+            m_native = sofaPhysicsAPI_create(1);
             if (m_native == IntPtr.Zero)
                 Debug.LogError("Error no sofaPhysicsAPI found and created!");
 

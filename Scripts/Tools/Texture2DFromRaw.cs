@@ -94,10 +94,19 @@ public class Texture2DFromRaw : SBaseObject
 
     protected bool firstTime = true;
     protected bool initDiff = false;
+    protected int textId = -1;
 
     /// Method called by @sa Update() method. To be implemented by child class.
-    public override void updateImpl()
-    {        
+    //public override void updateImpl()
+    public void Update()
+    {
+        int resId = m_object.impl.getIntValue("frameId");
+        
+        if (resId == textId)
+            return;
+
+        textId = resId;
+
         if (m_object != null)
         {            
             if (m_texture == null && rawImg != null) // first time create init texture
