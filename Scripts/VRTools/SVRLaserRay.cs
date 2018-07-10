@@ -1,5 +1,5 @@
 ﻿// Uncomment this line to use the compatibility with VRTK. TODO: find a way to automatically detect if VRTK asset is present
-//#define USING_VRTK
+#define USING_VRTK
 using UnityEngine;
 
 #if USING_VRTK
@@ -12,7 +12,7 @@ using VRTK;
 /// </summary>
 class SVRLaserRay : SLaserRay
 {
-    bool logController = false;
+    bool logController = true;
 
     public enum ButtonType
     {
@@ -50,6 +50,11 @@ class SVRLaserRay : SLaserRay
         {
             laser.transform.localPosition = new Vector3(-0.035f, -0.005f, 0.005f);
         }
+        activeTool(true);
+        if (m_sofaContext.testAsync == true)
+            m_sofaContext.registerCaster(this);
+        else
+            automaticCast = true;
     }
 
 #if USING_VRTK
