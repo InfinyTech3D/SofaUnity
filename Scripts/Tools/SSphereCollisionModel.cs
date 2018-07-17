@@ -190,11 +190,13 @@ public class SSphereCollisionModel : MonoBehaviour
         Vector3[] buffer = m_keyVertices.ToArray();
 
         List<Vector3> bufferTotal = new List<Vector3>();
+        int cpt = 0;
 
         float contextFactor = m_context.getFactorUnityToSofa();
         for (int i = 0; i < buffer.Length; ++i)
         {
             bufferTotal.Add(buffer[i]);
+            cpt++;
             Vector3 pointA = this.transform.TransformPoint(buffer[i]);
             for (int j = i + 1; j < buffer.Length; ++j)
             {
@@ -215,24 +217,35 @@ public class SSphereCollisionModel : MonoBehaviour
                     for (int k = 1; k < interpol; k++)
                     {
                         Vector3 newPoint = pointA + dir * interval * k;
+
+                        if (cpt >= 1000)
+                            break;
+
                         bufferTotal.Add(this.transform.InverseTransformPoint(newPoint));
+                        cpt++;
                     }
                 }
+
+                if (cpt >= 1000)
+                    break;
             }
+
+            if (cpt >= 1000)
+                break;
         }
 
         if (m_log)
             Debug.Log("bufferTotal.Count: " + bufferTotal.Count);
 
         m_centers = new Vector3[bufferTotal.Count];
-        int cpt = 0;
+        
         foreach (Vector3 vert in bufferTotal)
         {
             m_centers[cpt] = vert;
             cpt++;
         }
 
-        if (cpt > 1000) // too much spheres
+        if (cpt >= 1000) // too much spheres
         {
             Debug.LogWarning("This factor create too many spheres: " + cpt + " Change the factor.");
             return;
