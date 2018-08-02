@@ -74,30 +74,7 @@ public class EntactManager : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.PageDown))
-        {
-            Debug.Log("Right Homing");
-            if (m_sofaEntact != null)
-            {
-                int res = m_sofaEntact.SofaRightHoming();
-                if (res == 1)
-                    rightInit = true;
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.PageUp))
-        {
-            if (rightInit == false)
-            {
-                Debug.Log("Right homing is needed first.");
-            }
-            else
-            {
-                Debug.Log("Left Homing");
-                if (m_sofaEntact != null)
-                    m_sofaEntact.SofaLeftHoming();
-            }
-        }
-        else if(Input.GetKeyDown(KeyCode.End))
+        if(Input.GetKeyDown(KeyCode.End))
         {
             if (m_sofaEntact != null)
                 m_sofaEntact.numberOfTools();
