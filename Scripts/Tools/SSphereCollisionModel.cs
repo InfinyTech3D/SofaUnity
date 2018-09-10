@@ -30,6 +30,9 @@ public class SSphereCollisionModel : MonoBehaviour
 
     /// Booleen to activate/unactivate the collision
     [SerializeField] protected bool m_activated = true;
+    /// Booleen to activate/unactivate the factor or use unique position
+    [SerializeField]
+    protected bool m_usePositionOnly = true;
     /// Discretisation factor to compute the number of sphere to create on the object.
     [SerializeField] protected float m_factor = 50.0f;
 
@@ -180,6 +183,19 @@ public class SSphereCollisionModel : MonoBehaviour
     /// Method to compute the centers according to the @see m_keyVertices and @sa m_factor
     protected void computeSphereCenters()
     {
+        if (m_usePositionOnly)
+        {
+            m_centers = new Vector3[10];
+            for (int i=0; i<10; i++)
+                m_centers[i] = this.transform.localPosition;
+
+            if (m_impl != null)
+                m_impl.setNumberOfVertices(1);
+
+            return;
+        }
+
+
         if (m_keyVertices == null)
         {
             awakePostProcess();
@@ -238,7 +254,7 @@ public class SSphereCollisionModel : MonoBehaviour
             Debug.Log("bufferTotal.Count: " + bufferTotal.Count);
 
         m_centers = new Vector3[bufferTotal.Count];
-        
+        cpt = 0;
         foreach (Vector3 vert in bufferTotal)
         {
             m_centers[cpt] = vert;
@@ -268,6 +284,13 @@ public class SSphereCollisionModel : MonoBehaviour
     {
         get { return m_activated; }
         set { m_activated = value; }
+    }
+
+    /// Getter/Setter of the parameter @see m_usePositionOnly  
+    public bool usePositionOnly
+    {
+        get { return m_usePositionOnly; }
+        set { m_usePositionOnly = value; }
     }
 
     /// Getter/Setter of the parameter @see m_factor       
