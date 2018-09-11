@@ -47,25 +47,7 @@ public class SofaEntact : IDisposable
         else
             Debug.LogError("SofaEntact creation: " + nameID + " failed. Can't access Object Pointer simulation.");
         Debug.Log("Creation returns: " + res);
-    }
-
-    public int SofaRightHoming()
-    {
-        int res = sofaPhysicsAPI_entactRightToolHoming(m_simu, m_name);
-        if (log)
-            Debug.Log("SofaRightHoming: " + m_name + " -> return: " + res);
-
-        return res;
-    }
-
-    public int SofaLeftHoming()
-    {
-        int res = sofaPhysicsAPI_entactLeftToolHoming(m_simu, m_name);
-        if (log)
-            Debug.Log("SofaLeftHoming: " + m_name + " -> return: " + res);
-
-        return res;
-    }
+    }    
 
     public int numberOfTools()
     {
@@ -83,12 +65,6 @@ public class SofaEntact : IDisposable
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_createEntactManager(IntPtr obj, string nameID);
-
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysicsAPI_entactRightToolHoming(IntPtr obj, string nameID);
-
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysicsAPI_entactLeftToolHoming(IntPtr obj, string nameID);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_getNumberOfTools(IntPtr obj, string nameID);
