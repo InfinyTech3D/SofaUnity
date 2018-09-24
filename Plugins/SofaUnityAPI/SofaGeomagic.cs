@@ -42,24 +42,24 @@ public class SofaGeomagic : IDisposable
         {
             res = sofaPhysicsAPI_createGeomagicManager(m_simu, m_name);
             if (res < 0)
-                Debug.LogError("SofaPliers creation: " + m_name + " returns error: " + res);
+                Debug.LogError("SofaGeomagic creation: " + m_name + " returns error: " + res);
         }
         else
-            Debug.LogError("SofaEntact creation: " + nameID + " failed. Can't access Object Pointer simulation.");
+            Debug.LogError("SofaGeomagic creation: " + nameID + " failed. Can't access Object Pointer simulation.");
         Debug.Log("Creation returns: " + res);
     }
 
-    public void geomagicPosition()
-    {
-        float[] val = new float[7];
+    public int geomagicPosition(float[] val)
+    {        
         int res = sofaPhysicsAPI_getGeomagicPosition(m_simu, m_name, val);
-
-        Debug.Log("Position returns: " + res);
-        Debug.Log(val[0] + " " + val[1] + " " + val[2] + " " + val[3] + " " + val[4] + " " + val[5] + " " + val[6]);
-
+        return res;
     }
 
-   
+    public int geomagicStatus(int[] val)
+    {
+        int res = sofaPhysicsAPI_getGeomagicStatus(m_simu, m_name, val);
+        return res;
+    }
 
     /////////////////////////////////////////////////////////////////////////////////////////
     ///////////      Communication API to set/get basic values into Sofa     ////////////////

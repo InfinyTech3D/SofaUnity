@@ -4,6 +4,7 @@ using UnityEngine;
 using SofaUnity;
 using System;
 
+//[ExecuteInEditMode]
 public class GeomagicController : MonoBehaviour
 {
     ////////////////////////////////////////////
@@ -17,6 +18,7 @@ public class GeomagicController : MonoBehaviour
     protected SofaGeomagic m_sofaGeomagic = null;
 
 
+    public bool toolactivated = false;
     ////////////////////////////////////////////
     /////       Object creation API        /////
     ////////////////////////////////////////////
@@ -45,6 +47,8 @@ public class GeomagicController : MonoBehaviour
         // Call internal method that will create a ray caster in Sofa.
         if (contextOk)
             StartCoroutine(createGeomagicManager());
+
+
     }
 
 
@@ -74,7 +78,35 @@ public class GeomagicController : MonoBehaviour
     void Update()
     {
         if (m_sofaGeomagic != null)
-            m_sofaGeomagic.geomagicPosition();
+        {
+            float[] val = new float[7];
+            int res = m_sofaGeomagic.geomagicPosition(val);
+            if (res == 0)
+            {
+                //Debug.Log(val[0] + " " + val[1] + " " + val[2] + " " + val[3] + " " + val[4] + " " + val[5] + " " + val[6]);
+                this.transform.position = new Vector3(-val[0], val[1], val[2]);
+                var rotation = new Quaternion(val[3], val[4], val[5], val[6]);
+                Vector3 angles = rotation.eulerAngles;
+                //Debug.Log("angles: " + angles);
+                rotation.eulerAngles = new Vector3(angles[0], -angles[1], -angles[2]);
+                this.transform.rotation = rotation;// * Quaternion.Euler(90, 0, 0);
+            }
+            else
+                Debug.Log("Error position returns : " + res);
+
+            int[] status = new int[1];
+            int res2 = m_sofaGeomagic.geomagicStatus(status);
+            if (res2 == 0)
+            {
+                if (status[0] == 1)
+                    toolactivated = true;
+                else
+                    toolactivated = false;
+            }
+        }
+            
+
+        
         //if (Input.GetKeyDown(KeyCode.End))
         //{
         //    if (m_sofaGeomagic != null)
