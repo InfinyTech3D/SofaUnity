@@ -228,8 +228,11 @@ namespace SofaUnity
                 pluginPath = "/Plugins/";
 
             m_impl.initGlutGlew();
-            m_impl.loadPlugin(Application.dataPath + pluginPath + "ProjectiveXRay.dll");
-            m_impl.loadPlugin(Application.dataPath + pluginPath + "Entact.dll");
+            //m_impl.loadPlugin(Application.dataPath + pluginPath + "Entact.dll");
+            //m_impl.loadPlugin(Application.dataPath + pluginPath + "ProjectiveXRay.dll");
+            //m_impl.loadPlugin(Application.dataPath + pluginPath + "NeedleConstraintPlugin.dll");
+            m_impl.loadPlugin(Application.dataPath + pluginPath + "Geomagic.dll");
+            m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaCarving.dll");
         }
 
         /// Internal Method to init the SofaContext object
@@ -296,7 +299,7 @@ namespace SofaUnity
 
         private float nextUpdate = 0.0f;
 
-        public bool testAsync = true;
+        public bool testAsync = false;
 
         // Update is called once per frame
         void Update()
