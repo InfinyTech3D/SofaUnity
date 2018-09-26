@@ -51,6 +51,13 @@ public class SComponentEditor : Editor
             {
                 EditorGUILayout.FloatField(entry.nameID, _object.impl.getIntValue(entry.nameID));
             }
+            else if (entry.getType() == "Rigid3dTypes::Coord")
+            {
+                double[] values = new double[7];
+                _object.impl.getRigiddValue(entry.nameID, entry.getType(), values);
+                EditorGUILayout.Vector3Field(entry.nameID, new Vector3((float)values[0], (float)values[1], (float)values[2]));
+                EditorGUILayout.Vector4Field(entry.nameID, new Vector4((float)values[3], (float)values[4], (float)values[5], (float)values[6]));
+            }
             else
                 EditorGUILayout.TextField(entry.nameID, "Unsopported type: "+ entry.getType());
         }

@@ -127,7 +127,7 @@ public class Texture2DFromRaw : SBaseObject
                 }
 
 
-                int resValue = m_object.impl.getVecfValue(rawImg.nameID, res, m_rawData);
+                int resValue = m_object.impl.getVectorfValue(rawImg.nameID, res, m_rawData);
                 int cpt = 0;
                 int cpt1 = 0;
                 //var line = "";
@@ -171,7 +171,7 @@ public class Texture2DFromRaw : SBaseObject
                     initDiff = true;
                 }
 
-                int resValue = m_object.impl.getVecfValue(rawImgDiff.nameID, resDiff, m_rawData);
+                int resValue = m_object.impl.getVectorfValue(rawImgDiff.nameID, resDiff, m_rawData);
 
                 for (int i = 0; i < resDiff; i += 2)
                 {
