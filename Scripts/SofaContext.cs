@@ -233,6 +233,7 @@ namespace SofaUnity
             //m_impl.loadPlugin(Application.dataPath + pluginPath + "NeedleConstraintPlugin.dll");
             m_impl.loadPlugin(Application.dataPath + pluginPath + "Geomagic.dll");
             m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaCarving.dll");
+            m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaSparseSolver.dll");
         }
 
         /// Internal Method to init the SofaContext object
