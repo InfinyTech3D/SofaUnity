@@ -84,12 +84,12 @@ public class GeomagicController : MonoBehaviour
             if (res == 0)
             {
                 //Debug.Log(val[0] + " " + val[1] + " " + val[2] + " " + val[3] + " " + val[4] + " " + val[5] + " " + val[6]);
-                this.transform.position = new Vector3(-val[0], val[1], val[2]);
+                this.transform.localPosition = new Vector3(-val[0], val[1], val[2]);
                 var rotation = new Quaternion(val[3], val[4], val[5], val[6]);
                 Vector3 angles = rotation.eulerAngles;
                 //Debug.Log("angles: " + angles);
                 rotation.eulerAngles = new Vector3(angles[0], -angles[1], -angles[2]);
-                this.transform.rotation = rotation;// * Quaternion.Euler(90, 0, 0);
+                this.transform.localRotation = rotation;// * Quaternion.Euler(90, 0, 0);
             }
             else
                 Debug.Log("Error position returns : " + res);
