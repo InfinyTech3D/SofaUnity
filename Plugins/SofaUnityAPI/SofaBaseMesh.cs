@@ -361,13 +361,30 @@ public class SofaBaseMesh : SofaBaseObject
 
     }
 
+    private int m_topologyRevision = -5;
+
     /// Method to check if the topology of this mesh has changed since last update.
     public bool hasTopologyChanged()
     {
         if (m_native != IntPtr.Zero)
         {
-            bool value = sofaPhysicsAPI_hasTopologyChanged(m_simu, m_name);
-            return value;
+            int value = sofaPhysicsAPI_getTopologyRevision(m_simu, m_name);            
+            if (value < 0)
+            {
+                if (log)
+                    Debug.LogError("getTopologyRevision: " + m_name + " method returns error: " + value);
+                return false;
+            }
+            else
+            {
+                if (value != m_topologyRevision)
+                {
+                    m_topologyRevision = value;
+                    return true;
+                }
+                else
+                    return false;
+            }
         }
         else
             return false;
@@ -654,7 +671,7 @@ public class SofaBaseMesh : SofaBaseObject
 
     /// Binding to Topology change API
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern bool sofaPhysicsAPI_hasTopologyChanged(IntPtr obj, string name);
+    public static extern int sofaPhysicsAPI_getTopologyRevision(IntPtr obj, string name);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_setTopologyChanged(IntPtr obj, string name, bool value);
