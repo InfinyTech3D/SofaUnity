@@ -19,6 +19,8 @@ public class GeomagicController : MonoBehaviour
 
 
     public bool toolactivated = false;
+
+    public bool toolInContact = false;
     ////////////////////////////////////////////
     /////       Object creation API        /////
     ////////////////////////////////////////////
@@ -94,8 +96,20 @@ public class GeomagicController : MonoBehaviour
             else
                 Debug.Log("Error position returns : " + res);
 
+            int[] contact = new int[1];
+            int res3 = m_sofaGeomagic.geomagicStatus(contact);
+            if (res3 == 0)
+            {
+                if (contact[0] == 1)
+                    toolInContact = true;
+                else
+                    toolInContact = false;
+            }
+            else
+                Debug.Log("Error status returns : " + res3);
+
             int[] status = new int[1];
-            int res2 = m_sofaGeomagic.geomagicStatus(status);
+            int res2 = m_sofaGeomagic.geomagicButtonStatus(status);
             if (res2 == 0)
             {
                 if (status[0] == 1)
