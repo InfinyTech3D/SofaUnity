@@ -16,16 +16,26 @@ namespace SofaUnityAPI
         // TODO: check if needed
         bool m_isDisposed;
 
+        private bool m_isReady = false;
+
         /// Default constructor, will create the pointer to SofaPhysicsAPI
         public SofaContextAPI()
         {
             // Create the application
             m_native = sofaPhysicsAPI_create(1);
             if (m_native == IntPtr.Zero)
+            {
                 Debug.LogError("Error no sofaPhysicsAPI found and created!");
+                m_isReady = false;
+                return;
+            }
 
             // Create a simulation scene.
-            sofaPhysicsAPI_createScene(m_native);
+            int res = sofaPhysicsAPI_createScene(m_native);
+            if (res == 1)
+                m_isReady = true;
+            else
+                Debug.LogError("Error sofaPhysicsAPI scene creation return code error: " + res);
         }
 
         /// Destructor
@@ -59,19 +69,22 @@ namespace SofaUnityAPI
         /// Method to start the Sofa simulation
         public void start()
         {
-            sofaPhysicsAPI_start(m_native);
+            if (m_isReady)
+                sofaPhysicsAPI_start(m_native);
         }
 
         /// Method to stop the Sofa simulation
         public void stop()
         {
-            sofaPhysicsAPI_stop(m_native);
+            if (m_isReady)
+                sofaPhysicsAPI_stop(m_native);
         }
 
         /// Method to perform one step of simulation in Sofa
         public void step()
         {
-            sofaPhysicsAPI_step(m_native);
+            if (m_isReady)
+                sofaPhysicsAPI_step(m_native);
         }
 
         /// Method to perform one async step of simulation in Sofa
@@ -93,6 +106,8 @@ namespace SofaUnityAPI
             if (m_native != IntPtr.Zero)
             {
                 int res = sofaPhysicsAPI_loadScene(m_native, filename);
+                if (res != 1)
+                    Debug.LogError("Error sofaPhysicsAPI scene loading return code error: " + res);
             }
             else
                 Debug.LogError("Error can't load file: " + filename + "no sofaPhysicsAPI created!");
@@ -235,7 +250,7 @@ namespace SofaUnityAPI
 
         /// Bindings to create or load an existing simulation scene
         [DllImport("SofaAdvancePhysicsAPI")]
-        public static extern void sofaPhysicsAPI_createScene(IntPtr obj);
+        public static extern int sofaPhysicsAPI_createScene(IntPtr obj);
 
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaPhysicsAPI_loadScene(IntPtr obj, string filename);
