@@ -28,6 +28,7 @@ public class GeomagicController : MonoBehaviour
     /// Method called at GameObject creation. Will search for SofaContext @sa loadContext() which call @sa createObject() . Then call @see awakePostProcess()
     void Awake()
     {
+        
         bool contextOk = true;
         GameObject _contextObject = GameObject.Find("SofaContext");
         if (_contextObject != null)
@@ -59,7 +60,6 @@ public class GeomagicController : MonoBehaviour
     {
         // Get access to the sofaContext // TODO remove this HACK: All components need to be created before the Geomagic Manager
         yield return new WaitForSeconds(1);
-
         IntPtr _simu = m_sofaContext.getSimuContext();
         m_sofaGeomagic = new SofaGeomagic(_simu, name);
     }
@@ -86,7 +86,7 @@ public class GeomagicController : MonoBehaviour
             if (res == 0)
             {
                 //Debug.Log(val[0] + " " + val[1] + " " + val[2] + " " + val[3] + " " + val[4] + " " + val[5] + " " + val[6]);
-                this.transform.localPosition = new Vector3(-val[0], val[1], val[2]);
+                this.transform.localPosition = new Vector3(-val[0], val[1], val[2])*this.transform.localScale[0];
                 var rotation = new Quaternion(val[3], val[4], val[5], val[6]);
                 Vector3 angles = rotation.eulerAngles;
                 //Debug.Log("angles: " + angles);
@@ -117,6 +117,8 @@ public class GeomagicController : MonoBehaviour
                 else
                     toolactivated = false;
             }
+            else
+                Debug.LogError("EntactManager::Update - No Geomagic found.");
         }
             
 

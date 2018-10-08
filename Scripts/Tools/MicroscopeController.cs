@@ -10,6 +10,7 @@ public class MicroscopeController : MonoBehaviour
     public GameObject m_player;
     public Camera mainCam;
     public Camera microCam;
+    public GameObject m_controller;
 
     private int rollMaxValue = 30;
     private int titleMaxValue = 30;
@@ -21,12 +22,24 @@ public class MicroscopeController : MonoBehaviour
 
     private RenderTexture m_microTex = null;
 
+    private bool initController = false;
+    private Vector3 controllerPosition;
+    private Vector3 controllerEulerAngles;
+
     // Use this for initialization
     void Start()
     {
         //mainCam.enabled = true;
         //microCam.enabled = false;
         m_microTex = microCam.targetTexture;
+
+        if (m_controller != null)
+        {
+            controllerPosition = m_controller.transform.localPosition;
+            controllerEulerAngles = m_controller.transform.localEulerAngles;
+            //Debug.Log("controllerPosition: " + controllerPosition);
+            //Debug.Log("controllerEulerAngles: " + controllerEulerAngles);
+        }
     }
 
     // Update is called once per frame
@@ -60,6 +73,34 @@ public class MicroscopeController : MonoBehaviour
             panCamera(0.5f);
         else if (Input.GetKey(KeyCode.I))
             panCamera(-0.5f);
+
+        // transformation from controller
+        if (m_controller)
+        {
+            Vector3 oldPosition = controllerPosition;
+            Vector3 oldAngles  = controllerEulerAngles;
+            controllerPosition = m_controller.transform.localPosition;
+            controllerEulerAngles = m_controller.transform.localEulerAngles;
+
+            if (!initController && controllerPosition.magnitude != 0.0f)
+            {
+                initController = true;
+                return;
+            }
+
+            Vector3 diffP = controllerPosition - oldPosition;
+            Vector3 diffA = controllerEulerAngles - oldAngles;
+            //Debug.Log("diffP: " + diffP);
+            //Debug.Log("diffA: " + diffA);
+
+            Vector3 rotation = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, controllerEulerAngles.z);
+            rotation = Quaternion.Euler(90, 0, 0) * rotation;
+            // transform.parent.localPosition = new Vector3(transform.parent.localPosition.x + diffP.x*0.5f, transform.parent.localPosition.y + diffP.y * 0.5f, transform.parent.localPosition.z + diffP.z * 0.5f);
+            transform.localEulerAngles = rotation;
+           // transform.localEulerAngles = Quaternion.Euler(0, 0, 90) * transform.localEulerAngles;
+
+
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -68,9 +109,9 @@ public class MicroscopeController : MonoBehaviour
         {
             Debug.Log("entered");
 
-            microCam.targetTexture = null;
-            mainCam.enabled = false;
-            microCam.enabled = true;
+            //microCam.targetTexture = null;
+            //mainCam.enabled = false;
+            //microCam.enabled = true;
         }
     }
 
@@ -78,8 +119,9 @@ public class MicroscopeController : MonoBehaviour
     {
         if (m_player != null && other.gameObject == m_player)
         {
-            mainCam.enabled = true;
-            microCam.enabled = false;
+            Debug.Log("exit");
+            //mainCam.enabled = true;
+            //microCam.enabled = false;
         }
     }
 
