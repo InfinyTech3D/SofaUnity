@@ -35,8 +35,8 @@ public class MicroscopeController : MonoBehaviour
 
         if (m_controller != null)
         {
-            controllerPosition = m_controller.transform.localPosition;
-            controllerEulerAngles = m_controller.transform.localEulerAngles;
+            controllerPosition = m_controller.transform.position;
+            controllerEulerAngles = m_controller.transform.eulerAngles;
             //Debug.Log("controllerPosition: " + controllerPosition);
             //Debug.Log("controllerEulerAngles: " + controllerEulerAngles);
         }
@@ -79,8 +79,8 @@ public class MicroscopeController : MonoBehaviour
         {
             Vector3 oldPosition = controllerPosition;
             Vector3 oldAngles  = controllerEulerAngles;
-            controllerPosition = m_controller.transform.localPosition;
-            controllerEulerAngles = m_controller.transform.localEulerAngles;
+            controllerPosition = m_controller.transform.position;
+            controllerEulerAngles = m_controller.transform.eulerAngles;
 
             if (!initController && controllerPosition.magnitude != 0.0f)
             {
@@ -93,11 +93,12 @@ public class MicroscopeController : MonoBehaviour
             //Debug.Log("diffP: " + diffP);
             //Debug.Log("diffA: " + diffA);
 
-            Vector3 rotation = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, controllerEulerAngles.z);
-            rotation = Quaternion.Euler(90, 0, 0) * rotation;
-            // transform.parent.localPosition = new Vector3(transform.parent.localPosition.x + diffP.x*0.5f, transform.parent.localPosition.y + diffP.y * 0.5f, transform.parent.localPosition.z + diffP.z * 0.5f);
-            transform.localEulerAngles = rotation;
-           // transform.localEulerAngles = Quaternion.Euler(0, 0, 90) * transform.localEulerAngles;
+            //Vector3 rotation = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, controllerEulerAngles.z);
+            //rotation = Quaternion.Euler(90, 0, 0) * rotation;
+            transform.parent.localPosition = new Vector3(transform.parent.localPosition.x + diffP.x*0.5f, transform.parent.localPosition.y + diffP.y * 0.5f, transform.parent.localPosition.z + diffP.z * 0.5f);
+            transform.eulerAngles = controllerEulerAngles;// new Vector3(transform.parent.localEulerAngles.x + diffA.x * 0.5f, transform.parent.localEulerAngles.y + diffA.y * 0.5f, transform.parent.localEulerAngles.z + diffA.z * 0.5f);
+            //transform.localEulerAngles = rotation;
+            // transform.localEulerAngles = Quaternion.Euler(0, 0, 90) * transform.localEulerAngles;
 
 
         }
