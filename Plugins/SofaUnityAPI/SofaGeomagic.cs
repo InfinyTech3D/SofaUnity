@@ -12,6 +12,8 @@ public class SofaGeomagic : IDisposable
 
     /// Parameter to activate internal logging
     protected bool log = true;
+    protected bool m_isReady = false;
+    public bool IsReady() { return m_isReady; }
 
     // TODO: check if needed
     bool m_isDisposed;
@@ -41,8 +43,13 @@ public class SofaGeomagic : IDisposable
         if (m_simu != IntPtr.Zero)
         {
             res = sofaPhysicsAPI_createGeomagicManager(m_simu, m_name);
-            if (res < 0)
+            if (res != 1)
+            {
                 Debug.LogError("SofaGeomagic creation: " + m_name + " returns error: " + res);
+                m_isReady = false;
+                return;
+            }
+            m_isReady = true;
         }
         else
             Debug.LogError("SofaGeomagic creation: " + nameID + " failed. Can't access Object Pointer simulation.");

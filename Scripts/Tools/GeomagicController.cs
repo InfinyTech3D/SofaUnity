@@ -17,7 +17,7 @@ public class GeomagicController : MonoBehaviour
     /// Pointer to the corresponding SOFA API object
     protected SofaGeomagic m_sofaGeomagic = null;
 
-
+    public GameObject particles = null;
     public bool toolactivated = false;
 
     public bool toolInContact = false;
@@ -79,7 +79,7 @@ public class GeomagicController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (m_sofaGeomagic != null)
+        if (m_sofaGeomagic != null && m_sofaGeomagic.IsReady())
         {
             float[] val = new float[7];
             int res = m_sofaGeomagic.geomagicPosition(val);
@@ -113,12 +113,21 @@ public class GeomagicController : MonoBehaviour
             if (res2 == 0)
             {
                 if (status[0] == 1)
+                {
                     toolactivated = true;
+                }
                 else
                     toolactivated = false;
+
+                if (particles)
+                    particles.SetActive(toolactivated);
             }
             else
                 Debug.LogError("EntactManager::Update - No Geomagic found.");
+        }
+        else
+        {
+            
         }
             
 
@@ -129,4 +138,6 @@ public class GeomagicController : MonoBehaviour
         //        m_sofaGeomagic.numberOfTools();
         //}
     }
+
+
 }
