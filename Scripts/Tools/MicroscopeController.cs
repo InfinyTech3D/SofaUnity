@@ -11,6 +11,7 @@ public class MicroscopeController : MonoBehaviour
     public Camera mainCam;
     public Camera microCam;
     public GameObject m_controller;
+    public GameObject microLens;
 
     private int rollMaxValue = 30;
     private int titleMaxValue = 30;
@@ -32,8 +33,13 @@ public class MicroscopeController : MonoBehaviour
         //mainCam.enabled = true;
         //microCam.enabled = false;
         m_microTex = microCam.targetTexture;
+        if (microLens != null)
+        {
+            microLens.SetActive(false);
+        }
+        
 
-        if (m_controller != null)
+        if (m_controller != null && m_controller.activeInHierarchy)
         {
             controllerPosition = m_controller.transform.position;
             controllerEulerAngles = m_controller.transform.eulerAngles;
@@ -59,6 +65,10 @@ public class MicroscopeController : MonoBehaviour
         else if (Input.GetKey(KeyCode.L))
             moveCameraForward(-0.01f);
 
+        if (Input.GetKey(KeyCode.KeypadPlus))
+            zoomCamera(1.0f);
+        else if (Input.GetKey(KeyCode.KeypadMinus))
+            zoomCamera(-1.0f);
 
         // rotation code
         if (Input.GetKey(KeyCode.U))
@@ -75,8 +85,9 @@ public class MicroscopeController : MonoBehaviour
             panCamera(-0.5f);
 
         // transformation from controller
-        if (m_controller)
+        if (m_controller && m_controller.activeInHierarchy)
         {
+            Debug.Log("passe par controller");
             Vector3 oldPosition = controllerPosition;
             Vector3 oldAngles  = controllerEulerAngles;
             controllerPosition = m_controller.transform.position;
@@ -109,7 +120,7 @@ public class MicroscopeController : MonoBehaviour
         if (m_player != null && other.gameObject == m_player)
         {
             Debug.Log("entered");
-
+            microLens.SetActive(true);
             //microCam.targetTexture = null;
             //mainCam.enabled = false;
             //microCam.enabled = true;
@@ -121,6 +132,7 @@ public class MicroscopeController : MonoBehaviour
         if (m_player != null && other.gameObject == m_player)
         {
             Debug.Log("exit");
+            microLens.SetActive(false);
             //mainCam.enabled = true;
             //microCam.enabled = false;
         }
@@ -136,7 +148,8 @@ public class MicroscopeController : MonoBehaviour
 
     public void zoomCamera(float value)
     {
-        
+        if (microCam != null)
+            microCam.fieldOfView += value;
     }
 
     public void focusCamera(float value)
