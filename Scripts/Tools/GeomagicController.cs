@@ -18,6 +18,7 @@ public class GeomagicController : MonoBehaviour
     protected SofaGeomagic m_sofaGeomagic = null;
 
     public GameObject particles = null;
+    private AudioSource source = null;
     public bool toolactivated = false;
 
     public bool toolInContact = false;
@@ -51,7 +52,8 @@ public class GeomagicController : MonoBehaviour
         if (contextOk)
             StartCoroutine(createGeomagicManager());
 
-
+        // get acces to the audio source object
+        source = GetComponent<AudioSource>();
     }
 
 
@@ -127,17 +129,21 @@ public class GeomagicController : MonoBehaviour
         }
         else
         {
-            
-        }
-            
 
-        
+        }
+
+        if (source)
+        {
+            if (toolactivated && !source.isPlaying)
+                source.Play();
+            else if (!toolactivated && source.isPlaying)
+                source.Stop();
+        }
+
         //if (Input.GetKeyDown(KeyCode.End))
         //{
         //    if (m_sofaGeomagic != null)
         //        m_sofaGeomagic.numberOfTools();
         //}
     }
-
-
 }
