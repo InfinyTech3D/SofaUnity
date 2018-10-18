@@ -109,7 +109,8 @@ public class SPlierTool : MonoBehaviour
 
     private void Start()
     {
-        animator.speed = animSpeed;
+        if (animator)
+            animator.speed = animSpeed;
         cutFinished = false;
         breakProcedure = false;
     }
@@ -208,7 +209,8 @@ public class SPlierTool : MonoBehaviour
     /// Method to activate the clamping animation and call the plier clamping computation
     public IEnumerator Clamp()
     {
-        animator.SetBool("isClamped", true);
+        if (animator)
+            animator.SetBool("isClamped", true);
         yield return new WaitForSeconds(0.1f);
         clampSofaPlier();
     }
@@ -216,7 +218,8 @@ public class SPlierTool : MonoBehaviour
     /// Method to activate the unclamping animation and call the plier release computation
     public IEnumerator Unclamp()
     {
-        animator.SetBool("isClamped", false);
+        if (animator)
+            animator.SetBool("isClamped", false);
         yield return new WaitForSeconds(0.1f);
         releaseSofaPlier();
     }
@@ -260,7 +263,8 @@ public class SPlierTool : MonoBehaviour
         if (m_sofaPlier == null)
             return;
 
-        animator.SetBool("isClamped", false);
+        if (animator)
+            animator.SetBool("isClamped", false);
         releaseSofaPlier();
         int res = m_sofaPlier.cutPliersPath(transform.position * m_sofaContext.getFactorUnityToSofa(), -transform.right, transform.up, transform.forward, m_cutLength * m_sofaContext.getFactorUnityToSofa());
        

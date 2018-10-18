@@ -87,10 +87,19 @@ public class Texture2DFromRaw : SBaseObject
 
     protected bool firstTime = true;
     protected bool initDiff = false;
+    protected int textId = -1;
 
     /// Method called by @sa Update() method. To be implemented by child class.
-    public override void updateImpl()
-    {        
+    //public override void updateImpl()
+    public void Update()
+    {
+        int resId = m_object.impl.getIntValue("frameId");
+        
+        if (resId == textId)
+            return;
+
+        textId = resId;
+
         if (m_object != null)
         {            
             if (m_texture == null && rawImg != null) // first time create init texture
@@ -111,7 +120,7 @@ public class Texture2DFromRaw : SBaseObject
                 }
 
 
-                int resValue = m_object.impl.getVecfValue(rawImg.nameID, res, m_rawData);
+                int resValue = m_object.impl.getVectorfValue(rawImg.nameID, res, m_rawData);
                 int cpt = 0;
                 int cpt1 = 0;
                 //var line = "";
@@ -155,7 +164,7 @@ public class Texture2DFromRaw : SBaseObject
                     initDiff = true;
                 }
 
-                int resValue = m_object.impl.getVecfValue(rawImgDiff.nameID, resDiff, m_rawData);
+                int resValue = m_object.impl.getVectorfValue(rawImgDiff.nameID, resDiff, m_rawData);
 
                 for (int i = 0; i < resDiff; i += 2)
                 {

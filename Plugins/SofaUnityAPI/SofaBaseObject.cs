@@ -236,6 +236,7 @@ public class SofaBaseObject : IDisposable
     }
 
 
+
     /// <summary> Generic method to set value of a Data<Vec3f> field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <param name="values"> New Vector3 values of the Data. </param>
@@ -285,11 +286,11 @@ public class SofaBaseObject : IDisposable
     /// <param name="size"> Size of the Data vector. </param>
     /// <param name="values"> Values of the Data vector field returned. </param>
     /// <returns> Int error code. Negative value if method failed, 0 otherwise. </returns>
-    public int getVecfValue(string dataName, int size, float[] values)
+    public int getVectorfValue(string dataName, int size, float[] values)
     {
         if (checkNativePointerForGetData(dataName))
         {
-            int res = sofaPhysics3DObject_getVecfValue(m_simu, m_name, dataName, size, values);
+            int res = sofaPhysics3DObject_getVectorfValue(m_simu, m_name, dataName, size, values);
             return res;
         }
 
@@ -302,11 +303,11 @@ public class SofaBaseObject : IDisposable
     /// <param name="size"> Size of the Data vector. </param>
     /// <param name="values"> New values to set to the Data vector field. </param>
     /// <returns> Int error code. Negative value if method failed, 0 otherwise. </returns>
-    public int setVecfValue(string dataName, int size, float[] values)
+    public int setVectorfValue(string dataName, int size, float[] values)
     {
         if (checkNativePointerForSetData(dataName))
         {
-            int res = sofaPhysics3DObject_setVecfValue(m_simu, m_name, dataName, size, values);
+            int res = sofaPhysics3DObject_setVectorfValue(m_simu, m_name, dataName, size, values);
             return res;
         }
 
@@ -434,6 +435,82 @@ public class SofaBaseObject : IDisposable
 
 
 
+
+    public int getVecfValue(string dataName, string dataType, float[] values)
+    {
+        if (checkNativePointerForGetData(dataName))
+        {
+            int res = sofaPhysics3DObject_getVecfValue(m_simu, m_name, dataName, dataType, values);
+            Debug.Log("getVecfValue: " + res);
+            return res;
+        }
+
+        return -1;
+    }
+
+    public int setVecfValue(string dataName, string dataType, float[] values)
+    {
+        if (checkNativePointerForSetData(dataName))
+        {
+            int res = sofaPhysics3DObject_setVecfValue(m_simu, m_name, dataName, dataType, values);
+            Debug.Log("setVecfValue: " + res);
+            return res;
+        }
+
+        return -1;
+    }
+
+    public int getRigidfValue(string dataName, string dataType, float[] values)
+    {
+        if (checkNativePointerForGetData(dataName))
+        {
+            int res = sofaPhysics3DObject_getRigidfValue(m_simu, m_name, dataName, dataType, values);
+            Debug.Log("getRigidfValue: " + res);
+            return res;
+        }
+
+        return -1;
+    }
+
+    public int setRigidfValue(string dataName, string dataType, float[] values)
+    {
+        if (checkNativePointerForSetData(dataName))
+        {
+            int res = sofaPhysics3DObject_setRigidfValue(m_simu, m_name, dataName, dataType, values);
+            Debug.Log("setRigidfValue: " + res);
+            return res;
+        }
+
+        return -1;
+    }
+
+    public int getRigiddValue(string dataName, string dataType, double[] values)
+    {
+        if (checkNativePointerForGetData(dataName))
+        {
+            int res = sofaPhysics3DObject_getRigiddValue(m_simu, m_name, dataName, dataType, values);
+            Debug.Log("getRigiddValue: " + res);
+            Debug.Log("getRigiddValue: " + values[0] + values[1] + values[2] + values[3] + values[4] + values[5]);
+            return res;
+        }
+
+        return -1;
+    }
+
+    public int setRigiddValue(string dataName, string dataType, double[] values)
+    {
+        if (checkNativePointerForSetData(dataName))
+        {
+            int res = sofaPhysics3DObject_setRigiddValue(m_simu, m_name, dataName, dataType, values);
+            Debug.Log("setRigiddValue: " + res);
+            return res;
+        }
+
+        return -1;
+    }
+
+
+
     /// <summary> Method to check pointer of the Sofa object. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <returns> True if pointer is valid otherwise return false. </returns>
@@ -544,10 +621,10 @@ public class SofaBaseObject : IDisposable
     public static extern int sofaPhysics3DObject_getVecfSize(IntPtr obj, string objectName, string dataName, int[] value);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_getVecfValue(IntPtr obj, string objectName, string dataName, int size, float[] values);
+    public static extern int sofaPhysics3DObject_getVectorfValue(IntPtr obj, string objectName, string dataName, int size, float[] values);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_setVecfValue(IntPtr obj, string objectName, string dataName, int size, float[] values);
+    public static extern int sofaPhysics3DObject_setVectorfValue(IntPtr obj, string objectName, string dataName, int size, float[] values);
 
 
     /// Vector<int> API, need to get the size before set/get
@@ -570,4 +647,30 @@ public class SofaBaseObject : IDisposable
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysics3DObject_getVecofVec3fValue(IntPtr obj, string objectName, string dataName, int size, float[] values);
+
+    ///
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_setVeciValue(IntPtr obj, string objectName, string dataName, string dataType, int[] values);
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_setVecfValue(IntPtr obj, string objectName, string dataName, string dataType, float[] values);
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_setVecdValue(IntPtr obj, string objectName, string dataName, string dataType, double[] values);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getVeciValue(IntPtr obj, string objectName, string dataName, string dataType, int[] values);
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getVecfValue(IntPtr obj, string objectName, string dataName, string dataType, float[] values);
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getVecdValue(IntPtr obj, string objectName, string dataName, string dataType, double[] values);
+
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_setRigidfValue(IntPtr obj, string objectName, string dataName, string dataType, float[] values);
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_setRigiddValue(IntPtr obj, string objectName, string dataName, string dataType, double[] values);
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getRigidfValue(IntPtr obj, string objectName, string dataName, string dataType, float[] values);
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getRigiddValue(IntPtr obj, string objectName, string dataName, string dataType, double[] values);
+
 }

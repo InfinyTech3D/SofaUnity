@@ -193,7 +193,7 @@ namespace SofaUnity
         void Start()
         {
             breakerActivated = false;
-            cptBreaker = 0;
+            cptBreaker = 0;            
         }
 
         /// Method called at GameObject destruction.
@@ -218,6 +218,7 @@ namespace SofaUnity
             }
         }
 
+
         void loadPlugins()
         {           
             string pluginPath = "";
@@ -226,11 +227,20 @@ namespace SofaUnity
             else
                 pluginPath = "/Plugins/";
 
+            m_impl.initGlutGlew();
+            //m_impl.loadPlugin(Application.dataPath + pluginPath + "Entact.dll");
+            //m_impl.loadPlugin(Application.dataPath + pluginPath + "ProjectiveXRay.dll");
+            //m_impl.loadPlugin(Application.dataPath + pluginPath + "NeedleConstraintPlugin.dll");
+            m_impl.loadPlugin(Application.dataPath + pluginPath + "Geomagic.dll");
+            m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaCarving.dll");
+            //m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaSparseSolver.dll");
         }
 
         /// Internal Method to init the SofaContext object
         void init()
         {
+            
+
             if (m_impl == null)
             {
                 m_impl = new SofaContextAPI();
@@ -238,6 +248,7 @@ namespace SofaUnity
                 loadPlugins();
 
                 m_impl.start();
+
                 if (m_filename != "")
                 {
                     if (!File.Exists(Application.dataPath + m_filename))
@@ -259,6 +270,7 @@ namespace SofaUnity
                         Debug.LogError("Error file can't be found: " + Application.dataPath + m_filename);
                         return;
                     }
+
                     // load the file
                     m_impl.loadScene(Application.dataPath + m_filename);
 
@@ -274,8 +286,8 @@ namespace SofaUnity
                 }
                 //else
                 //{
-                    m_impl.timeStep = m_timeStep;
-                    m_impl.setGravity(m_gravity);
+                m_impl.timeStep = m_timeStep;
+                m_impl.setGravity(m_gravity);
                 //}
             }
         }
@@ -288,7 +300,7 @@ namespace SofaUnity
 
         private float nextUpdate = 0.0f;
 
-        public bool testAsync = true;
+        public bool testAsync = false;
 
         // Update is called once per frame
         void Update()
