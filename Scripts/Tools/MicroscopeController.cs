@@ -46,7 +46,11 @@ public class MicroscopeController : MonoBehaviour
             //Debug.Log("controllerPosition: " + controllerPosition);
             //Debug.Log("controllerEulerAngles: " + controllerEulerAngles);
         }
+        initController = false;
     }
+
+
+    private int cpt = 0;
 
     // Update is called once per frame
     void Update()
@@ -87,26 +91,36 @@ public class MicroscopeController : MonoBehaviour
         // transformation from controller
         if (m_controller && m_controller.activeInHierarchy)
         {
-            Debug.Log("passe par controller");
+            //Debug.Log("passe par controller");
             Vector3 oldPosition = controllerPosition;
             Vector3 oldAngles  = controllerEulerAngles;
             controllerPosition = m_controller.transform.position;
             controllerEulerAngles = m_controller.transform.eulerAngles;
 
-            if (!initController && controllerPosition.magnitude != 0.0f)
+
+            
+            Vector3 diffP = controllerPosition - oldPosition;
+            Vector3 diffA = controllerEulerAngles - oldAngles;
+
+            if (!initController)
             {
-                initController = true;
+                cpt++;
+                if (cpt == 10)
+                {
+                    //Debug.Log("diffPP: " + diffP + diffP.magnitude);
+                    oldPosition = controllerPosition;
+                    oldAngles = controllerEulerAngles;
+                    initController = true;
+                }
                 return;
             }
 
-            Vector3 diffP = controllerPosition - oldPosition;
-            Vector3 diffA = controllerEulerAngles - oldAngles;
             //Debug.Log("diffP: " + diffP);
             //Debug.Log("diffA: " + diffA);
 
             //Vector3 rotation = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, controllerEulerAngles.z);
             //rotation = Quaternion.Euler(90, 0, 0) * rotation;
-            transform.parent.localPosition = new Vector3(transform.parent.localPosition.x + diffP.x*0.5f, transform.parent.localPosition.y + diffP.y * 0.5f, transform.parent.localPosition.z + diffP.z * 0.5f);
+            transform.parent.localPosition = new Vector3(transform.parent.localPosition.x + diffP.x*0.9f, transform.parent.localPosition.y + diffP.y * 0.9f, transform.parent.localPosition.z + diffP.z * 0.9f);
             transform.eulerAngles = controllerEulerAngles;// new Vector3(transform.parent.localEulerAngles.x + diffA.x * 0.5f, transform.parent.localEulerAngles.y + diffA.y * 0.5f, transform.parent.localEulerAngles.z + diffA.z * 0.5f);
             //transform.localEulerAngles = rotation;
             // transform.localEulerAngles = Quaternion.Euler(0, 0, 90) * transform.localEulerAngles;
@@ -119,7 +133,7 @@ public class MicroscopeController : MonoBehaviour
     {
         if (m_player != null && other.gameObject == m_player)
         {
-            Debug.Log("entered");
+            //Debug.Log("entered");
             microLens.SetActive(true);
             //microCam.targetTexture = null;
             //mainCam.enabled = false;
@@ -131,7 +145,7 @@ public class MicroscopeController : MonoBehaviour
     {
         if (m_player != null && other.gameObject == m_player)
         {
-            Debug.Log("exit");
+            //Debug.Log("exit");
             microLens.SetActive(false);
             //mainCam.enabled = true;
             //microCam.enabled = false;
@@ -160,7 +174,7 @@ public class MicroscopeController : MonoBehaviour
     public void moveCameraUp(float value)
     {
         float position = transform.parent.localPosition.y + value;
-        Debug.Log("slideCamera: " + position);
+        //Debug.Log("slideCamera: " + position);
         if (position > yBounds[0] && position < yBounds[1])
             transform.parent.localPosition = new Vector3(transform.parent.localPosition.x, position, transform.parent.localPosition.z);
     }
@@ -168,7 +182,7 @@ public class MicroscopeController : MonoBehaviour
     public void moveCameraForward(float value)
     {
         float position = transform.parent.localPosition.x + value;
-        Debug.Log("moveCameraForward: " + position);
+        //Debug.Log("moveCameraForward: " + position);
         if (position > xBounds[0] && position < xBounds[1])
             transform.parent.localPosition = new Vector3(position, transform.parent.localPosition.y, transform.parent.localPosition.z);
     }
@@ -176,7 +190,7 @@ public class MicroscopeController : MonoBehaviour
     public void slideCamera(float value)
     {
         float position = transform.parent.localPosition.z + value;
-        Debug.Log("moveCameraUp: " + position);
+        //Debug.Log("moveCameraUp: " + position);
         if (position > zBounds[0] && position < zBounds[1])
             transform.parent.localPosition = new Vector3(transform.parent.localPosition.x, transform.parent.localPosition.y, position);
     }
