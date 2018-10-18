@@ -1,0 +1,41 @@
+<!-- Mechanical MassSpring Group Basic Example -->
+<Node name="root" dt="0.02" showBoundingTree="0" gravity="1 -9 0">
+    <VisualStyle displayFlags="showVisual showBehaviorModels" />
+    <DefaultPipeline name="default21" verbose="0" depth="1"/>
+    <BruteForceDetection name="N2" />
+    <DefaultContactManager name="default22" response="default" />
+    <DefaultCollisionGroupManager name="default23" />
+    <MinProximityIntersection name="Proximity" alarmDistance="1.0" contactDistance="0.01" />
+	
+    <Node name="tissue_node">
+        <EulerImplicit name="cg_odesolver" printLog="false" />
+        <CGLinearSolver iterations="25" name="linear solver" tolerance="1.0e-9" threshold="1.0e-9" />
+        <MeshGmshLoader name="meshLoader" filename="../SofaScenes/mesh/square3.msh" scale="10" createSubelements="true" />
+		
+        <TriangleSetTopologyContainer  name="Container" src="@meshLoader" tags=" " />
+		<TriangleSetTopologyModifier   name="Modifier" />
+		<TriangleSetTopologyAlgorithms name="TopoAlgo"   template="Vec3d" />
+		<TriangleSetGeometryAlgorithms name="GeomAlgo"   template="Vec3d" />
+		
+		<MechanicalObject name="tissue" rotation="90 0 0" translation="-4.32 44.78 69.24"/>
+		
+		<BoxROI name="FixedROI_2" template="Vec3d" box="-5.32 39.78 79.24 7.32 49.78 80.24" drawBoxes="1" position="@tissue.rest_position"/>		
+        <FixedConstraint name="ROI2" indices="@FixedROI_2.indices" />
+   		
+	<!--	
+		<MechanicalObject name="tissue" rotation="90 0 0"/>
+		
+		<BoxROI name="FixedROI_2" template="Vec3d" box="-1 -5 9.8 11 5 10.2" drawBoxes="1" position="@tissue.rest_position"/>		
+        <FixedConstraint name="ROI2" indices="@FixedROI_2.indices" />
+       -->
+		<DiagonalMass massDensity="0.1" />
+        
+        <TriangularFEMForceField name="FEM" youngModulus="600" poissonRatio="0.3" method="large" />
+        <TSphereModel name="stomacCol" group="1" radius="0.3" contactStiffness="1.0"/>
+		
+		<Node name="tissue_visu">
+			<OglModel name="Visual" color="red" />
+			<IdentityMapping input="@../" output="@Visual" />
+		</Node>
+    </Node>
+</Node>
