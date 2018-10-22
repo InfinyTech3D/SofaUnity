@@ -1,11 +1,15 @@
 <?xml version="1.0" ?>
 <Node name="lroot" gravity="0 -9 0" dt="0.02">
     <VisualStyle displayFlags="showVisual showBehaviorModels " /> <!--showBehaviorModels showCollisionModels-->
-    <LCPConstraintSolver tolerance="1e-3" maxIt="1000" initial_guess="false" build_lcp="false"  printLog="0" mu="0.2"/>
-    <FreeMotionAnimationLoop />
-    <CollisionPipeline depth="15" verbose="0" draw="0" />
+    
+	<CollisionPipeline verbose="0" depth="10" draw="0" />
     <BruteForceDetection name="N2" />
-    <MinProximityIntersection name="Proximity" alarmDistance="1.5" contactDistance="1" />
+    <MinProximityIntersection name="Proximity" alarmDistance="0.75" contactDistance="0.5" />
+    <CollisionResponse name="Response" response="default" />
+    <CollisionGroup name="Group" />
+	
+    <FreeMotionAnimationLoop/>
+ 
 	
 	<EulerImplicit name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.1" />
 	<CGLinearSolver iterations="20" name="linear solver" tolerance="1.0e-4" threshold="1.0e-4" />
@@ -202,24 +206,37 @@
 		<UncoupledConstraintCorrection />
 	</Node>
 	
-	
-		<!--
 	<Node name="liver">
-		<MeshObjLoader name="loader" filename="./mesh/organs_liver.obj" />
-		<SparseGrid name="grid" n="7 5 7" position="@loader.position" drawHexahedra="0" />
-		<MechanicalObject name="dofs" scale3d="1 1 1" />
-		<UniformMass totalMass="1.0" />
-		<HexahedronFEMForceField name="FEM" youngModulus="3000.0" poissonRatio="0.1" method="large" printLog="0" />
-		<Node name="lung_right_visu">
-			<OglModel name="Visual" fileMesh="./mesh/organs_liver.obj" color="yellow"/>
-			<BarycentricMapping input="@.." output="@Visual" />
-		</Node>
-		<UncoupledConstraintCorrection />
-	</Node>
-	
-	
-	
--->
+        <MeshGmshLoader name="loader" filename="./mesh/organs_liver.msh" />
+        <MechanicalObject src="@loader" name="Volume" />
+
+		<TetrahedronSetTopologyContainer  name="Container" position="@Volume.position" src="@loader" tags=" "/>
+		<TetrahedronSetTopologyModifier   name="Modifier" />
+		<TetrahedronSetTopologyAlgorithms name="TopoAlgo"  template="Vec3d" />
+		<TetrahedronSetGeometryAlgorithms name="GeomAlgo"  template="Vec3d" />
+		
+		<BoxROI name="ROI2" box="-7 -2 1 -3 0 5" drawBoxes="1" />
+		<FixedConstraint indices="@ROI2.indices" />
+
+        <DiagonalMass massDensity="1.0" />
+        <FastTetrahedralCorotationalForceField name="FEM" youngModulus="3000" poissonRatio="0.3" method="large" />	
+		<UncoupledConstraintCorrection />		
+        <Node name="T">
+            <TriangleSetTopologyContainer  name="Container" fileTopology="" tags=" " />
+			<TriangleSetTopologyModifier   name="Modifier" />
+			<TriangleSetTopologyAlgorithms name="TopoAlgo"   template="Vec3d" />
+			<TriangleSetGeometryAlgorithms name="GeomAlgo"   template="Vec3d" />
+			
+            <Tetra2TriangleTopologicalMapping input="@../Container" output="@Container" />			
+			<TriangleSet />
+            
+            <Node name="liver-Visual">
+                <OglModel name="Visual" color="blue" />
+                <IdentityMapping input="@../../Volume" output="@Visual" />
+            </Node>
+        </Node>
+    </Node>
+
 
 	<Node name="Visu_kidney_left" tags="Visual" >
 		<MeshObjLoader name="loader" filename="./mesh/organs_kidney_left.obj" />
