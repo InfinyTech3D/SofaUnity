@@ -11,8 +11,8 @@ static public class SofaDefines
         {1, "success (bool)"},
         {2, "SofaAdvancePhysicsAPI deletion completed with success."},
         {-1, "Invalid SofaAdvancePhysicsAPI pointer (API not found or null)."},
-        {-2, "Invalid SofaObject pointer (Object not found or null)."},
-        {-3, "Invalid SofaObjectManager pointer (Object not found or null)."},
+        {-2, "Invalid Sofa3DObject pointer (Object not found or null)."},
+        {-3, "Invalid Sofa3DObjectManager pointer (Object not found or null)."},
         {-4, "Method called is deprecated."},
         {-5, "Method called has not yet been implemented."},
         {-6, "Glew init error."},
@@ -50,6 +50,7 @@ static public class SofaDefines
         {-9995, "License initialisation failed at step 3."},
 
         {-100, "SofaAdvancePhysicsAPI illegal access."},
+        {-101, "SofaUnity init value."},
 
         {-400, "Ray casting manager not found."},
         {-401, "Ray casting tool not found."},

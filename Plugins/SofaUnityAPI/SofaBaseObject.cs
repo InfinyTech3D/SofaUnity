@@ -100,7 +100,7 @@ public class SofaBaseObject : IDisposable
             if (res == 0)
                 return val[0];
             else
-                Debug.LogError("Method getFloatValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
+                Debug.LogError("Method getFloatValue of Data: " + dataName + " of object: " + m_name + ", returns error: " + SofaDefines.msg_error[res]);
         }
 
         return float.MinValue;

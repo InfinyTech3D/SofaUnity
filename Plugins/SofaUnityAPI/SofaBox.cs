@@ -39,6 +39,7 @@ public class SofaBox : SofaBaseMesh
                     Debug.Log("cube Added! " + m_name);
 
                 int[] res1 = new int[1];
+                res1[0] = -101;
                 // Set created object to native pointer
                 m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name, res1);
                 if (res1[0] != 0)
@@ -63,6 +64,12 @@ public class SofaBox : SofaBaseMesh
         }
 
         int nbrQuads = sofaPhysics3DObject_getNbQuads(m_simu, m_name);
+
+        if (nbrQuads < 0)
+        {
+            Debug.LogError("createTriangulation failed, method returns: " + SofaDefines.msg_error[nbrQuads]);
+            return new int[0];
+        }
 
         //Debug.Log("NbrQuad: " + nbrQuads);
         int nbrIndices = nbrQuads * 4;
