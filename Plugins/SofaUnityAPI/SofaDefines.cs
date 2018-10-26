@@ -8,6 +8,7 @@ static public class SofaDefines
     static public Dictionary<int, string> msg_error = new Dictionary<int, string>
     {
         {0, "success"},
+        {1, "success (bool)"},
         {2, "SofaAdvancePhysicsAPI deletion completed with success."},
         {-1, "Invalid SofaAdvancePhysicsAPI pointer (API not found or null)."},
         {-2, "Invalid SofaObject pointer (Object not found or null)."},

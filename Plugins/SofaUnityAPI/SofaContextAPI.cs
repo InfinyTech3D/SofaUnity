@@ -25,7 +25,7 @@ namespace SofaUnityAPI
             m_native = sofaPhysicsAPI_create(1);
             if (m_native == IntPtr.Zero)
             {
-                Debug.LogError("Error no sofaAdvancePhysicsAPI found and created!");
+                Debug.LogError("Error no sofaAdvancePhysicsAPI found nor created!");
                 m_isReady = false;
                 return;
             }
@@ -120,7 +120,7 @@ namespace SofaUnityAPI
             if (m_native != IntPtr.Zero)
             {
                 int res = sofaPhysicsAPI_loadPlugin(m_native, pluginName);
-                if (res != 0)
+                if (res != 1)
                     Debug.LogError("SofaContextAPI::loadPlugin method returns: " + SofaDefines.msg_error[res]);
             }
             else

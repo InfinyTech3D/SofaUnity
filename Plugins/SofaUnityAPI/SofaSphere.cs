@@ -39,7 +39,11 @@ public class SofaSphere : SofaBaseMesh
                     Debug.Log("sphere Added! " + m_name);
 
                 // Set created object to native pointer
-                m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name);
+                int[] res1 = new int[1];
+                m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name, res1);
+
+                if (res1[0] != 0)
+                    Debug.LogError("SofaSphere::createObject get3DObject method returns: " + SofaDefines.msg_error[res1[0]]);
             }
 
             if (m_native == IntPtr.Zero)

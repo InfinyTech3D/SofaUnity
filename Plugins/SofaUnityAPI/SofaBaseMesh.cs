@@ -31,7 +31,11 @@ public class SofaBaseMesh : SofaBaseObject
         if (m_native == IntPtr.Zero) 
         {
             // Create object first
-            m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name);
+            int[] res1 = new int[1];
+            m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name, res1);
+
+            if (res1[0] != 0)
+                Debug.LogError("SofaBaseMesh::loadObject get3DObject method returns: " + SofaDefines.msg_error[res1[0]]);
 
             // Check if creation failed otherwise get parent name
             if (m_native == IntPtr.Zero)

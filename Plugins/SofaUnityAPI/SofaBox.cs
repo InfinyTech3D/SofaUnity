@@ -33,13 +33,19 @@ public class SofaBox : SofaBaseMesh
             // Create the cube
             int res = sofaPhysicsAPI_addCube(m_simu, m_name, m_isRigid);
             m_name += "_node";
-            if (res == 1) // cube added
+            if (res == 0) // cube added
             {
-                if(log)
+               // if(log)
                     Debug.Log("cube Added! " + m_name);
 
+                int[] res1 = new int[1];
                 // Set created object to native pointer
-                m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name);
+                m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name, res1);
+                if (res1[0] != 0)
+                    Debug.LogError("SofaBox::createObject get3DObject method returns: " + SofaDefines.msg_error[res1[0]]);
+                Debug.Log("SofaBox::createObject get3DObject method returns: " + SofaDefines.msg_error[res1[0]]);
+
+                res1 = null;
             }
 
             if (m_native == IntPtr.Zero)
@@ -50,7 +56,12 @@ public class SofaBox : SofaBaseMesh
 
     /// Method to create the triangulation from Sofa topology to Unity buffers
     public override int[] createTriangulation()
-    {        
+    {
+        if (m_native == IntPtr.Zero)
+        {
+            return new int[0];
+        }
+
         int nbrQuads = sofaPhysics3DObject_getNbQuads(m_simu, m_name);
 
         //Debug.Log("NbrQuad: " + nbrQuads);
