@@ -25,17 +25,17 @@ namespace SofaUnityAPI
             m_native = sofaPhysicsAPI_create(1);
             if (m_native == IntPtr.Zero)
             {
-                Debug.LogError("Error no sofaPhysicsAPI found and created!");
+                Debug.LogError("Error no sofaAdvancePhysicsAPI found and created!");
                 m_isReady = false;
                 return;
             }
 
             // Create a simulation scene.
             int res = sofaPhysicsAPI_createScene(m_native);
-            if (res == 1)
+            if (res == 0)
                 m_isReady = true;
             else
-                Debug.LogError("Error sofaPhysicsAPI scene creation return code error: " + res);
+                Debug.LogError("SofaContextAPI scene creation return: " + SofaDefines.msg_error[res]);
         }
 
         /// Destructor
@@ -53,9 +53,9 @@ namespace SofaUnityAPI
                 int resDel = sofaPhysicsAPI_delete(m_native);
                 m_native = IntPtr.Zero;
                 if (false)
-                    Debug.Log("Error: SofaContextAPI::Dispose sofaPhysicsAPI_delete method returns: " + resDel);
+                    Debug.Log("SofaContextAPI::Dispose sofaPhysicsAPI_delete method returns: " + SofaDefines.msg_error[resDel]);
                 if (resDel < 0)
-                    Debug.LogError("Error: SofaContextAPI::Dispose sofaPhysicsAPI_delete method returns: " + resDel);
+                    Debug.LogError("SofaContextAPI::Dispose sofaPhysicsAPI_delete method returns: " + SofaDefines.msg_error[resDel]);
             }
         }
 
@@ -106,11 +106,11 @@ namespace SofaUnityAPI
             if (m_native != IntPtr.Zero)
             {
                 int res = sofaPhysicsAPI_loadScene(m_native, filename);
-                if (res != 1)
-                    Debug.LogError("Error sofaPhysicsAPI scene loading return code error: " + res);
+                if (res != 0)
+                    Debug.LogError("SofaContextAPI::loadScene method returns: " + SofaDefines.msg_error[res]);
             }
             else
-                Debug.LogError("Error can't load file: " + filename + "no sofaPhysicsAPI created!");
+                Debug.LogError("SofaContextAPI::loadScene can't load file: " + filename + "no sofaPhysicsAPI created!");
         }
 
         /// <summary> Method to load a specific sofa plugin. </summary>
@@ -120,11 +120,11 @@ namespace SofaUnityAPI
             if (m_native != IntPtr.Zero)
             {
                 int res = sofaPhysicsAPI_loadPlugin(m_native, pluginName);
-                if (res < 1)
-                    Debug.LogError("Plugin loaded: " + pluginName + " method returns error: " + res);
+                if (res != 0)
+                    Debug.LogError("SofaContextAPI::loadPlugin method returns: " + SofaDefines.msg_error[res]);
             }
             else
-                Debug.LogError("Error: can't load plugin: " + pluginName + "no sofaPhysicsAPI created!");
+                Debug.LogError("SofaContextAPI::loadPlugin can't load plugin: " + pluginName + "no sofaPhysicsAPI created!");
         }
 
 
@@ -134,8 +134,8 @@ namespace SofaUnityAPI
             if (m_native != IntPtr.Zero)
             {
                 int initGl = sofaPhysicsAPI_initGlutGlew(m_native);
-                if (initGl < 0)
-                    Debug.LogError("Error: loading glut/glew in Sofa. Method returns error: " + initGl);
+                if (initGl != 0)
+                    Debug.LogError("Error: loading glut/glew in Sofa. Method returns error: " + SofaDefines.msg_error[initGl]);
             }
             else
                 Debug.LogError("Error can't load glut/glew no sofaPhysicsAPI created!");
@@ -149,7 +149,7 @@ namespace SofaUnityAPI
             {
                 int freeGl = sofaPhysicsAPI_freeGlutGlew(m_native);
                 if (freeGl < 0)
-                    Debug.LogError("Error: free glut/glew in Sofa. Method returns error: " + freeGl);
+                    Debug.LogError("Error: free glut/glew in Sofa. Method returns error: " + SofaDefines.msg_error[freeGl]);
             }
             else
                 Debug.LogError("Error can't free glut/glew no sofaPhysicsAPI found!");
@@ -187,16 +187,16 @@ namespace SofaUnityAPI
                 double[] grav = new double[3];
                 int res = sofaPhysicsAPI_gravity(m_native, grav);
 
-                if (res >= 0)
+                if (res == 0)
                 {
                     for (int i = 0; i < 3; ++i)
                         gravity[i] = (float)grav[i];
                 }
                 else
-                    Debug.LogError("Error in method getGravity(). Method Return: " + res);
+                    Debug.LogError("SofaContextAPI::getGravity method returns: " + SofaDefines.msg_error[res]);
             }
             else
-                Debug.LogError("Error in method getGravity(). Can't access Object Pointer m_native.");
+                Debug.LogError("SofaContextAPI::getGravity can't access Object Pointer m_native.");
             
             return gravity;
         }

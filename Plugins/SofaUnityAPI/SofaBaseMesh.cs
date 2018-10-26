@@ -105,7 +105,7 @@ public class SofaBaseMesh : SofaBaseObject
             int res = sofaPhysics3DObject_setVec3iValue(m_simu, m_name, "gridSize", gridSizes);
             gridSizes = null;
             if (log)
-                Debug.Log("Change gridSize res: " + res);
+                Debug.Log("setGridResolution method returns: " + SofaDefines.msg_error[res]);
         }
     }
 
