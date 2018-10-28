@@ -108,7 +108,7 @@ public class SofaBaseMesh : SofaBaseObject
                 gridSizes[i] = (int)values[i];
             int res = sofaPhysics3DObject_setVec3iValue(m_simu, m_name, "gridSize", gridSizes);
             gridSizes = null;
-            if (log)
+            if (displayLog)
                 Debug.Log("setGridResolution method returns: " + SofaDefines.msg_error[res]);
         }
     }
@@ -168,7 +168,7 @@ public class SofaBaseMesh : SofaBaseObject
         int nbrTris = sofaPhysics3DObject_getNbTriangles(m_simu, m_name);
         int nbrQuads = sofaPhysics3DObject_getNbQuads(m_simu, m_name);
 
-        if (log)
+        if (displayLog)
             Debug.Log("createTriangulation: " + m_name + " | nbrTris: " + nbrTris + " | nbQuads: " + nbrQuads);
         
         if (nbrTris < 0)
@@ -229,7 +229,7 @@ public class SofaBaseMesh : SofaBaseObject
             float[] normals = new float[nbrV * 3];
             int resN = sofaPhysics3DObject_getNormals(m_simu, m_name, normals);
 
-            if (log)
+            if (displayLog)
                 Debug.Log(m_name + " | Number of vertices: " + nbrV + " | resV: " + resV + " | resN: " + resN);
 
 
@@ -243,7 +243,7 @@ public class SofaBaseMesh : SofaBaseObject
                 first = true;
             }
 
-            if (log)
+            if (displayLog)
                 Debug.Log(m_name + " | Number of vertices: " + nbrV + " | verts.Length: " + verts.Length + " | vertices.Lengt: " + vertices.Length);
 
             if (vertices.Length != 0)
@@ -306,7 +306,7 @@ public class SofaBaseMesh : SofaBaseObject
         float[] velocities = new float[nbrV * 4];
         int resV = sofaPhysics3DObject_getVelocities(m_simu, m_name, velocities);
 
-        if (log)
+        if (displayLog)
             Debug.Log(m_name + " | Number of vertices: " + nbrV + " | resV: " + resV);
 
         if (resV < 0 || nbrV <= 0)
@@ -316,7 +316,7 @@ public class SofaBaseMesh : SofaBaseObject
         if (verts.Length == 0)// first time
             verts = new Vector3[nbrV];
 
-        if (log)
+        if (displayLog)
             Debug.Log(m_name + " | Number of vertices: " + nbrV + " | verts.Length: " + verts.Length + " | velocities.Lengt: " + velocities.Length);
 
 
@@ -337,13 +337,13 @@ public class SofaBaseMesh : SofaBaseObject
 
                 if(velocities[i * 4 + 1] > threshold || velocities[i * 4 + 2] > threshold || velocities[i * 4 + 3] > threshold)
                 {
-                    if (log)
+                    if (displayLog)
                         Debug.Log("BIG MOVE");
                     highMov = true;
                 }
             }
 
-            if (log)
+            if (displayLog)
                 Debug.Log(m_name + " update stop at: " + cpt + " of: " + nbrV);
 
         }
@@ -375,7 +375,7 @@ public class SofaBaseMesh : SofaBaseObject
             int value = sofaPhysicsAPI_getTopologyRevision(m_simu, m_name);            
             if (value < 0)
             {
-                if (log)
+                if (displayLog)
                     Debug.LogError("getTopologyRevision: " + m_name + " method returns error: " + value);
                 return false;
             }
@@ -436,7 +436,7 @@ public class SofaBaseMesh : SofaBaseObject
         {
             int nbrV = sofaPhysicsAPI_getNbVertices(m_simu, m_name);
 
-            //if (log)
+            //if (displayLog)
             //Debug.Log("vertices: " + nbrV);
 
             float[] vertices = new float[nbrV * 3];
@@ -550,7 +550,7 @@ public class SofaBaseMesh : SofaBaseObject
         Vector2[]  uv = new Vector2[nbrV];
 
         int res = sofaPhysics3DObject_getTexCoords(m_simu, m_name, texCoords);
-        if (log)
+        if (displayLog)
             Debug.Log("res get Texcoords: " + res);        
 
         if (res < 0)

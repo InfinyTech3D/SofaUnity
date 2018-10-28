@@ -36,7 +36,7 @@ public class SofaBaseObject : IDisposable
     // TODO: check if needed
     bool m_isDisposed;
     /// Parameter to activate internal logging
-    protected bool log = false;
+    public bool displayLog = false;
 
     /// Name of the Sofa 3D Object mapped to this Object.
     protected string m_name;
@@ -99,7 +99,7 @@ public class SofaBaseObject : IDisposable
 
             if (res == 0)
                 return val[0];
-            else
+            else if(displayLog)
                 Debug.LogError("Method getFloatValue of Data: " + dataName + " of object: " + m_name + ", returns error: " + SofaDefines.msg_error[res]);
         }
 
@@ -116,7 +116,7 @@ public class SofaBaseObject : IDisposable
         {
             int res = sofaPhysics3DObject_setFloatValue(m_simu, m_name, dataName, value);
 
-            if (res != 0)
+            if (res != 0 && displayLog)
                 Debug.LogError("Method setFloatValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
         }
     }
@@ -134,7 +134,7 @@ public class SofaBaseObject : IDisposable
 
             if (res == 0)
                 return val[0];
-            else
+            else if (displayLog)
                 Debug.LogError("Method getIntValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
         }
 
@@ -151,7 +151,7 @@ public class SofaBaseObject : IDisposable
         {
             int res = sofaPhysics3DObject_setIntValue(m_simu, m_name, dataName, value);
 
-            if (res != 0)
+            if (res != 0 && displayLog)
                 Debug.LogError("Method setIntValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
         }
     }
@@ -169,7 +169,7 @@ public class SofaBaseObject : IDisposable
 
             if (res == 0)
                 return val[0];
-            else
+            else if (displayLog)
                 Debug.LogError("Method getBoolValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
         }
 
@@ -185,7 +185,7 @@ public class SofaBaseObject : IDisposable
         if (checkNativePointerForSetData(dataName))
         {
             int res = sofaPhysics3DObject_setBoolValue(m_simu, m_name, dataName, value);
-            if (res != 0)
+            if (res != 0 && displayLog)
                 Debug.LogError("Method setBoolValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
         }
     }
@@ -214,7 +214,7 @@ public class SofaBaseObject : IDisposable
         if (checkNativePointerForSetData(dataName))
         {
             int res = sofaPhysics3DObject_setStringValue(m_simu, m_name, dataName, value);
-            if (res != 0)
+            if (res != 0 && displayLog)
                 Debug.LogError("Method setStringValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
         }
     }
@@ -236,7 +236,7 @@ public class SofaBaseObject : IDisposable
                 for (int i = 0; i < 3; ++i)
                     values[i] = val[i];
             }
-            else
+            else if (displayLog)
                 Debug.LogError("Method getVector3fValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
         }
 
@@ -258,7 +258,7 @@ public class SofaBaseObject : IDisposable
 
             int res = sofaPhysics3DObject_setVec3fValue(m_simu, m_name, dataName, val);
 
-            if (res != 0)
+            if (res != 0 && displayLog)
                 Debug.LogError("Method setVector3fValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
         }
     }
@@ -276,7 +276,7 @@ public class SofaBaseObject : IDisposable
             val[0] = -2;
             int res = sofaPhysics3DObject_getVecfSize(m_simu, m_name, dataName, val);
 
-            if (res != 0)
+            if (res != 0 && displayLog)
             {
                 Debug.LogError("Method getVecfSize of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
                 return res;
@@ -299,7 +299,7 @@ public class SofaBaseObject : IDisposable
         if (checkNativePointerForGetData(dataName))
         {
             int res = sofaPhysics3DObject_getVectorfValue(m_simu, m_name, dataName, size, values);
-            if (res != 0)
+            if (res != 0 && displayLog)
                 Debug.LogError("Method getVectorfValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
             return res;
         }
@@ -318,7 +318,7 @@ public class SofaBaseObject : IDisposable
         if (checkNativePointerForSetData(dataName))
         {
             int res = sofaPhysics3DObject_setVectorfValue(m_simu, m_name, dataName, size, values);
-            if (res != 0)
+            if (res != 0 && displayLog)
                 Debug.LogError("Method setVectorfValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
             return res;
         }
@@ -339,7 +339,7 @@ public class SofaBaseObject : IDisposable
             val[0] = -2;
             int res = sofaPhysics3DObject_getVeciSize(m_simu, m_name, dataName, val);
 
-            if (res != 0)
+            if (res != 0 && displayLog)
             {
                 Debug.LogError("Method setVectorfValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
                 return res;
@@ -361,7 +361,7 @@ public class SofaBaseObject : IDisposable
         if (m_native != IntPtr.Zero)
         {
             int res = sofaPhysics3DObject_getVeciValue(m_simu, m_name, dataName, size, values);
-            if (res != 0)
+            if (res != 0 && displayLog)
                 Debug.LogError("Method getVeciValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
             return res;
         }
@@ -380,7 +380,7 @@ public class SofaBaseObject : IDisposable
         if (checkNativePointerForSetData(dataName))
         {
             int res = sofaPhysics3DObject_setVeciValue(m_simu, m_name, dataName, size, values);
-            if (res != 0)
+            if (res != 0 && displayLog)
                 Debug.LogError("Method setVeciValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
             return res;
         }
@@ -401,7 +401,7 @@ public class SofaBaseObject : IDisposable
             val[0] = -2;
             int res = sofaPhysics3DObject_getVecofVec3fSize(m_simu, m_name, dataName, val);
 
-            if (res != 0)
+            if (res != 0 && displayLog)
             {
                 Debug.LogError("Method setVeciValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
                 return res;
@@ -424,7 +424,7 @@ public class SofaBaseObject : IDisposable
         if (checkNativePointerForGetData(dataName))
         {
             int res = sofaPhysics3DObject_getVecofVec3fValue(m_simu, m_name, dataName, size, values);
-            if (res != 0)
+            if (res != 0 && displayLog)
                 Debug.LogError("Method getVecofVec3fValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
             return res;
         }
@@ -443,7 +443,7 @@ public class SofaBaseObject : IDisposable
         if (checkNativePointerForSetData(dataName))
         {
             int res = sofaPhysics3DObject_setVecofVec3fValue(m_simu, m_name, dataName, size, values);
-            if (res != 0)
+            if (res != 0 && displayLog)
                 Debug.LogError("Method setVecofVec3fValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
             return res;
         }
@@ -461,7 +461,7 @@ public class SofaBaseObject : IDisposable
         if (checkNativePointerForGetData(dataName))
         {
             int res = sofaPhysics3DObject_getVecfValue(m_simu, m_name, dataName, dataType, values);
-            if (res != 0)
+            if (res != 0 && displayLog)
                 Debug.LogError("Method getVecfValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
             return res;
         }
@@ -474,7 +474,7 @@ public class SofaBaseObject : IDisposable
         if (checkNativePointerForSetData(dataName))
         {
             int res = sofaPhysics3DObject_setVecfValue(m_simu, m_name, dataName, dataType, values);
-            if (res != 0)
+            if (res != 0 && displayLog)
                 Debug.LogError("Method setVecfValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
             return res;
         }
@@ -487,7 +487,7 @@ public class SofaBaseObject : IDisposable
         if (checkNativePointerForGetData(dataName))
         {
             int res = sofaPhysics3DObject_getRigidfValue(m_simu, m_name, dataName, dataType, values);
-            if (res != 0)
+            if (res != 0 && displayLog)
                 Debug.LogError("Method getRigidfValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
             return res;
         }
@@ -500,7 +500,7 @@ public class SofaBaseObject : IDisposable
         if (checkNativePointerForSetData(dataName))
         {
             int res = sofaPhysics3DObject_setRigidfValue(m_simu, m_name, dataName, dataType, values);
-            if (res != 0)
+            if (res != 0 && displayLog)
                 Debug.LogError("Method setRigidfValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
             return res;
         }
@@ -513,7 +513,7 @@ public class SofaBaseObject : IDisposable
         if (checkNativePointerForGetData(dataName))
         {
             int res = sofaPhysics3DObject_getRigiddValue(m_simu, m_name, dataName, dataType, values);
-            if (res != 0)
+            if (res != 0 && displayLog)
                 Debug.LogError("Method getRigiddValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
             return res;
         }
@@ -526,7 +526,7 @@ public class SofaBaseObject : IDisposable
         if (checkNativePointerForSetData(dataName))
         {
             int res = sofaPhysics3DObject_setRigiddValue(m_simu, m_name, dataName, dataType, values);
-            if (res != 0)
+            if (res != 0 && displayLog)
                 Debug.LogError("Method setRigiddValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
             return res;
         }

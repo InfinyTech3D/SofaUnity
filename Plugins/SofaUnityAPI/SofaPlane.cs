@@ -35,7 +35,7 @@ public class SofaPlane : SofaBaseMesh
             m_name += "_node";
             if (res == 1) // plane added
             {
-                if (log)
+                if (displayLog)
                     Debug.Log("plane Added! " + m_name);
 
                 // Set created object to native pointer

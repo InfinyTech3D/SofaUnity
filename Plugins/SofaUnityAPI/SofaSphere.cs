@@ -35,7 +35,7 @@ public class SofaSphere : SofaBaseMesh
             m_name += "_node";
             if (res == 1) // sphere added
             {
-                if (log)
+                if (displayLog)
                     Debug.Log("sphere Added! " + m_name);
 
                 // Set created object to native pointer

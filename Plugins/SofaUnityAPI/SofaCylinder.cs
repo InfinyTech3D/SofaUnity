@@ -35,7 +35,7 @@ public class SofaCylinder : SofaBaseMesh
             m_name += "_node";
             if (res == 1) // cylinder added
             {
-                if (log)
+                if (displayLog)
                     Debug.Log("cylinder Added! " + m_name);
 
                 // Set created object to native pointer
