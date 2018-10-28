@@ -43,11 +43,11 @@ static public class SofaDefines
         {-53, "Multiple Sofa object of requested type found in the same Node."},
         {-54, "Invalid case scenario reached (good luck)."},
 
-        {-9999, "License initialisation failed at step 1."},
-        {-9998, "License initialisation failed at step 2."},
+        {-9999, "License initialization failed at step 1."},
+        {-9998, "License initialization failed at step 2."},
         {-9997, "licence limit exceeded."},
         {-9996, "licence limit reached."},
-        {-9995, "License initialisation failed at step 3."},
+        {-9995, "License initialization failed at step 3."},
 
         {-100, "SofaAdvancePhysicsAPI illegal access."},
         {-101, "SofaUnity init value."},

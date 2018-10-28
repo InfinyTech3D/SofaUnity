@@ -90,20 +90,26 @@ namespace SofaUnityAPI
         /// Method to perform one async step of simulation in Sofa
         public bool asyncStep()
         {
-            return sofaPhysicsAPI_asyncStep(m_native);
+            if (m_isReady)
+                return sofaPhysicsAPI_asyncStep(m_native);
+            else
+                return false;
         }
 
         /// Method to query the Sofa physics simulation for the asynch step completion
         public bool isAsyncStepCompleted()
         {
-            return sofaPhysicsAPI_isAsyncStepCompleted(m_native);
+            if (m_isReady)
+                return sofaPhysicsAPI_isAsyncStepCompleted(m_native);
+            else
+                return false;
         }        
 
         /// <summary> Load the Sofa scene given by name @param filename. </summary>
         /// <param name="filename"> Path to the filename. </param>
         public void loadScene(string filename)
         {
-            if (m_native != IntPtr.Zero)
+            if (m_isReady)
             {
                 int res = sofaPhysicsAPI_loadScene(m_native, filename);
                 if (res != 0)
@@ -117,14 +123,14 @@ namespace SofaUnityAPI
         /// <param name="pluginName"> Path to the plugin. </param>
         public void loadPlugin(string pluginName)
         {
-            if (m_native != IntPtr.Zero)
+            if (m_isReady)
             {
                 int res = sofaPhysicsAPI_loadPlugin(m_native, pluginName);
                 if (res != 1)
                     Debug.LogError("SofaContextAPI::loadPlugin method returns: " + SofaDefines.msg_error[res]);
             }
             else
-                Debug.LogError("SofaContextAPI::loadPlugin can't load plugin: " + pluginName + "no sofaPhysicsAPI created!");
+                Debug.LogError("SofaContextAPI::loadPlugin can't load plugin: " + pluginName + " no sofaPhysicsAPI created!");
         }
 
 
@@ -165,8 +171,16 @@ namespace SofaUnityAPI
         /// Getter/Setter of timestep
         public float timeStep
         {
-            get { return (float)sofaPhysicsAPI_timeStep(m_native); }
-            set { sofaPhysicsAPI_setTimeStep(m_native, value); }
+            get {
+                if (m_isReady)
+                    return (float)sofaPhysicsAPI_timeStep(m_native);
+                else
+                    return 0.01f;
+            }
+            set {
+                if (m_isReady)
+                    sofaPhysicsAPI_setTimeStep(m_native, value);                
+            }
         }
         
 
@@ -176,13 +190,15 @@ namespace SofaUnityAPI
             double[] grav = new double[3];
             for (int i = 0; i < 3; ++i)
                 grav[i] = (double)gravity[i];
-            sofaPhysicsAPI_setGravity(m_native, grav);
+
+            if (m_isReady)
+                sofaPhysicsAPI_setGravity(m_native, grav);
         }
 
         public Vector3 getGravity()
         {
             Vector3 gravity = new Vector3(0.0f, 0.0f, 0.0f);
-            if (m_native != IntPtr.Zero)
+            if (m_isReady)
             {
                 double[] grav = new double[3];
                 int res = sofaPhysicsAPI_gravity(m_native, grav);
@@ -205,7 +221,7 @@ namespace SofaUnityAPI
         public int getNumberObjects()
         {
             int res = 0;
-            if (m_native != IntPtr.Zero)
+            if (m_isReady)
                 res = sofaPhysicsAPI_getNumberObjects(m_native);
 
             return res;
@@ -214,7 +230,7 @@ namespace SofaUnityAPI
         /// Get Sofa object name (used as Id) by its position id in the creation order
         public string getObjectName(int id)
         {
-            if (m_native != IntPtr.Zero)
+            if (m_isReady)
             {
                 string name = sofaPhysicsAPI_get3DObjectName(m_native, id);
                 return name;
@@ -226,7 +242,7 @@ namespace SofaUnityAPI
         /// Get Sofa object type by its position id in the creation order
         public string getObjectType(int id)
         {
-            if (m_native != IntPtr.Zero)
+            if (m_isReady)
             {
                 string type = sofaPhysicsAPI_get3DObjectType(m_native, id);
                 return type;
