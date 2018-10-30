@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<Node name="lroot" gravity="0 0 -9" dt="0.02">
+<Node name="lroot" gravity="0 0 -9" dt="0.01">
     <VisualStyle displayFlags="showVisual showBehaviorModels " /> <!--showBehaviorModels showCollisionModels-->
     <RequiredPlugin pluginName="ProjectiveXRay"/>
 	<CollisionPipeline verbose="0" depth="10" draw="0" />
@@ -11,8 +11,8 @@
     <LCPConstraintSolver tolerance="0.001" maxIt="1000"/>
  
 	
-	<EulerImplicit name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.1" />
-	<CGLinearSolver iterations="20" name="linear solver" tolerance="1.0e-4" threshold="1.0e-4" />
+	<EulerImplicit name="cg_odesolver" printLog="false"  rayleighStiffness="0.01" rayleighMass="1.0" />
+	<CGLinearSolver iterations="12" name="linear solver" tolerance="1.0e-4" threshold="1.0e-4" />
 	
 	<!--texturename="./mesh/Materials/Textures/Organs_diffC.jpg" -->
     <Node name="lung_left">
@@ -25,10 +25,12 @@
 		<BoxROI name="ROI1" box="4 5 -3 10 15 3" drawBoxes="1" />
 		<FixedConstraint indices="@ROI1.indices" />
 		
+		<!--
 		<Node name="lung_left_visu">
-			<OglModel name="Visual" fileMesh="./mesh/organs_lung_left.obj" texturename="./mesh/Materials/Textures/Organs_diffC.jpg"/>
+			<OglModel name="Visual" fileMesh="./mesh/organs_lung_left.obj" texturename=""/>
 			<BarycentricMapping input="@.." output="@Visual" />
 		</Node>
+		-->
 		<Node name="lung_left_xray">
 			<MeshObjLoader name="loader" filename="./mesh/organs_lung_left.obj" />
 			<XRayModel src="@loader" density="1.0" isInner="true" isFixed="false"/>
@@ -38,8 +40,8 @@
 			<MeshObjLoader name="loader" filename="./mesh/organs_lung_left_collision.obj"/>
 			<Mesh src="@loader" />
             <MechanicalObject src="@loader" name="CollisModel" />
-            <Triangle  selfCollision="0" group="1"/>
-            <Point  selfCollision="0" group="1"/>
+            <Sphere radius="0.5"  selfCollision="0" group="1"/>
+            <!--<Point  selfCollision="0" group="1"/>-->
 			<BarycentricMapping input="@.." output="@." />
 		</Node>
 		<UncoupledConstraintCorrection />
@@ -54,11 +56,12 @@
 		
 		<BoxROI name="ROI1" box="-10 5 -3 -4 15 3" drawBoxes="1" />
 		<FixedConstraint indices="@ROI1.indices" />
-		
+		<!--
 		<Node name="lung_right_visu">
-			<OglModel name="Visual" fileMesh="./mesh/organs_lung_right.obj" texturename="./mesh/Materials/Textures/Organs_diffC.jpg"/>
+			<OglModel name="Visual" fileMesh="./mesh/organs_lung_right.obj" texturename=""/>
 			<BarycentricMapping input="@.." output="@Visual" />
 		</Node>
+		-->
 		<Node name="lung_right_xray">
 			<MeshObjLoader name="loader" filename="./mesh/organs_lung_right.obj" />
 			<XRayModel src="@loader" density="100.0" isInner="true" isFixed="false"/>
@@ -69,8 +72,8 @@
 			<MeshObjLoader name="loader" filename="./mesh/organs_lung_right_collision.obj"/>
 			<Mesh src="@loader" />
             <MechanicalObject src="@loader" name="CollisModel" />
-            <Triangle  selfCollision="0" group="1"/>
-            <Point  selfCollision="0" group="1"/>
+            <Sphere radius="0.5"  selfCollision="0" group="1"/>
+            <!--<Point  selfCollision="0" group="1"/>-->
 			<BarycentricMapping input="@.." output="@." />
 		</Node>
 		<UncoupledConstraintCorrection />
@@ -85,11 +88,12 @@
 		
 		<BoxROI name="ROI1" box="-2 10 -2 2 15 3" drawBoxes="1" />
 		<FixedConstraint indices="@ROI1.indices" />
-		
+		<!--
 		<Node name="heart_visu">
 			<OglModel name="Visual" fileMesh="./mesh/organs_heart.obj" texturename="./mesh/Materials/Textures/heart_diffC.jpg"/>
 			<BarycentricMapping input="@.." output="@Visual" />
 		</Node>
+		-->
 		<Node name="heart_xray">
 			<MeshObjLoader name="loader" filename="./mesh/organs_heart.obj" />
 			<XRayModel src="@loader" density="1000.0" isInner="true" isFixed="false"/>
@@ -99,8 +103,8 @@
 			<MeshObjLoader name="loader" filename="./mesh/organs_heart_collision.obj"/>
 			<Mesh src="@loader" />
             <MechanicalObject src="@loader" name="CollisModel" />
-            <Triangle  selfCollision="0"  group="1"/>
-            <Point  selfCollision="0"  group="1"/>
+            <Sphere radius="0.5"  selfCollision="0" group="1"/>
+            <!--<Point  selfCollision="0" group="1"/>-->
 			<BarycentricMapping input="@.." output="@." />
 		</Node>
 		<UncoupledConstraintCorrection />
@@ -115,11 +119,12 @@
 		
 		<BoxROI name="ROI1" box="-10 -40 -6 10 0 0" drawBoxes="1" />
 		<FixedConstraint indices="@ROI1.indices" />
-		
+		<!--
 		<Node name="diaphragm_visu">
-			<OglModel name="Visual" fileMesh="./mesh/organs_diaphragm.obj" texturename="./mesh/Materials/Textures/Organs_diffC.jpg"/>
+			<OglModel name="Visual" fileMesh="./mesh/organs_diaphragm.obj" texturename=""/>
 			<BarycentricMapping input="@.." output="@Visual" />
 		</Node>
+		-->
 		<Node name="diaphragm_xray">
 			<MeshObjLoader name="loader" filename="./mesh/organs_diaphragm.obj" />
 			<XRayModel src="@loader" density="300.0" isInner="true" isFixed="false"/>
@@ -129,14 +134,17 @@
 			<MeshObjLoader name="loader" filename="./mesh/organs_diaphragm_collision.obj"/>
 			<Mesh src="@loader" />
             <MechanicalObject src="@loader" name="CollisModel" />
-            <Triangle  selfCollision="0" group="2"/>
-            <Point  selfCollision="0" group="2"/>
+            <Sphere radius="0.5"  selfCollision="0" group="2"/>
+            <!--<Point  selfCollision="0" group="2"/>-->
 			<BarycentricMapping input="@.." output="@." />
 		</Node>
 		<UncoupledConstraintCorrection />
 	</Node>
 	
 	<Node name="intestine">
+		<!--<MeshObjLoader name="loader" filename="./mesh/organs_intestine.obj" />
+		<XRayModel src="@loader" density="10.0" isInner="true" isFixed="true"/>-->
+		
 		<MeshObjLoader name="loader" filename="./mesh/organs_intestine.obj" />
 		<SparseGrid name="grid" n="6 6 6" position="@loader.position" drawHexahedra="0" />
 		<MechanicalObject name="dofs" scale3d="1 1 1" />
@@ -145,25 +153,27 @@
 		
 		<BoxROI name="ROI1" box="-10 -40 -6 10 0 0" drawBoxes="1" />
 		<FixedConstraint indices="@ROI1.indices" />
-		
+		<!--
 		<Node name="intestine_visu">
-			<OglModel name="Visual" fileMesh="./mesh/organs_intestine.obj" texturename="./mesh/Materials/Textures/Organs_diffC.jpg"/>
+			<OglModel name="Visual" fileMesh="./mesh/organs_intestine.obj" texturename=""/>
 			<BarycentricMapping input="@.." output="@Visual" />
 		</Node>
+		-->
 		<Node name="intestine_xray">
 			<MeshObjLoader name="loader" filename="./mesh/organs_intestine.obj" />
 			<XRayModel src="@loader" density="10.0" isInner="true" isFixed="false"/>
 			<BarycentricMapping input="@.."/>
 		</Node>
-		<Node name="intestine_collision">
+		
+		<!--<Node name="intestine_collision">
 			<MeshObjLoader name="loader" filename="./mesh/organs_intestine_collision.obj"/>
 			<Mesh src="@loader" />
             <MechanicalObject src="@loader" name="CollisModel" />
-            <Triangle  selfCollision="0" group="2"/>
-            <Point  selfCollision="0" group="2"/>
-			<BarycentricMapping input="@.." output="@." />
+            <Sphere radius="0.5"  selfCollision="0" group="2"/>-->
+            <!--<Point  selfCollision="0" group="2"/>-->
+			<!--<BarycentricMapping input="@.." output="@." />
 		</Node>
-		<UncoupledConstraintCorrection />
+		<UncoupledConstraintCorrection />-->
 	</Node>
 
 		
@@ -179,11 +189,12 @@
 		
 		<BoxROI name="ROI2" box="-8 -10 0 0 -8 10" drawBoxes="1" />
 		<FixedConstraint indices="@ROI2.indices" />
-		
+		<!--
 		<Node name="stomach_visu">
-			<OglModel name="Visual" fileMesh="./mesh/organs_stomach.obj" texturename="./mesh/Materials/Textures/Organs_diffC.jpg"/>
+			<OglModel name="Visual" fileMesh="./mesh/organs_stomach.obj" texturename=""/>
 			<BarycentricMapping input="@.." output="@Visual" />
 		</Node>
+		-->
 		<Node name="stomach_xray">
 			<MeshObjLoader name="loader" filename="./mesh/organs_stomach.obj" />
 			<XRayModel src="@loader" density="500.0" isInner="true" isFixed="false"/>
@@ -193,8 +204,8 @@
 			<MeshObjLoader name="loader" filename="./mesh/organs_stomach_collision.obj"/>
 			<Mesh src="@loader" />
             <MechanicalObject src="@loader" name="CollisModel" />
-            <Triangle  selfCollision="0" group="1"/>
-            <Point  selfCollision="0" group="1"/>
+            <Sphere radius="0.5"  selfCollision="0" group="1"/>
+            <!--<Point  selfCollision="0" group="1"/>-->
 			<BarycentricMapping input="@.." output="@." />
 		</Node>
 		<UncoupledConstraintCorrection />
@@ -210,11 +221,12 @@
 		
 		<BoxROI name="ROI2" box="-8 -10 0 5 -5 1" drawBoxes="1" />
 		<FixedConstraint indices="@ROI2.indices" />
-		
+		<!--
 		<Node name="pancreas_visu">
-			<OglModel name="Visual" fileMesh="./mesh/organs_pancreas.obj" texturename="./mesh/Materials/Textures/Organs_diffC.jpg" />
+			<OglModel name="Visual" fileMesh="./mesh/organs_pancreas.obj" texturename="" />
 			<BarycentricMapping input="@.." output="@Visual" />
 		</Node>
+		-->
 		<Node name="pancreas_xray">
 			<MeshObjLoader name="loader" filename="./mesh/organs_pancreas.obj" />
 			<XRayModel src="@loader" density="800.0" isInner="true" isFixed="false"/>
@@ -224,8 +236,8 @@
 			<MeshObjLoader name="loader" filename="./mesh/organs_pancreas_collision.obj"/>
 			<Mesh src="@loader" />
             <MechanicalObject src="@loader" name="CollisModel" />
-            <Triangle  selfCollision="0" />
-            <Point  selfCollision="0" />
+            <Sphere radius="0.5"  selfCollision="0" />
+            <!--<Point  selfCollision="0" />-->
 			<BarycentricMapping input="@.." output="@." />
 		</Node>
 		<UncoupledConstraintCorrection />
@@ -241,12 +253,12 @@
 		
 		<BoxROI name="ROI2" box="-6 -4 0 0 1 4" drawBoxes="1" />
 		<FixedConstraint indices="@ROI2.indices" />
-		
+		<!--
 		<Node name="liver_visu">
-			<OglModel name="Visual" fileMesh="./mesh/organs_liver.obj" texturename="./mesh/Materials/Textures/Organs_diffC.jpg"/>
+			<OglModel name="Visual" fileMesh="./mesh/organs_liver.obj" texturename=""/>
 			<BarycentricMapping input="@.." output="@Visual" />
 		</Node>
-		
+		-->
 		<Node name="liver_xray">
 			<MeshObjLoader name="loader" filename="./mesh/organs_liver.obj" />
 			<XRayModel src="@loader" density="1000.0" isInner="true" isFixed="false"/>
@@ -256,8 +268,8 @@
 			<MeshObjLoader name="loader" filename="./mesh/organs_liver_collision.obj"/>
 			<Mesh src="@loader" />
             <MechanicalObject src="@loader" name="CollisModel" />
-            <Triangle  selfCollision="0" />
-            <Point  selfCollision="0" />
+            <Sphere radius="0.5"  selfCollision="0" />
+            <!--<Point  selfCollision="0" />-->
 			<BarycentricMapping input="@.." output="@." />
 		</Node>
 		<UncoupledConstraintCorrection />
@@ -266,20 +278,20 @@
 
 	<Node name="Visu_kidney_left" tags="Visual" >
 		<MeshObjLoader name="loader" filename="./mesh/organs_kidney_left.obj"/>
-        <OglModel  name="OglModel" src="@loader" texturename="./mesh/Materials/Textures/Organs_diffC.jpg"/>
+        <!--<OglModel  name="OglModel" src="@loader" texturename=""/>-->
 		<XRayModel src="@loader" density="800.0" isInner="true" isFixed="true"/>
     </Node>
 	
 	<Node name="Visu_kidney_right" tags="Visual" >
 		<MeshObjLoader name="loader" filename="./mesh/organs_kidney_right.obj"/>
-        <OglModel  name="OglModel" src="@loader" texturename="./mesh/Materials/Textures/Organs_diffC.jpg"/>
+        <!--<OglModel  name="OglModel" src="@loader" texturename=""/>-->
 		<XRayModel src="@loader" density="800.0" isInner="true" isFixed="true"/>
     </Node>
 	
 	
 	<Node name="torso_skeleton">
 		<MeshObjLoader filename="./mesh/torso_skeleton.obj" name="loader" flipNormals="false" translation="0 -137 6.5" scale3d="1.1 1.1 1.1"/>
-		<OglModel src="@loader" color="0.7 0.7 0.7 0.3" />
+		<!--<OglModel src="@loader" color="0.7 0.7 0.7 0.3" />-->
 		<XRayModel src="@loader" density="50.0" isInner="true" isFixed="true"/>
 	</Node>
 	
@@ -297,8 +309,8 @@
 		
 	 	<SurfaceXRayRenderer name="XRenderer"
 	 		sourcePosition="@SPosition1.output_position"
-	    	detectorPosition="@DPosition1.output_position" detectorSize="100 100" detectorUpVector="0 1 0" detectorResolution="1024 1024"
-			drawSource="false" draw="true" normalizeColors="true"  drawBeam="true" dumpImage="false" xrayFrameRate="100" beamPower="1000"
+	    	detectorPosition="@DPosition1.output_position" detectorSize="100 100" detectorUpVector="0 1 0" detectorResolution="600 600"
+			drawSource="false" draw="true" normalizeColors="true"  drawBeam="false" dumpImage="true" xrayFrameRate="100" beamPower="80"
 		/>	       
 	</Node>
 	
