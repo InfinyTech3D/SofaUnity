@@ -20,14 +20,14 @@
 		<SparseGrid name="grid" n="5 8 7" position="@loader.position" drawHexahedra="0" />
 		<MechanicalObject name="dofs" scale3d="1 1 1" />
 		<UniformMass totalMass="1.0" />
-		<HexahedronFEMForceField name="FEM" youngModulus="40.0" poissonRatio="0.3" method="large" printLog="0" />
+		<HexahedronFEMForceField name="FEM" youngModulus="40.0" poissonRatio="0.3" method="large" printLog="0" />		
+		<MiddleForceField name="center" force="0.01" pace="3.0" />
 		
-		<BoxROI name="ROI1" box="4 5 -3 10 15 3" drawBoxes="1" />
+		<BoxROI name="ROI1" box="4 2 -5 10 15 5" drawBoxes="1" />
 		<FixedConstraint indices="@ROI1.indices" />
-		
-		<!--
+			<!--
 		<Node name="lung_left_visu">
-			<OglModel name="Visual" fileMesh="./mesh/organs_lung_left.obj" texturename=""/>
+			<OglModel name="Visual" fileMesh="./mesh/organs_lung_left.obj" texturename="./mesh/Materials/Textures/Organs_diffC.jpg"/>
 			<BarycentricMapping input="@.." output="@Visual" />
 		</Node>
 		-->
@@ -53,12 +53,13 @@
 		<MechanicalObject name="dofs" scale3d="1 1 1" />
 		<UniformMass totalMass="1.0" />
 		<HexahedronFEMForceField name="FEM" youngModulus="40.0" poissonRatio="0.1" method="large" printLog="0" />
+		<MiddleForceField name="center" force="0.01" pace="3.0" />
 		
-		<BoxROI name="ROI1" box="-10 5 -3 -4 15 3" drawBoxes="1" />
+		<BoxROI name="ROI1" box="-10 2 -5 -4 15 5" drawBoxes="1" />
 		<FixedConstraint indices="@ROI1.indices" />
 		<!--
 		<Node name="lung_right_visu">
-			<OglModel name="Visual" fileMesh="./mesh/organs_lung_right.obj" texturename=""/>
+			<OglModel name="Visual" fileMesh="./mesh/organs_lung_right.obj" texturename="./mesh/Materials/Textures/Organs_diffC.jpg"/>
 			<BarycentricMapping input="@.." output="@Visual" />
 		</Node>
 		-->
@@ -85,8 +86,8 @@
 		<MechanicalObject name="dofs" scale3d="1 1 1" />
 		<UniformMass totalMass="1.0" />
 		<HexahedronFEMForceField name="FEM" youngModulus="40.0" poissonRatio="0.1" method="large" printLog="0" />
-		
-		<BoxROI name="ROI1" box="-2 10 -2 2 15 3" drawBoxes="1" />
+		<MiddleForceField name="center" force="0.12" pace="0.4" />
+		<BoxROI name="ROI1" box="-3 10 -2 3 15 3" drawBoxes="1" />
 		<FixedConstraint indices="@ROI1.indices" />
 		<!--
 		<Node name="heart_visu">
@@ -295,7 +296,7 @@
 		<XRayModel src="@loader" density="50.0" isInner="true" isFixed="true"/>
 	</Node>
 	
-	
+	<!--
 	<Node name="XRay1">
 		<Node name="ComputeCenter">
 			<MeshObjLoader filename="./mesh/torso_skeleton.obj" name="loader" flipNormals="false"  translation="0 -137 6.5" scale3d="1.1 1.1 1.1"/>
@@ -313,9 +314,13 @@
 			drawSource="false" draw="true" normalizeColors="true"  drawBeam="false" dumpImage="true" xrayFrameRate="100" beamPower="80"
 		/>	       
 	</Node>
-	
+	-->
 	<Node name="XRayViewer" >
-        <SofaComponentListener name="Listener" InputComponentPath="../XRay1/XRenderer" />
+		<SurfaceXRayRenderer name="XRenderer"
+            detectorSize="100 100" detectorUpVector="0 1 0" detectorResolution="400 400"
+			drawSource="false" draw="true" normalizeColors="true"  drawBeam="false" dumpImage="true" xrayFrameRate="100" beamPower="80"
+		/>	
+        <SofaComponentListener name="Listener" InputComponentPath="./XRenderer" />
     </Node>
 
 </Node>
