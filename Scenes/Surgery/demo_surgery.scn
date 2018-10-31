@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
-<Node name="lroot" gravity="0 -9 0" dt="0.01">
+<Node name="lroot" gravity="0 0 -9" dt="0.01">
     <VisualStyle displayFlags="showVisual showBehaviorModels " /> <!--showBehaviorModels showCollisionModels-->
-    
+    <RequiredPlugin name="Carving" pluginName="SofaCarving" />
 	<CollisionPipeline verbose="0" depth="10" draw="0" />
     <BruteForceDetection name="N2" />
     <MinProximityIntersection name="Proximity" alarmDistance="0.5" contactDistance="0.2" />
@@ -13,6 +13,8 @@
 
 	<EulerImplicit name="cg_odesolver" printLog="false"  rayleighStiffness="0.01" rayleighMass="0.1" />
 	<CGLinearSolver iterations="12" name="linear solver" tolerance="1.0e-4" threshold="1.0e-4" />
+	
+	<CarvingManager active="true" carvingDistance="-0.09"/>
 		
 	<!--texturename="./mesh/Materials/Textures/Organs_diffC.jpg" -->
     <Node name="lung_left">
@@ -234,7 +236,7 @@
 			<TriangleSetGeometryAlgorithms name="GeomAlgo"   template="Vec3d" />
 			
             <Tetra2TriangleTopologicalMapping input="@../Container" output="@Container" flipNormals="1" noNewTriangles="1"/>
-            <TriangleSet />
+            <TriangleSet name="triangleCol" tags="CarvingSurface"/>
             <Node name="Visu-old">
                 <OglModel name="Visual" color="blue" />
                 <IdentityMapping input="@../../Volume" output="@Visual" />
@@ -248,7 +250,7 @@
 			<TriangleSetGeometryAlgorithms name="GeomAlgo"   template="Vec3d" />
 			
             <Tetra2TriangleTopologicalMapping input="@../Container" output="@Container" flipNormals="1" noInitialTriangles="1"/>
-            <TriangleSet />
+            <TriangleSet name="triangleCol" tags="CarvingSurface"/>
             <Node name="Visu-new">
                 <OglModel name="Visual" color="red" />
                 <IdentityMapping input="@../../Volume" output="@Visual" />
@@ -318,4 +320,10 @@
 		<OglModel src="@loader" color="0.7 0.7 0.7 0.3" />
 	</Node>
 
+	<Node name="carvingElement">
+		<MechanicalObject name="Particles" template="Vec3d" position="0 0 30" velocity="0 0 -1"/>
+		<UniformMass name="Mass" totalMass="1.0" />
+		<SphereModel radius="1.0" tags="CarvingTool"/>
+		<UncoupledConstraintCorrection />
+	</Node>
 </Node>
