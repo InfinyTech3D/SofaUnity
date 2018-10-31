@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using SofaUnity;
 
 public class ImmersiveController : MonoBehaviour {
@@ -9,6 +10,14 @@ public class ImmersiveController : MonoBehaviour {
     private GameObject SofaObject = null;
     public GameObject m_mainScene = null;
     public GameObject m_immScene = null;
+
+    public GameObject m_controllerA = null;
+    public GameObject m_controllerB = null;
+
+    private bool isActivated = false;
+    private Vector3 restControllerA;
+    private Vector3 restControllerB;
+    private bool inImmersiveWorld = false;
 
     private GameObject m_sofaInMain = null;
     private GameObject m_sofaInImm = null;
@@ -42,6 +51,13 @@ public class ImmersiveController : MonoBehaviour {
             return;
         }
 
+        if (m_controllerA == null || m_controllerB == null)
+        {
+            Debug.LogError("ImmersiveController::Start - Controllers pointer not set.");
+            this.enabled = false;
+            return;
+        }
+
         // init the 2 transform version of SofaContext to the default one.
         m_sofaInMain = new GameObject();
         m_sofaInImm = new GameObject();
@@ -62,10 +78,76 @@ public class ImmersiveController : MonoBehaviour {
             setNormalScene();
         if (Input.GetKey(KeyCode.C))
             setImmersiveScene();
+
+        if(inImmersiveWorld)
+        {
+            if (Input.GetKey(KeyCode.B))
+                activeInteraction();
+
+            if (isActivated)
+                updateTransform();
+        }
+        
     }
 
-    void setNormalScene()
+    public void activeInteraction()
     {
+        isActivated = !isActivated;
+        if (isActivated) // first time backup positions
+        {
+            Debug.Log("isActivated");
+            restControllerA = m_controllerA.transform.position;
+            restControllerB = m_controllerB.transform.position;
+        }
+    }
+
+
+    private void updateTransform()
+    {
+        Vector3 diffPA = m_controllerA.transform.position - restControllerA;
+        Vector3 diffPB = m_controllerB.transform.position - restControllerB;
+
+        float normA = diffPA.magnitude;
+        float normB = diffPB.magnitude;
+
+        if (normA < 0.1 && normB < 0.1)
+            return;
+
+        Debug.Log("normA: " + normA);
+        Debug.Log("normB: " + normB);
+
+        Vector3 oldAB = restControllerB - restControllerA;
+        Vector3 newAB = m_controllerB.transform.position - m_controllerA.transform.position;
+        float oldNormAB = oldAB.magnitude;
+        float newNormAB = newAB.magnitude;
+
+        // translate center
+        if (normA > 0.1)
+            SofaObject.transform.position += diffPA;
+
+        // scale
+        float ratio = 1.0f;
+        if (oldNormAB > 0.01f)
+            ratio = newNormAB / oldNormAB;
+        //SofaObject.transform.localScale = SofaObject.transform.localScale * ratio;
+
+        // rotation
+        Quaternion rot = Quaternion.FromToRotation(oldAB, newAB);
+        SofaObject.transform.localEulerAngles = SofaObject.transform.localEulerAngles + rot.eulerAngles;
+
+        // update rest positions
+        if (normA > 0.1)
+            restControllerA = m_controllerA.transform.position;
+        if (normB > 0.1)
+            restControllerB = m_controllerB.transform.position;
+    }
+
+
+    public void setNormalScene()
+    {
+        if (!inImmersiveWorld)
+            return;
+
         m_mainScene.SetActive(true);
         m_immScene.SetActive(false);
 
@@ -78,30 +160,31 @@ public class ImmersiveController : MonoBehaviour {
         SofaObject.transform.position = new Vector3(m_sofaInMain.transform.position.x, m_sofaInMain.transform.position.y, m_sofaInMain.transform.position.z);
         SofaObject.transform.rotation = new Quaternion(m_sofaInMain.transform.rotation.x, m_sofaInMain.transform.rotation.y, m_sofaInMain.transform.rotation.z, m_sofaInMain.transform.rotation.w);
         SofaObject.transform.localScale = new Vector3(m_sofaInMain.transform.localScale.x, m_sofaInMain.transform.localScale.y, m_sofaInMain.transform.localScale.z);
+
+        inImmersiveWorld = false;
+        isActivated = false;
     }
 
-    void setImmersiveScene()
+    public void setImmersiveScene()
     {
+        if (inImmersiveWorld)
+            return;
+
         m_mainScene.SetActive(false);
         m_immScene.SetActive(true);
 
         // backup current main trans
-        //m_sofaTransInMain = SofaObject.transform;
-        //Debug.Log("setImmersiveScene: m_sofaTransInMain.localScale1: " + m_sofaTransInMain.localScale);
-        
-        Debug.Log("setImmersiveScene: SofaObject.transform.position: " + SofaObject.transform.position);
-        Debug.Log("pos.x: " + SofaObject.transform.position.x);
-        Debug.Log("setImmersiveScene: SofaObject.transform.rotation: " + SofaObject.transform.rotation);
-        Debug.Log("setImmersiveScene: SofaObject.transform.lossyScale: " + SofaObject.transform.localScale);
-
         m_sofaInMain.transform.position = new Vector3(SofaObject.transform.position.x, SofaObject.transform.position.y, SofaObject.transform.position.z);
         m_sofaInMain.transform.rotation = new Quaternion(SofaObject.transform.rotation.x, SofaObject.transform.rotation.y, SofaObject.transform.rotation.z, SofaObject.transform.rotation.w);
         m_sofaInMain.transform.localScale = new Vector3(SofaObject.transform.localScale.x, SofaObject.transform.localScale.y, SofaObject.transform.localScale.z);
-        Debug.Log("m_sofaTransInMain.scale.x: " + m_sofaInMain.transform.localScale.x);
 
         //// set to current immersive transform.
         SofaObject.transform.position = new Vector3(m_sofaInImm.transform.position.x, m_sofaInImm.transform.position.y, m_sofaInImm.transform.position.z);
         SofaObject.transform.rotation = new Quaternion(m_sofaInImm.transform.rotation.x, m_sofaInImm.transform.rotation.y, m_sofaInImm.transform.rotation.z, m_sofaInImm.transform.rotation.w);
         SofaObject.transform.localScale = new Vector3(m_sofaInImm.transform.localScale.x, m_sofaInImm.transform.localScale.y, m_sofaInImm.transform.localScale.z);
+
+        inImmersiveWorld = true;
     }
+
+
 }
