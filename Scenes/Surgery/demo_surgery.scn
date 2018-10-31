@@ -1,42 +1,40 @@
 <?xml version="1.0" ?>
-<Node name="lroot" gravity="0 -9 0" dt="0.02">
+<Node name="lroot" gravity="0 -9 0" dt="0.01">
     <VisualStyle displayFlags="showVisual showBehaviorModels " /> <!--showBehaviorModels showCollisionModels-->
     
 	<CollisionPipeline verbose="0" depth="10" draw="0" />
     <BruteForceDetection name="N2" />
-    <MinProximityIntersection name="Proximity" alarmDistance="0.75" contactDistance="0.5" />
+    <MinProximityIntersection name="Proximity" alarmDistance="0.5" contactDistance="0.2" />
     <CollisionResponse name="Response" response="default" />
     <CollisionGroup name="Group" />
 	
     <FreeMotionAnimationLoop/>
- 
-	
-	<EulerImplicit name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.1" />
-	<CGLinearSolver iterations="20" name="linear solver" tolerance="1.0e-4" threshold="1.0e-4" />
-	
-	
-	
+
+	<EulerImplicit name="cg_odesolver" printLog="false"  rayleighStiffness="0.01" rayleighMass="0.1" />
+	<CGLinearSolver iterations="16" name="linear solver" tolerance="1.0e-4" threshold="1.0e-4" />
+		
+	<!--texturename="./mesh/Materials/Textures/Organs_diffC.jpg" -->
     <Node name="lung_left">
 		<MeshObjLoader name="loader" filename="./mesh/organs_lung_left.obj" />
-		<SparseGrid name="grid" n="6 9 8" position="@loader.position" drawHexahedra="0" />
+		<SparseGrid name="grid" n="5 8 7" position="@loader.position" drawHexahedra="0" />
 		<MechanicalObject name="dofs" scale3d="1 1 1" />
 		<UniformMass totalMass="1.0" />
-		<HexahedronFEMForceField name="FEM" youngModulus="100.0" poissonRatio="0.3" method="large" printLog="0" />
+		<HexahedronFEMForceField name="FEM" youngModulus="40.0" poissonRatio="0.3" method="large" printLog="0" />		
+		<MiddleForceField name="center" force="0.01" pace="3.0" />
 		
-		<BoxROI name="ROI1" box="4 5 -3 10 15 3" drawBoxes="1" />
+		<BoxROI name="ROI1" box="4 2 -5 10 15 5" drawBoxes="1" />
 		<FixedConstraint indices="@ROI1.indices" />
 		
 		<Node name="lung_left_visu">
-			<OglModel name="Visual" fileMesh="./mesh/organs_lung_left.obj" color="yellow"/>
+			<OglModel name="Visual" fileMesh="./mesh/organs_lung_left.obj" texturename="./mesh/Materials/Textures/Organs_diffC.jpg"/>
 			<BarycentricMapping input="@.." output="@Visual" />
-		</Node>
+		</Node>		
+
 		<Node name="lung_left_collision">
 			<MeshObjLoader name="loader" filename="./mesh/organs_lung_left_collision.obj"/>
 			<Mesh src="@loader" />
             <MechanicalObject src="@loader" name="CollisModel" />
-            <Triangle  selfCollision="0" />
-			<Line    selfCollision="0" />
-            <Point  selfCollision="0" />
+            <Sphere radius="0.5"  selfCollision="0" group="1"/>
 			<BarycentricMapping input="@.." output="@." />
 		</Node>
 		<UncoupledConstraintCorrection />
@@ -44,25 +42,81 @@
 	
 	<Node name="lung_right">
 		<MeshObjLoader name="loader" filename="./mesh/organs_lung_right.obj" />
-		<SparseGrid name="grid" n="6 9 8" position="@loader.position" drawHexahedra="0" />
+		<SparseGrid name="grid" n="5 8 7" position="@loader.position" drawHexahedra="0" />
 		<MechanicalObject name="dofs" scale3d="1 1 1" />
 		<UniformMass totalMass="1.0" />
-		<HexahedronFEMForceField name="FEM" youngModulus="100.0" poissonRatio="0.1" method="large" printLog="0" />
+		<HexahedronFEMForceField name="FEM" youngModulus="40.0" poissonRatio="0.1" method="large" printLog="0" />
+		<MiddleForceField name="center" force="0.01" pace="3.0" />
 		
-		<BoxROI name="ROI1" box="-10 5 -3 -4 15 3" drawBoxes="1" />
+		<BoxROI name="ROI1" box="-10 4 -5 -4 17 3" drawBoxes="1" />
 		<FixedConstraint indices="@ROI1.indices" />
 		
-		<Node name="lung_left_visu">
-			<OglModel name="Visual" fileMesh="./mesh/organs_lung_right.obj" color="yellow"/>
+		<Node name="lung_right_visu">
+			<OglModel name="Visual" fileMesh="./mesh/organs_lung_right.obj" texturename="./mesh/Materials/Textures/Organs_diffC.jpg"/>
 			<BarycentricMapping input="@.." output="@Visual" />
 		</Node>
+		
 		<Node name="lung_right_collision">
 			<MeshObjLoader name="loader" filename="./mesh/organs_lung_right_collision.obj"/>
 			<Mesh src="@loader" />
             <MechanicalObject src="@loader" name="CollisModel" />
-            <Triangle  selfCollision="0" />
-			<Line    selfCollision="0" />
-            <Point  selfCollision="0" />
+            <Sphere radius="0.5"  selfCollision="0" group="1"/>
+			<BarycentricMapping input="@.." output="@." />
+		</Node>
+		<UncoupledConstraintCorrection />
+	</Node>
+	
+	
+	<Node name="heart">
+		<MeshObjLoader name="loader" filename="./mesh/organs_heart.obj" />
+		<SparseGrid name="grid" n="5 5 5" position="@loader.position" drawHexahedra="0" />
+		<MechanicalObject name="dofs" scale3d="1 1 1" />
+		<UniformMass totalMass="1.0" />
+		<HexahedronFEMForceField name="FEM" youngModulus="40.0" poissonRatio="0.1" method="large" printLog="0" />
+		<MiddleForceField name="center" force="0.12" pace="0.4" />
+		<BoxROI name="ROI1" box="-3 10 -2 3 15 3" drawBoxes="1" />
+		<FixedConstraint indices="@ROI1.indices" />
+
+		<Node name="heart_visu">
+			<OglModel name="Visual" fileMesh="./mesh/organs_heart.obj" texturename="./mesh/Materials/Textures/heart_diffC.jpg"/>
+			<BarycentricMapping input="@.." output="@Visual" />
+		</Node>
+<!--
+		<Node name="heart_collision">
+			<MeshObjLoader name="loader" filename="./mesh/organs_heart_collision.obj"/>
+			<Mesh src="@loader" />
+            <MechanicalObject src="@loader" name="CollisModel" />
+            <Sphere radius="0.5"  selfCollision="0" group="1"/>
+            
+			<Point  selfCollision="0" group="1"/>
+			<Triangle  selfCollision="0" group="1"/>
+			
+			<BarycentricMapping input="@.." output="@." />
+		</Node>-->
+		<UncoupledConstraintCorrection />
+	</Node>
+	
+	
+	<Node name="diaphragm">
+		<MeshObjLoader name="loader" filename="./mesh/organs_diaphragm.obj" />
+		<SparseGrid name="grid" n="6 6 6" position="@loader.position" drawHexahedra="0" />
+		<MechanicalObject name="dofs" scale3d="1 1 1" />
+		<UniformMass totalMass="1.0" />
+		<HexahedronFEMForceField name="FEM" youngModulus="50.0" poissonRatio="0.1" method="large" printLog="0" />
+		
+		<BoxROI name="ROI1" box="-10 -40 -6 10 0 0" drawBoxes="1" />
+		<FixedConstraint indices="@ROI1.indices" />
+		
+		<Node name="diaphragm_visu">
+			<OglModel name="Visual" fileMesh="./mesh/organs_diaphragm.obj" texturename="./mesh/Materials/Textures/Organs_diffC.jpg"/>
+			<BarycentricMapping input="@.." output="@Visual" />
+		</Node>
+		
+		<Node name="diaphragm_collision">
+			<MeshObjLoader name="loader" filename="./mesh/organs_diaphragm_collision.obj"/>
+			<Mesh src="@loader" />
+            <MechanicalObject src="@loader" name="CollisModel" />
+            <Sphere radius="0.5"  selfCollision="0" group="2"/>
 			<BarycentricMapping input="@.." output="@." />
 		</Node>
 		<UncoupledConstraintCorrection />
@@ -71,7 +125,7 @@
 	
 	<Node name="intestine">
 		<MeshObjLoader name="loader" filename="./mesh/organs_intestine.obj" />
-		<SparseGrid name="grid" n="7 7 7" position="@loader.position" drawHexahedra="0" />
+		<SparseGrid name="grid" n="6 6 6" position="@loader.position" drawHexahedra="0" />
 		<MechanicalObject name="dofs" scale3d="1 1 1" />
 		<UniformMass totalMass="1.0" />
 		<HexahedronFEMForceField name="FEM" youngModulus="10.0" poissonRatio="0.1" method="large" printLog="0" />
@@ -80,82 +134,26 @@
 		<FixedConstraint indices="@ROI1.indices" />
 		
 		<Node name="intestine_visu">
-			<OglModel name="Visual" fileMesh="./mesh/organs_intestine.obj" color="yellow"/>
+			<OglModel name="Visual" fileMesh="./mesh/organs_intestine.obj" texturename="./mesh/Materials/Textures/Organs_diffC.jpg"/>
 			<BarycentricMapping input="@.." output="@Visual" />
 		</Node>
-		<Node name="organs_intestine_collision">
+		
+		<Node name="intestine_collision">
 			<MeshObjLoader name="loader" filename="./mesh/organs_intestine_collision.obj"/>
 			<Mesh src="@loader" />
             <MechanicalObject src="@loader" name="CollisModel" />
-            <Triangle  selfCollision="0" />
-			<Line    selfCollision="0" />
-            <Point  selfCollision="0" />
+            <Sphere radius="0.5"  selfCollision="0"/>
 			<BarycentricMapping input="@.." output="@." />
 		</Node>
 		<UncoupledConstraintCorrection />
 	</Node>
-	
-	
-	
-	<Node name="diaphragm">
-		<MeshObjLoader name="loader" filename="./mesh/organs_diaphragm.obj" />
-		<SparseGrid name="grid" n="7 7 7" position="@loader.position" drawHexahedra="0" />
-		<MechanicalObject name="dofs" scale3d="1 1 1" />
-		<UniformMass totalMass="1.0" />
-		<HexahedronFEMForceField name="FEM" youngModulus="100.0" poissonRatio="0.1" method="large" printLog="0" />
-		
-		<BoxROI name="ROI1" box="-10 -40 -6 10 0 0" drawBoxes="1" />
-		<FixedConstraint indices="@ROI1.indices" />
-		
-		<Node name="lung_left_visu">
-			<OglModel name="Visual" fileMesh="./mesh/organs_diaphragm.obj" color="yellow"/>
-			<BarycentricMapping input="@.." output="@Visual" />
-		</Node>
-		<Node name="organs_diaphragm_collision">
-			<MeshObjLoader name="loader" filename="./mesh/organs_diaphragm_collision.obj"/>
-			<Mesh src="@loader" />
-            <MechanicalObject src="@loader" name="CollisModel" />
-            <Triangle  selfCollision="0" />
-			<Line    selfCollision="0" />
-            <Point  selfCollision="0" />
-			<BarycentricMapping input="@.." output="@." />
-		</Node>
-		<UncoupledConstraintCorrection />
-	</Node>
-	
-	<Node name="heart">
-		<MeshObjLoader name="loader" filename="./mesh/organs_heart.obj" />
-		<SparseGrid name="grid" n="6 6 6" position="@loader.position" drawHexahedra="0" />
-		<MechanicalObject name="dofs" scale3d="1 1 1" />
-		<UniformMass totalMass="1.0" />
-		<HexahedronFEMForceField name="FEM" youngModulus="100.0" poissonRatio="0.1" method="large" printLog="0" />
-		
-		<BoxROI name="ROI1" box="-2 10 -2 2 15 3" drawBoxes="1" />
-		<FixedConstraint indices="@ROI1.indices" />
-		
-		<Node name="heart_visu">
-			<OglModel name="Visual" fileMesh="./mesh/organs_heart.obj" color="yellow"/>
-			<BarycentricMapping input="@.." output="@Visual" />
-		</Node>
-		<Node name="organs_heart_collision">
-			<MeshObjLoader name="loader" filename="./mesh/organs_heart_collision.obj"/>
-			<Mesh src="@loader" />
-            <MechanicalObject src="@loader" name="CollisModel" />
-            <Triangle  selfCollision="0" />
-			<Line    selfCollision="0" />
-            <Point  selfCollision="0" />
-			<BarycentricMapping input="@.." output="@." />
-		</Node>
-		<UncoupledConstraintCorrection />
-	</Node>
-	
 	
 	<Node name="stomach">
 		<MeshObjLoader name="loader" filename="./mesh/organs_stomach.obj" />
-		<SparseGrid name="grid" n="6 12 6" position="@loader.position" drawHexahedra="0" />
+		<SparseGrid name="grid" n="5 5 4" position="@loader.position" drawHexahedra="0" />
 		<MechanicalObject name="dofs" scale3d="1 1 1" />
 		<UniformMass totalMass="1.0" />
-		<HexahedronFEMForceField name="FEM" youngModulus="60.0" poissonRatio="0.1" method="large" printLog="0" />
+		<HexahedronFEMForceField name="FEM" youngModulus="100.0" poissonRatio="0.1" method="large" printLog="0" />
 		
 		<BoxROI name="ROI1" box="-6 0 -6 6 40 6" drawBoxes="1" />
 		<FixedConstraint indices="@ROI1.indices" />
@@ -164,21 +162,23 @@
 		<FixedConstraint indices="@ROI2.indices" />
 		
 		<Node name="stomach_visu">
-			<OglModel name="Visual" fileMesh="./mesh/organs_stomach.obj" color="yellow"/>
+			<OglModel name="Visual" fileMesh="./mesh/organs_stomach.obj" texturename="./mesh/Materials/Textures/Organs_diffC.jpg"/>
 			<BarycentricMapping input="@.." output="@Visual" />
 		</Node>
-		<Node name="organs_stomach_collision">
+		
+		<Node name="stomach_collision">
 			<MeshObjLoader name="loader" filename="./mesh/organs_stomach_collision.obj"/>
 			<Mesh src="@loader" />
             <MechanicalObject src="@loader" name="CollisModel" />
-            <Triangle  selfCollision="0" />
-			<Line    selfCollision="0" />
-            <Point  selfCollision="0" />
+            <Sphere radius="0.5"  selfCollision="0" group="1"/>
+            <!--
+			<Point  selfCollision="0" group="1"/>
+			<Triangle  selfCollision="0" group="1"/>
+			-->
 			<BarycentricMapping input="@.." output="@." />
 		</Node>
 		<UncoupledConstraintCorrection />
 	</Node>
-	
 	
 	<Node name="pancreas">
 		<MeshObjLoader name="loader" filename="./mesh/organs_pancreas.obj" />
@@ -191,20 +191,25 @@
 		<FixedConstraint indices="@ROI2.indices" />
 		
 		<Node name="pancreas_visu">
-			<OglModel name="Visual" fileMesh="./mesh/organs_pancreas.obj" color="yellow"/>
+			<OglModel name="Visual" fileMesh="./mesh/organs_pancreas.obj" texturename="./mesh/Materials/Textures/Organs_diffC.jpg" />
 			<BarycentricMapping input="@.." output="@Visual" />
 		</Node>
-		<Node name="organs_pancreas_collision">
+		
+		<Node name="pancreas_collision">
 			<MeshObjLoader name="loader" filename="./mesh/organs_pancreas_collision.obj"/>
 			<Mesh src="@loader" />
             <MechanicalObject src="@loader" name="CollisModel" />
-            <Triangle  selfCollision="0" />
-			<Line    selfCollision="0" />
-            <Point  selfCollision="0" />
+            <Sphere radius="0.2"  selfCollision="0"  group="2"/>
+            <!--
+			<Point  selfCollision="0" />
+			<Triangle  selfCollision="0" />
+			-->
 			<BarycentricMapping input="@.." output="@." />
 		</Node>
 		<UncoupledConstraintCorrection />
 	</Node>
+	
+	<!--
 	
 	<Node name="liver">
         <MeshGmshLoader name="loader" filename="./mesh/organs_liver.msh" />
@@ -221,31 +226,95 @@
         <DiagonalMass massDensity="1.0" />
         <FastTetrahedralCorotationalForceField name="FEM" youngModulus="3000" poissonRatio="0.3" method="large" />	
 		<UncoupledConstraintCorrection />		
-        <Node name="T">
+        <Node name="surface-old">
             <TriangleSetTopologyContainer  name="Container" fileTopology="" tags=" " />
 			<TriangleSetTopologyModifier   name="Modifier" />
 			<TriangleSetTopologyAlgorithms name="TopoAlgo"   template="Vec3d" />
 			<TriangleSetGeometryAlgorithms name="GeomAlgo"   template="Vec3d" />
 			
-            <Tetra2TriangleTopologicalMapping input="@../Container" output="@Container" />			
-			<TriangleSet />
-            
-            <Node name="liver-Visual">
+            <Tetra2TriangleTopologicalMapping input="@../Container" output="@Container" flipNormals="1" noNewTriangles="1"/>
+            <TriangleSet />
+            <Node name="Visu-old">
                 <OglModel name="Visual" color="blue" />
                 <IdentityMapping input="@../../Volume" output="@Visual" />
             </Node>
         </Node>
+		
+		<Node name="surface-new">
+            <TriangleSetTopologyContainer  name="Container" fileTopology="" tags=" " />
+			<TriangleSetTopologyModifier   name="Modifier" />
+			<TriangleSetTopologyAlgorithms name="TopoAlgo"   template="Vec3d" />
+			<TriangleSetGeometryAlgorithms name="GeomAlgo"   template="Vec3d" />
+			
+            <Tetra2TriangleTopologicalMapping input="@../Container" output="@Container" flipNormals="1" noInitialTriangles="1"/>
+            <TriangleSet />
+            <Node name="Visu-new">
+                <OglModel name="Visual" color="red" />
+                <IdentityMapping input="@../../Volume" output="@Visual" />
+            </Node>
+        </Node>
     </Node>
-
-
-	<Node name="Visu_kidney_left" tags="Visual" >
-		<MeshObjLoader name="loader" filename="./mesh/organs_kidney_left.obj" />
-        <OglModel  name="OglModel" src="@loader" />
-    </Node>
+	-->
 	
-	<Node name="Visu_kidney_right" tags="Visual" >
+	<Node name="kidney_left">
+		<MeshObjLoader name="loader" filename="./mesh/organs_kidney_left.obj" />
+		<SparseGrid name="grid" n="4 4 3" position="@loader.position" drawHexahedra="0" />
+		<MechanicalObject name="dofs" scale3d="1 1 1" />
+		<UniformMass totalMass="1.0" />
+		<HexahedronFEMForceField name="FEM" youngModulus="100.0" poissonRatio="0.1" method="large" printLog="0" />
+		
+		<BoxROI name="ROI2" box="2 -14 -2 6 -7 1" drawBoxes="1" />
+		<FixedConstraint indices="@ROI2.indices" />
+		
+		<Node name="kidney_left_visu">
+			<OglModel name="Visual" fileMesh="./mesh/organs_kidney_left.obj" texturename="./mesh/Materials/Textures/Organs_diffC.jpg" />
+			<BarycentricMapping input="@.." output="@Visual" />
+		</Node>
+		
+		<Node name="kidney_left_collision">
+			<MeshObjLoader name="loader" filename="./mesh/organs_kidney_left_collision.obj"/>
+			<Mesh src="@loader" />
+            <MechanicalObject src="@loader" name="CollisModel" />
+            <Sphere radius="0.5"  selfCollision="0" />
+			<BarycentricMapping input="@.." output="@." />
+		</Node>
+		<UncoupledConstraintCorrection />
+	</Node>
+	
+	<Node name="kidney_right">
 		<MeshObjLoader name="loader" filename="./mesh/organs_kidney_right.obj" />
-        <OglModel  name="OglModel" src="@loader" />
-    </Node>
+		<SparseGrid name="grid" n="4 4 3" position="@loader.position" drawHexahedra="0" />
+		<MechanicalObject name="dofs" scale3d="1 1 1" />
+		<UniformMass totalMass="1.0" />
+		<HexahedronFEMForceField name="FEM" youngModulus="100.0" poissonRatio="0.1" method="large" printLog="0" />
+		
+		<BoxROI name="ROI2" box="-6 -14 -2 -2 -7 1" drawBoxes="1" />
+		<FixedConstraint indices="@ROI2.indices" />
+		
+		<Node name="kidney_right_visu">
+			<OglModel name="Visual" fileMesh="./mesh/organs_kidney_right.obj" texturename="./mesh/Materials/Textures/Organs_diffC.jpg" />
+			<BarycentricMapping input="@.." output="@Visual" />
+		</Node>
+		
+		<Node name="kidney_right_collision">
+			<MeshObjLoader name="loader" filename="./mesh/organs_kidney_right_collision.obj"/>
+			<Mesh src="@loader" />
+            <MechanicalObject src="@loader" name="CollisModel" />
+            <Sphere radius="0.5"  selfCollision="0" />
+			<BarycentricMapping input="@.." output="@." />
+		</Node>
+		<UncoupledConstraintCorrection />
+	</Node>
+
+	<Node name="liver_stl">
+		<MeshSTLLoader filename="./mesh/organs_liver.stl" name="loader"/>
+		<OglModel src="@loader" color="blue" />
+	</Node>
+	
+	
+	<Node name="torso_skeleton">
+		<MeshObjLoader filename="./mesh/torso_skeleton.obj" name="loader" flipNormals="false" translation="0 -137 6.5" scale3d="1.1 1.1 1.1"/>
+		<OglModel src="@loader" color="0.7 0.7 0.7 0.3" />
+	</Node>
 
 </Node>
