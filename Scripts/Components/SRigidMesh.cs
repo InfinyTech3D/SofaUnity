@@ -18,6 +18,9 @@ namespace SofaUnity
         /////       Object creation API        /////
         ////////////////////////////////////////////
 
+        /// Bool to store the last MeshFilter status. Allow to know if mesh is renderer or not.
+        protected bool m_previousMRDisplay = true;
+
         /// Method called by @sa loadContext() method. To create the object when Sofa context has been found.
         protected override void createObject()
         {
@@ -50,7 +53,8 @@ namespace SofaUnity
             MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();
             if (mr == null)
                 mr = gameObject.AddComponent<MeshRenderer>();
-
+            mr.enabled = false;
+            m_previousMRDisplay = false;
         }
 
 
