@@ -13,8 +13,6 @@
 
 	<EulerImplicit name="cg_odesolver" printLog="false"  rayleighStiffness="0.01" rayleighMass="0.1" />
 	<CGLinearSolver iterations="12" name="linear solver" tolerance="1.0e-4" threshold="1.0e-4" />
-	
-	<CarvingManager active="true" carvingDistance="-0.09"/>
 		
 	<!--texturename="./mesh/Materials/Textures/Organs_diffC.jpg" -->
     <Node name="lung_left">
@@ -228,7 +226,7 @@
 
         <DiagonalMass massDensity="1.0" />
         <FastTetrahedralCorotationalForceField name="FEM" youngModulus="3000" poissonRatio="0.3" method="large" />	
-		<UncoupledConstraintCorrection />		
+		<UncoupledConstraintCorrection defaultCompliance="0.001"/>		
         <Node name="surface-old">
             <TriangleSetTopologyContainer  name="Container" fileTopology="" tags=" " />
 			<TriangleSetTopologyModifier   name="Modifier" />
@@ -320,10 +318,5 @@
 		<OglModel src="@loader" color="0.7 0.7 0.7 0.3" />
 	</Node>
 
-	<Node name="carvingElement">
-		<MechanicalObject name="Particles" template="Vec3d" position="0 0 30" velocity="0 0 -1"/>
-		<UniformMass name="Mass" totalMass="1.0" />
-		<SphereModel radius="1.0" tags="CarvingTool"/>
-		<UncoupledConstraintCorrection />
-	</Node>
+
 </Node>
