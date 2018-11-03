@@ -1,9 +1,9 @@
 fileFormatVersion: 2
-guid: 086c8e93b61b8d34a855ac51d83e68d3
+guid: ce3a88df6e230bc48b288e4ba68c738e
 timeCreated: 1534874313
 licenseType: Free
 ModelImporter:
-  serializedVersion: 21
+  serializedVersion: 22
   fileIDToRecycleName:
     100000: Background
     100002: Background reflect
@@ -132,10 +132,17 @@ ModelImporter:
     7400164: Karl storz endoscope (2)|Tomograph Control Panel|Take 001|BaseLayer
     7400166: Karl storz endoscope (2)|Tomograph|Take 001|BaseLayer
     9500000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal
+    second: {fileID: 2100000, guid: 674420b92d61e024aafa66e60c5ab5d3, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -148,6 +155,7 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -172,6 +180,8 @@ ModelImporter:
     optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88

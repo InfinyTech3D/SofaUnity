@@ -1,9 +1,9 @@
 fileFormatVersion: 2
-guid: 3adb8649ac0234640b3908ce3e599c00
+guid: f71734e76d8ce054d9a6615d066eff5c
 timeCreated: 1534874314
 licenseType: Free
 ModelImporter:
-  serializedVersion: 21
+  serializedVersion: 22
   fileIDToRecycleName:
     100000: Background
     100002: Background reflect
@@ -77,10 +77,47 @@ ModelImporter:
     7400042: Siemens Arcadis Varic 1|VRayLight003.Target|Take 001|BaseLayer
     7400044: Siemens Arcadis Varic 1|VRayLight004|Take 001|BaseLayer
     9500000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Black
+    second: {fileID: 2100000, guid: b66105e6d2327fa4d86c9047baf55a38, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Dark Metal
+    second: {fileID: 2100000, guid: 3c865e0716ebb1545b0f0b30a341c502, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal Blue
+    second: {fileID: 2100000, guid: b9438f909f968af4b835d87cc24fd12d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Plastic Dark
+    second: {fileID: 2100000, guid: 78287fe36805d8e438fb4f6d4c797b43, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Plastic White
+    second: {fileID: 2100000, guid: 035872fa79636bd46aa5514696253a58, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rubber
+    second: {fileID: 2100000, guid: 79330da3eef27704da2262f53074dd76, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Steel_Stainlessl_Shiny
+    second: {fileID: 2100000, guid: c168f986978db9e4ab0f7a265e2b0c06, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -93,6 +130,7 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -117,6 +155,8 @@ ModelImporter:
     optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
