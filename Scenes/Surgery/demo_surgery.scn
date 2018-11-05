@@ -7,12 +7,14 @@
     <MinProximityIntersection name="Proximity" alarmDistance="0.5" contactDistance="0.2" />
     <CollisionResponse name="Response" response="default" />
     <CollisionGroup name="Group" />
-	
+	<CarvingManager active="true" carvingDistance="-0.09"/>
+
     <FreeMotionAnimationLoop/>
 	<GenericConstraintSolver maxIt="1000" tolerance="0.0001" printLog="false" />
 
 	<EulerImplicit name="cg_odesolver" printLog="false"  rayleighStiffness="0.01" rayleighMass="0.1" />
 	<CGLinearSolver iterations="12" name="linear solver" tolerance="1.0e-4" threshold="1.0e-4" />
+	
 		
 	<!--texturename="./mesh/Materials/Textures/Organs_diffC.jpg" -->
     <Node name="lung_left">
@@ -318,5 +320,10 @@
 		<OglModel src="@loader" color="0.7 0.7 0.7 0.3" />
 	</Node>
 
-
+	<Node name="carvingElement">
+		<MechanicalObject name="Particles" template="Vec3d" position="0 0 30" velocity="0 0 -1"/>
+		<UniformMass name="Mass" totalMass="1.0" />
+		<SphereModel radius="1.0" tags="CarvingTool"/>
+		<UncoupledConstraintCorrection />
+	</Node>
 </Node>

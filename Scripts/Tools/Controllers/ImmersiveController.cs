@@ -14,6 +14,13 @@ public class ImmersiveController : MonoBehaviour {
     public GameObject m_controllerA = null;
     public GameObject m_controllerB = null;
 
+    public Material wire = null;
+    public Material organs = null;
+    public Material heart = null;
+    public Material bone = null;
+    public Material bone_trans = null;
+    public Material col = null;
+
     private bool isActivated = false;
     private Vector3 restControllerA;
     private Vector3 restControllerB;
@@ -86,8 +93,22 @@ public class ImmersiveController : MonoBehaviour {
 
             if (isActivated)
                 updateTransform();
+
+            if (Input.GetKey(KeyCode.N))
+                showMechanicalModels();
+            if (Input.GetKey(KeyCode.X))
+                restoreNormalView();
         }
         
+    }
+
+    void OnPreRender()
+    {
+        GL.wireframe = true;
+    }
+    void OnPostRender()
+    {
+        GL.wireframe = false;
     }
 
     public void activeInteraction()
@@ -140,6 +161,77 @@ public class ImmersiveController : MonoBehaviour {
             restControllerA = m_controllerA.transform.position;
         if (normB > 0.1)
             restControllerB = m_controllerB.transform.position;
+    }
+
+    public void showMechanicalModels()
+    {
+        foreach (Transform child in SofaObject.transform)
+        {
+            if (child.name.Contains("skeleton"))
+            {
+                MeshRenderer mr = child.GetComponent<MeshRenderer>();
+                if (mr != null)
+                {
+                    mr.material = bone_trans;
+                }
+                continue;
+            }
+            
+            // Hack: assume only 2 level of hierarchy for the moment
+            foreach (Transform littleChild in child)
+            {
+                if (littleChild.name.Contains("collision"))
+                {
+                    MeshRenderer mr = littleChild.GetComponent<MeshRenderer>();
+                    if (mr != null)
+                        mr.enabled = true;
+                }
+                else if (littleChild.name.Contains("visu"))
+                {
+                    MeshRenderer mr = littleChild.GetComponent<MeshRenderer>();
+                    if (mr != null)
+                    {
+                        mr.material = wire;
+                    }
+                }
+            }
+        }
+    }
+
+    public void restoreNormalView()
+    {
+        foreach (Transform child in SofaObject.transform)
+        {
+            if (child.name.Contains("skeleton"))
+            {
+                MeshRenderer mr = child.GetComponent<MeshRenderer>();
+                if (mr != null)
+                    mr.material = bone;
+            }
+
+            // Hack: assume only 2 level of hierarchy for the moment
+            foreach (Transform littleChild in child)
+            {
+                if (littleChild.name.Contains("heart"))
+                {
+                    MeshRenderer mr = littleChild.GetComponent<MeshRenderer>();
+                    if (mr != null)
+                        mr.sharedMaterial = heart;
+                }
+                else if (littleChild.name.Contains("collision"))
+                {
+                    MeshRenderer mr = littleChild.GetComponent<MeshRenderer>();
+                    if (mr != null)
+                        mr.enabled = false;
+                }
+                else if (littleChild.name.Contains("visu"))
+                {
+                    MeshRenderer mr = littleChild.GetComponent<MeshRenderer>();
+                    if (mr != null)
+                        mr.enabled = organs;
+                }
+            }
+        }
     }
 
 
