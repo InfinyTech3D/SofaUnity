@@ -131,7 +131,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1872655713531824}
   m_LocalRotation: {x: 0.09198245, y: 0.77940637, z: -0.11783171, w: 0.60842484}
-  m_LocalPosition: {x: -1.5, y: 1.85, z: -0.34}
+  m_LocalPosition: {x: -1.507, y: 1.856, z: -0.286}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
   - {fileID: 4135820842387408}
@@ -362,8 +362,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_mainScene: {fileID: 0}
   m_immScene: {fileID: 0}
-  m_controllerA: {fileID: 0}
-  m_controllerB: {fileID: 0}
+  m_controllerA: {fileID: 1686250877869286}
+  m_controllerB: {fileID: 1476336454902944}
+  wire: {fileID: 2100000, guid: 23dc5e599edd89c4aa5030e9764a4a87, type: 2}
+  organs: {fileID: 2100000, guid: a88bcd3a340310546ad1a6b47099024a, type: 2}
+  heart: {fileID: 2100000, guid: 750447a7c3cf5724996312be702e2e33, type: 2}
+  bone: {fileID: 2100000, guid: a2f69b961a1fdb646becb02c0be25551, type: 2}
+  bone_trans: {fileID: 2100000, guid: 9135cf85c6b08c249b70f6aa36c503d7, type: 2}
+  col: {fileID: 2100000, guid: b27d062b78717924abde0a2597cb1938, type: 2}
 --- !u!124 &124760643101975930
 Behaviour:
   m_ObjectHideFlags: 1
