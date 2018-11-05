@@ -110,7 +110,7 @@ public class ImmersiveController : MonoBehaviour {
         float normA = diffPA.magnitude;
         float normB = diffPB.magnitude;
 
-        if (normA < 0.1 && normB < 0.1)
+        if (normA < 0.01 && normB < 0.01)
             return;
 
         Debug.Log("normA: " + normA);
@@ -122,23 +122,27 @@ public class ImmersiveController : MonoBehaviour {
         float newNormAB = newAB.magnitude;
 
         // translate center
-        if (normA > 0.1)
+        if (normA > 0.01)
             SofaObject.transform.position += diffPA;
 
         // scale
         float ratio = 1.0f;
-        if (oldNormAB > 0.01f)
+        if (oldNormAB > 0.1f)
             ratio = newNormAB / oldNormAB;
-        //SofaObject.transform.localScale = SofaObject.transform.localScale * ratio;
+        SofaObject.transform.localScale = SofaObject.transform.localScale * ratio;
 
         // rotation
         Quaternion rot = Quaternion.FromToRotation(oldAB, newAB);
+        
+        Debug.Log("SofaObject.transform.localEulerAngles: " + SofaObject.transform.localEulerAngles);
+        Debug.Log("rot.eulerAngles: " + rot.eulerAngles);
         SofaObject.transform.localEulerAngles = SofaObject.transform.localEulerAngles + rot.eulerAngles;
+        Debug.Log("SofaObject.transform.localEulerAngles apres: " + SofaObject.transform.localEulerAngles);
 
         // update rest positions
-        if (normA > 0.1)
+        if (normA > 0.01)
             restControllerA = m_controllerA.transform.position;
-        if (normB > 0.1)
+        if (normB > 0.01)
             restControllerB = m_controllerB.transform.position;
     }
 
