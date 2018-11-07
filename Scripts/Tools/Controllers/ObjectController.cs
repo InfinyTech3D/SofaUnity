@@ -25,29 +25,27 @@ public class ObjectController : MonoBehaviour
     void FixedUpdate()
     {
         if (Input.GetKey(KeyCode.J))
-            m_mesh.rotation = new Vector3(m_mesh.rotation.x, m_mesh.rotation.y, m_mesh.rotation.z + 0.1f);
+            transform.position = transform.position - transform.right * 0.001f;
         else if (Input.GetKey(KeyCode.L))
-            m_mesh.rotation = new Vector3(m_mesh.rotation.x, m_mesh.rotation.y, m_mesh.rotation.z - 0.1f);
-        else if (Input.GetKey(KeyCode.U))
-            m_mesh.rotation = new Vector3(m_mesh.rotation.x - 0.1f, m_mesh.rotation.y, m_mesh.rotation.z);
-        else if (Input.GetKey(KeyCode.O))
-            m_mesh.rotation = new Vector3(m_mesh.rotation.x + 0.1f, m_mesh.rotation.y, m_mesh.rotation.z);
+            transform.position = transform.position + transform.right * 0.001f;
+       
         else if (Input.GetKey(KeyCode.K))
         {
-            double angle = Math.PI * 0.77f;
-            Vector3 trans = m_mesh.translation;
-            trans.y += (float)Math.Sin(angle) * 0.05f;
-            trans.z += (float)Math.Cos(angle) * 0.05f;
-            m_mesh.translation = trans;
+            transform.position = transform.position - transform.forward * 0.001f;
         }
         else if (Input.GetKey(KeyCode.I))
         {
-            double angle = Math.PI * 0.77f;
-            Vector3 trans = m_mesh.translation;
-            trans.y -= (float)Math.Sin(angle) * 0.05f;
-            trans.z -= (float)Math.Cos(angle) * 0.05f;
-            m_mesh.translation = trans;
+            transform.position = transform.position + transform.forward * 0.001f;
         }
+
+        if (Input.GetKey(KeyCode.A))
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + 0.5f, transform.eulerAngles.z);
+        else if (Input.GetKey(KeyCode.D))
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y - 0.5f, transform.eulerAngles.z);
+        else if (Input.GetKey(KeyCode.W))
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x + 0.5f, transform.eulerAngles.y, transform.eulerAngles.z);
+        else if (Input.GetKey(KeyCode.S))
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x - 0.5f, transform.eulerAngles.y, transform.eulerAngles.z);
 
     }
     
