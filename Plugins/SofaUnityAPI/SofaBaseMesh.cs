@@ -555,6 +555,9 @@ public class SofaBaseMesh : SofaBaseObject
 
         if (res < 0)
         {
+           // computeStereographicsUV(mesh);
+           // return;
+
             this.computeBoundingBox(mesh);
             Vector3[] normals = mesh.normals;
 
@@ -589,6 +592,9 @@ public class SofaBaseMesh : SofaBaseObject
             {
                 id0 = 0; id1 = 2; id3 = 1;
             }
+            id0 = 0;
+            id1 = 1;
+            id3 = 2;
 
             float range0 = 1 / (m_max[id0] - m_min[id0]);
             float range1 = 1 / (m_max[id1] - m_min[id1]);
@@ -617,7 +623,20 @@ public class SofaBaseMesh : SofaBaseObject
         mesh.uv = uv;
     }
 
+    public void setNewPosition(Vector3 value)
+    {
+        if (m_native == IntPtr.Zero)
+            return;
 
+        float[] val = new float[3];
+        val[0] = value[0];
+        val[1] = value[1];
+        val[2] = value[2];
+        int resUpdate = sofaPhysics3DObject_setVertices(m_simu, m_name, val);
+        if (resUpdate < 0)
+            Debug.LogError("SofaCustomMesh updateMesh: " + m_name + " return error: " + resUpdate);
+
+    }
 
     /////////////////////////////////////////////////////////////////////////////////////////
     ///////////            API to Communication with mesh geometry           ////////////////
@@ -679,5 +698,8 @@ public class SofaBaseMesh : SofaBaseObject
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_setTopologyChanged(IntPtr obj, string name, bool value);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_setVertices(IntPtr obj, string name, float[] arr);
 
 }

@@ -321,9 +321,17 @@
 	</Node>
 
 	<Node name="carvingElement">
-		<MechanicalObject name="Particles" template="Vec3d" position="0 0 30" velocity="0 0 -1"/>
+		<MechanicalObject name="Particles" template="Vec3d" position="0 0 30"/>
 		<UniformMass name="Mass" totalMass="1.0" />
 		<SphereModel radius="1.0" tags="CarvingTool"/>
 		<UncoupledConstraintCorrection />
 	</Node>
+	
+	<Node name="collisionElement">
+		<MechanicalObject name="Particles" template="Vec3d" position="0 0 30"/>
+		<UniformMass name="Mass" totalMass="1.0" />
+		<SphereModel radius="1.0"/>
+		<UncoupledConstraintCorrection />
+	</Node>
+
 </Node>

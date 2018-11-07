@@ -91,13 +91,19 @@ public class ImmersiveController : MonoBehaviour {
             if (Input.GetKey(KeyCode.B))
                 activeInteraction();
 
-            if (isActivated)
-                updateTransform();
+            
 
             if (Input.GetKey(KeyCode.N))
                 showMechanicalModels();
             if (Input.GetKey(KeyCode.X))
                 restoreNormalView();
+
+            if (!first)
+                return;
+
+            SofaObject.transform.localScale = SofaObject.transform.localScale * 4.0f;
+            SofaObject.transform.localEulerAngles = new Vector3(180, 90, 180);
+            first = false;
         }
         
     }
@@ -121,10 +127,12 @@ public class ImmersiveController : MonoBehaviour {
             restControllerB = m_controllerB.transform.position;
         }
     }
-
+    bool first = true;
 
     private void updateTransform()
     {
+        
+
         Vector3 diffPA = m_controllerA.transform.position - restControllerA;
         Vector3 diffPB = m_controllerB.transform.position - restControllerB;
 
@@ -150,7 +158,7 @@ public class ImmersiveController : MonoBehaviour {
         float ratio = 1.0f;
         if (oldNormAB > 0.1f)
             ratio = newNormAB / oldNormAB;
-        SofaObject.transform.localScale = SofaObject.transform.localScale * ratio;
+        SofaObject.transform.localScale = SofaObject.transform.localScale * ratio * 0.1f;
 
         // rotation
         Quaternion rot = Quaternion.FromToRotation(oldAB, newAB);
@@ -187,8 +195,8 @@ public class ImmersiveController : MonoBehaviour {
                 if (littleChild.name.Contains("collision"))
                 {
                     MeshRenderer mr = littleChild.GetComponent<MeshRenderer>();
-                    if (mr != null)
-                        mr.enabled = true;
+                    //if (mr != null)
+                    //    mr.enabled = true;
                 }
                 else if (littleChild.name.Contains("visu"))
                 {
