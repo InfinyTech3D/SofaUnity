@@ -1,24 +1,28 @@
 fileFormatVersion: 2
-guid: 7785a934e13ff7b489c96b1375ea1235
-timeCreated: 1538993701
+guid: 9c8ddffa3dd422540b41ecaef93cc6b5
+timeCreated: 1542810465
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: Object003
-    100002: Object004
-    100004: Object005
-    100006: Object006
-    100008: //RootNode
-    400000: Object003
-    400002: Object004
-    400004: Object005
-    400006: Object006
-    400008: //RootNode
-    2100000: Object003Mat
-    2100002: Object004Mat
-    2100004: Object005Mat
-    2100006: Object006Mat
+    100000: Camera
+    100002: Lamp
+    100004: Object003
+    100006: Object004
+    100008: Object005
+    100010: Object006
+    100012: //RootNode
+    400000: Camera
+    400002: Lamp
+    400004: Object003
+    400006: Object004
+    400008: Object005
+    400010: Object006
+    400012: //RootNode
+    2000000: Camera
+    2100000: white_plastic
+    2100002: Metal_brush
+    2100004: Metal
     2300000: Object003
     2300002: Object004
     2300004: Object005
@@ -28,9 +32,10 @@ ModelImporter:
     3300004: Object005
     3300006: Object006
     4300000: Object003
-    4300002: Object004
-    4300004: Object005
+    4300002: Object005
+    4300004: Object004
     4300006: Object006
+    10800000: Lamp
   externalObjects: {}
   materials:
     importMaterials: 1
