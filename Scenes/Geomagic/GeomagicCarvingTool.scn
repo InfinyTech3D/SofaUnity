@@ -92,19 +92,6 @@
                 <IdentityMapping input="@../" output="@Visual" />
             </Node>
         </Node>
-		
-		<Node name="T2">
-            <TriangleSetTopologyContainer  name="TriContainer2" fileTopology="" tags=" " />
-			<TriangleSetTopologyModifier   name="TriModifier2" />
-			<TriangleSetTopologyAlgorithms name="TriTopoAlgo2" template="Vec3d" />
-			<TriangleSetGeometryAlgorithms name="TriGeomAlgo2" template="Vec3d" />
-			<Tetra2TriangleTopologicalMapping input="@../TetraContainer" output="@TriContainer2" noInitialTriangles="1" flipNormals="1"/>
-            <TriangleSet tags="CarvingSurface" />
-            <Node name="Visu2">
-                <OglModel name="Visual" color="red" />
-                <IdentityMapping input="@../" output="@Visual" />
-            </Node>
-        </Node>
     </Node>
 
 	
