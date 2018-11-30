@@ -112,8 +112,7 @@ namespace SofaUnity
         /// Method called at GameObject init (after creation or when starting play).
         private void Start()
         {
-            if (m_log)
-                Debug.Log("UNITY_EDITOR - SBaseMesh::start - " + m_nameId);
+            sofaLog("UNITY_EDITOR - SBaseMesh::start - " + m_nameId);
 
             if (m_impl != null)
             {
@@ -124,8 +123,7 @@ namespace SofaUnity
                 Mesh meshCopy = new Mesh();
                 m_mesh = mf.mesh = meshCopy;                    //Assign the copy to the meshes
 
-                if (m_log)
-                    Debug.Log("SMesh::Start editor mode.");
+                sofaLog("SMesh::Start editor mode.");
 #else
                 //do this in play mode
                 m_mesh = GetComponent<MeshFilter>().mesh;
@@ -135,6 +133,8 @@ namespace SofaUnity
 
                 initMesh(true);
             }
+
+            sofaLog("SBaseMesh::Start " + this.name);
         }
 
 

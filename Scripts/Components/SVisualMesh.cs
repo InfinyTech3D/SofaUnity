@@ -32,7 +32,7 @@ namespace SofaUnity
             }
 
             if (m_impl == null)
-                Debug.LogError("SVisualMesh:: Object creation failed.");
+                sofaLog("SVisualMesh:: Object creation failed.", 2);
         }
 
 
@@ -82,8 +82,7 @@ namespace SofaUnity
         /// Method called by @sa Update() method.
         public override void updateImpl()
         {
-            if (m_log)
-                Debug.Log("SVisualMesh::updateImpl called.");
+            sofaLog("SVisualMesh::updateImpl called.");
 
             if (m_impl != null)
             {

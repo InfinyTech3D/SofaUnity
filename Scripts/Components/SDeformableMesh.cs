@@ -248,8 +248,7 @@ namespace SofaUnity
                 nbTetra = m_impl.getNbTetrahedra();
                 if (nbTetra > 0)
                 {
-                    if (m_log)
-                        Debug.Log("Tetra found! Number: " + nbTetra);
+                    sofaLog("Tetra found! Number: " + nbTetra);
                     m_tetra = new int[nbTetra * 4];
 
                     m_impl.getTetrahedra(m_tetra);
@@ -288,8 +287,7 @@ namespace SofaUnity
         /// Method called by @sa Update() method.
         public override void updateImpl()
         {
-            if (m_log)
-                Debug.Log("SDeformableMesh::updateImpl called.");
+            sofaLog("SDeformableMesh::updateImpl called.");
 
             MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();            
 
