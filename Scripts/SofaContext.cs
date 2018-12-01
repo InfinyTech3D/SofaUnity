@@ -29,18 +29,6 @@ namespace SofaUnity
         /// Parameter: String representing the Path to the Sofa scene.
         public string m_filename = "";
 
-        
-        /// Parameter: Int number of objects created in this context. Used to add count in object name created from Unity.
-        //int m_objectCpt = 0;
-
-        /// Parameter: Int number of object to be loaded from a Sofa scene.
-        //protected int m_nbrObject = 0;
-        /// Parameter: Internal counter to the number of object created from a Sofa scene.
-        //int cptCreated = 0;
-
-        /// Dictionary storing the hierarchy of Sofa objects. Key = parent name, value = List of children names.
-        protected Dictionary<string, List<string> > hierarchy;
-
         /// Booleen to update sofa simulation
         public bool IsSofaUpdating = true;
 
@@ -48,7 +36,7 @@ namespace SofaUnity
 
         List<SRayCaster> m_casters = null;
 
-        private SObjectHierarchy m_hierarchy = null;
+        private SObjectHierarchy m_hierarchyPtr = null;
 
 
         /// Getter of current Sofa Context API, @see m_impl
@@ -105,8 +93,15 @@ namespace SofaUnity
                 {
                     if (File.Exists(Application.dataPath+value))
                     {
+                        bool reload = false;
+                        if (m_filename != "")
+                            reload = true;
+
                         m_filename = value;
-                        if (m_impl != null)
+
+                        if (reload)
+                            reloadFilename();
+                        else
                             loadFilename();
                     }
                     else
@@ -157,20 +152,20 @@ namespace SofaUnity
         /// Getter/Setter of current objectcpt @see m_objectCpt
         public int objectcpt
         {
-            get { return m_hierarchy.m_objectCpt; }
-            set { m_hierarchy.m_objectCpt = value; }
+            get { return m_hierarchyPtr.m_objectCpt; }
+            set { m_hierarchyPtr.m_objectCpt = value; }
         }
 
         /// Getter to the number of object loaded from Sofa Scene.
         public int nbrObject
         {
-            get { return m_hierarchy.m_nbrObject; }
+            get { return m_hierarchyPtr.m_nbrObject; }
         }
 
         public void registerObject(SBaseObject obj)
         {
-            if (m_hierarchy != null)
-                m_hierarchy.registerSObject(obj);
+            if (m_hierarchyPtr != null)
+                m_hierarchyPtr.registerSObject(obj);
         }
 
         public void registerCaster(SRayCaster obj)
@@ -186,8 +181,17 @@ namespace SofaUnity
             // Call the init method to create the Sofa Context
             init();
 
-            if (m_hierarchy.m_objects == null)
-                m_hierarchy.m_objects = new List<SBaseObject>();
+            if (m_impl == null)
+            {
+                Debug.Log("disable");
+                this.enabled = false;
+                this.gameObject.SetActive(false);
+                return;
+            }
+
+            if (m_hierarchyPtr.m_objects == null)
+                m_hierarchyPtr.m_objects = new List<SBaseObject>();
+
         }
 
         // Use this for initialization
@@ -200,13 +204,10 @@ namespace SofaUnity
         /// Method called at GameObject destruction.
         void OnDestroy()
         {
-           // if(m_log)
-               // Debug.Log("SofaContext::OnDestroy stop called.");
-
-            //foreach (Transform child in transform)
-            //{
-            //    //GameObject.Destroy(child.gameObject);
-            //}
+            if (m_hierarchyPtr != null)
+            {
+                m_hierarchyPtr = null;
+            }
 
             if(m_log)
                 Debug.Log("SofaContext::OnDestroy stop called.");
@@ -246,7 +247,8 @@ namespace SofaUnity
             if (m_impl == null)
             {
                 m_impl = new SofaContextAPI();
-                m_hierarchy = new SObjectHierarchy(this);
+                if (m_hierarchyPtr == null)
+                    m_hierarchyPtr = new SObjectHierarchy(this);
                 loadPlugins();
 
                 m_impl.start();
@@ -280,11 +282,11 @@ namespace SofaUnity
                     m_impl.loadScene(Application.dataPath + m_filename);
 
                     // Set counter of object creation to 0
-                    m_hierarchy.cptCreated = 0;
-                    m_hierarchy.m_nbrObject = m_impl.getNumberObjects();
+                    m_hierarchyPtr.cptCreated = 0;
+                    m_hierarchyPtr.m_nbrObject = m_impl.getNumberObjects();
 
                     if (m_log)
-                        Debug.Log("init - m_nbrObject: " + m_hierarchy.m_nbrObject);
+                        Debug.Log("init - m_nbrObject: " + m_hierarchyPtr.m_nbrObject);
 
                     //m_timeStep = m_impl.timeStep;
                     //m_gravity = m_impl.getGravity();
@@ -336,10 +338,10 @@ namespace SofaUnity
 
                 m_impl.step();
 
-                if (m_hierarchy.m_objects != null)
+                if (m_hierarchyPtr.m_objects != null)
                 {
                     // Set all objects to dirty to force and update.
-                    foreach (SBaseObject child in m_hierarchy.m_objects)
+                    foreach (SBaseObject child in m_hierarchyPtr.m_objects)
                     {
                         child.setDirty();
                     }
@@ -362,10 +364,10 @@ namespace SofaUnity
                     
                     // physics simulation step completed and is not running
                     // perform data synchronization safely (no need of synchronization locks)                        
-                    if (m_hierarchy.m_objects != null)
+                    if (m_hierarchyPtr.m_objects != null)
                     {
                         // Set all objects to dirty to force and update.
-                        foreach (SBaseObject child in m_hierarchy.m_objects)
+                        foreach (SBaseObject child in m_hierarchyPtr.m_objects)
                         {
                             //child.setDirty();
                             child.updateImpl();
@@ -397,19 +399,58 @@ namespace SofaUnity
         }
 
 
+        protected void reloadFilename()
+        {
+            // stop simulation first
+            m_impl.stop();
+
+            // clear hierarchy
+            //m_hierarchyPtr.clearHierarchy();
+            List<GameObject> childToDestroy = new List<GameObject>();
+            foreach (Transform child in this.transform)
+            {
+                Debug.Log("Destroy: " + child.name);
+                SBaseObject obj = child.GetComponent<SBaseObject>();
+                if (obj != null)
+                {
+                    childToDestroy.Add(child.gameObject);
+                    Debug.Log("DestroyImmediate: " + child.name);
+                }
+            }
+
+            foreach (GameObject child in childToDestroy)
+                DestroyImmediate(child);
+
+
+            // destroy sofaContext
+            m_impl.Dispose();
+
+            // recreate hierarchy
+            m_hierarchyPtr = new SObjectHierarchy(this);
+
+            // recreate sofaContext
+            m_impl = new SofaContextAPI();
+            loadPlugins();
+            m_impl.start();
+            
+            // loadFilename
+            loadFilename();
+        }
+
+
         /// Method to load a filename and create GameObject per Sofa object found.
         protected void loadFilename()
         {
             m_impl.loadScene(Application.dataPath + m_filename);
-            m_hierarchy.m_nbrObject = m_impl.getNumberObjects();
+            m_hierarchyPtr.m_nbrObject = m_impl.getNumberObjects();
 
             if (m_log)
-                Debug.Log("## SofaContext ## loadFilename - getNumberObjects: " + m_hierarchy.m_nbrObject);
+                Debug.Log("## SofaContext ## loadFilename - getNumberObjects: " + m_hierarchyPtr.m_nbrObject);
 
             // Add 1 fictive object to be sure this method reach the end of the object creation loop
             // before calling recreateHiearchy(); As the creation is asynchronous. call countCreated() at the end to compensate that +1.
-            m_hierarchy.m_nbrObject += 1; 
-            for (int i = 0; i < m_hierarchy.m_nbrObject; ++i)
+            m_hierarchyPtr.m_nbrObject += 1; 
+            for (int i = 0; i < m_hierarchyPtr.m_nbrObject; ++i)
             {
                 string name = m_impl.getObjectName(i);
                 string type = m_impl.getObjectType(i);
@@ -448,10 +489,10 @@ namespace SofaUnity
         /// Count the number of object created, when all created, will move them to recreate Sofa hierarchy.
         public void countCreated()
         {
-            m_hierarchy.cptCreated++;
+            m_hierarchyPtr.cptCreated++;
             
-            if (m_hierarchy.cptCreated == m_hierarchy.m_nbrObject)
-                m_hierarchy.recreateHiearchy();
+            if (m_hierarchyPtr.cptCreated == m_hierarchyPtr.m_nbrObject)
+                m_hierarchyPtr.recreateHiearchy();
         }
 
         

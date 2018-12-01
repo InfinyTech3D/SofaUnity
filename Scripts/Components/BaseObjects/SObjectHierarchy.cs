@@ -39,6 +39,11 @@ namespace SofaUnity
             m_objects = new List<SBaseObject>();
         }
 
+        ~SObjectHierarchy()
+        {
+            Debug.Log("## SObjectHierarchy::IsPlaying: >> ~SObjectHierarchy()");
+        }
+
 
         public void registerSObject(SBaseObject obj)
         {
@@ -127,6 +132,11 @@ namespace SofaUnity
             }
         }
 
+
+        public void clearHierarchy()
+        {
+            
+        }
 
     }
 }
