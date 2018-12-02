@@ -112,7 +112,7 @@ namespace SofaUnity
         /// Method called at GameObject init (after creation or when starting play).
         private void Start()
         {
-            sofaLog("UNITY_EDITOR - SBaseMesh::start - " + m_nameId);
+            sofaLog("SBaseMesh::start - " + m_nameId);
 
             if (m_impl != null)
             {

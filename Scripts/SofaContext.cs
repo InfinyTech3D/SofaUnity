@@ -19,7 +19,7 @@ namespace SofaUnity
         SofaContextAPI m_impl;
 
         /// Parameter to activate logging of this Sofa GameObject
-        public bool m_log = true;
+        public bool m_log = false;
 
         /// Parameter: Vector representing the gravity force.
         public Vector3 m_gravity = new Vector3(0f, -9.8f, 0f);
@@ -31,8 +31,6 @@ namespace SofaUnity
 
         /// Booleen to update sofa simulation
         public bool IsSofaUpdating = true;
-
-        //List<SBaseObject> m_objects = null;
 
         List<SRayCaster> m_casters = null;
 
@@ -183,7 +181,6 @@ namespace SofaUnity
 
             if (m_impl == null)
             {
-                Debug.Log("disable");
                 this.enabled = false;
                 this.gameObject.SetActive(false);
                 return;
@@ -409,12 +406,10 @@ namespace SofaUnity
             List<GameObject> childToDestroy = new List<GameObject>();
             foreach (Transform child in this.transform)
             {
-                Debug.Log("Destroy: " + child.name);
                 SBaseObject obj = child.GetComponent<SBaseObject>();
                 if (obj != null)
                 {
                     childToDestroy.Add(child.gameObject);
-                    Debug.Log("DestroyImmediate: " + child.name);
                 }
             }
 

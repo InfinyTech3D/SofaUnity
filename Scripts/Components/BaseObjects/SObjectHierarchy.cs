@@ -28,8 +28,6 @@ namespace SofaUnity
         // default constructor of the SObjectHiearchy
         public SObjectHierarchy(SofaContext context)
         {
-            Debug.Log("## SObjectHierarchy::IsPlaying: " + Application.isPlaying + " >> SObjectHierarchy()");
-
             // set the sofa Context
             m_sofaContext = context;
             if (m_sofaContext == null)
@@ -39,10 +37,10 @@ namespace SofaUnity
             m_objects = new List<SBaseObject>();
         }
 
-        ~SObjectHierarchy()
-        {
-            Debug.Log("## SObjectHierarchy::IsPlaying: >> ~SObjectHierarchy()");
-        }
+        //~SObjectHierarchy()
+        //{
+        //    //Debug.Log("## SObjectHierarchy::IsPlaying: >> ~SObjectHierarchy()");
+        //}
 
 
         public void registerSObject(SBaseObject obj)

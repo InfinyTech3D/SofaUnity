@@ -18,7 +18,7 @@ namespace SofaUnity
         protected SofaContext m_context = null;
 
         /// Parameter to activate logging of this Sofa GameObject
-        protected bool m_log = false;
+        public bool m_log = false;
 
         protected bool directChild = true;
 
@@ -54,21 +54,21 @@ namespace SofaUnity
             if (priority == 0)
             {
                 if (forceLog || m_log)
-                    Debug.Log("## " + Time.fixedTime + " " + mode + "::" + this.name + " >> " + msg);
+                    Debug.Log("## " + Time.fixedTime + " " + mode + "## " + this.name + " >> " + msg);
             }
             else if (priority == 1)
-                Debug.LogWarning("## " + Time.fixedTime + " " + mode + "::" + this.name + " >> " + msg);
+                Debug.LogWarning("## " + Time.fixedTime + " " + mode + "## " + this.name + " >> " + msg);
             else if (priority == 2)
-                Debug.LogError("## " + Time.fixedTime + " " + mode + "::" + this.name + " >> " + msg);
+                Debug.LogError("## " + Time.fixedTime + " " + mode + "## " + this.name + " >> " + msg);
         }
 
 
-        
         ////////////////////////////////////////////
         /////       Object creation API        /////
         ////////////////////////////////////////////
 
         /// Method called at GameObject creation. Will search for SofaContext @sa loadContext() which call @sa createObject() . Then call @see awakePostProcess()
+
         void Awake()
         {
             sofaLog("Awake - " + m_nameId);
