@@ -150,14 +150,27 @@ namespace SofaUnity
         /// Getter/Setter of current objectcpt @see m_objectCpt
         public int objectcpt
         {
-            get { return m_hierarchyPtr.m_objectCpt; }
-            set { m_hierarchyPtr.m_objectCpt = value; }
+            get {
+                if (m_hierarchyPtr == null)
+                    initHierarchy();
+
+                return m_hierarchyPtr.m_objectCpt;
+            }
+            set {
+                if (m_hierarchyPtr == null)
+                    initHierarchy();
+                m_hierarchyPtr.m_objectCpt = value;
+            }
         }
 
         /// Getter to the number of object loaded from Sofa Scene.
         public int nbrObject
         {
-            get { return m_hierarchyPtr.m_nbrObject; }
+            get {
+                if (m_hierarchyPtr == null)
+                    initHierarchy();
+                return m_hierarchyPtr.m_nbrObject;
+            }
         }
 
         public void registerObject(SBaseObject obj)
@@ -176,6 +189,7 @@ namespace SofaUnity
         /// Method called at GameObject creation.
         void Awake()
         {
+            Debug.Log("SofaContext::Awake");
             // Call the init method to create the Sofa Context
             init();
 
@@ -185,10 +199,6 @@ namespace SofaUnity
                 this.gameObject.SetActive(false);
                 return;
             }
-
-            if (m_hierarchyPtr.m_objects == null)
-                m_hierarchyPtr.m_objects = new List<SBaseObject>();
-
         }
 
         // Use this for initialization
@@ -201,11 +211,6 @@ namespace SofaUnity
         /// Method called at GameObject destruction.
         void OnDestroy()
         {
-            if (m_hierarchyPtr != null)
-            {
-                m_hierarchyPtr = null;
-            }
-
             if(m_log)
                 Debug.Log("SofaContext::OnDestroy stop called.");
             if (m_impl != null)
@@ -235,6 +240,15 @@ namespace SofaUnity
             //m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaSparseSolver.dll");
         }
 
+        public void initHierarchy()
+        {
+            if (m_hierarchyPtr == null)
+                m_hierarchyPtr = new SObjectHierarchy(this);
+
+            if (m_hierarchyPtr.m_objects == null)
+                m_hierarchyPtr.m_objects = new List<SBaseObject>();
+        }
+
         /// Internal Method to init the SofaContext object
         void init()
         {
@@ -244,8 +258,10 @@ namespace SofaUnity
             if (m_impl == null)
             {
                 m_impl = new SofaContextAPI();
+
                 if (m_hierarchyPtr == null)
-                    m_hierarchyPtr = new SObjectHierarchy(this);
+                    initHierarchy();
+
                 loadPlugins();
 
                 m_impl.start();
