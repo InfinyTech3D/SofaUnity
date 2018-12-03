@@ -17,6 +17,15 @@ public class SRayCaster : RayCaster
 
     public bool automaticCast = false;
 
+    public void stopRay()
+    {
+        if (m_sofaRC != null)
+        {
+            m_sofaRC.activateTool(false);
+            m_sofaRC.Dispose();
+            m_sofaRC = null;
+        }
+    }
 
     /// Method called at GameObject creation. Will search for SofaContext @sa loadContext() which call @sa createObject() . Then call @see awakePostProcess()
     void Awake()

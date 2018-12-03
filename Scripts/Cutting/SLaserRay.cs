@@ -110,6 +110,15 @@ public class SLaserRay : SRayCaster
         }
     }
 
+    private void OnDestroy()
+    {
+        if (m_sofaRC != null)
+        {
+            m_sofaRC.Dispose();
+            m_sofaRC = null;
+        }
+    }
+
     // Use this for initialization
     void Start()
     {

@@ -47,18 +47,10 @@ public class SofaRayCaster : IDisposable
     /// Memory free method
     public void Dispose()
     {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
+        activateTool(false);
 
-    /// Memory free method
-    protected virtual void Dispose(bool disposing)
-    {
-        if (!m_isDisposed)
-        {
-            m_isDisposed = true;
-        }
-    }
+        m_isDisposed = true;
+    }   
 
     /// Method to activate or not the tool attached to the ray caster
     public int activateTool(bool value)

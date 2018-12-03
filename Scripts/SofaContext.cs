@@ -221,6 +221,18 @@ namespace SofaUnity
             }
         }
 
+        private void OnApplicationQuit()
+        {
+            if (m_casters != null)
+            {
+                foreach (SRayCaster child in m_casters)
+                {
+                    if (child != null)
+                        child.stopRay();
+                }
+            }
+        }
+
 
         void loadPlugins()
         {           
