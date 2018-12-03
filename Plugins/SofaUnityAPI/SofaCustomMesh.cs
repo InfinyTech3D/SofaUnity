@@ -25,31 +25,34 @@ public class SofaCustomMesh : SofaBaseObject
         {
             // Create a Node in Sofa simulation tree and add a mechanicalObject into it
             int res = sofaPhysicsAPI_addMechanicalObject(m_simu, m_name);
-
             m_name += "_node";
-            if (res == 1) 
-            {
-                // Set created object to native pointer
-                int[] res1 = new int[1];
-                m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name, res1);
 
-                if (res1[0] != 0)
-                {
-                    Debug.LogError("SofaCustomMesh::createObject get3DObject method returns: " + SofaDefines.msg_error[res1[0]]);
-                    return false;
-                }
-            }
-
-            if (m_native == IntPtr.Zero)
+            if (res != 0)
             {
-                Debug.LogError("Error SofaCustomMesh created can't be found!");
+                Debug.LogError("SofaCustomMesh::createObject cube creation method return error: " + SofaDefines.msg_error[res] + " for object " + m_name);
                 return false;
             }
 
+            if (displayLog)
+                Debug.Log("SofaCustomMesh Added! " + m_name);
+
+            // Set created object to native pointer
+            int[] res1 = new int[1];
+            res1[0] = -101;
+
+            m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name, res1);
+            if (res1[0] != 0 || m_native == IntPtr.Zero)
+            {
+                Debug.LogError("SofaCustomMesh::createObject get3DObject method returns: " + SofaDefines.msg_error[res1[0]]);
+                res1 = null;
+                return false;
+            }
+
+            res1 = null;
             return true;
         }
 
-        return false;
+        return false;        
     }
 
    

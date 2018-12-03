@@ -121,10 +121,10 @@ public class SSphereCollisionModel : MonoBehaviour
         if (_simu != IntPtr.Zero) // Create the API object for Sofa Regular Grid Mesh
             m_impl = new SofaCustomMesh(_simu, this.name);            
 
-        if (m_impl == null)
+        if (m_impl == null || !m_impl.m_isCreated)
         {
-            Debug.LogError("SofaCustomMesh:: Object creation failed.");
-            return;
+            Debug.LogError("SofaCustomMesh:: Object creation failed: " + this.name);
+            this.enabled = false;
         }
     }
 
