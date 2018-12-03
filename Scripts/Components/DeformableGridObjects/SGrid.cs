@@ -35,10 +35,7 @@ namespace SofaUnity
                     mr.sharedMaterial = Resources.Load("Materials/BoxSofa") as Material;
                 else
                     mr.sharedMaterial = new Material(Shader.Find("Diffuse"));
-            }
-
-            mr.enabled = true;
-            m_previousMRDisplay = true;
+            }            
         }
 
 
