@@ -18,8 +18,11 @@ namespace SofaUnity
             if (_simu != IntPtr.Zero) // Create the API object for Sofa Regular Grid Mesh in 2D
                 m_impl = new SofaPlane(_simu, m_nameId, true);
 
-            if (m_impl == null)
-                Debug.LogError("SRigidPlane:: Object creation failed.");
+            if (m_impl == null || !m_impl.m_isCreated)
+            {
+                Debug.LogError("SRigidPlane:: Object creation failed: " + m_nameId);
+                this.enabled = false;
+            }
         }
 
 

@@ -18,8 +18,11 @@ namespace SofaUnity
             if (_simu != IntPtr.Zero) // Create the API object for Sofa Cylinder Grid Mesh
                 m_impl = new SofaCylinder(_simu, m_nameId, false);
 
-            if (m_impl == null)
-                Debug.LogError("SCylinder:: Object creation failed.");
+            if (m_impl == null || !m_impl.m_isCreated)
+            {
+                Debug.LogError("SCylinder:: Object creation failed: " + m_nameId);
+                this.enabled = false;
+            }
         }
 
         // Update is called once per frame
