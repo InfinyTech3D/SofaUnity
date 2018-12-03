@@ -53,31 +53,31 @@ public class SDeformableMeshEditor : Editor
         // Add FEM fields
         if (mesh.m_mass != float.MinValue)
         {
-            mesh.mass = EditorGUILayout.Slider("Mass", mesh.m_mass, 0, 1000);
+            mesh.mass = EditorGUILayout.Slider("Mass", mesh.m_mass, 0.0001f, 1000);
             EditorGUILayout.Separator();
         }
 
         if (mesh.m_young != float.MinValue)
         {
-            mesh.young = EditorGUILayout.Slider("Young Modulus", mesh.m_young, 0, 10000);
+            mesh.young = EditorGUILayout.Slider("Young Modulus", mesh.m_young, 0.0001f, 10000);
             EditorGUILayout.Separator();
         }
 
         if (mesh.m_poisson != float.MinValue)
         {
-            mesh.poisson = EditorGUILayout.Slider("Poisson Ratio", mesh.m_poisson, 0, 0.49f);
+            mesh.poisson = EditorGUILayout.Slider("Poisson Ratio", mesh.m_poisson, 0.0001f, 0.49f);
             EditorGUILayout.Separator();
         }
 
         if (mesh.m_stiffness != float.MinValue)
         {
-            mesh.stiffness = EditorGUILayout.Slider("Stiffness", mesh.m_stiffness, 0, 10000);
+            mesh.stiffness = EditorGUILayout.Slider("Stiffness", mesh.m_stiffness, 0.0001f, 10000);
             EditorGUILayout.Separator();
         }
 
         if (mesh.m_damping != float.MinValue)
         {
-            mesh.damping = EditorGUILayout.Slider("Damping", mesh.m_damping, 0, 100);
+            mesh.damping = EditorGUILayout.Slider("Damping", mesh.m_damping, 0.0001f, 100);
             EditorGUILayout.Separator();
         }
 
