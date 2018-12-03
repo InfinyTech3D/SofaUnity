@@ -19,7 +19,7 @@ public class SofaCustomMesh : SofaBaseObject
     }
 
     /// Implicit method to really create object and link to Sofa object. Called by SofaBaseObject constructor
-    protected override void createObject()
+    protected override bool createObject()
     {
         if (m_native == IntPtr.Zero) // first time create object only
         {
@@ -34,12 +34,22 @@ public class SofaCustomMesh : SofaBaseObject
                 m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name, res1);
 
                 if (res1[0] != 0)
+                {
                     Debug.LogError("SofaCustomMesh::createObject get3DObject method returns: " + SofaDefines.msg_error[res1[0]]);
+                    return false;
+                }
             }
 
             if (m_native == IntPtr.Zero)
+            {
                 Debug.LogError("Error SofaCustomMesh created can't be found!");
+                return false;
+            }
+
+            return true;
         }
+
+        return false;
     }
 
    
