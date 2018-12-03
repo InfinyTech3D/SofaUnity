@@ -22,6 +22,9 @@ public class SLaserRay : SRayCaster
     /// Booleen to draw the effective ray sent to Sofa ray caster
     public bool drawRay = false;
 
+    public float m_stiffness = 10000f;
+    protected float oldStiffness = 10000f;
+
     /// Enum that set the type of interaction to plug to this tool on sofa side
     public enum LaserType
     {
@@ -143,7 +146,18 @@ public class SLaserRay : SRayCaster
             int triId = -1;
             // get the id of the selected triangle. If < 0, no intersection
             if (m_isActivated)
+            {
                 triId = m_sofaRC.castRay(origin, direction, m_sofaContext.getScaleUnityToSofa());
+
+                if (m_laserType == LaserType.AttachTool)
+                {
+                    if (oldStiffness != m_stiffness)
+                    {
+                        oldStiffness = m_stiffness;
+                        m_sofaRC.setToolAttribute("stiffness", m_stiffness);
+                    }
+                }
+            }                
         }
 
         // Update the laser drawing

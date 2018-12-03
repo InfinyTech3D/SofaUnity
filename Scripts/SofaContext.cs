@@ -189,7 +189,6 @@ namespace SofaUnity
         /// Method called at GameObject creation.
         void Awake()
         {
-            Debug.Log("SofaContext::Awake");
             // Call the init method to create the Sofa Context
             init();
 
