@@ -1,0 +1,49 @@
+<Node name="root" dt="0.03333">
+    <CollisionPipeline verbose="0" depth="10" draw="0" />
+    <BruteForceDetection name="N2" />
+    <MinProximityIntersection name="Proximity" alarmDistance="0.1" contactDistance="0.05" />
+    <CollisionResponse name="Response" response="default" />
+    <CollisionGroup name="Group" />
+    <Node name="Cylinder">
+        <EulerImplicit name="cg_odesolver" printLog="false" />
+        <CGLinearSolver iterations="25" name="linear solver" tolerance="1.0e-9" threshold="1.0e-9" />
+		<MeshGmshLoader name="loader" filename="./mesh/cylinder.msh" />
+        <MechanicalObject src="@loader" name="Volume"/>
+		
+		<TetrahedronSetTopologyContainer  name="Container" position="@Volume.position" src="@loader" tags=" "/>
+		<TetrahedronSetTopologyModifier   name="Modifier" />
+		<TetrahedronSetTopologyAlgorithms name="TopoAlgo"  template="Vec3d" />
+		<TetrahedronSetGeometryAlgorithms name="GeomAlgo"  template="Vec3d" />
+		
+		<DiagonalMass massDensity="1.0" />
+		<TetrahedralCorotationalFEMForceField name="FEM" youngModulus="1300" poissonRatio="0.3" method="large" />		
+        <Node name="T">
+            <TriangleSetTopologyContainer  name="Container" fileTopology="" tags=" " />
+			<TriangleSetTopologyModifier   name="Modifier" />
+			<TriangleSetTopologyAlgorithms name="TopoAlgo"   template="Vec3d" />
+			<TriangleSetGeometryAlgorithms name="GeomAlgo"   template="Vec3d" />
+			
+            <Tetra2TriangleTopologicalMapping input="@../Container" output="@Container" />
+			<TriangularBendingSprings name="FEM-Bend" stiffness="600" damping="1.0" />
+			<TriangleSet />
+            
+            <Node name="Cylinder-Visu">
+                <OglModel name="Visual" color="blue" />
+                <IdentityMapping input="@../../Volume" output="@Visual" />
+            </Node>
+        </Node>
+		
+    </Node>    
+    <Node name="Cube">
+        <MeshObjLoader name="loader" filename="mesh/cube.obj" />
+        <Mesh src="@loader" />
+        <MechanicalObject name="Floor" src="@loader" translation="0 -5 0"/>
+        <Triangle name="Floor" simulated="0" moving="0" />
+        <Line name="Floor" simulated="0" moving="0" />
+        <Point name="Floor" simulated="0" moving="0" />
+        <Node name="Cube-Visu">
+                <OglModel name="Visual" color="red" />
+                <IdentityMapping input="@../Floor" output="@Visual" />
+            </Node>
+    </Node>
+</Node>
