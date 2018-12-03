@@ -44,6 +44,8 @@ namespace SofaUnity
             return "No impl";
         }
 
+        protected static int cptLifeCycle = 0;
+
         // priority 0 = debug, 1 = warning, 2 = error
         protected void sofaLog(string msg, int priority = 0, bool forceLog = false)
         {
@@ -77,13 +79,19 @@ namespace SofaUnity
             loadContext();
 
             // init the parameters from the sofa object
-            initParameters();
+            if (!Application.isPlaying)
+                initParameters();
+            else
+                initParametersOnPlay();
 
             // Call a post process method for additional codes.
             awakePostProcess();
 
             // Store the fact that awake has finished.
             m_isAwake = true;
+
+            // Increment life cycle
+            cptLifeCycle++;
         }
 
             
@@ -154,13 +162,18 @@ namespace SofaUnity
 
         }
 
+        /// called by @sa Awake method. To store value from sofa object at runTime
+        protected virtual void initParametersOnPlay()
+        {
+
+        }
+
 
         /// Method called by @sa Awake() method. As post process method after creation. To be implemented by child class.
         protected virtual void awakePostProcess()
         {
 
         }
-
         
 
 
@@ -172,13 +185,16 @@ namespace SofaUnity
         void Start()
         {
             sofaLog("SBaseObject::Start called.");
+
+            // Increment life cycle
+            cptLifeCycle++;
         }
         
 
         /// Method called to update GameObject, called once per frame. To be implemented by child class.
         void Update()
         {
-            sofaLog("SBaseObject::Update " + this.name + " called.");
+            //sofaLog("SBaseObject::Update " + this.name + " called.");
 
             if (!Application.isPlaying)
             {
@@ -199,6 +215,33 @@ namespace SofaUnity
         public virtual void updateImpl()
         {
 
-        }        
+        }
+
+
+        /// Method called by @sa Update() method. When Unity is not playing.
+        public virtual void updateInEditor()
+        {
+
+        }
+
+
+
+        /// Unity callback method OnEnable, will check cptLifeCycle to detect when animation will start.
+        protected void OnEnable()
+        {
+            // if static int cptLifeCycle ==0 , this means animation is going to start.
+            if (!Application.isPlaying && cptLifeCycle == 0)
+                copyDataForAnimation();
+
+            // Increment life cycle
+            cptLifeCycle++;
+        }
+
+
+        /// Method called just before animation start by OnEnable. To be able to copy init parameters to current one.
+        protected virtual void copyDataForAnimation()
+        {
+
+        }
     }
 }
