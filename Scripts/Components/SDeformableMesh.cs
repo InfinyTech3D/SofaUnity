@@ -6,41 +6,18 @@ using SofaUnityAPI;
 using System;
 
 namespace SofaUnity
-{
+{    
     /// <summary>
     /// Base class for a Deformable Mesh, inherite from SBaseMesh 
     /// This class will add a meshRenderer and create a SofaMesh API object to load the topology from Sofa Object.
     /// It will also try to create triangles mesh from tetra.
     /// </summary>
-    [ExecuteInEditMode]
+    [ExecuteInEditMode]    
     public class SDeformableMesh : SBaseMesh
     {
         ////////////////////////////////////////////
         /////          Object members          /////
         ////////////////////////////////////////////
-
-        /// Parameter to define the Mass of this deformable Object
-        public float m_mass = 10.0f;
-        /// Parameter to define the Young Modulus of this deformable Object
-        public float m_young = 1400.0f;
-        /// Parameter to define the Poisson Ratio of this deformable Object
-        public float m_poisson = 0.45f;
-        /// Parameter to define the uniform stiffness for all the springs of this deformable Object
-        public float m_stiffness = 1000.0f;
-        /// Parameter to define the uniform damping for all the springs of this deformable Object
-        public float m_damping = 1.0f;
-
-        /// Parameter to define the Mass of this deformable Object
-        public float m_init_mass = 10.0f;
-        /// Parameter to define the Young Modulus of this deformable Object
-        public float m_init_young = 1400.0f;
-        /// Parameter to define the Poisson Ratio of this deformable Object
-        public float m_init_poisson = 0.45f;
-        /// Parameter to define the uniform stiffness for all the springs of this deformable Object
-        public float m_init_stiffness = 1000.0f;
-        /// Parameter to define the uniform damping for all the springs of this deformable Object
-        public float m_init_damping = 1.0f;
-
 
         /// Member: if tetrahedron is detected, will gather the number of element
         protected int nbTetra = 0;
@@ -48,15 +25,21 @@ namespace SofaUnity
         protected int[] m_tetra;
         /// Member: if tetrahedron is detected, will store the vertex mapping between triangulation and tetrahedron topology
         protected Dictionary<int, int> mappingVertices;
+       
 
-        
         /// Initial number of vertices
         int nbVert = 0;
 
-        /// Bool to store the last MeshFilter status. Allow to know if mesh is renderer or not.
-        protected bool m_previousMRDisplay = true;
-
-
+        /// Parameter to define the Mass of this deformable Object
+        public float m_mass = float.MinValue;
+        /// Parameter to define the Young Modulus of this deformable Object
+        public float m_young = float.MinValue;
+        /// Parameter to define the Poisson Ratio of this deformable Object
+        public float m_poisson = float.MinValue;
+        /// Parameter to define the uniform stiffness for all the springs of this deformable Object
+        public float m_stiffness = float.MinValue;
+        /// Parameter to define the uniform damping for all the springs of this deformable Object
+        public float m_damping = float.MinValue;
 
 
         ////////////////////////////////////////////
@@ -76,42 +59,33 @@ namespace SofaUnity
                 // TODO: check if this is still needed (and why not in children)
                 m_impl.loadObject();
 
-                // Init the FEM and spring parameter from scene.
-                if (!Application.isPlaying)
-                {
-                    m_poisson = m_impl.poissonRatio;
-                    m_mass = m_impl.mass;
-                    m_young = m_impl.youngModulus;
-                    m_stiffness = m_impl.stiffness;
-                    m_damping = m_impl.damping;
-                }
-
                 // Call SBaseMesh.createObject() to init value loaded from the scene.
                 base.createObject();
             }
 
             if (m_impl == null)
                 Debug.LogError("SDeformableMesh:: Object creation failed.");
+
         }
 
 
         /// Method to check which deformable parameters coubld be set in the GUI
         protected override void initParameters()
         {
-            m_init_poisson = m_impl.poissonRatio;
-            m_init_mass = m_impl.mass;
-            m_init_young = m_impl.youngModulus;
-            m_init_stiffness = m_impl.stiffness;
-            m_init_damping = m_impl.damping;
-
-            if (!Application.isPlaying)
-            {
+            if (m_poisson == float.MinValue)
                 m_poisson = m_impl.poissonRatio;
+
+            if (m_mass == float.MinValue)
                 m_mass = m_impl.mass;
+
+            if (m_young == float.MinValue)
                 m_young = m_impl.youngModulus;
+
+            if (m_stiffness == float.MinValue)
                 m_stiffness = m_impl.stiffness;
+
+            if (m_damping == float.MinValue)
                 m_damping = m_impl.damping;
-            }
         }
 
 
@@ -124,12 +98,11 @@ namespace SofaUnity
             //to see it, we have to add a renderer
             MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();
             if (mr == null)
+            {
                 mr = gameObject.AddComponent<MeshRenderer>();
-            mr.enabled = false;
-            m_previousMRDisplay = false;
+                mr.enabled = false;
+            }            
         }
-
-
 
 
         ////////////////////////////////////////////
@@ -248,8 +221,7 @@ namespace SofaUnity
                 nbTetra = m_impl.getNbTetrahedra();
                 if (nbTetra > 0)
                 {
-                    if (m_log)
-                        Debug.Log("Tetra found! Number: " + nbTetra);
+                    sofaLog("Tetra found! Number: " + nbTetra);
                     m_tetra = new int[nbTetra * 4];
 
                     m_impl.getTetrahedra(m_tetra);
@@ -288,8 +260,7 @@ namespace SofaUnity
         /// Method called by @sa Update() method.
         public override void updateImpl()
         {
-            if (m_log)
-                Debug.Log("SDeformableMesh::updateImpl called.");
+            //sofaLog("SDeformableMesh::updateImpl called.");
 
             MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();            
 
@@ -309,15 +280,13 @@ namespace SofaUnity
 
                 if (nbTetra > 0)
                     updateTetraMesh();
-                else if (mr.enabled == m_previousMRDisplay) // which is true
+                else if (mr.enabled == true) // which is true
                     m_impl.updateMeshVelocity(m_mesh, m_context.timeStep);
                 else // pass from false to true.
                 {
                     m_impl.updateMesh(m_mesh);
                 }
             }
-
-            m_previousMRDisplay = mr.enabled;
         }
 
 

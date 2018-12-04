@@ -19,8 +19,11 @@ namespace SofaUnity
             if (_simu != IntPtr.Zero) // Create the API object for Sofa Sphere Grid Mesh
                 m_impl = new SofaSphere(_simu, m_nameId, true);
 
-            if (m_impl == null)
-                Debug.LogError("SRigidSphere:: Object creation failed.");
+            if (m_impl == null || !m_impl.m_isCreated)
+            {
+                Debug.LogError("SRigidSphere:: Object creation failed: " + m_nameId);
+                this.enabled = false;
+            }
         }
     }
 }

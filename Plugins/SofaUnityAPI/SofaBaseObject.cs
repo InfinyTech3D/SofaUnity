@@ -18,7 +18,7 @@ public class SofaBaseObject : IDisposable
         m_name = nameID;
         m_isRigid = isRigid;
 
-        createObject();
+        m_isCreated = createObject();
     }
 
     /// Destructor
@@ -48,6 +48,9 @@ public class SofaBaseObject : IDisposable
     /// Parameter to store the information if the object is rigid or deformable.
     protected bool m_isRigid = false;
 
+    /// Parameter to store the info if creation succeed. Will store the value return by @sa createObject
+    public bool m_isCreated = false;
+
 
     /// Memory free method
     public void Dispose()
@@ -67,9 +70,9 @@ public class SofaBaseObject : IDisposable
 
 
     /// Implicit method to really create object and link to Sofa object. To be overwritten by child.
-    protected virtual void createObject()
+    protected virtual bool createObject()
     {
-
+        return false;
     }
 
 

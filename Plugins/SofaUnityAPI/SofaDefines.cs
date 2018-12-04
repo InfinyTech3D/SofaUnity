@@ -60,6 +60,8 @@ static public class SofaDefines
         {-405, "Ray casting, no valid topology found."},
         {-406, "Ray casting, no valid collision model found."},
         {-407, "Ray casting, no valid mechanical mapper found."},
+        {-408, "Ray casting, no valid mechanical state found."},
+        {-409, "Ray casting, attribute name given is invalid."},
         {400, "Ray casting, already in contact."},
 
         {-500, "Garsping plugin not found."},

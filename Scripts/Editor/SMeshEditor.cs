@@ -28,6 +28,7 @@ public class SDeformableMeshEditor : Editor
     /// <summary>
     /// Method to set the UI of the SDeformableMesh GameObject
     /// </summary>
+    
     public override void OnInspectorGUI()
     {     
         SDeformableMesh mesh = (SDeformableMesh)this.target;
@@ -35,48 +36,48 @@ public class SDeformableMeshEditor : Editor
             return;
 
         // Check box to change normals direction
-        normalBtn = EditorGUILayout.Toggle("Inverse Normals", normalBtn);
+        normalBtn = EditorGUILayout.Toggle("Inverse Normals", mesh.m_invertNormals);
         mesh.invertNormals = normalBtn;
 
         // Add Triansformation fields
-        mesh.translation = EditorGUILayout.Vector3Field("Translation", mesh.translation);
+        mesh.translation = EditorGUILayout.Vector3Field("Translation", mesh.m_translation);
         EditorGUILayout.Separator();
 
-        mesh.rotation = EditorGUILayout.Vector3Field("Rotation", mesh.rotation);
+        mesh.rotation = EditorGUILayout.Vector3Field("Rotation", mesh.m_rotation);
         EditorGUILayout.Separator();
 
-        mesh.scale = EditorGUILayout.Vector3Field("Scale", mesh.scale);
+        mesh.scale = EditorGUILayout.Vector3Field("Scale", mesh.m_scale);
         EditorGUILayout.Separator();
 
 
         // Add FEM fields
-        if (mesh.mass != float.MinValue)
+        if (mesh.m_mass != float.MinValue)
         {
-            mesh.mass = EditorGUILayout.Slider("Mass", mesh.mass, 0, 1000);
+            mesh.mass = EditorGUILayout.Slider("Mass", mesh.m_mass, 0.0001f, 1000);
             EditorGUILayout.Separator();
         }
 
-        if (mesh.young != float.MinValue)
+        if (mesh.m_young != float.MinValue)
         {
-            mesh.young = EditorGUILayout.Slider("Young Modulus", mesh.young, 0, 10000);
+            mesh.young = EditorGUILayout.Slider("Young Modulus", mesh.m_young, 0.0001f, 10000);
             EditorGUILayout.Separator();
         }
 
-        if (mesh.poisson != float.MinValue)
+        if (mesh.m_poisson != float.MinValue)
         {
-            mesh.poisson = EditorGUILayout.Slider("Poisson Ratio", mesh.poisson, 0, 0.49f);
+            mesh.poisson = EditorGUILayout.Slider("Poisson Ratio", mesh.m_poisson, 0.0001f, 0.49f);
             EditorGUILayout.Separator();
         }
 
-        if (mesh.stiffness != float.MinValue)
+        if (mesh.m_stiffness != float.MinValue)
         {
-            mesh.stiffness = EditorGUILayout.Slider("Stiffness", mesh.stiffness, 0, 10000);
+            mesh.stiffness = EditorGUILayout.Slider("Stiffness", mesh.m_stiffness, 0.0001f, 10000);
             EditorGUILayout.Separator();
         }
 
-        if (mesh.damping != float.MinValue)
+        if (mesh.m_damping != float.MinValue)
         {
-            mesh.damping = EditorGUILayout.Slider("Damping", mesh.damping, 0, 100);
+            mesh.damping = EditorGUILayout.Slider("Damping", mesh.m_damping, 0.0001f, 100);
             EditorGUILayout.Separator();
         }
 

@@ -26,29 +26,40 @@ public class SofaCylinder : SofaBaseMesh
     }
 
     /// Implicit method to really create object and link to Sofa object. Called by SofaBaseObject constructor
-    protected override void createObject()
+    protected override bool createObject()
     {
         if (m_native == IntPtr.Zero) // first time create object only
         {
             // Create the cylinder
             int res = sofaPhysicsAPI_addCylinder(m_simu, m_name, m_isRigid);
             m_name += "_node";
-            if (res == 1) // cylinder added
+
+            if (res != 0)
             {
-                if (displayLog)
-                    Debug.Log("cylinder Added! " + m_name);
-
-                // Set created object to native pointer
-                int[] res1 = new int[1];
-                m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name, res1);
-
-                if (res1[0] != 0)
-                    Debug.LogError("SofaCylinder::createObject get3DObject method returns: " + SofaDefines.msg_error[res1[0]]);
+                Debug.LogError("SofaCylinder::createObject cylinder creation method return error: " + SofaDefines.msg_error[res] + " for object " + m_name);
+                return false;
             }
-            
-            if (m_native == IntPtr.Zero)
-                Debug.LogError("Error cylinder created can't be found!");
+
+            if (displayLog)
+                Debug.Log("cylinder Added! " + m_name);
+
+            // Set created object to native pointer
+            int[] res1 = new int[1];
+            res1[0] = -101;
+
+            m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name, res1);
+            if (res1[0] != 0 || m_native == IntPtr.Zero)
+            {
+                Debug.LogError("SofaCylinder::createObject get3DObject method returns: " + SofaDefines.msg_error[res1[0]]);
+                res1 = null;
+                return false;
+            }
+
+            res1 = null;
+            return true;
         }
+
+        return false;
     }
 
 
