@@ -427,6 +427,7 @@ namespace SofaUnity
         {
             // stop simulation first
             m_impl.stop();
+            m_impl.freeGlutGlew();
 
             // clear hierarchy
             //m_hierarchyPtr.clearHierarchy();
