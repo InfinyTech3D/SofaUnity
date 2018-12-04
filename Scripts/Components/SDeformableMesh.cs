@@ -86,8 +86,6 @@ namespace SofaUnity
 
             if (m_damping == float.MinValue)
                 m_damping = m_impl.damping;
-
-
         }
 
 

@@ -33,7 +33,14 @@ namespace SofaUnityAPI
             // Create a simulation scene.
             int res = sofaPhysicsAPI_createScene(m_native);
             if (res == 0)
+            {
                 m_isReady = true;
+
+                // load the sofaIni file
+                string pathIni = Application.dataPath + "/SofaUnity/Plugins/Native/x64/sofa.ini";
+                string sharePath = sofaPhysicsAPI_loadSofaIni(m_native, pathIni);
+                //Debug.Log("sharePath: " + sharePath);
+            }
             else
                 Debug.LogError("SofaContextAPI scene creation return: " + SofaDefines.msg_error[res]);
         }
@@ -275,6 +282,9 @@ namespace SofaUnityAPI
         /// Binding to load a plugin
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaPhysicsAPI_loadPlugin(IntPtr obj, string pluginName);
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern string sofaPhysicsAPI_loadSofaIni(IntPtr obj, string pathIni);
 
 
         /// Bindings to hangle glew creation/destruction
