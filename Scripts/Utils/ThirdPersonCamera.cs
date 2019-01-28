@@ -10,7 +10,7 @@ public class ThirdPersonCamera : MonoBehaviour
 	private const float Y_ANGLE_MIN = -50.0f;
 	private const float Y_ANGLE_MAX = 50.0f;
 
-	//public GameObject target;	
+	public GameObject target;	
     public float m_currentScale = 0.001f;
     public Vector3 m_lookAtStatic;
     public float m_cameraDistance = 100.0f;
@@ -33,7 +33,11 @@ public class ThirdPersonCamera : MonoBehaviour
 	{
 		m_leftButtonHold = false;
         m_rightButtonHold = false;
-	}
+
+        if (target != null)
+            m_lookAtStatic = target.transform.position;
+
+    }
 	
 	// Update is called once per frame
 	void Update () 
