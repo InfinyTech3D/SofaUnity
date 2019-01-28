@@ -43,7 +43,7 @@ public class SLaserRay : SRayCaster
     protected GameObject laser;
 
     /// Booleen to draw the laser object
-    public bool drawLaserParticles = true;
+    public bool drawLaserParticles = false;
 
     /// Laser renderer
     protected LineRenderer lr;
@@ -138,7 +138,7 @@ public class SLaserRay : SRayCaster
         direction = transform.forward * m_axisDirection[0] + transform.right * m_axisDirection[1] + transform.up * m_axisDirection[2];
 
         // update the light source
-        if (drawLaserParticles)
+        if (drawLaserParticles && lightSource)
             lightSource.transform.position = origin + transLocal;
 
         if (Input.GetKey(KeyCode.C))
