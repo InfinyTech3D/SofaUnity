@@ -20,7 +20,8 @@
         <DiagonalMass massDensity="1.0" />
         <BoxROI template="Vec3d" box="0 -5 -5 10 5 5" drawBoxes="1" position="@Volume.rest_position" name="FixedROI"/>
         <FixedConstraint indices="@FixedROI.indices" />
-        <TetrahedralCorotationalFEMForceField name="FEM" youngModulus="1300" poissonRatio="0.3" method="large" />		
+        <!--<TetrahedralCorotationalFEMForceField name="FEM" youngModulus="1300" poissonRatio="0.3" method="large" />		-->
+		<TetrahedronFEMForceField name="FEM" youngModulus="360" poissonRatio="0.3" computeGlobalMatrix="false" method="large" />
         <Node name="T">
             <TriangleSetTopologyContainer  name="Container" fileTopology="" tags=" " />
 			<TriangleSetTopologyModifier   name="Modifier" />

@@ -37,7 +37,7 @@ public class ObjectController : MonoBehaviour
         if (!m_isactive)
             return;
 
-        if (Input.GetKey(KeyCode.LeftControl))
+        if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
         {
             if (Input.GetKey(KeyCode.Keypad4))
                 transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + 0.5f, transform.eulerAngles.z);
@@ -45,26 +45,22 @@ public class ObjectController : MonoBehaviour
                 transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y - 0.5f, transform.eulerAngles.z);
             else if (Input.GetKey(KeyCode.Keypad8))
                 transform.eulerAngles = new Vector3(transform.eulerAngles.x + 0.5f, transform.eulerAngles.y, transform.eulerAngles.z);
-            else if (Input.GetKey(KeyCode.Keypad5))
+            else if (Input.GetKey(KeyCode.Keypad2))
                 transform.eulerAngles = new Vector3(transform.eulerAngles.x - 0.5f, transform.eulerAngles.y, transform.eulerAngles.z);
-            else if (Input.GetKey(KeyCode.Keypad7))
+            else if (Input.GetKey(KeyCode.Keypad5))
                 transform.position = transform.position - transform.forward * factor;
-            else if (Input.GetKey(KeyCode.Keypad9))
-                transform.position = transform.position + transform.forward * factor;
         }
         else
         {
             if (Input.GetKey(KeyCode.Keypad8))
                 transform.position = transform.position + transform.up * factor;
-            else if (Input.GetKey(KeyCode.Keypad5))
+            else if (Input.GetKey(KeyCode.Keypad2))
                 transform.position = transform.position - transform.up * factor;
             else if (Input.GetKey(KeyCode.Keypad4))
                 transform.position = transform.position - transform.right * factor;
             else if (Input.GetKey(KeyCode.Keypad6))
                 transform.position = transform.position + transform.right * factor;
-            else if (Input.GetKey(KeyCode.Keypad7))
-                transform.position = transform.position - transform.forward * factor;
-            else if (Input.GetKey(KeyCode.Keypad9))
+            else if (Input.GetKey(KeyCode.Keypad5))
                 transform.position = transform.position + transform.forward * factor;
         }
 
