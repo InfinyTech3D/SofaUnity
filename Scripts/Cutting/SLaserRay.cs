@@ -141,14 +141,6 @@ public class SLaserRay : SRayCaster
         if (drawLaserParticles && lightSource)
             lightSource.transform.position = origin + transLocal;
 
-        if (Input.GetKey(KeyCode.C))
-        {
-            this.activeTool(true);
-        }
-        else if (Input.GetKey(KeyCode.V))
-        {
-            this.activeTool(false);
-        }
 
         if (automaticCast && m_sofaRC != null)
         {
@@ -190,7 +182,7 @@ public class SLaserRay : SRayCaster
 
 
     /// Internal method to activate or not the tool, will also update the rendering
-    protected void activeTool(bool value)
+    public void activeTool(bool value)
     {
         m_isActivated = value;
 

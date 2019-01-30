@@ -16,12 +16,13 @@ public class ObjectController : MonoBehaviour
     /// Pointer to the current Mesh of the GameObject
     public GameObject light = null;
     public GameObject otherTool = null;
+    public SLaserRay toolImpl = null;
 
 
     protected bool m_isactive = false;
     protected ObjectController otherObjectCtrl = null;
 
-    public float factor = 0.05f;
+    public float factor = 0.1f;
     void Start()
     {
         if (light)
@@ -73,15 +74,27 @@ public class ObjectController : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.C) && light)
+        if (Input.GetKey(KeyCode.C))
         {
-            Light lt = light.GetComponent<Light>();
-            lt.color = Color.red;
+            if (light)
+            {
+                Light lt = light.GetComponent<Light>();
+                lt.color = Color.red;
+            }
+
+            if (toolImpl)
+                toolImpl.activeTool(true);
         }
         else if (Input.GetKey(KeyCode.V))
         {
-            Light lt = light.GetComponent<Light>();
-            lt.color = Color.green;
+            if (light)
+            {
+                Light lt = light.GetComponent<Light>();
+                lt.color = Color.green;
+            }
+
+            if (toolImpl)
+                toolImpl.activeTool(false);
         }
     }
 
@@ -92,7 +105,7 @@ public class ObjectController : MonoBehaviour
             light.SetActive(m_isactive);
     }
 
-    bool isToolActive()
+    public bool isToolActive()
     {
         return m_isactive;
     }
@@ -101,8 +114,8 @@ public class ObjectController : MonoBehaviour
     {
         activateTool(m_isactive = !m_isactive);
 
-        if (otherObjectCtrl)
-            otherObjectCtrl.activateTool(!m_isactive);
+        if (m_isactive && otherObjectCtrl && otherObjectCtrl.isToolActive())
+            otherObjectCtrl.activateTool(false);
     }
 
 }
