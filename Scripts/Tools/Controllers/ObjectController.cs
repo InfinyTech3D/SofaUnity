@@ -62,6 +62,15 @@ public class ObjectController : MonoBehaviour
                 transform.position = transform.position + transform.right * factor;
             else if (Input.GetKey(KeyCode.Keypad5))
                 transform.position = transform.position + transform.forward * factor;
+            else if (Input.GetKey(KeyCode.UpArrow))
+            {
+                factor += 0.01f;
+            }
+            else if (Input.GetKey(KeyCode.DownArrow))
+            {
+                if (factor > 0.02f)
+                    factor -= 0.01f;
+            }
         }
 
         if (Input.GetKey(KeyCode.C) && light)
