@@ -18,10 +18,10 @@
 		<TetrahedronSetGeometryAlgorithms name="GeomAlgo"  template="Vec3d" />
 
         <DiagonalMass massDensity="1.0" />
-        <BoxROI template="Vec3d" box="0 -5 -5 10 5 5" drawBoxes="1" position="@Volume.rest_position" name="FixedROI"/>
+        <BoxROI template="Vec3d" box="4 -4 -3 10 2 3" drawBoxes="1" position="@Volume.rest_position" name="FixedROI"/>
         <FixedConstraint indices="@FixedROI.indices" />
         <!--<TetrahedralCorotationalFEMForceField name="FEM" youngModulus="1300" poissonRatio="0.3" method="large" />		-->
-		<TetrahedronFEMForceField name="FEM" youngModulus="360" poissonRatio="0.3" computeGlobalMatrix="false" method="large" />
+		<TetrahedronFEMForceField name="FEM" youngModulus="1300" poissonRatio="0.3" computeGlobalMatrix="false" method="large" />
 		<PlaneForceField normal="0 1 0" d="-50" stiffness="100000" showPlane="1" showPlaneSize="20"/>
         <Node name="T">
             <TriangleSetTopologyContainer  name="Container" fileTopology="" tags=" " />
