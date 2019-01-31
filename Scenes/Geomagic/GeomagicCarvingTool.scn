@@ -1,0 +1,131 @@
+<?xml version="1.0" ?>
+<Node name="root" dt="0.05" showBoundingTree="0" gravity="0 0 0">
+
+	<RequiredPlugin name="Carving" pluginName="SofaCarving" />
+    <RequiredPlugin name="Geomagic plugin" pluginName="Geomagic" />
+
+    <CollisionPipeline name="pipeline" depth="6" verbose="0"/>
+    <BruteForceDetection name="detection" />
+    <CollisionResponse name="response" response="FrictionContact" />
+    <LocalMinDistance name="proximity" alarmDistance="0.5" contactDistance="0.1" angleCone="0.0" />
+    <FreeMotionAnimationLoop/>
+    <LCPConstraintSolver tolerance="0.001" maxIt="1000"/>
+    <CollisionGroup />
+
+    <Node name="OmniControler">
+        <GeomagicDriver name="GeomagicDevice" deviceName="Default Device" scale="1" drawDeviceFrame="0" 
+		positionBase="0 0 0" drawDevice="0" orientationBase="0 0.7071 0 0.7071" manualStart="true" />
+        <MechanicalObject name="ms" template="Rigid" position="@GeomagicDevice.positionDevice" free_position="@GeomagicDevice.positionDevice" showObject="0" showObjectScale="0" scale3d="1 1 1"/>
+    </Node>
+	
+    <CarvingManager active="@OmniControler/GeomagicDevice.button1" carvingDistance="0.2" key="k" />
+	<!--
+	<Node name="liver">
+        <MeshGmshLoader name="loader" filename="../SofaScenes/mesh/liver2.msh" />
+        <MechanicalObject src="@loader" name="Volume" scale3d="0.07 0.07 0.07" rotation="0 -90 90" translation="0 0.95 0.52"/>
+
+		<TetrahedronSetTopologyContainer name="TetraContainer" src="@meshLoader" />
+        <TetrahedronSetTopologyModifier name="Modifier" />
+        <TetrahedronSetTopologyAlgorithms template="Vec3d" name="TopoAlgo" />
+        <TetrahedronSetGeometryAlgorithms template="Vec3d" name="GeomAlgo" drawTetrahedra="0" />
+
+        <DiagonalMass massDensity="1.0" />
+        <BoxROI name="ROI1" box="-0.01 0.93 0.49 -0.05 0.97 0.53" drawBoxes="1" />
+		<FixedConstraint indices="@ROI1.indices" />
+        <FastTetrahedralCorotationalForceField name="FEM" youngModulus="6000" poissonRatio="0.3" method="large" />		
+        <PrecomputedConstraintCorrection recompute="true"/>
+
+        <Node name="T1">
+			<TriangleSetTopologyContainer  name="TriContainer1" fileTopology="" tags=" " />
+			<TriangleSetTopologyModifier   name="TriModifier1" />
+			<TriangleSetTopologyAlgorithms name="TriTopoAlgo1" template="Vec3d" />
+			<TriangleSetGeometryAlgorithms name="TriGeomAlgo1" template="Vec3d" />
+            <Tetra2TriangleTopologicalMapping input="@../TetraContainer" output="@TriContainer1" flipNormals="1" noNewTriangles="1"/>
+            <TriangleSet tags="CarvingSurface" />
+            <Node name="Visu1">
+                <OglModel name="Visual" color="blue" />
+                <IdentityMapping input="@../" output="@Visual" />
+            </Node>
+        </Node>
+		
+		<Node name="T2">
+            <TriangleSetTopologyContainer  name="TriContainer2" fileTopology="" tags=" " />
+			<TriangleSetTopologyModifier   name="TriModifier2" />
+			<TriangleSetTopologyAlgorithms name="TriTopoAlgo2" template="Vec3d" />
+			<TriangleSetGeometryAlgorithms name="TriGeomAlgo2" template="Vec3d" />
+			<Tetra2TriangleTopologicalMapping input="@../TetraContainer" output="@TriContainer2" noInitialTriangles="1" flipNormals="1"/>
+            <TriangleSet tags="CarvingSurface" />
+            <Node name="Visu2">
+                <OglModel name="Visual" color="red" />
+                <IdentityMapping input="@../" output="@Visual" />
+            </Node>
+        </Node>
+    </Node>
+	
+	-->
+	<Node name="Cylinder">
+        <EulerImplicitSolver name="cg_odesolver"  />
+        <CGLinearSolver name="linear solver" iterations="25" tolerance="1e-09" threshold="1e-09" />
+        <MeshGmshLoader filename="./mesh/cylinder.msh" name="meshLoader" scale="6" rotation="-90 0 0" translation="0 0 -2"/>
+        <MechanicalObject name="dofs" src="@meshLoader" />
+		<TetrahedronSetTopologyContainer name="TetraContainer" src="@meshLoader" />
+        <TetrahedronSetTopologyModifier name="Modifier" />
+        <TetrahedronSetTopologyAlgorithms template="Vec3d" name="TopoAlgo" />
+        <TetrahedronSetGeometryAlgorithms template="Vec3d" name="GeomAlgo" drawTetrahedra="0" />
+
+        <DiagonalMass massDensity="0.01" />
+        <BoxROI name="box" box="-10 -0.5 -6 10 0.5 4" drawBoxes="true" />
+		<FixedConstraint  name="FixedConstraint" indices="@box.indices" />
+        <TetrahedralCorotationalFEMForceField name="FEM" youngModulus="300" poissonRatio="0.3" method="large" />
+
+        <PrecomputedConstraintCorrection recompute="0"/>
+
+        <Node name="T1">
+			<TriangleSetTopologyContainer  name="TriContainer1" fileTopology="" tags=" " />
+			<TriangleSetTopologyModifier   name="TriModifier1" />
+			<TriangleSetTopologyAlgorithms name="TriTopoAlgo1" template="Vec3d" />
+			<TriangleSetGeometryAlgorithms name="TriGeomAlgo1" template="Vec3d" />
+            <Tetra2TriangleTopologicalMapping input="@../TetraContainer" output="@TriContainer1" flipNormals="1" noNewTriangles="1"/>
+            <TriangleSet tags="CarvingSurface" />
+            <Node name="Visu1">
+                <OglModel name="Visual" color="blue" />
+                <IdentityMapping input="@../" output="@Visual" />
+            </Node>
+        </Node>
+    </Node>
+
+	
+	<Node name="Omni">
+        <MechanicalObject template="Rigid" name="DOFs" position="@OmniControler/GeomagicDevice.positionDevice"/>
+        <MechanicalStateController template="Rigid" listening="true" mainDirection="-1.0 0.0 0.0" handleEventTriggersUpdate="true"/>
+        <Node name="RefModel">
+            <MeshObjLoader filename="./mesh/drill_collision.obj"  name="loader"/>
+            <Mesh src="@loader"  />
+            <MechanicalObject src="@loader" name="instrumentCollisionState" ry="-180" rz="-90" dz="3.5" dx="-0.3" />
+            <RigidMapping />
+        </Node>
+    </Node>
+
+    <Node name="Instrument" >
+        <EulerImplicitSolver name="ODE solver" rayleighStiffness="0.5" rayleighMass="1.0" />
+        <CGLinearSolver name="linear solver" iterations="25" tolerance="1e-10" threshold="10e-10" /> 
+        <MechanicalObject name="instrumentState" position="@OmniControler/GeomagicDevice.positionDevice" template="Rigid" />
+        <UniformMass name="mass" totalMass="0.005" />
+        <LCPForceFeedback activate="true" forceCoef="0.5"/>
+        <UncoupledConstraintCorrection/>
+		
+        <Node name="CollisionModel" >
+            <MeshObjLoader filename="./mesh/drill_collision.obj"  name="loader"/>
+            <Mesh src="@loader" name="InstrumentCollisionModel" />
+            <MechanicalObject src="@loader" name="instrumentCollisionState"  ry="-180" rz="-90" dz="3.5" dx="-0.3" />
+            <Line name="instrument" contactStiffness="10"/>			
+            <Point name="instrument" contactStiffness="10"/>
+			<SphereModel radius="0.02" contactStiffness="10" tags="CarvingTool"/>
+            <RigidMapping name="MM->CM mapping" input="@instrumentState" output="@instrumentCollisionState" />		
+        </Node>
+		
+        <VectorSpringForceField  template="Vec3d" object1="@Omni/RefModel/instrumentCollisionState" object2="@Instrument/CollisionModel/instrumentCollisionState" stiffness="1000000" viscosity="0.5" />
+    </Node>
+	
+
+</Node>
