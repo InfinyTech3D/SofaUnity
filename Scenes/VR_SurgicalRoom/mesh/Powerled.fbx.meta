@@ -1,0 +1,880 @@
+fileFormatVersion: 2
+guid: ff0cf4ad0d776e544b9f45eb658af44d
+timeCreated: 1534874160
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Background
+    100002: Background reflect
+    100004: Camera001
+    100006: Camera001.Target
+    100008: Modutec PLG Maquet
+    100010: //RootNode
+    100012: Powerled 500 (1)
+    100014: Powerled 500 (2)
+    100016: Powerled 500 (3)
+    100018: Powerled 500 (4)
+    100020: Powerled 500 (group 1)
+    100022: Powerled 500 (group 2)
+    100024: Powerled 500 (group 3)
+    100026: Powerled 700 (1)
+    100028: Powerled 700 (2)
+    100030: Powerled 700 (3)
+    100032: Powerled 700 (4)
+    100034: Powerled 700 (group 1)
+    100036: Powerled 700 (group 2)
+    100038: Powerled 700 (group 3)
+    100040: Powerled System
+    100042: Satelite System
+    100044: Single flat screen 1 (1)
+    100046: Single flat screen 1 (2)
+    100048: Single flat screen 1 (3)
+    100050: Single flat screen 1 (group 1)
+    100052: Single flat screen 1 (group 2)
+    100054: Single flat screen 2 (1)
+    100056: Single flat screen 2 (2)
+    100058: Single flat screen 2 (3)
+    100060: Single flat screen 2 (group 1)
+    100062: Single flat screen 2 (group 2)
+    400000: Background
+    400002: Background reflect
+    400004: Camera001
+    400006: Camera001.Target
+    400008: Modutec PLG Maquet
+    400010: //RootNode
+    400012: Powerled 500 (1)
+    400014: Powerled 500 (2)
+    400016: Powerled 500 (3)
+    400018: Powerled 500 (4)
+    400020: Powerled 500 (group 1)
+    400022: Powerled 500 (group 2)
+    400024: Powerled 500 (group 3)
+    400026: Powerled 700 (1)
+    400028: Powerled 700 (2)
+    400030: Powerled 700 (3)
+    400032: Powerled 700 (4)
+    400034: Powerled 700 (group 1)
+    400036: Powerled 700 (group 2)
+    400038: Powerled 700 (group 3)
+    400040: Powerled System
+    400042: Satelite System
+    400044: Single flat screen 1 (1)
+    400046: Single flat screen 1 (2)
+    400048: Single flat screen 1 (3)
+    400050: Single flat screen 1 (group 1)
+    400052: Single flat screen 1 (group 2)
+    400054: Single flat screen 2 (1)
+    400056: Single flat screen 2 (2)
+    400058: Single flat screen 2 (3)
+    400060: Single flat screen 2 (group 1)
+    400062: Single flat screen 2 (group 2)
+    2000000: Camera001
+    2300000: Background
+    2300002: Background reflect
+    2300004: Modutec PLG Maquet
+    2300006: Powerled 500 (1)
+    2300008: Powerled 500 (2)
+    2300010: Powerled 500 (3)
+    2300012: Powerled 500 (4)
+    2300014: Powerled 700 (1)
+    2300016: Powerled 700 (2)
+    2300018: Powerled 700 (3)
+    2300020: Powerled 700 (4)
+    2300022: Satelite System
+    2300024: Single flat screen 1 (1)
+    2300026: Single flat screen 1 (2)
+    2300028: Single flat screen 1 (3)
+    2300030: Single flat screen 2 (1)
+    2300032: Single flat screen 2 (2)
+    2300034: Single flat screen 2 (3)
+    3300000: Background
+    3300002: Background reflect
+    3300004: Modutec PLG Maquet
+    3300006: Powerled 500 (1)
+    3300008: Powerled 500 (2)
+    3300010: Powerled 500 (3)
+    3300012: Powerled 500 (4)
+    3300014: Powerled 700 (1)
+    3300016: Powerled 700 (2)
+    3300018: Powerled 700 (3)
+    3300020: Powerled 700 (4)
+    3300022: Satelite System
+    3300024: Single flat screen 1 (1)
+    3300026: Single flat screen 1 (2)
+    3300028: Single flat screen 1 (3)
+    3300030: Single flat screen 2 (1)
+    3300032: Single flat screen 2 (2)
+    3300034: Single flat screen 2 (3)
+    4300000: Background
+    4300002: Background reflect
+    4300004: Modutec PLG Maquet
+    4300006: Single flat screen 1 (3)
+    4300008: Single flat screen 1 (2)
+    4300010: Single flat screen 1 (1)
+    4300012: Powerled 700 (3)
+    4300014: Powerled 700 (2)
+    4300016: Powerled 700 (1)
+    4300018: Powerled 700 (4)
+    4300020: Powerled 500 (1)
+    4300022: Powerled 500 (2)
+    4300024: Powerled 500 (3)
+    4300026: Powerled 500 (4)
+    4300028: Single flat screen 2 (2)
+    4300030: Single flat screen 2 (1)
+    4300032: Single flat screen 2 (3)
+    4300034: Satelite System
+    7400000: Satelite System|Background reflect|Take 001|BaseLayer
+    7400002: Satelite System|Background|Take 001|BaseLayer
+    7400004: Satelite System|Camera001.Target|Take 001|BaseLayer
+    7400006: Satelite System|Camera001|Take 001|BaseLayer
+    7400008: Satelite System|Modutec PLG Maquet|Take 001|BaseLayer
+    7400010: Satelite System|Powerled 500 (1)|Take 001|BaseLayer
+    7400012: Satelite System|Powerled 500 (2)|Take 001|BaseLayer
+    7400014: Satelite System|Powerled 500 (3)|Take 001|BaseLayer
+    7400016: Satelite System|Powerled 500 (4)|Take 001|BaseLayer
+    7400018: Satelite System|Powerled 500 (group 1)|Take 001|BaseLayer
+    7400020: Satelite System|Powerled 500 (group 2)|Take 001|BaseLayer
+    7400022: Satelite System|Powerled 500 (group 3)|Take 001|BaseLayer
+    7400024: Satelite System|Powerled 700 (1)|Take 001|BaseLayer
+    7400026: Satelite System|Powerled 700 (3)|Take 001|BaseLayer
+    7400028: Satelite System|Powerled 700 (4)|Take 001|BaseLayer
+    7400030: Satelite System|Powerled 700 (group 1)|Take 001|BaseLayer
+    7400032: Satelite System|Powerled 700 (group 2)|Take 001|BaseLayer
+    7400034: Satelite System|Powerled 700 (group 3)|Take 001|BaseLayer
+    7400036: Satelite System|Powerled System|Take 001|BaseLayer
+    7400038: Satelite System|Satelite System|Take 001|BaseLayer
+    7400040: Satelite System|Single flat screen 1 (1)|Take 001|BaseLayer
+    7400042: Satelite System|Single flat screen 1 (2)|Take 001|BaseLayer
+    7400044: Satelite System|Single flat screen 1 (group 1)|Take 001|BaseLayer
+    7400046: Satelite System|Single flat screen 1 (group 2)|Take 001|BaseLayer
+    7400048: Satelite System|Single flat screen 2 (1)|Take 001|BaseLayer
+    7400050: Satelite System|Single flat screen 2 (2)|Take 001|BaseLayer
+    7400052: Satelite System|Single flat screen 2 (3)|Take 001|BaseLayer
+    7400054: Satelite System|Single flat screen 2 (group 1)|Take 001|BaseLayer
+    7400056: Satelite System|Single flat screen 2 (group 2)|Take 001|BaseLayer
+    7400058: Single flat screen 2 (group 2)|Background reflect|Take 001|BaseLayer
+    7400060: Single flat screen 2 (group 2)|Background|Take 001|BaseLayer
+    7400062: Single flat screen 2 (group 2)|Camera001.Target|Take 001|BaseLayer
+    7400064: Single flat screen 2 (group 2)|Camera001|Take 001|BaseLayer
+    7400066: Single flat screen 2 (group 2)|Modutec PLG Maquet|Take 001|BaseLayer
+    7400068: Single flat screen 2 (group 2)|Powerled 500 (1)|Take 001|BaseLayer
+    7400070: Single flat screen 2 (group 2)|Powerled 500 (2)|Take 001|BaseLayer
+    7400072: Single flat screen 2 (group 2)|Powerled 500 (3)|Take 001|BaseLayer
+    7400074: Single flat screen 2 (group 2)|Powerled 500 (4)|Take 001|BaseLayer
+    7400076: Single flat screen 2 (group 2)|Powerled 500 (group 1)|Take 001|BaseLayer
+    7400078: Single flat screen 2 (group 2)|Powerled 500 (group 2)|Take 001|BaseLayer
+    7400080: Single flat screen 2 (group 2)|Powerled 500 (group 3)|Take 001|BaseLayer
+    7400082: Single flat screen 2 (group 2)|Powerled 700 (1)|Take 001|BaseLayer
+    7400084: Single flat screen 2 (group 2)|Powerled 700 (3)|Take 001|BaseLayer
+    7400086: Single flat screen 2 (group 2)|Powerled 700 (4)|Take 001|BaseLayer
+    7400088: Single flat screen 2 (group 2)|Powerled 700 (group 1)|Take 001|BaseLayer
+    7400090: Single flat screen 2 (group 2)|Powerled 700 (group 2)|Take 001|BaseLayer
+    7400092: Single flat screen 2 (group 2)|Powerled 700 (group 3)|Take 001|BaseLayer
+    7400094: Single flat screen 2 (group 2)|Powerled System|Take 001|BaseLayer
+    7400096: Single flat screen 2 (group 2)|Satelite System|Take 001|BaseLayer
+    7400098: Single flat screen 2 (group 2)|Single flat screen 1 (1)|Take 001|BaseLayer
+    7400100: Single flat screen 2 (group 2)|Single flat screen 1 (2)|Take 001|BaseLayer
+    7400102: Single flat screen 2 (group 2)|Single flat screen 1 (group 1)|Take 001|BaseLayer
+    7400104: Single flat screen 2 (group 2)|Single flat screen 1 (group 2)|Take 001|BaseLayer
+    7400106: Single flat screen 2 (group 2)|Single flat screen 2 (1)|Take 001|BaseLayer
+    7400108: Single flat screen 2 (group 2)|Single flat screen 2 (2)|Take 001|BaseLayer
+    7400110: Single flat screen 2 (group 2)|Single flat screen 2 (3)|Take 001|BaseLayer
+    7400112: Single flat screen 2 (group 2)|Single flat screen 2 (group 1)|Take 001|BaseLayer
+    7400114: Single flat screen 2 (group 2)|Single flat screen 2 (group 2)|Take 001|BaseLayer
+    7400116: Single flat screen 2 (3)|Background reflect|Take 001|BaseLayer
+    7400118: Single flat screen 2 (3)|Background|Take 001|BaseLayer
+    7400120: Single flat screen 2 (3)|Camera001.Target|Take 001|BaseLayer
+    7400122: Single flat screen 2 (3)|Camera001|Take 001|BaseLayer
+    7400124: Single flat screen 2 (3)|Modutec PLG Maquet|Take 001|BaseLayer
+    7400126: Single flat screen 2 (3)|Powerled 500 (1)|Take 001|BaseLayer
+    7400128: Single flat screen 2 (3)|Powerled 500 (2)|Take 001|BaseLayer
+    7400130: Single flat screen 2 (3)|Powerled 500 (3)|Take 001|BaseLayer
+    7400132: Single flat screen 2 (3)|Powerled 500 (4)|Take 001|BaseLayer
+    7400134: Single flat screen 2 (3)|Powerled 500 (group 1)|Take 001|BaseLayer
+    7400136: Single flat screen 2 (3)|Powerled 500 (group 2)|Take 001|BaseLayer
+    7400138: Single flat screen 2 (3)|Powerled 500 (group 3)|Take 001|BaseLayer
+    7400140: Single flat screen 2 (3)|Powerled 700 (1)|Take 001|BaseLayer
+    7400142: Single flat screen 2 (3)|Powerled 700 (3)|Take 001|BaseLayer
+    7400144: Single flat screen 2 (3)|Powerled 700 (4)|Take 001|BaseLayer
+    7400146: Single flat screen 2 (3)|Powerled 700 (group 1)|Take 001|BaseLayer
+    7400148: Single flat screen 2 (3)|Powerled 700 (group 2)|Take 001|BaseLayer
+    7400150: Single flat screen 2 (3)|Powerled 700 (group 3)|Take 001|BaseLayer
+    7400152: Single flat screen 2 (3)|Powerled System|Take 001|BaseLayer
+    7400154: Single flat screen 2 (3)|Satelite System|Take 001|BaseLayer
+    7400156: Single flat screen 2 (3)|Single flat screen 1 (1)|Take 001|BaseLayer
+    7400158: Single flat screen 2 (3)|Single flat screen 1 (2)|Take 001|BaseLayer
+    7400160: Single flat screen 2 (3)|Single flat screen 1 (group 1)|Take 001|BaseLayer
+    7400162: Single flat screen 2 (3)|Single flat screen 1 (group 2)|Take 001|BaseLayer
+    7400164: Single flat screen 2 (3)|Single flat screen 2 (1)|Take 001|BaseLayer
+    7400166: Single flat screen 2 (3)|Single flat screen 2 (2)|Take 001|BaseLayer
+    7400168: Single flat screen 2 (3)|Single flat screen 2 (3)|Take 001|BaseLayer
+    7400170: Single flat screen 2 (3)|Single flat screen 2 (group 1)|Take 001|BaseLayer
+    7400172: Single flat screen 2 (3)|Single flat screen 2 (group 2)|Take 001|BaseLayer
+    7400174: Single flat screen 2 (group 1)|Background reflect|Take 001|BaseLayer
+    7400176: Single flat screen 2 (group 1)|Background|Take 001|BaseLayer
+    7400178: Single flat screen 2 (group 1)|Camera001.Target|Take 001|BaseLayer
+    7400180: Single flat screen 2 (group 1)|Camera001|Take 001|BaseLayer
+    7400182: Single flat screen 2 (group 1)|Modutec PLG Maquet|Take 001|BaseLayer
+    7400184: Single flat screen 2 (group 1)|Powerled 500 (1)|Take 001|BaseLayer
+    7400186: Single flat screen 2 (group 1)|Powerled 500 (2)|Take 001|BaseLayer
+    7400188: Single flat screen 2 (group 1)|Powerled 500 (3)|Take 001|BaseLayer
+    7400190: Single flat screen 2 (group 1)|Powerled 500 (4)|Take 001|BaseLayer
+    7400192: Single flat screen 2 (group 1)|Powerled 500 (group 1)|Take 001|BaseLayer
+    7400194: Single flat screen 2 (group 1)|Powerled 500 (group 2)|Take 001|BaseLayer
+    7400196: Single flat screen 2 (group 1)|Powerled 500 (group 3)|Take 001|BaseLayer
+    7400198: Single flat screen 2 (group 1)|Powerled 700 (1)|Take 001|BaseLayer
+    7400200: Single flat screen 2 (group 1)|Powerled 700 (3)|Take 001|BaseLayer
+    7400202: Single flat screen 2 (group 1)|Powerled 700 (4)|Take 001|BaseLayer
+    7400204: Single flat screen 2 (group 1)|Powerled 700 (group 1)|Take 001|BaseLayer
+    7400206: Single flat screen 2 (group 1)|Powerled 700 (group 2)|Take 001|BaseLayer
+    7400208: Single flat screen 2 (group 1)|Powerled 700 (group 3)|Take 001|BaseLayer
+    7400210: Single flat screen 2 (group 1)|Powerled System|Take 001|BaseLayer
+    7400212: Single flat screen 2 (group 1)|Satelite System|Take 001|BaseLayer
+    7400214: Single flat screen 2 (group 1)|Single flat screen 1 (1)|Take 001|BaseLayer
+    7400216: Single flat screen 2 (group 1)|Single flat screen 1 (2)|Take 001|BaseLayer
+    7400218: Single flat screen 2 (group 1)|Single flat screen 1 (group 1)|Take 001|BaseLayer
+    7400220: Single flat screen 2 (group 1)|Single flat screen 1 (group 2)|Take 001|BaseLayer
+    7400222: Single flat screen 2 (group 1)|Single flat screen 2 (1)|Take 001|BaseLayer
+    7400224: Single flat screen 2 (group 1)|Single flat screen 2 (2)|Take 001|BaseLayer
+    7400226: Single flat screen 2 (group 1)|Single flat screen 2 (3)|Take 001|BaseLayer
+    7400228: Single flat screen 2 (group 1)|Single flat screen 2 (group 1)|Take 001|BaseLayer
+    7400230: Single flat screen 2 (group 1)|Single flat screen 2 (group 2)|Take 001|BaseLayer
+    7400232: Single flat screen 2 (1)|Background reflect|Take 001|BaseLayer
+    7400234: Single flat screen 2 (1)|Background|Take 001|BaseLayer
+    7400236: Single flat screen 2 (1)|Camera001.Target|Take 001|BaseLayer
+    7400238: Single flat screen 2 (1)|Camera001|Take 001|BaseLayer
+    7400240: Single flat screen 2 (1)|Modutec PLG Maquet|Take 001|BaseLayer
+    7400242: Single flat screen 2 (1)|Powerled 500 (1)|Take 001|BaseLayer
+    7400244: Single flat screen 2 (1)|Powerled 500 (2)|Take 001|BaseLayer
+    7400246: Single flat screen 2 (1)|Powerled 500 (3)|Take 001|BaseLayer
+    7400248: Single flat screen 2 (1)|Powerled 500 (4)|Take 001|BaseLayer
+    7400250: Single flat screen 2 (1)|Powerled 500 (group 1)|Take 001|BaseLayer
+    7400252: Single flat screen 2 (1)|Powerled 500 (group 2)|Take 001|BaseLayer
+    7400254: Single flat screen 2 (1)|Powerled 500 (group 3)|Take 001|BaseLayer
+    7400256: Single flat screen 2 (1)|Powerled 700 (1)|Take 001|BaseLayer
+    7400258: Single flat screen 2 (1)|Powerled 700 (3)|Take 001|BaseLayer
+    7400260: Single flat screen 2 (1)|Powerled 700 (4)|Take 001|BaseLayer
+    7400262: Single flat screen 2 (1)|Powerled 700 (group 1)|Take 001|BaseLayer
+    7400264: Single flat screen 2 (1)|Powerled 700 (group 2)|Take 001|BaseLayer
+    7400266: Single flat screen 2 (1)|Powerled 700 (group 3)|Take 001|BaseLayer
+    7400268: Single flat screen 2 (1)|Powerled System|Take 001|BaseLayer
+    7400270: Single flat screen 2 (1)|Satelite System|Take 001|BaseLayer
+    7400272: Single flat screen 2 (1)|Single flat screen 1 (1)|Take 001|BaseLayer
+    7400274: Single flat screen 2 (1)|Single flat screen 1 (2)|Take 001|BaseLayer
+    7400276: Single flat screen 2 (1)|Single flat screen 1 (group 1)|Take 001|BaseLayer
+    7400278: Single flat screen 2 (1)|Single flat screen 1 (group 2)|Take 001|BaseLayer
+    7400280: Single flat screen 2 (1)|Single flat screen 2 (1)|Take 001|BaseLayer
+    7400282: Single flat screen 2 (1)|Single flat screen 2 (2)|Take 001|BaseLayer
+    7400284: Single flat screen 2 (1)|Single flat screen 2 (3)|Take 001|BaseLayer
+    7400286: Single flat screen 2 (1)|Single flat screen 2 (group 1)|Take 001|BaseLayer
+    7400288: Single flat screen 2 (1)|Single flat screen 2 (group 2)|Take 001|BaseLayer
+    7400290: Single flat screen 2 (2)|Background reflect|Take 001|BaseLayer
+    7400292: Single flat screen 2 (2)|Background|Take 001|BaseLayer
+    7400294: Single flat screen 2 (2)|Camera001.Target|Take 001|BaseLayer
+    7400296: Single flat screen 2 (2)|Camera001|Take 001|BaseLayer
+    7400298: Single flat screen 2 (2)|Modutec PLG Maquet|Take 001|BaseLayer
+    7400300: Single flat screen 2 (2)|Powerled 500 (1)|Take 001|BaseLayer
+    7400302: Single flat screen 2 (2)|Powerled 500 (2)|Take 001|BaseLayer
+    7400304: Single flat screen 2 (2)|Powerled 500 (3)|Take 001|BaseLayer
+    7400306: Single flat screen 2 (2)|Powerled 500 (4)|Take 001|BaseLayer
+    7400308: Single flat screen 2 (2)|Powerled 500 (group 1)|Take 001|BaseLayer
+    7400310: Single flat screen 2 (2)|Powerled 500 (group 2)|Take 001|BaseLayer
+    7400312: Single flat screen 2 (2)|Powerled 500 (group 3)|Take 001|BaseLayer
+    7400314: Single flat screen 2 (2)|Powerled 700 (1)|Take 001|BaseLayer
+    7400316: Single flat screen 2 (2)|Powerled 700 (3)|Take 001|BaseLayer
+    7400318: Single flat screen 2 (2)|Powerled 700 (4)|Take 001|BaseLayer
+    7400320: Single flat screen 2 (2)|Powerled 700 (group 1)|Take 001|BaseLayer
+    7400322: Single flat screen 2 (2)|Powerled 700 (group 2)|Take 001|BaseLayer
+    7400324: Single flat screen 2 (2)|Powerled 700 (group 3)|Take 001|BaseLayer
+    7400326: Single flat screen 2 (2)|Powerled System|Take 001|BaseLayer
+    7400328: Single flat screen 2 (2)|Satelite System|Take 001|BaseLayer
+    7400330: Single flat screen 2 (2)|Single flat screen 1 (1)|Take 001|BaseLayer
+    7400332: Single flat screen 2 (2)|Single flat screen 1 (2)|Take 001|BaseLayer
+    7400334: Single flat screen 2 (2)|Single flat screen 1 (group 1)|Take 001|BaseLayer
+    7400336: Single flat screen 2 (2)|Single flat screen 1 (group 2)|Take 001|BaseLayer
+    7400338: Single flat screen 2 (2)|Single flat screen 2 (1)|Take 001|BaseLayer
+    7400340: Single flat screen 2 (2)|Single flat screen 2 (2)|Take 001|BaseLayer
+    7400342: Single flat screen 2 (2)|Single flat screen 2 (3)|Take 001|BaseLayer
+    7400344: Single flat screen 2 (2)|Single flat screen 2 (group 1)|Take 001|BaseLayer
+    7400346: Single flat screen 2 (2)|Single flat screen 2 (group 2)|Take 001|BaseLayer
+    7400348: Powerled 500 (group 3)|Background reflect|Take 001|BaseLayer
+    7400350: Powerled 500 (group 3)|Background|Take 001|BaseLayer
+    7400352: Powerled 500 (group 3)|Camera001.Target|Take 001|BaseLayer
+    7400354: Powerled 500 (group 3)|Camera001|Take 001|BaseLayer
+    7400356: Powerled 500 (group 3)|Modutec PLG Maquet|Take 001|BaseLayer
+    7400358: Powerled 500 (group 3)|Powerled 500 (1)|Take 001|BaseLayer
+    7400360: Powerled 500 (group 3)|Powerled 500 (2)|Take 001|BaseLayer
+    7400362: Powerled 500 (group 3)|Powerled 500 (3)|Take 001|BaseLayer
+    7400364: Powerled 500 (group 3)|Powerled 500 (4)|Take 001|BaseLayer
+    7400366: Powerled 500 (group 3)|Powerled 500 (group 1)|Take 001|BaseLayer
+    7400368: Powerled 500 (group 3)|Powerled 500 (group 2)|Take 001|BaseLayer
+    7400370: Powerled 500 (group 3)|Powerled 500 (group 3)|Take 001|BaseLayer
+    7400372: Powerled 500 (group 3)|Powerled 700 (1)|Take 001|BaseLayer
+    7400374: Powerled 500 (group 3)|Powerled 700 (3)|Take 001|BaseLayer
+    7400376: Powerled 500 (group 3)|Powerled 700 (4)|Take 001|BaseLayer
+    7400378: Powerled 500 (group 3)|Powerled 700 (group 1)|Take 001|BaseLayer
+    7400380: Powerled 500 (group 3)|Powerled 700 (group 2)|Take 001|BaseLayer
+    7400382: Powerled 500 (group 3)|Powerled 700 (group 3)|Take 001|BaseLayer
+    7400384: Powerled 500 (group 3)|Powerled System|Take 001|BaseLayer
+    7400386: Powerled 500 (group 3)|Satelite System|Take 001|BaseLayer
+    7400388: Powerled 500 (group 3)|Single flat screen 1 (1)|Take 001|BaseLayer
+    7400390: Powerled 500 (group 3)|Single flat screen 1 (2)|Take 001|BaseLayer
+    7400392: Powerled 500 (group 3)|Single flat screen 1 (group 1)|Take 001|BaseLayer
+    7400394: Powerled 500 (group 3)|Single flat screen 1 (group 2)|Take 001|BaseLayer
+    7400396: Powerled 500 (group 3)|Single flat screen 2 (1)|Take 001|BaseLayer
+    7400398: Powerled 500 (group 3)|Single flat screen 2 (2)|Take 001|BaseLayer
+    7400400: Powerled 500 (group 3)|Single flat screen 2 (3)|Take 001|BaseLayer
+    7400402: Powerled 500 (group 3)|Single flat screen 2 (group 1)|Take 001|BaseLayer
+    7400404: Powerled 500 (group 3)|Single flat screen 2 (group 2)|Take 001|BaseLayer
+    7400406: Powerled 500 (4)|Background reflect|Take 001|BaseLayer
+    7400408: Powerled 500 (4)|Background|Take 001|BaseLayer
+    7400410: Powerled 500 (4)|Camera001.Target|Take 001|BaseLayer
+    7400412: Powerled 500 (4)|Camera001|Take 001|BaseLayer
+    7400414: Powerled 500 (4)|Modutec PLG Maquet|Take 001|BaseLayer
+    7400416: Powerled 500 (4)|Powerled 500 (1)|Take 001|BaseLayer
+    7400418: Powerled 500 (4)|Powerled 500 (2)|Take 001|BaseLayer
+    7400420: Powerled 500 (4)|Powerled 500 (3)|Take 001|BaseLayer
+    7400422: Powerled 500 (4)|Powerled 500 (4)|Take 001|BaseLayer
+    7400424: Powerled 500 (4)|Powerled 500 (group 1)|Take 001|BaseLayer
+    7400426: Powerled 500 (4)|Powerled 500 (group 2)|Take 001|BaseLayer
+    7400428: Powerled 500 (4)|Powerled 500 (group 3)|Take 001|BaseLayer
+    7400430: Powerled 500 (4)|Powerled 700 (1)|Take 001|BaseLayer
+    7400432: Powerled 500 (4)|Powerled 700 (3)|Take 001|BaseLayer
+    7400434: Powerled 500 (4)|Powerled 700 (4)|Take 001|BaseLayer
+    7400436: Powerled 500 (4)|Powerled 700 (group 1)|Take 001|BaseLayer
+    7400438: Powerled 500 (4)|Powerled 700 (group 2)|Take 001|BaseLayer
+    7400440: Powerled 500 (4)|Powerled 700 (group 3)|Take 001|BaseLayer
+    7400442: Powerled 500 (4)|Powerled System|Take 001|BaseLayer
+    7400444: Powerled 500 (4)|Satelite System|Take 001|BaseLayer
+    7400446: Powerled 500 (4)|Single flat screen 1 (1)|Take 001|BaseLayer
+    7400448: Powerled 500 (4)|Single flat screen 1 (2)|Take 001|BaseLayer
+    7400450: Powerled 500 (4)|Single flat screen 1 (group 1)|Take 001|BaseLayer
+    7400452: Powerled 500 (4)|Single flat screen 1 (group 2)|Take 001|BaseLayer
+    7400454: Powerled 500 (4)|Single flat screen 2 (1)|Take 001|BaseLayer
+    7400456: Powerled 500 (4)|Single flat screen 2 (2)|Take 001|BaseLayer
+    7400458: Powerled 500 (4)|Single flat screen 2 (3)|Take 001|BaseLayer
+    7400460: Powerled 500 (4)|Single flat screen 2 (group 1)|Take 001|BaseLayer
+    7400462: Powerled 500 (4)|Single flat screen 2 (group 2)|Take 001|BaseLayer
+    7400464: Powerled 500 (group 2)|Background reflect|Take 001|BaseLayer
+    7400466: Powerled 500 (group 2)|Background|Take 001|BaseLayer
+    7400468: Powerled 500 (group 2)|Camera001.Target|Take 001|BaseLayer
+    7400470: Powerled 500 (group 2)|Camera001|Take 001|BaseLayer
+    7400472: Powerled 500 (group 2)|Modutec PLG Maquet|Take 001|BaseLayer
+    7400474: Powerled 500 (group 2)|Powerled 500 (1)|Take 001|BaseLayer
+    7400476: Powerled 500 (group 2)|Powerled 500 (2)|Take 001|BaseLayer
+    7400478: Powerled 500 (group 2)|Powerled 500 (3)|Take 001|BaseLayer
+    7400480: Powerled 500 (group 2)|Powerled 500 (4)|Take 001|BaseLayer
+    7400482: Powerled 500 (group 2)|Powerled 500 (group 1)|Take 001|BaseLayer
+    7400484: Powerled 500 (group 2)|Powerled 500 (group 2)|Take 001|BaseLayer
+    7400486: Powerled 500 (group 2)|Powerled 500 (group 3)|Take 001|BaseLayer
+    7400488: Powerled 500 (group 2)|Powerled 700 (1)|Take 001|BaseLayer
+    7400490: Powerled 500 (group 2)|Powerled 700 (3)|Take 001|BaseLayer
+    7400492: Powerled 500 (group 2)|Powerled 700 (4)|Take 001|BaseLayer
+    7400494: Powerled 500 (group 2)|Powerled 700 (group 1)|Take 001|BaseLayer
+    7400496: Powerled 500 (group 2)|Powerled 700 (group 2)|Take 001|BaseLayer
+    7400498: Powerled 500 (group 2)|Powerled 700 (group 3)|Take 001|BaseLayer
+    7400500: Powerled 500 (group 2)|Powerled System|Take 001|BaseLayer
+    7400502: Powerled 500 (group 2)|Satelite System|Take 001|BaseLayer
+    7400504: Powerled 500 (group 2)|Single flat screen 1 (1)|Take 001|BaseLayer
+    7400506: Powerled 500 (group 2)|Single flat screen 1 (2)|Take 001|BaseLayer
+    7400508: Powerled 500 (group 2)|Single flat screen 1 (group 1)|Take 001|BaseLayer
+    7400510: Powerled 500 (group 2)|Single flat screen 1 (group 2)|Take 001|BaseLayer
+    7400512: Powerled 500 (group 2)|Single flat screen 2 (1)|Take 001|BaseLayer
+    7400514: Powerled 500 (group 2)|Single flat screen 2 (2)|Take 001|BaseLayer
+    7400516: Powerled 500 (group 2)|Single flat screen 2 (3)|Take 001|BaseLayer
+    7400518: Powerled 500 (group 2)|Single flat screen 2 (group 1)|Take 001|BaseLayer
+    7400520: Powerled 500 (group 2)|Single flat screen 2 (group 2)|Take 001|BaseLayer
+    7400522: Powerled 500 (3)|Background reflect|Take 001|BaseLayer
+    7400524: Powerled 500 (3)|Background|Take 001|BaseLayer
+    7400526: Powerled 500 (3)|Camera001.Target|Take 001|BaseLayer
+    7400528: Powerled 500 (3)|Camera001|Take 001|BaseLayer
+    7400530: Powerled 500 (3)|Modutec PLG Maquet|Take 001|BaseLayer
+    7400532: Powerled 500 (3)|Powerled 500 (1)|Take 001|BaseLayer
+    7400534: Powerled 500 (3)|Powerled 500 (2)|Take 001|BaseLayer
+    7400536: Powerled 500 (3)|Powerled 500 (3)|Take 001|BaseLayer
+    7400538: Powerled 500 (3)|Powerled 500 (4)|Take 001|BaseLayer
+    7400540: Powerled 500 (3)|Powerled 500 (group 1)|Take 001|BaseLayer
+    7400542: Powerled 500 (3)|Powerled 500 (group 2)|Take 001|BaseLayer
+    7400544: Powerled 500 (3)|Powerled 500 (group 3)|Take 001|BaseLayer
+    7400546: Powerled 500 (3)|Powerled 700 (1)|Take 001|BaseLayer
+    7400548: Powerled 500 (3)|Powerled 700 (3)|Take 001|BaseLayer
+    7400550: Powerled 500 (3)|Powerled 700 (4)|Take 001|BaseLayer
+    7400552: Powerled 500 (3)|Powerled 700 (group 1)|Take 001|BaseLayer
+    7400554: Powerled 500 (3)|Powerled 700 (group 2)|Take 001|BaseLayer
+    7400556: Powerled 500 (3)|Powerled 700 (group 3)|Take 001|BaseLayer
+    7400558: Powerled 500 (3)|Powerled System|Take 001|BaseLayer
+    7400560: Powerled 500 (3)|Satelite System|Take 001|BaseLayer
+    7400562: Powerled 500 (3)|Single flat screen 1 (1)|Take 001|BaseLayer
+    7400564: Powerled 500 (3)|Single flat screen 1 (2)|Take 001|BaseLayer
+    7400566: Powerled 500 (3)|Single flat screen 1 (group 1)|Take 001|BaseLayer
+    7400568: Powerled 500 (3)|Single flat screen 1 (group 2)|Take 001|BaseLayer
+    7400570: Powerled 500 (3)|Single flat screen 2 (1)|Take 001|BaseLayer
+    7400572: Powerled 500 (3)|Single flat screen 2 (2)|Take 001|BaseLayer
+    7400574: Powerled 500 (3)|Single flat screen 2 (3)|Take 001|BaseLayer
+    7400576: Powerled 500 (3)|Single flat screen 2 (group 1)|Take 001|BaseLayer
+    7400578: Powerled 500 (3)|Single flat screen 2 (group 2)|Take 001|BaseLayer
+    7400580: Powerled 500 (group 1)|Background reflect|Take 001|BaseLayer
+    7400582: Powerled 500 (group 1)|Background|Take 001|BaseLayer
+    7400584: Powerled 500 (group 1)|Camera001.Target|Take 001|BaseLayer
+    7400586: Powerled 500 (group 1)|Camera001|Take 001|BaseLayer
+    7400588: Powerled 500 (group 1)|Modutec PLG Maquet|Take 001|BaseLayer
+    7400590: Powerled 500 (group 1)|Powerled 500 (1)|Take 001|BaseLayer
+    7400592: Powerled 500 (group 1)|Powerled 500 (2)|Take 001|BaseLayer
+    7400594: Powerled 500 (group 1)|Powerled 500 (3)|Take 001|BaseLayer
+    7400596: Powerled 500 (group 1)|Powerled 500 (4)|Take 001|BaseLayer
+    7400598: Powerled 500 (group 1)|Powerled 500 (group 1)|Take 001|BaseLayer
+    7400600: Powerled 500 (group 1)|Powerled 500 (group 2)|Take 001|BaseLayer
+    7400602: Powerled 500 (group 1)|Powerled 500 (group 3)|Take 001|BaseLayer
+    7400604: Powerled 500 (group 1)|Powerled 700 (1)|Take 001|BaseLayer
+    7400606: Powerled 500 (group 1)|Powerled 700 (3)|Take 001|BaseLayer
+    7400608: Powerled 500 (group 1)|Powerled 700 (4)|Take 001|BaseLayer
+    7400610: Powerled 500 (group 1)|Powerled 700 (group 1)|Take 001|BaseLayer
+    7400612: Powerled 500 (group 1)|Powerled 700 (group 2)|Take 001|BaseLayer
+    7400614: Powerled 500 (group 1)|Powerled 700 (group 3)|Take 001|BaseLayer
+    7400616: Powerled 500 (group 1)|Powerled System|Take 001|BaseLayer
+    7400618: Powerled 500 (group 1)|Satelite System|Take 001|BaseLayer
+    7400620: Powerled 500 (group 1)|Single flat screen 1 (1)|Take 001|BaseLayer
+    7400622: Powerled 500 (group 1)|Single flat screen 1 (2)|Take 001|BaseLayer
+    7400624: Powerled 500 (group 1)|Single flat screen 1 (group 1)|Take 001|BaseLayer
+    7400626: Powerled 500 (group 1)|Single flat screen 1 (group 2)|Take 001|BaseLayer
+    7400628: Powerled 500 (group 1)|Single flat screen 2 (1)|Take 001|BaseLayer
+    7400630: Powerled 500 (group 1)|Single flat screen 2 (2)|Take 001|BaseLayer
+    7400632: Powerled 500 (group 1)|Single flat screen 2 (3)|Take 001|BaseLayer
+    7400634: Powerled 500 (group 1)|Single flat screen 2 (group 1)|Take 001|BaseLayer
+    7400636: Powerled 500 (group 1)|Single flat screen 2 (group 2)|Take 001|BaseLayer
+    7400638: Powerled 500 (2)|Background reflect|Take 001|BaseLayer
+    7400640: Powerled 500 (2)|Background|Take 001|BaseLayer
+    7400642: Powerled 500 (2)|Camera001.Target|Take 001|BaseLayer
+    7400644: Powerled 500 (2)|Camera001|Take 001|BaseLayer
+    7400646: Powerled 500 (2)|Modutec PLG Maquet|Take 001|BaseLayer
+    7400648: Powerled 500 (2)|Powerled 500 (1)|Take 001|BaseLayer
+    7400650: Powerled 500 (2)|Powerled 500 (2)|Take 001|BaseLayer
+    7400652: Powerled 500 (2)|Powerled 500 (3)|Take 001|BaseLayer
+    7400654: Powerled 500 (2)|Powerled 500 (4)|Take 001|BaseLayer
+    7400656: Powerled 500 (2)|Powerled 500 (group 1)|Take 001|BaseLayer
+    7400658: Powerled 500 (2)|Powerled 500 (group 2)|Take 001|BaseLayer
+    7400660: Powerled 500 (2)|Powerled 500 (group 3)|Take 001|BaseLayer
+    7400662: Powerled 500 (2)|Powerled 700 (1)|Take 001|BaseLayer
+    7400664: Powerled 500 (2)|Powerled 700 (3)|Take 001|BaseLayer
+    7400666: Powerled 500 (2)|Powerled 700 (4)|Take 001|BaseLayer
+    7400668: Powerled 500 (2)|Powerled 700 (group 1)|Take 001|BaseLayer
+    7400670: Powerled 500 (2)|Powerled 700 (group 2)|Take 001|BaseLayer
+    7400672: Powerled 500 (2)|Powerled 700 (group 3)|Take 001|BaseLayer
+    7400674: Powerled 500 (2)|Powerled System|Take 001|BaseLayer
+    7400676: Powerled 500 (2)|Satelite System|Take 001|BaseLayer
+    7400678: Powerled 500 (2)|Single flat screen 1 (1)|Take 001|BaseLayer
+    7400680: Powerled 500 (2)|Single flat screen 1 (2)|Take 001|BaseLayer
+    7400682: Powerled 500 (2)|Single flat screen 1 (group 1)|Take 001|BaseLayer
+    7400684: Powerled 500 (2)|Single flat screen 1 (group 2)|Take 001|BaseLayer
+    7400686: Powerled 500 (2)|Single flat screen 2 (1)|Take 001|BaseLayer
+    7400688: Powerled 500 (2)|Single flat screen 2 (2)|Take 001|BaseLayer
+    7400690: Powerled 500 (2)|Single flat screen 2 (3)|Take 001|BaseLayer
+    7400692: Powerled 500 (2)|Single flat screen 2 (group 1)|Take 001|BaseLayer
+    7400694: Powerled 500 (2)|Single flat screen 2 (group 2)|Take 001|BaseLayer
+    7400696: Powerled 500 (1)|Background reflect|Take 001|BaseLayer
+    7400698: Powerled 500 (1)|Background|Take 001|BaseLayer
+    7400700: Powerled 500 (1)|Camera001.Target|Take 001|BaseLayer
+    7400702: Powerled 500 (1)|Camera001|Take 001|BaseLayer
+    7400704: Powerled 500 (1)|Modutec PLG Maquet|Take 001|BaseLayer
+    7400706: Powerled 500 (1)|Powerled 500 (1)|Take 001|BaseLayer
+    7400708: Powerled 500 (1)|Powerled 500 (2)|Take 001|BaseLayer
+    7400710: Powerled 500 (1)|Powerled 500 (3)|Take 001|BaseLayer
+    7400712: Powerled 500 (1)|Powerled 500 (4)|Take 001|BaseLayer
+    7400714: Powerled 500 (1)|Powerled 500 (group 1)|Take 001|BaseLayer
+    7400716: Powerled 500 (1)|Powerled 500 (group 2)|Take 001|BaseLayer
+    7400718: Powerled 500 (1)|Powerled 500 (group 3)|Take 001|BaseLayer
+    7400720: Powerled 500 (1)|Powerled 700 (1)|Take 001|BaseLayer
+    7400722: Powerled 500 (1)|Powerled 700 (3)|Take 001|BaseLayer
+    7400724: Powerled 500 (1)|Powerled 700 (4)|Take 001|BaseLayer
+    7400726: Powerled 500 (1)|Powerled 700 (group 1)|Take 001|BaseLayer
+    7400728: Powerled 500 (1)|Powerled 700 (group 2)|Take 001|BaseLayer
+    7400730: Powerled 500 (1)|Powerled 700 (group 3)|Take 001|BaseLayer
+    7400732: Powerled 500 (1)|Powerled System|Take 001|BaseLayer
+    7400734: Powerled 500 (1)|Satelite System|Take 001|BaseLayer
+    7400736: Powerled 500 (1)|Single flat screen 1 (1)|Take 001|BaseLayer
+    7400738: Powerled 500 (1)|Single flat screen 1 (2)|Take 001|BaseLayer
+    7400740: Powerled 500 (1)|Single flat screen 1 (group 1)|Take 001|BaseLayer
+    7400742: Powerled 500 (1)|Single flat screen 1 (group 2)|Take 001|BaseLayer
+    7400744: Powerled 500 (1)|Single flat screen 2 (1)|Take 001|BaseLayer
+    7400746: Powerled 500 (1)|Single flat screen 2 (2)|Take 001|BaseLayer
+    7400748: Powerled 500 (1)|Single flat screen 2 (3)|Take 001|BaseLayer
+    7400750: Powerled 500 (1)|Single flat screen 2 (group 1)|Take 001|BaseLayer
+    7400752: Powerled 500 (1)|Single flat screen 2 (group 2)|Take 001|BaseLayer
+    7400754: Powerled 700 (group 3)|Background reflect|Take 001|BaseLayer
+    7400756: Powerled 700 (group 3)|Background|Take 001|BaseLayer
+    7400758: Powerled 700 (group 3)|Camera001.Target|Take 001|BaseLayer
+    7400760: Powerled 700 (group 3)|Camera001|Take 001|BaseLayer
+    7400762: Powerled 700 (group 3)|Modutec PLG Maquet|Take 001|BaseLayer
+    7400764: Powerled 700 (group 3)|Powerled 500 (1)|Take 001|BaseLayer
+    7400766: Powerled 700 (group 3)|Powerled 500 (2)|Take 001|BaseLayer
+    7400768: Powerled 700 (group 3)|Powerled 500 (3)|Take 001|BaseLayer
+    7400770: Powerled 700 (group 3)|Powerled 500 (4)|Take 001|BaseLayer
+    7400772: Powerled 700 (group 3)|Powerled 500 (group 1)|Take 001|BaseLayer
+    7400774: Powerled 700 (group 3)|Powerled 500 (group 2)|Take 001|BaseLayer
+    7400776: Powerled 700 (group 3)|Powerled 500 (group 3)|Take 001|BaseLayer
+    7400778: Powerled 700 (group 3)|Powerled 700 (1)|Take 001|BaseLayer
+    7400780: Powerled 700 (group 3)|Powerled 700 (3)|Take 001|BaseLayer
+    7400782: Powerled 700 (group 3)|Powerled 700 (4)|Take 001|BaseLayer
+    7400784: Powerled 700 (group 3)|Powerled 700 (group 1)|Take 001|BaseLayer
+    7400786: Powerled 700 (group 3)|Powerled 700 (group 2)|Take 001|BaseLayer
+    7400788: Powerled 700 (group 3)|Powerled 700 (group 3)|Take 001|BaseLayer
+    7400790: Powerled 700 (group 3)|Powerled System|Take 001|BaseLayer
+    7400792: Powerled 700 (group 3)|Satelite System|Take 001|BaseLayer
+    7400794: Powerled 700 (group 3)|Single flat screen 1 (1)|Take 001|BaseLayer
+    7400796: Powerled 700 (group 3)|Single flat screen 1 (2)|Take 001|BaseLayer
+    7400798: Powerled 700 (group 3)|Single flat screen 1 (group 1)|Take 001|BaseLayer
+    7400800: Powerled 700 (group 3)|Single flat screen 1 (group 2)|Take 001|BaseLayer
+    7400802: Powerled 700 (group 3)|Single flat screen 2 (1)|Take 001|BaseLayer
+    7400804: Powerled 700 (group 3)|Single flat screen 2 (2)|Take 001|BaseLayer
+    7400806: Powerled 700 (group 3)|Single flat screen 2 (3)|Take 001|BaseLayer
+    7400808: Powerled 700 (group 3)|Single flat screen 2 (group 1)|Take 001|BaseLayer
+    7400810: Powerled 700 (group 3)|Single flat screen 2 (group 2)|Take 001|BaseLayer
+    7400812: Powerled 700 (4)|Background reflect|Take 001|BaseLayer
+    7400814: Powerled 700 (4)|Background|Take 001|BaseLayer
+    7400816: Powerled 700 (4)|Camera001.Target|Take 001|BaseLayer
+    7400818: Powerled 700 (4)|Camera001|Take 001|BaseLayer
+    7400820: Powerled 700 (4)|Modutec PLG Maquet|Take 001|BaseLayer
+    7400822: Powerled 700 (4)|Powerled 500 (1)|Take 001|BaseLayer
+    7400824: Powerled 700 (4)|Powerled 500 (2)|Take 001|BaseLayer
+    7400826: Powerled 700 (4)|Powerled 500 (3)|Take 001|BaseLayer
+    7400828: Powerled 700 (4)|Powerled 500 (4)|Take 001|BaseLayer
+    7400830: Powerled 700 (4)|Powerled 500 (group 1)|Take 001|BaseLayer
+    7400832: Powerled 700 (4)|Powerled 500 (group 2)|Take 001|BaseLayer
+    7400834: Powerled 700 (4)|Powerled 500 (group 3)|Take 001|BaseLayer
+    7400836: Powerled 700 (4)|Powerled 700 (1)|Take 001|BaseLayer
+    7400838: Powerled 700 (4)|Powerled 700 (3)|Take 001|BaseLayer
+    7400840: Powerled 700 (4)|Powerled 700 (4)|Take 001|BaseLayer
+    7400842: Powerled 700 (4)|Powerled 700 (group 1)|Take 001|BaseLayer
+    7400844: Powerled 700 (4)|Powerled 700 (group 2)|Take 001|BaseLayer
+    7400846: Powerled 700 (4)|Powerled 700 (group 3)|Take 001|BaseLayer
+    7400848: Powerled 700 (4)|Powerled System|Take 001|BaseLayer
+    7400850: Powerled 700 (4)|Satelite System|Take 001|BaseLayer
+    7400852: Powerled 700 (4)|Single flat screen 1 (1)|Take 001|BaseLayer
+    7400854: Powerled 700 (4)|Single flat screen 1 (2)|Take 001|BaseLayer
+    7400856: Powerled 700 (4)|Single flat screen 1 (group 1)|Take 001|BaseLayer
+    7400858: Powerled 700 (4)|Single flat screen 1 (group 2)|Take 001|BaseLayer
+    7400860: Powerled 700 (4)|Single flat screen 2 (1)|Take 001|BaseLayer
+    7400862: Powerled 700 (4)|Single flat screen 2 (2)|Take 001|BaseLayer
+    7400864: Powerled 700 (4)|Single flat screen 2 (3)|Take 001|BaseLayer
+    7400866: Powerled 700 (4)|Single flat screen 2 (group 1)|Take 001|BaseLayer
+    7400868: Powerled 700 (4)|Single flat screen 2 (group 2)|Take 001|BaseLayer
+    7400870: Powerled 700 (group 2)|Background reflect|Take 001|BaseLayer
+    7400872: Powerled 700 (group 2)|Background|Take 001|BaseLayer
+    7400874: Powerled 700 (group 2)|Camera001.Target|Take 001|BaseLayer
+    7400876: Powerled 700 (group 2)|Camera001|Take 001|BaseLayer
+    7400878: Powerled 700 (group 2)|Modutec PLG Maquet|Take 001|BaseLayer
+    7400880: Powerled 700 (group 2)|Powerled 500 (1)|Take 001|BaseLayer
+    7400882: Powerled 700 (group 2)|Powerled 500 (2)|Take 001|BaseLayer
+    7400884: Powerled 700 (group 2)|Powerled 500 (3)|Take 001|BaseLayer
+    7400886: Powerled 700 (group 2)|Powerled 500 (4)|Take 001|BaseLayer
+    7400888: Powerled 700 (group 2)|Powerled 500 (group 1)|Take 001|BaseLayer
+    7400890: Powerled 700 (group 2)|Powerled 500 (group 2)|Take 001|BaseLayer
+    7400892: Powerled 700 (group 2)|Powerled 500 (group 3)|Take 001|BaseLayer
+    7400894: Powerled 700 (group 2)|Powerled 700 (1)|Take 001|BaseLayer
+    7400896: Powerled 700 (group 2)|Powerled 700 (3)|Take 001|BaseLayer
+    7400898: Powerled 700 (group 2)|Powerled 700 (4)|Take 001|BaseLayer
+    7400900: Powerled 700 (group 2)|Powerled 700 (group 1)|Take 001|BaseLayer
+    7400902: Powerled 700 (group 2)|Powerled 700 (group 2)|Take 001|BaseLayer
+    7400904: Powerled 700 (group 2)|Powerled 700 (group 3)|Take 001|BaseLayer
+    7400906: Powerled 700 (group 2)|Powerled System|Take 001|BaseLayer
+    7400908: Powerled 700 (group 2)|Satelite System|Take 001|BaseLayer
+    7400910: Powerled 700 (group 2)|Single flat screen 1 (1)|Take 001|BaseLayer
+    7400912: Powerled 700 (group 2)|Single flat screen 1 (2)|Take 001|BaseLayer
+    7400914: Powerled 700 (group 2)|Single flat screen 1 (group 1)|Take 001|BaseLayer
+    7400916: Powerled 700 (group 2)|Single flat screen 1 (group 2)|Take 001|BaseLayer
+    7400918: Powerled 700 (group 2)|Single flat screen 2 (1)|Take 001|BaseLayer
+    7400920: Powerled 700 (group 2)|Single flat screen 2 (2)|Take 001|BaseLayer
+    7400922: Powerled 700 (group 2)|Single flat screen 2 (3)|Take 001|BaseLayer
+    7400924: Powerled 700 (group 2)|Single flat screen 2 (group 1)|Take 001|BaseLayer
+    7400926: Powerled 700 (group 2)|Single flat screen 2 (group 2)|Take 001|BaseLayer
+    7400928: Powerled 700 (group 1)|Background reflect|Take 001|BaseLayer
+    7400930: Powerled 700 (group 1)|Background|Take 001|BaseLayer
+    7400932: Powerled 700 (group 1)|Camera001.Target|Take 001|BaseLayer
+    7400934: Powerled 700 (group 1)|Camera001|Take 001|BaseLayer
+    7400936: Powerled 700 (group 1)|Modutec PLG Maquet|Take 001|BaseLayer
+    7400938: Powerled 700 (group 1)|Powerled 500 (1)|Take 001|BaseLayer
+    7400940: Powerled 700 (group 1)|Powerled 500 (2)|Take 001|BaseLayer
+    7400942: Powerled 700 (group 1)|Powerled 500 (3)|Take 001|BaseLayer
+    7400944: Powerled 700 (group 1)|Powerled 500 (4)|Take 001|BaseLayer
+    7400946: Powerled 700 (group 1)|Powerled 500 (group 1)|Take 001|BaseLayer
+    7400948: Powerled 700 (group 1)|Powerled 500 (group 2)|Take 001|BaseLayer
+    7400950: Powerled 700 (group 1)|Powerled 500 (group 3)|Take 001|BaseLayer
+    7400952: Powerled 700 (group 1)|Powerled 700 (1)|Take 001|BaseLayer
+    7400954: Powerled 700 (group 1)|Powerled 700 (3)|Take 001|BaseLayer
+    7400956: Powerled 700 (group 1)|Powerled 700 (4)|Take 001|BaseLayer
+    7400958: Powerled 700 (group 1)|Powerled 700 (group 1)|Take 001|BaseLayer
+    7400960: Powerled 700 (group 1)|Powerled 700 (group 2)|Take 001|BaseLayer
+    7400962: Powerled 700 (group 1)|Powerled 700 (group 3)|Take 001|BaseLayer
+    7400964: Powerled 700 (group 1)|Powerled System|Take 001|BaseLayer
+    7400966: Powerled 700 (group 1)|Satelite System|Take 001|BaseLayer
+    7400968: Powerled 700 (group 1)|Single flat screen 1 (1)|Take 001|BaseLayer
+    7400970: Powerled 700 (group 1)|Single flat screen 1 (2)|Take 001|BaseLayer
+    7400972: Powerled 700 (group 1)|Single flat screen 1 (group 1)|Take 001|BaseLayer
+    7400974: Powerled 700 (group 1)|Single flat screen 1 (group 2)|Take 001|BaseLayer
+    7400976: Powerled 700 (group 1)|Single flat screen 2 (1)|Take 001|BaseLayer
+    7400978: Powerled 700 (group 1)|Single flat screen 2 (2)|Take 001|BaseLayer
+    7400980: Powerled 700 (group 1)|Single flat screen 2 (3)|Take 001|BaseLayer
+    7400982: Powerled 700 (group 1)|Single flat screen 2 (group 1)|Take 001|BaseLayer
+    7400984: Powerled 700 (group 1)|Single flat screen 2 (group 2)|Take 001|BaseLayer
+    7400986: Powerled 700 (1)|Background reflect|Take 001|BaseLayer
+    7400988: Powerled 700 (1)|Background|Take 001|BaseLayer
+    7400990: Powerled 700 (1)|Camera001.Target|Take 001|BaseLayer
+    7400992: Powerled 700 (1)|Camera001|Take 001|BaseLayer
+    7400994: Powerled 700 (1)|Modutec PLG Maquet|Take 001|BaseLayer
+    7400996: Powerled 700 (1)|Powerled 500 (1)|Take 001|BaseLayer
+    7400998: Powerled 700 (1)|Powerled 500 (2)|Take 001|BaseLayer
+    7401000: Powerled 700 (1)|Powerled 500 (3)|Take 001|BaseLayer
+    7401002: Powerled 700 (1)|Powerled 500 (4)|Take 001|BaseLayer
+    7401004: Powerled 700 (1)|Powerled 500 (group 1)|Take 001|BaseLayer
+    7401006: Powerled 700 (1)|Powerled 500 (group 2)|Take 001|BaseLayer
+    7401008: Powerled 700 (1)|Powerled 500 (group 3)|Take 001|BaseLayer
+    7401010: Powerled 700 (1)|Powerled 700 (1)|Take 001|BaseLayer
+    7401012: Powerled 700 (1)|Powerled 700 (3)|Take 001|BaseLayer
+    7401014: Powerled 700 (1)|Powerled 700 (4)|Take 001|BaseLayer
+    7401016: Powerled 700 (1)|Powerled 700 (group 1)|Take 001|BaseLayer
+    7401018: Powerled 700 (1)|Powerled 700 (group 2)|Take 001|BaseLayer
+    7401020: Powerled 700 (1)|Powerled 700 (group 3)|Take 001|BaseLayer
+    7401022: Powerled 700 (1)|Powerled System|Take 001|BaseLayer
+    7401024: Powerled 700 (1)|Satelite System|Take 001|BaseLayer
+    7401026: Powerled 700 (1)|Single flat screen 1 (1)|Take 001|BaseLayer
+    7401028: Powerled 700 (1)|Single flat screen 1 (2)|Take 001|BaseLayer
+    7401030: Powerled 700 (1)|Single flat screen 1 (group 1)|Take 001|BaseLayer
+    7401032: Powerled 700 (1)|Single flat screen 1 (group 2)|Take 001|BaseLayer
+    7401034: Powerled 700 (1)|Single flat screen 2 (1)|Take 001|BaseLayer
+    7401036: Powerled 700 (1)|Single flat screen 2 (2)|Take 001|BaseLayer
+    7401038: Powerled 700 (1)|Single flat screen 2 (3)|Take 001|BaseLayer
+    7401040: Powerled 700 (1)|Single flat screen 2 (group 1)|Take 001|BaseLayer
+    7401042: Powerled 700 (1)|Single flat screen 2 (group 2)|Take 001|BaseLayer
+    7401044: Powerled 700 (3)|Background reflect|Take 001|BaseLayer
+    7401046: Powerled 700 (3)|Background|Take 001|BaseLayer
+    7401048: Powerled 700 (3)|Camera001.Target|Take 001|BaseLayer
+    7401050: Powerled 700 (3)|Camera001|Take 001|BaseLayer
+    7401052: Powerled 700 (3)|Modutec PLG Maquet|Take 001|BaseLayer
+    7401054: Powerled 700 (3)|Powerled 500 (1)|Take 001|BaseLayer
+    7401056: Powerled 700 (3)|Powerled 500 (2)|Take 001|BaseLayer
+    7401058: Powerled 700 (3)|Powerled 500 (3)|Take 001|BaseLayer
+    7401060: Powerled 700 (3)|Powerled 500 (4)|Take 001|BaseLayer
+    7401062: Powerled 700 (3)|Powerled 500 (group 1)|Take 001|BaseLayer
+    7401064: Powerled 700 (3)|Powerled 500 (group 2)|Take 001|BaseLayer
+    7401066: Powerled 700 (3)|Powerled 500 (group 3)|Take 001|BaseLayer
+    7401068: Powerled 700 (3)|Powerled 700 (1)|Take 001|BaseLayer
+    7401070: Powerled 700 (3)|Powerled 700 (3)|Take 001|BaseLayer
+    7401072: Powerled 700 (3)|Powerled 700 (4)|Take 001|BaseLayer
+    7401074: Powerled 700 (3)|Powerled 700 (group 1)|Take 001|BaseLayer
+    7401076: Powerled 700 (3)|Powerled 700 (group 2)|Take 001|BaseLayer
+    7401078: Powerled 700 (3)|Powerled 700 (group 3)|Take 001|BaseLayer
+    7401080: Powerled 700 (3)|Powerled System|Take 001|BaseLayer
+    7401082: Powerled 700 (3)|Satelite System|Take 001|BaseLayer
+    7401084: Powerled 700 (3)|Single flat screen 1 (1)|Take 001|BaseLayer
+    7401086: Powerled 700 (3)|Single flat screen 1 (2)|Take 001|BaseLayer
+    7401088: Powerled 700 (3)|Single flat screen 1 (group 1)|Take 001|BaseLayer
+    7401090: Powerled 700 (3)|Single flat screen 1 (group 2)|Take 001|BaseLayer
+    7401092: Powerled 700 (3)|Single flat screen 2 (1)|Take 001|BaseLayer
+    7401094: Powerled 700 (3)|Single flat screen 2 (2)|Take 001|BaseLayer
+    7401096: Powerled 700 (3)|Single flat screen 2 (3)|Take 001|BaseLayer
+    7401098: Powerled 700 (3)|Single flat screen 2 (group 1)|Take 001|BaseLayer
+    7401100: Powerled 700 (3)|Single flat screen 2 (group 2)|Take 001|BaseLayer
+    7401102: Single flat screen 1 (group 1)|Background reflect|Take 001|BaseLayer
+    7401104: Single flat screen 1 (group 1)|Background|Take 001|BaseLayer
+    7401106: Single flat screen 1 (group 1)|Camera001.Target|Take 001|BaseLayer
+    7401108: Single flat screen 1 (group 1)|Camera001|Take 001|BaseLayer
+    7401110: Single flat screen 1 (group 1)|Modutec PLG Maquet|Take 001|BaseLayer
+    7401112: Single flat screen 1 (group 1)|Powerled 500 (1)|Take 001|BaseLayer
+    7401114: Single flat screen 1 (group 1)|Powerled 500 (2)|Take 001|BaseLayer
+    7401116: Single flat screen 1 (group 1)|Powerled 500 (3)|Take 001|BaseLayer
+    7401118: Single flat screen 1 (group 1)|Powerled 500 (4)|Take 001|BaseLayer
+    7401120: Single flat screen 1 (group 1)|Powerled 500 (group 1)|Take 001|BaseLayer
+    7401122: Single flat screen 1 (group 1)|Powerled 500 (group 2)|Take 001|BaseLayer
+    7401124: Single flat screen 1 (group 1)|Powerled 500 (group 3)|Take 001|BaseLayer
+    7401126: Single flat screen 1 (group 1)|Powerled 700 (1)|Take 001|BaseLayer
+    7401128: Single flat screen 1 (group 1)|Powerled 700 (3)|Take 001|BaseLayer
+    7401130: Single flat screen 1 (group 1)|Powerled 700 (4)|Take 001|BaseLayer
+    7401132: Single flat screen 1 (group 1)|Powerled 700 (group 1)|Take 001|BaseLayer
+    7401134: Single flat screen 1 (group 1)|Powerled 700 (group 2)|Take 001|BaseLayer
+    7401136: Single flat screen 1 (group 1)|Powerled 700 (group 3)|Take 001|BaseLayer
+    7401138: Single flat screen 1 (group 1)|Powerled System|Take 001|BaseLayer
+    7401140: Single flat screen 1 (group 1)|Satelite System|Take 001|BaseLayer
+    7401142: Single flat screen 1 (group 1)|Single flat screen 1 (1)|Take 001|BaseLayer
+    7401144: Single flat screen 1 (group 1)|Single flat screen 1 (2)|Take 001|BaseLayer
+    7401146: Single flat screen 1 (group 1)|Single flat screen 1 (group 1)|Take 001|BaseLayer
+    7401148: Single flat screen 1 (group 1)|Single flat screen 1 (group 2)|Take 001|BaseLayer
+    7401150: Single flat screen 1 (group 1)|Single flat screen 2 (1)|Take 001|BaseLayer
+    7401152: Single flat screen 1 (group 1)|Single flat screen 2 (2)|Take 001|BaseLayer
+    7401154: Single flat screen 1 (group 1)|Single flat screen 2 (3)|Take 001|BaseLayer
+    7401156: Single flat screen 1 (group 1)|Single flat screen 2 (group 1)|Take 001|BaseLayer
+    7401158: Single flat screen 1 (group 1)|Single flat screen 2 (group 2)|Take 001|BaseLayer
+    7401160: Single flat screen 1 (1)|Background reflect|Take 001|BaseLayer
+    7401162: Single flat screen 1 (1)|Background|Take 001|BaseLayer
+    7401164: Single flat screen 1 (1)|Camera001.Target|Take 001|BaseLayer
+    7401166: Single flat screen 1 (1)|Camera001|Take 001|BaseLayer
+    7401168: Single flat screen 1 (1)|Modutec PLG Maquet|Take 001|BaseLayer
+    7401170: Single flat screen 1 (1)|Powerled 500 (1)|Take 001|BaseLayer
+    7401172: Single flat screen 1 (1)|Powerled 500 (2)|Take 001|BaseLayer
+    7401174: Single flat screen 1 (1)|Powerled 500 (3)|Take 001|BaseLayer
+    7401176: Single flat screen 1 (1)|Powerled 500 (4)|Take 001|BaseLayer
+    7401178: Single flat screen 1 (1)|Powerled 500 (group 1)|Take 001|BaseLayer
+    7401180: Single flat screen 1 (1)|Powerled 500 (group 2)|Take 001|BaseLayer
+    7401182: Single flat screen 1 (1)|Powerled 500 (group 3)|Take 001|BaseLayer
+    7401184: Single flat screen 1 (1)|Powerled 700 (1)|Take 001|BaseLayer
+    7401186: Single flat screen 1 (1)|Powerled 700 (3)|Take 001|BaseLayer
+    7401188: Single flat screen 1 (1)|Powerled 700 (4)|Take 001|BaseLayer
+    7401190: Single flat screen 1 (1)|Powerled 700 (group 1)|Take 001|BaseLayer
+    7401192: Single flat screen 1 (1)|Powerled 700 (group 2)|Take 001|BaseLayer
+    7401194: Single flat screen 1 (1)|Powerled 700 (group 3)|Take 001|BaseLayer
+    7401196: Single flat screen 1 (1)|Powerled System|Take 001|BaseLayer
+    7401198: Single flat screen 1 (1)|Satelite System|Take 001|BaseLayer
+    7401200: Single flat screen 1 (1)|Single flat screen 1 (1)|Take 001|BaseLayer
+    7401202: Single flat screen 1 (1)|Single flat screen 1 (2)|Take 001|BaseLayer
+    7401204: Single flat screen 1 (1)|Single flat screen 1 (group 1)|Take 001|BaseLayer
+    7401206: Single flat screen 1 (1)|Single flat screen 1 (group 2)|Take 001|BaseLayer
+    7401208: Single flat screen 1 (1)|Single flat screen 2 (1)|Take 001|BaseLayer
+    7401210: Single flat screen 1 (1)|Single flat screen 2 (2)|Take 001|BaseLayer
+    7401212: Single flat screen 1 (1)|Single flat screen 2 (3)|Take 001|BaseLayer
+    7401214: Single flat screen 1 (1)|Single flat screen 2 (group 1)|Take 001|BaseLayer
+    7401216: Single flat screen 1 (1)|Single flat screen 2 (group 2)|Take 001|BaseLayer
+    7401218: Single flat screen 1 (2)|Background reflect|Take 001|BaseLayer
+    7401220: Single flat screen 1 (2)|Background|Take 001|BaseLayer
+    7401222: Single flat screen 1 (2)|Camera001.Target|Take 001|BaseLayer
+    7401224: Single flat screen 1 (2)|Camera001|Take 001|BaseLayer
+    7401226: Single flat screen 1 (2)|Modutec PLG Maquet|Take 001|BaseLayer
+    7401228: Single flat screen 1 (2)|Powerled 500 (1)|Take 001|BaseLayer
+    7401230: Single flat screen 1 (2)|Powerled 500 (2)|Take 001|BaseLayer
+    7401232: Single flat screen 1 (2)|Powerled 500 (3)|Take 001|BaseLayer
+    7401234: Single flat screen 1 (2)|Powerled 500 (4)|Take 001|BaseLayer
+    7401236: Single flat screen 1 (2)|Powerled 500 (group 1)|Take 001|BaseLayer
+    7401238: Single flat screen 1 (2)|Powerled 500 (group 2)|Take 001|BaseLayer
+    7401240: Single flat screen 1 (2)|Powerled 500 (group 3)|Take 001|BaseLayer
+    7401242: Single flat screen 1 (2)|Powerled 700 (1)|Take 001|BaseLayer
+    7401244: Single flat screen 1 (2)|Powerled 700 (3)|Take 001|BaseLayer
+    7401246: Single flat screen 1 (2)|Powerled 700 (4)|Take 001|BaseLayer
+    7401248: Single flat screen 1 (2)|Powerled 700 (group 1)|Take 001|BaseLayer
+    7401250: Single flat screen 1 (2)|Powerled 700 (group 2)|Take 001|BaseLayer
+    7401252: Single flat screen 1 (2)|Powerled 700 (group 3)|Take 001|BaseLayer
+    7401254: Single flat screen 1 (2)|Powerled System|Take 001|BaseLayer
+    7401256: Single flat screen 1 (2)|Satelite System|Take 001|BaseLayer
+    7401258: Single flat screen 1 (2)|Single flat screen 1 (1)|Take 001|BaseLayer
+    7401260: Single flat screen 1 (2)|Single flat screen 1 (2)|Take 001|BaseLayer
+    7401262: Single flat screen 1 (2)|Single flat screen 1 (group 1)|Take 001|BaseLayer
+    7401264: Single flat screen 1 (2)|Single flat screen 1 (group 2)|Take 001|BaseLayer
+    7401266: Single flat screen 1 (2)|Single flat screen 2 (1)|Take 001|BaseLayer
+    7401268: Single flat screen 1 (2)|Single flat screen 2 (2)|Take 001|BaseLayer
+    7401270: Single flat screen 1 (2)|Single flat screen 2 (3)|Take 001|BaseLayer
+    7401272: Single flat screen 1 (2)|Single flat screen 2 (group 1)|Take 001|BaseLayer
+    7401274: Single flat screen 1 (2)|Single flat screen 2 (group 2)|Take 001|BaseLayer
+    9500000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Dark Metal
+    second: {fileID: 2100000, guid: 3c865e0716ebb1545b0f0b30a341c502, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Light
+    second: {fileID: 2100000, guid: 1933ce584ffc1fe4c983612aaf82e700, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal White
+    second: {fileID: 2100000, guid: 0780409ce7e98d7479e641f00d6d1f28, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Plastic Dark
+    second: {fileID: 2100000, guid: 78287fe36805d8e438fb4f6d4c797b43, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Plastic Green
+    second: {fileID: 2100000, guid: cebb72aab35d41c47a5643a32517c373, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Screen
+    second: {fileID: 2100000, guid: c895d75642240cb45aaa1753472aa98e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Steel_Stainlessl_Shiny
+    second: {fileID: 2100000, guid: c168f986978db9e4ab0f7a265e2b0c06, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
