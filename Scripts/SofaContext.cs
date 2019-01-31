@@ -241,10 +241,6 @@ namespace SofaUnity
                 pluginPath = "/SofaUnity/Plugins/Native/x64/";
             else
                 pluginPath = "/Plugins/";
-
-            m_impl.initGlutGlew();
-            m_impl.loadPlugin(Application.dataPath + pluginPath + "Geomagic.dll");
-            m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaCarving.dll");
         }
 
         public void initHierarchy()
