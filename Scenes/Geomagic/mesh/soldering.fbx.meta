@@ -36,7 +36,22 @@ ModelImporter:
     4300004: Object004
     4300006: Object006
     10800000: Lamp
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal
+    second: {fileID: 2100000, guid: 9ad81b4302b1e564fae9837db8a68ef8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal_brush
+    second: {fileID: 2100000, guid: 01074d0a5e6acd241a23c40e1ab4480a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: white_plastic
+    second: {fileID: 2100000, guid: f600e1fa89880974daf76aa215680bf6, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
