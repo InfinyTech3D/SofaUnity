@@ -1,0 +1,174 @@
+<Node name="root" dt="0.05" gravity="0.0 -9.8 0.0">
+	<VisualStyle name="AllVisualStyle"  displayFlags="showVisual showBehavior" />
+    
+	<CollisionPipeline name="pipeline" depth="6" verbose="0"/>
+    <BruteForceDetection name="detection" />
+    <CollisionResponse name="response" response="default" />
+    <MinProximityIntersection name="proximity" alarmDistance="0.1" contactDistance="0.005"/>
+	
+	
+
+	<EulerImplicitSolver name="cg_odesolver"  />
+    <CGLinearSolver name="linear solver" iterations="25" tolerance="1e-09" threshold="1e-09" />
+
+	<!--
+	<Node name="skelete">
+		<MeshObjLoader filename="mesh/skell_splitted.obj" name="loader" rotation="0 -90 -90" translation="-1.148 0.908 0.516"/>
+		<OglModel src="@loader"/>
+	</Node>
+	-->
+	<Node name="liver">
+        <MeshGmshLoader name="loader" filename="../SofaScenes/mesh/liver2.msh" />
+        <MechanicalObject src="@loader" name="Volume" scale3d="0.07 0.07 0.07" rotation="0 -90 90" translation="0 0.95 0.52"/>
+
+		<TetrahedronSetTopologyContainer  name="Container" position="@Volume.position" src="@loader" tags=" "/>
+		<TetrahedronSetTopologyModifier   name="Modifier" />
+		<TetrahedronSetTopologyAlgorithms name="TopoAlgo"  template="Vec3d" />
+		<TetrahedronSetGeometryAlgorithms name="GeomAlgo"  template="Vec3d" />
+
+        <DiagonalMass massDensity="1.0" />
+        <BoxROI name="ROI1" box="-0.01 0.93 0.49 -0.05 0.97 0.53" drawBoxes="1" />
+		<FixedConstraint indices="@ROI1.indices" />
+        <FastTetrahedralCorotationalForceField name="FEM" youngModulus="6000" poissonRatio="0.3" method="large" />		
+        <Node name="T">
+            <TriangleSetTopologyContainer  name="Container" fileTopology="" tags=" " />
+			<TriangleSetTopologyModifier   name="Modifier" />
+			<TriangleSetTopologyAlgorithms name="TopoAlgo"   template="Vec3d" />
+			<TriangleSetGeometryAlgorithms name="GeomAlgo"   template="Vec3d" />
+			
+            <Tetra2TriangleTopologicalMapping input="@../Container" output="@Container" />
+			
+			<TriangleSet group="1"/>
+            
+            <Node name="liver-Visual">
+                <OglModel name="Visual" color="blue" />
+                <IdentityMapping input="@../../Volume" output="@Visual" />
+            </Node>
+        </Node>
+    </Node>
+	
+	<Node name="lungs">
+		<MeshObjLoader filename="mesh/lungs.obj" name="loader" rotation="0 90 -90" translation="-1.148 0.908 0.516"/>
+		<SparseGridTopology name="grid" position="@loader.position" drawHexahedra="0" n="14 8 10" />
+		<HexahedronSetGeometryAlgorithms />
+
+		<MechanicalObject template="Vec3d" name="DOFs" />
+		<UniformMass totalMass="1.0" />
+
+		<HexahedronFEMForceField name="FEM" youngModulus="16000" poissonRatio="0.3" method="large" />
+	
+		<BoxROI name="ROI1" box="0.0 0.9 0.4 0.5 0.93 0.62" drawBoxes="1" />
+		<FixedConstraint indices="@ROI1.indices" />
+				
+		<Node name="lungs-Visual" >
+            <OglModel  name="VisualBody" fileMesh="mesh/lungs.obj"  rotation="0 -90 -90" translation="-1.148 0.908 0.516" />
+            <BarycentricMapping input="@.." output="@VisualBody" />
+        </Node>
+		
+		<Node name="lungs-collision">
+            <MeshObjLoader name="loader" filename="mesh/lungs_col.obj" rotation="0 -90 -90" translation="-1.148 0.908 0.516"/>
+			<Mesh src="@loader" />
+            <MechanicalObject src="@loader" name="CollisModel" />
+            <TriangleSet group="1"/>
+            <BarycentricMapping input="@.." output="@." />
+        </Node>
+	</Node>
+	
+		
+	<Node name="heart">
+		<MeshObjLoader filename="mesh/heart.obj" name="loader" rotation="0 -90 -90" translation="-1.148 0.908 0.516"/>
+		<SparseGridTopology name="grid" position="@loader.position" drawHexahedra="0" n="6 6 6" />
+		<HexahedronSetGeometryAlgorithms />
+
+		<MechanicalObject template="Vec3d" name="DOFs" />
+		<UniformMass totalMass="1.0" />
+
+		<HexahedronFEMForceField name="FEM" youngModulus="16000" poissonRatio="0.3" method="large" />
+	
+		<BoxROI name="ROI1" box="0.0 0.9 0.4 0.5 0.93 0.62" drawBoxes="1" />
+		<FixedConstraint indices="@ROI1.indices" />
+				
+		<Node name="heart-Visual">
+            <OglModel  name="VisualBody" fileMesh="mesh/heart.obj"  rotation="0 -90 -90" translation="-1.148 0.908 0.516" />
+            <BarycentricMapping input="@.." output="@VisualBody" />
+        </Node>
+		
+		<Node name="heart-collision">
+            <MeshObjLoader name="loader" filename="mesh/heart_col.obj" rotation="0 -90 -90" translation="-1.148 0.908 0.516"/>
+			<Mesh src="@loader" />
+            <MechanicalObject src="@loader" name="CollisModel" />
+            <TriangleSet group="1"/>
+            <BarycentricMapping input="@.." output="@." />
+        </Node>
+	</Node>
+	
+	<Node name="stomac">
+		<MeshObjLoader filename="mesh/stomac.obj" name="loader" rotation="0 -90 -90" translation="-1.148 0.908 0.516"/>
+		<SparseGridTopology name="grid" position="@loader.position" drawHexahedra="0" n="8 8 8" />
+		<HexahedronSetGeometryAlgorithms />
+
+		<MechanicalObject template="Vec3d" name="DOFs" />
+		<UniformMass totalMass="0.1" />
+
+		<HexahedronFEMForceField name="FEM" youngModulus="22000" poissonRatio="0.3" method="large" />
+	
+		<BoxROI name="ROI1" box="-0.08 0.9 0.48 0.0 0.96 0.6" drawBoxes="1" />
+		<FixedConstraint indices="@ROI1.indices" />
+				
+		<Node name="stomac-Visual">
+            <OglModel  name="VisualBody" fileMesh="mesh/stomac.obj"  rotation="0 -90 -90" translation="-1.148 0.908 0.516" />
+            <BarycentricMapping input="@.." output="@VisualBody" />
+        </Node>
+		
+		<Node name="stomac-collision">
+            <MeshObjLoader name="loader" filename="mesh/stomac_col.obj" rotation="0 -90 -90" translation="-1.148 0.908 0.516"/>
+			<Mesh src="@loader" />
+            <MechanicalObject src="@loader" name="CollisModel" />
+            <TriangleSet group="1"/>
+            <BarycentricMapping input="@.." output="@." />
+        </Node>
+	</Node>
+	
+	<!--
+	<Node name="kidney">
+		<MeshObjLoader filename="mesh/kidney.obj" name="loader" rotation="0 -90 -90" translation="-1.148 0.908 0.516"/>
+		<SparseGridTopology name="grid" position="@loader.position" drawHexahedra="0" n="4 6 6" />
+		<HexahedronSetGeometryAlgorithms />
+
+		<MechanicalObject template="Vec3d" name="DOFs" />
+		<UniformMass totalMass="1.0" />
+
+		<HexahedronFEMForceField name="FEM" youngModulus="60000" poissonRatio="0.3" method="large" />
+	
+		<BoxROI name="ROI1" box="-0.2 0.85 0.48 0.0 0.9 0.55" drawBoxes="1" />
+		<FixedConstraint indices="@ROI1.indices" />
+				
+		<Node name="kidney-Visual">
+            <OglModel  name="VisualBody" fileMesh="mesh/kidney.obj"  rotation="0 -90 -90" translation="-1.148 0.908 0.516" />
+            <BarycentricMapping input="@.." output="@VisualBody" />
+        </Node>
+	</Node>
+	
+	
+	
+	<Node name="intestine">
+		<MeshObjLoader filename="mesh/intestine.obj" name="loader" rotation="0 -90 -90" translation="-1.148 0.908 0.516"/>
+		<SparseGridTopology name="grid" position="@loader.position" drawHexahedra="0" n="8 6 8" />
+		<HexahedronSetGeometryAlgorithms />
+
+		<MechanicalObject template="Vec3d" name="DOFs" />
+		<UniformMass totalMass="1.0" />
+
+		<HexahedronFEMForceField name="FEM" youngModulus="10000" poissonRatio="0.3" method="large" />
+		<TSphereModel name="stomacCol" group="1" radius="0.01" contactStiffness="1.0"/>
+		<BoxROI name="ROI1" box="-0.04 0.9 0.48 -0.2 0.96 0.6" drawBoxes="1" />
+		<FixedConstraint indices="@ROI1.indices" />
+				
+		<Node name="intestine-Visual">
+            <OglModel  name="VisualBody" fileMesh="mesh/intestine.obj"  rotation="0 -90 -90" translation="-1.148 0.908 0.516" />
+            <BarycentricMapping input="@.." output="@VisualBody" />
+        </Node>
+	</Node>
+	-->
+	
+</Node>
