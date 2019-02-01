@@ -7,10 +7,11 @@
     <MinProximityIntersection name="Proximity" alarmDistance="0.25" contactDistance="0.025" />
     <CollisionResponse name="Response" response="FrictionContact" />
 		
-	<!--
-	<GeomagicDriver name="GeomagicDevice" deviceName="Default Device" scale="1" drawDeviceFrame="1" positionBase="0 0 0" orientationBase="0 0.707 0 -0.707" manualStart="false" />	
+	
+	<GeomagicDriver name="GeomagicDevice" deviceName="Default Device" scale="1" drawDeviceFrame="1" 
+	positionBase="0 0 0" orientationBase="0 0.707 0 -0.707" manualStart="true" />	
     <CarvingManager active="@GeomagicDevice.button1" carvingDistance="0.2" key="k" />
-	-->
+
 	
 	
 	<Node name="Player">
@@ -33,7 +34,7 @@
 		<Point />
     </Node>
 	
-	<!--
+	
 	<Node name="CubeFlex">
 		<EulerImplicitSolver name="cg_odesolver"  />
         <CGLinearSolver name="linear solver" iterations="25" tolerance="1e-09" threshold="1e-09" />
@@ -46,7 +47,7 @@
         
 		<DiagonalMass massDensity="1.0" />
 
-		<TetrahedralCorotationalFEMForceField name="FEM" youngModulus="3000" poissonRatio="0.3" method="large" />
+		<TetrahedronFEMForceField name="FEM" youngModulus="3000" poissonRatio="0.3" method="large" />
 		<PrecomputedConstraintCorrection recompute="0"/>
 		
 		<BoxROI name="FixedROI" box="7 -6 -4 0 -4.8 4" drawBoxes="1"  />
@@ -65,7 +66,7 @@
             </Node>
         </Node>
     </Node>
--->
+
 	
 	
 	<Node name="Cube_0_flex">
@@ -224,9 +225,21 @@
     </Node>
 	
 	
+	<Node name="Box_Node">
+        <MeshObjLoader name="loader" filename="mesh/Box.obj" />
+        <Mesh name="Box_topo" src="@loader" />
+        <MechanicalObject name="Box_meca" src="@loader" />
+        <Triangle name="Box_TM" simulated="0" moving="0" bothSide="false"/>
+        <Line name="Box_LM" simulated="0" moving="0" />
+        <Point name="Box_PM" simulated="0" moving="0" />
+        <Node name="Box_visu" >
+            <OglModel name="Box_ogl" fileMesh="@loader.filename" texturename="textures/floor2.bmp" />
+            <IdentityMapping input="@../Box_meca" output="@Box_ogl" />
+        </Node>
+    </Node>
 	
     <Node name="Floor_Node">
-        <MeshObjLoader name="loader" filename="mesh/Box.obj" />
+        <MeshObjLoader name="loader" filename="mesh/floor.obj" />
         <Mesh name="Floor_topo" src="@loader" />
         <MechanicalObject name="Floor_meca" src="@loader" />
         <Triangle name="Floor_TM" simulated="0" moving="0" bothSide="false"/>
@@ -239,7 +252,7 @@
     </Node>
 	
 	
-<!--
+
     <Node name="Omni">
         <MechanicalObject template="Rigid" name="DOFs" position="@GeomagicDevice.positionDevice"/>
         <MechanicalStateController template="Rigid" listening="true" mainDirection="-1.0 0.0 0.0" handleEventTriggersUpdate="true"/>
@@ -271,5 +284,5 @@
             <RigidMapping name="MM->CM mapping" input="@instrumentState" output="@instrumentCollisionState" />		
         </Node>       
     </Node> 
-	-->
+	
 </Node>
