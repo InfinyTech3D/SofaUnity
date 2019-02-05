@@ -226,7 +226,7 @@
 	
 	
 	<Node name="Box_Node">
-        <MeshObjLoader name="loader" filename="mesh/Box.obj" />
+        <MeshObjLoader name="loader" filename="mesh/Box2.obj" />
         <Mesh name="Box_topo" src="@loader" />
         <MechanicalObject name="Box_meca" src="@loader" />
         <Triangle name="Box_TM" simulated="0" moving="0" bothSide="false"/>
