@@ -32,6 +32,9 @@ namespace SofaUnity
         /// Booleen to update sofa simulation
         public bool IsSofaUpdating = true;
 
+        /// Booleen to activate sofa message handler
+        public bool CatchSofaMessages = true;
+
         List<SRayCaster> m_casters = null;
 
         private SObjectHierarchy m_hierarchyPtr = null;
@@ -216,6 +219,13 @@ namespace SofaUnity
             {
                 if (m_log)
                     Debug.Log("SofaContext::OnDestroy stop now.");
+
+                if (isMsgHandlerActivated)
+                {
+                    m_impl.activateMessageHandler(false);
+                    isMsgHandlerActivated = false;
+                }
+
                 m_impl.stop();
                 m_impl.Dispose();
             }
@@ -265,6 +275,7 @@ namespace SofaUnity
                 if (m_hierarchyPtr == null)
                     initHierarchy();
 
+                catchSofaMessages();
                 loadPlugins();
 
                 m_impl.start();
@@ -311,8 +322,10 @@ namespace SofaUnity
                 //{
                 m_impl.timeStep = m_timeStep;
                 m_impl.setGravity(m_gravity);
-                //}
+                //}              
             }
+
+            
         }
         
         // Update is called once per fix frame
@@ -336,6 +349,9 @@ namespace SofaUnity
             else
                 updateImplSync();
 
+            // log sofa messages
+            catchSofaMessages();
+
             // counter if need to freeze the simulation for several iterations
             cptBreaker++;
             if (cptBreaker == countDownBreaker)
@@ -343,6 +359,7 @@ namespace SofaUnity
                 cptBreaker = 0;
                 breakerActivated = false;
             }
+
         }
 
 
@@ -414,6 +431,26 @@ namespace SofaUnity
             }
         }
 
+        private bool isMsgHandlerActivated = false;
+        protected void catchSofaMessages()
+        {
+            // first time activated
+            if (CatchSofaMessages && !isMsgHandlerActivated)
+            {
+                m_impl.activateMessageHandler(true);
+                isMsgHandlerActivated = true;
+            }
+            else if(!CatchSofaMessages && isMsgHandlerActivated)
+            {
+                m_impl.activateMessageHandler(false);
+                isMsgHandlerActivated = false;
+            }
+
+            if (isMsgHandlerActivated)
+            {
+                 m_impl.DisplayMessages();
+            }
+        }
 
         protected void reloadFilename()
         {
