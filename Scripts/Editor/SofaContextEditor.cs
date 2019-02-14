@@ -66,6 +66,7 @@ public class SofaContextEditor : Editor
 
         // Add field for simulation
         context.IsSofaUpdating = EditorGUILayout.Toggle("Activate Simulation", context.IsSofaUpdating);
+        context.CatchSofaMessages = EditorGUILayout.Toggle("Activate Sofa Logs", context.CatchSofaMessages);
 
         // Add Button to load a filename
         if (GUILayout.Button("Load Scene"))
