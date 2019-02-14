@@ -184,13 +184,13 @@
     <Node name="Floor">
         <MeshObjLoader name="loader" filename="mesh/plane.obj" />
         <Mesh src="@loader" />
-        <MechanicalObject name="Floor_mecObj" src="@loader" />
-        <Triangle name="Floor" simulated="0" moving="0" bothSide="false"/>
-        <Line name="Floor" simulated="0" moving="0" />
-        <Point name="Floor" simulated="0" moving="0" />
+        <MechanicalObject name="Floor_obj" src="@loader" />
+        <Triangle simulated="0" moving="0" bothSide="false"/>
+        <Line simulated="0" moving="0" />
+        <Point simulated="0" moving="0" />
         <Node name="Floor_Visu">
 			<OglModel name="Floor_ogl" fileMesh="@loader.filename"/>
 			<IdentityMapping input="@../Floor_obj" output="@Floor_ogl" />
-		</Node>
+		</Node>        
     </Node>
 </Node>
