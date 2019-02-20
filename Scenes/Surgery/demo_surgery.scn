@@ -235,7 +235,7 @@
 			<TriangleSetTopologyAlgorithms name="TopoAlgo"   template="Vec3d" />
 			<TriangleSetGeometryAlgorithms name="GeomAlgo"   template="Vec3d" />
 			
-            <Tetra2TriangleTopologicalMapping input="@../Container" output="@Container" flipNormals="1" noNewTriangles="1"/>
+            <Tetra2TriangleTopologicalMapping input="@../Container" output="@Container" noNewTriangles="1"/>
             <TriangleSet name="triangleCol" tags="CarvingSurface"/>
             <Node name="Visu-old">
                 <OglModel name="Visual" color="blue" />
@@ -249,7 +249,7 @@
 			<TriangleSetTopologyAlgorithms name="TopoAlgo"   template="Vec3d" />
 			<TriangleSetGeometryAlgorithms name="GeomAlgo"   template="Vec3d" />
 			
-            <Tetra2TriangleTopologicalMapping input="@../Container" output="@Container" flipNormals="1" noInitialTriangles="1"/>
+            <Tetra2TriangleTopologicalMapping input="@../Container" output="@Container" noInitialTriangles="1"/>
             <TriangleSet name="triangleCol" tags="CarvingSurface"/>
             <Node name="Visu-new">
                 <OglModel name="Visual" color="red" />
