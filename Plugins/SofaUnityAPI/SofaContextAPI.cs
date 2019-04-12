@@ -67,6 +67,7 @@ namespace SofaUnityAPI
                     Debug.Log("SofaContextAPI::Dispose sofaPhysicsAPI_delete method returns: " + SofaDefines.msg_error[resDel]);
                 if (resDel < 0)
                     Debug.LogError("SofaContextAPI::Dispose sofaPhysicsAPI_delete method returns: " + SofaDefines.msg_error[resDel]);
+                m_isReady = false;
             }
         }
 
@@ -76,6 +77,13 @@ namespace SofaUnityAPI
             get { return m_isDisposed; }
         }
 
+        public int contextStatus()
+        {
+            if (m_isReady)
+                return sofaPhysicsAPI_getStateMachine(m_native);
+            else
+                return -2;
+        }
 
         /// Method to start the Sofa simulation
         public void start()
@@ -129,6 +137,13 @@ namespace SofaUnityAPI
             else
                 Debug.LogError("SofaContextAPI::loadScene can't load file: " + filename + "no sofaPhysicsAPI created!");
         }
+
+        /// Method to stop the Sofa simulation
+        public void unload()
+        {
+            if (m_isReady)
+                sofaPhysicsAPI_unloadScene(m_native);
+        }        
 
         /// <summary> Method to load a specific sofa plugin. </summary>
         /// <param name="pluginName"> Path to the plugin. </param>
@@ -335,6 +350,11 @@ namespace SofaUnityAPI
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaPhysicsAPI_loadScene(IntPtr obj, string filename);
 
+        [DllImport("SofaAdvancePhysicsAPI")]
+        public static extern int sofaPhysicsAPI_unloadScene(IntPtr obj);
+
+        [DllImport("SofaAdvancePhysicsAPI")]
+        public static extern int sofaPhysicsAPI_getStateMachine(IntPtr obj);        
 
         /// Binding to load a plugin
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
