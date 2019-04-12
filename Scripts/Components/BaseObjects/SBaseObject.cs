@@ -225,16 +225,36 @@ namespace SofaUnity
         }
 
 
+        public virtual void activateObject()
+        {
+
+        }
+
+        public virtual void deactivateObject()
+        {
+
+        }
+
 
         /// Unity callback method OnEnable, will check cptLifeCycle to detect when animation will start.
         protected void OnEnable()
         {
             // if static int cptLifeCycle ==0 , this means animation is going to start.
             if (!Application.isPlaying && cptLifeCycle == 0)
+            {
                 copyDataForAnimation();
+            }
 
             // Increment life cycle
             cptLifeCycle++;
+
+            activateObject();
+        }
+
+        protected void OnDisable()
+        {
+
+            deactivateObject();
         }
 
 

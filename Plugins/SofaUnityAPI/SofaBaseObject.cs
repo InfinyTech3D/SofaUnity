@@ -68,6 +68,20 @@ public class SofaBaseObject : IDisposable
         }
     }
 
+    public int activateObject(bool active)
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            int res = sofaPhysicsAPI_setObjectActive(m_simu, m_name, active);
+
+            if (res != 0)
+                Debug.LogError("Method activateObject of object: " + m_name + ", returns error: " + SofaDefines.msg_error[res]);
+            return res;
+        }
+        else
+            return -1;
+    }
+    
 
     /// Implicit method to really create object and link to Sofa object. To be overwritten by child.
     protected virtual bool createObject()
@@ -590,6 +604,8 @@ public class SofaBaseObject : IDisposable
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern string sofaPhysicsAPI_getParentNodeName(IntPtr obj, string name);
 
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysicsAPI_setObjectActive(IntPtr obj, string objectName, bool active);
 
 
     /////////////////////////////////////////////////////////////////////////////////////////

@@ -187,6 +187,17 @@ namespace SofaUnity
         }
 
 
+        public override void activateObject()
+        {
+            if (m_impl != null)
+                m_impl.activateObject(true);
+        }
+
+        public override void deactivateObject()
+        {
+            if (m_impl != null)
+                m_impl.activateObject(false);
+        }
 
 
         ////////////////////////////////////////////
