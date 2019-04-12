@@ -228,7 +228,19 @@ namespace SofaUnity
                     isMsgHandlerActivated = false;
                 }
 
+                if (m_log)
+                    Debug.Log("## SofaContext status before stop: " + m_impl.contextStatus());
+
                 m_impl.stop();
+
+                if (m_log)
+                    Debug.Log("## SofaContext status after stop: " + m_impl.contextStatus());
+
+                m_impl.unload();
+
+                if (m_log)
+                    Debug.Log("## SofaContext status after unload: " + m_impl.contextStatus());
+
                 m_impl.Dispose();
             }
         }
@@ -286,7 +298,14 @@ namespace SofaUnity
                 catchSofaMessages();
                 loadPlugins();
 
+                if (m_log)
+                    Debug.Log("## SofaContext status before start: " + m_impl.contextStatus());
+                                   
                 m_impl.start();
+
+                if (m_log)
+                    Debug.Log("## SofaContext status after start: " + m_impl.contextStatus());
+
 
                 if (m_filename != "")
                 {
@@ -331,6 +350,9 @@ namespace SofaUnity
                 m_impl.timeStep = m_timeStep;
                 m_impl.setGravity(m_gravity);
                 //}              
+
+                if (m_log)
+                    Debug.Log("## SofaContext status end init: " + m_impl.contextStatus());
             }
 
             
