@@ -255,6 +255,8 @@ namespace SofaUnity
                 pluginPath = "/Plugins/";
 
             // Default plugin to be loaded
+            m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaCUDA.dll");
+
             m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaMiscCollision.dll");
             m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaSparseSolver.dll");
         }
