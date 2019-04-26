@@ -19,10 +19,14 @@ namespace SofaUnityAPI
         private bool m_isReady = false;
 
         /// Default constructor, will create the pointer to SofaPhysicsAPI
-        public SofaContextAPI()
+        public SofaContextAPI(bool async)
         {
             // Create the application
-            m_native = sofaPhysicsAPI_create(1);
+            if (async)
+                m_native = sofaPhysicsAPI_create(2);
+            else
+                m_native = sofaPhysicsAPI_create(1);
+
             if (m_native == IntPtr.Zero)
             {
                 Debug.LogError("Error no sofaAdvancePhysicsAPI found nor created!");
