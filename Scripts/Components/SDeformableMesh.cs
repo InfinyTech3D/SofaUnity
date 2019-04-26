@@ -304,26 +304,22 @@ namespace SofaUnity
             {
                 int[] id = new int[4];
                 int[] old_id = new int[4];
-                Vector3[] vert = new Vector3[4];
-
+                
+                int idTet = i * 4;
                 for (int j=0; j<4; ++j)
                 {
-                    id[j] = i * 4 + j;
-                    old_id[j] = m_tetra[i * 4 + j];
-                    vert[j] = m_mesh.vertices[old_id[j]];
-                }
+                    id[j] = idTet + j;
+                    old_id[j] = m_tetra[idTet + j];
 
-                // vert of new tetra reduce to the center of the tetra
-                for (int j = 0; j < 4; ++j)
-                {
-                    verts[id[j]] = vert[j];
+                    verts[id[j]] = m_mesh.vertices[old_id[j]];
                     norms[id[j]] = m_mesh.normals[old_id[j]];
                     mappingVertices.Add(id[j], old_id[j]);
-                    // update tetra to store new ids
-                    m_tetra[i * 4 + j] = id[j];
-                    uv[i * 4 + j].x = j / 4;
-                    uv[i * 4 + j].y = uv[i * 4 + j].x;
+
+                    m_tetra[idTet + j] = id[j];
+                    uv[idTet + j].x = j / 4;
+                    uv[idTet + j].y = uv[i * 4 + j].x;
                 }
+
 
                 tris[i * 12 + 0] = id[0];
                 tris[i * 12 + 1] = id[2];
@@ -337,9 +333,9 @@ namespace SofaUnity
                 tris[i * 12 + 7] = id[0];
                 tris[i * 12 + 8] = id[3];
 
-                tris[i * 12 + 9] = id[3];
-                tris[i * 12 + 10] = id[0];
-                tris[i * 12 + 11] = id[1];
+                tris[i * 12 + 9] = id[0];
+                tris[i * 12 + 10] = id[1];
+                tris[i * 12 + 11] = id[3];
             }
 
             m_mesh.vertices = verts;
@@ -369,7 +365,7 @@ namespace SofaUnity
 
                 // reduce the tetra size according to the barycenter
                 for (int j = 0; j < 4; ++j)
-                    verts[m_tetra[idI + j]] = bary + (verts[m_tetra[idI + j]] - bary) * 0.7f;
+                    verts[m_tetra[idI + j]] = bary + (verts[m_tetra[idI + j]] - bary) * 0.5f;
             }
 
             m_mesh.vertices = verts;
