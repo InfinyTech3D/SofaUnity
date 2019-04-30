@@ -19,10 +19,14 @@ namespace SofaUnityAPI
         private bool m_isReady = false;
 
         /// Default constructor, will create the pointer to SofaPhysicsAPI
-        public SofaContextAPI()
+        public SofaContextAPI(bool async)
         {
             // Create the application
-            m_native = sofaPhysicsAPI_create(1);
+            if (async)
+                m_native = sofaPhysicsAPI_create(2);
+            else
+                m_native = sofaPhysicsAPI_create(1);
+
             if (m_native == IntPtr.Zero)
             {
                 Debug.LogError("Error no sofaAdvancePhysicsAPI found nor created!");
@@ -148,7 +152,7 @@ namespace SofaUnityAPI
             if (m_isReady)
             {
                 int res = sofaPhysicsAPI_loadPlugin(m_native, pluginName);
-                if (res != 1)
+                if (res != 0)
                     Debug.LogError("SofaContextAPI::loadPlugin method returns: " + SofaDefines.msg_error[res]);
             }
             else

@@ -3,8 +3,24 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
 
+[InitializeOnLoad]
 public class CopyConfigPostProcessor
 {
+    /// <summary>
+    /// Generate .ini file on load.
+    /// </summary>
+    static CopyConfigPostProcessor()
+    {
+        string sofaIniFile = Application.dataPath + "/SofaUnity/Plugins/Native/x64/sofa.ini";
+        using (StreamWriter outputIniFile = new StreamWriter(sofaIniFile))
+        {
+            string SofaUnityDir = Application.dataPath + "/SofaUnity/scenes/SofaScenes";
+            outputIniFile.WriteLine("SHARE_DIR=" + SofaUnityDir);
+            outputIniFile.WriteLine("EXAMPLES_DIR=" + SofaUnityDir);
+            Debug.Log("Generate " + sofaIniFile + " file.");
+        }
+    }
+
     private static void DirectoryCopy(
         string sourceDirName, string destDirName, bool copySubDirs)
     {
@@ -92,6 +108,21 @@ public class CopyConfigPostProcessor
 
                     Debug.Log("Copying: " + currentSofaDir + " to " + SofaUnityDir);
                     DirectoryCopy(currentSofaDir, SofaUnityDir, true);
+
+                    string buildPathIniDir = dataDir + "/SofaUnity/Plugins/Native/x64/";
+                    if (!Directory.Exists(buildPathIniDir))
+                    {
+                        Directory.CreateDirectory(buildPathIniDir);
+                        Debug.Log("Create directory " + buildPathIniDir);
+                    }
+
+                    string outputIniPath = Path.Combine(buildPathIniDir, "sofa.ini");
+                    using (StreamWriter outputIniFile = new StreamWriter(outputIniPath))
+                    {
+                        outputIniFile.WriteLine("SHARE_DIR=" + SofaUnityDir);
+                        outputIniFile.WriteLine("EXAMPLES_DIR=" + SofaUnityDir);
+                        Debug.Log("Generate " + outputIniPath + " file.");
+                    }
 
                     break;
                 }

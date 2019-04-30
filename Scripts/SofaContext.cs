@@ -39,6 +39,8 @@ namespace SofaUnity
 
         private SObjectHierarchy m_hierarchyPtr = null;
 
+        public bool testAsync = false;
+
 
         /// Getter of current Sofa Context API, @see m_impl
         public IntPtr getSimuContext()
@@ -289,7 +291,7 @@ namespace SofaUnity
 
             if (m_impl == null)
             {
-                m_impl = new SofaContextAPI();
+                m_impl = new SofaContextAPI(testAsync);
 
                 if (m_hierarchyPtr == null)
                     initHierarchy();
@@ -364,8 +366,6 @@ namespace SofaUnity
         }
 
         private float nextUpdate = 0.0f;
-
-        public bool testAsync = false;
 
         // Update is called once per frame
         void Update()
@@ -510,7 +510,7 @@ namespace SofaUnity
             m_hierarchyPtr = new SObjectHierarchy(this);
 
             // recreate sofaContext
-            m_impl = new SofaContextAPI();
+            m_impl = new SofaContextAPI(testAsync);
             loadPlugins();
             m_impl.start();
             

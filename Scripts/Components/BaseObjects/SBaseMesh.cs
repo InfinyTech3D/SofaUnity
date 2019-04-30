@@ -186,19 +186,26 @@ namespace SofaUnity
                 m_impl.updateMesh(m_mesh);
         }
 
+        protected bool once = false;
 
-        public override void activateObject()
+        public override void updateInEditor()
         {
-            if (m_impl != null)
-                m_impl.activateObject(true);
+            if (m_log)
+                Debug.Log("SBaseMesh::updateInEditor called.");
+
+            //Recompute bound and normal once in editor.
+            if (!once)
+            {
+                m_mesh.RecalculateBounds();
+                m_mesh.RecalculateNormals();
+                once = true;
+            }
         }
 
-        public override void deactivateObject()
+        void OnApplicationQuit()
         {
-            if (m_impl != null)
-                m_impl.activateObject(false);
+            once = false;
         }
-
 
         ////////////////////////////////////////////
         /////        Object members API        /////
