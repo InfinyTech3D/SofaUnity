@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <Node name="lroot" gravity="0 0 -9" dt="0.01">
-    <VisualStyle displayFlags="showVisual showBehaviorModels " /> <!--showBehaviorModels showCollisionModels-->
+    <VisualStyle displayFlags="showVisual hideBehaviorModels " /> <!--showBehaviorModels showCollisionModels-->
     <RequiredPlugin name="Geomagic plugin" pluginName="Geomagic" />
     
     <CollisionPipeline name="pipeline" depth="6" verbose="0"/>
@@ -9,7 +9,7 @@
     <LocalMinDistance name="proximity" alarmDistance="0.15" contactDistance="0.05" angleCone="0.0" />
     <FreeMotionAnimationLoop/>
     <LCPConstraintSolver tolerance="0.001" maxIt="1000"/>
-    <GeomagicDriver name="GeomagicDevice" deviceName="Default Device" scale="1" drawDeviceFrame="1" positionBase="0 0 0" orientationBase="0 0.707 0 -0.707"  />
+    <GeomagicDriver name="GeomagicDevice" deviceName="Default Device" scale="1" drawDevice="0" drawDeviceFrame="1" positionBase="0 0 0" orientationBase="0 0.707 0 -0.707"  />
 
 
     <Node name="Omni">
@@ -24,8 +24,8 @@
 		<MechanicalObject name="instrumentState" template="Rigid" />
 		<UniformMass name="mass" totalMass="0.05" />
 		
-		<RestShapeSpringsForceField stiffness='1000000' angularStiffness='1000000' external_rest_shape='@../Omni/DOFs' points='0' external_points='0' />
-        <LCPForceFeedback activate="true" forceCoef="0.001"/> <!-- ADDED : Compute a force-feedback for the device -->
+		<RestShapeSpringsForceField stiffness='10000000000' angularStiffness='100000000000' external_rest_shape='@../Omni/DOFs' points='0' external_points='0' />
+        <LCPForceFeedback activate="true" forceCoef="0.01"/> 
         <UncoupledConstraintCorrection/>
         
 		<Node name="VisualModel" >
@@ -43,7 +43,6 @@
     </Node>  
     
     
-    
    <!--
     <Node name="knee_ref">
         <MeshObjLoader filename="./mesh/Knee_joint.obj" name="loader" flipNormals="false" translation="10 0 0" handleSeams="1"/>
@@ -53,11 +52,11 @@
     
     <Node name="knee_bones">
         <Node name="Visual_bones" >
-            <MeshObjLoader filename="./mesh/knee_bones.obj" name="loader" flipNormals="false" handleSeams="1"/>
+            <MeshObjLoader filename="./mesh/knee_bones.obj" name="loader" flipNormals="false" handleSeams="1" rotation="-90 0 0"/>
             <OglModel name="visual" src="@loader" texturename="./mesh/Materials/Textures/Knee_C.jpg" /> 
         </Node>
         <Node name="CollisionModel" >
-            <MeshObjLoader filename="./mesh/knee_bones_collision.obj" name="loader"/>
+            <MeshObjLoader filename="./mesh/knee_bones_collision.obj" name="loader" rotation="-90 0 0"/>
             <Mesh src="@loader" name="ToothCollisionModel"  />
             <MechanicalObject src="@loader" name="toothState" />        
             <TriangleCollisionModel name="tooth" contactStiffness="100" simulated="0" moving="0" group="1"/>
@@ -67,7 +66,7 @@
     </Node>
     
     <Node name="knee_rotule">
-        <MeshObjLoader filename="./mesh/knee_rotule_collision.obj" name="loader" />
+        <MeshObjLoader filename="./mesh/knee_rotule_collision.obj" name="loader" rotation="-90 0 0" />
         <Mesh src="@loader" name="ToothCollisionModel"  />
         <MechanicalObject src="@loader" name="toothState" />        
         <TriangleCollisionModel name="tooth" contactStiffness="100" simulated="0" moving="0" />
@@ -76,7 +75,7 @@
     </Node>
     
     <Node name="knee_muscles_back">
-        <MeshObjLoader filename="./mesh/knee_muscles_back.obj" name="loader" handleSeams="1"/>
+        <MeshObjLoader filename="./mesh/knee_muscles_back.obj" name="loader" handleSeams="1" rotation="-90 0 0"/>
         <OglModel src="@loader" texturename="./mesh/Materials/Textures/Knee_C.jpg" />
     </Node>
 
@@ -84,25 +83,26 @@
         <EulerImplicit name="cg_odesolver" printLog="false"  rayleighStiffness="0.01" rayleighMass="0.1" />
         <CGLinearSolver iterations="12" name="linear solver" tolerance="1.0e-4" threshold="1.0e-4" />
  
-        <MeshObjLoader name="loader" filename="./mesh/knee_front_collision.obj" />
-        <SparseGrid name="grid" n="8 10 5" position="@loader.position" drawHexahedra="0" />
+        <MeshObjLoader name="loader" filename="./mesh/knee_front_collision.obj" rotation="-90 0 0" />
+        <SparseGrid name="grid" n="8 5 12" position="@loader.position" drawHexahedra="0" />
         <MechanicalObject name="dofs" scale3d="1 1 1" />
-        <UniformMass totalMass="1.0" />
-        <HexahedronFEMForceField name="FEM" youngModulus="4000.0" poissonRatio="0.1" method="large" printLog="0" />
+        <UniformMass totalMass="10" />
+        <HexahedronFEMForceField name="FEM" youngModulus="40000.0" poissonRatio="0.3" method="large" printLog="0" />
         
-        <BoxROI name="ROI1" box="-2 -6 3 2 -4 6" drawBoxes="1" />
+        <BoxROI name="ROI1" box="-2 3 4 2 6 6" drawBoxes="1" />
         <FixedConstraint indices="@ROI1.indices" />
         
-        <BoxROI name="ROI2" box="-10 9 -10 10 12 10" drawBoxes="1" />
+        <BoxROI name="ROI2" box="-10 -10 -9 10 10 -12" drawBoxes="1" />
         <FixedConstraint indices="@ROI2.indices" />
         
         <Node name="knee_front_visu">
-            <OglModel name="Visual" fileMesh="./mesh/knee_front.obj" texturename="./mesh/Materials/Textures/Knee_C.jpg" />
+            <MeshObjLoader filename="./mesh/knee_front.obj" name="loader" handleSeams="1" rotation="-90 0 0"/>
+            <OglModel name="Visual" src="@loader" texturename="./mesh/Materials/Textures/Knee_C.jpg"/>
             <BarycentricMapping input="@.." output="@Visual" />
         </Node>
         
         <Node name="knee_front_collision">
-            <MeshObjLoader filename="./mesh/knee_front_collision.obj" name="loader" handleSeams="1"/>
+            <MeshObjLoader filename="./mesh/knee_front_collision.obj" name="loader" handleSeams="1" rotation="-90 0 0"/>
             <Mesh src="@loader" name="ToothCollisionModel"  />
             <MechanicalObject src="@loader" name="toothState" />        
             <TriangleCollisionModel name="tooth" contactStiffness="100" group="1"/>
@@ -110,42 +110,43 @@
             <PointCollisionModel name="tooth" contactStiffness="100" group="1"/>   
             <BarycentricMapping input="@.." output="@." />
         </Node>
-        <UncoupledConstraintCorrection />
+        <!--<UncoupledConstraintCorrection />-->
+        <PrecomputedConstraintCorrection recompute="0" fileCompliance="./compliance/knee_front-885-0.01.comp"/>
     </Node>
-    
     
     
     <Node name="knee_muscles_side">
         <EulerImplicit name="cg_odesolver" printLog="false"  rayleighStiffness="0.01" rayleighMass="0.1" />
         <CGLinearSolver iterations="12" name="linear solver" tolerance="1.0e-4" threshold="1.0e-4" />
  
-        <MeshObjLoader name="loader" filename="./mesh/knee_muscles_side_collision.obj" />
-        <SparseGrid name="grid" n="4 9 4" position="@loader.position" drawHexahedra="0" />
+        <MeshObjLoader name="loader" filename="./mesh/knee_muscles_side_collision.obj" rotation="-90 0 0" />
+        <SparseGrid name="grid" n="4 4 9" position="@loader.position" drawHexahedra="0" />
         <MechanicalObject name="dofs" scale3d="1 1 1" />
         <UniformMass totalMass="1.0" />
-        <HexahedronFEMForceField name="FEM" youngModulus="4000.0" poissonRatio="0.1" method="large" printLog="0" />
+        <HexahedronFEMForceField name="FEM" youngModulus="80000.0" poissonRatio="0.1" method="large" printLog="0" />
         
-        <BoxROI name="ROI1" box="-6 -5 0 0 -3 3" drawBoxes="1" />
+        <BoxROI name="ROI1" box="-6 0 3 0 3 5" drawBoxes="1" />
         <FixedConstraint indices="@ROI1.indices" />
         
-        <BoxROI name="ROI2" box="-10 8 -10 10 12 10" drawBoxes="1" />
+        <BoxROI name="ROI2" box="-10 -10 -9 10 10 -12" drawBoxes="1" />
         <FixedConstraint indices="@ROI2.indices" />
         
         <Node name="knee_muscles_side_visu">
-            <OglModel name="Visual" fileMesh="./mesh/knee_muscles_side.obj" texturename="./mesh/Materials/Textures/Knee_C.jpg" />
+            <MeshObjLoader filename="./mesh/knee_muscles_side.obj" name="loader" handleSeams="1" rotation="-90 0 0"/>
+            <OglModel name="Visual" src="@loader" texturename="./mesh/Materials/Textures/Knee_C.jpg" />
             <BarycentricMapping input="@.." output="@Visual" />
         </Node>
         
         <Node name="knee_muscles_side_collision">
-            <MeshObjLoader filename="./mesh/knee_muscles_side_collision.obj" name="loader" handleSeams="1"/>
+            <MeshObjLoader filename="./mesh/knee_muscles_side_collision.obj" name="loader" handleSeams="1" rotation="-90 0 0"/>
             <Mesh src="@loader" name="ToothCollisionModel"  />
             <MechanicalObject src="@loader" name="toothState" />        
-            <TriangleCollisionModel name="tooth" contactStiffness="100" group="1"/>
-            <LineCollisionModel name="tooth" contactStiffness="100" group="1"/>    
-            <PointCollisionModel name="tooth" contactStiffness="100" group="1"/>   
+            <TriangleCollisionModel name="tooth" contactStiffness="1" group="1"/>
+            <LineCollisionModel name="tooth" contactStiffness="1" group="1"/>    
+            <PointCollisionModel name="tooth" contactStiffness="1" group="1"/>   
             <BarycentricMapping input="@.." output="@." />
         </Node>
-        <UncoupledConstraintCorrection />
+        <PrecomputedConstraintCorrection recompute="0" fileCompliance="./compliance/knee_muscles_side-333-0.01.comp"/>
     </Node>
     
     
@@ -153,25 +154,26 @@
         <EulerImplicit name="cg_odesolver" printLog="false"  rayleighStiffness="0.01" rayleighMass="0.1" />
         <CGLinearSolver iterations="12" name="linear solver" tolerance="1.0e-4" threshold="1.0e-4" />
  
-        <MeshObjLoader name="loader" filename="./mesh/knee_tendon_side_collision.obj" />
-        <SparseGrid name="grid" n="3 6 3" position="@loader.position" drawHexahedra="0" />
+        <MeshObjLoader name="loader" filename="./mesh/knee_tendon_side_collision.obj" rotation="-90 0 0" />
+        <SparseGrid name="grid" n="3 3 4" position="@loader.position" drawHexahedra="0" />
         <MechanicalObject name="dofs" />
         <UniformMass totalMass="1.0" />
-        <HexahedronFEMForceField name="FEM" youngModulus="40000.0" poissonRatio="0.1" method="large" printLog="0" />
+        <HexahedronFEMForceField name="FEM" youngModulus="80000.0" poissonRatio="0.1" method="large" printLog="0" />
         
-        <BoxROI name="ROI1" box="-6 -5 0 0 -3 3" drawBoxes="1" />
+        <BoxROI name="ROI1" box="-6 0 3 0 3 5" drawBoxes="1" />
         <FixedConstraint indices="@ROI1.indices" />
         
-        <BoxROI name="ROI2" box="-10 -1 -10 10 1 10" drawBoxes="1" />
+        <BoxROI name="ROI2" box="-10 -10 -1 10 10 1" drawBoxes="1" />
         <FixedConstraint indices="@ROI2.indices" />
         
         <Node name="knee_muscles_side_visu">
-            <OglModel name="Visual" fileMesh="./mesh/knee_tendon_side.obj" texturename="./mesh/Materials/Textures/Knee_C.jpg" />
+            <MeshObjLoader filename="./mesh/knee_tendon_side.obj" name="loader" handleSeams="1" rotation="-90 0 0"/>
+            <OglModel name="Visual" src="@loader" texturename="./mesh/Materials/Textures/Knee_C.jpg" />
             <BarycentricMapping input="@.." output="@Visual" />
         </Node>
         
         <Node name="knee_tendon_side_collision">
-            <MeshObjLoader filename="./mesh/knee_tendon_side_collision.obj" name="loader" handleSeams="1"/>
+            <MeshObjLoader filename="./mesh/knee_tendon_side_collision.obj" name="loader" handleSeams="1" rotation="-90 0 0"/>
             <Mesh src="@loader" name="ToothCollisionModel"  />
             <MechanicalObject src="@loader" name="toothState" />        
             <TriangleCollisionModel name="tooth" contactStiffness="100" group="1"/>
@@ -179,9 +181,7 @@
             <PointCollisionModel name="tooth" contactStiffness="100" group="1"/>   
             <BarycentricMapping input="@.." output="@." />
         </Node>
-        <UncoupledConstraintCorrection />
+        <PrecomputedConstraintCorrection recompute="0" fileCompliance="./compliance/knee_tendon_side-96-0.01.comp"/>
     </Node>
     
-    
-
 </Node>
