@@ -29,13 +29,13 @@
         <UncoupledConstraintCorrection/>
         
 		<Node name="VisualModel" >
-            <OglModel name="InstrumentVisualModel" fileMesh="Demos/Dentistry/data/mesh/dental_instrument.obj" color="1.0 0.2 0.2 1.0" ry="-180" rz="-90" dz="3.5" dx="-0.3"/>
+            <OglModel name="InstrumentVisualModel" fileMesh="./mesh/Surgical_periotome.obj" color="1.0 0.2 0.2 1.0" rx="180" rz="-90" dz="2.0" dx="0.0"/>
             <RigidMapping name="MM->VM mapping" input="@instrumentState" output="@InstrumentVisualModel" />
         </Node>
         <Node name="CollisionModel" >
-            <MeshObjLoader filename="Demos/Dentistry/data/mesh/dental_instrument_centerline.obj"  name="loader"/>
+            <MeshObjLoader filename="./mesh/Surgical_periotome_collision.obj"  name="loader"/>
             <Mesh src="@loader" name="InstrumentCollisionModel" />
-            <MechanicalObject src="@loader" name="instrumentCollisionState"  ry="-180" rz="-90" dz="3.5" dx="-0.3" />
+            <MechanicalObject src="@loader" name="instrumentCollisionState"  rx="180" rz="-90" dz="2.0" dx="0.0" />
             <LineCollisionModel name="instrument" contactStiffness="10" />
             <PointCollisionModel name="instrument" contactStiffness="10" /> 
             <RigidMapping name="MM->CM mapping" input="@instrumentState" output="@instrumentCollisionState" />
@@ -73,7 +73,7 @@
         <LineCollisionModel name="tooth" contactStiffness="100" simulated="0" moving="0" />    
         <PointCollisionModel name="tooth" contactStiffness="100" simulated="0" moving="0" />   
     </Node>
-    
+   
     <Node name="knee_muscles_back">
         <MeshObjLoader filename="./mesh/knee_muscles_back.obj" name="loader" handleSeams="1" rotation="-90 0 0"/>
         <OglModel src="@loader" texturename="./mesh/Materials/Textures/Knee_C.jpg" />
@@ -110,7 +110,6 @@
             <PointCollisionModel name="tooth" contactStiffness="100" group="1"/>   
             <BarycentricMapping input="@.." output="@." />
         </Node>
-        <!--<UncoupledConstraintCorrection />-->
         <PrecomputedConstraintCorrection recompute="0" fileCompliance="./compliance/knee_front-885-0.01.comp"/>
     </Node>
     
