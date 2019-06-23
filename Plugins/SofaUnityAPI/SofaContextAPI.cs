@@ -153,7 +153,7 @@ namespace SofaUnityAPI
             {
                 int res = sofaPhysicsAPI_loadPlugin(m_native, pluginName);
                 if (res != 0)
-                    Debug.LogError("SofaContextAPI::loadPlugin method returns: " + SofaDefines.msg_error[res]);
+                    Debug.LogError("SofaContextAPI::loadPlugin: " + pluginName + ", method returns: " + SofaDefines.msg_error[res]);
             }
             else
                 Debug.LogError("SofaContextAPI::loadPlugin can't load plugin: " + pluginName + " no sofaPhysicsAPI created!");
