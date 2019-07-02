@@ -73,6 +73,7 @@ namespace SofaUnity
                 // TODO: need to find why velocity doesn't work for grid
                 //m_impl.updateMeshVelocity(m_mesh, m_context.timeStep);
                 m_impl.updateMesh(m_mesh);
+                m_mesh.RecalculateBounds();
                 //m_mesh.RecalculateNormals();
             }
         }

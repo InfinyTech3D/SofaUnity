@@ -230,7 +230,7 @@ public class SofaBaseMesh : SofaBaseObject
             int resN = sofaPhysics3DObject_getNormals(m_simu, m_name, normals);
 
             if (displayLog)
-                Debug.Log(m_name + " | Number of vertices: " + nbrV + " | resV: " + resV + " | resN: " + resN);
+                Debug.Log(m_name + " | Number of vertices: " + nbrV + " with resV: " + SofaDefines.msg_error[resV] + " | resN: " + SofaDefines.msg_error[resN]);
 
 
             Vector3[] verts = mesh.vertices;
@@ -376,7 +376,7 @@ public class SofaBaseMesh : SofaBaseObject
             if (value < 0)
             {
                 if (displayLog)
-                    Debug.LogError("getTopologyRevision: " + m_name + " method returns error: " + value);
+                    Debug.LogError("getTopologyRevision: " + m_name + " method returns error: " + SofaDefines.msg_error[value]);
                 return false;
             }
             else
@@ -443,11 +443,13 @@ public class SofaBaseMesh : SofaBaseObject
             int resV = sofaPhysics3DObject_getVertices(m_simu, m_name, vertices);
             float[] normals = new float[nbrV * 3];
             int resN = sofaPhysics3DObject_getNormals(m_simu, m_name, normals);
-
+            
             if (resV < 0) {
-                Debug.LogError("SofaBaseMesh::updateMeshTetra: No vertices found, Error return: " + resV);
+                Debug.LogError("SofaBaseMesh::updateMeshTetra: No vertices found, Error return: " + SofaDefines.msg_error[resV]);
                 return;
             }
+            else if (displayLog)
+                Debug.Log(m_name + " | Number of vertices: " + nbrV + " | verts.Length: " + vertices.Length);
 
             Vector3[] verts = new Vector3[nbrV];
             Vector3[] norms = new Vector3[nbrV];
@@ -551,7 +553,7 @@ public class SofaBaseMesh : SofaBaseObject
 
         int res = sofaPhysics3DObject_getTexCoords(m_simu, m_name, texCoords);
         if (displayLog)
-            Debug.Log("res get Texcoords: " + res);        
+            Debug.Log("res get Texcoords: " + SofaDefines.msg_error[res]);
 
         if (res < 0)
         {
@@ -634,7 +636,7 @@ public class SofaBaseMesh : SofaBaseObject
         val[2] = value[2];
         int resUpdate = sofaPhysics3DObject_setVertices(m_simu, m_name, val);
         if (resUpdate < 0)
-            Debug.LogError("SofaCustomMesh updateMesh: " + m_name + " return error: " + resUpdate);
+            Debug.LogError("SofaCustomMesh updateMesh: " + m_name + " return error: " + SofaDefines.msg_error[resUpdate]);
 
     }
 
