@@ -269,6 +269,8 @@ namespace SofaUnity
             // Default plugin to be loaded
             m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaMiscCollision.dll");
             m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaSparseSolver.dll");
+            m_impl.loadPlugin(Application.dataPath + pluginPath + "MultiCoreGPU.dll");
+            
         }
 
         public void initHierarchy()
