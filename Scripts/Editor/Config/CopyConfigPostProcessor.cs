@@ -2,6 +2,8 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [InitializeOnLoad]
 public class CopyConfigPostProcessor
@@ -78,6 +80,15 @@ public class CopyConfigPostProcessor
         }
     }
 
+    static string scenePath = "";
+
+    [PostProcessSceneAttribute(2)]
+    public static void OnPostprocessScene()
+    {
+        Scene scene = SceneManager.GetActiveScene();
+        scenePath = scene.path;        
+    }
+
 
     [PostProcessBuild]
     public static void OnPostprocessBuild(BuildTarget target, string pathToBuiltProject)
@@ -122,6 +133,19 @@ public class CopyConfigPostProcessor
                         outputIniFile.WriteLine("SHARE_DIR=" + SofaUnityDir);
                         outputIniFile.WriteLine("EXAMPLES_DIR=" + SofaUnityDir);
                         Debug.Log("Generate " + outputIniPath + " file.");
+                    }
+
+
+                    Debug.Log("currentScene path: " + scenePath);
+                    if (scenePath.Length != 0)
+                    {
+                        System.IO.FileInfo scenePathInfo = new FileInfo(scenePath);
+
+                        string scenePathDir = dataDir + "/SofaUnity/scenes/";
+                        DirectoryInfo dirInfo = scenePathInfo.Directory;
+                        Debug.Log("scenePathInfo.Name: " + dirInfo.Parent.Name);
+                        Debug.Log("Copying: " + scenePathInfo.DirectoryName + " to " + scenePathDir);
+                        DirectoryCopy(scenePathInfo.DirectoryName, scenePathDir, true);
                     }
 
                     break;
