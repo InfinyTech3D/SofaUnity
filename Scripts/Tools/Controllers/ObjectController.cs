@@ -19,7 +19,7 @@ public class ObjectController : MonoBehaviour
     public SLaserRay toolImpl = null;
 
 
-    protected bool m_isactive = false;
+    public bool m_isactive = false;
     protected ObjectController otherObjectCtrl = null;
 
     public float factor = 0.1f;
