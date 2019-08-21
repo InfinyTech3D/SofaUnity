@@ -20,8 +20,11 @@ public class GeomagicController : MonoBehaviour
     public GameObject particles = null;
     private AudioSource source = null;
     public bool toolactivated = false;
+	public bool toolButton2 = false;
 
     public bool toolInContact = false;
+	public bool statusButton2 = false;
+	
     ////////////////////////////////////////////
     /////       Object creation API        /////
     ////////////////////////////////////////////
@@ -111,7 +114,7 @@ public class GeomagicController : MonoBehaviour
                 Debug.Log("Error status returns : " + res3);
 
             int[] status = new int[1];
-            int res2 = m_sofaGeomagic.geomagicButtonStatus(status);
+            int res2 = m_sofaGeomagic.geomagicButtonStatus1(status);
             if (res2 == 0)
             {
                 if (status[0] == 1)
@@ -123,6 +126,24 @@ public class GeomagicController : MonoBehaviour
 
                 if (particles)
                     particles.SetActive(toolactivated);
+            }
+            else
+                Debug.LogError("EntactManager::Update - No Geomagic found.");
+			
+			res2 = m_sofaGeomagic.geomagicButtonStatus2(status);
+            if (res2 == 0)
+            {
+                if (status[0] == 1)
+                {
+					if (!toolButton2) // switch status
+						statusButton2 = !statusButton2;
+						
+					toolButton2 = true;
+                }
+                else
+                    toolButton2 = false;
+				
+				
             }
             else
                 Debug.LogError("EntactManager::Update - No Geomagic found.");

@@ -62,9 +62,15 @@ public class SofaGeomagic : IDisposable
         return res;
     }
 
-    public int geomagicButtonStatus(int[] val)
+    public int geomagicButtonStatus1(int[] val)
     {
-        int res = sofaPhysicsAPI_getGeomagicButtonStatus(m_simu, m_name, val);
+        int res = sofaPhysicsAPI_getGeomagicButtonStatus1(m_simu, m_name, val);
+        return res;
+    }
+	
+	public int geomagicButtonStatus2(int[] val)
+    {
+        int res = sofaPhysicsAPI_getGeomagicButtonStatus2(m_simu, m_name, val);
         return res;
     }
 
@@ -88,5 +94,8 @@ public class SofaGeomagic : IDisposable
     public static extern int sofaPhysicsAPI_getGeomagicStatus(IntPtr obj, string nameID, int[] value);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysicsAPI_getGeomagicButtonStatus(IntPtr obj, string nameID, int[] value);
+    public static extern int sofaPhysicsAPI_getGeomagicButtonStatus1(IntPtr obj, string nameID, int[] value);
+	
+	    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysicsAPI_getGeomagicButtonStatus2(IntPtr obj, string nameID, int[] value);
 }
