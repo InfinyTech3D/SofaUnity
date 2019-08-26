@@ -4,118 +4,73 @@ using SofaUnity;
 
 /// <summary>
 /// Script to Add to a GameOject in order to move it using the keybord.
-/// I = move forward
-/// K = move backword
-/// U = move left
-/// O = move right
-/// J = move Up
-/// L = move down
-/// </summary>
+
 public class ObjectController : MonoBehaviour
 {
-    /// Pointer to the current Mesh of the GameObject
-    public GameObject light = null;
-    public GameObject otherTool = null;
-    public SLaserRay toolImpl = null;
+    /// factor to change the rotation speed of the camera.
+    public float m_rotationFactor = 0.05f;
+
+    /// factor to change the movement speed of the camera.
+    public float m_moveFactor = 0.001f;
 
 
-    public bool m_isactive = false;
-    protected ObjectController otherObjectCtrl = null;
-
-    public float factor = 0.1f;
-    void Start()
+    /// Callback Method that can be linked in Unity GUI to zoom object 
+    public void zoom()
     {
-        if (light)
-            light.SetActive(m_isactive);
-
-        if (otherTool)
-            otherObjectCtrl = otherTool.GetComponent<ObjectController>();
+        transform.position = transform.position + transform.forward * m_moveFactor;
     }
 
-    /// Method calle at each update, will move the object regardings keys pushed.
-    void FixedUpdate()
+    /// Callback Method that can be linked in Unity GUI to unzoom object
+    public void unZoom()
     {
-        if (!m_isactive)
-            return;
-
-        if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
-        {
-            if (Input.GetKey(KeyCode.Keypad4))
-                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + 0.5f, transform.eulerAngles.z);
-            else if (Input.GetKey(KeyCode.Keypad6))
-                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y - 0.5f, transform.eulerAngles.z);
-            else if (Input.GetKey(KeyCode.Keypad8))
-                transform.eulerAngles = new Vector3(transform.eulerAngles.x + 0.5f, transform.eulerAngles.y, transform.eulerAngles.z);
-            else if (Input.GetKey(KeyCode.Keypad2))
-                transform.eulerAngles = new Vector3(transform.eulerAngles.x - 0.5f, transform.eulerAngles.y, transform.eulerAngles.z);
-            else if (Input.GetKey(KeyCode.Keypad5))
-                transform.position = transform.position - transform.forward * factor;
-        }
-        else
-        {
-            if (Input.GetKey(KeyCode.Keypad8))
-                transform.position = transform.position + transform.up * factor;
-            else if (Input.GetKey(KeyCode.Keypad2))
-                transform.position = transform.position - transform.up * factor;
-            else if (Input.GetKey(KeyCode.Keypad4))
-                transform.position = transform.position - transform.right * factor;
-            else if (Input.GetKey(KeyCode.Keypad6))
-                transform.position = transform.position + transform.right * factor;
-            else if (Input.GetKey(KeyCode.Keypad5))
-                transform.position = transform.position + transform.forward * factor;
-            else if (Input.GetKey(KeyCode.UpArrow))
-            {
-                factor += 0.01f;
-            }
-            else if (Input.GetKey(KeyCode.DownArrow))
-            {
-                if (factor > 0.02f)
-                    factor -= 0.01f;
-            }
-        }
-
-        if (Input.GetKey(KeyCode.C))
-        {
-            if (light)
-            {
-                Light lt = light.GetComponent<Light>();
-                lt.color = Color.red;
-            }
-
-            if (toolImpl)
-                toolImpl.activeTool(true);
-        }
-        else if (Input.GetKey(KeyCode.V))
-        {
-            if (light)
-            {
-                Light lt = light.GetComponent<Light>();
-                lt.color = Color.green;
-            }
-
-            if (toolImpl)
-                toolImpl.activeTool(false);
-        }
+        transform.position = transform.position - transform.forward * m_moveFactor;
     }
 
-    void activateTool(bool value)
+
+    /// Callback Method that can be linked in Unity GUI to zoom this camera
+    public void rotateUp()
     {
-        m_isactive = value;
-        if (light)
-            light.SetActive(m_isactive);
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x - m_rotationFactor, transform.eulerAngles.y, transform.eulerAngles.z);
     }
 
-    public bool isToolActive()
+    /// Callback Method that can be linked in Unity GUI to zoom this camera
+    public void rotateDown()
     {
-        return m_isactive;
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x + m_rotationFactor, transform.eulerAngles.y, transform.eulerAngles.z);
     }
 
-    void OnMouseDown()
+    public void rotateLeft()
     {
-        activateTool(m_isactive = !m_isactive);
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y - m_rotationFactor, transform.eulerAngles.z);
+    }
 
-        if (m_isactive && otherObjectCtrl && otherObjectCtrl.isToolActive())
-            otherObjectCtrl.activateTool(false);
+    public void rotateRight()
+    {
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + m_rotationFactor, transform.eulerAngles.z);
+    }
+
+
+
+    /// Callback Method that can be linked in Unity GUI to zoom this camera
+    public void moveUp()
+    {
+        transform.position = transform.position + transform.up * m_moveFactor;
+    }
+
+    /// Callback Method that can be linked in Unity GUI to zoom this camera
+    public void moveDown()
+    {
+        transform.position = transform.position - transform.up * m_moveFactor;
+    }
+
+    public void moveLeft()
+    {
+        transform.position = transform.position - transform.right * m_moveFactor;
+    }
+
+    public void moveRight()
+    {
+        transform.position = transform.position + transform.right * m_moveFactor;
     }
 
 }
