@@ -19,10 +19,14 @@ namespace SofaUnityAPI
         private bool m_isReady = false;
 
         /// Default constructor, will create the pointer to SofaPhysicsAPI
-        public SofaContextAPI()
+        public SofaContextAPI(bool async)
         {
             // Create the application
-            m_native = sofaPhysicsAPI_create(1);
+            if (async)
+                m_native = sofaPhysicsAPI_create(2);
+            else
+                m_native = sofaPhysicsAPI_create(1);
+
             if (m_native == IntPtr.Zero)
             {
                 Debug.LogError("Error no sofaAdvancePhysicsAPI found nor created!");
@@ -63,6 +67,7 @@ namespace SofaUnityAPI
                     Debug.Log("SofaContextAPI::Dispose sofaPhysicsAPI_delete method returns: " + SofaDefines.msg_error[resDel]);
                 if (resDel < 0)
                     Debug.LogError("SofaContextAPI::Dispose sofaPhysicsAPI_delete method returns: " + SofaDefines.msg_error[resDel]);
+                m_isReady = false;
             }
         }
 
@@ -72,6 +77,13 @@ namespace SofaUnityAPI
             get { return m_isDisposed; }
         }
 
+        public int contextStatus()
+        {
+            if (m_isReady)
+                return sofaPhysicsAPI_getStateMachine(m_native);
+            else
+                return -2;
+        }
 
         /// Method to start the Sofa simulation
         public void start()
@@ -126,6 +138,13 @@ namespace SofaUnityAPI
                 Debug.LogError("SofaContextAPI::loadScene can't load file: " + filename + "no sofaPhysicsAPI created!");
         }
 
+        /// Method to stop the Sofa simulation
+        public void unload()
+        {
+            if (m_isReady)
+                sofaPhysicsAPI_unloadScene(m_native);
+        }        
+
         /// <summary> Method to load a specific sofa plugin. </summary>
         /// <param name="pluginName"> Path to the plugin. </param>
         public void loadPlugin(string pluginName)
@@ -133,8 +152,8 @@ namespace SofaUnityAPI
             if (m_isReady)
             {
                 int res = sofaPhysicsAPI_loadPlugin(m_native, pluginName);
-                if (res != 1)
-                    Debug.LogError("SofaContextAPI::loadPlugin method returns: " + SofaDefines.msg_error[res]);
+                if (res != 0)
+                    Debug.LogError("SofaContextAPI::loadPlugin: " + pluginName + ", method returns: " + SofaDefines.msg_error[res]);
             }
             else
                 Debug.LogError("SofaContextAPI::loadPlugin can't load plugin: " + pluginName + " no sofaPhysicsAPI created!");
@@ -259,6 +278,74 @@ namespace SofaUnityAPI
         }
 
 
+        public void activateMessageHandler(bool status)
+        {
+            int res = 0;
+            if (m_isReady)
+                res = sofaPhysicsAPI_activateMessageHandler(m_native, status);
+
+            if (res != 0)
+                Debug.LogError("SofaContextAPI::activateMessageHandler method returns: " + SofaDefines.msg_error[res]);
+        }
+
+        public void DisplayMessages()
+        {
+            if (!m_isReady)
+                return;
+
+            int res = 0;
+            res = sofaPhysicsAPI_getNbMessages(m_native);
+
+            if (res <= 0)
+                return;
+
+            int[] type = new int[1];
+            type[0] = -1;
+            for (int i=0; i<res; i++)
+            {
+                string message = sofaPhysicsAPI_getMessage(m_native, i, type);
+
+                // check if message should be ignored given specific rules
+                if (skipExceptionMessage(message))
+                    continue;
+
+                if (type[0] == -1)
+                    continue;
+                else if (type[0] == 3)
+                    Debug.LogWarning("# Sofa Warning: " + message);
+                else if (type[0] == 4)
+                    Debug.LogError("# Sofa Error: " + message);
+                else if (type[0] == 5)
+                    Debug.LogError("<color=red># Sofa Fatal error:</color> " + message);
+                else
+                    Debug.Log("# Sofa Log: " + message);
+            }
+
+            res = sofaPhysicsAPI_clearMessages(m_native);
+            if (res != 0)
+                Debug.LogError("SofaContextAPI::clearMessages method returns: " + SofaDefines.msg_error[res]);
+        }
+
+        // check if message match given specific rules
+        public bool skipExceptionMessage(string message)
+        {
+            if (message.Contains("Plugin not found"))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public int clearMessages()
+        {
+            int res = 0;
+            if (m_isReady)
+                res = sofaPhysicsAPI_clearMessages(m_native);
+
+            return res;
+        }
+
+
         /////////////////////////////////////////////////////////////////////////////////////////
         //////////          API to Communication with SofaAdvancePhysicsAPI         /////////////
         /////////////////////////////////////////////////////////////////////////////////////////
@@ -278,6 +365,11 @@ namespace SofaUnityAPI
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaPhysicsAPI_loadScene(IntPtr obj, string filename);
 
+        [DllImport("SofaAdvancePhysicsAPI")]
+        public static extern int sofaPhysicsAPI_unloadScene(IntPtr obj);
+
+        [DllImport("SofaAdvancePhysicsAPI")]
+        public static extern int sofaPhysicsAPI_getStateMachine(IntPtr obj);        
 
         /// Binding to load a plugin
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
@@ -341,6 +433,20 @@ namespace SofaUnityAPI
 
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern string sofaPhysicsAPI_testName(IntPtr obj);
+
+
+        /// logging api
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int sofaPhysicsAPI_activateMessageHandler(IntPtr obj, bool value);
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int sofaPhysicsAPI_getNbMessages(IntPtr obj);
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern string sofaPhysicsAPI_getMessage(IntPtr obj, int messageId, int[] messageType);
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int sofaPhysicsAPI_clearMessages(IntPtr obj);
 
     }
 }

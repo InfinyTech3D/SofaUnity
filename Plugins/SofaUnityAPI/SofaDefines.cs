@@ -17,7 +17,7 @@ static public class SofaDefines
         {-5, "Method called has not yet been implemented."},
         {-6, "Glew init error."},
         {-10, "Sofa simulation scene creation failed."},
-        {-11, "Sofa simulation scene loading failed."},
+        {-11, "Sofa plugin loading failed."},
 
         {-21, "Sofa object creation failed due to incorrect name."},
         {-22, "Sofa object creation failed because simulation can't be reached."},

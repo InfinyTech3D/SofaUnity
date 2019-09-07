@@ -2,9 +2,27 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
+[InitializeOnLoad]
 public class CopyConfigPostProcessor
 {
+    /// <summary>
+    /// Generate .ini file on load.
+    /// </summary>
+    static CopyConfigPostProcessor()
+    {
+        string sofaIniFile = Application.dataPath + "/SofaUnity/Plugins/Native/x64/sofa.ini";
+        using (StreamWriter outputIniFile = new StreamWriter(sofaIniFile))
+        {
+            string SofaUnityDir = Application.dataPath + "/SofaUnity/scenes/SofaScenes";
+            outputIniFile.WriteLine("SHARE_DIR=" + SofaUnityDir);
+            outputIniFile.WriteLine("EXAMPLES_DIR=" + SofaUnityDir);
+            Debug.Log("Generate " + sofaIniFile + " file.");
+        }
+    }
+
     private static void DirectoryCopy(
         string sourceDirName, string destDirName, bool copySubDirs)
     {
@@ -62,6 +80,15 @@ public class CopyConfigPostProcessor
         }
     }
 
+    static string scenePath = "";
+
+    [PostProcessSceneAttribute(2)]
+    public static void OnPostprocessScene()
+    {
+        Scene scene = SceneManager.GetActiveScene();
+        scenePath = scene.path;        
+    }
+
 
     [PostProcessBuild]
     public static void OnPostprocessBuild(BuildTarget target, string pathToBuiltProject)
@@ -92,6 +119,34 @@ public class CopyConfigPostProcessor
 
                     Debug.Log("Copying: " + currentSofaDir + " to " + SofaUnityDir);
                     DirectoryCopy(currentSofaDir, SofaUnityDir, true);
+
+                    string buildPathIniDir = dataDir + "/SofaUnity/Plugins/Native/x64/";
+                    if (!Directory.Exists(buildPathIniDir))
+                    {
+                        Directory.CreateDirectory(buildPathIniDir);
+                        Debug.Log("Create directory " + buildPathIniDir);
+                    }
+
+                    string outputIniPath = Path.Combine(buildPathIniDir, "sofa.ini");
+                    using (StreamWriter outputIniFile = new StreamWriter(outputIniPath))
+                    {
+                        outputIniFile.WriteLine("SHARE_DIR=" + SofaUnityDir);
+                        outputIniFile.WriteLine("EXAMPLES_DIR=" + SofaUnityDir);
+                        Debug.Log("Generate " + outputIniPath + " file.");
+                    }
+
+
+                    Debug.Log("currentScene path: " + scenePath);
+                    if (scenePath.Length != 0)
+                    {
+                        System.IO.FileInfo scenePathInfo = new FileInfo(scenePath);
+
+                        string scenePathDir = dataDir + "/SofaUnity/scenes/";
+                        DirectoryInfo dirInfo = scenePathInfo.Directory;
+                        Debug.Log("scenePathInfo.Name: " + dirInfo.Parent.Name);
+                        Debug.Log("Copying: " + scenePathInfo.DirectoryName + " to " + scenePathDir);
+                        DirectoryCopy(scenePathInfo.DirectoryName, scenePathDir, true);
+                    }
 
                     break;
                 }

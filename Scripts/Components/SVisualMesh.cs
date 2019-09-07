@@ -96,7 +96,7 @@ namespace SofaUnity
                     }
                     m_impl.setTopologyChange(false);
                     m_impl.updateMesh(m_mesh);
-                    m_mesh.RecalculateNormals();
+                    m_mesh.RecalculateNormals();                    
                 }
                 else
                 {
@@ -104,6 +104,7 @@ namespace SofaUnity
                     if (res == -1)
                         m_context.breakerProcedure();
                 }
+                m_mesh.RecalculateBounds();
             }
             
         }

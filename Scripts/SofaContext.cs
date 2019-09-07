@@ -32,9 +32,14 @@ namespace SofaUnity
         /// Booleen to update sofa simulation
         public bool IsSofaUpdating = true;
 
+        /// Booleen to activate sofa message handler
+        public bool CatchSofaMessages = true;
+
         List<SRayCaster> m_casters = null;
 
         private SObjectHierarchy m_hierarchyPtr = null;
+
+        public bool testAsync = false;
 
 
         /// Getter of current Sofa Context API, @see m_impl
@@ -216,7 +221,26 @@ namespace SofaUnity
             {
                 if (m_log)
                     Debug.Log("SofaContext::OnDestroy stop now.");
+
+                if (isMsgHandlerActivated)
+                {
+                    m_impl.activateMessageHandler(false);
+                    isMsgHandlerActivated = false;
+                }
+
+                if (m_log)
+                    Debug.Log("## SofaContext status before stop: " + m_impl.contextStatus());
+
                 m_impl.stop();
+
+                if (m_log)
+                    Debug.Log("## SofaContext status after stop: " + m_impl.contextStatus());
+
+                m_impl.unload();
+
+                if (m_log)
+                    Debug.Log("## SofaContext status after unload: " + m_impl.contextStatus());
+
                 m_impl.Dispose();
             }
         }
@@ -241,6 +265,10 @@ namespace SofaUnity
                 pluginPath = "/SofaUnity/Plugins/Native/x64/";
             else
                 pluginPath = "/Plugins/";
+
+            // Default plugin to be loaded
+            m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaMiscCollision.dll");
+            m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaSparseSolver.dll");
         }
 
         public void initHierarchy()
@@ -255,19 +283,34 @@ namespace SofaUnity
         /// Internal Method to init the SofaContext object
         void init()
         {
+            if (this.transform.localScale.x > 0)
+            {
+                Vector3 scale = this.transform.localScale;
+                scale.x *= -1;
+                this.transform.localScale = scale;
+            }
+
             if (m_log)
                 Debug.Log("## SofaContext ## init ");
 
             if (m_impl == null)
             {
-                m_impl = new SofaContextAPI();
+                m_impl = new SofaContextAPI(testAsync);
 
                 if (m_hierarchyPtr == null)
                     initHierarchy();
 
+                catchSofaMessages();
                 loadPlugins();
 
+                if (m_log)
+                    Debug.Log("## SofaContext status before start: " + m_impl.contextStatus());
+                                   
                 m_impl.start();
+
+                if (m_log)
+                    Debug.Log("## SofaContext status after start: " + m_impl.contextStatus());
+
 
                 if (m_filename != "")
                 {
@@ -311,8 +354,13 @@ namespace SofaUnity
                 //{
                 m_impl.timeStep = m_timeStep;
                 m_impl.setGravity(m_gravity);
-                //}
+                //}              
+
+                if (m_log)
+                    Debug.Log("## SofaContext status end init: " + m_impl.contextStatus());
             }
+
+            
         }
         
         // Update is called once per fix frame
@@ -322,8 +370,6 @@ namespace SofaUnity
         }
 
         private float nextUpdate = 0.0f;
-
-        public bool testAsync = false;
 
         // Update is called once per frame
         void Update()
@@ -336,6 +382,9 @@ namespace SofaUnity
             else
                 updateImplSync();
 
+            // log sofa messages
+            catchSofaMessages();
+
             // counter if need to freeze the simulation for several iterations
             cptBreaker++;
             if (cptBreaker == countDownBreaker)
@@ -343,6 +392,7 @@ namespace SofaUnity
                 cptBreaker = 0;
                 breakerActivated = false;
             }
+
         }
 
 
@@ -414,6 +464,26 @@ namespace SofaUnity
             }
         }
 
+        private bool isMsgHandlerActivated = false;
+        protected void catchSofaMessages()
+        {
+            // first time activated
+            if (CatchSofaMessages && !isMsgHandlerActivated)
+            {
+                m_impl.activateMessageHandler(true);
+                isMsgHandlerActivated = true;
+            }
+            else if(!CatchSofaMessages && isMsgHandlerActivated)
+            {
+                m_impl.activateMessageHandler(false);
+                isMsgHandlerActivated = false;
+            }
+
+            if (isMsgHandlerActivated)
+            {
+                 m_impl.DisplayMessages();
+            }
+        }
 
         protected void reloadFilename()
         {
@@ -444,7 +514,7 @@ namespace SofaUnity
             m_hierarchyPtr = new SObjectHierarchy(this);
 
             // recreate sofaContext
-            m_impl = new SofaContextAPI();
+            m_impl = new SofaContextAPI(testAsync);
             loadPlugins();
             m_impl.start();
             
