@@ -8,7 +8,7 @@
     <MinProximityIntersection name="Proximity" alarmDistance="1.0" contactDistance="0.01" />
 	
     <Node name="tissue_node">
-        <EulerImplicit name="cg_odesolver" printLog="false" />
+        <EulerImplicitSolver name="cg_odesolver" printLog="false" />
         <CGLinearSolver iterations="25" name="linear solver" tolerance="1.0e-9" threshold="1.0e-9" />
         <MeshGmshLoader name="meshLoader" filename="mesh/square3.msh" scale="10" createSubelements="true" />
 		

@@ -286,6 +286,13 @@ namespace SofaUnity
         /// Internal Method to init the SofaContext object
         void init()
         {
+            if (this.transform.localScale.x > 0)
+            {
+                Vector3 scale = this.transform.localScale;
+                scale.x *= -1;
+                this.transform.localScale = scale;
+            }
+
             if (m_log)
                 Debug.Log("## SofaContext ## init ");
 

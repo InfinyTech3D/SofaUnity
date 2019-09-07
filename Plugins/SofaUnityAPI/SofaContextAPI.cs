@@ -153,7 +153,7 @@ namespace SofaUnityAPI
             {
                 int res = sofaPhysicsAPI_loadPlugin(m_native, pluginName);
                 if (res != 0)
-                    Debug.LogError("SofaContextAPI::loadPlugin method returns: " + SofaDefines.msg_error[res]);
+                    Debug.LogError("SofaContextAPI::loadPlugin: " + pluginName + ", method returns: " + SofaDefines.msg_error[res]);
             }
             else
                 Debug.LogError("SofaContextAPI::loadPlugin can't load plugin: " + pluginName + " no sofaPhysicsAPI created!");
@@ -304,6 +304,11 @@ namespace SofaUnityAPI
             for (int i=0; i<res; i++)
             {
                 string message = sofaPhysicsAPI_getMessage(m_native, i, type);
+
+                // check if message should be ignored given specific rules
+                if (skipExceptionMessage(message))
+                    continue;
+
                 if (type[0] == -1)
                     continue;
                 else if (type[0] == 3)
@@ -319,6 +324,16 @@ namespace SofaUnityAPI
             res = sofaPhysicsAPI_clearMessages(m_native);
             if (res != 0)
                 Debug.LogError("SofaContextAPI::clearMessages method returns: " + SofaDefines.msg_error[res]);
+        }
+
+        // check if message match given specific rules
+        public bool skipExceptionMessage(string message)
+        {
+            if (message.Contains("Plugin not found"))
+            {
+                return true;
+            }
+            return false;
         }
 
         public int clearMessages()

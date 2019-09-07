@@ -8,14 +8,9 @@ using System.Collections;
 /// D = turn right
 /// W = look up
 /// </summary>
-public class CameraController : MonoBehaviour 
+public class CameraController : ObjectController
 {
-    /// factor to change the rotation speed of the camera.
-    public float m_rotationFactor = 0.05f;
-
-    /// factor to change the movement speed of the camera.
-    public float m_moveFactor = 0.001f;
-
+   
     /// Use this for initialization
     void Start () 
 	{
@@ -23,43 +18,28 @@ public class CameraController : MonoBehaviour
 	}
 	
 
-    /// Callback Method that can be linked in Unity GUI to zoom this camera
-    public void zoomCamera()
-    {
-        transform.position = transform.position + transform.forward * m_moveFactor;
-    }
-
-    /// Callback Method that can be linked in Unity GUI to unzoom this camera
-    public void unZoomCamera()
-    {
-        transform.position = transform.position - transform.forward * m_moveFactor;
-    }
-
-
-    /// Callback Method that can be linked in Unity GUI to zoom this camera
-    public void rotateCameraUp()
-    {
-        transform.eulerAngles = new Vector3(transform.eulerAngles.x + m_rotationFactor, transform.eulerAngles.y, transform.eulerAngles.z);
-    }
-
-    /// Callback Method that can be linked in Unity GUI to zoom this camera
-    public void rotateCameraDown()
-    {
-        transform.eulerAngles = new Vector3(transform.eulerAngles.x - m_rotationFactor, transform.eulerAngles.y, transform.eulerAngles.z);
-    }
-
-
-
     /// Update is called once per frame
-    void Update () 
+    void FixedUpdate() 
 	{
-        if (Input.GetKey(KeyCode.A))
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + 0.5f, transform.eulerAngles.z);
-        else if (Input.GetKey(KeyCode.D))
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y - 0.5f, transform.eulerAngles.z);
-        else if (Input.GetKey(KeyCode.W))
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x + 0.5f, transform.eulerAngles.y, transform.eulerAngles.z);
-        else if (Input.GetKey(KeyCode.S))
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x - 0.5f, transform.eulerAngles.y, transform.eulerAngles.z);
+        if (Input.GetKey(KeyCode.Keypad8))
+            moveUp();
+        else if (Input.GetKey(KeyCode.Keypad5))
+            moveDown();
+        else if (Input.GetKey(KeyCode.Keypad4))
+            moveLeft();
+        else if (Input.GetKey(KeyCode.Keypad6))
+            moveRight();
+        else if (Input.GetKey(KeyCode.Keypad7))
+            rotateUp();
+        else if (Input.GetKey(KeyCode.Keypad9))
+            rotateDown();
+        else if (Input.GetKey(KeyCode.Keypad1))
+            rotateLeft();
+        else if (Input.GetKey(KeyCode.Keypad3))
+            rotateRight();
+        else if (Input.GetKey(KeyCode.KeypadPlus))
+            zoom();
+        else if (Input.GetKey(KeyCode.KeypadMinus))
+            unZoom();
     }
 }
