@@ -270,6 +270,7 @@ namespace SofaUnity
             m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaOpenglVisual.dll");
             m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaMiscCollision.dll");
             m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaSparseSolver.dll");
+            m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaSphFluid.dll");
         }
 
         public void initHierarchy()
