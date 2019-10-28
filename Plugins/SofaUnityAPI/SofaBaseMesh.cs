@@ -236,7 +236,7 @@ public class SofaBaseMesh : SofaBaseObject
             Vector3[] verts = mesh.vertices;
             Vector3[] norms = mesh.normals;
             bool first = false;
-            if (verts.Length == 0)// first time
+            if (verts.Length == 0 || verts.Length != nbrV) // need to resize vectors
             {
                 verts = new Vector3[nbrV];
                 norms = new Vector3[nbrV];
