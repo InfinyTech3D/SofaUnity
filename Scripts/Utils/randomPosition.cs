@@ -10,15 +10,22 @@ public class randomPosition : MonoBehaviour {
     // radius of the 3D area sphere
     public float oscilationRange = 1.0f;
     protected Vector3 initPosition;
+    public int rate = 10;
     // Use this for initialization
     void Start ()
     {
         initPosition = transform.position;
     }
-	
-	// Update is called once per frame
-	void FixedUpdate ()
+    private int fixedUpdateCount = 0;
+    // Update is called once per frame
+    void FixedUpdate ()
     {
-        transform.position = initPosition + Random.insideUnitSphere * oscilationRange;
+        fixedUpdateCount++;
+        if (fixedUpdateCount == rate)
+        {
+            transform.position = initPosition + Random.insideUnitSphere * oscilationRange;
+            fixedUpdateCount = 0;
+        }
+        
     }
 }
