@@ -99,6 +99,13 @@ namespace SofaUnityAPI
                 sofaPhysicsAPI_stop(m_native);
         }
 
+        /// Method to reset the Sofa simulation
+        public void reset()
+        {
+            if (m_isReady)
+                sofaPhysicsAPI_reset(m_native);
+        }
+
         /// Method to perform one step of simulation in Sofa
         public void step()
         {

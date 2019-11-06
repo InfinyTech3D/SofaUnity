@@ -35,6 +35,9 @@ namespace SofaUnity
         /// Booleen to activate sofa message handler
         public bool CatchSofaMessages = true;
 
+        /// Booleen to start Sofa simulation on Play
+        public bool StartOnPlay = true;
+
         List<SRayCaster> m_casters = null;
 
         private SObjectHierarchy m_hierarchyPtr = null;
@@ -194,22 +197,22 @@ namespace SofaUnity
         /// Method called at GameObject creation.
         void Awake()
         {
-            // Call the init method to create the Sofa Context
-            init();
+            if (Application.isPlaying)
+                Debug.Log("#### is playing");
+            else
+                Debug.Log("#### is editor");
 
-            if (m_impl == null)
-            {
-                this.enabled = false;
-                this.gameObject.SetActive(false);
+            Debug.Log("#### StartOnPlay: " + StartOnPlay);
+            if (Application.isPlaying && StartOnPlay == false)
                 return;
-            }
+
+            StartSofa();
         }
 
         // Use this for initialization
         void Start()
         {
-            breakerActivated = false;
-            cptBreaker = 0;            
+
         }
 
         /// Method called at GameObject destruction.
@@ -257,6 +260,30 @@ namespace SofaUnity
             }
         }
 
+        void StartSofa()
+        {
+            Debug.Log("### StartSofa ");
+            // Call the init method to create the Sofa Context
+            init();
+
+            if (m_impl == null)
+            {
+                this.enabled = false;
+                this.gameObject.SetActive(false);
+                return;
+            }
+
+            breakerActivated = false;
+            cptBreaker = 0;
+        }
+
+        public void resetSofa()
+        {
+            if (m_impl != null)
+            {
+                m_impl.reset();
+            }
+        }
 
         void loadPlugins()
         {           
