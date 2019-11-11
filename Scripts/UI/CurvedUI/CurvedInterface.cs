@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using SofaUnity;
 
 public class CurvedInterface : MonoBehaviour
@@ -19,9 +20,11 @@ public class CurvedInterface : MonoBehaviour
     
     //public ImageSwitch m_imageSwitcher;
     private int m_environmentCount = 0;
-    private string m_currentScene;
+    private string m_currentScene = "";
+    private string m_targetScene = "";
 
-    bool m_isReady = false;
+    protected bool m_isReady = false;
+    protected bool m_working = false;
 
     // Start is called before the first frame update
     void Start()
@@ -99,18 +102,23 @@ public class CurvedInterface : MonoBehaviour
         for (int i = 0; i < SelectedEnvironmentText.Length; i++)
             StartCoroutine(ChangeText(SelectedEnvironmentText[i], info.m_sceneInfo));
 
-        m_currentScene = info.m_sceneName;
+        m_targetScene = info.m_sceneName;
     }
 
     public void loadScene()
     {
-        if (!m_isReady)
+        if (!m_isReady || m_working)
             return;
 
-        if (m_currentScene.Length == 0)
+        if (m_targetScene.Length == 0 || m_targetScene == m_currentScene)
             return;
 
-        Debug.Log("Load scene: " + m_currentScene);
+        if (m_sofaContext)
+            m_sofaContext.IsSofaUpdating = false;
+
+        m_working = true;
+        Debug.Log("Load scene: " + m_targetScene);
+        StartCoroutine(loadSceneAsync_impl(m_targetScene));
     }
 
 
@@ -125,5 +133,79 @@ public class CurvedInterface : MonoBehaviour
         }
 
         yield return null;
+    }
+
+
+    IEnumerator loadSceneAsync_impl(string levelName)
+    {
+        yield return null;
+        int cptSecu = 0;
+
+        // first unload previous scene
+        if (m_currentScene.Length != 0)
+        {
+            AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(m_currentScene);
+            cptSecu = 0;
+            while (!asyncUnload.isDone && cptSecu < 10000)
+            {
+                cptSecu++;
+                yield return null;
+            }
+
+            m_sofaContext = null;
+        }
+
+        // load new scene
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Additive);
+        //asyncLoad.allowSceneActivation = false;
+        cptSecu = 0;
+        while (!asyncLoad.isDone && cptSecu < 10000)
+        {
+            //if (m_Text) //Output the current progress
+            //{
+            //    m_Text.text = "Loading progress: " + (asyncLoad.progress * 100) + "%";
+            //}
+            cptSecu++;
+            yield return null;
+        }
+
+        m_currentScene = levelName;
+        m_working = false;
+
+        // look for new sofaContext
+        GameObject _contextObject = GameObject.Find("SofaContext");
+        if (_contextObject != null)
+        {
+            // Get Sofa context
+            m_sofaContext = _contextObject.GetComponent<SofaContext>();
+            if (m_sofaContext == null)
+            {
+                Debug.LogError("GetComponent<SofaContext> failed.");
+            }
+        }
+        //if (m_Text)
+        //{
+        //    if (asyncLoad.isDone)
+        //        m_Text.text = "Loading success.";
+        //    else
+        //        m_Text.text = "Loading failed.";
+        //}
+    }
+
+    IEnumerator unloadSceneAsync_impl()
+    {
+        yield return null;
+
+        AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(m_currentScene);
+        int cptSecu = 0;
+        while (!asyncUnload.isDone && cptSecu < 10000)
+        {
+            cptSecu++;
+            yield return null;
+        }
+
+        m_currentScene = "";
+        m_working = false;
+        m_sofaContext = null;
     }
 }
