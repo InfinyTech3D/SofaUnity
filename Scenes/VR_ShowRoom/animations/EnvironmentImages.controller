@@ -3,25 +3,24 @@
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_Name: EnvironmentImages
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: LIVER
+  - m_Name: EARTH
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: ORGANS
+  - m_Name: ICEPLANET
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: CADUCEUS
+  - m_Name: JUNGLEPLANET
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -43,13 +42,12 @@ AnimatorController:
 --- !u!1101 &1101606855504687334
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: LIVER
+    m_ConditionEvent: EARTH
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102782771377757718}
@@ -68,13 +66,12 @@ AnimatorStateTransition:
 --- !u!1101 &1101651746257538770
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: ORGANS
+    m_ConditionEvent: ICEPLANET
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102816819514122736}
@@ -93,13 +90,12 @@ AnimatorStateTransition:
 --- !u!1101 &1101656502290102144
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: CADUCEUS
+    m_ConditionEvent: JUNGLEPLANET
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102928572289402290}
@@ -119,9 +115,8 @@ AnimatorStateTransition:
 AnimatorState:
   serializedVersion: 5
   m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_Name: imageEarth
   m_Speed: 1
   m_CycleOffset: 0
@@ -145,9 +140,8 @@ AnimatorState:
 AnimatorState:
   serializedVersion: 5
   m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_Name: imageIcePlanet
   m_Speed: 1
   m_CycleOffset: 0
@@ -171,9 +165,8 @@ AnimatorState:
 AnimatorState:
   serializedVersion: 5
   m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_Name: imageJunglePlanet
   m_Speed: 1
   m_CycleOffset: 0
@@ -197,9 +190,8 @@ AnimatorState:
 AnimatorStateMachine:
   serializedVersion: 5
   m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_Name: Base Layer
   m_ChildStates:
   - serializedVersion: 1
