@@ -80,7 +80,7 @@ public class SofaRayCaster : IDisposable
     }
 
     /// Method to send a new ray. TODO: could be optimise here and send only if tool is activated
-    public int castRay(Vector3 origin, Vector3 direction, Vector3 scaleUnityToSofa)
+    public int castRay(Vector3 originInSofa, Vector3 directionInSofa)
     {
         if (m_simu == IntPtr.Zero)
             return -10;
@@ -90,8 +90,8 @@ public class SofaRayCaster : IDisposable
 
         for (int i = 0; i < 3; ++i)
         {
-            ori[i] = origin[i] * scaleUnityToSofa[i];
-            dir[i] = direction[i];
+            ori[i] = originInSofa[i];
+            dir[i] = directionInSofa[i];
         }
 
         int res = sofaPhysicsAPI_castRay(m_simu, m_name, ori, dir);

@@ -148,7 +148,9 @@ public class SLaserRay : SRayCaster
             // get the id of the selected triangle. If < 0, no intersection
             if (m_isActivated)
             {
-                triId = m_sofaRC.castRay(origin, direction, m_sofaContext.getScaleUnityToSofa());
+                Vector3 originS = m_sofaContext.transform.InverseTransformPoint(origin);
+                Vector3 directionS = m_sofaContext.transform.InverseTransformDirection(direction);
+                triId = m_sofaRC.castRay(originS, directionS);
 
                 if (m_laserType == LaserType.AttachTool)
                 {
@@ -176,7 +178,11 @@ public class SLaserRay : SRayCaster
             int triId = -1;
             // get the id of the selected triangle. If < 0, no intersection
             if (m_isActivated)
-                triId = m_sofaRC.castRay(origin, direction, m_sofaContext.getScaleUnityToSofa());
+            {
+                Vector3 originS = m_sofaContext.transform.InverseTransformPoint(origin);
+                Vector3 directionS = m_sofaContext.transform.InverseTransformDirection(direction);
+                triId = m_sofaRC.castRay(originS, directionS);
+            }
         }
     }
 
