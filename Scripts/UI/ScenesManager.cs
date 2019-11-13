@@ -69,7 +69,7 @@ public class ScenesManager : MonoBehaviour
             else
                 sceneInfo = "3D " + name + " interaction";
             
-            m_scenesInfo.Add(new SceneMenuInfo(name, sceneInfo, sprite));            
+            m_scenesInfo.Add(new SceneMenuInfo("VR_" + name, sceneInfo, sprite));            
         }
 
         m_nbrScenes = m_scenesInfo.Count;
