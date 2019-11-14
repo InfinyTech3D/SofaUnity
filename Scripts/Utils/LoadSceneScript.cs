@@ -7,14 +7,16 @@ using UnityEngine.UI;
 public class LoadSceneScript : MonoBehaviour
 {
     public GameObject loadingImage = null;
-    public Text m_Text;
+    public Text m_Text;    
 
     protected string m_currentSceneName = "";
     protected int m_levelId = -1;
 
     protected bool m_working = false;
 
-    public void loadScene(int level)
+    public bool isLoading() { return m_working; }
+
+    public void loadSofaScene(int level)
     {
         if (m_working) // already in process, exit
             return;
@@ -26,13 +28,33 @@ public class LoadSceneScript : MonoBehaviour
         StartCoroutine(loadSceneAsync_impl(level));
     }
 
-    public void testMethod(int level)
+
+    public void loadSofaScene(string name)
     {
+        if (m_working) // already in process, exit
+            return;
+
         if (loadingImage)
             loadingImage.SetActive(true);
-        Debug.Log("LoadSceneScript::testMethod level: " + level);
+
+        m_working = true;        
+        StartCoroutine(loadSceneAsync_impl(name));
+    }    
+
+
+    public void unLoadScene()
+    {
+        if (m_working) // already in process, exit
+            return;
+
+        if (m_levelId != -1)
+        {
+            m_working = true;
+            StartCoroutine(unloadSceneAsync_impl());
+        }
     }
-    
+
+
     IEnumerator loadSceneAsync_impl(int level)
     {
         yield return null;
@@ -63,7 +85,7 @@ public class LoadSceneScript : MonoBehaviour
             cptSecu++;
             yield return null;
         }
-
+        
         m_levelId = level;
         m_working = false;
         if (m_Text)
@@ -76,17 +98,47 @@ public class LoadSceneScript : MonoBehaviour
     }
 
 
-    public void unLoadScene()
+    IEnumerator loadSceneAsync_impl(string sceneName)
     {
-        if (m_working) // already in process, exit
-            return;
+        yield return null;
+        int cptSecu = 0;
 
-        if (m_levelId != -1)
+        // first unload previous scene
+        if (m_currentSceneName.Length != 0)
         {
-            m_working = true;
-            StartCoroutine(unloadSceneAsync_impl());
+            AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(m_currentSceneName);
+            cptSecu = 0;
+            while (!asyncUnload.isDone && cptSecu < 10000)
+            {
+                cptSecu++;
+                yield return null;
+            }
         }
-    }
+
+        // load new scene
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        //asyncLoad.allowSceneActivation = false;
+        cptSecu = 0;
+        while (!asyncLoad.isDone && cptSecu < 10000)
+        {
+            if (m_Text) //Output the current progress
+            {
+                m_Text.text = "Loading progress: " + (asyncLoad.progress * 100) + "%";
+            }
+            cptSecu++;
+            yield return null;
+        }
+
+        m_currentSceneName = sceneName;
+        m_working = false;
+        if (m_Text)
+        {
+            if (asyncLoad.isDone)
+                m_Text.text = "Loading success.";
+            else
+                m_Text.text = "Loading failed.";
+        }
+    }        
 
     IEnumerator unloadSceneAsync_impl()
     {
@@ -102,5 +154,14 @@ public class LoadSceneScript : MonoBehaviour
 
         m_levelId = -1;
         m_working = false;
+    }
+
+
+    //////////////////////////////////// WIP //////////////////////////////////////////
+    public void testMethod(int level)
+    {
+        if (loadingImage)
+            loadingImage.SetActive(true);
+        Debug.Log("LoadSceneScript::testMethod level: " + level);
     }
 }

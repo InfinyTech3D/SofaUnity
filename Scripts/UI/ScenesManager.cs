@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ScenesManager : MonoBehaviour
 {
     protected int m_nbrScenes;    
+    public string prefixFiles = "VR_";
 
     public class SceneMenuInfo
     {
@@ -34,12 +35,20 @@ public class ScenesManager : MonoBehaviour
         return m_nbrScenes;
     }
     
-    public SceneMenuInfo getSceneInfo(int id)
+    public SceneMenuInfo getSceneInfo(int sceneID)
     {
-        if (id < 0 || id >= m_nbrScenes)
+        if (sceneID < 0 || sceneID >= m_nbrScenes)
             return null;
 
-        return m_scenesInfo[id];
+        return m_scenesInfo[sceneID];
+    }
+
+    public string getSceneName(int sceneID)
+    {
+        if (sceneID < 0 || sceneID >= m_nbrScenes)
+            return "";
+
+        return m_scenesInfo[sceneID].m_sceneName;
     }
 
     // Start is called before the first frame update
@@ -69,7 +78,7 @@ public class ScenesManager : MonoBehaviour
             else
                 sceneInfo = "3D " + name + " interaction";
             
-            m_scenesInfo.Add(new SceneMenuInfo("VR_" + name, sceneInfo, sprite));            
+            m_scenesInfo.Add(new SceneMenuInfo(prefixFiles + name, sceneInfo, sprite));            
         }
 
         m_nbrScenes = m_scenesInfo.Count;
