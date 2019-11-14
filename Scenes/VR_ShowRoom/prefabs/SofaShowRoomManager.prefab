@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1130881586}
   - component: {fileID: 1673780938054316938}
   - component: {fileID: 1260714345353943154}
+  - component: {fileID: 1764622848}
   m_Layer: 0
   m_Name: SofaShowRoomManager
   m_TagString: Untagged
@@ -48,6 +49,7 @@ MonoBehaviour:
   m_curvedUI: {fileID: 0}
   m_scenes: {fileID: 1673780938054316938}
   m_loader: {fileID: 1260714345353943154}
+  m_viewCtrl: {fileID: 1764622848}
 --- !u!114 &1673780938054316938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,3 +84,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadingImage: {fileID: 0}
   m_Text: {fileID: 0}
+--- !u!114 &1764622848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673780938054316939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12e82726f758ed04983077712d5dbcbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_controllerA: {fileID: 0}
+  m_controllerB: {fileID: 0}
+  startOnPlay: 0
+  ratioScale: 1
