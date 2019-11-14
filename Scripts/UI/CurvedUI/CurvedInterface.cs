@@ -6,46 +6,29 @@ using UnityEngine.SceneManagement;
 using SofaUnity;
 
 public class CurvedInterface : MonoBehaviour
-{
-    protected SofaContext m_sofaContext;
-    public ScenesManager m_scenes;
-
+{                
     public Image m_CurrentImage;
     public Text[] SelectedEnvironmentText;
 
-    //public enum Environment { LIVER, ORGANS, CADUCEUS }
-    //[HideInInspector]
-    //public Environment SelectedEnvironment;
-    //public Animator EnvironmentImageAnimator;
-    
     //public ImageSwitch m_imageSwitcher;
     private int m_environmentCount = 0;
-    private string m_currentScene = "";
-    private string m_targetScene = "";
+    private int m_targetSceneId = -1;
+    private int m_currentSceneId = -1;
 
     protected bool m_isReady = false;
-    protected bool m_working = false;
-
-    // Start is called before the first frame update
-    void Start()
+    protected SofaVR_API m_sofaVR_API = null;
+    protected ScenesManager m_scenes = null;
+    
+    public void initUI(SofaVR_API api, ScenesManager _scenes)
     {
-        if (m_scenes == null)
-            return;
-
-        m_scenes.parseScenes();
-        m_isReady = true;
-
-
-        //SelectedEnvironment = Environment.LIVER;
-        //m_environmentCount = System.Enum.GetValues(typeof(Environment)).Length;
+        m_sofaVR_API = api;
+        m_scenes = _scenes;
+        if (m_scenes == null || m_sofaVR_API == null)
+            m_isReady = false;
+        else
+            m_isReady = true;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
 
     public void ChangePlayerStatus(Toggle _toggle)
     {
@@ -54,26 +37,23 @@ public class CurvedInterface : MonoBehaviour
 
         if (_toggle.isOn)
         {
-            if (m_sofaContext == null)
+            if (m_sofaVR_API == null)
             {
-                Debug.LogWarning("No m_sofaContext found");
+                Debug.LogWarning("No m_sofaVR_API found");
                 return;
             }
 
             if (_toggle.gameObject.name.Contains("play"))
             {
-                Debug.Log("PLAY");
-                m_sofaContext.IsSofaUpdating = true;
+                m_sofaVR_API.startSofaSimulation();
             }
             else if (_toggle.gameObject.name.Contains("stop"))
             {
-                Debug.Log("STOP");
-                m_sofaContext.resetSofa(); 
+                m_sofaVR_API.restartSofaSimulation();
             }
             else if (_toggle.gameObject.name.Contains("pause"))
             {
-                Debug.Log("PAUSE");
-                m_sofaContext.IsSofaUpdating = false;
+                m_sofaVR_API.stopSofaSimulation();
             }
         }
     }
@@ -89,11 +69,11 @@ public class CurvedInterface : MonoBehaviour
         Debug.Log("ChangeEnvironment, m_environmentCount: " + m_environmentCount);
 
         int nbrScene = m_scenes.getNbrScenes();
-        int id = Mathf.Abs(m_environmentCount % nbrScene);
-        Debug.Log("ChangeEnvironment, id: " + id + " | nbr scene: " + nbrScene);
+        m_targetSceneId = Mathf.Abs(m_environmentCount % nbrScene);
+        Debug.Log("ChangeEnvironment, id: " + m_targetSceneId + " | nbr scene: " + nbrScene);
 
         // get info from scene manager
-        ScenesManager.SceneMenuInfo info = m_scenes.getSceneInfo(id);
+        ScenesManager.SceneMenuInfo info = m_scenes.getSceneInfo(m_targetSceneId);
 
         if (m_CurrentImage)
             m_CurrentImage.sprite = info.m_sceneImage;
@@ -101,24 +81,19 @@ public class CurvedInterface : MonoBehaviour
         StopAllCoroutines();
         for (int i = 0; i < SelectedEnvironmentText.Length; i++)
             StartCoroutine(ChangeText(SelectedEnvironmentText[i], info.m_sceneInfo));
-
-        m_targetScene = info.m_sceneName;
     }
 
     public void loadScene()
     {
-        if (!m_isReady || m_working)
+        if (!m_isReady)
             return;
 
-        if (m_targetScene.Length == 0 || m_targetScene == m_currentScene)
+        if (m_targetSceneId == -1 || m_targetSceneId == m_currentSceneId)
             return;
 
-        if (m_sofaContext)
-            m_sofaContext.IsSofaUpdating = false;
+        m_sofaVR_API.loadSofaScene(m_targetSceneId);
 
-        m_working = true;
-        Debug.Log("Load scene: " + m_targetScene);
-        StartCoroutine(loadSceneAsync_impl(m_targetScene));
+        m_currentSceneId = m_targetSceneId;
     }
 
 
@@ -133,79 +108,5 @@ public class CurvedInterface : MonoBehaviour
         }
 
         yield return null;
-    }
-
-
-    IEnumerator loadSceneAsync_impl(string levelName)
-    {
-        yield return null;
-        int cptSecu = 0;
-
-        // first unload previous scene
-        if (m_currentScene.Length != 0)
-        {
-            AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(m_currentScene);
-            cptSecu = 0;
-            while (!asyncUnload.isDone && cptSecu < 10000)
-            {
-                cptSecu++;
-                yield return null;
-            }
-
-            m_sofaContext = null;
-        }
-
-        // load new scene
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Additive);
-        //asyncLoad.allowSceneActivation = false;
-        cptSecu = 0;
-        while (!asyncLoad.isDone && cptSecu < 10000)
-        {
-            //if (m_Text) //Output the current progress
-            //{
-            //    m_Text.text = "Loading progress: " + (asyncLoad.progress * 100) + "%";
-            //}
-            cptSecu++;
-            yield return null;
-        }
-
-        m_currentScene = levelName;
-        m_working = false;
-
-        // look for new sofaContext
-        GameObject _contextObject = GameObject.Find("SofaContext");
-        if (_contextObject != null)
-        {
-            // Get Sofa context
-            m_sofaContext = _contextObject.GetComponent<SofaContext>();
-            if (m_sofaContext == null)
-            {
-                Debug.LogError("GetComponent<SofaContext> failed.");
-            }
-        }
-        //if (m_Text)
-        //{
-        //    if (asyncLoad.isDone)
-        //        m_Text.text = "Loading success.";
-        //    else
-        //        m_Text.text = "Loading failed.";
-        //}
-    }
-
-    IEnumerator unloadSceneAsync_impl()
-    {
-        yield return null;
-
-        AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(m_currentScene);
-        int cptSecu = 0;
-        while (!asyncUnload.isDone && cptSecu < 10000)
-        {
-            cptSecu++;
-            yield return null;
-        }
-
-        m_currentScene = "";
-        m_working = false;
-        m_sofaContext = null;
     }
 }
