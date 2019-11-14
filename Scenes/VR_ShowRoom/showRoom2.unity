@@ -192,11 +192,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5178bc8574ce2bf4388e787a2e2af326, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  opMode: 1
-  resetHmdPoseOnRelease: 1
-  resetHmdPoseByMiddleMouseButton: 1
-  activateKeys: 3201000031010000
-  pitchKeys: 3401000033010000
 --- !u!114 &38301018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,51 +204,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e933e81d3c20c74ea6fdc708a67e3a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  queueAhead: 1
-  useRecommendedMSAALevel: 1
-  _monoscopic: 0
-  enableAdaptiveResolution: 0
-  minRenderScale: 0.7
-  maxRenderScale: 1
-  _headPoseRelativeOffsetRotation: {x: 0, y: 0, z: 0}
-  _headPoseRelativeOffsetTranslation: {x: 0, y: 0, z: 0}
-  profilerTcpPort: 32419
-  expandMixedRealityCapturePropertySheet: 0
-  enableMixedReality: 0
-  compositionMethod: 0
-  extraHiddenLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  externalCompositionBackdropColorRift: {r: 0, g: 1, b: 0, a: 1}
-  externalCompositionBackdropColorQuest: {r: 0, g: 0, b: 0, a: 0}
-  capturingCameraDevice: 0
-  flipCameraFrameHorizontally: 0
-  flipCameraFrameVertically: 0
-  handPoseStateLatency: 0
-  sandwichCompositionRenderLatency: 0
-  sandwichCompositionBufferedFrames: 8
-  chromaKeyColor: {r: 0, g: 1, b: 0, a: 1}
-  chromaKeySimilarity: 0.6
-  chromaKeySmoothRange: 0.03
-  chromaKeySpillRange: 0.06
-  useDynamicLighting: 0
-  depthQuality: 1
-  dynamicLightingSmoothFactor: 8
-  dynamicLightingDepthVariationClampingValue: 0.001
-  virtualGreenScreenType: 0
-  virtualGreenScreenTopY: 10
-  virtualGreenScreenBottomY: -10
-  virtualGreenScreenApplyDepthCulling: 0
-  virtualGreenScreenDepthTolerance: 0.2
-  mrcActivationMode: 0
-  _trackingOriginType: 0
-  usePositionTracking: 1
-  useRotationTracking: 1
-  useIPDInPositionTracking: 1
-  resetTrackerOnLoad: 0
-  AllowRecenter: 1
-  _reorientHMDOnControllerRecenter: 1
-  LateControllerUpdate: 1
 --- !u!114 &38301019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,9 +216,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df9f338034892c44ebb62d97894772f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  usePerEyeCameras: 0
-  useFixedUpdateForTracking: 0
-  disableEyeAnchorCameras: 0
 --- !u!1 &45327572
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,9 +392,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b32642724c1719444826991e4ff8fccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoStartSampling: 1
-  velocityAverageFrames: 5
-  angularVelocityAverageFrames: 10
 --- !u!114 &85078561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -554,20 +498,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5837af0260a118e4d808bfe0405429a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoManageScriptDefines: 1
-  activeScriptingDefineSymbolsWithoutSDKClasses: []
-  scriptAliasLeftController: {fileID: 1408711848}
-  scriptAliasRightController: {fileID: 109582311}
-  autoManageVRSettings: 1
-  autoLoadSetup: 1
-  setups:
-  - {fileID: 989801329}
-  - {fileID: 730106134}
-  - {fileID: 323797067}
-  - {fileID: 437934681}
-  - {fileID: 2086791897}
-  excludeTargetGroups: 1a0000001b000000
-  persistOnLoad: 0
 --- !u!4 &101641546
 Transform:
   m_ObjectHideFlags: 0
@@ -597,7 +527,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbd363faecdfb6d4da2d9cdab9de34f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceOculusFloorLevel: 1
 --- !u!1 &109582311
 GameObject:
   m_ObjectHideFlags: 0
@@ -641,44 +570,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eba3cd5456cd79e49948f5ceb58544b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  axisFidelity: 1
-  senseAxisForceZeroThreshold: 0.15
-  senseAxisPressThreshold: 0.95
-  triggerClickThreshold: 1
-  triggerForceZeroThreshold: 0.01
-  triggerAxisZeroOnUntouch: 0
-  gripClickThreshold: 1
-  gripForceZeroThreshold: 0.01
-  gripAxisZeroOnUntouch: 0
-  triggerPressed: 0
-  triggerTouched: 0
-  triggerHairlinePressed: 0
-  triggerClicked: 0
-  triggerAxisChanged: 0
-  triggerSenseAxisChanged: 0
-  gripPressed: 0
-  gripTouched: 0
-  gripHairlinePressed: 0
-  gripClicked: 0
-  gripAxisChanged: 0
-  touchpadPressed: 0
-  touchpadTouched: 0
-  touchpadAxisChanged: 0
-  touchpadSenseAxisChanged: 0
-  touchpadTwoTouched: 0
-  touchpadTwoPressed: 0
-  touchpadTwoAxisChanged: 0
-  buttonOnePressed: 0
-  buttonOneTouched: 0
-  buttonTwoPressed: 0
-  buttonTwoTouched: 0
-  startMenuPressed: 0
-  middleFingerSenseAxisChanged: 0
-  ringFingerSenseAxisChanged: 0
-  pinkyFingerSenseAxisChanged: 0
-  gripSenseAxisChanged: 0
-  gripSensePressed: 0
-  controllerVisible: 1
 --- !u!1 &129575846
 GameObject:
   m_ObjectHideFlags: 0
@@ -889,9 +780,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b32642724c1719444826991e4ff8fccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoStartSampling: 1
-  velocityAverageFrames: 5
-  angularVelocityAverageFrames: 10
 --- !u!81 &193044775
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1197,33 +1085,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeda6d41317f444b900e374895f14e95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoPopulateObjectReferences: 0
-  actualBoundaries: {fileID: 1406599098}
-  actualHeadset: {fileID: 1406599093}
-  actualLeftController: {fileID: 1406599097}
-  actualRightController: {fileID: 1406599095}
-  modelAliasLeftController: {fileID: 1406599096}
-  modelAliasRightController: {fileID: 1406599094}
-  cachedSystemSDKInfo:
-    baseTypeName: VRTK.SDK_BaseSystem
-    fallbackTypeName: VRTK.SDK_FallbackSystem
-    typeName: VRTK.SDK_SteamVRSystem
-    descriptionIndex: 0
-  cachedBoundariesSDKInfo:
-    baseTypeName: VRTK.SDK_BaseBoundaries
-    fallbackTypeName: VRTK.SDK_FallbackBoundaries
-    typeName: VRTK.SDK_SteamVRBoundaries
-    descriptionIndex: 0
-  cachedHeadsetSDKInfo:
-    baseTypeName: VRTK.SDK_BaseHeadset
-    fallbackTypeName: VRTK.SDK_FallbackHeadset
-    typeName: VRTK.SDK_SteamVRHeadset
-    descriptionIndex: 0
-  cachedControllerSDKInfo:
-    baseTypeName: VRTK.SDK_BaseController
-    fallbackTypeName: VRTK.SDK_FallbackController
-    typeName: VRTK.SDK_SteamVRController
-    descriptionIndex: 0
 --- !u!1 &406992569
 GameObject:
   m_ObjectHideFlags: 0
@@ -1470,33 +1331,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeda6d41317f444b900e374895f14e95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoPopulateObjectReferences: 0
-  actualBoundaries: {fileID: 2062689431}
-  actualHeadset: {fileID: 85078558}
-  actualLeftController: {fileID: 1366177957}
-  actualRightController: {fileID: 988666046}
-  modelAliasLeftController: {fileID: 1585959415}
-  modelAliasRightController: {fileID: 1044784150}
-  cachedSystemSDKInfo:
-    baseTypeName: VRTK.SDK_BaseSystem
-    fallbackTypeName: VRTK.SDK_FallbackSystem
-    typeName: VRTK.SDK_UnitySystem
-    descriptionIndex: 1
-  cachedBoundariesSDKInfo:
-    baseTypeName: VRTK.SDK_BaseBoundaries
-    fallbackTypeName: VRTK.SDK_FallbackBoundaries
-    typeName: VRTK.SDK_UnityBoundaries
-    descriptionIndex: 1
-  cachedHeadsetSDKInfo:
-    baseTypeName: VRTK.SDK_BaseHeadset
-    fallbackTypeName: VRTK.SDK_FallbackHeadset
-    typeName: VRTK.SDK_UnityHeadset
-    descriptionIndex: 1
-  cachedControllerSDKInfo:
-    baseTypeName: VRTK.SDK_BaseController
-    fallbackTypeName: VRTK.SDK_FallbackController
-    typeName: VRTK.SDK_UnityController
-    descriptionIndex: 1
 --- !u!1 &474727782
 GameObject:
   m_ObjectHideFlags: 0
@@ -1747,7 +1581,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e02f8c9a00f838548ac1b43fd6738130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceRoomScaleTracking: 1
 --- !u!81 &570541598
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2185,33 +2018,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeda6d41317f444b900e374895f14e95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoPopulateObjectReferences: 0
-  actualBoundaries: {fileID: 38301015}
-  actualHeadset: {fileID: 1887792552}
-  actualLeftController: {fileID: 474727782}
-  actualRightController: {fileID: 732077815}
-  modelAliasLeftController: {fileID: 0}
-  modelAliasRightController: {fileID: 0}
-  cachedSystemSDKInfo:
-    baseTypeName: VRTK.SDK_BaseSystem
-    fallbackTypeName: VRTK.SDK_FallbackSystem
-    typeName: VRTK.SDK_OculusSystem
-    descriptionIndex: 0
-  cachedBoundariesSDKInfo:
-    baseTypeName: VRTK.SDK_BaseBoundaries
-    fallbackTypeName: VRTK.SDK_FallbackBoundaries
-    typeName: VRTK.SDK_OculusBoundaries
-    descriptionIndex: 0
-  cachedHeadsetSDKInfo:
-    baseTypeName: VRTK.SDK_BaseHeadset
-    fallbackTypeName: VRTK.SDK_FallbackHeadset
-    typeName: VRTK.SDK_OculusHeadset
-    descriptionIndex: 0
-  cachedControllerSDKInfo:
-    baseTypeName: VRTK.SDK_BaseController
-    fallbackTypeName: VRTK.SDK_FallbackController
-    typeName: VRTK.SDK_OculusController
-    descriptionIndex: 0
 --- !u!1 &732077815
 GameObject:
   m_ObjectHideFlags: 0
@@ -2322,9 +2128,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b32642724c1719444826991e4ff8fccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoStartSampling: 1
-  velocityAverageFrames: 5
-  angularVelocityAverageFrames: 10
 --- !u!114 &753630017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3022,9 +2825,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b32642724c1719444826991e4ff8fccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoStartSampling: 1
-  velocityAverageFrames: 5
-  angularVelocityAverageFrames: 10
 --- !u!114 &988666049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3038,12 +2838,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a56f0178eefe7b9409460ae29588f961, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodeType: 5
-  index: 0
-  triggerAxisName: RightTrigger
-  gripAxisName: RightGrip
-  touchpadHorizontalAxisName: RightTrackpadHorizontal
-  touchpadVerticalAxisName: RightTrackpadVertical
 --- !u!1 &989801327
 GameObject:
   m_ObjectHideFlags: 0
@@ -3091,33 +2885,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeda6d41317f444b900e374895f14e95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoPopulateObjectReferences: 0
-  actualBoundaries: {fileID: 183304586}
-  actualHeadset: {fileID: 570541595}
-  actualLeftController: {fileID: 1278181809}
-  actualRightController: {fileID: 753630014}
-  modelAliasLeftController: {fileID: 1568581446}
-  modelAliasRightController: {fileID: 1120626477}
-  cachedSystemSDKInfo:
-    baseTypeName: VRTK.SDK_BaseSystem
-    fallbackTypeName: VRTK.SDK_FallbackSystem
-    typeName: VRTK.SDK_WindowsMR
-    descriptionIndex: 0
-  cachedBoundariesSDKInfo:
-    baseTypeName: VRTK.SDK_BaseBoundaries
-    fallbackTypeName: VRTK.SDK_FallbackBoundaries
-    typeName: VRTK.SDK_WindowsMRBoundaries
-    descriptionIndex: 0
-  cachedHeadsetSDKInfo:
-    baseTypeName: VRTK.SDK_BaseHeadset
-    fallbackTypeName: VRTK.SDK_FallbackHeadset
-    typeName: VRTK.SDK_WindowsMRHeadset
-    descriptionIndex: 0
-  cachedControllerSDKInfo:
-    baseTypeName: VRTK.SDK_BaseController
-    fallbackTypeName: VRTK.SDK_FallbackController
-    typeName: VRTK.SDK_WindowsMRController
-    descriptionIndex: 0
 --- !u!1 &997091825
 GameObject:
   m_ObjectHideFlags: 0
@@ -3408,6 +3175,36 @@ Transform:
   m_Father: {fileID: 988666047}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1076896882
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 1634794050}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1076896883}
+  m_Layer: 0
+  m_Name: Missing Prefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1076896883
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 1634794050}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076896882}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1576160800}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1101259490
 GameObject:
   m_ObjectHideFlags: 0
@@ -3693,6 +3490,79 @@ Transform:
   m_Father: {fileID: 753630015}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1130881583
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1673780938054316939, guid: 6c9141ad3a6423c40bcbc00c52b2d203,
+        type: 3}
+      propertyPath: m_Name
+      value: SofaShowRoomManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1673780938054316149, guid: 6c9141ad3a6423c40bcbc00c52b2d203,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.30265996
+      objectReference: {fileID: 0}
+    - target: {fileID: 1673780938054316149, guid: 6c9141ad3a6423c40bcbc00c52b2d203,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.4759637
+      objectReference: {fileID: 0}
+    - target: {fileID: 1673780938054316149, guid: 6c9141ad3a6423c40bcbc00c52b2d203,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.420413
+      objectReference: {fileID: 0}
+    - target: {fileID: 1673780938054316149, guid: 6c9141ad3a6423c40bcbc00c52b2d203,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1673780938054316149, guid: 6c9141ad3a6423c40bcbc00c52b2d203,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1673780938054316149, guid: 6c9141ad3a6423c40bcbc00c52b2d203,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1673780938054316149, guid: 6c9141ad3a6423c40bcbc00c52b2d203,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1673780938054316149, guid: 6c9141ad3a6423c40bcbc00c52b2d203,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1673780938054316149, guid: 6c9141ad3a6423c40bcbc00c52b2d203,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1673780938054316149, guid: 6c9141ad3a6423c40bcbc00c52b2d203,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1673780938054316149, guid: 6c9141ad3a6423c40bcbc00c52b2d203,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1130881586, guid: 6c9141ad3a6423c40bcbc00c52b2d203, type: 3}
+      propertyPath: m_curvedUI
+      value: 
+      objectReference: {fileID: 5929085857989048537}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6c9141ad3a6423c40bcbc00c52b2d203, type: 3}
 --- !u!1 &1133160272
 GameObject:
   m_ObjectHideFlags: 0
@@ -4387,9 +4257,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b32642724c1719444826991e4ff8fccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoStartSampling: 1
-  velocityAverageFrames: 5
-  angularVelocityAverageFrames: 10
 --- !u!114 &1278181812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4521,9 +4388,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b32642724c1719444826991e4ff8fccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoStartSampling: 1
-  velocityAverageFrames: 5
-  angularVelocityAverageFrames: 10
 --- !u!114 &1318755598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4537,7 +4401,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0893f0c8a7712e8458dc3722eef95aca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selected: 0
 --- !u!1 &1339431202
 GameObject:
   m_ObjectHideFlags: 0
@@ -4636,9 +4499,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b32642724c1719444826991e4ff8fccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoStartSampling: 1
-  velocityAverageFrames: 5
-  angularVelocityAverageFrames: 10
 --- !u!114 &1366177960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4652,12 +4512,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a56f0178eefe7b9409460ae29588f961, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodeType: 4
-  index: 1
-  triggerAxisName: LeftTrigger
-  gripAxisName: LeftGrip
-  touchpadHorizontalAxisName: LeftTrackpadHorizontal
-  touchpadVerticalAxisName: LeftTrackpadVertical
 --- !u!1001 &1406599091
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4954,44 +4808,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eba3cd5456cd79e49948f5ceb58544b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  axisFidelity: 1
-  senseAxisForceZeroThreshold: 0.15
-  senseAxisPressThreshold: 0.95
-  triggerClickThreshold: 1
-  triggerForceZeroThreshold: 0.01
-  triggerAxisZeroOnUntouch: 0
-  gripClickThreshold: 1
-  gripForceZeroThreshold: 0.01
-  gripAxisZeroOnUntouch: 0
-  triggerPressed: 0
-  triggerTouched: 0
-  triggerHairlinePressed: 0
-  triggerClicked: 0
-  triggerAxisChanged: 0
-  triggerSenseAxisChanged: 0
-  gripPressed: 0
-  gripTouched: 0
-  gripHairlinePressed: 0
-  gripClicked: 0
-  gripAxisChanged: 0
-  touchpadPressed: 0
-  touchpadTouched: 0
-  touchpadAxisChanged: 0
-  touchpadSenseAxisChanged: 0
-  touchpadTwoTouched: 0
-  touchpadTwoPressed: 0
-  touchpadTwoAxisChanged: 0
-  buttonOnePressed: 0
-  buttonOneTouched: 0
-  buttonTwoPressed: 0
-  buttonTwoTouched: 0
-  startMenuPressed: 0
-  middleFingerSenseAxisChanged: 0
-  ringFingerSenseAxisChanged: 0
-  pinkyFingerSenseAxisChanged: 0
-  gripSenseAxisChanged: 0
-  gripSensePressed: 0
-  controllerVisible: 1
 --- !u!1 &1438938390
 GameObject:
   m_ObjectHideFlags: 0
@@ -5561,15 +5377,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbef415ca4404081ab7abdd88f0a7f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fallbackCamera: {fileID: 1192678514}
-  eventSystem: {fileID: 1478250177}
-  currentText: {fileID: 1113755336}
-  statusPanel: {fileID: 45327573}
-  selectionPanel: {fileID: 911137774}
-  switchButton: {fileID: 1703159952}
-  cancelButton: {fileID: 1101259494}
-  chooseButton: {fileID: 516690991}
-  playareaSync: 1
 --- !u!114 &1584514796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5974,9 +5781,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b32642724c1719444826991e4ff8fccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoStartSampling: 1
-  velocityAverageFrames: 5
-  angularVelocityAverageFrames: 10
 --- !u!114 &1646320892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5990,7 +5794,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0893f0c8a7712e8458dc3722eef95aca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selected: 0
 --- !u!1 &1651503894
 GameObject:
   m_ObjectHideFlags: 0
@@ -6259,43 +6062,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52d0ccd621417664ca1f1123b9488a27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showControlHints: 1
-  hideHandsAtSwitch: 0
-  resetHandsAtSwitch: 1
-  showHandAxisHelpers: 1
-  lockMouseToView: 1
-  mouseMovementInput: 0
-  handMoveMultiplier: 0.2
-  handRotationMultiplier: 30
-  playerMoveMultiplier: 5
-  playerRotationMultiplier: 0.5
-  playerSprintMultiplier: 2
-  lockedCursorMultiplier: 5
-  leftHandColor: {r: 1, g: 0, b: 0, a: 1}
-  rightHandColor: {r: 0, g: 1, b: 0, a: 1}
-  mouseMovementKey: 325
-  toggleControlHints: 282
-  toggleMouseLock: 285
-  changeHands: 9
-  handsOnOff: 308
-  rotationPosition: 304
-  changeAxis: 306
-  distancePickupLeft: 323
-  distancePickupRight: 324
-  distancePickupModifier: 306
-  moveForward: 119
-  moveLeft: 97
-  moveBackward: 115
-  moveRight: 100
-  sprint: 304
-  triggerAlias: 324
-  gripAlias: 323
-  touchpadAlias: 113
-  buttonOneAlias: 101
-  buttonTwoAlias: 114
-  startMenuAlias: 102
-  touchModifier: 116
-  hairTouchModifier: 104
 --- !u!1 &1739009062
 GameObject:
   m_ObjectHideFlags: 0
@@ -6340,7 +6106,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac27124318cf8e84aa7350c2ac1cdb80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Mode: 0
 --- !u!114 &1739009065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6353,54 +6118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f3402a2ea5bff4880c0313515240cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oculusUserID: 0
-  Driver: {fileID: 1739009064}
-  EnableBody: 1
-  EnableHands: 1
-  EnableBase: 0
-  EnableExpressive: 1
-  RecordPackets: 1
-  UseSDKPackets: 1
-  PacketSettings:
-    UpdateRate: 0.033333335
-  StartWithControllers: 1
-  FirstPersonLayer:
-    layerIndex: 0
-  ThirdPersonLayer:
-    layerIndex: 0
-  ShowFirstPerson: 1
-  ShowThirdPerson: 0
-  LevelOfDetail: 5
-  UseTransparentRenderQueue: 1
-  Monochrome_SurfaceShader: {fileID: 4800000, guid: 73f67c4e7bf718b4385aa6b1f8a06591,
-    type: 3}
-  Monochrome_SurfaceShader_SelfOccluding: {fileID: 4800000, guid: 69f342b79d37541489919a19cfd8a924,
-    type: 3}
-  Monochrome_SurfaceShader_PBS: {fileID: 4800000, guid: 5e52aa58207bbf24d8eb8ec969e9ae88,
-    type: 3}
-  Skinshaded_SurfaceShader_SingleComponent: {fileID: 4800000, guid: 36b8b481cf607814a8cec318f0148d63,
-    type: 3}
-  Skinshaded_VertFrag_SingleComponent: {fileID: 4800000, guid: c26fc51e445dcfd4db09305d861dc11c,
-    type: 3}
-  Skinshaded_VertFrag_CombinedMesh: {fileID: 4800000, guid: 37d2b8298f61cd2469465fc36108675d,
-    type: 3}
-  Skinshaded_Expressive_SurfaceShader_SingleComponent: {fileID: 4800000, guid: 93b478e926e46654889c1c20f87f253f,
-    type: 3}
-  Skinshaded_Expressive_VertFrag_SingleComponent: {fileID: 4800000, guid: 2fe0ac0c2373ab143a6f21314b785d7d,
-    type: 3}
-  Skinshaded_Expressive_VertFrag_CombinedMesh: {fileID: 4800000, guid: 0600fe59b0c043344affd1d1368b9ef2,
-    type: 3}
-  Loader_VertFrag_CombinedMesh: {fileID: 4800000, guid: 822f5e641dc5dd54ca9555b727b3277f,
-    type: 3}
-  EyeLens: {fileID: 4800000, guid: 8392f54e79937ed4bb1b692a143dc02b, type: 3}
-  ControllerShader: {fileID: 4800000, guid: 28729c6ae5a33b04cb2f7956f3f3fc01, type: 3}
-  CanOwnMicrophone: 1
-  EnableLaughter: 1
-  MouthAnchor: {fileID: 0}
-  LeftHandCustomPose: {fileID: 0}
-  RightHandCustomPose: {fileID: 0}
-  VoiceAmplitude: 0
-  EnableMouthVertexAnimation: 0
 --- !u!1 &1749001002
 GameObject:
   m_ObjectHideFlags: 0
@@ -6518,8 +6235,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48cee710ccfd4564fba2718900f56c57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backKey: 8
-  forwardKey: 32
 --- !u!1 &1861743274
 GameObject:
   m_ObjectHideFlags: 0
@@ -6992,7 +6707,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb11f5366d9c17040b6a0ed716e36353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lockPhysicsUpdateRateToRenderFrequency: 1
 --- !u!1 &2086791896
 GameObject:
   m_ObjectHideFlags: 0
@@ -7024,33 +6738,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeda6d41317f444b900e374895f14e95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoPopulateObjectReferences: 0
-  actualBoundaries: {fileID: 1720271303}
-  actualHeadset: {fileID: 193044771}
-  actualLeftController: {fileID: 1646320889}
-  actualRightController: {fileID: 1318755595}
-  modelAliasLeftController: {fileID: 1640072336}
-  modelAliasRightController: {fileID: 1600767285}
-  cachedSystemSDKInfo:
-    baseTypeName: VRTK.SDK_BaseSystem
-    fallbackTypeName: VRTK.SDK_FallbackSystem
-    typeName: VRTK.SDK_SimSystem
-    descriptionIndex: 0
-  cachedBoundariesSDKInfo:
-    baseTypeName: VRTK.SDK_BaseBoundaries
-    fallbackTypeName: VRTK.SDK_FallbackBoundaries
-    typeName: VRTK.SDK_SimBoundaries
-    descriptionIndex: 0
-  cachedHeadsetSDKInfo:
-    baseTypeName: VRTK.SDK_BaseHeadset
-    fallbackTypeName: VRTK.SDK_FallbackHeadset
-    typeName: VRTK.SDK_SimHeadset
-    descriptionIndex: 0
-  cachedControllerSDKInfo:
-    baseTypeName: VRTK.SDK_BaseController
-    fallbackTypeName: VRTK.SDK_FallbackController
-    typeName: VRTK.SDK_SimController
-    descriptionIndex: 0
 --- !u!4 &2086791898
 Transform:
   m_ObjectHideFlags: 0
@@ -8051,3 +7738,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df642a55ddc9d9349b07d30fa7a0cb16, type: 3}
+--- !u!114 &5929085857989048537 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1977243801, guid: df642a55ddc9d9349b07d30fa7a0cb16,
+    type: 3}
+  m_PrefabInstance: {fileID: 5929085857989048536}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22263761490bbfa46ae882a5d69b434a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
