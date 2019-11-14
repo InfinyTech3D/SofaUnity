@@ -11,6 +11,7 @@ public class SofaViewController : MonoBehaviour
     public GameObject m_controllerA = null;
     public GameObject m_controllerB = null;
 
+    public bool startOnPlay = true;
     public float ratioScale = 1.0f;
 
     private bool isActivated = false;
@@ -18,13 +19,14 @@ public class SofaViewController : MonoBehaviour
     private Vector3 restControllerB;
     private GameObject m_sofaIninit = null;
 
-    public enum MoveMode { FIX, TRANSLATION, ROTATION, SCALE }
+    public enum MoveMode { FIX, TRANSLATION, ROTATION, SCALE, ALL }
     private MoveMode currentMode = MoveMode.FIX;
 
     // Start is called before the first frame update
     void Start()
     {
-        searchForSofaContext();
+        if(startOnPlay)
+            searchForSofaContext();
     }
 
     // Update is called once per frame
@@ -38,6 +40,9 @@ public class SofaViewController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.S))
             activeInteraction(MoveMode.SCALE);
+
+        if (Input.GetKey(KeyCode.A))
+            activeInteraction(MoveMode.ALL);
 
         if (Input.GetKey(KeyCode.E))
             resetSofaView();
@@ -61,6 +66,12 @@ public class SofaViewController : MonoBehaviour
             Debug.Log("## " + Time.fixedTime + "SCALE");
             ScaleSofaContext();
         }
+        else if (currentMode == MoveMode.ALL)
+        {
+            TranslateSofaContext();
+            RotateSofaContext();
+            ScaleSofaContext();
+        }
 
         // update position.
         restControllerA = m_controllerA.transform.position;
@@ -81,27 +92,34 @@ public class SofaViewController : MonoBehaviour
     {
         sofaContext = null;
         SofaObject = null;
+        currentMode = MoveMode.FIX;
     }
 
     public void searchForSofaContext()
     {
+        // find SofaContext and register this object
+        GameObject _sofaObject = GameObject.Find("SofaContext");
+        setSofaContext(_sofaObject);
+    }
+
+    public void setSofaContext(GameObject _sofaObject)
+    {
         unloadSofaScene();
 
-        // find SofaContext and register this object
-        SofaObject = GameObject.Find("SofaContext");
+        SofaObject = _sofaObject;
         if (SofaObject != null)
         {
             // Get Sofa context
             sofaContext = SofaObject.GetComponent<SofaUnity.SofaContext>();
             if (sofaContext == null)
             {
-                Debug.LogError("ImmersiveController::Start - sofaContext not found");
+                Debug.LogError("SofaViewController::Start - sofaContext not found");
                 this.enabled = false;
             }
         }
         else
         {
-            Debug.LogError("ImmersiveController::Start - SofaObject not found");
+            Debug.LogError("SofaViewController::Start - SofaObject not found");
             this.enabled = false;
         }
 
@@ -109,7 +127,7 @@ public class SofaViewController : MonoBehaviour
         m_sofaIninit = new GameObject();
         m_sofaIninit.transform.position = new Vector3(SofaObject.transform.position.x, SofaObject.transform.position.y, SofaObject.transform.position.z);
         m_sofaIninit.transform.rotation = new Quaternion(SofaObject.transform.rotation.x, SofaObject.transform.rotation.y, SofaObject.transform.rotation.z, SofaObject.transform.rotation.w);
-        m_sofaIninit.transform.localScale = new Vector3(SofaObject.transform.localScale.x, SofaObject.transform.localScale.y, SofaObject.transform.localScale.z);
+        m_sofaIninit.transform.localScale = new Vector3(SofaObject.transform.localScale.x, SofaObject.transform.localScale.y, SofaObject.transform.localScale.z);        
     }
 
     public void activeInteraction(MoveMode mode)

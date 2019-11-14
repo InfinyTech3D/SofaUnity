@@ -8,6 +8,7 @@ public class SofaVR_API : MonoBehaviour
     public CurvedInterface m_curvedUI = null;
     public ScenesManager m_scenes = null;
     public LoadSceneScript m_loader = null;
+    public SofaViewController m_viewCtrl = null;
 
     protected SofaContext m_sofaContext = null;
     
@@ -60,13 +61,18 @@ public class SofaVR_API : MonoBehaviour
             Debug.LogError("No LoadSceneScript created.");
             return;
         }
+        
+        if (m_viewCtrl != null)
+        {
+            m_viewCtrl.unloadSofaScene();
+        }
 
         // stop current sofa application and remove pointer
         if (m_sofaContext)
         {
             m_sofaContext.IsSofaUpdating = false;
             m_sofaContext = null;
-        }
+        }        
 
         // Set loading info
         m_loading = true;    
@@ -119,6 +125,10 @@ public class SofaVR_API : MonoBehaviour
             }
         }
 
+        if (m_viewCtrl != null)
+        {
+            m_viewCtrl.setSofaContext(_contextObject);
+        }
         // update actions here.
     }
 }
