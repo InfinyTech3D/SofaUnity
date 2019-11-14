@@ -9,7 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1673780938054316149}
+  - component: {fileID: 1130881586}
   - component: {fileID: 1673780938054316938}
+  - component: {fileID: 1260714345353943154}
   m_Layer: 0
   m_Name: SofaShowRoomManager
   m_TagString: Untagged
@@ -31,6 +33,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1130881586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673780938054316939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d015cf8f93123143bb88fd3705e6ea6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_curvedUI: {fileID: 0}
+  m_scenes: {fileID: 1673780938054316938}
+  m_loader: {fileID: 1260714345353943154}
 --- !u!114 &1673780938054316938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43,6 +60,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e04ddccfd0bf82f47b383eea3faf9f92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefixFiles: VR_
   scenes:
   - {fileID: 21300000, guid: c7ca0df724c1a444bad54813dea6ebdd, type: 3}
   - {fileID: 21300000, guid: 2523336db566cb8448a8b19c1722e978, type: 3}
@@ -50,3 +68,17 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3928c7b51b956cd40b06476c3a653e51, type: 3}
   - {fileID: 21300000, guid: 144860f0bf4a48a4e814cd82bf1f2ca3, type: 3}
   - {fileID: 0}
+--- !u!114 &1260714345353943154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673780938054316939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cacb9b69c6c1bf4da2d8184d847a186, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadingImage: {fileID: 0}
+  m_Text: {fileID: 0}

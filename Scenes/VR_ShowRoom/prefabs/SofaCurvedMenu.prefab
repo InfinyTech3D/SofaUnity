@@ -4404,7 +4404,6 @@ GameObject:
   - component: {fileID: 5929085859426000961}
   - component: {fileID: 5929085859426000960}
   - component: {fileID: 5929085859426000975}
-  - component: {fileID: 1977243798}
   - component: {fileID: 1977243801}
   - component: {fileID: 227366636329476692}
   m_Layer: 5
@@ -4479,25 +4478,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &1977243798
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5929085859426000973}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e04ddccfd0bf82f47b383eea3faf9f92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scenes:
-  - {fileID: 21300000, guid: c7ca0df724c1a444bad54813dea6ebdd, type: 3}
-  - {fileID: 21300000, guid: 2523336db566cb8448a8b19c1722e978, type: 3}
-  - {fileID: 21300000, guid: 9d18c28b86ef044468dea0a27ccbb195, type: 3}
-  - {fileID: 21300000, guid: 3928c7b51b956cd40b06476c3a653e51, type: 3}
-  - {fileID: 21300000, guid: 144860f0bf4a48a4e814cd82bf1f2ca3, type: 3}
-  - {fileID: 0}
 --- !u!114 &1977243801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4510,7 +4490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22263761490bbfa46ae882a5d69b434a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_scenes: {fileID: 1977243798}
+  m_sofaVR_API: {fileID: 0}
   m_CurrentImage: {fileID: 5929085858089651707}
   SelectedEnvironmentText:
   - {fileID: 5929085858591665660}
