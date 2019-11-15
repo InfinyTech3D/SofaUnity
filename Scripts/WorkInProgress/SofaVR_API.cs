@@ -9,6 +9,8 @@ public class SofaVR_API : MonoBehaviour
     public ScenesManager m_scenes = null;
     public LoadSceneScript m_loader = null;
     public SofaViewController m_viewCtrl = null;
+    public VRHandController m_rightHandCtrl = null;
+    public VRHandController m_leftHandCtrl = null;
 
     protected SofaContext m_sofaContext = null;
     
@@ -18,11 +20,18 @@ public class SofaVR_API : MonoBehaviour
     protected bool m_loading = false;
     protected int m_currentSceneId = -1;
 
+    protected bool m_VRControlMode = false;
+
+    protected bool m_viewMode = false;
+
     // Start is called before the first frame update
     void Start()
     {
         if (m_scenes == null || m_curvedUI == null || m_loader == null)
             return;
+
+        if (m_rightHandCtrl != null && m_leftHandCtrl != null)
+            m_VRControlMode = true;
 
         m_scenes.parseScenes();
         m_curvedUI.initUI(this, m_scenes);
@@ -31,6 +40,7 @@ public class SofaVR_API : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // check if loading
         if (m_loading && m_loader != null) // wait for new loaded scene
         {
             if (!m_loader.isLoading())
@@ -40,6 +50,33 @@ public class SofaVR_API : MonoBehaviour
                 m_loading = false;
             }
         }
+
+        if (!m_VRControlMode || m_sofaContext == null)
+            return;
+
+        // check if controller view
+        bool gripR = m_rightHandCtrl.isGripPressed();
+        bool gripL = m_leftHandCtrl.isGripPressed();
+
+        bool trigR = m_rightHandCtrl.isTriggerPressed();
+        bool trigL = m_leftHandCtrl.isTriggerPressed();
+
+        if (m_viewCtrl && gripR && gripL)
+        {
+            if (!m_viewMode) // first time
+            {
+                m_viewCtrl.activeInteraction(SofaViewController.MoveMode.ALL);
+                m_viewMode = true;
+            }
+        }
+        else
+        {
+            m_viewCtrl.activeInteraction(SofaViewController.MoveMode.FIX);
+            m_viewMode = false;
+        }
+
+        //bool gripR = m_rightHandCtrl.isGripPressed();
+        //bool gripR = m_rightHandCtrl.isGripPressed();
     }
 
 
