@@ -1,38 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+#if VRTK_VERSION_3_2_1_OR_NEWER
 using VRTK;
-public class VRHandController : MonoBehaviour
+#endif
+
+public class VRHandController : HandlerController
 {
+#if VRTK_VERSION_3_2_1_OR_NEWER
     public VRTK_ControllerEvents controllerEvents;
+#endif
     public bool triggerButtonEvents = true;
     public bool gripButtonEvents = true;
     public bool touchpadButtonEvents = true;
-
-    protected SofaVR_API m_sofaVR_API = null;
-    protected bool m_gripPessed = false;
-    protected bool m_triggerPressed = false;
-    protected bool m_touchPadPressed = false;
-
-    public bool isGripPressed() { return m_gripPessed; }
-    public bool isTriggerPressed() { return m_triggerPressed; }
-    public bool isTouchPadPressed() { return m_touchPadPressed; }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     
     private void OnEnable()
     {
+#if VRTK_VERSION_3_2_1_OR_NEWER
         controllerEvents = (controllerEvents == null ? GetComponent<VRTK_ControllerEvents>() : controllerEvents);
         if (controllerEvents == null)
         {
@@ -49,10 +34,12 @@ public class VRHandController : MonoBehaviour
 
         controllerEvents.TouchpadPressed += DoTouchpadPressed;
         controllerEvents.TouchpadReleased += DoTouchpadReleased;
+#endif
     }
 
     private void OnDisable()
     {
+#if VRTK_VERSION_3_2_1_OR_NEWER
         if (controllerEvents != null)
         {
             controllerEvents.TriggerPressed -= DoTriggerPressed;
@@ -64,8 +51,10 @@ public class VRHandController : MonoBehaviour
             controllerEvents.TouchpadPressed -= DoTouchpadPressed;
             controllerEvents.TouchpadReleased -= DoTouchpadReleased;
         }
+#endif
     }
 
+#if VRTK_VERSION_3_2_1_OR_NEWER
     private void DebugLogger(uint index, string button, string action, ControllerInteractionEventArgs e)
     {
         string debugString = "Controller on index '" + index + "' " + button + " has been " + action
@@ -127,4 +116,6 @@ public class VRHandController : MonoBehaviour
             m_touchPadPressed = false;
         }
     }
+
+#endif
 }
