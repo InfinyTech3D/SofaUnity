@@ -5,6 +5,14 @@ using UnityEngine;
 
 static public class SofaDefines
 {
+    public enum SRayInteraction
+    {
+        none,
+        CuttingTool,
+        AttachTool,
+        FixTool
+    };
+
     static public Dictionary<int, string> msg_error = new Dictionary<int, string>
     {
         {0, "success"},

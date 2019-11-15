@@ -26,13 +26,7 @@ public class SLaserRay : SRayCaster
     protected float oldStiffness = 10000f;
 
     /// Enum that set the type of interaction to plug to this tool on sofa side
-    public enum LaserType
-    {
-        CuttingTool,
-        AttachTool,
-        FixTool
-    };
-    public LaserType m_laserType;
+    public SofaDefines.SRayInteraction m_laserType;
 
 
     /// Laser object
@@ -63,6 +57,8 @@ public class SLaserRay : SRayCaster
     protected bool psInitialized = false;
     public Material particleMat;
     /// }
+    protected float m_startSpeed = 100;
+
 
     /// Protected method that will really create the Sofa ray caster
     protected override void createSofaRayCaster()
@@ -75,7 +71,7 @@ public class SLaserRay : SRayCaster
             laser.transform.parent = this.transform;
             laser.transform.localPosition = Vector3.zero;
             laser.transform.localRotation = Quaternion.identity;
-            laser.transform.localScale = Vector3.one;
+            laser.transform.localScale = Vector3.one * 0.1f;
         }
 
         if (drawLaserParticles && lightSource == null)
@@ -106,9 +102,9 @@ public class SLaserRay : SRayCaster
 
             float raySofaLength = length * m_sofaContext.getFactorUnityToSofa(1);
             Debug.Log("raySofaLength: " + raySofaLength);
-            if (m_laserType == LaserType.CuttingTool)
+            if (m_laserType == SofaDefines.SRayInteraction.CuttingTool)
                 m_sofaRC = new SofaRayCaster(_simu, 0, base.name, raySofaLength);
-            else if (m_laserType == LaserType.AttachTool)
+            else if (m_laserType == SofaDefines.SRayInteraction.AttachTool)
                 m_sofaRC = new SofaRayCaster(_simu, 1, base.name, raySofaLength);
             else
                 m_sofaRC = new SofaRayCaster(_simu, 2, base.name, raySofaLength);
@@ -171,7 +167,7 @@ public class SLaserRay : SRayCaster
                 triId = m_sofaRC.castRay(originS, directionS);
                 //Debug.Log("origin: " + origin + " => originS: " + originS + " |  directionS: " + directionS + " | triId: " + triId);
 
-                if (m_laserType == LaserType.AttachTool)
+                if (m_laserType == SofaDefines.SRayInteraction.AttachTool)
                 {
                     if (oldStiffness != m_stiffness)
                     {
@@ -268,20 +264,19 @@ public class SLaserRay : SRayCaster
         if (drawLaserParticles)
         {
             ps = laser.AddComponent<ParticleSystem>();
-        ps = laser.GetComponent<ParticleSystem>();
-        var shape = ps.shape;
-        shape.angle = 0;
-        shape.radius = 0.2f;
-        var em = ps.emission;
-        em.rateOverTime = 1000;
-        var psmain = ps.main;
-        psmain.startSize = 1.0f;
-        psmain.startLifetime = 0.11f;
-        psmain.startSpeed = 100;
-        psmain.maxParticles = 800;
-        psmain.startColor = new Color(1, 1, 1, 0.25f);
-        //var pscolor = ps.colorOverLifetime;
-        //pscolor.color = new ParticleSystem.MinMaxGradient(startColor, endColor);
+            var shape = ps.shape;
+            shape.angle = 0;
+            shape.radius = 0.2f;
+            var em = ps.emission;
+            em.rateOverTime = 1000;
+            var psmain = ps.main;
+            psmain.startSize = 1.0f;
+            psmain.startLifetime = length * 0.1f;
+            psmain.startSpeed = 100;
+            psmain.maxParticles = 800;
+            psmain.startColor = new Color(1, 1, 1, 0.25f);
+            //var pscolor = ps.colorOverLifetime;
+            //pscolor.color = new ParticleSystem.MinMaxGradient(startColor, endColor);
         
             var psrenderer = ps.GetComponent<ParticleSystemRenderer>();
             if (particleMat == null)
