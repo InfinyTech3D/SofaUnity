@@ -130,10 +130,13 @@ public class SofaViewController : MonoBehaviour
         m_sofaIninit.transform.localScale = new Vector3(SofaObject.transform.localScale.x, SofaObject.transform.localScale.y, SofaObject.transform.localScale.z);        
     }
 
-    public void activeInteraction(MoveMode mode)
+    public void activeInteraction(MoveMode mode, bool continuous = false)
     {
-        restControllerA = m_controllerA.transform.position;
-        restControllerB = m_controllerB.transform.position;
+        if (!continuous)
+        {
+            restControllerA = m_controllerA.transform.position;
+            restControllerB = m_controllerB.transform.position;
+        }
 
         if (mode == currentMode) // exit mode
             currentMode = MoveMode.FIX;
@@ -200,10 +203,10 @@ public class SofaViewController : MonoBehaviour
     {
         Vector3 oldAB = restControllerB - restControllerA;
         Vector3 newAB = m_controllerB.transform.position - m_controllerA.transform.position;
-
+        
         // rotation
         Quaternion rot = Quaternion.FromToRotation(oldAB, newAB);
-        SofaObject.transform.localEulerAngles = SofaObject.transform.localEulerAngles + rot.eulerAngles;
+        SofaObject.transform.eulerAngles = SofaObject.transform.eulerAngles + rot.eulerAngles;
     }
 
     private void ScaleSofaContext()
@@ -211,12 +214,12 @@ public class SofaViewController : MonoBehaviour
         // suppose same scale on all direction
         Vector3 diffInit = restControllerA - restControllerB;
         Vector3 diffCurrent = m_controllerA.transform.position - m_controllerB.transform.position;
-        float scaleInit = SofaObject.transform.localScale.x;
+        Vector3 scaleInit = SofaObject.transform.localScale;
 
         float normInit = diffInit.magnitude;
         float normCurrent = diffCurrent.magnitude;
 
-        float newScale = (normCurrent / normInit) * scaleInit;
-        SofaObject.transform.localScale = new Vector3(newScale, newScale, newScale); 
+        Vector3 newScale = (normCurrent / normInit) * scaleInit;
+        SofaObject.transform.localScale = newScale; 
     }
 }
