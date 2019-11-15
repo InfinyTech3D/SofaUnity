@@ -40,7 +40,7 @@ public class SLaserRay : SRayCaster
     /// Laser material
     public Material laserMat = null;
     /// Laser GameObject
-    protected GameObject laser;
+    protected GameObject laser = null;
 
     /// Booleen to draw the laser object
     public bool drawLaserParticles = false;
@@ -55,7 +55,7 @@ public class SLaserRay : SRayCaster
     public float width = 0.15f;
 
     // Light emitted by the laser origin
-    protected GameObject lightSource;
+    protected GameObject lightSource = null;
     protected Light light;
 
     // Light Particle system following the lineRenderer
@@ -67,14 +67,18 @@ public class SLaserRay : SRayCaster
     /// Protected method that will really create the Sofa ray caster
     protected override void createSofaRayCaster()
     {
+        Debug.Log("createSofaRayCaster: " + this.name);
         // Create Laser
-        laser = new GameObject("Laser");
-        laser.transform.parent = this.transform;
-        laser.transform.localPosition = Vector3.zero;
-        laser.transform.localRotation = Quaternion.identity;
-        laser.transform.localScale = Vector3.one;
+        if (laser == null)
+        {
+            laser = new GameObject("Laser");
+            laser.transform.parent = this.transform;
+            laser.transform.localPosition = Vector3.zero;
+            laser.transform.localRotation = Quaternion.identity;
+            laser.transform.localScale = Vector3.one;
+        }
 
-        if (drawLaserParticles)
+        if (drawLaserParticles && lightSource == null)
         {
             // Create light source
             lightSource = new GameObject("Light");
@@ -97,7 +101,7 @@ public class SLaserRay : SRayCaster
 
         // Get access to the sofaContext
         IntPtr _simu = m_sofaContext.getSimuContext();
-        if (_simu != IntPtr.Zero)
+        if (_simu != IntPtr.Zero && m_sofaRC == null)
         {   
             if (m_laserType == LaserType.CuttingTool)
                 m_sofaRC = new SofaRayCaster(_simu, 0, base.name, length);
@@ -122,6 +126,9 @@ public class SLaserRay : SRayCaster
     // Use this for initialization
     void Start()
     {
+        if (!startOnPlay)
+            return;
+
         m_axisDirection.Normalize();
         if (m_sofaContext.testAsync == true)
             m_sofaContext.registerCaster(this);
@@ -132,6 +139,9 @@ public class SLaserRay : SRayCaster
     // Update is called once per frame
     void Update()
     {
+        if (!m_isReady)
+            return;
+        
         // compute the direction and origin of the ray by adding object transform + additional manual transform
         Vector3 transLocal = transform.TransformVector(m_translation);
         origin = transform.position + transLocal;
@@ -164,11 +174,15 @@ public class SLaserRay : SRayCaster
         }
 
         // Update the laser drawing
-        this.draw(origin, origin + direction * length);
+        if (drawRay)
+            this.draw(origin, origin + direction * length);
     }
 
     public override void updateImpl()
     {
+        if (!m_isReady)
+            return;
+        
         Vector3 transLocal = transform.TransformVector(m_translation);
         origin = transform.position + transLocal;
         direction = transform.forward * m_axisDirection[0] + transform.right * m_axisDirection[1] + transform.up * m_axisDirection[2];

@@ -15,7 +15,10 @@ public class SRayCaster : RayCaster
     /// Pointer to the corresponding SOFA API object
     protected SofaRayCaster m_sofaRC = null;
 
+    public bool startOnPlay = true;
     public bool automaticCast = false;
+
+    protected bool m_isReady = false;
 
     public void stopRay()
     {
@@ -25,11 +28,15 @@ public class SRayCaster : RayCaster
             m_sofaRC.Dispose();
             m_sofaRC = null;
         }
+        m_isReady = false;
     }
 
     /// Method called at GameObject creation. Will search for SofaContext @sa loadContext() which call @sa createObject() . Then call @see awakePostProcess()
     void Awake()
     {
+        if (!startOnPlay)
+            return;
+
         GameObject _contextObject = GameObject.Find("SofaContext");
         if (_contextObject != null)
         {
@@ -43,9 +50,36 @@ public class SRayCaster : RayCaster
 
         // Call internal method that will create a ray caster in Sofa.
         createSofaRayCaster();
+
+        m_isReady = true;
     }
 
+    public void startSofaRayCaster(SofaUnity.SofaContext _context)
+    {
+        if (m_sofaContext != null || m_sofaRC != null)
+        {
+            stopRay();
+        }
 
+        m_sofaContext = _context;
+
+        // Call internal method that will create a ray caster in Sofa.
+        createSofaRayCaster();
+
+        if (m_sofaContext.testAsync == true)
+            m_sofaContext.registerCaster(this);
+        else
+            automaticCast = true;
+
+        m_isReady = true;
+    }
+
+    public void unloadSofaRayCaster()
+    {
+        stopRay();
+        m_sofaContext = null;
+    }
+    
     /// Method called by @sa loadContext() method. To create the object when Sofa context has been found. To be implemented by child class.
     protected virtual void createSofaRayCaster()
     {
