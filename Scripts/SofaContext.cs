@@ -131,16 +131,21 @@ namespace SofaUnity
             return scale;
         }
 
-        public float getFactorSofaToUnity()
+        public float getFactorSofaToUnity(int dir = -1)
         {
             Vector3 scale = this.transform.localScale;
-            float factor = (Math.Abs(scale.x) + Math.Abs(scale.y) + Math.Abs(scale.z)) / 3;
+            float factor;
+            if (dir == -1)
+                factor = (Math.Abs(scale.x) + Math.Abs(scale.y) + Math.Abs(scale.z)) / 3;
+            else
+                factor = scale[dir];
+
             return factor;
         }
 
-        public float getFactorUnityToSofa()
+        public float getFactorUnityToSofa(int dir = -1)
         {
-            float factor = getFactorSofaToUnity();
+            float factor = getFactorSofaToUnity(dir);               
             if (factor != 0.0f) factor = 1 / factor;
 
             return factor;

@@ -102,15 +102,23 @@ public class SLaserRay : SRayCaster
         // Get access to the sofaContext
         IntPtr _simu = m_sofaContext.getSimuContext();
         if (_simu != IntPtr.Zero && m_sofaRC == null)
-        {   
+        {
+
+            float raySofaLength = length * m_sofaContext.getFactorUnityToSofa(1);
+            Debug.Log("raySofaLength: " + raySofaLength);
             if (m_laserType == LaserType.CuttingTool)
-                m_sofaRC = new SofaRayCaster(_simu, 0, base.name, length);
+                m_sofaRC = new SofaRayCaster(_simu, 0, base.name, raySofaLength);
             else if (m_laserType == LaserType.AttachTool)
-                m_sofaRC = new SofaRayCaster(_simu, 1, base.name, length);
+                m_sofaRC = new SofaRayCaster(_simu, 1, base.name, raySofaLength);
             else
-                m_sofaRC = new SofaRayCaster(_simu, 2, base.name, length);
+                m_sofaRC = new SofaRayCaster(_simu, 2, base.name, raySofaLength);
 
             base.createSofaRayCaster();
+        }
+
+        if (m_sofaRC == null)
+        {
+            Debug.LogError("No SofaRayCaster " + this.name);
         }
     }
 
@@ -161,6 +169,7 @@ public class SLaserRay : SRayCaster
                 Vector3 originS = m_sofaContext.transform.InverseTransformPoint(origin);
                 Vector3 directionS = m_sofaContext.transform.InverseTransformDirection(direction);
                 triId = m_sofaRC.castRay(originS, directionS);
+                //Debug.Log("origin: " + origin + " => originS: " + originS + " |  directionS: " + directionS + " | triId: " + triId);
 
                 if (m_laserType == LaserType.AttachTool)
                 {
