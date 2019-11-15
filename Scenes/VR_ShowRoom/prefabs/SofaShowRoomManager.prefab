@@ -52,8 +52,8 @@ MonoBehaviour:
   m_scenes: {fileID: 1673780938054316938}
   m_loader: {fileID: 1260714345353943154}
   m_viewCtrl: {fileID: 1764622848}
-  m_rightHandCtrl: {fileID: 0}
-  m_leftHandCtrl: {fileID: 0}
+  m_rightHand: {fileID: 1673780938726430518}
+  m_leftHand: {fileID: 1673780938163753870}
 --- !u!114 &1673780938054316938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,6 +104,102 @@ MonoBehaviour:
   m_controllerB: {fileID: 1673780938726430518}
   startOnPlay: 0
   ratioScale: 1
+--- !u!114 &1673780938743624313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673780938163753870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c046549737019ed4bb8ab45117d7d247, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controllerEvents: {fileID: 0}
+  triggerButtonEvents: 1
+  gripButtonEvents: 1
+  touchpadButtonEvents: 1
+--- !u!114 &1673780938743624315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673780938163753870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 324061e86f12969498483741cf7c59c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  length: 1
+  mask:
+    serializedVersion: 2
+    m_Bits: 0
+  checkBackfaces: 0
+  useHighlight: 0
+  startOnPlay: 0
+  automaticCast: 0
+  m_axisDirection: {x: 1, y: 0, z: 0}
+  m_translation: {x: 0, y: 0, z: 0}
+  m_isActivated: 1
+  drawRay: 1
+  m_stiffness: 10000
+  m_laserType: 1
+  laserMat: {fileID: 0}
+  drawLaserParticles: 0
+  startColor: {r: 0, g: 1, b: 0, a: 1}
+  endColor: {r: 0, g: 1, b: 0, a: 1}
+  width: 0.15
+  particleMat: {fileID: 0}
+--- !u!114 &1673780938743624312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673780938726430518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c046549737019ed4bb8ab45117d7d247, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controllerEvents: {fileID: 0}
+  triggerButtonEvents: 1
+  gripButtonEvents: 1
+  touchpadButtonEvents: 1
+--- !u!114 &1673780938743624314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673780938726430518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 324061e86f12969498483741cf7c59c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  length: 0.01
+  mask:
+    serializedVersion: 2
+    m_Bits: 0
+  checkBackfaces: 0
+  useHighlight: 0
+  startOnPlay: 0
+  automaticCast: 0
+  m_axisDirection: {x: 1, y: 0, z: 0}
+  m_translation: {x: 0, y: 0, z: 0}
+  m_isActivated: 0
+  drawRay: 1
+  m_stiffness: 10000
+  m_laserType: 1
+  laserMat: {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  drawLaserParticles: 0
+  startColor: {r: 0, g: 1, b: 0, a: 1}
+  endColor: {r: 0, g: 1, b: 0, a: 1}
+  width: 0.015
+  particleMat: {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!1001 &1673780938163626682
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -113,7 +209,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 143668, guid: e6ba3498ffa1e534b91a07264266e6b8, type: 3}
       propertyPath: m_Name
-      value: CustomHandLeft
+      value: SofaVRHandLeft
       objectReference: {fileID: 0}
     - target: {fileID: 414912, guid: e6ba3498ffa1e534b91a07264266e6b8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -175,6 +271,16 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 137977633181334670, guid: e6ba3498ffa1e534b91a07264266e6b8,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 934036f9ef25e4d46a6c304c898e06a1, type: 2}
+    - target: {fileID: 137977633181334670, guid: e6ba3498ffa1e534b91a07264266e6b8,
+        type: 3}
+      propertyPath: m_SkinnedMotionVectors
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6ba3498ffa1e534b91a07264266e6b8, type: 3}
 --- !u!1 &1673780938163753870 stripped
@@ -198,7 +304,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 195418, guid: ba1fa4a8c66106b4988c88fe4b8e8502, type: 3}
       propertyPath: m_Name
-      value: CustomHandRight
+      value: SofaVRHandRight
       objectReference: {fileID: 0}
     - target: {fileID: 422740, guid: ba1fa4a8c66106b4988c88fe4b8e8502, type: 3}
       propertyPath: m_LocalPosition.x
@@ -256,6 +362,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 137383442524578654, guid: ba1fa4a8c66106b4988c88fe4b8e8502,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4c4fb7337add3aa479c62f49a9044f30, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba1fa4a8c66106b4988c88fe4b8e8502, type: 3}
 --- !u!1 &1673780938726430518 stripped
