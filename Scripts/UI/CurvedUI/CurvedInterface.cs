@@ -27,6 +27,9 @@ public class CurvedInterface : MonoBehaviour
             m_isReady = false;
         else
             m_isReady = true;
+
+        if (m_scenes.getNbrScenes() > 0)
+            ChangeScene(0);
     }
     
 
