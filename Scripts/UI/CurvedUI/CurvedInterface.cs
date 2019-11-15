@@ -69,11 +69,11 @@ public class CurvedInterface : MonoBehaviour
         //Debug.Log("ChangeEnvironment, direction: " + _direction);
 
         m_environmentCount += _direction;
-        Debug.Log("ChangeEnvironment, m_environmentCount: " + m_environmentCount);
+        //Debug.Log("ChangeEnvironment, m_environmentCount: " + m_environmentCount);
 
         int nbrScene = m_scenes.getNbrScenes();
         m_targetSceneId = Mathf.Abs(m_environmentCount % nbrScene);
-        Debug.Log("ChangeEnvironment, id: " + m_targetSceneId + " | nbr scene: " + nbrScene);
+        //Debug.Log("ChangeEnvironment, id: " + m_targetSceneId + " | nbr scene: " + nbrScene);
 
         // get info from scene manager
         ScenesManager.SceneMenuInfo info = m_scenes.getSceneInfo(m_targetSceneId);

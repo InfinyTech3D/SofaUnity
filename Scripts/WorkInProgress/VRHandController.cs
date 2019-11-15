@@ -33,8 +33,6 @@ public class VRHandController : MonoBehaviour
     
     private void OnEnable()
     {
-
-        Debug.Log("VRHandController OnEnable");
         controllerEvents = (controllerEvents == null ? GetComponent<VRTK_ControllerEvents>() : controllerEvents);
         if (controllerEvents == null)
         {
