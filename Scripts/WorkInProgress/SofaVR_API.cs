@@ -13,8 +13,8 @@ public class SofaVR_API : MonoBehaviour
     public GameObject m_rightHand = null;
     public GameObject m_leftHand = null;
 
-    protected VRHandController m_rightHandCtrl = null;
-    protected VRHandController m_leftHandCtrl = null;
+    protected HandlerController m_rightHandCtrl = null;
+    protected HandlerController m_leftHandCtrl = null;
     protected SLaserRay m_rightRayCaster = null;
     protected SLaserRay m_leftRayCaster = null;
 
@@ -40,10 +40,10 @@ public class SofaVR_API : MonoBehaviour
 
         if (m_rightHand != null && m_leftHand != null)
         {
-            m_rightHandCtrl = m_rightHand.GetComponent<VRHandController>();
+            m_rightHandCtrl = m_rightHand.GetComponent<HandlerController>();
             m_rightRayCaster = m_rightHand.GetComponent<SLaserRay>();
 
-            m_leftHandCtrl = m_leftHand.GetComponent<VRHandController>();
+            m_leftHandCtrl = m_leftHand.GetComponent<HandlerController>();
             m_leftRayCaster = m_leftHand.GetComponent<SLaserRay>();
 
             if (m_rightHandCtrl == null || m_rightRayCaster == null)
