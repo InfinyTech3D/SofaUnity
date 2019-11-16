@@ -9,6 +9,7 @@ public class CurvedInterface : MonoBehaviour
 {                
     public Image m_CurrentImage;
     public Text[] SelectedEnvironmentText;
+    public ToggleGroup playerButtons;
 
     //public ImageSwitch m_imageSwitcher;
     private int m_environmentCount = 0;
@@ -93,9 +94,10 @@ public class CurvedInterface : MonoBehaviour
 
         if (m_targetSceneId == -1 || m_targetSceneId == m_currentSceneId)
             return;
-
+        
         m_sofaVR_API.loadSofaScene(m_targetSceneId);
 
+        playerButtons.SetAllTogglesOff();
         m_currentSceneId = m_targetSceneId;
     }
 
