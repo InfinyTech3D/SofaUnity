@@ -9,6 +9,7 @@ public class SofaVR_API : MonoBehaviour
     public ScenesManager m_scenes = null;
     public LoadSceneScript m_loader = null;
     public SofaViewController m_viewCtrl = null;
+    public SceneInfo m_sceneInfo = null;
 
     public GameObject m_rightHand = null;
     public GameObject m_leftHand = null;
@@ -182,8 +183,6 @@ public class SofaVR_API : MonoBehaviour
             return;
         }
 
-        Debug.Log("handleLeftController continue");
-
         if (m_leftRayCaster.m_laserType == SofaDefines.SRayInteraction.AttachTool) // need trigger
         {
             if (trigL)
@@ -249,6 +248,11 @@ public class SofaVR_API : MonoBehaviour
         if (m_rightRayCaster != null)
         {
             m_rightRayCaster.unloadSofaRayCaster();
+        }
+
+        if (m_sceneInfo != null)
+        {
+            m_sceneInfo.unloadSofaContext();
         }
 
         // stop current sofa application and remove pointer
@@ -331,5 +335,9 @@ public class SofaVR_API : MonoBehaviour
         }
 
         // update scene info here
+        if (m_sceneInfo != null)
+        {
+            m_sceneInfo.setSofaContext(m_sofaContext);
+        }
     }
 }
