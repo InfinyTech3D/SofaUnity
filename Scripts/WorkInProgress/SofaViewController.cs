@@ -80,12 +80,13 @@ public class SofaViewController : MonoBehaviour
 
     public void resetSofaView()
     {
+        if (m_sofaIninit == null || SofaObject == null)
+            return;
+
         //// restore to main immersive transform.
         SofaObject.transform.position = new Vector3(m_sofaIninit.transform.position.x, m_sofaIninit.transform.position.y, m_sofaIninit.transform.position.z);
         SofaObject.transform.rotation = new Quaternion(m_sofaIninit.transform.rotation.x, m_sofaIninit.transform.rotation.y, m_sofaIninit.transform.rotation.z, m_sofaIninit.transform.rotation.w);
         SofaObject.transform.localScale = new Vector3(m_sofaIninit.transform.localScale.x, m_sofaIninit.transform.localScale.y, m_sofaIninit.transform.localScale.z);
-
-        activeInteraction(MoveMode.FIX);
     }
 
     public void unloadSofaScene()

@@ -102,6 +102,15 @@ public class CurvedInterface : MonoBehaviour
     }
 
 
+    public void resetSofaView()
+    {
+        if (!m_isReady)
+            return;
+
+        m_sofaVR_API.resetSofaView();
+    }
+
+
     ///////////////////////////////////////////////////////////////////////////////////////////
     private IEnumerator ChangeText(Text _text, string _string, float _timeBetweenLetters = 0.05f)
     {

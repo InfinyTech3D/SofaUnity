@@ -296,6 +296,13 @@ public class SofaVR_API : MonoBehaviour
         }
     }
 
+    public void resetSofaView()
+    {
+        Debug.Log("resetSofaView");
+        if (m_viewCtrl)
+            m_viewCtrl.resetSofaView();
+    }
+
 
     protected void OnSofaSceneLoaded()
     {
