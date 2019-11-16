@@ -83,62 +83,137 @@ public class SofaVR_API : MonoBehaviour
 
         // check if controller view
         bool gripR = m_rightHandCtrl.isGripPressed();
-        bool gripL = m_leftHandCtrl.isGripPressed();
-
         bool trigR = m_rightHandCtrl.isTriggerPressed();
+
+        bool gripL = m_leftHandCtrl.isGripPressed();
         bool trigL = m_leftHandCtrl.isTriggerPressed();
 
         // check view mode first
         if (m_viewCtrl)
         {
-            if (gripR && gripL)
+            handleViewController(gripR, gripL);
+        }
+
+        // handle right tool
+        if (m_viewCtrl)
+        {
+            handleRightController(gripR, trigR);
+        }
+
+        // handle left tool
+        if (m_viewCtrl)
+        {
+            handleLeftController(gripL, trigL);
+        }
+    }
+
+
+    protected void handleViewController(bool gripR, bool gripL)
+    {
+        if (gripR && gripL)
+        {
+            if (!m_viewMode) // first time
             {
-                if (!m_viewMode) // first time
-                {
-                    m_viewCtrl.activeInteraction(SofaViewController.MoveMode.ALL);
-                    m_viewMode = true;
-                }
-            }
-            else if (m_viewMode) // unactive
-            {
-                m_viewCtrl.activeInteraction(SofaViewController.MoveMode.FIX);
-                m_viewMode = false;
+                m_viewCtrl.activeInteraction(SofaViewController.MoveMode.ALL);
+                m_viewMode = true;
             }
         }
-        
-        // in view mode no ray casting
+        else if (m_viewMode) // unactive
+        {
+            m_viewCtrl.activeInteraction(SofaViewController.MoveMode.FIX);
+            m_viewMode = false;
+        }
+    }
+
+    protected void handleRightController(bool gripR, bool trigR)
+    {
         if (m_viewMode)
         {
-            if (m_rightCtrlActivated)
+            Debug.Log("handleRightController Off");
+            if (m_rightCtrlActivated) // was activated and now view mode
             {
                 m_rightRayCaster.activeTool(false);
                 m_rightCtrlActivated = false;
             }
+            return;
+        }
 
-            if (m_leftCtrlActivated)
+        if (m_rightRayCaster.m_laserType == SofaDefines.SRayInteraction.AttachTool) // need trigger
+        {
+            if (trigR)
+            {
+                m_rightRayCaster.activeTool(true);
+                m_rightCtrlActivated = true;
+            }
+            else if (m_rightCtrlActivated)
+            {
+                m_rightRayCaster.activeTool(false);
+                m_rightCtrlActivated = false;
+            }
+        }
+        else if (m_rightRayCaster.m_laserType == SofaDefines.SRayInteraction.CuttingTool) // need grip
+        {
+            if (gripR)
+            {
+                m_rightRayCaster.activeTool(true);
+                m_rightCtrlActivated = true;
+            }
+            else if (m_rightCtrlActivated)
+            {
+                m_rightRayCaster.activeTool(false);
+                m_rightCtrlActivated = false;
+            }
+        }
+        else if (m_rightRayCaster.m_laserType == SofaDefines.SRayInteraction.FixTool) // not yet
+        {
+
+        }
+    }
+
+    protected void handleLeftController(bool gripL, bool trigL)
+    {
+        if (m_viewMode)
+        {
+            if (m_leftCtrlActivated) // was activated and now view mode
             {
                 m_leftRayCaster.activeTool(false);
                 m_leftCtrlActivated = false;
             }
-
             return;
         }
 
-        // check ray casting interaction
-        if (trigR)
-        {
-            m_rightRayCaster.activeTool(true);
-            m_rightCtrlActivated = true;
-        }
-        else if (m_rightCtrlActivated)
-        {
-            m_rightRayCaster.activeTool(false);
-            m_rightCtrlActivated = false;
-        }
+        Debug.Log("handleLeftController continue");
 
+        if (m_leftRayCaster.m_laserType == SofaDefines.SRayInteraction.AttachTool) // need trigger
+        {
+            if (trigL)
+            {
+                m_leftRayCaster.activeTool(true);
+                m_leftCtrlActivated = true;
+            }
+            else if (m_rightCtrlActivated)
+            {
+                m_leftRayCaster.activeTool(false);
+                m_leftCtrlActivated = false;
+            }
+        }
+        else if (m_leftRayCaster.m_laserType == SofaDefines.SRayInteraction.CuttingTool) // need grip
+        {
+            if (gripL)
+            {
+                m_leftRayCaster.activeTool(true);
+                m_leftCtrlActivated = true;
+            }
+            else if (m_rightCtrlActivated)
+            {
+                m_leftRayCaster.activeTool(false);
+                m_leftCtrlActivated = false;
+            }
+        }
+        else if (m_leftRayCaster.m_laserType == SofaDefines.SRayInteraction.FixTool) // not yet
+        {
 
-        //bool gripR = m_rightHandCtrl.isGripPressed();
-        //bool gripR = m_rightHandCtrl.isGripPressed();
+        }
     }
 
 
@@ -166,10 +241,10 @@ public class SofaVR_API : MonoBehaviour
             m_viewCtrl.unloadSofaScene();
         }
 
-        //if (m_leftRayCaster != null)
-        //{
-        //    m_leftRayCaster.unloadSofaRayCaster();
-        //}
+        if (m_leftRayCaster != null)
+        {
+            m_leftRayCaster.unloadSofaRayCaster();
+        }
 
         if (m_rightRayCaster != null)
         {
@@ -221,7 +296,8 @@ public class SofaVR_API : MonoBehaviour
     protected void OnSofaSceneLoaded()
     {
         // normally should enable sofa player here in real gui.
-        Debug.Log("OnSofaSceneLoaded: " + this.name);
+        //Debug.Log("OnSofaSceneLoaded: " + this.name);
+        
         // look for new sofaContext
         GameObject _contextObject = GameObject.Find("SofaContext");
         if (_contextObject != null)
@@ -234,20 +310,26 @@ public class SofaVR_API : MonoBehaviour
             }
         }
 
+        // set sofaContext to viewCtrl
         if (m_viewCtrl != null)
         {
             m_viewCtrl.setSofaContext(_contextObject);
         }
 
-        //if (m_leftRayCaster != null)
-        //{
-        //    m_leftRayCaster.startSofaRayCaster(m_sofaContext);
-        //}
+        // update actions here.
+        ScenesManager.SceneMenuInfo sceneInfo = m_scenes.getSceneInfo(m_currentSceneId);        
+        if (m_leftRayCaster != null)
+        {
+            m_leftRayCaster.m_laserType = sceneInfo.m_leftToolType;
+            m_leftRayCaster.startSofaRayCaster(m_sofaContext);
+        }
 
         if (m_rightRayCaster != null)
         {
+            m_rightRayCaster.m_laserType = sceneInfo.m_rightToolType;
             m_rightRayCaster.startSofaRayCaster(m_sofaContext);
         }
-        // update actions here.
+
+        // update scene info here
     }
 }
