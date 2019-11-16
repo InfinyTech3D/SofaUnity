@@ -63,7 +63,6 @@ public class SLaserRay : SRayCaster
     /// Protected method that will really create the Sofa ray caster
     protected override void createSofaRayCaster()
     {
-        Debug.Log("createSofaRayCaster: " + this.name);
         // Create Laser
         if (laser == null)
         {
@@ -100,21 +99,34 @@ public class SLaserRay : SRayCaster
         if (_simu != IntPtr.Zero && m_sofaRC == null)
         {
 
-            float raySofaLength = length * m_sofaContext.getFactorUnityToSofa(1);
-            Debug.Log("raySofaLength: " + raySofaLength);
+            float raySofaLength = length * m_sofaContext.getFactorUnityToSofa(1);            
             if (m_laserType == SofaDefines.SRayInteraction.CuttingTool)
+            {
                 m_sofaRC = new SofaRayCaster(_simu, 0, base.name, raySofaLength);
+                Debug.Log(this.name + " create SofaRayCaster CuttingTool with length: " + raySofaLength);
+            }
             else if (m_laserType == SofaDefines.SRayInteraction.AttachTool)
+            {
                 m_sofaRC = new SofaRayCaster(_simu, 1, base.name, raySofaLength);
-            else
+                Debug.Log(this.name + " create SofaRayCaster AttachTool with length: " + raySofaLength);
+            }
+            else if (m_laserType == SofaDefines.SRayInteraction.FixTool)
+            {
                 m_sofaRC = new SofaRayCaster(_simu, 2, base.name, raySofaLength);
+                Debug.Log(this.name + " create SofaRayCaster FixTool with length: " + raySofaLength);
+            }
+            else
+            {
+                m_sofaRC = null;
+                m_isReady = false;
+            }
 
             base.createSofaRayCaster();
         }
 
         if (m_sofaRC == null)
         {
-            Debug.LogError("No SofaRayCaster " + this.name);
+            Debug.Log(this.name + "No SofaRayCaster created");
         }
     }
 
@@ -280,7 +292,7 @@ public class SLaserRay : SRayCaster
         
             var psrenderer = ps.GetComponent<ParticleSystemRenderer>();
             if (particleMat == null)
-                particleMat = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
+                particleMat = new Material(Shader.Find("Particles/Default-Particle"));
 
             psrenderer.material = particleMat;
         }
