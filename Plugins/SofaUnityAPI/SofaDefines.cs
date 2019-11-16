@@ -7,7 +7,7 @@ static public class SofaDefines
 {
     public enum SRayInteraction
     {
-        none,
+        None,
         CuttingTool,
         AttachTool,
         FixTool

@@ -15,11 +15,15 @@ public class ScenesManager : MonoBehaviour
             m_sceneName = sceneName;
             m_sceneInfo = sceneInfo;
             m_sceneImage = sceneImage;
+            m_rightToolType = SofaDefines.SRayInteraction.None;
+            m_leftToolType = SofaDefines.SRayInteraction.None;
         }
 
         public string m_sceneName;
         public string m_sceneInfo;
         public Sprite m_sceneImage;
+        public SofaDefines.SRayInteraction m_rightToolType;
+        public SofaDefines.SRayInteraction m_leftToolType;
 
         public void printInfo()
         {
@@ -69,16 +73,42 @@ public class ScenesManager : MonoBehaviour
             int separator = sprite.name.LastIndexOf("_");
             string name = sprite.name.Substring(separator + 1);
             string sceneInfo = "";
+            SofaDefines.SRayInteraction _rightToolType = SofaDefines.SRayInteraction.None;
+            SofaDefines.SRayInteraction _leftToolType = SofaDefines.SRayInteraction.None;
+            // TODO: to that better
             if (name.Contains("organs"))
+            {
                 sceneInfo = name + " multi threaded manipulation";
+                _rightToolType = SofaDefines.SRayInteraction.AttachTool;
+                _leftToolType = SofaDefines.SRayInteraction.AttachTool;
+            }
             else if (name.Contains("xray"))
+            {
                 sceneInfo = name + " view manipulation";
+            }
             else if (name.Contains("cadus"))
+            {
                 sceneInfo = name + " demo";
-            else
+                _rightToolType = SofaDefines.SRayInteraction.AttachTool;
+                _leftToolType = SofaDefines.SRayInteraction.AttachTool;
+            }
+            else if (name.Contains("liver"))
+            {
                 sceneInfo = "3D " + name + " interaction";
-            
-            m_scenesInfo.Add(new SceneMenuInfo(prefixFiles + name, sceneInfo, sprite));            
+                _rightToolType = SofaDefines.SRayInteraction.AttachTool;
+                _leftToolType = SofaDefines.SRayInteraction.CuttingTool;
+            }
+            else if (name.Contains("cloth"))
+            {
+                sceneInfo = "3D " + name + " interaction";
+                _rightToolType = SofaDefines.SRayInteraction.AttachTool;
+                _leftToolType = SofaDefines.SRayInteraction.AttachTool;
+            }
+
+            SceneMenuInfo info = new SceneMenuInfo(prefixFiles + name, sceneInfo, sprite);
+            info.m_rightToolType = _rightToolType;
+            info.m_leftToolType = _leftToolType;
+            m_scenesInfo.Add(info);
         }
 
         m_nbrScenes = m_scenesInfo.Count;
