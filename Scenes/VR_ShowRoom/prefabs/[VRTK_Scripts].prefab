@@ -547,6 +547,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RightRadialMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 128202, guid: d5fe2f7f9d3e98a478d151422643620c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 496472, guid: d5fe2f7f9d3e98a478d151422643620c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -650,6 +654,10 @@ PrefabInstance:
     - target: {fileID: 128202, guid: d5fe2f7f9d3e98a478d151422643620c, type: 3}
       propertyPath: m_Name
       value: LeftRadialMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 128202, guid: d5fe2f7f9d3e98a478d151422643620c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 496472, guid: d5fe2f7f9d3e98a478d151422643620c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -804,8 +812,12 @@ PrefabInstance:
       value: 0.1223
       objectReference: {fileID: 0}
     - target: {fileID: 4902960099699280, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.013
+      objectReference: {fileID: 0}
+    - target: {fileID: 4902960099699280, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.0271
+      value: 0.09
       objectReference: {fileID: 0}
     - target: {fileID: 484582, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -817,7 +829,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 484582, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.0019
+      value: 0.0264
       objectReference: {fileID: 0}
     - target: {fileID: 472402, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -829,15 +841,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000014175454880, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0647
+      value: -0.1184
       objectReference: {fileID: 0}
     - target: {fileID: 4000014175454880, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.0857
+      value: -0.0349
       objectReference: {fileID: 0}
     - target: {fileID: 4000012396937550, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.0898
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000012396937550, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.0684
+      objectReference: {fileID: 0}
+    - target: {fileID: 11415184, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
+      propertyPath: triggerText
+      value: Trigger Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 11415184, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
+      propertyPath: gripText
+      value: Grip Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 11415184, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
+      propertyPath: touchpadText
+      value: Touchpad + Trigger to select
       objectReference: {fileID: 0}
     - target: {fileID: 11415184, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: touchpadTwoText
@@ -845,7 +873,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11415184, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: buttonOneText
-      value: 
+      value: 'Button B: Hide/Show tooltips'
+      objectReference: {fileID: 0}
+    - target: {fileID: 11415184, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
+      propertyPath: buttonTwoText
+      value: Press Both Grip to controll view
       objectReference: {fileID: 0}
     - target: {fileID: 11415184, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: startMenuText
@@ -858,30 +890,6 @@ PrefabInstance:
     - target: {fileID: 178472, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1000012862124634, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000011018885128, guid: 910be6460ba00dc4bb13725c3ff972cb,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 62.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000011018885128, guid: 910be6460ba00dc4bb13725c3ff972cb,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 16.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000014259110642, guid: 910be6460ba00dc4bb13725c3ff972cb,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 62.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000014259110642, guid: 910be6460ba00dc4bb13725c3ff972cb,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 16.5
       objectReference: {fileID: 0}
     - target: {fileID: 22454212, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: m_SizeDelta.x
@@ -984,7 +992,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4902960099699280, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.113
+      value: -0.1103
       objectReference: {fileID: 0}
     - target: {fileID: 4902960099699280, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: m_LocalPosition.y
@@ -992,7 +1000,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4902960099699280, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.015
+      value: 0.0547
       objectReference: {fileID: 0}
     - target: {fileID: 484582, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1008,11 +1016,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 472402, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0184
+      value: -0.0123
       objectReference: {fileID: 0}
     - target: {fileID: 472402, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.088
+      value: 0.1083
       objectReference: {fileID: 0}
     - target: {fileID: 4000014175454880, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1020,7 +1028,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000014175454880, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.0719
+      value: -0.0152
+      objectReference: {fileID: 0}
+    - target: {fileID: 11415184, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
+      propertyPath: triggerText
+      value: Trigger Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 11415184, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
+      propertyPath: gripText
+      value: Grip Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 11415184, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
+      propertyPath: touchpadText
+      value: Touchpad + Trigger to select
       objectReference: {fileID: 0}
     - target: {fileID: 11415184, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: touchpadTwoText
@@ -1029,6 +1049,10 @@ PrefabInstance:
     - target: {fileID: 11415184, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: buttonOneText
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11415184, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
+      propertyPath: buttonTwoText
+      value: Press Both Grip to controll view
       objectReference: {fileID: 0}
     - target: {fileID: 11415184, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: startMenuText
@@ -1046,10 +1070,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1000011905105796, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 224000011018885128, guid: 910be6460ba00dc4bb13725c3ff972cb,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -1060,32 +1080,12 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 16.5
       objectReference: {fileID: 0}
-    - target: {fileID: 224000012153209662, guid: 910be6460ba00dc4bb13725c3ff972cb,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 62.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000012153209662, guid: 910be6460ba00dc4bb13725c3ff972cb,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 16.5
-      objectReference: {fileID: 0}
     - target: {fileID: 224000014259110642, guid: 910be6460ba00dc4bb13725c3ff972cb,
         type: 3}
       propertyPath: m_SizeDelta.x
       value: 62.5
       objectReference: {fileID: 0}
     - target: {fileID: 224000014259110642, guid: 910be6460ba00dc4bb13725c3ff972cb,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 16.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000013893780094, guid: 910be6460ba00dc4bb13725c3ff972cb,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 62.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000013893780094, guid: 910be6460ba00dc4bb13725c3ff972cb,
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 16.5
