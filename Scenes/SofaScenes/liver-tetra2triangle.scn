@@ -22,7 +22,7 @@
         <FixedConstraint indices="@FixedROI.indices" />
         <!--<TetrahedralCorotationalFEMForceField name="FEM" youngModulus="1300" poissonRatio="0.3" method="large" />		-->
 		<TetrahedronFEMForceField name="FEM" youngModulus="1300" poissonRatio="0.3" computeGlobalMatrix="false" method="large" />
-		<PlaneForceField normal="0 1 0" d="-50" stiffness="100000" showPlane="1" showPlaneSize="20"/>
+		<PlaneForceField normal="0 1 0" d="-120" stiffness="100000" showPlane="1" showPlaneSize="20"/>
         <Node name="T">
             <TriangleSetTopologyContainer  name="Container" fileTopology="" tags=" " />
 			<TriangleSetTopologyModifier   name="Modifier" />
