@@ -19,7 +19,7 @@ public class SSphereCollisionModel : MonoBehaviour
     ////////////////////////////////////////////
 
     /// Pointer to the Sofa context this GameObject belongs to.
-    protected SofaContext m_context = null;
+    protected SofaContext m_sofaContext = null;
 
     /// Pointer to the corresponding SOFA API object
     protected SofaCustomMesh m_impl = null;
@@ -79,9 +79,9 @@ public class SSphereCollisionModel : MonoBehaviour
         if (_contextObject != null)
         {
             // Get Sofa context
-            m_context = _contextObject.GetComponent<SofaContext>();
+            m_sofaContext = _contextObject.GetComponent<SofaContext>();
 
-            if (m_context == null)
+            if (m_sofaContext == null)
             {
                 Debug.LogError("Error SSphereCollisionModel::loadContext: Context not found");
                 return false;
@@ -94,10 +94,10 @@ public class SSphereCollisionModel : MonoBehaviour
             createObject();
 
             // Increment counter if objectis created from loading scene process
-            m_context.countCreated();
+            m_sofaContext.countCreated();
 
             // Increment the context object counter for names.
-            m_context.objectcpt = m_context.objectcpt + 1;
+            m_sofaContext.objectcpt = m_sofaContext.objectcpt + 1;
 
             return true;
         }
@@ -116,7 +116,7 @@ public class SSphereCollisionModel : MonoBehaviour
             Debug.Log("UNITY_EDITOR - SSphereCollisionModel::createObject");
 
         // Get access to the sofaContext
-        IntPtr _simu = m_context.getSimuContext();
+        IntPtr _simu = m_sofaContext.getSimuContext();
 
         if (_simu != IntPtr.Zero) // Create the API object for Sofa Regular Grid Mesh
             m_impl = new SofaCustomMesh(_simu, this.name);            
@@ -166,7 +166,7 @@ public class SSphereCollisionModel : MonoBehaviour
         if (m_impl != null)
         {
             m_impl.setFloatValue("contactStiffness", m_stiffness);
-            m_impl.setFloatValue("radius", m_radius);
+            m_impl.setFloatValue("radius", m_radius * m_sofaContext.getFactorUnityToSofa(1));
         }
     }
 
@@ -176,7 +176,7 @@ public class SSphereCollisionModel : MonoBehaviour
     {
         if (m_activated && m_impl != null)
         {
-            m_impl.updateMesh(this.transform, m_centers, m_context.getScaleUnityToSofa());
+            m_impl.updateMesh(this.transform, m_centers, m_sofaContext.transform);
         }
     }
 
@@ -208,7 +208,7 @@ public class SSphereCollisionModel : MonoBehaviour
         List<Vector3> bufferTotal = new List<Vector3>();
         int cpt = 0;
 
-        float contextFactor = m_context.getFactorUnityToSofa();
+        float contextFactor = m_sofaContext.getFactorUnityToSofa();
         for (int i = 0; i < buffer.Length; ++i)
         {
             bufferTotal.Add(buffer[i]);
@@ -319,7 +319,7 @@ public class SSphereCollisionModel : MonoBehaviour
             {
                 m_radius = value;
                 if (m_impl != null)
-                    m_impl.setFloatValue("radius", m_radius);
+                    m_impl.setFloatValue("radius", m_radius * m_sofaContext.getFactorUnityToSofa(1));
             }
             else
                 m_radius = value;
@@ -359,15 +359,15 @@ public class SSphereCollisionModel : MonoBehaviour
     /// Method to draw debug information like the vertex being grabed
     void OnDrawGizmosSelected()
     {
-        if (m_centers == null || m_context == null)
+        if (m_centers == null || m_sofaContext == null)
             return;
 
         Gizmos.color = Color.yellow;
-        float factor = m_context.getFactorSofaToUnity();
+        //float factor = m_sofaContext.getFactorSofaToUnity();
         
         foreach (Vector3 vert in m_centers)
         {
-            Gizmos.DrawSphere(this.transform.TransformPoint(vert), m_radius * factor);
+            Gizmos.DrawSphere(this.transform.TransformPoint(vert), m_radius/**m_sofaContext.getFactorSofaToUnity(1)*/);
         }
     }
 }

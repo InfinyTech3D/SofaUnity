@@ -29,7 +29,7 @@ public class SofaCustomMesh : SofaBaseObject
 
             if (res != 0)
             {
-                Debug.LogError("SofaCustomMesh::createObject cube creation method return error: " + SofaDefines.msg_error[res] + " for object " + m_name);
+                Debug.LogError("SofaCustomMesh::createObject creation method return error: " + SofaDefines.msg_error[res] + " for object " + m_name);
                 return false;
             }
 
@@ -71,7 +71,7 @@ public class SofaCustomMesh : SofaBaseObject
     /// <param name="trans"> Local GameObject Transform to get Unity world position.</param>
     /// <param name="vertices"> List of vertices from Unity GameObject.</param>
     /// <param name="scaleUnityToSofa"> scale to transform Unity to Sofa positions.</param>
-    public void updateMesh(Transform trans, Vector3[] vertices, Vector3 scaleUnityToSofa)
+    public void updateMesh(Transform trans, Vector3[] vertices, Transform sofaCTransform)
     {
         if (m_native == IntPtr.Zero)
             return;
@@ -82,9 +82,11 @@ public class SofaCustomMesh : SofaBaseObject
         for (int i = 0; i < nbrV; i++)
         {
             Vector3 vert = trans.TransformPoint(vertices[i]);
-            val[i * 3] = vert.x * scaleUnityToSofa.x;
-            val[i * 3 + 1] = vert.y * scaleUnityToSofa.y;
-            val[i * 3 + 2] = vert.z * scaleUnityToSofa.z;
+            Vector3 vertS = sofaCTransform.InverseTransformPoint(vert);
+
+            val[i * 3] = vertS.x;
+            val[i * 3 + 1] = vertS.y;
+            val[i * 3 + 2] = vertS.z;
         }
 
         int resUpdate = sofaPhysics3DObject_setVertices(m_simu, m_name, val);
