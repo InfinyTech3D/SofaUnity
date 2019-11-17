@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1673780938054316938}
   - component: {fileID: 1260714345353943154}
   - component: {fileID: 1764622848}
+  - component: {fileID: 1673780938743624311}
   m_Layer: 0
   m_Name: SofaShowRoomManager
   m_TagString: Untagged
@@ -52,6 +53,7 @@ MonoBehaviour:
   m_scenes: {fileID: 1673780938054316938}
   m_loader: {fileID: 1260714345353943154}
   m_viewCtrl: {fileID: 1764622848}
+  m_sceneInfo: {fileID: 1673780938743624311}
   m_rightHand: {fileID: 1673780938726430518}
   m_leftHand: {fileID: 1673780938163753870}
 --- !u!114 &1673780938054316938
@@ -104,6 +106,25 @@ MonoBehaviour:
   m_controllerB: {fileID: 1673780938726430518}
   startOnPlay: 0
   ratioScale: 1
+--- !u!114 &1673780938743624311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673780938054316939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1d84e2839ce7af4a8ba0ab5c0f5b6db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textUI: {fileID: 0}
+  t_nbrModels: {fileID: 0}
+  t_nbrVertices: {fileID: 0}
+  t_nbrTriangles: {fileID: 0}
+  t_FPS: {fileID: 0}
+  displayFPS: 1
+  m_startOnPlay: 0
 --- !u!114 &1673780938743624313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,6 +137,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c046549737019ed4bb8ab45117d7d247, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_gripPessed: 0
+  m_triggerPressed: 0
+  m_touchPadPressed: 0
   controllerEvents: {fileID: 0}
   triggerButtonEvents: 1
   gripButtonEvents: 1
@@ -164,6 +188,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c046549737019ed4bb8ab45117d7d247, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_gripPessed: 0
+  m_triggerPressed: 0
+  m_touchPadPressed: 0
   controllerEvents: {fileID: 0}
   triggerButtonEvents: 1
   gripButtonEvents: 1
