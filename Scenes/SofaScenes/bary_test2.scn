@@ -1,0 +1,62 @@
+<?xml version="1.0" ?>
+<Node name="root" gravity="0 -1000 0" dt="0.04">
+    <VisualStyle displayFlags="showVisual showCollisionModels " /> <!--showBehaviorModels showCollisionModels-->
+    <LCPConstraintSolver tolerance="1e-3" maxIt="1000" initial_guess="false" build_lcp="false"  printLog="0" mu="0.2"/>
+    <FreeMotionAnimationLoop />
+    <DefaultPipeline depth="15" verbose="0" draw="0" />
+    <BruteForceDetection name="N2" />
+    <MinProximityIntersection name="Proximity" alarmDistance="1.5" contactDistance="1" />
+
+    <DefaultContactManager name="Response" response="FrictionContact" />
+          <EulerImplicitSolver name="cg_odesolver" rayleighMass="1" rayleighStiffness="0.03" />
+        <CGLinearSolver name="linear solver" iterations="20" tolerance="1e-12" threshold="1e-18" />
+    <Node name="Snake" >
+
+        <SparseGridRamificationTopology name="grid" n="4 12 3" fileTopology="C:/projects/Unity/SofaUnity_default/Assets/SofaUnity/Scenes/SofaScenes/mesh/snake_body.obj" nbVirtualFinerLevels="3" finestConnectivity="0"/>
+
+
+		<MechanicalObject name="dofs"  dy="2" position="@grid.position"/>
+        <UniformMass totalMass="1.0" />
+        <HexahedronFEMForceField name="FEM" youngModulus="30000.0" poissonRatio="0.3" method="large" updateStiffnessMatrix="false" printLog="0" />
+
+		<UncoupledConstraintCorrection />
+
+		<Node name="Collis">
+            <MeshObjLoader name="loader" filename="mesh/meca_snake_900tri.obj" />
+            <MeshTopology src="@loader" name="colliTopo"/>
+            <MechanicalObject src="@loader" name="CollisModel" />
+            <TriangleCollisionModel  name="colTri" selfCollision="0" />
+            <LineCollisionModel name="colLine" selfCollision="0" />
+            <PointCollisionModel name="colPoint" selfCollision="0" />
+            <BarycentricMapping input="@.." output="@." />
+        </Node>
+
+        <Node name="VisuBody" tags="Visual" >
+            <MeshObjLoader name="loader" filename="mesh/snake_body.obj" handleSeams="1"/>
+            <OglModel  name="VisualBody" src="@loader"   />
+            <BarycentricMapping input="@.." output="@VisualBody" />
+        </Node>
+
+        <Node name="VisuCornea" tags="Visual" >
+            <MeshObjLoader name="loader" filename="mesh/snake_cornea.obj" handleSeams="1"/>
+            <OglModel  name="VisualCornea" src="@loader"   />
+            <BarycentricMapping input="@.." output="@VisualCornea" />
+        </Node>
+
+        <Node name="VisuEye" tags="Visual" >
+            <MeshObjLoader name="loader" filename="mesh/snake_yellowEye.obj" handleSeams="1"/>
+            <OglModel  name="VisualEye" src="@loader"/>
+            <BarycentricMapping input="@.." output="@VisualEye" />
+        </Node>
+		
+    </Node>
+
+     <Node name="test">
+        <MechanicalObject name="tool" scale3d="1 1 1" position="0 50 0"/>
+       <StiffSpringForceField name="force" object1="@../Snake/Collis/CollisModel" object2="@tool" stiffness="10000" indices1="0" indices2="0"/>
+    <!--     <StiffSpringForceField name="force" object1="@../liver/dofs" object2="@tool" indices1="0" indices2="0"/>-->
+        <Sphere radius="0.5"  selfCollision="0" group="1"/>
+        <FixedConstraint indices="0" />
+    </Node>
+	
+</Node>
