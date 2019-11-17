@@ -68,6 +68,13 @@ public class SofaContextEditor : Editor
         context.IsSofaUpdating = EditorGUILayout.Toggle("Activate Simulation", context.IsSofaUpdating);
         context.CatchSofaMessages = EditorGUILayout.Toggle("Activate Sofa Logs", context.CatchSofaMessages);
         context.StartOnPlay = EditorGUILayout.Toggle("Start Sofa on Play", context.StartOnPlay);
+        context.StepbyStep = EditorGUILayout.Toggle("StepByStep", context.StepbyStep);
+
+        if (GUILayout.Button("Step"))
+        {
+            context.StepbyStep = true;
+            context.IsSofaUpdating = true;
+        }
 
         // Add Button to load a filename
         if (GUILayout.Button("Load Scene"))

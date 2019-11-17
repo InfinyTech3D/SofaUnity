@@ -30,13 +30,16 @@ namespace SofaUnity
         public string m_filename = "";
 
         /// Booleen to update sofa simulation
-        public bool IsSofaUpdating = true;
+        public bool IsSofaUpdating = false;
 
         /// Booleen to activate sofa message handler
         public bool CatchSofaMessages = true;
 
         /// Booleen to start Sofa simulation on Play
+        [SerializeField]
         public bool StartOnPlay = true;
+
+        public bool StepbyStep = false;
 
         List<SRayCaster> m_casters = null;
 
@@ -202,6 +205,7 @@ namespace SofaUnity
         /// Method called at GameObject creation.
         void Awake()
         {
+            m_log = false;
             if (Application.isPlaying)
                 Debug.Log("#### is playing");
             else
@@ -302,6 +306,7 @@ namespace SofaUnity
             m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaOpenglVisual.dll");
             m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaMiscCollision.dll");
             m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaSparseSolver.dll");
+            m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaPreconditioner.dll");
             m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaSphFluid.dll");
         }
 
@@ -427,7 +432,13 @@ namespace SofaUnity
                 breakerActivated = false;
             }
 
+            if (StepbyStep)
+            {
+                IsSofaUpdating = false;
+            }
         }
+
+
 
 
         protected void updateImplSync()
@@ -595,8 +606,16 @@ namespace SofaUnity
                     go = new GameObject("SComponent - " + name);
                     go.AddComponent<SComponentObject>();
                 }
+                else if (type.Contains("SofaStatic3DObject"))
+                {
+                    go = new GameObject("SMesh - " + name);
+                    go.AddComponent<SDeformableMesh>();
+                }
                 else
+                {
+                    Debug.LogWarning("Object not added: " + name + " of type: " + type);
                     continue;
+                }
 
                 go.transform.parent = this.gameObject.transform;
             }
