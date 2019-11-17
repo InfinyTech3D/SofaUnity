@@ -75,6 +75,7 @@ public class ScenesManager : MonoBehaviour
             string sceneInfo = "";
             SofaDefines.SRayInteraction _rightToolType = SofaDefines.SRayInteraction.None;
             SofaDefines.SRayInteraction _leftToolType = SofaDefines.SRayInteraction.None;
+
             // TODO: to that better
             if (name.Contains("organs"))
             {
@@ -86,11 +87,11 @@ public class ScenesManager : MonoBehaviour
             {
                 sceneInfo = name + " view manipulation";
             }
-            else if (name.Contains("cadus"))
+            else if (name.Contains("caduceus"))
             {
                 sceneInfo = name + " demo";
                 _rightToolType = SofaDefines.SRayInteraction.AttachTool;
-                _leftToolType = SofaDefines.SRayInteraction.AttachTool;
+                _leftToolType = SofaDefines.SRayInteraction.None;
             }
             else if (name.Contains("liver"))
             {
@@ -102,7 +103,7 @@ public class ScenesManager : MonoBehaviour
             {
                 sceneInfo = "3D " + name + " interaction";
                 _rightToolType = SofaDefines.SRayInteraction.AttachTool;
-                _leftToolType = SofaDefines.SRayInteraction.AttachTool;
+                _leftToolType = SofaDefines.SRayInteraction.CuttingTool;
             }
 
             SceneMenuInfo info = new SceneMenuInfo(prefixFiles + name, sceneInfo, sprite);
