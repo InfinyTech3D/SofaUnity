@@ -56,6 +56,8 @@ MonoBehaviour:
   m_sceneInfo: {fileID: 1673780938743624311}
   m_rightHand: {fileID: 1673780938726430518}
   m_leftHand: {fileID: 1673780938163753870}
+  m_rightTooltip: {fileID: 0}
+  m_leftTooltip: {fileID: 0}
 --- !u!114 &1673780938054316938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,10 +142,15 @@ MonoBehaviour:
   m_gripPessed: 0
   m_triggerPressed: 0
   m_touchPadPressed: 0
+  m_buttonOnePressed: 0
+  m_buttonTwoPressed: 0
   controllerEvents: {fileID: 0}
   triggerButtonEvents: 1
   gripButtonEvents: 1
   touchpadButtonEvents: 1
+  buttonOneEvents: 1
+  buttonTwoEvents: 1
+  logEvents: 0
 --- !u!114 &1673780938743624315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 324061e86f12969498483741cf7c59c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  length: 1
+  length: 0.02
   mask:
     serializedVersion: 2
     m_Bits: 0
@@ -165,17 +172,17 @@ MonoBehaviour:
   startOnPlay: 0
   automaticCast: 0
   m_axisDirection: {x: 1, y: 0, z: 0}
-  m_translation: {x: 0, y: 0, z: 0}
-  m_isActivated: 1
+  m_translation: {x: 0.001, y: 0.01, z: 0.06}
+  m_isActivated: 0
   drawRay: 1
-  m_stiffness: 10000
+  m_stiffness: 1000
   m_laserType: 1
   laserMat: {fileID: 0}
   drawLaserParticles: 0
   startColor: {r: 0, g: 1, b: 0, a: 1}
   endColor: {r: 0, g: 1, b: 0, a: 1}
-  width: 0.15
-  particleMat: {fileID: 0}
+  width: 0.01
+  particleMat: {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!114 &1673780938743624312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,10 +198,15 @@ MonoBehaviour:
   m_gripPessed: 0
   m_triggerPressed: 0
   m_touchPadPressed: 0
+  m_buttonOnePressed: 0
+  m_buttonTwoPressed: 0
   controllerEvents: {fileID: 0}
   triggerButtonEvents: 1
   gripButtonEvents: 1
   touchpadButtonEvents: 1
+  buttonOneEvents: 1
+  buttonTwoEvents: 1
+  logEvents: 0
 --- !u!114 &1673780938743624314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,7 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 324061e86f12969498483741cf7c59c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  length: 0.01
+  length: 0.02
   mask:
     serializedVersion: 2
     m_Bits: 0
@@ -216,16 +228,16 @@ MonoBehaviour:
   startOnPlay: 0
   automaticCast: 0
   m_axisDirection: {x: 1, y: 0, z: 0}
-  m_translation: {x: 0, y: 0, z: 0}
+  m_translation: {x: 0.001, y: 0.01, z: 0.06}
   m_isActivated: 0
   drawRay: 1
-  m_stiffness: 10000
+  m_stiffness: 1000
   m_laserType: 1
-  laserMat: {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  laserMat: {fileID: 0}
   drawLaserParticles: 0
   startColor: {r: 0, g: 1, b: 0, a: 1}
   endColor: {r: 0, g: 1, b: 0, a: 1}
-  width: 0.015
+  width: 0.01
   particleMat: {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!1001 &1673780938163626682
 PrefabInstance:
