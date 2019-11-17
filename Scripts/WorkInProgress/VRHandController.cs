@@ -14,7 +14,13 @@ public class VRHandController : HandlerController
     public bool triggerButtonEvents = true;
     public bool gripButtonEvents = true;
     public bool touchpadButtonEvents = true;
-    
+
+    public bool buttonOneEvents = true;
+    public bool buttonTwoEvents = true;
+
+    public bool logEvents = false;
+
+
     private void OnEnable()
     {
 #if VRTK_VERSION_3_2_1_OR_NEWER
@@ -34,6 +40,12 @@ public class VRHandController : HandlerController
 
         controllerEvents.TouchpadPressed += DoTouchpadPressed;
         controllerEvents.TouchpadReleased += DoTouchpadReleased;
+
+        controllerEvents.ButtonOnePressed += DoButtonOnePressed;
+        controllerEvents.ButtonOneReleased += DoButtonOneReleased;
+
+        controllerEvents.ButtonTwoPressed += DoButtonTwoPressed;
+        controllerEvents.ButtonTwoReleased += DoButtonTwoReleased;
 #endif
     }
 
@@ -67,7 +79,8 @@ public class VRHandController : HandlerController
     {
         if (triggerButtonEvents)
         {
-            DebugLogger(VRTK_ControllerReference.GetRealIndex(e.controllerReference), "TRIGGER", "pressed", e);
+            if (logEvents)
+                DebugLogger(VRTK_ControllerReference.GetRealIndex(e.controllerReference), "TRIGGER", "pressed", e);
             m_triggerPressed = true;
         }
     }
@@ -76,7 +89,8 @@ public class VRHandController : HandlerController
     {
         if (triggerButtonEvents)
         {
-            DebugLogger(VRTK_ControllerReference.GetRealIndex(e.controllerReference), "TRIGGER", "released", e);
+            if (logEvents)
+                DebugLogger(VRTK_ControllerReference.GetRealIndex(e.controllerReference), "TRIGGER", "released", e);
             m_triggerPressed = false;
         }
     }
@@ -85,7 +99,8 @@ public class VRHandController : HandlerController
     {
         if (gripButtonEvents)
         {
-            DebugLogger(VRTK_ControllerReference.GetRealIndex(e.controllerReference), "GRIP", "pressed", e);
+            if (logEvents)
+                DebugLogger(VRTK_ControllerReference.GetRealIndex(e.controllerReference), "GRIP", "pressed", e);
             m_gripPessed = true;
         }
     }
@@ -94,7 +109,8 @@ public class VRHandController : HandlerController
     {
         if (gripButtonEvents)
         {
-            DebugLogger(VRTK_ControllerReference.GetRealIndex(e.controllerReference), "GRIP", "released", e);
+            if (logEvents)
+                DebugLogger(VRTK_ControllerReference.GetRealIndex(e.controllerReference), "GRIP", "released", e);
             m_gripPessed = false;
         }
     }
@@ -103,7 +119,8 @@ public class VRHandController : HandlerController
     {
         if (touchpadButtonEvents)
         {
-            DebugLogger(VRTK_ControllerReference.GetRealIndex(e.controllerReference), "TOUCHPAD", "pressed down", e);
+            if (logEvents)
+                DebugLogger(VRTK_ControllerReference.GetRealIndex(e.controllerReference), "TOUCHPAD", "pressed down", e);
             m_touchPadPressed = true;
         }
     }
@@ -112,8 +129,51 @@ public class VRHandController : HandlerController
     {
         if (touchpadButtonEvents)
         {
-            DebugLogger(VRTK_ControllerReference.GetRealIndex(e.controllerReference), "TOUCHPAD", "released", e);
+            if (logEvents)
+                DebugLogger(VRTK_ControllerReference.GetRealIndex(e.controllerReference), "TOUCHPAD", "released", e);
             m_touchPadPressed = false;
+        }
+    }
+
+
+    private void DoButtonOnePressed(object sender, ControllerInteractionEventArgs e)
+    {
+        if (buttonOneEvents)
+        {
+            if (logEvents)
+                DebugLogger(VRTK_ControllerReference.GetRealIndex(e.controllerReference), "Button One", "pressed down", e);
+            m_buttonOnePressed = true;
+        }
+    }
+
+    private void DoButtonOneReleased(object sender, ControllerInteractionEventArgs e)
+    {
+        if (buttonOneEvents)
+        {
+            if (logEvents)
+                DebugLogger(VRTK_ControllerReference.GetRealIndex(e.controllerReference), "Button One", "released", e);
+            m_buttonOnePressed = false;
+        }
+    }
+
+
+    private void DoButtonTwoPressed(object sender, ControllerInteractionEventArgs e)
+    {
+        if (buttonTwoEvents)
+        {
+            if (logEvents)
+                DebugLogger(VRTK_ControllerReference.GetRealIndex(e.controllerReference), "Button Two", "pressed down", e);
+            m_buttonTwoPressed = true;
+        }
+    }
+
+    private void DoButtonTwoReleased(object sender, ControllerInteractionEventArgs e)
+    {
+        if (buttonTwoEvents)
+        {
+            if (logEvents)
+                DebugLogger(VRTK_ControllerReference.GetRealIndex(e.controllerReference), "Button Two", "released", e);
+            m_buttonTwoPressed = false;
         }
     }
 
