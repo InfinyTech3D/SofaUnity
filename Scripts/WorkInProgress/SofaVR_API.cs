@@ -14,6 +14,9 @@ public class SofaVR_API : MonoBehaviour
     public GameObject m_rightHand = null;
     public GameObject m_leftHand = null;
 
+    public GameObject m_rightTooltip = null;
+    public GameObject m_leftTooltip = null;
+
     protected HandlerController m_rightHandCtrl = null;
     protected HandlerController m_leftHandCtrl = null;
     protected SLaserRay m_rightRayCaster = null;
@@ -32,6 +35,9 @@ public class SofaVR_API : MonoBehaviour
     protected bool m_viewMode = false;
     protected bool m_rightCtrlActivated = false;
     protected bool m_leftCtrlActivated = false;
+
+    protected bool m_showToolTip = true;
+    protected bool m_showFirstToolTip = true;
 
     // Start is called before the first frame update
     void Start()
@@ -63,6 +69,9 @@ public class SofaVR_API : MonoBehaviour
 
         m_scenes.parseScenes();
         m_curvedUI.initUI(this, m_scenes);
+
+        showToolTip(true, true);
+        m_showFirstToolTip = true;
     }
 
     // Update is called once per frame
@@ -81,6 +90,10 @@ public class SofaVR_API : MonoBehaviour
 
         if (!m_VRControlMode || m_sofaContext == null)
             return;
+
+        // show tooltip
+        bool buttonTT = m_rightHandCtrl.isButtonTwoPressed();
+        showToolTip(buttonTT);
 
         // check if controller view
         bool gripR = m_rightHandCtrl.isGripPressed();
@@ -190,7 +203,7 @@ public class SofaVR_API : MonoBehaviour
                 m_leftRayCaster.activeTool(true);
                 m_leftCtrlActivated = true;
             }
-            else if (m_rightCtrlActivated)
+            else if (m_leftCtrlActivated)
             {
                 m_leftRayCaster.activeTool(false);
                 m_leftCtrlActivated = false;
@@ -203,7 +216,7 @@ public class SofaVR_API : MonoBehaviour
                 m_leftRayCaster.activeTool(true);
                 m_leftCtrlActivated = true;
             }
-            else if (m_rightCtrlActivated)
+            else if (m_leftCtrlActivated)
             {
                 m_leftRayCaster.activeTool(false);
                 m_leftCtrlActivated = false;
@@ -346,5 +359,52 @@ public class SofaVR_API : MonoBehaviour
         {
             m_sceneInfo.setSofaContext(m_sofaContext);
         }
+
+        // update tooltip
+        showToolTip(true, true);
+        m_showFirstToolTip = true;
+    }
+
+    protected void updateToolTip()
+    {
+
+    }
+
+    protected void showToolTip(bool value, bool force = false)
+    {
+        Debug.Log("showToolTip: " + value + " | m_showToolTip: " + m_showToolTip);
+        if (force)
+        {
+            if (m_rightTooltip != null)
+                m_rightTooltip.SetActive(value);
+
+            if (m_leftTooltip != null)
+                m_leftTooltip.SetActive(value);
+
+            m_showToolTip = value;
+            return;
+        }
+
+        if (m_showFirstToolTip)// first time
+        {
+            if (value)
+            {
+                Debug.Log("First time");
+                m_showFirstToolTip = false;
+            }
+            else
+                return;
+        }
+
+        if (value == m_showToolTip)
+            return;
+
+        if (m_rightTooltip != null)
+            m_rightTooltip.SetActive(value);
+
+        if (m_leftTooltip != null)
+            m_leftTooltip.SetActive(value);
+
+        m_showToolTip = value;
     }
 }
