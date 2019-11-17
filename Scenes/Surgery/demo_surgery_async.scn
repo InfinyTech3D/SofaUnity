@@ -4,19 +4,19 @@
     
 	<FreeMotionAnimationLoopAsync  scheduler="lockFree"  keepThreadsIdle="true" threadNumber="8" displayTime="true"/>
 	<GenericConstraintSolverAsync unbuilt="false" tolerance="1e-4" maxIt="200"   printLog="0"/>
-	<CollisionPipelineAsync verbose="0" depth="10" draw="0" />
+	<DefaultPipelineAsync verbose="0" depth="10" draw="0" />
     <BruteForceDetectionAsync name="N2" />
 	<MinProximityIntersection name="Proximity" alarmDistance="0.5" contactDistance="0.2" />
-    <CollisionResponse name="Response" response="default" />
+    <DefaultContactManager name="Response" response="default" />
 
-	<EulerImplicit name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="1.0" />
+	<EulerImplicitSolver name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="1.0" />
 	<CGLinearSolver iterations="6" name="linear solver" tolerance="1.0e-4" threshold="1.0e-4" />
-    <CollisionGroup/>
+    <DefaultCollisionGroupManager/>
 
     <Node name="lung_left">
 
         <MeshObjLoader name="loader" filename="./mesh/organs_lung_left.obj" />
-        <SparseGrid name="grid" n="4 7 6" position="@loader.position" drawHexahedra="0" />
+        <SparseGridTopology name="grid" n="4 7 6" position="@loader.position" drawHexahedra="0" />
         <MechanicalObject name="dofs" scale3d="1 1 1" />
         <UniformMass totalMass="1.0" />
         <HexahedronFEMForceField name="FEM" youngModulus="40.0" poissonRatio="0.3" method="large" printLog="0" />        
@@ -32,14 +32,14 @@
 
         <Node name="lung_left_collision">
             <MeshObjLoader name="loader" filename="./mesh/organs_lung_left_collision.obj"/>
-            <Mesh src="@loader" />
+            <MeshTopology src="@loader" />
             <MechanicalObject src="@loader" name="CollisModel" />
 
-            <Sphere radius="0.5"  selfCollision="0" />
+            <SphereCollisionModel radius="0.5"  selfCollision="0" />
             <!--
-            <Point  selfCollision="0" />
-            <Triangle  selfCollision="0" />
-            <Line  selfCollision="0" />
+            <PointCollisionModel  selfCollision="0" />
+            <TriangleCollisionModel  selfCollision="0" />
+            <LineCollisionModel  selfCollision="0" />
             -->
             <BarycentricMapping input="@.." output="@." />
         </Node>
@@ -51,7 +51,7 @@
     <Node name="lung_right">
 
         <MeshObjLoader name="loader" filename="./mesh/organs_lung_right.obj" />
-        <SparseGrid name="grid" n="4 7 6" position="@loader.position" drawHexahedra="0" />
+        <SparseGridTopology name="grid" n="4 7 6" position="@loader.position" drawHexahedra="0" />
         <MechanicalObject name="dofs" scale3d="1 1 1" />
         <UniformMass totalMass="1.0" />
         <HexahedronFEMForceField name="FEM" youngModulus="40.0" poissonRatio="0.1" method="large" printLog="0" />
@@ -67,14 +67,14 @@
         
         <Node name="lung_right_collision">
             <MeshObjLoader name="loader" filename="./mesh/organs_lung_right_collision.obj"/>
-            <Mesh src="@loader" />
+            <MeshTopology src="@loader" />
             <MechanicalObject src="@loader" name="CollisModel" />
 
-            <Sphere radius="0.5"  selfCollision="0"/>
+            <SphereCollisionModel radius="0.5"  selfCollision="0"/>
             <!--
-            <Point  selfCollision="0" />
-            <Triangle  selfCollision="0" />
-            <Line  selfCollision="0" />
+            <PointCollisionModel  selfCollision="0" />
+            <TriangleCollisionModel  selfCollision="0" />
+            <LineCollisionModel  selfCollision="0" />
             -->
 
             <BarycentricMapping input="@.." output="@." />
@@ -86,7 +86,7 @@
     <Node name="heart">
 
         <MeshObjLoader name="loader" filename="./mesh/organs_heart.obj" />
-        <SparseGrid name="grid" n="5 5 5" position="@loader.position" drawHexahedra="0" />
+        <SparseGridTopology name="grid" n="5 5 5" position="@loader.position" drawHexahedra="0" />
         <MechanicalObject name="dofs" scale3d="1 1 1" />
         <UniformMass totalMass="1.0" />
         <HexahedronFEMForceField name="FEM" youngModulus="40.0" poissonRatio="0.1" method="large" printLog="0" />
@@ -102,14 +102,14 @@
 
         <Node name="heart_collision">
             <MeshObjLoader name="loader" filename="./mesh/organs_heart_collision.obj"/>
-            <Mesh src="@loader" />
+            <MeshTopology src="@loader" />
             <MechanicalObject src="@loader" name="CollisModel" />
             
-            <Sphere radius="0.5"  selfCollision="0"/>
+            <SphereCollisionModel radius="0.5"  selfCollision="0"/>
             <!--
-            <Point  selfCollision="0" />
-            <Triangle  selfCollision="0" />
-            <Line  selfCollision="0" />
+            <PointCollisionModel  selfCollision="0" />
+            <TriangleCollisionModel  selfCollision="0" />
+            <LineCollisionModel  selfCollision="0" />
             -->
             
             <BarycentricMapping input="@.." output="@." />
@@ -120,7 +120,7 @@
     <Node name="diaphragm">
 
         <MeshObjLoader name="loader" filename="./mesh/organs_diaphragm.obj" />
-        <SparseGrid name="grid" n="6 6 4" position="@loader.position" drawHexahedra="0" />
+        <SparseGridTopology name="grid" n="6 6 4" position="@loader.position" drawHexahedra="0" />
         <MechanicalObject name="dofs" scale3d="1 1 1" />
         <UniformMass totalMass="1.0" />
         <HexahedronFEMForceField name="FEM" youngModulus="50.0" poissonRatio="0.1" method="large" printLog="0" />
@@ -136,12 +136,12 @@
         
         <Node name="diaphragm_collision">
             <MeshObjLoader name="loader" filename="./mesh/organs_diaphragm_collision.obj"/>
-            <Mesh src="@loader" />
+            <MeshTopology src="@loader" />
             <MechanicalObject src="@loader" name="CollisModel" />
 
-            <Point  selfCollision="0" group="2"/>
-            <Triangle  selfCollision="0" group="2"/>
-            <Line  selfCollision="0" group="2"/>
+            <PointCollisionModel  selfCollision="0" group="2"/>
+            <TriangleCollisionModel  selfCollision="0" group="2"/>
+            <LineCollisionModel  selfCollision="0" group="2"/>
 
             <BarycentricMapping input="@.." output="@." />
         </Node>
@@ -151,7 +151,7 @@
     <Node name="intestine">
 
         <MeshObjLoader name="loader" filename="./mesh/organs_intestine.obj" />
-        <SparseGrid name="grid" n="4 4 4" position="@loader.position" drawHexahedra="0" />
+        <SparseGridTopology name="grid" n="4 4 4" position="@loader.position" drawHexahedra="0" />
         <MechanicalObject name="dofs" scale3d="1 1 1" />
         <UniformMass totalMass="1.0" />
         <HexahedronFEMForceField name="FEM" youngModulus="50.0" poissonRatio="0.1" method="large" printLog="0" />
@@ -167,14 +167,14 @@
         
         <Node name="intestine_collision">
             <MeshObjLoader name="loader" filename="./mesh/organs_intestine_collision.obj"/>
-            <Mesh src="@loader" />
+            <MeshTopology src="@loader" />
             <MechanicalObject src="@loader" name="CollisModel" />
 
-            <Sphere radius="0.5"  selfCollision="0" group="1"/>
+            <SphereCollisionModel radius="0.5"  selfCollision="0" group="1"/>
             <!--
-            <Point  selfCollision="0" />
-            <Triangle  selfCollision="0" />
-            <Line  selfCollision="0" />
+            <PointCollisionModel  selfCollision="0" />
+            <TriangleCollisionModel  selfCollision="0" />
+            <LineCollisionModel  selfCollision="0" />
             -->
 
             <BarycentricMapping input="@.." output="@." />
@@ -186,7 +186,7 @@
     <Node name="stomach">
 
         <MeshObjLoader name="loader" filename="./mesh/organs_stomach.obj" />
-        <SparseGrid name="grid" n="4 4 4" position="@loader.position" drawHexahedra="0" />
+        <SparseGridTopology name="grid" n="4 4 4" position="@loader.position" drawHexahedra="0" />
         <MechanicalObject name="dofs" scale3d="1 1 1" />
         <UniformMass totalMass="1.0" />
         <HexahedronFEMForceField name="FEM" youngModulus="1000.0" poissonRatio="0.1" method="large" printLog="0" />
@@ -205,12 +205,12 @@
         
         <Node name="stomach_collision">
             <MeshObjLoader name="loader" filename="./mesh/organs_stomach_collision.obj"/>
-            <Mesh src="@loader" />
+            <MeshTopology src="@loader" />
             <MechanicalObject src="@loader" name="CollisModel" />
 
-            <Point  selfCollision="0" group="3"/>
-            <Triangle  selfCollision="0" group="3"/>
-            <Line  selfCollision="0" group="3"/>
+            <PointCollisionModel  selfCollision="0" group="3"/>
+            <TriangleCollisionModel  selfCollision="0" group="3"/>
+            <LineCollisionModel  selfCollision="0" group="3"/>
 
             <BarycentricMapping input="@.." output="@." />
         </Node>
@@ -221,7 +221,7 @@
     <Node name="pancreas">
 
         <MeshObjLoader name="loader" filename="./mesh/organs_pancreas.obj" />
-        <SparseGrid name="grid" n="4 3 3" position="@loader.position" drawHexahedra="0" />
+        <SparseGridTopology name="grid" n="4 3 3" position="@loader.position" drawHexahedra="0" />
         <MechanicalObject name="dofs" scale3d="1 1 1" />
         <UniformMass totalMass="1.0" />
         <HexahedronFEMForceField name="FEM" youngModulus="100.0" poissonRatio="0.1" method="large" printLog="0" />
@@ -237,12 +237,12 @@
         
         <Node name="pancreas_collision">
             <MeshObjLoader name="loader" filename="./mesh/organs_pancreas_collision.obj"/>
-            <Mesh src="@loader" />
+            <MeshTopology src="@loader" />
             <MechanicalObject src="@loader" name="CollisModel" />
                         
-            <Point  selfCollision="0" group="2"/>
-            <Triangle  selfCollision="0" group="2"/>
-            <Line  selfCollision="0" group="2"/>
+            <PointCollisionModel  selfCollision="0" group="2"/>
+            <TriangleCollisionModel  selfCollision="0" group="2"/>
+            <LineCollisionModel  selfCollision="0" group="2"/>
 
             <BarycentricMapping input="@.." output="@." />
         </Node>
@@ -253,7 +253,7 @@
     <Node name="spleen">
 
         <MeshObjLoader name="loader" filename="./mesh/organs_spleen_collision.obj" />
-        <SparseGrid name="grid" n="3 4 3" position="@loader.position" drawHexahedra="0" />
+        <SparseGridTopology name="grid" n="3 4 3" position="@loader.position" drawHexahedra="0" />
         <MechanicalObject name="dofs" scale3d="1 1 1" />
         <UniformMass totalMass="1.0" />
         <HexahedronFEMForceField name="FEM" youngModulus="100.0" poissonRatio="0.1" method="large" printLog="0" />
@@ -269,12 +269,12 @@
         
         <Node name="spleen_collision">
             <MeshObjLoader name="loader" filename="./mesh/organs_spleen_collision.obj"/>
-            <Mesh src="@loader" />
+            <MeshTopology src="@loader" />
             <MechanicalObject src="@loader" name="CollisModel" />
                         
-            <Point  selfCollision="0" />
-            <Triangle  selfCollision="0" />
-            <Line  selfCollision="0" />
+            <PointCollisionModel  selfCollision="0" />
+            <TriangleCollisionModel  selfCollision="0" />
+            <LineCollisionModel  selfCollision="0" />
 
             <BarycentricMapping input="@.." output="@." />
         </Node>
@@ -285,7 +285,7 @@
     <Node name="gallbladder">
 
         <MeshObjLoader name="loader" filename="./mesh/organs_gallbladder.obj" />
-        <SparseGrid name="grid" n="4 5 3" position="@loader.position" drawHexahedra="0" />
+        <SparseGridTopology name="grid" n="4 5 3" position="@loader.position" drawHexahedra="0" />
         <MechanicalObject name="dofs" scale3d="1 1 1" />
         <UniformMass totalMass="1.0" />
         <HexahedronFEMForceField name="FEM" youngModulus="50.0" poissonRatio="0.1" method="large" printLog="0" />
@@ -301,12 +301,12 @@
         
         <Node name="gallbladder_collision">
             <MeshObjLoader name="loader" filename="./mesh/organs_gallbladder_collision.obj"/>
-            <Mesh src="@loader" />
+            <MeshTopology src="@loader" />
             <MechanicalObject src="@loader" name="CollisModel" />
                         
-            <Point  selfCollision="0" group="3"/>
-            <Triangle  selfCollision="0" group="3"/>
-            <Line  selfCollision="0" group="3"/>
+            <PointCollisionModel  selfCollision="0" group="3"/>
+            <TriangleCollisionModel  selfCollision="0" group="3"/>
+            <LineCollisionModel  selfCollision="0" group="3"/>
 
             <BarycentricMapping input="@.." output="@." />
         </Node>
@@ -318,7 +318,7 @@
     <Node name="liver">
 
         <MeshObjLoader name="loader" filename="./mesh/organs_liver.obj" />
-        <SparseGrid name="grid" n="6 4 4" position="@loader.position" drawHexahedra="0" />
+        <SparseGridTopology name="grid" n="6 4 4" position="@loader.position" drawHexahedra="0" />
         <MechanicalObject name="dofs" scale3d="1 1 1" />
         <UniformMass totalMass="1.0" />
         <HexahedronFEMForceField name="FEM" youngModulus="1000.0" poissonRatio="0.1" method="large" printLog="0" />
@@ -334,12 +334,12 @@
         
         <Node name="liver_collision">
             <MeshObjLoader name="loader" filename="./mesh/organs_liver_collision.obj"/>
-            <Mesh src="@loader" />
+            <MeshTopology src="@loader" />
             <MechanicalObject src="@loader" name="CollisModel" />
 
-            <Point  selfCollision="0" />
-            <Triangle  selfCollision="0"/>
-            <Line  selfCollision="0" />
+            <PointCollisionModel  selfCollision="0" />
+            <TriangleCollisionModel  selfCollision="0"/>
+            <LineCollisionModel  selfCollision="0" />
 
 
             <BarycentricMapping input="@.." output="@." />
@@ -351,7 +351,7 @@
     <Node name="kidney_left">
 
         <MeshObjLoader name="loader" filename="./mesh/organs_kidney_left.obj" />
-        <SparseGrid name="grid" n="4 4 3" position="@loader.position" drawHexahedra="0" />
+        <SparseGridTopology name="grid" n="4 4 3" position="@loader.position" drawHexahedra="0" />
         <MechanicalObject name="dofs" scale3d="1 1 1" />
         <UniformMass totalMass="1.0" />
         <HexahedronFEMForceField name="FEM" youngModulus="100.0" poissonRatio="0.1" method="large" printLog="0" />
@@ -367,14 +367,14 @@
         
         <Node name="kidney_left_collision">
             <MeshObjLoader name="loader" filename="./mesh/organs_kidney_left_collision.obj"/>
-            <Mesh src="@loader" />
+            <MeshTopology src="@loader" />
             <MechanicalObject src="@loader" name="CollisModel" />
 
-            <Sphere radius="0.5"  selfCollision="0" group="3"/>
+            <SphereCollisionModel radius="0.5"  selfCollision="0" group="3"/>
             <!--
-            <Point  selfCollision="0" />
-            <Triangle  selfCollision="0" />
-            <Line  selfCollision="0" />
+            <PointCollisionModel  selfCollision="0" />
+            <TriangleCollisionModel  selfCollision="0" />
+            <LineCollisionModel  selfCollision="0" />
             -->
 
             <BarycentricMapping input="@.." output="@." />
@@ -386,7 +386,7 @@
     <Node name="kidney_right">
 
         <MeshObjLoader name="loader" filename="./mesh/organs_kidney_right.obj" />
-        <SparseGrid name="grid" n="4 4 3" position="@loader.position" drawHexahedra="0" />
+        <SparseGridTopology name="grid" n="4 4 3" position="@loader.position" drawHexahedra="0" />
         <MechanicalObject name="dofs" scale3d="1 1 1" />
         <UniformMass totalMass="1.0" />
         <HexahedronFEMForceField name="FEM" youngModulus="100.0" poissonRatio="0.1" method="large" printLog="0" />
@@ -402,14 +402,14 @@
         
         <Node name="kidney_right_collision">
             <MeshObjLoader name="loader" filename="./mesh/organs_kidney_right_collision.obj"/>
-            <Mesh src="@loader" />
+            <MeshTopology src="@loader" />
             <MechanicalObject src="@loader" name="CollisModel" />
 
-            <Sphere radius="0.5"  selfCollision="0" group="3"/>
+            <SphereCollisionModel radius="0.5"  selfCollision="0" group="3"/>
             <!--
-            <Point  selfCollision="0" />
-            <Triangle  selfCollision="0" />
-            <Line  selfCollision="0" />
+            <PointCollisionModel  selfCollision="0" />
+            <TriangleCollisionModel  selfCollision="0" />
+            <LineCollisionModel  selfCollision="0" />
             -->
 
             <BarycentricMapping input="@.." output="@." />
