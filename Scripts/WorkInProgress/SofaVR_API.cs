@@ -95,6 +95,8 @@ public class SofaVR_API : MonoBehaviour
         bool buttonTT = m_rightHandCtrl.isButtonTwoPressed();
         showToolTip(buttonTT);
 
+        showWireframe(m_leftHandCtrl.isButtonTwoPressed());
+
         // check if controller view
         bool gripR = m_rightHandCtrl.isGripPressed();
         bool trigR = m_rightHandCtrl.isTriggerPressed();
@@ -372,7 +374,7 @@ public class SofaVR_API : MonoBehaviour
 
     protected void showToolTip(bool value, bool force = false)
     {
-        Debug.Log("showToolTip: " + value + " | m_showToolTip: " + m_showToolTip);
+        //Debug.Log("showToolTip: " + value + " | m_showToolTip: " + m_showToolTip);
         if (force)
         {
             if (m_rightTooltip != null)
@@ -406,5 +408,50 @@ public class SofaVR_API : MonoBehaviour
             m_leftTooltip.SetActive(value);
 
         m_showToolTip = value;
+    }
+
+    protected bool firstWireClick = false;
+    protected void showWireframe(bool value)
+    {
+        if (m_sofaContext == null)
+            return;
+
+        if (value == false) // not click
+        {
+            firstWireClick = true;
+            return;
+        }
+
+        if (!firstWireClick)
+            return;
+
+        // only one object would be better...
+        foreach (Transform child in m_sofaContext.transform)
+        {
+            showWireFrameChilds(child, value);
+            SVisualMesh obj = child.GetComponent<SVisualMesh>();
+            if (obj != null)
+            {
+                if (obj.m_isSelected)
+                    obj.ShowWireframe(!obj.m_isWireframe);
+            }
+        }
+
+        firstWireClick = false;
+    }
+
+    protected void showWireFrameChilds(Transform parent, bool value)
+    {
+        foreach (Transform child in parent)
+        {
+            showWireFrameChilds(child, value);
+
+            SVisualMesh obj = child.GetComponent<SVisualMesh>();
+            if (obj != null)
+            {
+                if (obj.m_isSelected)
+                    obj.ShowWireframe(!obj.m_isWireframe);
+            }
+        }
     }
 }

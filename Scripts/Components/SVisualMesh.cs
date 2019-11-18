@@ -53,7 +53,38 @@ namespace SofaUnity
             }
         }
 
+        Material m_currentMaterial = null;
+        public bool m_isWireframe = false;
+        public void ShowWireframe(bool value)
+        {
+            Debug.Log("ShowWireframe: " + value);
+            if (value)
+            {
+                Material wireMaterial = (Material)Resources.Load("Wireframe", typeof(Material));
+                MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();
+                if (mr != null)
+                {
+                    if (m_currentMaterial == null)
+                        m_currentMaterial = mr.sharedMaterial;
+                    mr.sharedMaterial = wireMaterial;
+                    m_isWireframe = true;
+                }
+            }
+            else
+            {
+                MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();
+                if (mr != null)
+                {
+                    if (m_currentMaterial != null)
+                        mr.sharedMaterial = m_currentMaterial;
+                    else
+                        mr.sharedMaterial = new Material(Shader.Find("Diffuse"));
+                    m_isWireframe = false;
+                }
+            }
+        }
 
+        public bool m_isSelected = false;
 
 
         ////////////////////////////////////////////
