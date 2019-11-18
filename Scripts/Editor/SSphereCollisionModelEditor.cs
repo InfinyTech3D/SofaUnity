@@ -14,6 +14,7 @@ public class SSphereCollisionModelEditor : Editor
         model.radius = EditorGUILayout.Slider("Sphere radius", model.radius, 0.001f, 10);
         model.activated = EditorGUILayout.Toggle("Activate collision", model.activated);
         model.stiffness = EditorGUILayout.Slider("Contact stiffness", model.stiffness, 1, 5000);
+        model.m_startOnPlay = EditorGUILayout.Toggle("Start on Play", model.m_startOnPlay);
 
         EditorGUILayout.LabelField("Number of spheres", model.nbrSpheres.ToString());
     }

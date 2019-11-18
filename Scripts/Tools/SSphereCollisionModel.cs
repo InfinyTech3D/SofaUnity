@@ -47,9 +47,9 @@ public class SSphereCollisionModel : MonoBehaviour
 
     /// array of vertex corresponding to the sphere centers
     protected Vector3[] m_centers = null;
-    
 
-
+    [SerializeField]
+    public bool m_startOnPlay = true;
 
     ////////////////////////////////////////////
     /////       Object creation API        /////
@@ -60,6 +60,9 @@ public class SSphereCollisionModel : MonoBehaviour
     {
         if (m_log)
             Debug.Log("UNITY_EDITOR - SSphereCollisionModel::Awake - " + this.name);
+
+        if (!m_startOnPlay)
+            return;
 
         // First load the Sofa context and create the object.
         loadContext();
@@ -154,6 +157,36 @@ public class SSphereCollisionModel : MonoBehaviour
     }
 
 
+    public void setSofaContext(SofaUnity.SofaContext _context)
+    {
+        m_sofaContext = _context;
+        if (m_sofaContext == null)
+            return;
+
+        // Really Create the gameObject linked to sofaObject
+        createObject();
+
+        // Increment counter if objectis created from loading scene process
+        m_sofaContext.countCreated();
+
+        // Increment the context object counter for names.
+        m_sofaContext.objectcpt = m_sofaContext.objectcpt + 1;
+
+        // Call a post process method for additional codes.
+        awakePostProcess();
+
+        if (m_impl != null)
+        {
+            m_impl.setFloatValue("contactStiffness", m_stiffness);
+            m_impl.setFloatValue("radius", m_radius * m_sofaContext.getFactorUnityToSofa(1));
+        }
+    }
+
+
+    public void unloadSofaContext()
+    {
+        m_sofaContext = null;
+    }
 
 
     ////////////////////////////////////////////
