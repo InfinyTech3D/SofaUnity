@@ -17,6 +17,9 @@ public class SofaVR_API : MonoBehaviour
     public GameObject m_rightTooltip = null;
     public GameObject m_leftTooltip = null;
 
+    public SSphereCollisionModel m_rightCollisionModel = null;
+    public SSphereCollisionModel m_leftCollisionModel = null;
+
     protected HandlerController m_rightHandCtrl = null;
     protected HandlerController m_leftHandCtrl = null;
     protected SLaserRay m_rightRayCaster = null;
@@ -148,10 +151,20 @@ public class SofaVR_API : MonoBehaviour
             Debug.Log("handleRightController Off");
             if (m_rightCtrlActivated) // was activated and now view mode
             {
+                m_rightCollisionModel.activated = false;
                 m_rightRayCaster.activeTool(false);
                 m_rightCtrlActivated = false;
             }
             return;
+        }
+
+
+        if (m_rightCollisionModel)
+        {
+            if (gripR)
+                m_rightCollisionModel.activated = true;
+            else
+                m_rightCollisionModel.activated = false;
         }
 
         if (m_rightRayCaster.m_laserType == SofaDefines.SRayInteraction.AttachTool) // need trigger
@@ -169,7 +182,7 @@ public class SofaVR_API : MonoBehaviour
         }
         else if (m_rightRayCaster.m_laserType == SofaDefines.SRayInteraction.CuttingTool) // need grip
         {
-            if (gripR)
+            if (trigR)
             {
                 m_rightRayCaster.activeTool(true);
                 m_rightCtrlActivated = true;
@@ -192,11 +205,21 @@ public class SofaVR_API : MonoBehaviour
         {
             if (m_leftCtrlActivated) // was activated and now view mode
             {
+                m_leftCollisionModel.activated = false;
                 m_leftRayCaster.activeTool(false);
                 m_leftCtrlActivated = false;
             }
             return;
         }
+
+        if (m_leftCollisionModel)
+        {
+            if (gripL)
+                m_leftCollisionModel.activated = true;
+            else
+                m_leftCollisionModel.activated = false;
+        }
+
 
         if (m_leftRayCaster.m_laserType == SofaDefines.SRayInteraction.AttachTool) // need trigger
         {
@@ -213,7 +236,7 @@ public class SofaVR_API : MonoBehaviour
         }
         else if (m_leftRayCaster.m_laserType == SofaDefines.SRayInteraction.CuttingTool) // need grip
         {
-            if (gripL)
+            if (trigL)
             {
                 m_leftRayCaster.activeTool(true);
                 m_leftCtrlActivated = true;
@@ -342,6 +365,13 @@ public class SofaVR_API : MonoBehaviour
             m_viewCtrl.setSofaContext(_contextObject);
         }
 
+        // set sofaContext to collision model
+        if (m_rightCollisionModel != null)
+            m_rightCollisionModel.setSofaContext(m_sofaContext);
+
+        if (m_leftCollisionModel != null)
+            m_leftCollisionModel.setSofaContext(m_sofaContext);
+
         // update actions here.
         ScenesManager.SceneMenuInfo sceneInfo = m_scenes.getSceneInfo(m_currentSceneId);        
         if (m_leftRayCaster != null)
@@ -365,6 +395,7 @@ public class SofaVR_API : MonoBehaviour
         // update tooltip
         showToolTip(true, true);
         m_showFirstToolTip = true;
+
     }
 
     protected void updateToolTip()
