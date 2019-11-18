@@ -51,6 +51,8 @@ namespace SofaUnity
             {
                     mr.sharedMaterial = new Material(Shader.Find("Diffuse"));
             }
+
+            gameObject.AddComponent<MeshCollider>();
         }
 
         Material m_currentMaterial = null;
@@ -85,13 +87,24 @@ namespace SofaUnity
         }
 
         public bool m_isSelected = false;
+        private void OnTriggerEnter(Collider other)
+        {
+           // if (enter)
+            {
+                m_isSelected = true;
+            }
+        }
 
+        private void OnTriggerExit(Collider other)
+        {
+            m_isSelected = false;
+        }
 
         ////////////////////////////////////////////
         /////       Object behavior API        /////
         ////////////////////////////////////////////
-        
-        /// Method called by \sa Start() method to init the current object and impl. @param toUpdate indicate if updateMesh has to be called.
+
+            /// Method called by \sa Start() method to init the current object and impl. @param toUpdate indicate if updateMesh has to be called.
         protected override void initMesh(bool toUpdate)
         {
             if (m_impl == null)
