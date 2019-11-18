@@ -80,8 +80,8 @@ public class ScenesManager : MonoBehaviour
             if (name.Contains("organs"))
             {
                 sceneInfo = name + " multi threaded manipulation";
-                _rightToolType = SofaDefines.SRayInteraction.AttachTool;
-                _leftToolType = SofaDefines.SRayInteraction.AttachTool;
+                //_rightToolType = SofaDefines.SRayInteraction.AttachTool;
+                //_leftToolType = SofaDefines.SRayInteraction.AttachTool;
             }
             else if (name.Contains("xray"))
             {
@@ -90,8 +90,8 @@ public class ScenesManager : MonoBehaviour
             else if (name.Contains("caduceus"))
             {
                 sceneInfo = name + " demo";
-                _rightToolType = SofaDefines.SRayInteraction.AttachTool;
-                _leftToolType = SofaDefines.SRayInteraction.None;
+                //_rightToolType = SofaDefines.SRayInteraction.AttachTool;
+                //_leftToolType = SofaDefines.SRayInteraction.None;
             }
             else if (name.Contains("liver"))
             {

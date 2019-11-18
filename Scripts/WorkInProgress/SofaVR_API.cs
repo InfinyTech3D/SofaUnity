@@ -300,6 +300,9 @@ public class SofaVR_API : MonoBehaviour
             m_sofaContext = null;
         }
 
+        if (sceneName.Contains("xray"))
+            return;
+
         // Set loading info
         m_loading = true;    
         
