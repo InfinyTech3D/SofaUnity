@@ -857,11 +857,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11415184, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: triggerText
-      value: Trigger Button
+      value: Action Trigger Button
       objectReference: {fileID: 0}
     - target: {fileID: 11415184, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: gripText
-      value: Grip Button
+      value: 'Grip Button: hand collision'
       objectReference: {fileID: 0}
     - target: {fileID: 11415184, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: touchpadText
@@ -1030,13 +1030,17 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.0152
       objectReference: {fileID: 0}
+    - target: {fileID: 4000012396937550, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.0514
+      objectReference: {fileID: 0}
     - target: {fileID: 11415184, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: triggerText
-      value: Trigger Button
+      value: Action Trigger Button
       objectReference: {fileID: 0}
     - target: {fileID: 11415184, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: gripText
-      value: Grip Button
+      value: 'Grip Button: hand collision'
       objectReference: {fileID: 0}
     - target: {fileID: 11415184, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: touchpadText
@@ -1048,7 +1052,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11415184, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: buttonOneText
-      value: 
+      value: 'Button Y + Trigger: Hide/Show mesh'
       objectReference: {fileID: 0}
     - target: {fileID: 11415184, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: buttonTwoText
@@ -1065,30 +1069,6 @@ PrefabInstance:
     - target: {fileID: 178472, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1000012862124634, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000011018885128, guid: 910be6460ba00dc4bb13725c3ff972cb,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 62.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000011018885128, guid: 910be6460ba00dc4bb13725c3ff972cb,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 16.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000014259110642, guid: 910be6460ba00dc4bb13725c3ff972cb,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 62.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000014259110642, guid: 910be6460ba00dc4bb13725c3ff972cb,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 16.5
       objectReference: {fileID: 0}
     - target: {fileID: 22454212, guid: 910be6460ba00dc4bb13725c3ff972cb, type: 3}
       propertyPath: m_SizeDelta.x
