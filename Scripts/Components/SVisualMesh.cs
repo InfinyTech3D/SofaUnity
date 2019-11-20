@@ -52,7 +52,9 @@ namespace SofaUnity
                     mr.sharedMaterial = new Material(Shader.Find("Diffuse"));
             }
 
-            gameObject.AddComponent<MeshCollider>();
+            MeshCollider collid = gameObject.GetComponent<MeshCollider>();
+            if (collid == null)
+                gameObject.AddComponent<MeshCollider>();
         }
 
         Material m_currentMaterial = null;
