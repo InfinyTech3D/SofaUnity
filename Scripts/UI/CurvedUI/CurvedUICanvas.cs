@@ -40,7 +40,7 @@ public class CurvedUICanvas : GraphicRaycaster
         }
     }
     protected override void OnDestroy()
-    {        
+    {
         if (Event.current != null && (Event.current.commandName == "SoftDelete" || Event.current.commandName == "Delete"))
         {
             //destroy rendertexture,  camera
@@ -48,6 +48,5 @@ public class CurvedUICanvas : GraphicRaycaster
             DestroyImmediate(eventCamera);
         }
         base.OnDestroy();
-
     }
 }

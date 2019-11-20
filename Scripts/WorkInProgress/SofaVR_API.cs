@@ -91,12 +91,15 @@ public class SofaVR_API : MonoBehaviour
             }
         }
 
-        if (!m_VRControlMode || m_sofaContext == null)
+        if (!m_VRControlMode)
             return;
 
         // show tooltip
         bool buttonTT = m_rightHandCtrl.isButtonTwoPressed();
         showToolTip(buttonTT);
+
+        if (m_sofaContext == null)
+            return;
 
         showWireframe(m_leftHandCtrl.isButtonTwoPressed());
 
@@ -300,7 +303,7 @@ public class SofaVR_API : MonoBehaviour
             m_sofaContext = null;
         }
 
-        if (sceneName.Contains("xray"))
+        if (sceneName.Contains("xray") || sceneName.Contains("cadu"))
             return;
 
         // Set loading info
