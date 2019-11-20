@@ -10,7 +10,7 @@
     <Node name="tissue_node">
         <EulerImplicitSolver name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.1" />
         <CGLinearSolver iterations="25" name="linear solver" tolerance="1.0e-9" threshold="1.0e-9" />
-        <MeshObjLoader name="meshLoader" filename="mesh/TShirt_collision.obj" handleSeams="1" />
+        <MeshObjLoader name="meshLoader" filename="mesh/TShirt_collision.obj" handleSeams="1" rotation="0 180 0"/>
 		
         <TriangleSetTopologyContainer name="Container"  position="@meshLoader.position"  edges="@meshLoader.edges"  triangles="@meshLoader.triangles" />
 		<TriangleSetTopologyModifier name="Modifier" />
@@ -24,15 +24,15 @@
 		<TriangleCollisionModel template="Vec3d" name="tTriangleModel1" />
 		<!--<FFDDistanceGrid fileFFDDistanceGrid="mesh/dummy_collision.obj" scale="1.0" usePoints="0" proximity="0.1" contactStiffness="500.0" contactFriction="0.0" />-->
 		<Node name="Visu">
-            <MeshObjLoader name="loader" filename="./mesh/TShirt_visu.obj" handleSeams="1"/>
-            <OglModel name="Visual" color="red" />
+            <MeshObjLoader name="loader" filename="./mesh/TShirt_visu.obj" handleSeams="1" rotation="0 180 0"/>
+            <OglModel name="Visual" color="red" src="@loader"/>
             <BarycentricMapping input="@.." output="@Visual" />
         </Node>
     </Node>
     
     <Node name="body_visu" tags="Visual" >
-		<MeshObjLoader name="loader" filename="./mesh/dummy_visu.obj" scale3d="0.99 0.99 0.99" handleSeams="1"/>
+		<MeshObjLoader name="loader" filename="./mesh/dummy_visu.obj" scale3d="0.95 0.95 0.95" handleSeams="1" rotation="0 180 0"/>
         <OglModel  name="OglModel" src="@loader" texturename=""/>
-        <DistanceGrid fileRigidDistanceGrid="mesh/dummy_collision.obj" scale="1.0" usePoints="0" proximity="0.1" contactStiffness="5.0" contactFriction="0.0" />
+        <DistanceGrid fileRigidDistanceGrid="mesh/dummy_collision.obj" scale="1.0" usePoints="0" proximity="0.1" contactStiffness="5.0" contactFriction="0.0" rotation="0 180 0"/>
     </Node>
 </Node>
