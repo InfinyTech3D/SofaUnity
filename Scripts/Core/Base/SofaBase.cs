@@ -44,6 +44,15 @@ namespace SofaUnity
 
         /// Pointer to the Sofa context this GameObject belongs to.
         public SofaContext m_sofaContext = null;
+        public void SetSofaContext(SofaContext sofacontext)
+        {
+            m_sofaContext = sofacontext;
+            if (m_sofaContext == null)
+            {
+                SofaLog("SBaseObject::loadContext - GetComponent<SofaContext> failed.", 2);
+                return;
+            }
+        }
 
         /// Parameter to activate logging of this Sofa GameObject
         public bool m_log = true;
@@ -97,11 +106,20 @@ namespace SofaUnity
         void Awake()
         {
             SofaLog("Awake - " + m_uniqueNameId);
+
         }
+
+        public virtual void Init()
+        {
+
+        }
+        
 
         void Start()
         {
             SofaLog("Start - " + m_uniqueNameId);
+
+            Init();
         }
 
         // Update is called once per frame

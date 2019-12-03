@@ -10,21 +10,9 @@ namespace SofaUnity
         /// Pointer to the Sofa Context API.
         SofaDAGNodeAPI m_impl = null;
 
-        public void init(SofaContext sofacontext)
-        {
-            Debug.Log("#### SofaDAGNode::init: " + UniqueNameId);
-            m_sofaContext = sofacontext;
-
-            loadSofaObject();
-        }
-
         void Awake()
         {
             Debug.Log("#### SofaDAGNode: " + UniqueNameId);
-            if (m_impl == null)
-            {
-                loadSofaObject();
-            }
 
             if (m_impl == null)
                 Debug.Log("###### HAS impl");
@@ -32,7 +20,14 @@ namespace SofaUnity
                 Debug.Log("###### NO impl");
         }
 
-        void loadSofaObject()
+        override public void Init() 
+        {
+            if (m_impl == null)
+                CreateSofaAPI();
+        }
+
+
+        void CreateSofaAPI()
         {
             if (m_impl != null)
             {

@@ -54,7 +54,9 @@ namespace SofaUnity
                     GameObject nodeGO = new GameObject("SofaNode - " + NodeName);
                     SofaDAGNode dagNode = nodeGO.AddComponent<SofaDAGNode>();
                     dagNode.UniqueNameId = NodeName;
-                    dagNode.init(m_sofaContext);
+                    dagNode.SetSofaContext(m_sofaContext);
+
+                    // need init?
 
                     m_dagNodes.Add(dagNode);
                     nodeGO.transform.parent = m_sofaContext.gameObject.transform;
