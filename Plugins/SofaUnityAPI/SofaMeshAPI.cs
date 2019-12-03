@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 /// <summary>
 /// Class used to handle bindings to the Sofa generic Mesh object.
 /// </summary>
-public class SofaMesh : SofaBaseMesh
+public class SofaMeshAPI : SofaBaseMesh
 {
     /// <summary>
     /// Default constructor
@@ -13,14 +13,14 @@ public class SofaMesh : SofaBaseMesh
     /// <param name="simu">Pointer to the SofaPhysicsAPI</param>
     /// <param name="nameID">Name of this Object</param>
     /// <param name="isRigid">Type rigid or deformable</param>
-    public SofaMesh(IntPtr simu, string nameID, bool isRigid)
+    public SofaMeshAPI(IntPtr simu, string nameID, bool isRigid)
         : base(simu, nameID, isRigid)
     {
 
     }
 
     /// Destructor
-    ~SofaMesh()
+    ~SofaMeshAPI()
     {
         Dispose(false);
     }

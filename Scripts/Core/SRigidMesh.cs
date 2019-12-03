@@ -26,7 +26,7 @@ namespace SofaUnity
             if (_simu != IntPtr.Zero)
             {
                 // Create the API object for SofaMesh
-                m_impl = new SofaMesh(_simu, m_nameId, false);
+                m_impl = new SofaMeshAPI(_simu, m_nameId, false);
 
                 // TODO: check if this is still needed (and why not in children)
                 m_impl.loadObject();
