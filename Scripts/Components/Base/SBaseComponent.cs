@@ -2,17 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SBaseComponent : MonoBehaviour
+namespace SofaUnity
 {
-    // Start is called before the first frame update
-    void Start()
+    // TODO find a way to interactively add more type if plugin are loaded
+    public enum SBaseComponentType
     {
-        
-    }
+        SofaSolver,
+        SofaLoader,
+        SofaMesh,
+        SofaMass,
+        SofaFEMForceField,
+        SofaMechanicalMapping,
+        SofaCollisionModel,
+        SofaVisualModel
+    };
 
-    // Update is called once per frame
-    void Update()
+    
+    public class SBaseComponent : SBase
     {
-        
+        // do generic stuff for baseComponent here
+        protected SDAGNode m_ownerNode = null;
+
+        public string m_baseComponentType = "Not set";
+        public string m_componentType = "Not set";
+        public SBaseComponentType myType;
     }
 }

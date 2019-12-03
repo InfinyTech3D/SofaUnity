@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SComponentFactory : MonoBehaviour
+using SofaUnityAPI;
+
+namespace SofaUnity
 {
-    // Start is called before the first frame update
-    void Start()
+    // manage specific component class implementation
+    public class SComponentFactory
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
