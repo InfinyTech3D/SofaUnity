@@ -44,6 +44,7 @@ namespace SofaUnity
         List<SRayCaster> m_casters = null;
 
         private SObjectHierarchy m_hierarchyPtr = null;
+        private NodeGraphManager m_nodeGraphMgr = null;
 
         public bool testAsync = false;
 
@@ -100,7 +101,7 @@ namespace SofaUnity
             {
                 if (value != m_filename)
                 {
-                    if (File.Exists(Application.dataPath+value))
+                    if (File.Exists(Application.dataPath + value))
                     {
                         bool reload = false;
                         if (m_filename != "")
@@ -148,11 +149,13 @@ namespace SofaUnity
 
         public float getFactorUnityToSofa(int dir = -1)
         {
-            float factor = getFactorSofaToUnity(dir);               
+            float factor = getFactorSofaToUnity(dir);
             if (factor != 0.0f) factor = 1 / factor;
 
             return factor;
         }
+
+
 
         public bool breakerActivated = false;
         private int cptBreaker = 0;
@@ -166,13 +169,15 @@ namespace SofaUnity
         /// Getter/Setter of current objectcpt @see m_objectCpt
         public int objectcpt
         {
-            get {
+            get
+            {
                 if (m_hierarchyPtr == null)
                     initHierarchy();
 
                 return m_hierarchyPtr.m_objectCpt;
             }
-            set {
+            set
+            {
                 if (m_hierarchyPtr == null)
                     initHierarchy();
                 m_hierarchyPtr.m_objectCpt = value;
@@ -182,7 +187,8 @@ namespace SofaUnity
         /// Getter to the number of object loaded from Sofa Scene.
         public int nbrObject
         {
-            get {
+            get
+            {
                 if (m_hierarchyPtr == null)
                     initHierarchy();
                 return m_hierarchyPtr.m_nbrObject;
@@ -227,7 +233,7 @@ namespace SofaUnity
         /// Method called at GameObject destruction.
         void OnDestroy()
         {
-            if(m_log)
+            if (m_log)
                 Debug.Log("SofaContext::OnDestroy stop called.");
             if (m_impl != null)
             {
@@ -295,7 +301,7 @@ namespace SofaUnity
         }
 
         void loadPlugins()
-        {           
+        {
             string pluginPath = "";
             if (Application.isEditor)
                 pluginPath = "/SofaUnity/Plugins/Native/x64/";
@@ -305,9 +311,15 @@ namespace SofaUnity
             // Default plugin to be loaded
             m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaOpenglVisual.dll");
             m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaMiscCollision.dll");
-            m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaSparseSolver.dll");
-            m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaPreconditioner.dll");
-            m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaSphFluid.dll");
+            //m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaSparseSolver.dll");
+            //m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaPreconditioner.dll");
+
+            //m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaSphFluid.dll");
+            //m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaHaptics.dll");
+            //m_impl.loadPlugin(Application.dataPath + pluginPath + "Geomagic.dll");
+            //m_impl.loadPlugin(Application.dataPath + pluginPath + "InteractionTools.dll");
+
+            //m_impl.loadPlugin(Application.dataPath + pluginPath + "MultiCoreGPU.dll");
         }
 
         public void initHierarchy()
@@ -325,7 +337,7 @@ namespace SofaUnity
             if (this.transform.localScale.x > 0)
             {
                 Vector3 scale = this.transform.localScale;
-                scale.x *= -1;
+                //scale.x *= -1;
                 this.transform.localScale = scale;
             }
 
@@ -336,15 +348,21 @@ namespace SofaUnity
             {
                 m_impl = new SofaContextAPI(testAsync);
 
-                if (m_hierarchyPtr == null)
-                    initHierarchy();
+                if (m_nodeGraphMgr == null)
+                    m_nodeGraphMgr = new NodeGraphManager(this, m_impl);
+                else
+                {
+                    Debug.Log("## m_nodeGraphMgr already created...");
+                }
+                //if (m_hierarchyPtr == null)
+                //    initHierarchy();
 
                 catchSofaMessages();
                 loadPlugins();
 
                 if (m_log)
                     Debug.Log("## SofaContext status before start: " + m_impl.contextStatus());
-                                   
+
                 m_impl.start();
 
                 if (m_log)
@@ -380,11 +398,11 @@ namespace SofaUnity
                     m_impl.loadScene(Application.dataPath + m_filename);
 
                     // Set counter of object creation to 0
-                    m_hierarchyPtr.cptCreated = 0;
-                    m_hierarchyPtr.m_nbrObject = m_impl.getNumberObjects();
+                    //m_hierarchyPtr.cptCreated = 0;
+                    //m_hierarchyPtr.m_nbrObject = m_impl.getNumberObjects();
 
-                    if (m_log)
-                        Debug.Log("init - m_nbrObject: " + m_hierarchyPtr.m_nbrObject);
+                    //if (m_log)
+                    //    Debug.Log("init - m_nbrObject: " + m_hierarchyPtr.m_nbrObject);
 
                     //m_timeStep = m_impl.timeStep;
                     //m_gravity = m_impl.getGravity();
@@ -399,9 +417,9 @@ namespace SofaUnity
                     Debug.Log("## SofaContext status end init: " + m_impl.contextStatus());
             }
 
-            
+
         }
-        
+
         // Update is called once per fix frame
         void FixedUpdate()
         {
@@ -414,7 +432,7 @@ namespace SofaUnity
         void Update()
         {
             // only if scene is playing or if sofa is running
-            if (IsSofaUpdating == false || Application.isPlaying == false) return; 
+            if (IsSofaUpdating == false || Application.isPlaying == false) return;
 
             if (testAsync)
                 updateImplASync();
@@ -449,14 +467,14 @@ namespace SofaUnity
 
                 m_impl.step();
 
-                if (m_hierarchyPtr.m_objects != null)
-                {
-                    // Set all objects to dirty to force and update.
-                    foreach (SBaseObject child in m_hierarchyPtr.m_objects)
-                    {
-                        child.setDirty();
-                    }
-                }
+                //if (m_hierarchyPtr.m_objects != null)
+                //{
+                //    // Set all objects to dirty to force and update.
+                //    foreach (SBaseObject child in m_hierarchyPtr.m_objects)
+                //    {
+                //        child.setDirty();
+                //    }
+                //}
             }
         }
 
@@ -471,20 +489,20 @@ namespace SofaUnity
                 // if physics simulation async step is still running do not wait and return the control to Unity
                 if (m_impl.isAsyncStepCompleted())
                 {
-                   // Debug.Log("isAsyncStepCompleted: YES ");
-                    
+                    // Debug.Log("isAsyncStepCompleted: YES ");
+
                     // physics simulation step completed and is not running
                     // perform data synchronization safely (no need of synchronization locks)                        
-                    if (m_hierarchyPtr.m_objects != null)
-                    {
-                        // Set all objects to dirty to force and update.
-                        foreach (SBaseObject child in m_hierarchyPtr.m_objects)
-                        {
-                            //child.setDirty();
-                            child.updateImpl();
-                            //Debug.Log(child.name);
-                        }
-                    }
+                    //if (m_hierarchyPtr.m_objects != null)
+                    //{
+                    //    // Set all objects to dirty to force and update.
+                    //    foreach (SBaseObject child in m_hierarchyPtr.m_objects)
+                    //    {
+                    //        //child.setDirty();
+                    //        child.updateImpl();
+                    //        //Debug.Log(child.name);
+                    //    }
+                    //}
 
                     // update the ray casters
                     if (m_casters != null)
@@ -518,7 +536,7 @@ namespace SofaUnity
                 m_impl.activateMessageHandler(true);
                 isMsgHandlerActivated = true;
             }
-            else if(!CatchSofaMessages && isMsgHandlerActivated)
+            else if (!CatchSofaMessages && isMsgHandlerActivated)
             {
                 m_impl.activateMessageHandler(false);
                 isMsgHandlerActivated = false;
@@ -526,7 +544,7 @@ namespace SofaUnity
 
             if (isMsgHandlerActivated)
             {
-                 m_impl.DisplayMessages();
+                m_impl.DisplayMessages();
             }
         }
 
@@ -556,13 +574,13 @@ namespace SofaUnity
             m_impl.Dispose();
 
             // recreate hierarchy
-            m_hierarchyPtr = new SObjectHierarchy(this);
+            //m_hierarchyPtr = new SObjectHierarchy(this);
 
             // recreate sofaContext
             m_impl = new SofaContextAPI(testAsync);
             loadPlugins();
             m_impl.start();
-            
+
             // loadFilename
             loadFilename();
         }
@@ -572,67 +590,68 @@ namespace SofaUnity
         protected void loadFilename()
         {
             m_impl.loadScene(Application.dataPath + m_filename);
-            m_hierarchyPtr.m_nbrObject = m_impl.getNumberObjects();
+            //m_hierarchyPtr.m_nbrObject = m_impl.getNumberObjects();
 
-            if (m_log)
-                Debug.Log("## SofaContext ## loadFilename - getNumberObjects: " + m_hierarchyPtr.m_nbrObject);
+            //if (m_log)
+            //    Debug.Log("## SofaContext ## loadFilename - getNumberObjects: " + m_hierarchyPtr.m_nbrObject);
 
             // Add 1 fictive object to be sure this method reach the end of the object creation loop
             // before calling recreateHiearchy(); As the creation is asynchronous. call countCreated() at the end to compensate that +1.
-            m_hierarchyPtr.m_nbrObject += 1; 
-            for (int i = 0; i < m_hierarchyPtr.m_nbrObject; ++i)
-            {
-                string name = m_impl.getObjectName(i);
-                string type = m_impl.getObjectType(i);
+            //m_hierarchyPtr.m_nbrObject += 1; 
+            //for (int i = 0; i < m_hierarchyPtr.m_nbrObject; ++i)
+            //{
+            //    string name = m_impl.getObjectName(i);
+            //    string type = m_impl.getObjectType(i);
 
-                GameObject go;
-                if (type.Contains("SofaVisual"))
-                {
-                    go = new GameObject("SVisualMesh - " + name);
-                    go.AddComponent<SVisualMesh>();
-                }
-                else if (type.Contains("SofaDeformable3DObject"))
-                {
-                    go = new GameObject("SMesh - " + name);
-                    go.AddComponent<SDeformableMesh>();
-                }
-                else if (type.Contains("SofaRigid3DObject"))
-                {
-                    go = new GameObject("SMesh - " + name);
-                    go.AddComponent<SRigidMesh>();
-                }
-                else if (type.Contains("SofaComponentObject"))
-                {
-                    go = new GameObject("SComponent - " + name);
-                    go.AddComponent<SComponentObject>();
-                }
-                else if (type.Contains("SofaStatic3DObject"))
-                {
-                    go = new GameObject("SMesh - " + name);
-                    go.AddComponent<SDeformableMesh>();
-                }
-                else
-                {
-                    Debug.LogWarning("Object not added: " + name + " of type: " + type);
-                    continue;
-                }
+            //    GameObject go;
+            //    if (type.Contains("SofaVisual"))
+            //    {
+            //        go = new GameObject("SVisualMesh - " + name);
+            //        go.AddComponent<SVisualMesh>();
+            //    }
+            //    else if (type.Contains("SofaDeformable3DObject"))
+            //    {
+            //        go = new GameObject("SMesh - " + name);
+            //        go.AddComponent<SDeformableMesh>();
+            //    }
+            //    else if (type.Contains("SofaRigid3DObject"))
+            //    {
+            //        go = new GameObject("SMesh - " + name);
+            //        go.AddComponent<SRigidMesh>();
+            //    }
+            //    else if (type.Contains("SofaComponentObject"))
+            //    {
+            //        go = new GameObject("SComponent - " + name);
+            //        go.AddComponent<SComponentObject>();
+            //    }
+            //    else if (type.Contains("SofaStatic3DObject"))
+            //    {
+            //        go = new GameObject("SMesh - " + name);
+            //        go.AddComponent<SDeformableMesh>();
+            //    }
+            //    else
+            //    {
+            //        Debug.LogWarning("Object not added: " + name + " of type: " + type);
+            //        continue;
+            //    }
 
-                go.transform.parent = this.gameObject.transform;
-            }
-            
-            countCreated();
+            //    go.transform.parent = this.gameObject.transform;
+            //}
+
+            //countCreated();
+            m_nodeGraphMgr.loadGraph();
         }
 
 
         /// Count the number of object created, when all created, will move them to recreate Sofa hierarchy.
         public void countCreated()
         {
-            m_hierarchyPtr.cptCreated++;
-            
-            if (m_hierarchyPtr.cptCreated == m_hierarchyPtr.m_nbrObject)
-                m_hierarchyPtr.recreateHiearchy();
+            //    m_hierarchyPtr.cptCreated++;
+
+            //    if (m_hierarchyPtr.cptCreated == m_hierarchyPtr.m_nbrObject)
+            //        m_hierarchyPtr.recreateHiearchy();
         }
 
-        
+
     }
 }
