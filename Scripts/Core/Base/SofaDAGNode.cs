@@ -5,14 +5,14 @@ using SofaUnityAPI;
 
 namespace SofaUnity
 {
-    public class SDAGNode : SBase
+    public class SofaDAGNode : SofaBase
     {
         /// Pointer to the Sofa Context API.
-        SofaDAGNode m_impl = null;
+        SofaDAGNodeAPI m_impl = null;
 
         public void init(SofaContext sofacontext)
         {
-            Debug.Log("#### SDAGNode::init: " + UniqueNameId);
+            Debug.Log("#### SofaDAGNode::init: " + UniqueNameId);
             m_sofaContext = sofacontext;
 
             loadSofaObject();
@@ -20,7 +20,7 @@ namespace SofaUnity
 
         void Awake()
         {
-            Debug.Log("#### SDAGNode: " + UniqueNameId);
+            Debug.Log("#### SofaDAGNode: " + UniqueNameId);
             if (m_impl == null)
             {
                 loadSofaObject();
@@ -36,14 +36,14 @@ namespace SofaUnity
         {
             if (m_impl != null)
             {
-                Debug.LogError("SDAGNode " + UniqueNameId + " already has SofaDAGNode.");
+                Debug.LogError("SofaDAGNode " + UniqueNameId + " already has SofaDAGNode.");
                 return;
             }
 
-            m_impl = new SofaDAGNode(m_sofaContext.getSimuContext(), UniqueNameId);
+            m_impl = new SofaDAGNodeAPI(m_sofaContext.getSimuContext(), UniqueNameId);
 
             string componentsS = m_impl.GetDAGNodeComponents();
-            Debug.Log("#### SDAGNode: " + UniqueNameId + " -> " + componentsS);
+            Debug.Log("#### SofaDAGNode: " + UniqueNameId + " -> " + componentsS);
         }
 
     }

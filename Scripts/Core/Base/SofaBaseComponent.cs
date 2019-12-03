@@ -18,10 +18,10 @@ namespace SofaUnity
     };
 
     
-    public class SBaseComponent : SBase
+    public class SofaBaseComponent : SofaBase
     {
         // do generic stuff for baseComponent here
-        protected SDAGNode m_ownerNode = null;
+        protected SofaDAGNode m_ownerNode = null;
 
         public string m_baseComponentType = "Not set";
         public string m_componentType = "Not set";

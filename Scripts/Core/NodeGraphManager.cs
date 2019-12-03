@@ -10,8 +10,8 @@ namespace SofaUnity
 
         static int value = -1;
 
-        /// List of SDAGNode in the graph
-        public List<SDAGNode> m_dagNodes = null;
+        /// List of SofaDAGNode in the graph
+        public List<SofaDAGNode> m_dagNodes = null;
 
         /// pointer to the SofaContext root object
         private SofaContext m_sofaContext = null;
@@ -31,7 +31,7 @@ namespace SofaUnity
             }
 
             // create the list of SBaseObject
-            m_dagNodes = new List<SDAGNode>();
+            m_dagNodes = new List<SofaDAGNode>();
             value++;
 
             Debug.Log(Application.isPlaying + " value: " + value);
@@ -52,7 +52,7 @@ namespace SofaUnity
                 if (NodeName != "Error")
                 {
                     GameObject nodeGO = new GameObject("SofaNode - " + NodeName);
-                    SDAGNode dagNode = nodeGO.AddComponent<SDAGNode>();
+                    SofaDAGNode dagNode = nodeGO.AddComponent<SofaDAGNode>();
                     dagNode.UniqueNameId = NodeName;
                     dagNode.init(m_sofaContext);
 

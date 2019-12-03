@@ -2,7 +2,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-public class SofaDAGNode : IDisposable
+public class SofaDAGNodeAPI : IDisposable
 {
     /// Name of the Sofa 3D Object mapped to this Object.
     protected string m_name;
@@ -19,14 +19,14 @@ public class SofaDAGNode : IDisposable
 
     protected string m_componentListS = "";
 
-    public SofaDAGNode(IntPtr simu, string nameID)
+    public SofaDAGNodeAPI(IntPtr simu, string nameID)
     {
         m_simu = simu;
         m_name = nameID;
 
         if (m_simu == IntPtr.Zero)
         {
-            Debug.LogError("SofaDAGNode created with null SofaContextAPI pointer.");
+            Debug.LogError("SofaDAGNodeAPI created with null SofaContextAPI pointer.");
             m_isReady = false;
             return;
         }
