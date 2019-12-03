@@ -7,6 +7,9 @@ namespace SofaUnity
 {
     public class NodeGraphManager
     {
+
+        static int value = -1;
+
         /// List of SDAGNode in the graph
         public List<SDAGNode> m_dagNodes = null;
 
@@ -29,6 +32,9 @@ namespace SofaUnity
 
             // create the list of SBaseObject
             m_dagNodes = new List<SDAGNode>();
+            value++;
+
+            Debug.Log(Application.isPlaying + " value: " + value);
         }
 
 
@@ -47,13 +53,15 @@ namespace SofaUnity
                 {
                     GameObject nodeGO = new GameObject("SofaNode - " + NodeName);
                     SDAGNode dagNode = nodeGO.AddComponent<SDAGNode>();
-                    dagNode.setDAGNodeName(NodeName);
-                    dagNode.init();
+                    dagNode.UniqueNameId = NodeName;
+                    dagNode.init(m_sofaContext);
 
                     m_dagNodes.Add(dagNode);
                     nodeGO.transform.parent = m_sofaContext.gameObject.transform;
                 }
             }
+            value += nbrNode;
+            Debug.Log(Application.isPlaying + " value: " + value);
         }
 
         // Start is called before the first frame update

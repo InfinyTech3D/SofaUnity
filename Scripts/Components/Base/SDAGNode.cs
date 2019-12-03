@@ -8,39 +8,44 @@ namespace SofaUnity
     public class SDAGNode : SBase
     {
         /// Pointer to the Sofa Context API.
-        SofaDAGNode m_impl;
+        SofaDAGNode m_impl = null;
 
-        SofaContextAPI m_sofaContext;
-
-        protected string m_nodeName = "UnSet";
-
-        public void setDAGNodeName(string _name)
+        public void init(SofaContext sofacontext)
         {
-            m_nodeName = _name;
-        }
-
-        public void init(SofaContextAPI sofacontext)
-        {
-            Debug.Log("#### SDAGNode::init: " + m_nodeName);
+            Debug.Log("#### SDAGNode::init: " + UniqueNameId);
             m_sofaContext = sofacontext;
+
+            loadSofaObject();
         }
 
         void Awake()
         {
-            Debug.Log("#### SDAGNode: " + m_nodeName);
+            Debug.Log("#### SDAGNode: " + UniqueNameId);
+            if (m_impl == null)
+            {
+                loadSofaObject();
+            }
+
+            if (m_impl == null)
+                Debug.Log("###### HAS impl");
+            else
+                Debug.Log("###### NO impl");
         }
 
-        // Start is called before the first frame update
-        void Start()
+        void loadSofaObject()
         {
-        
+            if (m_impl != null)
+            {
+                Debug.LogError("SDAGNode " + UniqueNameId + " already has SofaDAGNode.");
+                return;
+            }
+
+            m_impl = new SofaDAGNode(m_sofaContext.getSimuContext(), UniqueNameId);
+
+            string componentsS = m_impl.GetDAGNodeComponents();
+            Debug.Log("#### SDAGNode: " + UniqueNameId + " -> " + componentsS);
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
     }
 
 } // namespace SofaUnity
