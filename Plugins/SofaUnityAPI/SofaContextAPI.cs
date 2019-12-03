@@ -285,6 +285,59 @@ namespace SofaUnityAPI
         }
 
 
+
+        public int logSceneGraph()
+        {
+            int res = -9999;
+            if (m_isReady)
+                res = sofaPhysicsAPI_logSceneGraph(m_native);
+
+            return res;
+        }
+
+        public int getNbrDAGNode()
+        {
+            int res = -9999;
+            if (m_isReady)
+                res = sofaPhysicsAPI_getNbrDAGNode(m_native);
+
+            return res;
+        }
+
+        public string getBaseComponentTypes()
+        {
+            if (m_isReady)
+            {
+                string type = sofaPhysicsAPI_getBaseComponentTypes(m_native);
+                return type;
+            }
+            else
+                return "Error";
+        }
+
+        public string getDAGNodeName(int DAGNodeID)
+        {
+            if (m_isReady)
+            {
+                string type = sofaPhysicsAPI_getDAGNodeName(m_native, DAGNodeID);
+                return type;
+            }
+            else
+                return "Error";
+        }
+
+
+        public string getDAGNodeComponents(string nodeName)
+        {
+            if (m_isReady)
+            {
+                string type = sofaPhysicsAPI_getComponentsAsString(m_native, nodeName);
+                return type;
+            }
+            else
+                return "Error";
+        }
+
         public void activateMessageHandler(bool status)
         {
             int res = 0;
@@ -454,6 +507,35 @@ namespace SofaUnityAPI
 
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaPhysicsAPI_clearMessages(IntPtr obj);
+
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int sofaPhysicsAPI_logSceneGraph(IntPtr obj);
+
+
+        /// new binding API
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int sofaPhysicsAPI_getNbrDAGNode(IntPtr obj);
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern string sofaPhysicsAPI_getBaseComponentTypes(IntPtr obj);
+
+
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern string sofaPhysicsAPI_getDAGNodeName(IntPtr obj, int DAGNodeID);
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern string sofaPhysicsAPI_getComponentsAsString(IntPtr obj, string nodeName);
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern string sofaPhysicsAPI_getBaseComponentType(IntPtr obj, string componentName);
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern string sofaPhysicsAPI_getComponentType(IntPtr obj, string componentName);
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern string sofaPhysicsAPI_getPossibleTypes(IntPtr obj, string componentName);
 
     }
 }
