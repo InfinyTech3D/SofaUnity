@@ -56,6 +56,7 @@ namespace SofaUnity
             sofaCompo.UniqueNameId = nameId;
             sofaCompo.m_baseComponentType = sofaCompo.BaseTypeFromString(componentType);
             compoGO.transform.parent = parent.gameObject.transform;
+            sofaCompo.Init();
         }
     }
 

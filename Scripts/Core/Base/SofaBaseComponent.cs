@@ -18,17 +18,19 @@ namespace SofaUnity
         SofaCollisionModel,
         SofaVisualModel,
         SofaUnknown
-    };
-    
+    };  
 
     public class SofaBaseComponent : SofaBase
     {
         // do generic stuff for baseComponent here
-        protected SofaDAGNode m_ownerNode = null;
+        public SofaDAGNode m_ownerNode = null;
         
         public SBaseComponentType m_baseComponentType;
-        public string m_componentType = "Not set";
+        protected List<string> m_possibleComponentTypes;
+        public string m_componentType;
 
+        /// Pointer to the Sofa Context API.
+        protected SofaBaseComponentAPI m_impl = null;
 
         public string BaseTypeToString(SBaseComponentType type)
         {
@@ -69,9 +71,36 @@ namespace SofaUnity
             }
         }
 
+        public override void Init()
+        {
+            if (m_impl == null)
+            {
+                CreateSofaAPI();
+
+                FillPossibleTypes();
+            }
+        }
+
+        virtual protected void CreateSofaAPI()
+        {
+            Debug.Log("##!!!## SofaBaseComponent:CreateSofaAPI ");
+            if (m_impl != null)
+            {
+                Debug.LogError("SofaBaseComponent " + UniqueNameId + " already has a SofaBaseComponentAPI.");
+                return;
+            }
+
+            m_impl = new SofaBaseComponentAPI(m_sofaContext.getSimuContext(), UniqueNameId);            
+        }
+
+        virtual protected void FillPossibleTypes()
+        {
+
+        }
+
 
         /// Method called by @sa Update() method. To be implemented by child class.
-        public virtual void UpdateImpl()
+        virtual public void UpdateImpl()
         {
 
         }
