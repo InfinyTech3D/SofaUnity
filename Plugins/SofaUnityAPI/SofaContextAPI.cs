@@ -526,16 +526,6 @@ namespace SofaUnityAPI
         public static extern string sofaPhysicsAPI_getDAGNodeName(IntPtr obj, int DAGNodeID);
 
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public static extern string sofaPhysicsAPI_getComponentsAsString(IntPtr obj, string nodeName);
-
-        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public static extern string sofaPhysicsAPI_getBaseComponentType(IntPtr obj, string componentName);
-
-        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public static extern string sofaPhysicsAPI_getComponentType(IntPtr obj, string componentName);
-
-        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public static extern string sofaPhysicsAPI_getPossibleTypes(IntPtr obj, string componentName);
-
+        public static extern string sofaPhysicsAPI_getComponentsAsString(IntPtr obj, string nodeName);                
     }
 }

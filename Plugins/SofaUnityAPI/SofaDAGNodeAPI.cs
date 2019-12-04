@@ -32,6 +32,7 @@ public class SofaDAGNodeAPI : IDisposable
         }
 
         m_componentListS = sofaPhysicsAPI_getComponentsAsString(m_simu, m_name);
+        m_isReady = true;
     }
 
     /// Memory free method
@@ -68,6 +69,46 @@ public class SofaDAGNodeAPI : IDisposable
     }
 
 
+    public string GetBaseComponentType(string componentName)
+    {
+        if (m_isReady)
+        {
+            string type = sofaPhysicsAPI_getBaseComponentType(m_simu, componentName);
+            return type;
+        }
+        else
+            return "Error";
+    }
+
+
+    public string GetComponentType(string componentName)
+    {
+        if (m_isReady)
+        {
+            string type = sofaPhysicsAPI_getComponentType(m_simu, componentName);
+            return type;
+        }
+        else
+            return "Error";
+    }
+
+
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern string sofaPhysicsAPI_getComponentsAsString(IntPtr obj, string nodeName);
+
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern string sofaPhysicsAPI_getBaseComponentTypes(IntPtr obj);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern string sofaPhysicsAPI_getBaseComponentType(IntPtr obj, string componentName);
+
+
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern string sofaPhysicsAPI_getPossibleTypes(IntPtr obj, string componentName);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern string sofaPhysicsAPI_getComponentType(IntPtr obj, string componentName);
+
 }
