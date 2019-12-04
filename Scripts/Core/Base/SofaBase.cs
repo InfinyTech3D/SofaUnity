@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System.Linq;
 
 namespace SofaUnity
 {
@@ -32,6 +34,7 @@ namespace SofaUnity
 
 
 
+
     /// <summary>
     /// Base class of SOFA Unity GameObject
     /// This class control the commun members and methods to all GameObject of SOFA-Unity
@@ -52,6 +55,12 @@ namespace SofaUnity
                 SofaLog("SBaseObject::loadContext - GetComponent<SofaContext> failed.", 2);
                 return;
             }
+        }
+
+        public List<string> ConvertStringToList(string valueString)
+        {
+            List<string> values = valueString.Split(',').ToList();
+            return values;
         }
 
         /// Parameter to activate logging of this Sofa GameObject
