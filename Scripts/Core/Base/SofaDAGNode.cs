@@ -31,13 +31,16 @@ namespace SofaUnity
         {
             if (m_impl != null)
             {
-                Debug.LogError("SofaDAGNode " + UniqueNameId + " already has SofaDAGNode.");
+                Debug.LogError("SofaDAGNode " + UniqueNameId + " already has a SofaDAGNodeAPI.");
                 return;
             }
 
             m_impl = new SofaDAGNodeAPI(m_sofaContext.getSimuContext(), UniqueNameId);
 
-            string componentsS = m_impl.GetDAGNodeComponents();
+            string componentsS = m_impl.GetDAGNodeComponents();            
+            if (componentsS.Length == 0)
+                return;
+
             Debug.Log("##!!!## SofaDAGNode: " + UniqueNameId + " -> " + componentsS);
 
             List<string> compoNames = ConvertStringToList(componentsS);
