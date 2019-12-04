@@ -38,7 +38,18 @@ namespace SofaUnity
             m_impl = new SofaDAGNodeAPI(m_sofaContext.getSimuContext(), UniqueNameId);
 
             string componentsS = m_impl.GetDAGNodeComponents();
-            Debug.Log("#### SofaDAGNode: " + UniqueNameId + " -> " + componentsS);
+            Debug.Log("##!!!## SofaDAGNode: " + UniqueNameId + " -> " + componentsS);
+
+            List<string> compoNames = ConvertStringToList(componentsS);
+            foreach (string compoName in compoNames)
+            {
+                string baseType = m_impl.GetBaseComponentType(compoName);
+
+                if (baseType.Contains("Error"))
+                    SofaLog("Component " + compoName + " returns baseType: " + baseType, 2);                    
+                else
+                    SComponentFactory.CreateSofaComponent(compoName, baseType, this, this.gameObject);
+            }
         }
 
     }

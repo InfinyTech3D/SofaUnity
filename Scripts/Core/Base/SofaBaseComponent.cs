@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 
 namespace SofaUnity
 {
@@ -14,19 +16,41 @@ namespace SofaUnity
         SofaFEMForceField,
         SofaMechanicalMapping,
         SofaCollisionModel,
-        SofaVisualModel
+        SofaVisualModel,
+        SofaUnknown
     };
-
+    
 
     public class SofaBaseComponent : SofaBase
     {
         // do generic stuff for baseComponent here
         protected SofaDAGNode m_ownerNode = null;
-
-        public string m_baseComponentType = "Not set";
+        
+        public SBaseComponentType m_baseComponentType;
         public string m_componentType = "Not set";
-        public SBaseComponentType myType;
 
+
+        public string BaseTypeToString(SBaseComponentType type)
+        {
+            return type.ToString();
+        }
+
+        public SBaseComponentType BaseTypeFromString(string typeS)
+        {
+            SBaseComponentType enumRes = SBaseComponentType.SofaUnknown;
+            var enumValues = Enum.GetValues(typeof(SBaseComponentType));
+            foreach (SBaseComponentType enumVal in enumValues)
+                if (enumVal.ToString() == typeS)
+                    return enumVal;
+
+            return enumRes;
+        }
+
+        public void setDAGNode(SofaDAGNode _node)
+        {
+            m_ownerNode = _node;
+            m_sofaContext = m_ownerNode.m_sofaContext;
+        }
 
         void Update()
         {
