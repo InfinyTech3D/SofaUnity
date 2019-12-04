@@ -2,53 +2,23 @@
 using System;
 using System.Runtime.InteropServices;
 
-public class SofaDAGNodeAPI : IDisposable
+public class SofaDAGNodeAPI : SBaseAPI
 {
-    /// Name of the Sofa 3D Object mapped to this Object.
-    protected string m_name;
-    /// Type of Sofa 3D Object mapped to this Object.
-    //protected string m_type;
-
-    private bool m_isReady = false;
-
-    // TODO: check if needed
-    bool m_isDisposed;
-
-    /// Pointer to the SofaPhysicsAPI 
-    protected IntPtr m_simu = IntPtr.Zero;
-
     protected string m_componentListS = "";
 
     public SofaDAGNodeAPI(IntPtr simu, string nameID)
+        : base(simu, nameID)
     {
-        m_simu = simu;
-        m_name = nameID;
 
-        if (m_simu == IntPtr.Zero)
-        {
-            Debug.LogError("SofaDAGNodeAPI created with null SofaContextAPI pointer.");
-            m_isReady = false;
-            return;
-        }
-
-        m_componentListS = sofaPhysicsAPI_getComponentsAsString(m_simu, m_name);
-        m_isReady = true;
     }
 
-    /// Memory free method
-    public void Dispose()
+    override protected bool Init()
     {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-
-    /// Memory free method
-    protected virtual void Dispose(bool disposing)
-    {
-        if (!m_isDisposed)
-        {
-            m_isDisposed = true;
-        }
+        
+        m_componentListS = sofaPhysicsAPI_getDAGNodeComponentsName(m_simu, m_name);
+        Debug.Log("SofaDAGNodeAPI::Init(): " + m_name);
+        Debug.Log("SofaDAGNodeAPI::Init() Found: " + m_componentListS);
+        return true;
     }
 
     public string GetDAGNodeComponents()
@@ -61,7 +31,7 @@ public class SofaDAGNodeAPI : IDisposable
     {
         if (m_isReady)
         {
-            string type = sofaPhysicsAPI_getComponentsAsString(m_simu, m_name);
+            string type = sofaPhysicsAPI_getDAGNodeComponentsName(m_simu, m_name);
             return type;
         }
         else
@@ -80,9 +50,12 @@ public class SofaDAGNodeAPI : IDisposable
             return "Error";
     }
 
+
+
+
     
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern string sofaPhysicsAPI_getComponentsAsString(IntPtr obj, string nodeName);
+    public static extern string sofaPhysicsAPI_getDAGNodeComponentsName(IntPtr obj, string nodeName);
 
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]

@@ -2,49 +2,15 @@
 using System;
 using System.Runtime.InteropServices;
 
-public class SofaBaseComponentAPI : IDisposable
+public class SofaBaseComponentAPI : SBaseAPI
 {
-    /// Name of the Sofa 3D Object mapped to this Object.
-    protected string m_name;
-
-    private bool m_isReady = false;
-
-    /// Pointer to the SofaPhysicsAPI 
-    protected IntPtr m_simu = IntPtr.Zero;
 
     public SofaBaseComponentAPI(IntPtr simu, string nameID)
-    {
-        m_simu = simu;
-        m_name = nameID;
+        : base(simu, nameID)
+    { 
 
-        if (m_simu == IntPtr.Zero)
-        {
-            Debug.LogError("SofaBaseComponentAPI created with null SofaContextAPI pointer.");
-            m_isReady = false;
-            return;
-        }
-
-        m_isReady = true;
     }
 
-    /// Memory free method
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-
-    // TODO: check if needed
-    bool m_isDisposed;
-
-    /// Memory free method
-    protected virtual void Dispose(bool disposing)
-    {
-        if (!m_isDisposed)
-        {
-            m_isDisposed = true;
-        }
-    }
 
     public string GetPossiblesTypes()
     {
@@ -74,6 +40,8 @@ public class SofaBaseComponentAPI : IDisposable
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern string sofaPhysicsAPI_getComponentType(IntPtr obj, string componentName);
+
+
 
 
 }
