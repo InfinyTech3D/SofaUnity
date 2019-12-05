@@ -2,7 +2,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-public class SofaDAGNodeAPI : SBaseAPI
+public class SofaDAGNodeAPI : SofaBaseAPI
 {
     protected string m_componentListS = "";
 

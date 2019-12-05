@@ -2,7 +2,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-public class SofaBaseComponentAPI : SBaseAPI
+public class SofaBaseComponentAPI : SofaBaseAPI
 {
 
     public SofaBaseComponentAPI(IntPtr simu, string nameID)
