@@ -15,6 +15,9 @@ public class SBaseAPI : IDisposable
     // TODO: check if needed
     bool m_isDisposed;
 
+    /// Parameter to activate internal logging
+    protected bool displayLog = false;
+
     /// <summary> Default constructor, will call impl method: @see createObject() </summary>
     /// <param name="simu">Pointer to the SofaPhysicsAPI</param>
     /// <param name="nameID">Name of this Object</param>
@@ -57,4 +60,20 @@ public class SBaseAPI : IDisposable
             m_isDisposed = true;
         }
     }
+
+
+    protected bool checkNativePointer()
+    {
+        if (m_simu == IntPtr.Zero) // use native pointer?? m_native
+        {
+            Debug.LogError("Can't access Sofa native API for: " + m_name);
+            return false;
+        }
+        else
+            return true;
+    }
+
+
+
+
 }
