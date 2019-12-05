@@ -10,6 +10,10 @@ namespace SofaUnity
         /// Pointer to the Sofa Context API.
         SofaDAGNodeAPI m_impl = null;
 
+        protected string m_parentNodeName = "None";
+        public string getParentName() { return m_parentNodeName; }
+
+
         void Awake()
         {
             Debug.Log("#### SofaDAGNode: " + UniqueNameId);
@@ -52,6 +56,13 @@ namespace SofaUnity
                     SofaLog("Component " + compoName + " returns baseType: " + baseType, 2);                    
                 else
                     SComponentFactory.CreateSofaComponent(compoName, baseType, this, this.gameObject);
+            }
+
+            m_parentNodeName = m_impl.GetParentNodeName();
+            if (m_parentNodeName.Contains("Error"))
+            {
+                SofaLog("Node Parent Name return error: " + m_parentNodeName + ", will use None.");
+                m_parentNodeName = "None";
             }
         }
 

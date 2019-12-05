@@ -64,6 +64,24 @@ namespace SofaUnity
             }
             value += nbrNode;
             Debug.Log(Application.isPlaying + " value: " + value);
+
+            // reorder nodes
+            foreach (SofaDAGNode snode in m_dagNodes)
+            {
+                string parentName = snode.getParentName();
+                if (parentName == "None") // root node
+                    continue;
+
+                // search for parent (no optimisation needed here)
+                foreach (SofaDAGNode snodeP in m_dagNodes)
+                {
+                    if (snodeP.UniqueNameId == parentName)
+                    {
+                        snode.gameObject.transform.parent = snodeP.gameObject.transform;
+                        break;
+                    }
+                }
+            }
         }
 
         // Start is called before the first frame update

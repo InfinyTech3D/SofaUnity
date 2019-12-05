@@ -50,10 +50,19 @@ public class SofaDAGNodeAPI : SBaseAPI
             return "Error";
     }
 
+    public string GetParentNodeName()
+    {
+        if (m_isReady)
+        {
+            string type = sofaPhysicsAPI_getDAGNodeParentName(m_simu, m_name);
+            return type;
+        }
+        else
+            return "Error";
+    }
 
 
 
-    
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern string sofaPhysicsAPI_getDAGNodeComponentsName(IntPtr obj, string nodeName);
 
@@ -64,5 +73,7 @@ public class SofaDAGNodeAPI : SBaseAPI
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern string sofaPhysicsAPI_getBaseComponentType(IntPtr obj, string componentName);
 
-        
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern string sofaPhysicsAPI_getDAGNodeParentName(IntPtr obj, string nodeName);
+    
 }
