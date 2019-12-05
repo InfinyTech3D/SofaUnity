@@ -20,6 +20,16 @@ namespace SofaUnity
             m_possibleComponentTypes = ConvertStringToList(typesS);
             m_componentType = m_impl.GetComponentType();
         }
+
+        void Start()
+        {
+            Debug.Log("##!!!## SofaMass: Data: ");
+            foreach (string key in m_dataMap.Keys)
+            {
+                string val = m_dataMap[key];
+                Debug.Log(key + " | type:  " + val);
+            }
+        }
     }
 
 } // namespace SofaUnity

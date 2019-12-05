@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 
 namespace SofaUnity
@@ -78,6 +79,8 @@ namespace SofaUnity
                 CreateSofaAPI();
 
                 FillPossibleTypes();
+
+                GetAllData();
             }
         }
 
@@ -93,9 +96,48 @@ namespace SofaUnity
             m_impl = new SofaBaseComponentAPI(m_sofaContext.getSimuContext(), UniqueNameId);            
         }
 
+
         virtual protected void FillPossibleTypes()
         {
 
+        }
+
+
+        /// List of Data parsed
+        protected List<SData> m_datas = null;
+        public List<SData> datas
+        {
+            get { return m_datas; }
+        }
+
+        /// Map of the Data parsed. Key is the dataName of the Data, value is the type of this Data.
+        protected Dictionary<string, string> m_dataMap = null;
+        public Dictionary<string, string> dataMap
+        {
+            get { return m_dataMap; }
+        }
+
+        virtual protected void GetAllData()
+        {
+            if (m_impl != null)
+            {
+                string allData = m_impl.LoadAllData();
+                SofaLog("AllData: " + allData);
+                if (allData == "None")
+                    return;
+
+                List<String> datas = allData.Split(';').ToList();
+                m_dataMap = new Dictionary<string, string>();
+                m_datas = new List<SData>();
+                foreach (String data in datas)
+                {
+                    String[] values = data.Split(',');
+                    if (values.GetLength(0) == 2)
+                    {
+                        m_datas.Add(new SData(values[0], values[1], null));
+                    }
+                }
+            }
         }
 
 
