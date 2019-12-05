@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 /// <summary>
 /// Class used to handle bindings to the Sofa generic Mesh object.
 /// </summary>
-public class SofaMeshAPI : SofaBaseMesh
+public class SofaMeshAPI : SofaBaseMeshAPI
 {
     /// <summary>
     /// Default constructor

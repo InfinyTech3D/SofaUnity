@@ -22,7 +22,7 @@ public class SSphereCollisionModel : MonoBehaviour
     protected SofaContext m_sofaContext = null;
 
     /// Pointer to the corresponding SOFA API object
-    protected SofaCustomMesh m_impl = null;
+    protected SofaCustomMeshAPI m_impl = null;
 
 
     /// Parameter to activate logging of this Sofa GameObject
@@ -122,7 +122,7 @@ public class SSphereCollisionModel : MonoBehaviour
         IntPtr _simu = m_sofaContext.getSimuContext();
 
         if (_simu != IntPtr.Zero) // Create the API object for Sofa Regular Grid Mesh
-            m_impl = new SofaCustomMesh(_simu, this.name);            
+            m_impl = new SofaCustomMeshAPI(_simu, this.name);            
 
         if (m_impl == null || !m_impl.m_isCreated)
         {

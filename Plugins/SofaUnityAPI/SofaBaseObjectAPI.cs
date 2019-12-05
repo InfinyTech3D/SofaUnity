@@ -6,13 +6,13 @@ using System.Runtime.InteropServices;
 /// Main class of the Sofa plugin. This is the base class representing Sofa 3D Object, handling all bindings to Sofa 3D Object.
 /// It will connect to the SofaPhysicsAPI. 
 /// </summary>
-public class SofaBaseObject : IDisposable
+public class SofaBaseObjectAPI : IDisposable
 {
     /// <summary> Default constructor, will call impl method: @see createObject() </summary>
     /// <param name="simu">Pointer to the SofaPhysicsAPI</param>
     /// <param name="nameID">Name of this Object</param>
     /// <param name="isRigid">Type rigid or deformable</param>
-    public SofaBaseObject(IntPtr simu, string nameID, bool isRigid)
+    public SofaBaseObjectAPI(IntPtr simu, string nameID, bool isRigid)
     {
         m_simu = simu;
         m_name = nameID;
@@ -22,7 +22,7 @@ public class SofaBaseObject : IDisposable
     }
 
     /// Destructor
-    ~SofaBaseObject()
+    ~SofaBaseObjectAPI()
     {
         Dispose(false);
     }

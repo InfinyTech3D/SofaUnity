@@ -7,12 +7,12 @@ using System.Runtime.InteropServices;
 /// It will consist into a MechanicalObject and a collisionSphereModel
 /// It will connect to the SofaPhysicsAPI. 
 /// </summary>
-public class SofaCustomMesh : SofaBaseObject
+public class SofaCustomMeshAPI : SofaBaseObjectAPI
 {
     /// <summary> Default constructor, will call impl method: @see createObject() </summary>
     /// <param name="simu">Pointer to the SofaPhysicsAPI</param>
     /// <param name="nameID">Name of this Object</param>
-    public SofaCustomMesh(IntPtr simu, string nameID)
+    public SofaCustomMeshAPI(IntPtr simu, string nameID)
         : base(simu, nameID, true)
     {
 

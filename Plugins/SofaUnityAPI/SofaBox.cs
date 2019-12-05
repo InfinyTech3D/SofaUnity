@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 /// <summary>
 /// Class used to handle bindings to the Sofa Cube object, using a RegularGrid.
 /// </summary>
-public class SofaBox : SofaBaseMesh
+public class SofaBox : SofaBaseMeshAPI
 {
     /// <summary>
     /// Default constructor

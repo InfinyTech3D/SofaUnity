@@ -21,7 +21,7 @@ namespace SofaUnity
         /// Member: Unity Mesh object of this GameObject
         protected Mesh m_mesh;
         /// Pointer to the corresponding SOFA API object
-        public SofaBaseMesh m_impl = null;
+        public SofaBaseMeshAPI m_impl = null;
 
 
         /// Initial Translation from Sofa Object at init

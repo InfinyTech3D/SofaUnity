@@ -21,8 +21,8 @@ namespace SofaUnity
         ////////////////////////////////////////////
 
         /// Pointer to the corresponding SOFA API object
-        protected SofaComponent m_impl = null;
-        public SofaComponent impl
+        protected SofaComponentObjectAPI m_impl = null;
+        public SofaComponentObjectAPI impl
         {
             get { return m_impl; }
         }
@@ -56,7 +56,7 @@ namespace SofaUnity
             if (_simu != IntPtr.Zero)
             {
                 // Create the API object for SofaComponent
-                m_impl = new SofaComponent(_simu, m_nameId, false);
+                m_impl = new SofaComponentObjectAPI(_simu, m_nameId, false);
 
                 if (m_impl == null)
                 {

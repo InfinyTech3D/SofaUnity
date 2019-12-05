@@ -8,13 +8,13 @@ using System.Collections.Generic;
 /// SofaComponent class that will be linked to a SofacomponentListener Object which allow to listen to all Data of a target component.
 /// It will connect to the SofaPhysicsAPI. 
 /// </summary>
-public class SofaComponent : SofaBaseObject
+public class SofaComponentObjectAPI : SofaBaseObjectAPI
 {
     /// <summary> Default constructor to create a  </summary>
     /// <param name="simu">Pointer to the SofaPhysicsAPI</param>
     /// <param name="nameID">Name of this Object</param>
     /// <param name="isRigid">Type rigid or deformable</param>
-    public SofaComponent(IntPtr simu, string nameID, bool isRigid)
+    public SofaComponentObjectAPI(IntPtr simu, string nameID, bool isRigid)
         : base(simu, nameID, isRigid)
     {
 

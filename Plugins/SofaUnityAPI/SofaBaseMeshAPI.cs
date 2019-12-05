@@ -8,13 +8,13 @@ using System.Collections.Generic;
 /// Base class representing Sofa Mesh Object, handling all bindings to Sofa 3D Mesh Object.
 /// It will connect to the SofaPhysicsAPI and prepar the link to specific mesh objects. 
 /// </summary>
-public class SofaBaseMesh : SofaBaseObject
+public class SofaBaseMeshAPI : SofaBaseObjectAPI
 {
     /// <summary> Default constructor to create a Sofa 3D Mesh. </summary>
     /// <param name="simu">Pointer to the SofaPhysicsAPI</param>
     /// <param name="nameID">Name of this Object</param>
     /// <param name="isRigid">Type rigid or deformable</param>
-    public SofaBaseMesh(IntPtr simu, string nameID, bool isRigid)
+    public SofaBaseMeshAPI(IntPtr simu, string nameID, bool isRigid)
         : base(simu, nameID, isRigid)
     {
 

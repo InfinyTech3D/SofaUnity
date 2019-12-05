@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 /// <summary>
 /// Class used to handle bindings to the Sofa Sphere object, using a Sphere RegularGrid topology.
 /// </summary>
-public class SofaSphere : SofaBaseMesh
+public class SofaSphere : SofaBaseMeshAPI
 {
     /// <summary>
     /// Default constructor

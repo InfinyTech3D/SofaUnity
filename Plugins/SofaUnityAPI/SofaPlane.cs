@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 /// <summary>
 /// Class used to handle bindings to the Sofa Plane object, using a Regular Grid topology in 2D.
 /// </summary>
-public class SofaPlane : SofaBaseMesh
+public class SofaPlane : SofaBaseMeshAPI
 {
     /// <summary>
     /// Default constructor
