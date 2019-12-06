@@ -55,24 +55,12 @@ namespace SofaUnity
             m_sofaContext = m_ownerNode.m_sofaContext;
         }
 
-        void Update()
-        {
-            if (!Application.isPlaying)
-            {
-                UpdateInEditor();
-                return;
-            }
 
+        ////////////////////////////////////////////
+        /////          Component API           /////
+        ////////////////////////////////////////////
 
-            // Call internal method that can be overwritten. Only if dirty
-            if (m_isDirty)
-            {
-                UpdateImpl();
-                m_isDirty = false;
-            }
-        }
-
-        public override void Init()
+        protected override void InitImpl()
         {
             if (m_impl == null)
             {
@@ -84,24 +72,31 @@ namespace SofaUnity
             }
         }
 
-        virtual protected void CreateSofaAPI()
+
+        protected virtual void CreateSofaAPI()
         {
-            Debug.Log("##!!!## SofaBaseComponent:CreateSofaAPI ");
+            //Debug.Log("##!!!## SofaBaseComponent:CreateSofaAPI ");
             if (m_impl != null)
             {
                 Debug.LogError("SofaBaseComponent " + UniqueNameId + " already has a SofaBaseComponentAPI.");
                 return;
             }
 
-            m_impl = new SofaBaseComponentAPI(m_sofaContext.getSimuContext(), UniqueNameId);            
+            m_impl = new SofaBaseComponentAPI(m_sofaContext.getSimuContext(), UniqueNameId);
         }
 
 
-        virtual protected void FillPossibleTypes()
+        protected virtual void FillPossibleTypes()
         {
 
         }
 
+
+
+
+        ////////////////////////////////////////////
+        /////        Internal Sata API         /////
+        ////////////////////////////////////////////
 
         /// List of Data parsed
         protected List<SData> m_datas = null;
@@ -138,20 +133,6 @@ namespace SofaUnity
                     }
                 }
             }
-        }
-
-
-        /// Method called by @sa Update() method. To be implemented by child class.
-        virtual public void UpdateImpl()
-        {
-
-        }
-
-
-        /// Method called by @sa Update() method. When Unity is not playing.
-        public virtual void UpdateInEditor()
-        {
-
         }
     }
 

@@ -6,14 +6,13 @@ namespace SofaUnity
 {
     public class SofaFEMForceField : SofaBaseComponent
     {
-        override public void Init()
+        protected override void FillPossibleTypes()
         {
-            SofaLog("Init SofaFEMForceField");
+            SofaLog("FillPossibleTypes SofaFEMForceField");
         }
 
-
         /// Method called by @sa Update() method.
-        override public void UpdateImpl()
+        protected override void UpdateImpl()
         {
             SofaLog("UpdateImpl SofaFEMForceField");
         }

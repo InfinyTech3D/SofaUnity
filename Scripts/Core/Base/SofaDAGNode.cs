@@ -16,7 +16,7 @@ namespace SofaUnity
 
         void Awake()
         {
-            Debug.Log("#### SofaDAGNode: " + UniqueNameId);
+            Debug.Log("######## Awake SofaDAGNode: " + UniqueNameId);
 
             if (m_impl == null)
                 Debug.Log("###### HAS impl");
@@ -24,14 +24,15 @@ namespace SofaUnity
                 Debug.Log("###### NO impl");
         }
 
-        override public void Init() 
+
+        protected override void InitImpl() 
         {
             if (m_impl == null)
                 CreateSofaAPI();
         }
 
 
-        void CreateSofaAPI()
+        protected void CreateSofaAPI()
         {
             if (m_impl != null)
             {

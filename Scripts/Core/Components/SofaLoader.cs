@@ -6,14 +6,14 @@ namespace SofaUnity
 {
     public class SofaLoader : SofaBaseComponent
     {
-        override public void Init()
+        protected override void FillPossibleTypes()
         {
-            SofaLog("Init SofaLoader");
+            SofaLog("FillPossibleTypes SofaLoader");
         }
 
 
         /// Method called by @sa Update() method.
-        override public void UpdateImpl()
+        protected override void UpdateImpl()
         {
             SofaLog("UpdateImpl SofaLoader");
         }

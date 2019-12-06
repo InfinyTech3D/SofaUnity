@@ -6,30 +6,48 @@ namespace SofaUnity
 {
     public class SofaMass : SofaBaseComponent
     {
+        void Start()
+        {
+            Debug.Log("##!!!## SofaMass: Start: ");
+            foreach (string key in m_dataMap.Keys)
+            {
+                string val = m_dataMap[key];
+                // Debug.Log(key + " | type:  " + val);
+            }
+
+            if (m_impl != null)
+            {
+                string type = m_impl.GetComponentType();
+                Debug.Log("##!!!## SofaMass: " + type);
+            }
+            else
+                Debug.LogError("SofaMass No Impl at start: ");
+
+        }
+
+
         /// Method called by @sa Update() method.
-        override public void UpdateImpl()
+        protected override void UpdateImpl()
         {
             SofaLog("UpdateImpl SofaMass");
         }
 
-        override protected void FillPossibleTypes()
+        protected override void FillPossibleTypes()
         {
             string typesS = m_impl.GetPossiblesTypes();
-            Debug.Log("##!!!## SofaMass: " + UniqueNameId + " -> " + typesS);
+            //Debug.Log("##!!!## SofaMass: " + UniqueNameId + " -> " + typesS);
 
             m_possibleComponentTypes = ConvertStringToList(typesS);
             m_componentType = m_impl.GetComponentType();
-        }
 
-        void Start()
-        {
-            Debug.Log("##!!!## SofaMass: Data: ");
-            foreach (string key in m_dataMap.Keys)
+            if (m_impl != null)
             {
-                string val = m_dataMap[key];
-                Debug.Log(key + " | type:  " + val);
+                string type = m_impl.GetComponentType();
+                Debug.Log("##!!!## SofaMass: " + type);
             }
-        }
+            else
+                Debug.LogError("SofaMass No Impl at Init: ");
+        }       
     }
 
 } // namespace SofaUnity

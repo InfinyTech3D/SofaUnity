@@ -6,14 +6,14 @@ namespace SofaUnity
 {
     public class SofaCollisionModel : SofaBaseComponent
     {
-        override public void Init()
+        protected override void FillPossibleTypes()
         {
-            SofaLog("Init SofaCollisionModel");
+            SofaLog("FillPossibleTypes SofaCollisionModel");
         }
 
 
         /// Method called by @sa Update() method.
-        override public void UpdateImpl()
+        protected override void UpdateImpl()
         {
             SofaLog("UpdateImpl SofaCollisionModel");
         }

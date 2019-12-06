@@ -108,33 +108,79 @@ namespace SofaUnity
 
 
         ////////////////////////////////////////////
-        /////       Object creation API        /////
+        /////        Object public API         /////
         ////////////////////////////////////////////
 
         //// Start is called before the first frame update
         void Awake()
         {
-            SofaLog("Awake - " + m_uniqueNameId);
+            Debug.Log("####### Awake SofaBase: " + UniqueNameId);
 
+            InitImpl();
+
+            AwakePostProcess();
         }
-
-        public virtual void Init()
+                
+        // call by a thrid party, should do the same as awake
+        public void Init()
         {
-
+            InitImpl();
         }
         
 
         void Start()
         {
-            SofaLog("Start - " + m_uniqueNameId);
-
-            Init();
+            Debug.Log("####### Start SofaBase: " + UniqueNameId);
+            
         }
 
         // Update is called once per frame
         void Update()
         {
-            //SofaLog("Update - " + m_uniqueNameId);
+            if (!Application.isPlaying)
+            {
+                UpdateInEditor();
+                return;
+            }
+
+
+            // Call internal method that can be overwritten. Only if dirty
+            if (m_isDirty)
+            {
+                UpdateImpl();
+                m_isDirty = false;
+            }
         }
+
+
+        ////////////////////////////////////////////
+        /////        Object virtual API        /////
+        ////////////////////////////////////////////
+
+        protected virtual void AwakePostProcess()
+        {
+
+        }
+
+        protected virtual void InitImpl()
+        {
+
+        }
+
+
+        /// Method called by @sa Update() method. To be implemented by child class.
+        protected virtual void UpdateImpl()
+        {
+
+        }
+
+
+        /// Method called by @sa Update() method. When Unity is not playing.
+        protected virtual void UpdateInEditor()
+        {
+
+        }
+
+
     }
 }
