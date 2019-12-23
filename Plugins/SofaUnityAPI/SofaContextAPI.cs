@@ -21,6 +21,7 @@ namespace SofaUnityAPI
         /// Default constructor, will create the pointer to SofaPhysicsAPI
         public SofaContextAPI(bool async)
         {
+            Debug.Log("## create ## SofaContextAPI ");
             // Create the application
             if (async)
                 m_native = sofaPhysicsAPI_create(2);

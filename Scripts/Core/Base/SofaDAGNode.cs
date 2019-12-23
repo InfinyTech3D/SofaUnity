@@ -28,12 +28,17 @@ namespace SofaUnity
         protected override void InitImpl() 
         {
             if (m_impl == null)
+            Debug.Log("####### SofaDAGNode::InitImpl: " + UniqueNameId);
+            if (m_impl == null) 
                 CreateSofaAPI();
+            else
+                Debug.Log("SofaDAGNode::InitImpl, already created: " + UniqueNameId);
         }
 
 
         protected void CreateSofaAPI()
         {
+            Debug.Log("####### SofaDAGNode::CreateSofaAPI: " + UniqueNameId);
             if (m_impl != null)
             {
                 Debug.LogError("SofaDAGNode " + UniqueNameId + " already has a SofaDAGNodeAPI.");
@@ -46,7 +51,7 @@ namespace SofaUnity
             if (componentsS.Length == 0)
                 return;
 
-            Debug.Log("##!!!## SofaDAGNode: " + UniqueNameId + " -> " + componentsS);
+            SofaLog("#####################!!!############################ SofaDAGNode: " + UniqueNameId + " -> " + componentsS);
 
             List<string> compoNames = ConvertStringToList(componentsS);
             foreach (string compoName in compoNames)

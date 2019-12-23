@@ -19,7 +19,7 @@ namespace SofaUnity
         SofaContextAPI m_impl;
 
         /// Parameter to activate logging of this Sofa GameObject
-        public bool m_log = false;
+        public bool m_log = true;
 
         /// Parameter: Vector representing the gravity force.
         public Vector3 m_gravity = new Vector3(0f, -9.8f, 0f);
@@ -213,9 +213,9 @@ namespace SofaUnity
         {
             m_log = false;
             if (Application.isPlaying)
-                Debug.Log("#### is playing");
+                Debug.Log("#### SofaContext is playing");
             else
-                Debug.Log("#### is editor");
+                Debug.Log("#### SofaContext is editor");
 
             Debug.Log("#### StartOnPlay: " + StartOnPlay);
             if (Application.isPlaying && StartOnPlay == false)
@@ -341,7 +341,7 @@ namespace SofaUnity
                 this.transform.localScale = scale;
             }
 
-            if (m_log)
+            //if (m_log)
                 Debug.Log("## SofaContext ## init ");
 
             if (m_impl == null)
@@ -349,7 +349,10 @@ namespace SofaUnity
                 m_impl = new SofaContextAPI(testAsync);
 
                 if (m_nodeGraphMgr == null)
+                {
+                    Debug.Log("## m_nodeGraphMgr creation...");
                     m_nodeGraphMgr = new NodeGraphManager(this, m_impl);
+                }
                 else
                 {
                     Debug.Log("## m_nodeGraphMgr already created...");
@@ -415,6 +418,10 @@ namespace SofaUnity
 
                 if (m_log)
                     Debug.Log("## SofaContext status end init: " + m_impl.contextStatus());
+            }
+            else
+            {
+                Debug.LogError("### SofaContext init No Impl");
             }
 
 
@@ -589,6 +596,7 @@ namespace SofaUnity
         /// Method to load a filename and create GameObject per Sofa object found.
         protected void loadFilename()
         {
+            Debug.Log("## SofaContext ## loadFilename " + Application.dataPath + m_filename);
             m_impl.loadScene(Application.dataPath + m_filename);
             //m_hierarchyPtr.m_nbrObject = m_impl.getNumberObjects();
 
@@ -640,6 +648,9 @@ namespace SofaUnity
 
             //countCreated();
             m_nodeGraphMgr.loadGraph();
+
+            int nbrObj = m_impl.getNumberObjects();
+            Debug.Log("######### nbr Objects: " + nbrObj);
         }
 
 

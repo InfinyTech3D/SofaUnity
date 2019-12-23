@@ -16,8 +16,8 @@ public class SofaDAGNodeAPI : SofaBaseAPI
     {
         
         m_componentListS = sofaPhysicsAPI_getDAGNodeComponentsName(m_simu, m_name);
-        Debug.Log("SofaDAGNodeAPI::Init(): " + m_name);
-        Debug.Log("SofaDAGNodeAPI::Init() Found: " + m_componentListS);
+        //Debug.Log("SofaDAGNodeAPI::Init(): " + m_name);
+        //Debug.Log("SofaDAGNodeAPI::Init() Found: " + m_componentListS);
         return true;
     }
 

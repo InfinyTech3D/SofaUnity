@@ -44,8 +44,6 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     }
 
 
-
-
     /// <summary> Generic method to get value of a Data<bool> field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <returns> Bool value of the Data field, return false if field is not found. </returns>

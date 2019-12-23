@@ -62,6 +62,7 @@ namespace SofaUnity
 
         protected override void InitImpl()
         {
+            Debug.Log("####### SofaBaseComponent::InitImpl: " + UniqueNameId);
             if (m_impl == null)
             {
                 CreateSofaAPI();
@@ -70,12 +71,14 @@ namespace SofaUnity
 
                 GetAllData();
             }
+            else
+                Debug.Log("SofaBaseComponent::InitImpl, already created: " + UniqueNameId);
         }
 
 
         protected virtual void CreateSofaAPI()
         {
-            //Debug.Log("##!!!## SofaBaseComponent:CreateSofaAPI ");
+            Debug.Log("####### SofaBaseComponent::CreateSofaAPI: " + UniqueNameId);
             if (m_impl != null)
             {
                 Debug.LogError("SofaBaseComponent " + UniqueNameId + " already has a SofaBaseComponentAPI.");

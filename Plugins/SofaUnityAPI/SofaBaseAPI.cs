@@ -40,7 +40,7 @@ public class SofaBaseAPI : IDisposable
     /// method to be overriden by cildren
     virtual protected bool Init()
     {
-        Debug.Log("SBaseAPI::Init()");
+        //Debug.Log("SBaseAPI::Init() " + m_name);
 
         return true;
     }

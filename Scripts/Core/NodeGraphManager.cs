@@ -21,6 +21,7 @@ namespace SofaUnity
         // default constructor of the SObjectHiearchy
         public NodeGraphManager(SofaContext context, SofaContextAPI impl)
         {
+            Debug.Log("NodeGraphManager creation");
             // set the sofa Context
             m_sofaContext = context;
             m_sofaContextAPI = impl;
@@ -41,7 +42,7 @@ namespace SofaUnity
         public void loadGraph()
         {
             int nbrNode = m_sofaContextAPI.getNbrDAGNode();
-            Debug.Log("## NodeGraphManager nbr DAG: " + nbrNode);
+            Debug.Log("## NodeGraphManager loadGraph: nbr DAG: " + nbrNode);
 
             if (nbrNode <= 0)
                 return;
@@ -84,11 +85,13 @@ namespace SofaUnity
             }
         }
 
+
         // Start is called before the first frame update
         void Start()
         {
 
         }
+
 
         // Update is called once per frame
         void Update()
