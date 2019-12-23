@@ -70,6 +70,8 @@ namespace SofaUnity
                 FillPossibleTypes();
 
                 GetAllData();
+
+                FillDataStructure();
             }
             else
                 SofaLog("SofaBaseComponent::InitImpl, already created: " + UniqueNameId, 1);
@@ -112,6 +114,11 @@ namespace SofaUnity
             CreateSofaAPI();
         }
 
+
+        protected virtual void FillDataStructure()
+        {
+
+        }
 
 
         ////////////////////////////////////////////
