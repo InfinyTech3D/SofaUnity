@@ -85,6 +85,19 @@ namespace SofaUnity
                 return;
             }
 
+            if (m_sofaContext == null)
+            {
+                SofaLog("CreateSofaAPI: " + UniqueNameId + " m_sofaContext is null", 1);
+                return;
+            }
+
+            if (m_sofaContext.getSimuContext() == null)
+            {
+                SofaLog("CreateSofaAPI: " + UniqueNameId + " m_sofaContext.getSimuContext() is null", 1);
+                return;
+            }
+
+            SofaLog("CreateSofaAPI: " + UniqueNameId + " | m_sofaContext: " + m_sofaContext + " | m_sofaContext.getSimuContext(): " + m_sofaContext.getSimuContext());
             m_impl = new SofaBaseComponentAPI(m_sofaContext.getSimuContext(), UniqueNameId);
         }
 
@@ -94,6 +107,11 @@ namespace SofaUnity
 
         }
 
+
+        protected override void ReconnectImpl()
+        {
+            CreateSofaAPI();
+        }
 
 
 

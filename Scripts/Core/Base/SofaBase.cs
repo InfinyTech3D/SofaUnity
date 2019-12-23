@@ -129,7 +129,13 @@ namespace SofaUnity
             SetSofaContext(sofacontext);
             InitImpl();
         }
-        
+
+        public void Reconnect(SofaContext sofacontext)
+        {
+            Debug.Log("####### SofaBase::Reconnect: " + UniqueNameId);
+            SetSofaContext(sofacontext);
+            ReconnectImpl();
+        }        
 
         void Start()
         {
@@ -170,6 +176,11 @@ namespace SofaUnity
 
         }
 
+        protected virtual void ReconnectImpl()
+        {
+
+        }
+        
 
         /// Method called by @sa Update() method. To be implemented by child class.
         protected virtual void UpdateImpl()

@@ -400,6 +400,10 @@ namespace SofaUnity
                     // load the file
                     m_impl.loadScene(Application.dataPath + m_filename);
 
+                    if (m_nodeGraphMgr != null)
+                    {
+                        m_nodeGraphMgr.ReconnectNodeGraph();
+                    }
                     // Set counter of object creation to 0
                     //m_hierarchyPtr.cptCreated = 0;
                     //m_hierarchyPtr.m_nbrObject = m_impl.getNumberObjects();

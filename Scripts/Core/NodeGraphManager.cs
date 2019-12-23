@@ -39,6 +39,78 @@ namespace SofaUnity
         }
 
 
+        public void RegisterNode(string NodeName)
+        {
+
+        }
+
+
+        public void ReconnectNodeGraph()
+        {
+            Debug.Log("## NodeGraphManager RecreateNodeGraph: nbr DAG: " + m_dagNodes.Count);
+
+            int nbrNode = m_sofaContextAPI.getNbrDAGNode();
+            if (nbrNode <= 0)
+                return;
+
+            for (int i = 0; i < nbrNode; i++)
+            {
+                string NodeName = m_sofaContextAPI.getDAGNodeName(i);
+                if (NodeName == "Error")
+                {
+                    Debug.LogError("NodeName: " + NodeName);
+                    continue;
+                }
+
+                string nodeGOName = "SofaNode - " + NodeName;
+
+                // will look first for node child of SofaContext
+                bool res = FindNodeGameObject(m_sofaContext.transform, nodeGOName);
+                if (res == false) // not found
+                {
+                    GameObject GONode = GameObject.Find(nodeGOName);
+                    if (GONode != null)
+                    {
+                        SofaDAGNode dagNode = GONode.GetComponent<SofaDAGNode>();
+                        m_dagNodes.Add(dagNode);
+                    }
+                }
+            }
+
+
+            // Reconnect each Node
+            for (int i=0; i< m_dagNodes.Count; i++)
+            {
+                m_dagNodes[i].Reconnect(m_sofaContext);
+            }
+            Debug.Log("## NodeGraphManager RecreateNodeGraph: nbr DAG AFTER: " + m_dagNodes.Count);
+        }
+
+
+        protected bool FindNodeGameObject(Transform parentTransform, string NodeName)
+        {
+            bool found = false;
+            
+            foreach (Transform child in parentTransform)
+            {
+                found = FindNodeGameObject(child, NodeName);
+
+                if (found)
+                    return found;
+
+                if (child.name == NodeName)
+                {                    
+                    SofaDAGNode dagNode = child.GetComponent<SofaDAGNode>();
+                    m_dagNodes.Add(dagNode);
+                    return true;
+                }
+            }
+
+            return found;
+        }
+        //hand = GameObject.Find("Hand");
+
+
         public void loadGraph()
         {
             int nbrNode = m_sofaContextAPI.getNbrDAGNode();

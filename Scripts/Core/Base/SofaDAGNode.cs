@@ -14,20 +14,10 @@ namespace SofaUnity
         public string getParentName() { return m_parentNodeName; }
 
 
-        void Awake()
+
+
+        protected override void InitImpl()  // if launch by awake should only retrive pointer to sofaContext + name to reconnect to sofaDAGNodeAPI
         {
-            Debug.Log("######## Awake SofaDAGNode: " + UniqueNameId);
-
-            if (m_impl == null)
-                Debug.Log("###### HAS impl");
-            else
-                Debug.Log("###### NO impl");
-        }
-
-
-        protected override void InitImpl() 
-        {
-            if (m_impl == null)
             Debug.Log("####### SofaDAGNode::InitImpl: " + UniqueNameId);
             if (m_impl == null) 
                 CreateSofaAPI();
@@ -72,6 +62,50 @@ namespace SofaUnity
             }
         }
 
+
+        protected override void ReconnectImpl()
+        {
+            if (m_impl != null)
+            {
+                Debug.LogError("SofaDAGNode " + UniqueNameId + " already has a SofaDAGNodeAPI.");
+                return;
+            }
+
+            m_impl = new SofaDAGNodeAPI(m_sofaContext.getSimuContext(), UniqueNameId);
+
+            string componentsS = m_impl.GetDAGNodeComponents();
+            if (componentsS.Length == 0)
+                return;
+
+            List<string> compoNames = ConvertStringToList(componentsS);
+            foreach (string compoName in compoNames)
+            {
+                bool found = false;
+                GameObject componentGO = null;
+                string compoGOName = "SofaComponent - " + compoName;
+                foreach (Transform child in this.gameObject.transform)
+                {
+                    if (child.name == compoGOName)
+                    {
+                        componentGO = child.gameObject;                       
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found)
+                {
+                    componentGO = GameObject.Find(compoGOName);
+                }
+
+                if (found)
+                {
+                    SofaBase component = componentGO.GetComponent<SofaBase>();
+                    if (component != null)
+                        component.Reconnect(this.m_sofaContext);
+                }
+            }
+        }
     }
 
 } // namespace SofaUnity
