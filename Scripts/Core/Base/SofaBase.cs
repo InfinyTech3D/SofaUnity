@@ -135,13 +135,19 @@ namespace SofaUnity
 
         void Start()
         {
-            Debug.Log("####### Start SofaBase: " + UniqueNameId);
+            Debug.Log("####### SofaBase::Start: " + UniqueNameId);
             
         }
 
+        private bool firstUpdate = true;
         // Update is called once per frame
         void Update()
         {
+            if(firstUpdate)
+            {
+                Debug.Log("####### SofaBase::Update: " + UniqueNameId);
+                firstUpdate = false;
+            }
             if (!Application.isPlaying)
             {
                 UpdateInEditor();

@@ -119,7 +119,7 @@ namespace SofaUnity
         /////        Internal Sata API         /////
         ////////////////////////////////////////////
 
-        /// List of Data parsed
+            /// List of Data parsed
         protected List<SData> m_datas = null;
         public List<SData> datas
         {
@@ -138,7 +138,7 @@ namespace SofaUnity
             if (m_impl != null)
             {
                 string allData = m_impl.LoadAllData();
-                SofaLog("AllData: " + allData);
+                //SofaLog("AllData: " + allData);
                 if (allData == "None")
                     return;
 
