@@ -145,6 +145,40 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     }
 
 
+    /// <summary> Generic method to get value of a Data<float> field. </summary>
+    /// <param name="dataName"> Name of the Data field requested. </param>
+    /// <returns> Float value casted from Double of the Data field, return float.MinValue if field is not found. </returns>
+    public float GetDoubleValue(string dataName)
+    {
+        if (checkNativePointer())
+        {
+            float[] val = new float[1];
+            int res = sofaComponentAPI_getDoubleValue(m_simu, m_name, dataName, val);
+
+            if (res == 0)
+                return val[0];
+            else if (displayLog)
+                Debug.LogError("Method GetDoubleValue of Data: " + dataName + " of object: " + m_name + ", returns error: " + SofaDefines.msg_error[res]);
+        }
+
+        return float.MinValue;
+    }
+
+    /// <summary> Generic method to set value of a Data<float> field. </summary>
+    /// <param name="dataName"> Name of the Data field requested. </param>
+    /// <param name="value"> New float value of the Data. </param>
+    public void SetDoubleValue(string dataName, float value)
+    {
+        if (checkNativePointer())
+        {
+            int res = sofaComponentAPI_setDoubleValue(m_simu, m_name, dataName, value);
+
+            if (res != 0 && displayLog)
+                Debug.LogError("Method SetDoubleValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
+        }
+    }
+
+
     /// <summary> Generic method to get value of a Data<string> field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <returns> String value of the Data field, return "None" if field is not found. </returns>
@@ -522,6 +556,14 @@ public class SofaBaseComponentAPI : SofaBaseAPI
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_setFloatValue(IntPtr obj, string componentName, string dataName, float value);
+
+
+    /// Double API
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_getDoubleValue(IntPtr obj, string componentName, string dataName, float[] value);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_setDoubleValue(IntPtr obj, string componentName, string dataName, float value);
 
 
     /// String API
