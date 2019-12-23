@@ -44,7 +44,7 @@ namespace SofaUnity
         List<SRayCaster> m_casters = null;
 
         private SObjectHierarchy m_hierarchyPtr = null;
-        private NodeGraphManager m_nodeGraphMgr = null;
+        private SofaDAGNodeManager m_nodeGraphMgr = null;
 
         public bool testAsync = false;
 
@@ -351,7 +351,7 @@ namespace SofaUnity
                 if (m_nodeGraphMgr == null)
                 {
                     Debug.Log("## m_nodeGraphMgr creation...");
-                    m_nodeGraphMgr = new NodeGraphManager(this, m_impl);
+                    m_nodeGraphMgr = new SofaDAGNodeManager(this, m_impl);
                 }
                 else
                 {

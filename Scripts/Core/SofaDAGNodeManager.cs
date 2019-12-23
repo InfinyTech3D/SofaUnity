@@ -5,12 +5,13 @@ using SofaUnityAPI;
 
 namespace SofaUnity
 {
-    public class NodeGraphManager
+    public class SofaDAGNodeManager
     {
 
         static int value = -1;
 
         /// List of SofaDAGNode in the graph
+        [SerializeField]
         public List<SofaDAGNode> m_dagNodes = null;
 
         /// pointer to the SofaContext root object
@@ -19,9 +20,9 @@ namespace SofaUnity
         private SofaContextAPI m_sofaContextAPI = null;
 
         // default constructor of the SObjectHiearchy
-        public NodeGraphManager(SofaContext context, SofaContextAPI impl)
+        public SofaDAGNodeManager(SofaContext context, SofaContextAPI impl)
         {
-            Debug.Log("NodeGraphManager creation");
+            Debug.Log("SofaDAGNodeManager creation");
             // set the sofa Context
             m_sofaContext = context;
             m_sofaContextAPI = impl;
@@ -47,7 +48,7 @@ namespace SofaUnity
 
         public void ReconnectNodeGraph()
         {
-            Debug.Log("## NodeGraphManager RecreateNodeGraph: nbr DAG: " + m_dagNodes.Count);
+            Debug.Log("## SofaDAGNodeManager RecreateNodeGraph: nbr DAG: " + m_dagNodes.Count);
 
             int nbrNode = m_sofaContextAPI.getNbrDAGNode();
             if (nbrNode <= 0)
@@ -83,7 +84,7 @@ namespace SofaUnity
             {
                 m_dagNodes[i].Reconnect(m_sofaContext);
             }
-            Debug.Log("## NodeGraphManager RecreateNodeGraph: nbr DAG AFTER: " + m_dagNodes.Count);
+            Debug.Log("## SofaDAGNodeManager RecreateNodeGraph: nbr DAG AFTER: " + m_dagNodes.Count);
         }
 
 
@@ -114,7 +115,7 @@ namespace SofaUnity
         public void loadGraph()
         {
             int nbrNode = m_sofaContextAPI.getNbrDAGNode();
-            Debug.Log("## NodeGraphManager loadGraph: nbr DAG: " + nbrNode);
+            Debug.Log("## SofaDAGNodeManager loadGraph: nbr DAG: " + nbrNode);
 
             if (nbrNode <= 0)
                 return;
