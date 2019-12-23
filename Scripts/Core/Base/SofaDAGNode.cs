@@ -18,20 +18,18 @@ namespace SofaUnity
 
         protected override void InitImpl()  // if launch by awake should only retrive pointer to sofaContext + name to reconnect to sofaDAGNodeAPI
         {
-            Debug.Log("####### SofaDAGNode::InitImpl: " + UniqueNameId);
             if (m_impl == null) 
                 CreateSofaAPI();
             else
-                Debug.Log("SofaDAGNode::InitImpl, already created: " + UniqueNameId);
+                SofaLog("SofaDAGNode::InitImpl, already created: " + UniqueNameId, 1);
         }
 
 
         protected void CreateSofaAPI()
         {
-            Debug.Log("####### SofaDAGNode::CreateSofaAPI: " + UniqueNameId);
             if (m_impl != null)
             {
-                Debug.LogError("SofaDAGNode " + UniqueNameId + " already has a SofaDAGNodeAPI.");
+                SofaLog("SofaDAGNode " + UniqueNameId + " already has a SofaDAGNodeAPI.", 2);
                 return;
             }
 
@@ -41,7 +39,7 @@ namespace SofaUnity
             if (componentsS.Length == 0)
                 return;
 
-            SofaLog("#####################!!!############################ SofaDAGNode: " + UniqueNameId + " -> " + componentsS);
+            SofaLog("####### SofaDAGNode: " + UniqueNameId + " -> " + componentsS);
 
             List<string> compoNames = ConvertStringToList(componentsS);
             foreach (string compoName in compoNames)
@@ -67,7 +65,7 @@ namespace SofaUnity
         {
             if (m_impl != null)
             {
-                Debug.LogError("SofaDAGNode " + UniqueNameId + " already has a SofaDAGNodeAPI.");
+                SofaLog("SofaDAGNode " + UniqueNameId + " already has a SofaDAGNodeAPI.", 2);
                 return;
             }
 

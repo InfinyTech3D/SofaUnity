@@ -211,13 +211,11 @@ namespace SofaUnity
         /// Method called at GameObject creation.
         void Awake()
         {
-            m_log = false;
             if (Application.isPlaying)
-                Debug.Log("#### SofaContext is playing");
+                Debug.Log("#### SofaContext is playing | StartOnPlay: " + StartOnPlay);
             else
-                Debug.Log("#### SofaContext is editor");
+                Debug.Log("#### SofaContext is editor | StartOnPlay: " + StartOnPlay);
 
-            Debug.Log("#### StartOnPlay: " + StartOnPlay);
             if (Application.isPlaying && StartOnPlay == false)
                 return;
 
@@ -341,7 +339,7 @@ namespace SofaUnity
                 this.transform.localScale = scale;
             }
 
-            //if (m_log)
+            if (m_log)
                 Debug.Log("## SofaContext ## init ");
 
             if (m_impl == null)

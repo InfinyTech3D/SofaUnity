@@ -62,7 +62,7 @@ namespace SofaUnity
 
         protected override void InitImpl()
         {
-            Debug.Log("####### SofaBaseComponent::InitImpl: " + UniqueNameId);
+            SofaLog("####### SofaBaseComponent::InitImpl: " + UniqueNameId);
             if (m_impl == null)
             {
                 CreateSofaAPI();
@@ -72,13 +72,12 @@ namespace SofaUnity
                 GetAllData();
             }
             else
-                Debug.Log("SofaBaseComponent::InitImpl, already created: " + UniqueNameId);
+                SofaLog("SofaBaseComponent::InitImpl, already created: " + UniqueNameId, 1);
         }
 
 
         protected virtual void CreateSofaAPI()
         {
-            Debug.Log("####### SofaBaseComponent::CreateSofaAPI: " + UniqueNameId);
             if (m_impl != null)
             {
                 Debug.LogError("SofaBaseComponent " + UniqueNameId + " already has a SofaBaseComponentAPI.");
@@ -138,7 +137,7 @@ namespace SofaUnity
             if (m_impl != null)
             {
                 string allData = m_impl.LoadAllData();
-                //SofaLog("AllData: " + allData);
+                SofaLog("AllData: " + allData);
                 if (allData == "None")
                     return;
 
@@ -153,6 +152,10 @@ namespace SofaUnity
                         m_datas.Add(new SofaData(values[0], values[1], null));
                     }
                 }
+            }
+            else
+            {
+                SofaLog("GetAllData: m_impl is null.", 1);
             }
         }
     }

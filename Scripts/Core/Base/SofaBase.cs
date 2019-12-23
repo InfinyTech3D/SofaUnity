@@ -121,21 +121,19 @@ namespace SofaUnity
         public void Init(SofaContext sofacontext, string name)
         {
             UniqueNameId = name;
-            Debug.Log("####### SofaBase::Init: " + UniqueNameId);
             SetSofaContext(sofacontext);
             InitImpl();
         }
 
         public void Reconnect(SofaContext sofacontext)
         {
-            Debug.Log("####### SofaBase::Reconnect: " + UniqueNameId);
             SetSofaContext(sofacontext);
             ReconnectImpl();
         }        
 
         void Start()
         {
-            Debug.Log("####### SofaBase::Start: " + UniqueNameId);
+            SofaLog("####### SofaBase::Start: " + UniqueNameId);
             
         }
 
@@ -145,7 +143,7 @@ namespace SofaUnity
         {
             if(firstUpdate)
             {
-                Debug.Log("####### SofaBase::Update: " + UniqueNameId);
+                SofaLog("####### SofaBase::Update: " + UniqueNameId);
                 firstUpdate = false;
             }
             if (!Application.isPlaying)
