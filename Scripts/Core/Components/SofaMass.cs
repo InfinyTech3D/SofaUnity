@@ -29,7 +29,7 @@ namespace SofaUnity
         /// Method called by @sa Update() method.
         protected override void UpdateImpl()
         {
-            SofaLog("UpdateImpl SofaMass");
+            //SofaLog("UpdateImpl SofaMass");
         }
 
         protected override void FillPossibleTypes()

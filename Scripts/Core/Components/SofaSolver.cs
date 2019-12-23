@@ -8,14 +8,14 @@ namespace SofaUnity
     {
         protected override void FillPossibleTypes()
         {
-            SofaLog("FillPossibleTypes SofaSolver");
+            //SofaLog("FillPossibleTypes SofaSolver");
         }
 
 
         /// Method called by @sa Update() method.
         protected override void UpdateImpl()
         {
-            SofaLog("UpdateImpl SofaSolver");
+            //SofaLog("UpdateImpl SofaSolver");
         }
     }
 

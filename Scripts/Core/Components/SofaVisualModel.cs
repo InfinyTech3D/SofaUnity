@@ -103,7 +103,7 @@ namespace SofaUnity
         /// Method called by @sa Update() method.
         protected override void UpdateImpl()
         {
-            SofaLog("SVisualMesh::updateImpl called.");
+            //SofaLog("SVisualMesh::updateImpl called.");
             return;
 
 

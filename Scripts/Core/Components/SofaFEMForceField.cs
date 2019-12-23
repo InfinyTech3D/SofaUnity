@@ -8,13 +8,13 @@ namespace SofaUnity
     {
         protected override void FillPossibleTypes()
         {
-            SofaLog("FillPossibleTypes SofaFEMForceField");
+            //SofaLog("FillPossibleTypes SofaFEMForceField");
         }
 
         /// Method called by @sa Update() method.
         protected override void UpdateImpl()
         {
-            SofaLog("UpdateImpl SofaFEMForceField");
+            //SofaLog("UpdateImpl SofaFEMForceField");
         }
     }
 
