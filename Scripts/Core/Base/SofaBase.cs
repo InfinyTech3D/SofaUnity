@@ -114,11 +114,7 @@ namespace SofaUnity
         //// Start is called before the first frame update
         void Awake()
         {
-            Debug.Log("####### Awake SofaBase: " + UniqueNameId);
 
-            InitImpl();
-
-            AwakePostProcess();
         }
                 
         // call by a thrid party, should do the same as awake but here we directly give the pointer to sofaContext
