@@ -5,13 +5,13 @@ using System;
 
 namespace SofaUnity
 {
-    public class SBaseData
+    public class SofaBaseData
     {
         protected string m_nameID = "";
         protected bool m_isReadOnly = false;
         private SBaseObject m_owner;
 
-        public SBaseData(string nameID, SBaseObject owner)
+        public SofaBaseData(string nameID, SBaseObject owner)
         {
             m_nameID = nameID;
             m_owner = owner;
@@ -30,7 +30,7 @@ namespace SofaUnity
         public virtual string getType()
         {
             return "None";
-            //Debug.Log("SBaseData::Type");
+            //Debug.Log("SofaBaseData::Type");
         }
     }
 }

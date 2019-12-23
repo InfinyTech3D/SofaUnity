@@ -6,11 +6,11 @@ using System;
 namespace SofaUnity
 {
     //public class SData<T> : SBaseData
-    public class SData : SBaseData
+    public class SofaData : SofaBaseData
     {
         public string m_type = "None";
 
-        public SData(string nameID, string type, SBaseObject owner)
+        public SofaData(string nameID, string type, SBaseObject owner)
             : base(nameID, owner)
         {
             m_type = type;

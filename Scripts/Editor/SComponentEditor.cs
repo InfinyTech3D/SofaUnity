@@ -17,9 +17,9 @@ public class SComponentEditor : Editor
     {
         SComponentObject _object = (SComponentObject)this.target;
 
-        List<SData> datas = _object.datas;
+        List<SofaData> datas = _object.datas;
 
-        foreach (SData entry in datas)
+        foreach (SofaData entry in datas)
         {
             if (entry.getType() == "string")
             {

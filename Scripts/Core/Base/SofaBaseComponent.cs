@@ -119,9 +119,9 @@ namespace SofaUnity
         /////        Internal Sata API         /////
         ////////////////////////////////////////////
 
-            /// List of Data parsed
-        protected List<SData> m_datas = null;
-        public List<SData> datas
+        /// List of Data parsed
+        protected List<SofaData> m_datas = null;
+        public List<SofaData> datas
         {
             get { return m_datas; }
         }
@@ -144,13 +144,13 @@ namespace SofaUnity
 
                 List<String> datas = allData.Split(';').ToList();
                 m_dataMap = new Dictionary<string, string>();
-                m_datas = new List<SData>();
+                m_datas = new List<SofaData>();
                 foreach (String data in datas)
                 {
                     String[] values = data.Split(',');
                     if (values.GetLength(0) == 2)
                     {
-                        m_datas.Add(new SData(values[0], values[1], null));
+                        m_datas.Add(new SofaData(values[0], values[1], null));
                     }
                 }
             }
