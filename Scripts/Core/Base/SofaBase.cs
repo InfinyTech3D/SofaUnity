@@ -121,9 +121,12 @@ namespace SofaUnity
             AwakePostProcess();
         }
                 
-        // call by a thrid party, should do the same as awake
-        public void Init()
+        // call by a thrid party, should do the same as awake but here we directly give the pointer to sofaContext
+        public void Init(SofaContext sofacontext, string name)
         {
+            UniqueNameId = name;
+            Debug.Log("####### SofaBase::Init: " + UniqueNameId);
+            SetSofaContext(sofacontext);
             InitImpl();
         }
         
