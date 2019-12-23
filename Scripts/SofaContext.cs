@@ -19,7 +19,7 @@ namespace SofaUnity
         SofaContextAPI m_impl;
 
         /// Parameter to activate logging of this Sofa GameObject
-        public bool m_log = true;
+        public bool m_log = false;
 
         /// Parameter: Vector representing the gravity force.
         public Vector3 m_gravity = new Vector3(0f, -9.8f, 0f);
@@ -275,7 +275,6 @@ namespace SofaUnity
 
         void StartSofa()
         {
-            Debug.Log("### StartSofa ");
             // Call the init method to create the Sofa Context
             init();
 
@@ -348,7 +347,6 @@ namespace SofaUnity
 
                 if (m_nodeGraphMgr == null)
                 {
-                    Debug.Log("## m_nodeGraphMgr creation...");
                     m_nodeGraphMgr = new SofaDAGNodeManager(this, m_impl);
                 }
                 else

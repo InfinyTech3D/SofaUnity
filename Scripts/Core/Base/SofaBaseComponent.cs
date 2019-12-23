@@ -62,7 +62,6 @@ namespace SofaUnity
 
         protected override void InitImpl()
         {
-            SofaLog("####### SofaBaseComponent::InitImpl: " + UniqueNameId);
             if (m_impl == null)
             {
                 CreateSofaAPI();
@@ -143,8 +142,7 @@ namespace SofaUnity
         {
             if (m_impl != null)
             {
-                string allData = m_impl.LoadAllData();
-                SofaLog("AllData: " + allData);
+                string allData = m_impl.LoadAllData();                
                 if (allData == "None")
                     return;
 

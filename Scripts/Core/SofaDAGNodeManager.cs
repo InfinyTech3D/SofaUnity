@@ -35,8 +35,6 @@ namespace SofaUnity
             // create the list of SBaseObject
             m_dagNodes = new List<SofaDAGNode>();
             value++;
-
-            Debug.Log(Application.isPlaying + " value: " + value);
         }
 
 
