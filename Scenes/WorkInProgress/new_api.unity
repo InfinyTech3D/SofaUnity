@@ -1,0 +1,2168 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!29 &1
+OcclusionCullingSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_OcclusionBakeSettings:
+    smallestOccluder: 5
+    smallestHole: 0.25
+    backfaceThreshold: 100
+  m_SceneGUID: 00000000000000000000000000000000
+  m_OcclusionCullingData: {fileID: 0}
+--- !u!104 &2
+RenderSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 9
+  m_Fog: 0
+  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_FogMode: 3
+  m_FogDensity: 0.01
+  m_LinearFogStart: 0
+  m_LinearFogEnd: 300
+  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
+  m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
+  m_AmbientIntensity: 1
+  m_AmbientMode: 0
+  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
+  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_HaloStrength: 0.5
+  m_FlareStrength: 1
+  m_FlareFadeSpeed: 3
+  m_HaloTexture: {fileID: 0}
+  m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
+  m_DefaultReflectionMode: 0
+  m_DefaultReflectionResolution: 128
+  m_ReflectionBounces: 1
+  m_ReflectionIntensity: 1
+  m_CustomReflection: {fileID: 0}
+  m_Sun: {fileID: 0}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_UseRadianceAmbientProbe: 0
+--- !u!157 &3
+LightmapSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 11
+  m_GIWorkflowMode: 0
+  m_GISettings:
+    serializedVersion: 2
+    m_BounceScale: 1
+    m_IndirectOutputScale: 1
+    m_AlbedoBoost: 1
+    m_EnvironmentLightingMode: 0
+    m_EnableBakedLightmaps: 1
+    m_EnableRealtimeLightmaps: 1
+  m_LightmapEditorSettings:
+    serializedVersion: 10
+    m_Resolution: 2
+    m_BakeResolution: 40
+    m_AtlasSize: 1024
+    m_AO: 0
+    m_AOMaxDistance: 1
+    m_CompAOExponent: 1
+    m_CompAOExponentDirect: 0
+    m_Padding: 2
+    m_LightmapParameters: {fileID: 0}
+    m_LightmapsBakeMode: 1
+    m_TextureCompression: 1
+    m_FinalGather: 0
+    m_FinalGatherFiltering: 1
+    m_FinalGatherRayCount: 256
+    m_ReflectionCompression: 2
+    m_MixedBakeMode: 2
+    m_BakeBackend: 1
+    m_PVRSampling: 1
+    m_PVRDirectSampleCount: 32
+    m_PVRSampleCount: 500
+    m_PVRBounces: 2
+    m_PVRFilterTypeDirect: 0
+    m_PVRFilterTypeIndirect: 0
+    m_PVRFilterTypeAO: 0
+    m_PVRFilteringMode: 1
+    m_PVRCulling: 1
+    m_PVRFilteringGaussRadiusDirect: 1
+    m_PVRFilteringGaussRadiusIndirect: 5
+    m_PVRFilteringGaussRadiusAO: 2
+    m_PVRFilteringAtrousPositionSigmaDirect: 0.5
+    m_PVRFilteringAtrousPositionSigmaIndirect: 2
+    m_PVRFilteringAtrousPositionSigmaAO: 1
+    m_ShowResolutionOverlay: 1
+  m_LightingDataAsset: {fileID: 0}
+  m_UseShadowmask: 1
+--- !u!196 &4
+NavMeshSettings:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_BuildSettings:
+    serializedVersion: 2
+    agentTypeID: 0
+    agentRadius: 0.5
+    agentHeight: 2
+    agentSlope: 45
+    agentClimb: 0.4
+    ledgeDropHeight: 0
+    maxJumpAcrossDistance: 0
+    minRegionArea: 2
+    manualCellSize: 0
+    cellSize: 0.16666667
+    manualTileSize: 0
+    tileSize: 256
+    accuratePlacement: 0
+    debug:
+      m_Flags: 0
+  m_NavMeshData: {fileID: 0}
+--- !u!1 &160205809
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 160205811}
+  - component: {fileID: 160205810}
+  m_Layer: 0
+  m_Name: SofaContext
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &160205810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160205809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fd615e119b7e54793f03d8e24065c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_log: 0
+  m_gravity: {x: 0, y: -9.8, z: 0}
+  m_timeStep: 0.02
+  m_filename: /SofaUnity/Scenes/SofaScenes/TriangleSurfaceCutting.scn
+  IsSofaUpdating: 0
+  CatchSofaMessages: 1
+  StartOnPlay: 1
+  StepbyStep: 0
+  testAsync: 0
+  breakerActivated: 0
+--- !u!4 &160205811
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160205809}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1133596552}
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &164142590
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 164142591}
+  - component: {fileID: 164142592}
+  m_Layer: 0
+  m_Name: SofaComponent - uniformMass2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &164142591
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164142590}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1236719418}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &164142592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164142590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0271f7ab21246e7409de53c72f809575, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sofaContext: {fileID: 160205810}
+  m_log: 1
+  m_uniqueNameId: uniformMass2
+  m_ownerNode: {fileID: 1236719419}
+  m_baseComponentType: 3
+  m_componentType: UniformMass
+  m_dataArchiver:
+    m_names:
+    - name
+    - printLog
+    - componentState
+    - listening
+    - isCompliance
+    - rayleighStiffness
+    - separateGravity
+    - rayleighMass
+    - vertexMass
+    - totalMass
+    - filename
+    - showGravityCenter
+    - showAxisSizeFactor
+    - compute_mapping_inertia
+    - showInitialCenterOfGravity
+    - showX0
+    - localRange
+    - indices
+    - handleTopoChange
+    - preserveTotalMass
+    m_types:
+    - string
+    - bool
+    - enumComponentState
+    - bool
+    - bool
+    - double
+    - bool
+    - double
+    - double
+    - double
+    - string
+    - bool
+    - float
+    - bool
+    - bool
+    - bool
+    - Vec2i
+    - vector<int>
+    - bool
+    - bool
+    m_stringData:
+    - m_owner: {fileID: 164142592}
+      m_dataName: name
+      m_dataType: string
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: uniformMass2
+    - m_owner: {fileID: 164142592}
+      m_dataName: filename
+      m_dataType: string
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: unused
+    m_boolData:
+    - m_owner: {fileID: 164142592}
+      m_dataName: printLog
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 164142592}
+      m_dataName: listening
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 164142592}
+      m_dataName: isCompliance
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 164142592}
+      m_dataName: separateGravity
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 164142592}
+      m_dataName: showGravityCenter
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 164142592}
+      m_dataName: compute_mapping_inertia
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 164142592}
+      m_dataName: showInitialCenterOfGravity
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 164142592}
+      m_dataName: showX0
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 164142592}
+      m_dataName: handleTopoChange
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 164142592}
+      m_dataName: preserveTotalMass
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    m_intData: []
+    m_floatData:
+    - m_owner: {fileID: 164142592}
+      m_dataName: showAxisSizeFactor
+      m_dataType: float
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 1
+    m_doubleData:
+    - m_owner: {fileID: 164142592}
+      m_dataName: rayleighStiffness
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 164142592}
+      m_dataName: rayleighMass
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 164142592}
+      m_dataName: vertexMass
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0.012919896
+    - m_owner: {fileID: 164142592}
+      m_dataName: totalMass
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 10
+    m_vec3fData: []
+    m_otherData:
+    - m_owner: {fileID: 164142592}
+      m_dataName: componentState
+      m_dataType: enumComponentState
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 164142592}
+      m_dataName: localRange
+      m_dataType: Vec2i
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 164142592}
+      m_dataName: indices
+      m_dataType: vector<int>
+      m_isReadOnly: 0
+      m_isEdited: 0
+--- !u!1 &569224620
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 569224621}
+  - component: {fileID: 569224622}
+  m_Layer: 0
+  m_Name: SofaNode - Visu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &569224621
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569224620}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1775871590}
+  m_Father: {fileID: 1236719418}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &569224622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569224620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd514e8b1708b348bb1987be968669c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sofaContext: {fileID: 160205810}
+  m_log: 1
+  m_uniqueNameId: Visu
+--- !u!1 &662537069
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 662537070}
+  - component: {fileID: 662537071}
+  m_Layer: 0
+  m_Name: SofaComponent - FEM
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &662537070
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662537069}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1236719418}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &662537071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662537069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5515e3f9a76f9054ea2f6a42fc598fcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sofaContext: {fileID: 160205810}
+  m_log: 1
+  m_uniqueNameId: FEM
+  m_ownerNode: {fileID: 1236719419}
+  m_baseComponentType: 4
+  m_componentType: 
+  m_dataArchiver:
+    m_names:
+    - name
+    - printLog
+    - componentState
+    - listening
+    - isCompliance
+    - rayleighStiffness
+    - method
+    - poissonRatio
+    - youngModulus
+    - damping
+    - initialTransformation
+    - fracturable
+    - hosfordExponant
+    - criteriaValue
+    - showStressValue
+    - showStressVector
+    - showFracturableTriangles
+    - computePrincipalStress
+    m_types:
+    - string
+    - bool
+    - enumComponentState
+    - bool
+    - bool
+    - double
+    - string
+    - vector<double>
+    - vector<double>
+    - double
+    - vector<Mat3x3d>
+    - bool
+    - double
+    - double
+    - bool
+    - bool
+    - bool
+    - bool
+    m_stringData:
+    - m_owner: {fileID: 662537071}
+      m_dataName: name
+      m_dataType: string
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: FEM
+    - m_owner: {fileID: 662537071}
+      m_dataName: method
+      m_dataType: string
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: large
+    m_boolData:
+    - m_owner: {fileID: 662537071}
+      m_dataName: printLog
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 662537071}
+      m_dataName: listening
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 662537071}
+      m_dataName: isCompliance
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 662537071}
+      m_dataName: fracturable
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 662537071}
+      m_dataName: showStressValue
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 662537071}
+      m_dataName: showStressVector
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 662537071}
+      m_dataName: showFracturableTriangles
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 662537071}
+      m_dataName: computePrincipalStress
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    m_intData: []
+    m_floatData: []
+    m_doubleData:
+    - m_owner: {fileID: 662537071}
+      m_dataName: rayleighStiffness
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 662537071}
+      m_dataName: damping
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 662537071}
+      m_dataName: hosfordExponant
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 1
+    - m_owner: {fileID: 662537071}
+      m_dataName: criteriaValue
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 1e+15
+    m_vec3fData: []
+    m_otherData:
+    - m_owner: {fileID: 662537071}
+      m_dataName: componentState
+      m_dataType: enumComponentState
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 662537071}
+      m_dataName: poissonRatio
+      m_dataType: vector<double>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 662537071}
+      m_dataName: youngModulus
+      m_dataType: vector<double>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 662537071}
+      m_dataName: initialTransformation
+      m_dataType: vector<Mat3x3d>
+      m_isReadOnly: 0
+      m_isEdited: 0
+--- !u!1 &1115124883
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1115124886}
+  - component: {fileID: 1115124885}
+  - component: {fileID: 1115124884}
+  m_Layer: 0
+  m_Name: Main Camera
+  m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!81 &1115124884
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115124883}
+  m_Enabled: 1
+--- !u!20 &1115124885
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115124883}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_GateFitMode: 2
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: -1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &1115124886
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115124883}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1133596551
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1133596552}
+  - component: {fileID: 1133596553}
+  m_Layer: 0
+  m_Name: SofaNode - root
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1133596552
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133596551}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1236719418}
+  m_Father: {fileID: 160205811}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1133596553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133596551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd514e8b1708b348bb1987be968669c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sofaContext: {fileID: 160205810}
+  m_log: 1
+  m_uniqueNameId: root
+--- !u!1 &1155074731
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1155074732}
+  - component: {fileID: 1155074733}
+  m_Layer: 0
+  m_Name: SofaComponent - Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1155074732
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1155074731}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1236719418}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1155074733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1155074731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33eb14f5b03eef7498ad3ef1fc36ca3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sofaContext: {fileID: 160205810}
+  m_log: 1
+  m_uniqueNameId: Container
+  m_ownerNode: {fileID: 1236719419}
+  m_baseComponentType: 2
+  m_componentType: 
+  m_dataArchiver:
+    m_names:
+    - name
+    - printLog
+    - componentState
+    - listening
+    - filename
+    - position
+    - nbPoints
+    - points
+    - edges
+    - checkConnexity
+    - triangles
+    m_types:
+    - string
+    - bool
+    - enumComponentState
+    - bool
+    - string
+    - vector<Vec3d>
+    - unsigned int
+    - vector<unsigned int>
+    - vector<Edge>
+    - bool
+    - vector<Triangle>
+    m_stringData:
+    - m_owner: {fileID: 1155074733}
+      m_dataName: name
+      m_dataType: string
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: Container
+    - m_owner: {fileID: 1155074733}
+      m_dataName: filename
+      m_dataType: string
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 
+    m_boolData:
+    - m_owner: {fileID: 1155074733}
+      m_dataName: printLog
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1155074733}
+      m_dataName: listening
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1155074733}
+      m_dataName: checkConnexity
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    m_intData: []
+    m_floatData: []
+    m_doubleData: []
+    m_vec3fData: []
+    m_otherData:
+    - m_owner: {fileID: 1155074733}
+      m_dataName: componentState
+      m_dataType: enumComponentState
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1155074733}
+      m_dataName: position
+      m_dataType: vector<Vec3d>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1155074733}
+      m_dataName: nbPoints
+      m_dataType: unsigned int
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1155074733}
+      m_dataName: points
+      m_dataType: vector<unsigned int>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1155074733}
+      m_dataName: edges
+      m_dataType: vector<Edge>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1155074733}
+      m_dataName: triangles
+      m_dataType: vector<Triangle>
+      m_isReadOnly: 0
+      m_isEdited: 0
+--- !u!1 &1236719417
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1236719418}
+  - component: {fileID: 1236719419}
+  m_Layer: 0
+  m_Name: SofaNode - SquareGravity_test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1236719418
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1236719417}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1445668790}
+  - {fileID: 1908584701}
+  - {fileID: 1155074732}
+  - {fileID: 164142591}
+  - {fileID: 662537070}
+  - {fileID: 1879850281}
+  - {fileID: 1801636670}
+  - {fileID: 569224621}
+  m_Father: {fileID: 1133596552}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1236719419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1236719417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd514e8b1708b348bb1987be968669c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sofaContext: {fileID: 160205810}
+  m_log: 1
+  m_uniqueNameId: SquareGravity_test
+--- !u!1 &1445668789
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1445668790}
+  - component: {fileID: 1445668791}
+  m_Layer: 0
+  m_Name: SofaComponent - cg_odesolver
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1445668790
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1445668789}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1236719418}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1445668791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1445668789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5a9e3a7c55d1304a992047259afb664, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sofaContext: {fileID: 160205810}
+  m_log: 1
+  m_uniqueNameId: cg_odesolver
+  m_ownerNode: {fileID: 1236719419}
+  m_baseComponentType: 0
+  m_componentType: 
+  m_dataArchiver:
+    m_names:
+    - name
+    - printLog
+    - componentState
+    - listening
+    - rayleighStiffness
+    - rayleighMass
+    - vdamping
+    - firstOrder
+    - trapezoidalScheme
+    - solveConstraint
+    - threadSafeVisitor
+    m_types:
+    - string
+    - bool
+    - enumComponentState
+    - bool
+    - double
+    - double
+    - double
+    - bool
+    - bool
+    - bool
+    - bool
+    m_stringData:
+    - m_owner: {fileID: 1445668791}
+      m_dataName: name
+      m_dataType: string
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: cg_odesolver
+    m_boolData:
+    - m_owner: {fileID: 1445668791}
+      m_dataName: printLog
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1445668791}
+      m_dataName: listening
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1445668791}
+      m_dataName: firstOrder
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1445668791}
+      m_dataName: trapezoidalScheme
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1445668791}
+      m_dataName: solveConstraint
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1445668791}
+      m_dataName: threadSafeVisitor
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    m_intData: []
+    m_floatData: []
+    m_doubleData:
+    - m_owner: {fileID: 1445668791}
+      m_dataName: rayleighStiffness
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0.1
+    - m_owner: {fileID: 1445668791}
+      m_dataName: rayleighMass
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0.1
+    - m_owner: {fileID: 1445668791}
+      m_dataName: vdamping
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    m_vec3fData: []
+    m_otherData:
+    - m_owner: {fileID: 1445668791}
+      m_dataName: componentState
+      m_dataType: enumComponentState
+      m_isReadOnly: 0
+      m_isEdited: 0
+--- !u!1 &1775871589
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1775871590}
+  - component: {fileID: 1775871591}
+  m_Layer: 0
+  m_Name: SofaComponent - Visual
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1775871590
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775871589}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 569224621}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1775871591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775871589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9ada23308123864684a6f2bf864f07e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sofaContext: {fileID: 160205810}
+  m_log: 1
+  m_uniqueNameId: Visual
+  m_ownerNode: {fileID: 569224622}
+  m_baseComponentType: 7
+  m_componentType: 
+  m_dataArchiver:
+    m_names:
+    - name
+    - printLog
+    - componentState
+    - listening
+    - position
+    - restPosition
+    - normal
+    - initRestPositions
+    - useNormals
+    - updateNormals
+    - computeTangents
+    - updateTangents
+    - handleDynamicTopology
+    - fixMergedUVSeams
+    - keepLines
+    - isFixed
+    - vertices
+    - texcoords
+    - tangents
+    - bitangents
+    - edges
+    - triangles
+    - quads
+    - vertPosIdx
+    - vertNormIdx
+    - filename
+    - texturename
+    - translation
+    - rotation
+    - scale3d
+    - scaleTex
+    - translationTex
+    - material
+    - putOnlyTexCoords
+    - srgbTexturing
+    - materials
+    - groups
+    - blendTranslucency
+    - premultipliedAlpha
+    - writeZTransparent
+    - alphaBlend
+    - depthTest
+    - cullFace
+    - lineWidth
+    - pointSize
+    - lineSmooth
+    - pointSmooth
+    - isEnabled
+    - primitiveType
+    - blendEquation
+    - sfactor
+    - dfactor
+    m_types:
+    - string
+    - bool
+    - enumComponentState
+    - bool
+    - vector<Vec3d>
+    - vector<Vec3d>
+    - vector<Vec3d>
+    - bool
+    - bool
+    - bool
+    - bool
+    - bool
+    - bool
+    - bool
+    - bool
+    - bool
+    - vector<Vec3d>
+    - vector<Vec2f>
+    - vector<Vec3d>
+    - vector<Vec3d>
+    - vector<Edge>
+    - vector<Triangle>
+    - vector<Quad>
+    - vector<int>
+    - vector<int>
+    - string
+    - string
+    - Vec3d
+    - Vec3d
+    - Vec3d
+    - Vec2f
+    - Vec2f
+    - Material
+    - bool
+    - bool
+    - vectorMaterialCPUMemoryManagerMaterial> >
+    - vectorFaceGroupCPUMemoryManagerFaceGroup> >
+    - bool
+    - bool
+    - bool
+    - bool
+    - bool
+    - int
+    - float
+    - float
+    - bool
+    - bool
+    - bool
+    - OptionsGroup
+    - OptionsGroup
+    - OptionsGroup
+    - OptionsGroup
+    m_stringData:
+    - m_owner: {fileID: 1775871591}
+      m_dataName: name
+      m_dataType: string
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: Visual
+    - m_owner: {fileID: 1775871591}
+      m_dataName: filename
+      m_dataType: string
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 
+    - m_owner: {fileID: 1775871591}
+      m_dataName: texturename
+      m_dataType: string
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 
+    m_boolData:
+    - m_owner: {fileID: 1775871591}
+      m_dataName: printLog
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: listening
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: initRestPositions
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: useNormals
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: updateNormals
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: computeTangents
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: updateTangents
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: handleDynamicTopology
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: fixMergedUVSeams
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: keepLines
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: isFixed
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: putOnlyTexCoords
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: srgbTexturing
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: blendTranslucency
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: premultipliedAlpha
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: writeZTransparent
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: alphaBlend
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: depthTest
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: lineSmooth
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: pointSmooth
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: isEnabled
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    m_intData:
+    - m_owner: {fileID: 1775871591}
+      m_dataName: cullFace
+      m_dataType: int
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    m_floatData:
+    - m_owner: {fileID: 1775871591}
+      m_dataName: lineWidth
+      m_dataType: float
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 1
+    - m_owner: {fileID: 1775871591}
+      m_dataName: pointSize
+      m_dataType: float
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 1
+    m_doubleData: []
+    m_vec3fData: []
+    m_otherData:
+    - m_owner: {fileID: 1775871591}
+      m_dataName: componentState
+      m_dataType: enumComponentState
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: position
+      m_dataType: vector<Vec3d>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: restPosition
+      m_dataType: vector<Vec3d>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: normal
+      m_dataType: vector<Vec3d>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: vertices
+      m_dataType: vector<Vec3d>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: texcoords
+      m_dataType: vector<Vec2f>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: tangents
+      m_dataType: vector<Vec3d>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: bitangents
+      m_dataType: vector<Vec3d>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: edges
+      m_dataType: vector<Edge>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: triangles
+      m_dataType: vector<Triangle>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: quads
+      m_dataType: vector<Quad>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: vertPosIdx
+      m_dataType: vector<int>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: vertNormIdx
+      m_dataType: vector<int>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: translation
+      m_dataType: Vec3d
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: rotation
+      m_dataType: Vec3d
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: scale3d
+      m_dataType: Vec3d
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: scaleTex
+      m_dataType: Vec2f
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: translationTex
+      m_dataType: Vec2f
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: material
+      m_dataType: Material
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: materials
+      m_dataType: vectorMaterialCPUMemoryManagerMaterial> >
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: groups
+      m_dataType: vectorFaceGroupCPUMemoryManagerFaceGroup> >
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: primitiveType
+      m_dataType: OptionsGroup
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: blendEquation
+      m_dataType: OptionsGroup
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: sfactor
+      m_dataType: OptionsGroup
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1775871591}
+      m_dataName: dfactor
+      m_dataType: OptionsGroup
+      m_isReadOnly: 0
+      m_isEdited: 0
+--- !u!1 &1801636669
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1801636670}
+  - component: {fileID: 1801636671}
+  m_Layer: 0
+  m_Name: SofaComponent - tTriangleModel1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1801636670
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1801636669}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1236719418}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1801636671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1801636669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdc1ff4aee4589a4f967e46a74099f13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sofaContext: {fileID: 160205810}
+  m_log: 1
+  m_uniqueNameId: tTriangleModel1
+  m_ownerNode: {fileID: 1236719419}
+  m_baseComponentType: 6
+  m_componentType: 
+  m_dataArchiver:
+    m_names:
+    - name
+    - printLog
+    - componentState
+    - listening
+    - active
+    - moving
+    - simulated
+    - selfCollision
+    - proximity
+    - contactStiffness
+    - contactFriction
+    - contactRestitution
+    - contactResponse
+    - color
+    - group
+    - bothSide
+    - computeNormals
+    m_types:
+    - string
+    - bool
+    - enumComponentState
+    - bool
+    - bool
+    - bool
+    - bool
+    - bool
+    - double
+    - double
+    - double
+    - double
+    - string
+    - RGBAColor
+    - std::set<int>
+    - bool
+    - bool
+    m_stringData:
+    - m_owner: {fileID: 1801636671}
+      m_dataName: name
+      m_dataType: string
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: tTriangleModel1
+    - m_owner: {fileID: 1801636671}
+      m_dataName: contactResponse
+      m_dataType: string
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 
+    m_boolData:
+    - m_owner: {fileID: 1801636671}
+      m_dataName: printLog
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1801636671}
+      m_dataName: listening
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1801636671}
+      m_dataName: active
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1801636671}
+      m_dataName: moving
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1801636671}
+      m_dataName: simulated
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1801636671}
+      m_dataName: selfCollision
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1801636671}
+      m_dataName: bothSide
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1801636671}
+      m_dataName: computeNormals
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    m_intData: []
+    m_floatData: []
+    m_doubleData:
+    - m_owner: {fileID: 1801636671}
+      m_dataName: proximity
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1801636671}
+      m_dataName: contactStiffness
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 10
+    - m_owner: {fileID: 1801636671}
+      m_dataName: contactFriction
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1801636671}
+      m_dataName: contactRestitution
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    m_vec3fData: []
+    m_otherData:
+    - m_owner: {fileID: 1801636671}
+      m_dataName: componentState
+      m_dataType: enumComponentState
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1801636671}
+      m_dataName: color
+      m_dataType: RGBAColor
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1801636671}
+      m_dataName: group
+      m_dataType: std::set<int>
+      m_isReadOnly: 0
+      m_isEdited: 0
+--- !u!1 &1879850280
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1879850281}
+  - component: {fileID: 1879850282}
+  m_Layer: 0
+  m_Name: SofaComponent - FEM-Bend
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1879850281
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879850280}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1236719418}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1879850282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879850280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5515e3f9a76f9054ea2f6a42fc598fcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sofaContext: {fileID: 160205810}
+  m_log: 1
+  m_uniqueNameId: FEM-Bend
+  m_ownerNode: {fileID: 1236719419}
+  m_baseComponentType: 4
+  m_componentType: 
+  m_dataArchiver:
+    m_names:
+    - name
+    - printLog
+    - componentState
+    - listening
+    - isCompliance
+    - rayleighStiffness
+    - stiffness
+    - damping
+    m_types:
+    - string
+    - bool
+    - enumComponentState
+    - bool
+    - bool
+    - double
+    - double
+    - double
+    m_stringData:
+    - m_owner: {fileID: 1879850282}
+      m_dataName: name
+      m_dataType: string
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: FEM-Bend
+    m_boolData:
+    - m_owner: {fileID: 1879850282}
+      m_dataName: printLog
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1879850282}
+      m_dataName: listening
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1879850282}
+      m_dataName: isCompliance
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    m_intData: []
+    m_floatData: []
+    m_doubleData:
+    - m_owner: {fileID: 1879850282}
+      m_dataName: rayleighStiffness
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1879850282}
+      m_dataName: stiffness
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 200
+    - m_owner: {fileID: 1879850282}
+      m_dataName: damping
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 1
+    m_vec3fData: []
+    m_otherData:
+    - m_owner: {fileID: 1879850282}
+      m_dataName: componentState
+      m_dataType: enumComponentState
+      m_isReadOnly: 0
+      m_isEdited: 0
+--- !u!1 &1908584700
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1908584701}
+  - component: {fileID: 1908584702}
+  m_Layer: 0
+  m_Name: SofaComponent - meshLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1908584701
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1908584700}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1236719418}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1908584702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1908584700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8303bbfe06f7b7043a38754ae9a3cf70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sofaContext: {fileID: 160205810}
+  m_log: 1
+  m_uniqueNameId: meshLoader
+  m_ownerNode: {fileID: 1236719419}
+  m_baseComponentType: 1
+  m_componentType: 
+  m_dataArchiver:
+    m_names:
+    - name
+    - printLog
+    - componentState
+    - listening
+    - filename
+    - position
+    - polylines
+    - edges
+    - triangles
+    - quads
+    - polygons
+    - tetrahedra
+    - hexahedra
+    - pentahedra
+    - pyramids
+    - normals
+    - flipNormals
+    - triangulate
+    - createSubelements
+    - onlyAttachedPoints
+    - translation
+    - rotation
+    - scale3d
+    - transformation
+    m_types:
+    - string
+    - bool
+    - enumComponentState
+    - bool
+    - string
+    - vector<Vec3d>
+    - vector<vector<unsigned int>>
+    - vector<Edge>
+    - vector<Triangle>
+    - vector<Quad>
+    - vector<vector<unsigned int>>
+    - vector<Tetrahedron>
+    - vector<Hexahedron>
+    - vector<Pentahedron>
+    - vector<Pyramid>
+    - vector<Vec3d>
+    - bool
+    - bool
+    - bool
+    - bool
+    - Vec3d
+    - Vec3d
+    - Vec3d
+    - Mat4x4d
+    m_stringData:
+    - m_owner: {fileID: 1908584702}
+      m_dataName: name
+      m_dataType: string
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: meshLoader
+    - m_owner: {fileID: 1908584702}
+      m_dataName: filename
+      m_dataType: string
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: mesh/square3.msh
+    m_boolData:
+    - m_owner: {fileID: 1908584702}
+      m_dataName: printLog
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1908584702}
+      m_dataName: listening
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1908584702}
+      m_dataName: flipNormals
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1908584702}
+      m_dataName: triangulate
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1908584702}
+      m_dataName: createSubelements
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    - m_owner: {fileID: 1908584702}
+      m_dataName: onlyAttachedPoints
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_value: 0
+    m_intData: []
+    m_floatData: []
+    m_doubleData: []
+    m_vec3fData: []
+    m_otherData:
+    - m_owner: {fileID: 1908584702}
+      m_dataName: componentState
+      m_dataType: enumComponentState
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1908584702}
+      m_dataName: position
+      m_dataType: vector<Vec3d>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1908584702}
+      m_dataName: polylines
+      m_dataType: vector<vector<unsigned int>>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1908584702}
+      m_dataName: edges
+      m_dataType: vector<Edge>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1908584702}
+      m_dataName: triangles
+      m_dataType: vector<Triangle>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1908584702}
+      m_dataName: quads
+      m_dataType: vector<Quad>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1908584702}
+      m_dataName: polygons
+      m_dataType: vector<vector<unsigned int>>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1908584702}
+      m_dataName: tetrahedra
+      m_dataType: vector<Tetrahedron>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1908584702}
+      m_dataName: hexahedra
+      m_dataType: vector<Hexahedron>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1908584702}
+      m_dataName: pentahedra
+      m_dataType: vector<Pentahedron>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1908584702}
+      m_dataName: pyramids
+      m_dataType: vector<Pyramid>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1908584702}
+      m_dataName: normals
+      m_dataType: vector<Vec3d>
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1908584702}
+      m_dataName: translation
+      m_dataType: Vec3d
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1908584702}
+      m_dataName: rotation
+      m_dataType: Vec3d
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1908584702}
+      m_dataName: scale3d
+      m_dataType: Vec3d
+      m_isReadOnly: 0
+      m_isEdited: 0
+    - m_owner: {fileID: 1908584702}
+      m_dataName: transformation
+      m_dataType: Mat4x4d
+      m_isReadOnly: 0
+      m_isEdited: 0
+--- !u!1 &2030685525
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2030685527}
+  - component: {fileID: 2030685526}
+  m_Layer: 0
+  m_Name: Directional Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!108 &2030685526
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030685525}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 1
+  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Intensity: 1
+  m_Range: 10
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 2
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!4 &2030685527
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030685525}
+  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
