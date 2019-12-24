@@ -25,12 +25,12 @@ public class Texture2DFromRaw : SBaseObject
     /// Name of the Data containing the raw data
     public string dataName = "";
     /// Pointer to the Data containing the raw data
-    protected SofaData rawImg = null;
+    protected old_SofaData rawImg = null;
 
     /// Name of the Data containing the raw diff data
     public string dataName2 = "";
     /// Pointer to the Data containing the raw diff data
-    protected SofaData rawImgDiff = null;
+    protected old_SofaData rawImgDiff = null;
 
     /// raw data of the 2d texture
     protected float[] m_rawData = null;
@@ -52,7 +52,7 @@ public class Texture2DFromRaw : SBaseObject
             return;
 
         m_object = m_target.GetComponent<SComponentObject>();
-        foreach (SofaData entry in m_object.datas)
+        foreach (old_SofaData entry in m_object.datas)
         {
             if (entry.nameID == dataName)
             {

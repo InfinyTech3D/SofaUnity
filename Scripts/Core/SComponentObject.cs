@@ -28,8 +28,8 @@ namespace SofaUnity
         }
 
         /// List of Data parsed
-        protected List<SofaData> m_datas = null;
-        public List<SofaData> datas
+        protected List<old_SofaData> m_datas = null;
+        public List<old_SofaData> datas
         {
             get { return m_datas; }
         }
@@ -84,13 +84,13 @@ namespace SofaUnity
                       
             List<String> datas = allData.Split(';').ToList();
             m_dataMap = new Dictionary<string, string>();
-            m_datas = new List<SofaData>();
+            m_datas = new List<old_SofaData>();
             foreach (String data in datas)
             {
                 String[] values = data.Split(',');
                 if (values.GetLength(0) == 2)
                 {
-                    m_datas.Add(new SofaData(values[0], values[1], this));
+                    m_datas.Add(new old_SofaData(values[0], values[1], this));
                 }
             }
         }

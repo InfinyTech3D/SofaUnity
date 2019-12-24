@@ -5,13 +5,13 @@ using System;
 
 namespace SofaUnity
 {
-    public class SofaBaseData
+    public class old_SofaBaseData
     {
         protected string m_nameID = "";
         protected bool m_isReadOnly = false;
         private SBaseObject m_owner;
 
-        public SofaBaseData(string nameID, SBaseObject owner)
+        public old_SofaBaseData(string nameID, SBaseObject owner)
         {
             m_nameID = nameID;
             m_owner = owner;

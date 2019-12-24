@@ -7,11 +7,11 @@ using UnityEditor;
 namespace SofaUnity
 {
     //public class SData<T> : SBaseData
-    public class SofaData : SofaBaseData
+    public class old_SofaData : old_SofaBaseData
     {
         public string m_type = "None";
 
-        public SofaData(string nameID, string type, SBaseObject owner)
+        public old_SofaData(string nameID, string type, SBaseObject owner)
             : base(nameID, owner)
         {
             m_type = type;
@@ -33,8 +33,6 @@ namespace SofaUnity
             //Type toto = typeof(T);
             //Debug.Log("Type: " + toto);
         }
-
-        
     }
 
     [System.Serializable]
