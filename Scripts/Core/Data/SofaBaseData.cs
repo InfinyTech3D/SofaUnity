@@ -5,6 +5,46 @@ using System;
 
 namespace SofaUnity
 {
+    [System.Serializable]
+    public class SofaBaseData
+    {
+        [SerializeField]
+        protected SofaBaseComponent m_owner;
+        [SerializeField]
+        protected string m_dataName = "";
+        [SerializeField]
+        protected string m_dataType = "";
+
+        [SerializeField]
+        protected bool m_isReadOnly = false;
+
+        public SofaBaseData(SofaBaseComponent owner, string nameID, string type)
+        {
+            m_owner = owner;
+            m_dataName = nameID;
+            m_dataType = type;
+        }
+
+        public string DataName
+        {
+            get { return m_dataName; }
+        }
+
+        public string DataType
+        {
+            get { return m_dataType; }
+        }
+
+        public bool IsReadOnly
+        {
+            get { return m_isReadOnly; }
+        }
+    }
+
+
+
+
+
     public class old_SofaBaseData
     {
         protected string m_nameID = "";

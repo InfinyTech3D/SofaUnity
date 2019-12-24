@@ -6,6 +6,219 @@ using UnityEditor;
 
 namespace SofaUnity
 {
+    [System.Serializable]
+    public class SofaData : SofaBaseData
+    {
+        public SofaData(SofaBaseComponent owner, string nameID, string type)
+            : base(owner, nameID, type)
+        {
+            
+        }
+    }
+
+
+
+    [System.Serializable]
+    public class SofaBoolData : SofaBaseData
+    {
+        [SerializeField]
+        protected bool m_value = false;
+
+        public SofaBoolData(SofaBaseComponent owner, string nameID, bool value)
+            : base(owner, nameID, "bool")
+        {
+            m_value = value;
+        }
+
+        public bool Value
+        {
+            get { return m_value; }
+            set
+            {
+                if (m_value != value)
+                {
+                    m_value = value;
+                    //if (m_impl != null)
+                    //    m_impl.timeStep = m_timeStep;
+                }
+            }
+        }
+
+        public void Log()
+        {
+            Debug.Log(m_owner.UniqueNameId + "{" + m_dataType + "}: " + m_dataName + " => " + m_value);
+        }
+    }
+
+
+    [System.Serializable]
+    public class SofaIntData : SofaBaseData
+    {
+        [SerializeField]
+        protected int m_value = int.MinValue;
+
+        public SofaIntData(SofaBaseComponent owner, string nameID, int value)
+            : base(owner, nameID, "int")
+        {
+            m_value = value;
+        }
+
+        public int Value
+        {
+            get { return m_value; }
+            set
+            {
+                if (m_value != value)
+                {
+                    m_value = value;
+                    //if (m_impl != null)
+                    //    m_impl.timeStep = m_timeStep;
+                }
+            }
+        }
+
+        public void Log()
+        {
+            Debug.Log(m_owner.UniqueNameId + "{" + m_dataType + "}: " + m_dataName + " => " + m_value);
+        }
+    }
+
+
+    [System.Serializable]
+    public class SofaFloatData : SofaBaseData
+    {
+        [SerializeField]
+        protected float m_value = float.MinValue;        
+
+        public SofaFloatData(SofaBaseComponent owner, string nameID, float value)
+            : base(owner, nameID, "float")
+        {
+            m_value = value;
+        }
+
+        public float Value
+        {
+            get { return m_value; }
+            set
+            {
+                if (m_value != value)
+                {
+                    m_value = value;
+                    //if (m_impl != null)
+                    //    m_impl.timeStep = m_timeStep;
+                }
+            }
+        }
+
+        public void Log()
+        {
+            Debug.Log(m_owner.UniqueNameId + "{" + m_dataType + "}: " + m_dataName + " => " + m_value);
+        }
+    }
+
+
+    [System.Serializable]
+    public class SofaDoubleData : SofaBaseData
+    {
+        [SerializeField]
+        protected float m_value = float.MinValue;
+
+        public SofaDoubleData(SofaBaseComponent owner, string nameID, float value)
+            : base(owner, nameID, "double")
+        {
+            m_value = value;
+        }
+
+        public float Value
+        {
+            get { return m_value; }
+            set
+            {
+                if (m_value != value)
+                {
+                    m_value = value;
+                    //if (m_impl != null)
+                    //    m_impl.timeStep = m_timeStep;
+                }
+            }
+        }
+
+        public void Log()
+        {
+            Debug.Log(m_owner.UniqueNameId + "{" + m_dataType + "}: " + m_dataName + " => " + m_value);
+        }
+    }
+
+
+
+    [System.Serializable]
+    public class SofaStringData : SofaBaseData
+    {
+        [SerializeField]
+        protected string m_value = "";
+
+        public SofaStringData(SofaBaseComponent owner, string nameID, string value)
+            : base(owner, nameID, "string")
+        {
+            m_value = value;
+        }
+
+        public string Value
+        {
+            get { return m_value; }
+            set
+            {
+                if (m_value != value)
+                {
+                    m_value = value;
+                    //if (m_impl != null)
+                    //    m_impl.timeStep = m_timeStep;
+                }
+            }
+        }
+
+        public void Log()
+        {
+            Debug.Log(m_owner.UniqueNameId + "{" + m_dataType + "}: " + m_dataName + " => " + m_value);
+        }
+    }
+
+
+
+
+    [System.Serializable]
+    public class SofaVec3fData : SofaBaseData
+    {
+        [SerializeField]
+        protected Vector3 m_value;
+
+        public SofaVec3fData(SofaBaseComponent owner, string nameID, Vector3 value)
+            : base(owner, nameID, "Vec3f")
+        {
+            m_value = new Vector3(value.x, value.y, value.z);
+        }
+
+        public Vector3 Value
+        {
+            get { return m_value; }
+            set
+            {
+                if (m_value != value)
+                {
+                    m_value = value;
+                    //if (m_impl != null)
+                    //    m_impl.timeStep = m_timeStep;
+                }
+            }
+        }
+
+        public void Log()
+        {
+            Debug.Log(m_owner.UniqueNameId + "{" + m_dataType + "}: " + m_dataName + " => " + m_value);
+        }
+    }
+
+
     //public class SData<T> : SBaseData
     public class old_SofaData : old_SofaBaseData
     {
@@ -33,102 +246,5 @@ namespace SofaUnity
             //Type toto = typeof(T);
             //Debug.Log("Type: " + toto);
         }
-    }
-
-    [System.Serializable]
-    public class SofaBaseDataTest
-    {
-        [SerializeField]
-        protected ComponentDataTest m_owner;
-        [SerializeField]
-        protected string m_dataName = "";
-        [SerializeField]
-        protected bool m_isReadOnly = false;
-
-        public SofaBaseDataTest(ComponentDataTest owner, string nameID)
-        {
-            m_owner = owner;
-            m_dataName = nameID;
-        }
-
-        public string DataName
-        {
-            get { return m_dataName; }
-        }
-
-        public bool IsReadOnly
-        {
-            get { return m_isReadOnly; }
-        }
-    }
-
-
-    [System.Serializable]
-    public class SofaDataFloat : SofaBaseDataTest
-    {
-        [SerializeField]
-        protected float m_value = float.MinValue;        
-
-        public SofaDataFloat(ComponentDataTest owner, string nameID, float value)
-            : base(owner, nameID)
-        {
-            m_value = value;
-        }
-
-        public float Value
-        {
-            get { return m_value; }
-            set
-            {
-                if (m_value != value)
-                {
-                    m_value = value;
-                    //if (m_impl != null)
-                    //    m_impl.timeStep = m_timeStep;
-                }
-            }
-        }
-
-        public void Log()
-        {
-            Debug.Log("SofaDataFloat: " + m_dataName + " -> " + m_value + " owner: " + m_owner.nameId);
-        }
-
-        //public getEditor()
-    }
-
-
-    [System.Serializable]
-    public class SofaDataVec3Float : SofaBaseDataTest
-    {
-        [SerializeField]
-        protected Vector3 m_value;
-
-        public SofaDataVec3Float(ComponentDataTest owner, string nameID, float value0, float value1, float value2)
-            : base(owner, nameID)
-        {
-            m_value = new Vector3(value0, value1, value2);
-        }
-
-        public Vector3 Value
-        {
-            get { return m_value; }
-            set
-            {
-                if (m_value != value)
-                {
-                    m_value = value;
-                    //if (m_impl != null)
-                    //    m_impl.timeStep = m_timeStep;
-                }
-            }
-        }
-
-        public void Log()
-        {
-            Debug.Log("SofaDataFloat: " + m_dataName + " -> " + m_value + " owner: " + m_owner.nameId);
-        }
-
-        //public getEditor()
     }
 }
