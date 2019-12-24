@@ -152,11 +152,11 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     {
         if (checkNativePointer())
         {
-            float[] val = new float[1];
+            double[] val = new double[1];
             int res = sofaComponentAPI_getDoubleValue(m_simu, m_name, dataName, val);
 
             if (res == 0)
-                return val[0];
+                return (float)val[0];
             else if (displayLog)
                 Debug.LogError("Method GetDoubleValue of Data: " + dataName + " of object: " + m_name + ", returns error: " + SofaDefines.msg_error[res]);
         }
@@ -560,10 +560,10 @@ public class SofaBaseComponentAPI : SofaBaseAPI
 
     /// Double API
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaComponentAPI_getDoubleValue(IntPtr obj, string componentName, string dataName, float[] value);
+    public static extern int sofaComponentAPI_getDoubleValue(IntPtr obj, string componentName, string dataName, double[] value);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaComponentAPI_setDoubleValue(IntPtr obj, string componentName, string dataName, float value);
+    public static extern int sofaComponentAPI_setDoubleValue(IntPtr obj, string componentName, string dataName, double value);
 
 
     /// String API
@@ -590,12 +590,28 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     public static extern int sofaComponentAPI_setVec3iValue(IntPtr obj, string componentName, string dataName, int[] values);
 
 
-    /// Rigid3 bindings
+    /// Vec3 API
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_getVec3Value(IntPtr obj, string componentName, string dataName, bool doubleValue, int[] values);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_setVec3Value(IntPtr obj, string componentName, string dataName, bool doubleValue, int[] values);
+
+
+    /// Rigid3f API
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_getRigid3fValue(IntPtr obj, string componentName, string dataName, float[] values);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_setRigid3fValue(IntPtr obj, string componentName, string dataName, float[] values);
+
+
+    /// Rigid3 API
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_getRigid3Value(IntPtr obj, string componentName, string dataName, bool doubleValue, int[] values);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_setRigid3Value(IntPtr obj, string componentName, string dataName, bool doubleValue, int[] values);
 
 
 
