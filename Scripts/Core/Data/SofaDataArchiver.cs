@@ -22,10 +22,12 @@ public class SofaDataArchiver //: MonoBehaviour, ISerializationCallbackReceiver
 
 
     // unssuported types
+    public List<string> m_otherNames = new List<string>();
     public List<SofaData> m_otherData = null;
 
     public void AddData(SofaBaseComponent owner, string dataName, string dataType)
     {
+        bool supported = true;
         if (dataType == "string")
         {
             string value = owner.m_impl.getStringValue(dataName);
@@ -56,10 +58,10 @@ public class SofaDataArchiver //: MonoBehaviour, ISerializationCallbackReceiver
             Vector3 value = owner.m_impl.GetVector3fValue(dataName);
             AddVec3fData(owner, dataName, value);
         }
-        //else if (dataType == "Vec3d" || dataType == "Vec3f")
-        //{
-
-        //}
+        else if (dataType == "Vec3d")
+        {
+            Vector3 value = owner.m_impl.GetVector3fValue(dataName);
+        }
         //else if (dataType == "vector < float >" || dataType == "vector<float>")
         //{
 
@@ -77,10 +79,16 @@ public class SofaDataArchiver //: MonoBehaviour, ISerializationCallbackReceiver
         else
         {
             AddUnssuportedData(owner, dataName, dataType);
+            m_otherNames.Add(dataName);
+            supported = false;
         }
 
-        m_names.Add(dataName);
-        m_types.Add(dataType);
+
+        if (supported)
+        {
+            m_names.Add(dataName);
+            m_types.Add(dataType);
+        }
     }
 
 
