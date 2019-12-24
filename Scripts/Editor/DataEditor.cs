@@ -26,8 +26,8 @@ public class DataEditor : Editor
     public override void OnInspectorGUI()
     {
         ComponentDataTest _object = (ComponentDataTest)this.target;
-        _object.data1.value = EditorGUILayout.FloatField(_object.data1.nameID, _object.data1.value);
-        _object.data2.value = EditorGUILayout.Vector3Field(_object.data2.nameID, _object.data2.value);
+        _object.data1.Value = EditorGUILayout.FloatField(_object.data1.DataName, _object.data1.Value);
+        _object.data2.Value = EditorGUILayout.Vector3Field(_object.data2.DataName, _object.data2.Value);
 
         //    // call SRigidGrid and SRigidMesh UI creation
         //    base.OnInspectorGUI();

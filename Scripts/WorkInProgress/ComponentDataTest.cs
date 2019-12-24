@@ -13,6 +13,9 @@ public class ComponentDataTest : MonoBehaviour//, ISerializationCallbackReceiver
     [SerializeField]
     public SofaDataVec3Float data2;
 
+    [SerializeField]
+    public SofaDataArchiver m_dataArchiver;
+
     public string nameId = "mytoto";
 
     void Awake()
@@ -24,19 +27,33 @@ public class ComponentDataTest : MonoBehaviour//, ISerializationCallbackReceiver
     {
         if (!Application.isPlaying)
         {
-            data1 = new SofaDataFloat(this, "toto", 666.0f);
-            data1.Log();
+            //data1 = new SofaDataFloat(this, "toto", 666.0f);
+            //data1.Log();
 
-            data2 = new SofaDataVec3Float(this, "tata", 10, 50, 80);
-            data2.Log();
+            //data2 = new SofaDataVec3Float(this, "tata", 10, 50, 80);
+            //data2.Log();
+
+            m_dataArchiver = new SofaDataArchiver();
+            
+            m_dataArchiver.addFloatValue(1.0f);
+            m_dataArchiver.addFloatValue(11.0f);
+            m_dataArchiver.addFloatValue(21.0f);
+
+            m_dataArchiver.addFloatData(this, "totoD0", 666.0f);
+            m_dataArchiver.addFloatData(this, "totoD1", 777.0f);
+
+            m_dataArchiver.addVec3FloatData(this, "tata", 10, 50, 80);
+
+            m_dataArchiver.Log();
         }
     }
 
     void Start()
     {
         Debug.Log("ComponentDataTest::Start");
-        data1.Log();
-        data2.Log();
+        //data1.Log();
+        //data2.Log();
+        m_dataArchiver.Log();
     }
 
     // Update is called once per frame

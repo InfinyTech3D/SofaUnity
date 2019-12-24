@@ -38,28 +38,46 @@ namespace SofaUnity
     }
 
     [System.Serializable]
-    public class SofaDataFloat
+    public class SofaBaseDataTest
     {
         [SerializeField]
-        protected string m_nameID = "";
-        [SerializeField]
-        protected float m_value = float.MinValue;
-        [SerializeField]
         protected ComponentDataTest m_owner;
+        [SerializeField]
+        protected string m_dataName = "";
+        [SerializeField]
+        protected bool m_isReadOnly = false;
 
-        public SofaDataFloat(ComponentDataTest owner, string nameID, float value)
+        public SofaBaseDataTest(ComponentDataTest owner, string nameID)
         {
             m_owner = owner;
-            m_nameID = nameID;
+            m_dataName = nameID;
+        }
+
+        public string DataName
+        {
+            get { return m_dataName; }
+        }
+
+        public bool IsReadOnly
+        {
+            get { return m_isReadOnly; }
+        }
+    }
+
+
+    [System.Serializable]
+    public class SofaDataFloat : SofaBaseDataTest
+    {
+        [SerializeField]
+        protected float m_value = float.MinValue;        
+
+        public SofaDataFloat(ComponentDataTest owner, string nameID, float value)
+            : base(owner, nameID)
+        {
             m_value = value;
         }
 
-        public string nameID
-        {
-            get { return m_nameID; }
-        }
-
-        public float value
+        public float Value
         {
             get { return m_value; }
             set
@@ -75,7 +93,7 @@ namespace SofaUnity
 
         public void Log()
         {
-            Debug.Log("SofaDataFloat: " + m_nameID + " -> " + m_value + " owner: " + m_owner.nameId);
+            Debug.Log("SofaDataFloat: " + m_dataName + " -> " + m_value + " owner: " + m_owner.nameId);
         }
 
         //public getEditor()
@@ -83,28 +101,18 @@ namespace SofaUnity
 
 
     [System.Serializable]
-    public class SofaDataVec3Float
+    public class SofaDataVec3Float : SofaBaseDataTest
     {
         [SerializeField]
-        protected string m_nameID = "";
-        [SerializeField]
         protected Vector3 m_value;
-        [SerializeField]
-        protected ComponentDataTest m_owner;
 
         public SofaDataVec3Float(ComponentDataTest owner, string nameID, float value0, float value1, float value2)
+            : base(owner, nameID)
         {
-            m_owner = owner;
-            m_nameID = nameID;
             m_value = new Vector3(value0, value1, value2);
         }
 
-        public string nameID
-        {
-            get { return m_nameID; }
-        }
-
-        public Vector3 value
+        public Vector3 Value
         {
             get { return m_value; }
             set
@@ -120,7 +128,7 @@ namespace SofaUnity
 
         public void Log()
         {
-            Debug.Log("SofaDataFloat: " + m_nameID + " -> " + m_value + " owner: " + m_owner.nameId);
+            Debug.Log("SofaDataFloat: " + m_dataName + " -> " + m_value + " owner: " + m_owner.nameId);
         }
 
         //public getEditor()
