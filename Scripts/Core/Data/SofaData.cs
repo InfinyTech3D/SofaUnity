@@ -104,6 +104,7 @@ namespace SofaUnity
                 if (m_value != value)
                 {
                     m_value = value;
+                    m_isEdited = true;
                     //if (m_impl != null)
                     //    m_impl.timeStep = m_timeStep;
                 }
@@ -137,6 +138,7 @@ namespace SofaUnity
                 if (m_value != value)
                 {
                     m_value = value;
+                    m_isEdited = true;
                     //if (m_impl != null)
                     //    m_impl.timeStep = m_timeStep;
                 }
@@ -171,6 +173,7 @@ namespace SofaUnity
                 if (m_value != value)
                 {
                     m_value = value;
+                    m_isEdited = true;
                     //if (m_impl != null)
                     //    m_impl.timeStep = m_timeStep;
                 }
@@ -206,6 +209,7 @@ namespace SofaUnity
                 if (m_value != value)
                 {
                     m_value = value;
+                    m_isEdited = true;
                     //if (m_impl != null)
                     //    m_impl.timeStep = m_timeStep;
                 }
