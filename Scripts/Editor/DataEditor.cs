@@ -26,8 +26,8 @@ public class DataEditor : Editor
     public override void OnInspectorGUI()
     {
         ComponentDataTest _object = (ComponentDataTest)this.target;
-        _object.data1.Value = EditorGUILayout.FloatField(_object.data1.DataName, _object.data1.Value);
-        _object.data2.Value = EditorGUILayout.Vector3Field(_object.data2.DataName, _object.data2.Value);
+        //_object.data1.Value = EditorGUILayout.FloatField(_object.data1.DataName, _object.data1.Value);
+        //_object.data2.Value = EditorGUILayout.Vector3Field(_object.data2.DataName, _object.data2.Value);
 
         //    // call SRigidGrid and SRigidMesh UI creation
         //    base.OnInspectorGUI();
@@ -35,16 +35,5 @@ public class DataEditor : Editor
     }
 }
 
-[CustomEditor(typeof(SofaDataFloat), true)]
-public class SofaDataFloatEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        Debug.Log("SofaDataFloatEditor OnInspectorGUI");
-        // call SRigidGrid and SRigidMesh UI creation
-        //base.OnInspectorGUI();
-
-    }
-}
 
 

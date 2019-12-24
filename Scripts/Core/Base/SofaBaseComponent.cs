@@ -31,7 +31,8 @@ namespace SofaUnity
         public string m_componentType;
 
         /// Pointer to the Sofa Context API.
-        protected SofaBaseComponentAPI m_impl = null;
+        public SofaBaseComponentAPI m_impl = null;
+
 
         public string BaseTypeToString(SBaseComponentType type)
         {
@@ -124,37 +125,41 @@ namespace SofaUnity
         /////        Internal Sata API         /////
         ////////////////////////////////////////////
 
+        [SerializeField]
+        public SofaDataArchiver m_dataArchiver;
+
         /// List of Data parsed
-        protected List<SofaData> m_datas = null;
-        public List<SofaData> datas
-        {
-            get { return m_datas; }
-        }
+        //protected List<SofaData> m_datas = null;
+        //public List<SofaData> datas
+        //{
+        //    get { return m_datas; }
+        //}
 
         /// Map of the Data parsed. Key is the dataName of the Data, value is the type of this Data.
-        protected Dictionary<string, string> m_dataMap = null;
-        public Dictionary<string, string> dataMap
-        {
-            get { return m_dataMap; }
-        }
+        //protected Dictionary<string, string> m_dataMap = null;
+        //public Dictionary<string, string> dataMap
+        //{
+        //    get { return m_dataMap; }
+        //}
 
         virtual protected void GetAllData()
         {
             if (m_impl != null)
             {
-                string allData = m_impl.LoadAllData();                
+                string allData = m_impl.LoadAllData();
                 if (allData == "None")
                     return;
 
+                if (m_dataArchiver == null)
+                    m_dataArchiver = new SofaDataArchiver();
+
                 List<String> datas = allData.Split(';').ToList();
-                m_dataMap = new Dictionary<string, string>();
-                m_datas = new List<SofaData>();
                 foreach (String data in datas)
                 {
                     String[] values = data.Split(',');
                     if (values.GetLength(0) == 2)
                     {
-                        m_datas.Add(new SofaData(values[0], values[1], null));
+                        m_dataArchiver.AddData(this, values[0], values[1]);
                     }
                 }
             }
