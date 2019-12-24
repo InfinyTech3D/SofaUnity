@@ -144,6 +144,77 @@ public class SofaDataArchiver //: MonoBehaviour, ISerializationCallbackReceiver
     }
 
 
+    public SofaStringData GetSofaStringData(string dataName)
+    {
+        foreach(SofaStringData data in m_stringData)
+        {
+            if (data.DataName == dataName)
+                return data;
+        }
+        return null;
+    }
+
+    public SofaBoolData GetSofaBoolData(string dataName)
+    {
+        foreach (SofaBoolData data in m_boolData)
+        {
+            if (data.DataName == dataName)
+                return data;
+        }
+        return null;
+    }
+
+    public SofaIntData GetSofaIntData(string dataName)
+    {
+        foreach (SofaIntData data in m_intData)
+        {
+            if (data.DataName == dataName)
+                return data;
+        }
+        return null;
+    }
+
+    public SofaFloatData GetSofaFloatData(string dataName)
+    {
+        foreach (SofaFloatData data in m_floatData)
+        {
+            if (data.DataName == dataName)
+                return data;
+        }
+        return null;
+    }
+
+    public SofaDoubleData GetDoubleIntData(string dataName)
+    {
+        foreach (SofaDoubleData data in m_doubleData)
+        {
+            if (data.DataName == dataName)
+                return data;
+        }
+        return null;
+    }
+
+    public SofaVec3fData GetSofaVec3fData(string dataName)
+    {
+        foreach (SofaVec3fData data in m_vec3fData)
+        {
+            if (data.DataName == dataName)
+                return data;
+        }
+        return null;
+    }
+
+    public SofaData GetGenericData(string dataName)
+    {
+        foreach (SofaData data in m_otherData)
+        {
+            if (data.DataName == dataName)
+                return data;
+        }
+        return null;
+    }
+
+
     //public void Log()
     //{
     //    Debug.Log("SofaDataArchiver m_floatData: " + m_floatData.Count);
