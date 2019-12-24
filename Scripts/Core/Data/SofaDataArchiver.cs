@@ -48,7 +48,7 @@ public class SofaDataArchiver //: MonoBehaviour, ISerializationCallbackReceiver
         }
         else if (dataType == "double")
         {
-            float value = owner.m_impl.GetFloatValue(dataName);
+            float value = owner.m_impl.GetDoubleValue(dataName);
             AddDoubleData(owner, dataName, value);
         }
         else if (dataType == "Vec3f")
@@ -76,7 +76,7 @@ public class SofaDataArchiver //: MonoBehaviour, ISerializationCallbackReceiver
         //}
         else
         {
-
+            AddUnssuportedData(owner, dataName, dataType);
         }
 
         m_names.Add(dataName);

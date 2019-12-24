@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace SofaUnity
 {
     public class SofaMass : SofaBaseComponent
     {
+
         void Start()
         {
             Debug.Log("##!!!## SofaMass: Start: ");
@@ -52,11 +54,11 @@ namespace SofaUnity
         protected override void FillDataStructure()
         {
             Debug.Log("##!!!## SofaMass: FillDataStructure: ");
-            foreach (SofaData data in m_datas)
-            {
+            //foreach (SofaData data in m_datas)
+            //{
                 
-                Debug.Log(data.nameID + " | type:  " + data.GetType());
-            }
+            //    Debug.Log(data.nameID + " | type:  " + data.GetType());
+            //}
         }
     }
 
