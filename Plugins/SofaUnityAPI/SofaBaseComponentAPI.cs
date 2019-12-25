@@ -171,7 +171,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     {
         if (checkNativePointer())
         {
-            int res = sofaComponentAPI_setDoubleValue(m_simu, m_name, dataName, value);
+            int res = sofaComponentAPI_setDoubleValue(m_simu, m_name, dataName, (double)value);
 
             if (res != 0 && displayLog)
                 Debug.LogError("Method SetDoubleValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
@@ -206,25 +206,73 @@ public class SofaBaseComponentAPI : SofaBaseAPI
         }
     }
 
-  
-    /// <summary> Generic method to get value of a Data<Vec3f> field. </summary>
+
+    /// <summary> Generic method to get value of a Data<Vec2i> field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
-    /// <returns> Vector3 of the Data field, return Vector3 of float.MinValue if field is not found. </returns>
-    public Vector3 GetVector3fValue(string dataName)
+    /// <returns> Vector2 of int of the Data field, return Vector2 of int.MinValue if field is not found. </returns>
+    public Vector2Int GetVector2iValue(string dataName)
     {
-        Vector3 values = new Vector3(float.MinValue, float.MinValue, float.MinValue);
+        Vector2Int values = new Vector2Int(int.MinValue, int.MinValue);
         if (checkNativePointer())
         {
-            float[] val = new float[3];
-            int res = sofaComponentAPI_getVec3fValue(m_simu, m_name, dataName, val);
+            int[] val = new int[2];
+            int res = sofaComponentAPI_getVec2iValue(m_simu, m_name, dataName, val);
 
             if (res == 0)
             {
-                for (int i = 0; i < 3; ++i)
+                for (int i = 0; i < 2; ++i)
                     values[i] = val[i];
             }
             else if (displayLog)
-                Debug.LogError("Method getVector3fValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
+                Debug.LogError("Method getVector2iValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
+        }
+
+        return values;
+    }
+
+    /// <summary> Generic method to set value of a Data<Vec2i> field. </summary>
+    /// <param name="dataName"> Name of the Data field requested. </param>
+    /// <param name="values"> New Vector2 values of the Data. </param>
+    public void SetVector2iValue(string dataName, Vector2Int values)
+    {
+        if (checkNativePointer())
+        {
+            int[] val = new int[2];
+            for (int i = 0; i < 2; ++i)
+                val[i] = values[i];
+
+            int res = sofaComponentAPI_setVec2iValue(m_simu, m_name, dataName, val);
+
+            if (res != 0 && displayLog)
+                Debug.LogError("Method setVector2iValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
+        }
+    }
+
+
+    /// <summary> Generic method to get value of a Data<Vec2> field. </summary>
+    /// <param name="dataName"> Name of the Data field requested. </param>
+    /// <param name="doubleValue"> Parameter to inform if data is in double and should be converted to float. </param>
+    /// <returns> Vector2 of the Data field, return Vector2 of float.MinValue if field is not found. </returns>
+    public Vector3 GetVector2Value(string dataName, bool doubleValue = false)
+    {
+        Vector2 values = new Vector2(float.MinValue, float.MinValue);
+        if (checkNativePointer())
+        {
+            float[] val = new float[2];
+
+            int res = -1;
+            if (doubleValue)
+                res = sofaComponentAPI_getVec2Value(m_simu, m_name, dataName, true, val);
+            else
+                res = sofaComponentAPI_getVec2fValue(m_simu, m_name, dataName, val);
+
+            if (res == 0)
+            {
+                for (int i = 0; i < 2; ++i)
+                    values[i] = val[i];
+            }
+            else if (displayLog)
+                Debug.LogError("Method getVector2Value of Data: " + dataName + " of object: " + m_name + " in double: " + doubleValue + " returns error: " + SofaDefines.msg_error[res]);
         }
 
         return values;
@@ -232,27 +280,32 @@ public class SofaBaseComponentAPI : SofaBaseAPI
 
     /// <summary> Generic method to set value of a Data<Vec3f> field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
+    /// <param name="doubleValue"> Parameter to inform if data is in double and should be converted to float. </param>
     /// <param name="values"> New Vector3 values of the Data. </param>
-    public void SetVector3fValue(string dataName, Vector3 values)
+    public void SetVector2Value(string dataName, Vector2 values, bool doubleValue = false)
     {
         if (checkNativePointer())
         {
-            float[] val = new float[3];
-            for (int i = 0; i < 3; ++i)
+            float[] val = new float[2];
+            for (int i = 0; i < 2; ++i)
                 val[i] = values[i];
 
-            int res = sofaComponentAPI_setVec3fValue(m_simu, m_name, dataName, val);
+            int res = -1;
+            if (doubleValue)
+                res = sofaComponentAPI_setVec2Value(m_simu, m_name, dataName, true, val);
+            else
+                res = sofaComponentAPI_setVec2fValue(m_simu, m_name, dataName, val);
 
             if (res != 0 && displayLog)
-                Debug.LogError("Method setVector3fValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
+                Debug.LogError("Method setVector2Value of Data: " + dataName + " of object: " + m_name + " in double: " + doubleValue + " returns error: " + SofaDefines.msg_error[res]);
         }
     }
 
 
-    /// <summary> Generic method to get value of a Data<Vec3f> field. </summary>
+    /// <summary> Generic method to get value of a Data<Vec3i> field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
-    /// <returns> Vector3 of the Data field, return Vector3 of float.MinValue if field is not found. </returns>
-    public Vector3 GetVector3iValue(string dataName)
+    /// <returns> Vector3 of int of the Data field, return Vector3 of int.MinValue if field is not found. </returns>
+    public Vector3Int GetVector3iValue(string dataName)
     {
         Vector3Int values = new Vector3Int(int.MinValue, int.MinValue, int.MinValue);
         if (checkNativePointer())
@@ -274,7 +327,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
 
     /// <summary> Generic method to set value of a Data<Vec3f> field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
-    /// <param name="values"> New Vector3 values of the Data. </param>
+    /// <param name="values"> New Vector3Int values of the Data. </param>
     public void SetVector3iValue(string dataName, Vector3Int values)
     {
         if (checkNativePointer())
@@ -287,6 +340,59 @@ public class SofaBaseComponentAPI : SofaBaseAPI
 
             if (res != 0 && displayLog)
                 Debug.LogError("Method setVector3iValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
+        }
+    }
+
+
+    /// <summary> Generic method to get value of a Data<Vec3f> field. </summary>
+    /// <param name="dataName"> Name of the Data field requested. </param>
+    /// <param name="doubleValue"> Parameter to inform if data is in double and should be converted to float. </param>
+    /// <returns> Vector3 of the Data field, return Vector3 of float.MinValue if field is not found. </returns>
+    public Vector3 GetVector3Value(string dataName, bool doubleValue = false)
+    {
+        Vector3 values = new Vector3(float.MinValue, float.MinValue, float.MinValue);
+        if (checkNativePointer())
+        {
+            float[] val = new float[3];
+
+            int res = -1;
+            if (doubleValue)
+                res = sofaComponentAPI_getVec3Value(m_simu, m_name, dataName, true, val);
+            else
+                res = sofaComponentAPI_getVec3fValue(m_simu, m_name, dataName, val);
+
+            if (res == 0)
+            {
+                for (int i = 0; i < 3; ++i)
+                    values[i] = val[i];
+            }
+            else if (displayLog)
+                Debug.LogError("Method getVector3Value of Data: " + dataName + " of object: " + m_name + " in double: " + doubleValue + " returns error: " + SofaDefines.msg_error[res]);
+        }
+
+        return values;
+    }
+
+    /// <summary> Generic method to set value of a Data<Vec3f> field. </summary>
+    /// <param name="dataName"> Name of the Data field requested. </param>
+    /// <param name="doubleValue"> Parameter to inform if data is in double and should be converted to float. </param>
+    /// <param name="values"> New Vector3 values of the Data. </param>
+    public void SetVector3Value(string dataName, Vector3 values, bool doubleValue = false)
+    {
+        if (checkNativePointer())
+        {
+            float[] val = new float[3];
+            for (int i = 0; i < 3; ++i)
+                val[i] = values[i];
+
+            int res = -1;
+            if (doubleValue)
+                res = sofaComponentAPI_setVec3Value(m_simu, m_name, dataName, true, val);
+            else
+                res = sofaComponentAPI_setVec3fValue(m_simu, m_name, dataName, val);
+
+            if (res != 0 && displayLog)
+                Debug.LogError("Method setVector3fValue of Data: " + dataName + " of object: " + m_name + " in double: " + doubleValue + " returns error: " + SofaDefines.msg_error[res]);
         }
     }
 
@@ -574,12 +680,29 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     public static extern int sofaComponentAPI_setStringValue(IntPtr obj, string componentName, string dataName, string value);
 
 
-    /// Vec3f API
+
+    // Vec2i API
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaComponentAPI_getVec3fValue(IntPtr obj, string componentName, string dataName, float[] values);
+    public static extern int sofaComponentAPI_getVec2iValue(IntPtr obj, string componentName, string dataName, int[] values);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaComponentAPI_setVec3fValue(IntPtr obj, string componentName, string dataName, float[] values);
+    public static extern int sofaComponentAPI_setVec2iValue(IntPtr obj, string componentName, string dataName, int[] values);
+
+
+    // Vec2f API
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_getVec2fValue(IntPtr obj, string componentName, string dataName, float[] values);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_setVec2fValue(IntPtr obj, string componentName, string dataName, float[] values);
+
+
+    // Vec2 API 
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_getVec2Value(IntPtr obj, string componentName, string dataName, bool doubleValue, float[] values);
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_setVec2Value(IntPtr obj, string componentName, string dataName, bool doubleValue, float[] values);
+
 
 
     /// Vec3i API
@@ -590,12 +713,21 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     public static extern int sofaComponentAPI_setVec3iValue(IntPtr obj, string componentName, string dataName, int[] values);
 
 
-    /// Vec3 API
+    /// Vec3f API
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaComponentAPI_getVec3Value(IntPtr obj, string componentName, string dataName, bool doubleValue, int[] values);
+    public static extern int sofaComponentAPI_getVec3fValue(IntPtr obj, string componentName, string dataName, float[] values);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaComponentAPI_setVec3Value(IntPtr obj, string componentName, string dataName, bool doubleValue, int[] values);
+    public static extern int sofaComponentAPI_setVec3fValue(IntPtr obj, string componentName, string dataName, float[] values);
+    
+
+    /// Vec3 API
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_getVec3Value(IntPtr obj, string componentName, string dataName, bool doubleValue, float[] values);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_setVec3Value(IntPtr obj, string componentName, string dataName, bool doubleValue, float[] values);
+
 
 
     /// Rigid3f API
