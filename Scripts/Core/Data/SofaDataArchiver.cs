@@ -18,7 +18,7 @@ public class SofaDataArchiver //: MonoBehaviour, ISerializationCallbackReceiver
     public List<SofaDoubleData> m_doubleData = null;
 
     // vector types
-    public List<SofaVec3fData> m_vec3fData = null;
+    public List<SofaVec3Data> m_vec3Data = null;
 
 
     // unssuported types
@@ -55,12 +55,13 @@ public class SofaDataArchiver //: MonoBehaviour, ISerializationCallbackReceiver
         }
         else if (dataType == "Vec3f")
         {
-            Vector3 value = owner.m_impl.GetVector3fValue(dataName);
-            AddVec3fData(owner, dataName, value);
+            Vector3 value = owner.m_impl.GetVector3Value(dataName);
+            AddVec3Data(owner, dataName, value, false);
         }
         else if (dataType == "Vec3d")
         {
-            Vector3 value = owner.m_impl.GetVector3fValue(dataName);
+            Vector3 value = owner.m_impl.GetVector3Value(dataName, true);
+            AddVec3Data(owner, dataName, value, true);
         }
         //else if (dataType == "vector < float >" || dataType == "vector<float>")
         //{
@@ -134,12 +135,12 @@ public class SofaDataArchiver //: MonoBehaviour, ISerializationCallbackReceiver
 
 
 
-    public void AddVec3fData(SofaBaseComponent owner, string nameID, Vector3 value)
+    public void AddVec3Data(SofaBaseComponent owner, string nameID, Vector3 value, bool isDouble = false)
     {
-        if (m_vec3fData == null) // first time
-            m_vec3fData = new List<SofaVec3fData>();
+        if (m_vec3Data == null) // first time
+            m_vec3Data = new List<SofaVec3Data>();
 
-        m_vec3fData.Add(new SofaVec3fData(owner, nameID, value));
+        m_vec3Data.Add(new SofaVec3Data(owner, nameID, value, isDouble));
     }
 
 
@@ -202,9 +203,9 @@ public class SofaDataArchiver //: MonoBehaviour, ISerializationCallbackReceiver
         return null;
     }
 
-    public SofaVec3fData GetSofaVec3fData(string dataName)
+    public SofaVec3Data GetSofaVec3Data(string dataName)
     {
-        foreach (SofaVec3fData data in m_vec3fData)
+        foreach (SofaVec3Data data in m_vec3Data)
         {
             if (data.DataName == dataName)
                 return data;

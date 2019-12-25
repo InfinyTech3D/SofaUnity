@@ -190,15 +190,19 @@ namespace SofaUnity
 
 
     [System.Serializable]
-    public class SofaVec3fData : SofaBaseData
+    public class SofaVec3Data : SofaBaseData
     {
         [SerializeField]
         protected Vector3 m_value;
 
-        public SofaVec3fData(SofaBaseComponent owner, string nameID, Vector3 value)
+        [SerializeField]
+        protected bool m_isDouble;
+
+        public SofaVec3Data(SofaBaseComponent owner, string nameID, Vector3 value, bool isDouble)
             : base(owner, nameID, "Vec3f")
         {
             m_value = new Vector3(value.x, value.y, value.z);
+            m_isDouble = isDouble;
         }
 
         public Vector3 Value

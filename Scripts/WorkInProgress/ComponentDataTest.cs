@@ -38,7 +38,7 @@ public class ComponentDataTest : SofaBaseComponent//, ISerializationCallbackRece
             m_dataArchiver.AddFloatData(this, "totoD0", 666.0f);
             m_dataArchiver.AddFloatData(this, "totoD1", 777.0f);
 
-            m_dataArchiver.AddVec3fData(this, "tata", new Vector3(10, 50, 80));
+            m_dataArchiver.AddVec3Data(this, "tata", new Vector3(10, 50, 80), false);
 
             //m_dataArchiver.Log();
         }
