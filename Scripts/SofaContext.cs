@@ -30,7 +30,7 @@ namespace SofaUnity
         public string m_filename = "";
 
         /// Booleen to update sofa simulation
-        public bool IsSofaUpdating = false;
+        public bool IsSofaUpdating = true;
 
         /// Booleen to activate sofa message handler
         public bool CatchSofaMessages = true;

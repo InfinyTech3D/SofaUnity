@@ -10,7 +10,7 @@ namespace SofaUnity
         /// Member: Unity Mesh object of this GameObject
         protected Mesh m_mesh;
         /// Pointer to the corresponding SOFA API object
-        protected SofaBaseMeshAPI m_objectAPI = null;
+        protected SofaBaseMeshAPI m_sofaMeshAPI = null;
 
         protected override void CreateSofaAPI()
         {
@@ -42,49 +42,47 @@ namespace SofaUnity
 
         protected void InitBaseMeshAPI()
         {
+            Debug.Log("SofaVisualModel::InitBaseMeshAPI");
 
+            if (m_sofaMeshAPI == null)
+            {
+                // Get access to the sofaContext
+                IntPtr _simu = m_sofaContext.getSimuContext();
+
+                Debug.Log("UniqueNameId: " + UniqueNameId);
+
+                if (_simu == IntPtr.Zero)
+                    return;
+                
+                // Create the API object for SofaMesh
+                m_sofaMeshAPI = new SofaBaseMeshAPI(m_sofaContext.getSimuContext(), UniqueNameId, false);
+                Debug.Log("SofaVisualModel::InitBaseMeshAPI object created");
+
+                m_sofaMeshAPI.loadObject();
+
+                // Add a MeshFilter to the GameObject
+                MeshFilter mf = gameObject.GetComponent<MeshFilter>();
+                if (mf == null)
+                    gameObject.AddComponent<MeshFilter>();
+
+                //to see it, we have to add a renderer
+                MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();
+                if (mr == null)
+                    mr = gameObject.AddComponent<MeshRenderer>();
+
+                if (mr.sharedMaterial == null)
+                {
+                    mr.sharedMaterial = new Material(Shader.Find("Diffuse"));
+                }
+
+                //MeshCollider collid = gameObject.GetComponent<MeshCollider>();
+                //if (collid == null)
+                //    gameObject.AddComponent<MeshCollider>();
+
+                initMesh(false);
+            }
         }
-
-        //override protected void InitImpl()
-        //{
-        //    Debug.Log("SofaVisualModel::InitImpl");
-        //    //if (m_objectAPI == null)
-        //    //{
-        //    //    // Get access to the sofaContext
-        //    //    IntPtr _simu = m_sofaContext.getSimuContext();
-
-        //    //    if (_simu != IntPtr.Zero)
-        //    //    {
-        //    //        // Create the API object for SofaMesh
-        //    //        m_objectAPI = new SofaMeshAPI(_simu, m_uniqueNameId, false);
-        //    //        Debug.Log("SofaVisualModel::InitImpl object created");
-        //    //    }
-
-        //    //    Debug.Log("SofaVisualModel::awakePostProcess");
-        //    //    // Add a MeshFilter to the GameObject
-        //    //    MeshFilter mf = gameObject.GetComponent<MeshFilter>();
-        //    //    if (mf == null)
-        //    //        gameObject.AddComponent<MeshFilter>();
-
-        //    //    //to see it, we have to add a renderer
-        //    //    MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();
-        //    //    if (mr == null)
-        //    //        mr = gameObject.AddComponent<MeshRenderer>();
-
-        //    //    if (mr.sharedMaterial == null)
-        //    //    {
-        //    //        mr.sharedMaterial = new Material(Shader.Find("Diffuse"));
-        //    //    }
-
-        //    //    MeshCollider collid = gameObject.GetComponent<MeshCollider>();
-        //    //    if (collid == null)
-        //    //        gameObject.AddComponent<MeshCollider>();
-
-        //    //    initMesh(true);
-        //    //}
-        //}
-
-
+        
         /// Method called by @sa Awake() method. As post process method after creation.
         protected override void AwakePostProcess()
         {
@@ -101,7 +99,7 @@ namespace SofaUnity
         protected void initMesh(bool toUpdate)
         {
             Debug.Log("SofaVisualModel::initMesh");
-            if (m_objectAPI == null)
+            if (m_sofaMeshAPI == null)
                 return;
 
 #if UNITY_EDITOR
@@ -121,14 +119,14 @@ namespace SofaUnity
 
             m_mesh.name = "SofaVisualMesh";
             m_mesh.vertices = new Vector3[0];
-            m_objectAPI.updateMesh(m_mesh);
-            m_mesh.triangles = m_objectAPI.createTriangulation();
-            m_objectAPI.recomputeTexCoords(m_mesh);
+            m_sofaMeshAPI.updateMesh(m_mesh);
+            m_mesh.triangles = m_sofaMeshAPI.createTriangulation();
+            m_sofaMeshAPI.recomputeTexCoords(m_mesh);
 
             //base.initMesh(false);
 
             if (toUpdate)
-                m_objectAPI.updateMesh(m_mesh);
+                m_sofaMeshAPI.updateMesh(m_mesh);
         }
 
 
@@ -136,28 +134,29 @@ namespace SofaUnity
         protected override void UpdateImpl()
         {
             //SofaLog("SVisualMesh::updateImpl called.");
-            return;
+            //return;
 
 
-            if (m_impl != null)
+            if (m_sofaMeshAPI != null)
             {
-                if (m_objectAPI.hasTopologyChanged())
+                if (false)//(m_sofaMeshAPI.hasTopologyChanged())
                 {
-                    m_mesh.triangles = m_objectAPI.createTriangulation();
+                    m_mesh.triangles = m_sofaMeshAPI.createTriangulation();
                     //if (m_invertNormals)
                     //{
-                    //    m_objectAPI.m_invertNormals = m_invertNormals;
+                    //    m_sofaMeshAPI.m_invertNormals = m_invertNormals;
                     //    invertMeshNormals();
                     //}
-                    m_objectAPI.setTopologyChange(false);
-                    m_objectAPI.updateMesh(m_mesh);
+                    m_sofaMeshAPI.setTopologyChange(false);
+                    m_sofaMeshAPI.updateMesh(m_mesh);
                     m_mesh.RecalculateNormals();
                 }
                 else
                 {
-                    int res = m_objectAPI.updateMeshVelocity(m_mesh, m_sofaContext.timeStep);
-                    if (res == -1)
-                        m_sofaContext.breakerProcedure();
+                    //int res = m_sofaMeshAPI.updateMeshVelocity(m_mesh, m_sofaContext.timeStep);                    
+                    //if (res == -1)
+                    //    m_sofaContext.breakerProcedure();
+                    m_sofaMeshAPI.updateMesh(m_mesh);
                 }
                 m_mesh.RecalculateBounds();
             }
