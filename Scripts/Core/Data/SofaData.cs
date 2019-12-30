@@ -37,9 +37,13 @@ namespace SofaUnity
             {
                 if (m_value != value)
                 {
+                    Debug.Log("Set value: " + m_dataName + " = " + m_value);
                     m_value = value;
-                    //if (m_impl != null)
-                    //    m_impl.timeStep = m_timeStep;
+                    if (m_owner.m_impl != null)
+                    {
+                        m_owner.m_impl.SetBoolValue(m_dataName, m_value);
+                        m_isEdited = true;
+                    }
                 }
             }
         }
@@ -70,9 +74,13 @@ namespace SofaUnity
             {
                 if (m_value != value)
                 {
+                    Debug.Log("Set value: " + m_dataName + " = " + m_value);
                     m_value = value;
-                    //if (m_impl != null)
-                    //    m_impl.timeStep = m_timeStep;
+                    if (m_owner.m_impl != null)
+                    {
+                        m_owner.m_impl.SetIntValue(m_dataName, m_value);
+                        m_isEdited = true;
+                    }
                 }
             }
         }
@@ -101,12 +109,12 @@ namespace SofaUnity
             get { return m_value; }
             set
             {
-                if (m_value != value)
+                Debug.Log("Set value: " + m_dataName + " = " + m_value);
+                m_value = value;
+                if (m_owner.m_impl != null)
                 {
-                    m_value = value;
+                    m_owner.m_impl.SetFloatValue(m_dataName, m_value);
                     m_isEdited = true;
-                    //if (m_impl != null)
-                    //    m_impl.timeStep = m_timeStep;
                 }
             }
         }
@@ -137,10 +145,13 @@ namespace SofaUnity
             {
                 if (m_value != value)
                 {
+                    Debug.Log("Set value: " + m_dataName + " = " + m_value);
                     m_value = value;
-                    m_isEdited = true;
-                    //if (m_impl != null)
-                    //    m_impl.timeStep = m_timeStep;
+                    if (m_owner.m_impl != null)
+                    {
+                        m_owner.m_impl.SetDoubleValue(m_dataName, m_value);
+                        m_isEdited = true;
+                    }
                 }
             }
         }
@@ -172,10 +183,13 @@ namespace SofaUnity
             {
                 if (m_value != value)
                 {
+                    Debug.Log("Set value: " + m_dataName + " = " + m_value);
                     m_value = value;
-                    m_isEdited = true;
-                    //if (m_impl != null)
-                    //    m_impl.timeStep = m_timeStep;
+                    if (m_owner.m_impl != null)
+                    {
+                        m_owner.m_impl.SetStringValue(m_dataName, m_value);
+                        m_isEdited = true;
+                    }
                 }
             }
         }
@@ -199,7 +213,7 @@ namespace SofaUnity
         protected bool m_isDouble;
 
         public SofaVec3Data(SofaBaseComponent owner, string nameID, Vector3 value, bool isDouble)
-            : base(owner, nameID, "Vec3f")
+            : base(owner, nameID, "Vec3")
         {
             m_value = new Vector3(value.x, value.y, value.z);
             m_isDouble = isDouble;
@@ -212,10 +226,13 @@ namespace SofaUnity
             {
                 if (m_value != value)
                 {
+                    Debug.Log("Set value: " + m_dataName + " = " + m_value);
                     m_value = value;
-                    m_isEdited = true;
-                    //if (m_impl != null)
-                    //    m_impl.timeStep = m_timeStep;
+                    if (m_owner.m_impl != null)
+                    {
+                        m_owner.m_impl.SetVector3Value(m_dataName, m_value, m_isDouble);
+                        m_isEdited = true;
+                    }
                 }
             }
         }
@@ -226,40 +243,7 @@ namespace SofaUnity
         }
     }
 
-
-    [System.Serializable]
-    public class SofaVec3dData : SofaBaseData
-    {
-        [SerializeField]
-        protected Vector3 m_value;
-
-        public SofaVec3dData(SofaBaseComponent owner, string nameID, Vector3 value)
-            : base(owner, nameID, "Vec3d")
-        {
-            m_value = new Vector3(value.x, value.y, value.z);
-        }
-
-        public Vector3 Value
-        {
-            get { return m_value; }
-            set
-            {
-                if (m_value != value)
-                {
-                    m_value = value;
-                    m_isEdited = true;
-                    //if (m_impl != null)
-                    //    m_impl.timeStep = m_timeStep;
-                }
-            }
-        }
-
-        public void Log()
-        {
-            Debug.Log(m_owner.UniqueNameId + "{" + m_dataType + "}: " + m_dataName + " => " + m_value);
-        }
-    }
-
+    
 
     //public class SData<T> : SBaseData
     public class old_SofaData : old_SofaBaseData
