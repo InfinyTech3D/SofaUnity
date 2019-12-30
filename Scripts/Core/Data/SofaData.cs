@@ -109,12 +109,15 @@ namespace SofaUnity
             get { return m_value; }
             set
             {
-                Debug.Log("Set value: " + m_dataName + " = " + m_value);
-                m_value = value;
-                if (m_owner.m_impl != null)
+                if (m_value != value)
                 {
-                    m_owner.m_impl.SetFloatValue(m_dataName, m_value);
-                    m_isEdited = true;
+                    Debug.Log("Set value: " + m_dataName + " = " + m_value);
+                    m_value = value;
+                    if (m_owner.m_impl != null)
+                    {
+                        m_owner.m_impl.SetFloatValue(m_dataName, m_value);
+                        m_isEdited = true;
+                    }
                 }
             }
         }
