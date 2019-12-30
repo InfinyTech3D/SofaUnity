@@ -36,7 +36,7 @@ public class SofaBaseObjectAPI : IDisposable
     // TODO: check if needed
     bool m_isDisposed;
     /// Parameter to activate internal logging
-    public bool displayLog = true;
+    public bool displayLog = false;
 
     /// Name of the Sofa 3D Object mapped to this Object.
     protected string m_name;

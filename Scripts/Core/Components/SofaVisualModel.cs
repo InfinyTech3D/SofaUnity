@@ -32,7 +32,7 @@ namespace SofaUnity
                 return;
             }
 
-            SofaLog("CreateSofaAPI: " + UniqueNameId + " | m_sofaContext: " + m_sofaContext + " | m_sofaContext.getSimuContext(): " + m_sofaContext.getSimuContext());
+            SofaLog("SofaVisualModel::CreateSofaAPI: " + UniqueNameId + " | m_sofaContext: " + m_sofaContext + " | m_sofaContext.getSimuContext(): " + m_sofaContext.getSimuContext());
             m_impl = new SofaVisualModelAPI(m_sofaContext.getSimuContext(), UniqueNameId);
 
 

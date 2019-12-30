@@ -102,7 +102,7 @@ namespace SofaUnity
                 return;
             }
 
-            SofaLog("CreateSofaAPI: " + UniqueNameId + " | m_sofaContext: " + m_sofaContext + " | m_sofaContext.getSimuContext(): " + m_sofaContext.getSimuContext());
+            SofaLog("SofaBaseComponent::CreateSofaAPI: " + UniqueNameId + " | m_sofaContext: " + m_sofaContext + " | m_sofaContext.getSimuContext(): " + m_sofaContext.getSimuContext());
             m_impl = new SofaBaseComponentAPI(m_sofaContext.getSimuContext(), UniqueNameId);
         }
 
