@@ -65,12 +65,16 @@ namespace SofaUnity
         {
             if (m_impl == null)
             {
+                // Creation method of Sofa component API
                 CreateSofaAPI();
 
+                // overide method to fill specific possible types
                 FillPossibleTypes();
 
+                // Genereic Data section
                 GetAllData();
 
+                // overide method to fill specific data section
                 FillDataStructure();
             }
             else

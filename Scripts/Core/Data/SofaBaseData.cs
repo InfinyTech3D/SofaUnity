@@ -20,6 +20,9 @@ namespace SofaUnity
 
         [SerializeField]
         protected bool m_isEdited = false;
+        [SerializeField]
+        protected bool m_isDirty = false;
+
 
         public SofaBaseData(SofaBaseComponent owner, string nameID, string type)
         {

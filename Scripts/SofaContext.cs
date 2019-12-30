@@ -651,6 +651,10 @@ namespace SofaUnity
 
             int nbrObj = m_impl.getNumberObjects();
             Debug.Log("######### nbr Objects: " + nbrObj);
+            for (int i = 0; i < nbrObj; i++)
+            {
+                Debug.Log(i + " -> " + m_impl.getObjectName(i));
+            }
         }
 
 

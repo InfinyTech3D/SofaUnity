@@ -12,6 +12,38 @@ namespace SofaUnity
         /// Pointer to the corresponding SOFA API object
         protected SofaBaseMeshAPI m_objectAPI = null;
 
+        protected override void CreateSofaAPI()
+        {
+            if (m_impl != null)
+            {
+                Debug.LogError("SofaBaseComponent " + UniqueNameId + " already has a SofaBaseComponentAPI.");
+                return;
+            }
+
+            if (m_sofaContext == null)
+            {
+                SofaLog("CreateSofaAPI: " + UniqueNameId + " m_sofaContext is null", 1);
+                return;
+            }
+
+            if (m_sofaContext.getSimuContext() == null)
+            {
+                SofaLog("CreateSofaAPI: " + UniqueNameId + " m_sofaContext.getSimuContext() is null", 1);
+                return;
+            }
+
+            SofaLog("CreateSofaAPI: " + UniqueNameId + " | m_sofaContext: " + m_sofaContext + " | m_sofaContext.getSimuContext(): " + m_sofaContext.getSimuContext());
+            m_impl = new SofaVisualModelAPI(m_sofaContext.getSimuContext(), UniqueNameId);
+
+
+            InitBaseMeshAPI();
+        }
+
+
+        protected void InitBaseMeshAPI()
+        {
+
+        }
 
         //override protected void InitImpl()
         //{

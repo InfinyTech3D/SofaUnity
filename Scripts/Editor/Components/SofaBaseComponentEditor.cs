@@ -16,7 +16,7 @@ public class SofaBaseComponentEditor : Editor
         EditorGUILayout.ObjectField("Sofa Context", compo.m_sofaContext, typeof(Object), true);
         EditorGUILayout.ObjectField("Sofa DAG Node", compo.m_ownerNode, typeof(Object), true);
         EditorGUILayout.EnumPopup("BaseComponentType", compo.m_baseComponentType);
-        compo.m_componentType = EditorGUILayout.TextField("Unique Name Id", compo.m_componentType);
+        compo.m_componentType = EditorGUILayout.TextField("Component Type", compo.m_componentType);
         EditorGUI.EndDisabledGroup();
 
         EditorGUILayout.Separator();
