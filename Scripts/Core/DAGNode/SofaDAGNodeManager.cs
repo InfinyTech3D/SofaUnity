@@ -32,7 +32,7 @@ namespace SofaUnity
                 return;
             }
 
-            // create the list of SBaseObject
+            // create the list of SofaBaseObject
             m_dagNodes = new List<SofaDAGNode>();
             value++;
         }

@@ -14,6 +14,22 @@ namespace SofaUnity
         public string getParentName() { return m_parentNodeName; }
 
 
+        /// init() is called by nodeMgr with sofaContext and names
+        /// - Set sofaContext and name and call InitImpl()
+        /// - create connection with the good api
+        /// - create Object if needed
+        /// - get all data + types
+        /// - get data values and fill data with default values or loaded values
+        /// 
+        /// When play
+        /// - Awake should be done delayed (loop) while SofaContext is init
+        /// - GraphNodeMgr should only init itself with empty vectors
+        /// - Awake is called on each DAGNode which should retrieve SofaContext pointer
+        /// - Using saved Name, connect to API
+        /// - Register to GraphNodeMgr
+        /// - get all data + types
+        /// - Set value modified by editor!!!!!
+        /// ---> Start()
 
 
         protected override void InitImpl()  // if launch by awake should only retrive pointer to sofaContext + name to reconnect to sofaDAGNodeAPI
