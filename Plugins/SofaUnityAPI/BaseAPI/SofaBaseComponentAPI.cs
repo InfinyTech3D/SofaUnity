@@ -397,6 +397,59 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     }
 
 
+    /// <summary> Generic method to get value of a Data<Vec4f> field. </summary>
+    /// <param name="dataName"> Name of the Data field requested. </param>
+    /// <param name="doubleValue"> Parameter to inform if data is in double and should be converted to float. </param>
+    /// <returns> Vector4 of the Data field, return Vector4 of float.MinValue if field is not found. </returns>
+    public Vector4 GetVector4Value(string dataName, bool doubleValue = false)
+    {
+        Vector4 values = new Vector4(float.MinValue, float.MinValue, float.MinValue, float.MinValue);
+        if (checkNativePointer())
+        {
+            float[] val = new float[4];
+
+            int res = -1;
+            if (doubleValue)
+                res = sofaComponentAPI_getVec4Value(m_simu, m_name, dataName, true, val);
+            else
+                res = sofaComponentAPI_getVec4fValue(m_simu, m_name, dataName, val);
+
+            if (res == 0)
+            {
+                for (int i = 0; i < 4; ++i)
+                    values[i] = val[i];
+            }
+            else if (displayLog)
+                Debug.LogError("Method getVector4Value of Data: " + dataName + " of object: " + m_name + " in double: " + doubleValue + " returns error: " + SofaDefines.msg_error[res]);
+        }
+
+        return values;
+    }
+
+    /// <summary> Generic method to set value of a Data<Vec4f> field. </summary>
+    /// <param name="dataName"> Name of the Data field requested. </param>
+    /// <param name="doubleValue"> Parameter to inform if data is in double and should be converted to float. </param>
+    /// <param name="values"> New Vector4 values of the Data. </param>
+    public void SetVector4Value(string dataName, Vector4 values, bool doubleValue = false)
+    {
+        if (checkNativePointer())
+        {
+            float[] val = new float[4];
+            for (int i = 0; i < 4; ++i)
+                val[i] = values[i];
+
+            int res = -1;
+            if (doubleValue)
+                res = sofaComponentAPI_setVec4Value(m_simu, m_name, dataName, true, val);
+            else
+                res = sofaComponentAPI_setVec4fValue(m_simu, m_name, dataName, val);
+
+            if (res != 0 && displayLog)
+                Debug.LogError("Method setVector4fValue of Data: " + dataName + " of object: " + m_name + " in double: " + doubleValue + " returns error: " + SofaDefines.msg_error[res]);
+        }
+    }
+
+
     ///  Generic method to get value of a Data<Rigid3f> field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <param name="values"> Buffer to get the values of the Rigid3f. </param>
@@ -727,6 +780,22 @@ public class SofaBaseComponentAPI : SofaBaseAPI
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_setVec3Value(IntPtr obj, string componentName, string dataName, bool doubleValue, float[] values);
+
+
+    /// Vec4f API
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_getVec4fValue(IntPtr obj, string componentName, string dataName, float[] values);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_setVec4fValue(IntPtr obj, string componentName, string dataName, float[] values);
+
+
+    /// Vec4 API
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_getVec4Value(IntPtr obj, string componentName, string dataName, bool doubleValue, float[] values);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_setVec4Value(IntPtr obj, string componentName, string dataName, bool doubleValue, float[] values);
 
 
 

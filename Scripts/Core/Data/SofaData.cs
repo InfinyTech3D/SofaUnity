@@ -246,7 +246,47 @@ namespace SofaUnity
         }
     }
 
-    
+
+    [System.Serializable]
+    public class SofaVec4Data : SofaBaseData
+    {
+        [SerializeField]
+        protected Vector4 m_value;
+
+        [SerializeField]
+        protected bool m_isDouble;
+
+        public SofaVec4Data(SofaBaseComponent owner, string nameID, Vector3 value, bool isDouble)
+            : base(owner, nameID, "Vec4")
+        {
+            m_value = new Vector3(value.x, value.y, value.z);
+            m_isDouble = isDouble;
+        }
+
+        public Vector4 Value
+        {
+            get { return m_value; }
+            set
+            {
+                if (m_value != value)
+                {
+                    Debug.Log("Set value: " + m_dataName + " = " + m_value);
+                    m_value = value;
+                    if (m_owner.m_impl != null)
+                    {
+                        m_owner.m_impl.SetVector4Value(m_dataName, m_value, m_isDouble);
+                        m_isEdited = true;
+                    }
+                }
+            }
+        }
+
+        public void Log()
+        {
+            Debug.Log(m_owner.UniqueNameId + "{" + m_dataType + "}: " + m_dataName + " => " + m_value);
+        }
+    }
+
 
     //public class SData<T> : SBaseData
     public class old_SofaData : old_SofaBaseData

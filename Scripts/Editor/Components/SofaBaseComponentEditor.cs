@@ -63,6 +63,11 @@ public class SofaBaseComponentEditor : Editor
                 SofaVec3Data data = dataArchiver.GetSofaVec3Data(dataName);
                 data.Value = EditorGUILayout.Vector3Field(data.DataName, data.Value);
             }
+            else if (dataType == "Vec4f" || dataType == "Vec4d")
+            {
+                SofaVec4Data data = dataArchiver.GetSofaVec4Data(dataName);
+                data.Value = EditorGUILayout.Vector4Field(data.DataName, data.Value);
+            }
             else
             {
                 SofaData data = dataArchiver.GetGenericData(dataName);
