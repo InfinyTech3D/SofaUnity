@@ -4,34 +4,34 @@ using SofaUnity;
 
 
 /// <summary>
-/// Editor Class to define the creation and UI of SDeformableMesh GameObject
+/// Editor Class to define the creation and UI of SofaDeformableMesh GameObject
 /// </summary>
-[CustomEditor(typeof(SDeformableMesh), true)]
-public class SDeformableMeshEditor : Editor
+[CustomEditor(typeof(SofaDeformableMesh), true)]
+public class SofaDeformableMeshEditor : Editor
 {
     bool normalBtn = false;
 
     /// <summary>
-    ///  Add SDeformableMesh Object creation to the SofaUnity Menu
+    ///  Add SofaDeformableMesh Object creation to the SofaUnity Menu
     /// </summary>
-    /// <returns>Pointer to the SDeformableMesh GameObject</returns>
-    [MenuItem("SofaUnity/Sofa 3D Object/SDeformableMesh")]
-    [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SDeformableMesh")]
+    /// <returns>Pointer to the SofaDeformableMesh GameObject</returns>
+    [MenuItem("SofaUnity/Sofa 3D Object/SofaDeformableMesh")]
+    [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SofaDeformableMesh")]
     public static GameObject CreateNew()
     {
-        GameObject go = new GameObject("SDeformableMesh");
-        go.AddComponent<SDeformableMesh>();
+        GameObject go = new GameObject("SofaDeformableMesh");
+        go.AddComponent<SofaDeformableMesh>();
         return go;
     }
 
 
     /// <summary>
-    /// Method to set the UI of the SDeformableMesh GameObject
+    /// Method to set the UI of the SofaDeformableMesh GameObject
     /// </summary>
     
     public override void OnInspectorGUI()
     {     
-        SDeformableMesh mesh = (SDeformableMesh)this.target;
+        SofaDeformableMesh mesh = (SofaDeformableMesh)this.target;
         if (mesh.isAwake() == false)
             return;
 
@@ -93,32 +93,32 @@ public class SDeformableMeshEditor : Editor
 
 
 /// <summary>
-/// Editor Class to define the creation and UI of SRigidMesh GameObject
+/// Editor Class to define the creation and UI of SofaRigidMesh GameObject
 /// </summary>
-[CustomEditor(typeof(SRigidMesh), true)]
-public class SRigidMeshEditor : Editor
+[CustomEditor(typeof(SofaRigidMesh), true)]
+public class SofaRigidMeshEditor : Editor
 {
     bool normalBtn = false;
 
     /// <summary>
-    ///  Add SRigidMesh Object creation to the SofaUnity Menu
+    ///  Add SofaRigidMesh Object creation to the SofaUnity Menu
     /// </summary>
-    /// <returns>Pointer to the SRigidMesh GameObject</returns>
-    [MenuItem("SofaUnity/Sofa 3D Object/SRigidMesh")]
-    [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SRigidMesh")]
+    /// <returns>Pointer to the SofaRigidMesh GameObject</returns>
+    [MenuItem("SofaUnity/Sofa 3D Object/SofaRigidMesh")]
+    [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SofaRigidMesh")]
     public static GameObject CreateNew()
     {
-        GameObject go = new GameObject("SRigidMesh");
-        go.AddComponent<SRigidMesh>();
+        GameObject go = new GameObject("SofaRigidMesh");
+        go.AddComponent<SofaRigidMesh>();
         return go;
     }
 
     /// <summary>
-    /// Method to set the UI of the SRigidMesh GameObject
+    /// Method to set the UI of the SofaRigidMesh GameObject
     /// </summary>
     public override void OnInspectorGUI()
     {
-        SRigidMesh mesh = (SRigidMesh)this.target;
+        SofaRigidMesh mesh = (SofaRigidMesh)this.target;
         if (mesh.isAwake() == false)
             return;
 

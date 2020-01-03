@@ -9,7 +9,7 @@ public class DataEditor : Editor
     /// <summary>
     ///  Add ComponentDataTest Object creation to the SofaUnity Menu
     /// </summary>
-    /// <returns>Pointer to the SRigidPlane GameObject</returns>
+    /// <returns>Pointer to the SofaRigidPlane GameObject</returns>
     [MenuItem("SofaUnity/ComponentDataTest")]
     [MenuItem("GameObject/Create Other/SofaUnity/ComponentDataTest")]
     public static GameObject CreateNew()
@@ -21,7 +21,7 @@ public class DataEditor : Editor
     }
 
     /// <summary>
-    /// Method to set the UI of the SRigidPlane GameObject
+    /// Method to set the UI of the SofaRigidPlane GameObject
     /// </summary>
     public override void OnInspectorGUI()
     {
@@ -29,7 +29,7 @@ public class DataEditor : Editor
         //_object.data1.Value = EditorGUILayout.FloatField(_object.data1.DataName, _object.data1.Value);
         //_object.data2.Value = EditorGUILayout.Vector3Field(_object.data2.DataName, _object.data2.Value);
 
-        //    // call SRigidGrid and SRigidMesh UI creation
+        //    // call SofaRigidGrid and SofaRigidMesh UI creation
         //    base.OnInspectorGUI();
 
     }

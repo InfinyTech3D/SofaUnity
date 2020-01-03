@@ -4,11 +4,11 @@ using System;
 namespace SofaUnity
 {
     /// <summary>
-    /// Specific class for a Visual Mesh, inherite from SBaseMesh 
+    /// Specific class for a Visual Mesh, inherite from SofaBaseMesh 
     /// This class will add a meshRenderer and create a SofaMesh API object to load the topology from Sofa Object.
     /// </summary>
     [ExecuteInEditMode]
-    class SVisualMesh : SBaseMesh
+    class SofaVisualMesh : SofaBaseMesh
     {
         ////////////////////////////////////////////
         /////       Object creation API        /////
@@ -27,19 +27,19 @@ namespace SofaUnity
                 // TODO: check if this is still needed (and why not in children)
                 m_impl.loadObject();
 
-                // Call SBaseMesh.createObject() to init value loaded from the scene.// Set init value loaded from the scene.
+                // Call SofaBaseMesh.createObject() to init value loaded from the scene.// Set init value loaded from the scene.
                 base.createObject();
             }
 
             if (m_impl == null)
-                sofaLog("SVisualMesh:: Object creation failed.", 2);
+                sofaLog("SofaVisualMesh:: Object creation failed.", 2);
         }
 
 
         /// Method called by @sa Awake() method. As post process method after creation.
         protected override void awakePostProcess()
         {
-            // Call SBaseMesh.awakePostProcess()
+            // Call SofaBaseMesh.awakePostProcess()
             base.awakePostProcess();
 
             //to see it, we have to add a renderer
@@ -128,7 +128,7 @@ namespace SofaUnity
         /// Method called by @sa Update() method.
         public override void updateImpl()
         {
-            sofaLog("SVisualMesh::updateImpl called.");
+            sofaLog("SofaVisualMesh::updateImpl called.");
 
             if (m_impl != null)
             {

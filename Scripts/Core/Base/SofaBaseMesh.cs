@@ -9,10 +9,10 @@ namespace SofaUnity
 {
     /// <summary>
     /// Base class that design a Mesh GameObject mapped to a Sofa 3DObject.
-    /// This class inherite from @see SBaseObject and add the creation of Mesh and handle transformation
+    /// This class inherite from @see SofaBaseObject and add the creation of Mesh and handle transformation
     /// </summary>
     [ExecuteInEditMode]
-    public class SBaseMesh : SBaseObject
+    public class SofaBaseMesh : SofaBaseObject
     {
         ////////////////////////////////////////////
         /////          Object members          /////
@@ -89,7 +89,7 @@ namespace SofaUnity
         /// Method called at GameObject init (after creation or when starting play).
         private void Start()
         {
-            sofaLog("SBaseMesh::start - " + m_nameId);
+            sofaLog("SofaBaseMesh::start - " + m_nameId);
 
             if (m_impl != null)
             {
@@ -105,13 +105,13 @@ namespace SofaUnity
                 //do this in play mode
                 m_mesh = GetComponent<MeshFilter>().mesh;
                 if (m_log)
-                    Debug.Log("SBox::Start play mode.");
+                    Debug.Log("SofaBox::Start play mode.");
 #endif
 
                 initMesh(true);
             }
 
-            sofaLog("SBaseMesh::Start " + this.name);
+            sofaLog("SofaBaseMesh::Start " + this.name);
         }
 
 
@@ -157,7 +157,7 @@ namespace SofaUnity
         public override void updateInEditor()
         {
             if (m_log)
-                Debug.Log("SBaseMesh::updateInEditor called.");
+                Debug.Log("SofaBaseMesh::updateInEditor called.");
 
             //Recompute bound and normal once in editor.
             if (!once)

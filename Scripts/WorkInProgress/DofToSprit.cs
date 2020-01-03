@@ -9,7 +9,7 @@ public class DofToSprit : MonoBehaviour
     public ParticleSystem m_pSystem = null;
 
     /// Pointer to Sofa deformable Mesh
-    public SDeformableMesh m_sofaObject = null;
+    public SofaDeformableMesh m_sofaObject = null;
 
     /// Vector of particles
     private ParticleSystem.Particle[] m_particles = null;

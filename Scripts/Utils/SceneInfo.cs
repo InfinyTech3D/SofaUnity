@@ -74,7 +74,7 @@ namespace SofaUnity
             foreach (Transform child in SContext.transform)
             {
                 parseInfoChilds(child);                
-                SVisualMesh obj = child.GetComponent<SVisualMesh>();
+                SofaVisualMesh obj = child.GetComponent<SofaVisualMesh>();
                 if (obj != null)
                 {
                     Debug.Log("obj " + obj.name);
@@ -93,7 +93,7 @@ namespace SofaUnity
             {
                 parseInfoChilds(child);
 
-                SVisualMesh obj = child.GetComponent<SVisualMesh>();
+                SofaVisualMesh obj = child.GetComponent<SofaVisualMesh>();
                 if (obj != null)
                 {
                     Debug.Log("obj " + obj.name);

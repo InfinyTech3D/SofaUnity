@@ -8,12 +8,12 @@ using System;
 namespace SofaUnity
 {    
     /// <summary>
-    /// Base class for a Deformable Mesh, inherite from SBaseMesh 
+    /// Base class for a Deformable Mesh, inherite from SofaBaseMesh 
     /// This class will add a meshRenderer and create a SofaMesh API object to load the topology from Sofa Object.
     /// It will also try to create triangles mesh from tetra.
     /// </summary>
     [ExecuteInEditMode]    
-    public class SDeformableMesh : SBaseMesh
+    public class SofaDeformableMesh : SofaBaseMesh
     {
         ////////////////////////////////////////////
         /////          Object members          /////
@@ -60,12 +60,12 @@ namespace SofaUnity
                 // TODO: check if this is still needed (and why not in children)
                 m_impl.loadObject();
 
-                // Call SBaseMesh.createObject() to init value loaded from the scene.
+                // Call SofaBaseMesh.createObject() to init value loaded from the scene.
                 base.createObject();
             }
 
             if (m_impl == null)
-                Debug.LogError("SDeformableMesh:: Object creation failed.");
+                Debug.LogError("SofaDeformableMesh:: Object creation failed.");
 
         }
 
@@ -93,7 +93,7 @@ namespace SofaUnity
         /// Method called by @sa Awake() method. As post process method after creation.
         protected override void awakePostProcess()
         {
-            // Call SBaseMesh.awakePostProcess()
+            // Call SofaBaseMesh.awakePostProcess()
             base.awakePostProcess();
 
             //to see it, we have to add a renderer
@@ -261,7 +261,7 @@ namespace SofaUnity
         /// Method called by @sa Update() method.
         public override void updateImpl()
         {
-            //sofaLog("SDeformableMesh::updateImpl called.");
+            //sofaLog("SofaDeformableMesh::updateImpl called.");
 
             MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();            
 

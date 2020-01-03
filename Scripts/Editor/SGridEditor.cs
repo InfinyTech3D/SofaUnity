@@ -3,20 +3,20 @@ using UnityEditor;
 using SofaUnity;
 
 /// <summary>
-/// Editor Class to define the UI of SGrid GameObject. As Intermediate class. No Object is created here.
+/// Editor Class to define the UI of SofaGrid GameObject. As Intermediate class. No Object is created here.
 /// </summary>
-[CustomEditor(typeof(SGrid), true)]
-public class SGridEditor : SDeformableMeshEditor
+[CustomEditor(typeof(SofaGrid), true)]
+public class SofaGridEditor : SofaDeformableMeshEditor
 {
     /// <summary>
-    /// Method to set the UI of the SGrid GameObject
+    /// Method to set the UI of the SofaGrid GameObject
     /// </summary>
     public override void OnInspectorGUI()
     {
-        // call SDeformableMesh UI creation
+        // call SofaDeformableMesh UI creation
         base.OnInspectorGUI();
 
-        SGrid grid = (SGrid)this.target;
+        SofaGrid grid = (SofaGrid)this.target;
 
         // Add Grid resolution field
         grid.gridSize = EditorGUILayout.Vector3Field("Grid resolution", grid.gridSize);
@@ -25,20 +25,20 @@ public class SGridEditor : SDeformableMeshEditor
 }
 
 /// <summary>
-/// Editor Class to define the UI of SRigidGrid GameObject. As Intermediate class. No Object is created here.
+/// Editor Class to define the UI of SofaRigidGrid GameObject. As Intermediate class. No Object is created here.
 /// </summary>
-[CustomEditor(typeof(SRigidGrid), true)]
-public class SRigidGridEditor : SRigidMeshEditor
+[CustomEditor(typeof(SofaRigidGrid), true)]
+public class SofaRigidGridEditor : SofaRigidMeshEditor
 {
     /// <summary>
-    /// Method to set the UI of the SRigidGrid GameObject
+    /// Method to set the UI of the SofaRigidGrid GameObject
     /// </summary>
     public override void OnInspectorGUI()
     {
-        // call SRigidMesh UI creation
+        // call SofaRigidMesh UI creation
         base.OnInspectorGUI();
 
-        SRigidGrid grid = (SRigidGrid)this.target;
+        SofaRigidGrid grid = (SofaRigidGrid)this.target;
 
         // Add Grid resolution field
         grid.gridSize = EditorGUILayout.Vector3Field("Grid resolution", grid.gridSize);

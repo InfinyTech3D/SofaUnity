@@ -3,60 +3,60 @@ using UnityEditor;
 using SofaUnity;
 
 /// <summary>
-/// Editor Class to define the creation and UI of SSphere GameObject
+/// Editor Class to define the creation and UI of SofaSphere GameObject
 /// </summary>
-[CustomEditor(typeof(SSphere), true)]
-public class SSphereEditor : SGridEditor
+[CustomEditor(typeof(SofaSphere), true)]
+public class SofaSphereEditor : SofaGridEditor
 {
     /// <summary>
-    ///  Add SSphere Object creation to the SofaUnity Menu
+    ///  Add SofaSphere Object creation to the SofaUnity Menu
     /// </summary>
-    /// <returns>Pointer to the SSphere GameObject</returns>
-    [MenuItem("SofaUnity/Sofa 3D Object/SSphere")]
-    [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SSphere")]
+    /// <returns>Pointer to the SofaSphere GameObject</returns>
+    [MenuItem("SofaUnity/Sofa 3D Object/SofaSphere")]
+    [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SofaSphere")]
     new public static GameObject CreateNew()
     {
-        GameObject go = new GameObject("SSphere");
-        go.AddComponent<SSphere>();
+        GameObject go = new GameObject("SofaSphere");
+        go.AddComponent<SofaSphere>();
         return go;
     }
 
     /// <summary>
-    /// Method to set the UI of the SSphere GameObject
+    /// Method to set the UI of the SofaSphere GameObject
     /// </summary>
     public override void OnInspectorGUI()
     {
-        // call SGrid and SDeformableMesh UI creation
+        // call SofaGrid and SofaDeformableMesh UI creation
         base.OnInspectorGUI();
     }
 }
 
 
 /// <summary>
-/// Editor Class to define the creation and UI of SRigidSphere GameObject
+/// Editor Class to define the creation and UI of SofaRigidSphere GameObject
 /// </summary>
-[CustomEditor(typeof(SRigidSphere), true)]
-public class SRigidSphereEditor : SRigidGridEditor
+[CustomEditor(typeof(SofaRigidSphere), true)]
+public class SofaRigidSphereEditor : SofaRigidGridEditor
 {
     /// <summary>
-    ///  Add SRigidSphere Object creation to the SofaUnity Menu
+    ///  Add SofaRigidSphere Object creation to the SofaUnity Menu
     /// </summary>
-    /// <returns>Pointer to the SRigidSphere GameObject</returns>
-    [MenuItem("SofaUnity/Sofa 3D Object/SRigidSphere")]
-    [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SRigidSphere")]
+    /// <returns>Pointer to the SofaRigidSphere GameObject</returns>
+    [MenuItem("SofaUnity/Sofa 3D Object/SofaRigidSphere")]
+    [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SofaRigidSphere")]
     new public static GameObject CreateNew()
     {
-        GameObject go = new GameObject("SRigidSphere");
-        go.AddComponent<SRigidSphere>();
+        GameObject go = new GameObject("SofaRigidSphere");
+        go.AddComponent<SofaRigidSphere>();
         return go;
     }
 
     /// <summary>
-    /// Method to set the UI of the SRigidSphere GameObject
+    /// Method to set the UI of the SofaRigidSphere GameObject
     /// </summary>
     public override void OnInspectorGUI()
     {
-        // call SRigidGrid and SRigidMesh UI creation
+        // call SofaRigidGrid and SofaRigidMesh UI creation
         base.OnInspectorGUI();
     }
 }

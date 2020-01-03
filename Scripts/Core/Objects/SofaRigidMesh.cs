@@ -8,11 +8,11 @@ using System;
 namespace SofaUnity
 {
     /// <summary>
-    /// Base class for a Rigid Mesh, inherite from SBaseMesh 
+    /// Base class for a Rigid Mesh, inherite from SofaBaseMesh 
     /// This class will add a meshRenderer and create a SofaMesh API object to load the topology from Sofa Object.
     /// </summary>
     [ExecuteInEditMode]
-    public class SRigidMesh : SBaseMesh
+    public class SofaRigidMesh : SofaBaseMesh
     {
         ////////////////////////////////////////////
         /////       Object creation API        /////
@@ -31,7 +31,7 @@ namespace SofaUnity
                 // TODO: check if this is still needed (and why not in children)
                 m_impl.loadObject();
 
-                // Call SBaseMesh.createObject() to init value loaded from the scene.
+                // Call SofaBaseMesh.createObject() to init value loaded from the scene.
                 base.createObject();
             }
 
@@ -43,7 +43,7 @@ namespace SofaUnity
         /// Method called by @sa Awake() method. As post process method after creation.
         protected override void awakePostProcess()
         {
-            // Call SBaseMesh.awakePostProcess()
+            // Call SofaBaseMesh.awakePostProcess()
             base.awakePostProcess();
 
             //to see it, we have to add a renderer
@@ -87,7 +87,7 @@ namespace SofaUnity
         public override void updateImpl()
         {
             if (m_log)
-                Debug.Log("SRigidMesh::updateImpl called.");
+                Debug.Log("SofaRigidMesh::updateImpl called.");
 
             if (m_impl != null)
             {

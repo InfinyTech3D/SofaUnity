@@ -11,10 +11,10 @@ namespace SofaUnity
     /// <summary>
     /// Base class that design a SComponentObject mapped to a SofaComponent listener object.
     /// The SofaComponent allows to get all Data of a component that is listened. 
-    /// This class inherite from @see SBaseObject and add the creation of Mesh and handle transformation
+    /// This class inherite from @see SofaBaseObject and add the creation of Mesh and handle transformation
     /// </summary>
     [ExecuteInEditMode]
-    public class SComponentObject : SBaseObject
+    public class SComponentObject : SofaBaseObject
     {
         ////////////////////////////////////////////
         /////        Object members API        /////
@@ -66,7 +66,7 @@ namespace SofaUnity
 
                 m_impl.loadObject();
 
-                // Call SBaseMesh.createObject() to init value loaded from the scene.
+                // Call SofaBaseMesh.createObject() to init value loaded from the scene.
                 base.createObject();
             }
         }

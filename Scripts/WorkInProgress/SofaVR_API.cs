@@ -17,8 +17,8 @@ public class SofaVR_API : MonoBehaviour
     public GameObject m_rightTooltip = null;
     public GameObject m_leftTooltip = null;
 
-    public SSphereCollisionModel m_rightCollisionModel = null;
-    public SSphereCollisionModel m_leftCollisionModel = null;
+    public SofaSphereCollisionModel m_rightCollisionModel = null;
+    public SofaSphereCollisionModel m_leftCollisionModel = null;
 
     protected HandlerController m_rightHandCtrl = null;
     protected HandlerController m_leftHandCtrl = null;
@@ -466,7 +466,7 @@ public class SofaVR_API : MonoBehaviour
         foreach (Transform child in m_sofaContext.transform)
         {
             showWireFrameChilds(child, value);
-            SVisualMesh obj = child.GetComponent<SVisualMesh>();
+            SofaVisualMesh obj = child.GetComponent<SofaVisualMesh>();
             if (obj != null)
             {
                 if (obj.m_isSelected)
@@ -483,7 +483,7 @@ public class SofaVR_API : MonoBehaviour
         {
             showWireFrameChilds(child, value);
 
-            SVisualMesh obj = child.GetComponent<SVisualMesh>();
+            SofaVisualMesh obj = child.GetComponent<SofaVisualMesh>();
             if (obj != null)
             {
                 if (obj.m_isSelected)

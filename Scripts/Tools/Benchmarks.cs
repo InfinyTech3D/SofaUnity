@@ -55,15 +55,15 @@ namespace SofaScripts
 
 
         /// <summary>
-        /// Method to Add a floor to the scene, I.e a SRigidPlane
+        /// Method to Add a floor to the scene, I.e a SofaRigidPlane
         /// </summary>
         /// <returns>Pointer to this GameObject</returns>
         static public GameObject createFloor()
         {
             GameObject floor = new GameObject();
-            floor.AddComponent<SRigidPlane>();
+            floor.AddComponent<SofaRigidPlane>();
             floor.name = "Rigid Floor";
-            SRigidPlane plane = floor.GetComponent<SRigidPlane>();
+            SofaRigidPlane plane = floor.GetComponent<SofaRigidPlane>();
             plane.m_gridSize[0] = 2;
             plane.m_gridSize[1] = 2;
             plane.m_gridSize[2] = 2;
@@ -83,7 +83,7 @@ namespace SofaScripts
         static public GameObject createCube(string name)
         {
             GameObject obj = new GameObject();
-            obj.AddComponent<SBox>();
+            obj.AddComponent<SofaBox>();
             obj.name = name;
             return obj;
         }
@@ -96,7 +96,7 @@ namespace SofaScripts
         static public GameObject createSphere(string name)
         {
             GameObject obj = new GameObject();
-            obj.AddComponent<SSphere>();
+            obj.AddComponent<SofaSphere>();
             obj.name = name;
             return obj;
         }
@@ -109,7 +109,7 @@ namespace SofaScripts
         static public GameObject createCylinder(string name)
         {
             GameObject obj = new GameObject();
-            obj.AddComponent<SCylinder>();
+            obj.AddComponent<SofaCylinder>();
             obj.name = name;
             return obj;
         }

@@ -3,32 +3,32 @@ using UnityEditor;
 using SofaUnity;
 
 /// <summary>
-/// Editor Class to define the creation and UI of SRigidPlane GameObject
+/// Editor Class to define the creation and UI of SofaRigidPlane GameObject
 /// </summary>
-[CustomEditor(typeof(SRigidPlane), true)]
-public class SRigidPlaneEditor : SRigidGridEditor
+[CustomEditor(typeof(SofaRigidPlane), true)]
+public class SofaRigidPlaneEditor : SofaRigidGridEditor
 {
     /// <summary>
-    ///  Add SRigidPlane Object creation to the SofaUnity Menu
+    ///  Add SofaRigidPlane Object creation to the SofaUnity Menu
     /// </summary>
-    /// <returns>Pointer to the SRigidPlane GameObject</returns>
-    [MenuItem("SofaUnity/Sofa 3D Object/SRigidPlane")]
-    [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SRigidPlane")]
+    /// <returns>Pointer to the SofaRigidPlane GameObject</returns>
+    [MenuItem("SofaUnity/Sofa 3D Object/SofaRigidPlane")]
+    [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SofaRigidPlane")]
     new public static GameObject CreateNew()
     {
-        GameObject go = new GameObject("SRigidPlane");
-        go.AddComponent<SRigidPlane>();
+        GameObject go = new GameObject("SofaRigidPlane");
+        go.AddComponent<SofaRigidPlane>();
         return go;
     }
 
     /// <summary>
-    /// Method to set the UI of the SRigidPlane GameObject
+    /// Method to set the UI of the SofaRigidPlane GameObject
     /// </summary>
     public override void OnInspectorGUI()
     {
-        // call SRigidGrid and SRigidMesh UI creation
+        // call SofaRigidGrid and SofaRigidMesh UI creation
         base.OnInspectorGUI();
 
-        SRigidPlane grid = (SRigidPlane)this.target;
+        SofaRigidPlane grid = (SofaRigidPlane)this.target;
     }
 }

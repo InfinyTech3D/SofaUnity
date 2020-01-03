@@ -28,7 +28,7 @@ namespace SofaUnity
             m_sofaContextAPI = impl;
             if (m_sofaContext == null)
             {
-                Debug.LogError("## SObjectHierarchy::IsPlaying: " + Application.isPlaying + " >> SofaContext is null");
+                Debug.LogError("## SofaObjectHierarchy::IsPlaying: " + Application.isPlaying + " >> SofaContext is null");
                 return;
             }
 

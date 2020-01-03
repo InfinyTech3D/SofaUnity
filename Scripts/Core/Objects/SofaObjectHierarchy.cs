@@ -5,10 +5,10 @@ using UnityEngine;
 
 namespace SofaUnity
 {    
-    public class SObjectHierarchy
+    public class SofaObjectHierarchy
     {
-        /// List of SBaseObject in this hierarchy
-        public List<SBaseObject> m_objects = null;
+        /// List of SofaBaseObject in this hierarchy
+        public List<SofaBaseObject> m_objects = null;
 
         /// Dictionary storing the hierarchy of Sofa objects. Key = parent name, value = List of children names.
         protected Dictionary<string, List<string> > hierarchy;
@@ -26,27 +26,27 @@ namespace SofaUnity
         public int cptCreated = 0;
 
         // default constructor of the SObjectHiearchy
-        public SObjectHierarchy(SofaContext context)
+        public SofaObjectHierarchy(SofaContext context)
         {
             // set the sofa Context
             m_sofaContext = context;
             if (m_sofaContext == null)
-                Debug.LogError("## SObjectHierarchy::IsPlaying: " + Application.isPlaying + " >> SofaContext is null");
+                Debug.LogError("## SofaObjectHierarchy::IsPlaying: " + Application.isPlaying + " >> SofaContext is null");
 
-            // create the list of SBaseObject
-            m_objects = new List<SBaseObject>();
+            // create the list of SofaBaseObject
+            m_objects = new List<SofaBaseObject>();
         }
 
-        //~SObjectHierarchy()
+        //~SofaObjectHierarchy()
         //{
-        //    //Debug.Log("## SObjectHierarchy::IsPlaying: >> ~SObjectHierarchy()");
+        //    //Debug.Log("## SofaObjectHierarchy::IsPlaying: >> ~SofaObjectHierarchy()");
         //}
 
 
-        public void registerSObject(SBaseObject obj)
+        public void registerSObject(SofaBaseObject obj)
         {
             if (m_objects == null)
-                Debug.LogError("## SObjectHierarchy::IsPlaying: " + Application.isPlaying + " >> m_objects is null");
+                Debug.LogError("## SofaObjectHierarchy::IsPlaying: " + Application.isPlaying + " >> m_objects is null");
 
             m_objects.Add(obj);
         }
@@ -63,10 +63,10 @@ namespace SofaUnity
 
             foreach (Transform child in m_sofaContext.transform)
             {
-                SBaseObject obj = child.GetComponent<SBaseObject>();
+                SofaBaseObject obj = child.GetComponent<SofaBaseObject>();
 
                 if (m_sofaContext.m_log)
-                    Debug.Log("## SObjectHierarchy::IsPlaying: " + Application.isPlaying + " parent: " + obj.parentName());
+                    Debug.Log("## SofaObjectHierarchy::IsPlaying: " + Application.isPlaying + " parent: " + obj.parentName());
                 if (hierarchy.ContainsKey(obj.parentName()))
                     hierarchy[obj.parentName()].Add(child.name);
                 else
@@ -84,7 +84,7 @@ namespace SofaUnity
                 if (m_sofaContext.m_log)
                 {
                     foreach (string childName in children)
-                        Debug.Log("## SObjectHierarchy::IsPlaying: " + Application.isPlaying + " parent: " + entry.Key + " - child: " + childName);
+                        Debug.Log("## SofaObjectHierarchy::IsPlaying: " + Application.isPlaying + " parent: " + entry.Key + " - child: " + childName);
                 }
 
                 if (entry.Key != "root" && entry.Key != "No impl")
@@ -111,7 +111,7 @@ namespace SofaUnity
                 }
 
             if (!found)
-                Debug.LogError("## SObjectHierarchy::IsPlaying: " + Application.isPlaying + " moveChildren parent node not found: " + parentName);
+                Debug.LogError("## SofaObjectHierarchy::IsPlaying: " + Application.isPlaying + " moveChildren parent node not found: " + parentName);
 
 
             foreach (string childName in children)
@@ -119,7 +119,7 @@ namespace SofaUnity
                 foreach (Transform child in m_sofaContext.transform)
                 {
                     if (m_sofaContext.m_log)
-                        Debug.Log("## SObjectHierarchy::IsPlaying: " + Application.isPlaying + " name found: " + child.name + " current parent: " + child.transform.parent.name);
+                        Debug.Log("## SofaObjectHierarchy::IsPlaying: " + Application.isPlaying + " name found: " + child.name + " current parent: " + child.transform.parent.name);
 
                     if (child.name.Contains(childName))
                     {

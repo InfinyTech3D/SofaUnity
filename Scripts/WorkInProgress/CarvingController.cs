@@ -8,7 +8,7 @@ public class CarvingController : MonoBehaviour {
     public GameObject m_carvingElem = null;
     public bool isActive = false;
 
-    protected SBaseMesh m_object = null;
+    protected SofaBaseMesh m_object = null;
     protected GameObject sofaContextObjet = null;
     protected SofaContext m_sofaObject = null;
 
@@ -33,10 +33,10 @@ public class CarvingController : MonoBehaviour {
             return;
         }
 
-        m_object = m_carvingElem.GetComponent<SBaseMesh>();
+        m_object = m_carvingElem.GetComponent<SofaBaseMesh>();
         if (m_object == null)
         {
-            Debug.LogError("CarvingController::Start - SBaseMesh pointer not set.");
+            Debug.LogError("CarvingController::Start - SofaBaseMesh pointer not set.");
             this.enabled = false;
             return;
         }

@@ -4,10 +4,10 @@ using UnityEngine;
 namespace SofaUnity
 {
     /// <summary>
-    /// Specific class to create a rigid Grid Mesh, inherite from SRigidMesh 
+    /// Specific class to create a rigid Grid Mesh, inherite from SofaRigidMesh 
     /// This class will prepare the creation of specific Grid by adding texture and material to the renderer.
     /// </summary>
-    public class SRigidGrid : SRigidMesh
+    public class SofaRigidGrid : SofaRigidMesh
     {
         /// Parameter to use texCoords and recompute them.
         protected bool m_useTex = true;
@@ -19,7 +19,7 @@ namespace SofaUnity
         /// Method called by @sa Awake() method. As post process method after creation.
         protected override void awakePostProcess()
         {
-            // Call SRigidMesh.awakePostProcess(); to create MeshRenderer
+            // Call SofaRigidMesh.awakePostProcess(); to create MeshRenderer
             base.awakePostProcess();
 
             // Add default material to the MeshRenderer

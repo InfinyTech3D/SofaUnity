@@ -114,7 +114,7 @@ namespace SofaUnity
             //do this in play mode
             m_mesh = GetComponent<MeshFilter>().mesh;
             if (m_log)
-                Debug.Log("SBox::Start play mode.");
+                Debug.Log("SofaBox::Start play mode.");
 #endif
 
             m_mesh.name = "SofaVisualMesh";
@@ -133,7 +133,7 @@ namespace SofaUnity
         /// Method called by @sa Update() method.
         protected override void UpdateImpl()
         {
-            //SofaLog("SVisualMesh::updateImpl called.");
+            //SofaLog("SofaVisualMesh::updateImpl called.");
             //return;
 
 

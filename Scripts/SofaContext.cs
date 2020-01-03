@@ -43,7 +43,7 @@ namespace SofaUnity
 
         List<SRayCaster> m_casters = null;
 
-        private SObjectHierarchy m_hierarchyPtr = null;
+        private SofaObjectHierarchy m_hierarchyPtr = null;
         private SofaDAGNodeManager m_nodeGraphMgr = null;
 
         public bool testAsync = false;
@@ -195,7 +195,7 @@ namespace SofaUnity
             }
         }
 
-        public void registerObject(SBaseObject obj)
+        public void registerObject(SofaBaseObject obj)
         {
             if (m_hierarchyPtr != null)
                 m_hierarchyPtr.registerSObject(obj);
@@ -322,10 +322,10 @@ namespace SofaUnity
         public void initHierarchy()
         {
             if (m_hierarchyPtr == null)
-                m_hierarchyPtr = new SObjectHierarchy(this);
+                m_hierarchyPtr = new SofaObjectHierarchy(this);
 
             if (m_hierarchyPtr.m_objects == null)
-                m_hierarchyPtr.m_objects = new List<SBaseObject>();
+                m_hierarchyPtr.m_objects = new List<SofaBaseObject>();
         }
 
         /// Internal Method to init the SofaContext object
@@ -477,7 +477,7 @@ namespace SofaUnity
                 //if (m_hierarchyPtr.m_objects != null)
                 //{
                 //    // Set all objects to dirty to force and update.
-                //    foreach (SBaseObject child in m_hierarchyPtr.m_objects)
+                //    foreach (SofaBaseObject child in m_hierarchyPtr.m_objects)
                 //    {
                 //        child.setDirty();
                 //    }
@@ -503,7 +503,7 @@ namespace SofaUnity
                     //if (m_hierarchyPtr.m_objects != null)
                     //{
                     //    // Set all objects to dirty to force and update.
-                    //    foreach (SBaseObject child in m_hierarchyPtr.m_objects)
+                    //    foreach (SofaBaseObject child in m_hierarchyPtr.m_objects)
                     //    {
                     //        //child.setDirty();
                     //        child.updateImpl();
@@ -566,7 +566,7 @@ namespace SofaUnity
             List<GameObject> childToDestroy = new List<GameObject>();
             foreach (Transform child in this.transform)
             {
-                SBaseObject obj = child.GetComponent<SBaseObject>();
+                SofaBaseObject obj = child.GetComponent<SofaBaseObject>();
                 if (obj != null)
                 {
                     childToDestroy.Add(child.gameObject);
@@ -581,7 +581,7 @@ namespace SofaUnity
             m_impl.Dispose();
 
             // recreate hierarchy
-            //m_hierarchyPtr = new SObjectHierarchy(this);
+            //m_hierarchyPtr = new SofaObjectHierarchy(this);
 
             // recreate sofaContext
             m_impl = new SofaContextAPI(testAsync);
@@ -614,18 +614,18 @@ namespace SofaUnity
             //    GameObject go;
             //    if (type.Contains("SofaVisual"))
             //    {
-            //        go = new GameObject("SVisualMesh - " + name);
-            //        go.AddComponent<SVisualMesh>();
+            //        go = new GameObject("SofaVisualMesh - " + name);
+            //        go.AddComponent<SofaVisualMesh>();
             //    }
             //    else if (type.Contains("SofaDeformable3DObject"))
             //    {
             //        go = new GameObject("SMesh - " + name);
-            //        go.AddComponent<SDeformableMesh>();
+            //        go.AddComponent<SofaDeformableMesh>();
             //    }
             //    else if (type.Contains("SofaRigid3DObject"))
             //    {
             //        go = new GameObject("SMesh - " + name);
-            //        go.AddComponent<SRigidMesh>();
+            //        go.AddComponent<SofaRigidMesh>();
             //    }
             //    else if (type.Contains("SofaComponentObject"))
             //    {
@@ -635,7 +635,7 @@ namespace SofaUnity
             //    else if (type.Contains("SofaStatic3DObject"))
             //    {
             //        go = new GameObject("SMesh - " + name);
-            //        go.AddComponent<SDeformableMesh>();
+            //        go.AddComponent<SofaDeformableMesh>();
             //    }
             //    else
             //    {

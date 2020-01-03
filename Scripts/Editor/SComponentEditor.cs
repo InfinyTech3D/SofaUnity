@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 
 /// <summary>
-/// Editor Class to define the creation and UI of SDeformableMesh GameObject
+/// Editor Class to define the creation and UI of SofaDeformableMesh GameObject
 /// </summary>
 [CustomEditor(typeof(SComponentObject), true)]
 public class SComponentEditor : Editor
 {
     /// <summary>
-    /// Method to set the UI of the SDeformableMesh GameObject
+    /// Method to set the UI of the SofaDeformableMesh GameObject
     /// </summary>
     public override void OnInspectorGUI()
     {

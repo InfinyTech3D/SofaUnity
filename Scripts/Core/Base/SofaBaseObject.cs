@@ -8,7 +8,7 @@ namespace SofaUnity
     /// Base class to map a Sofa3DObject with a Unity GameObject
     /// This class control the creation of the Sofa3DObject as well as the link to the SofaContext 
     /// </summary>
-    public class SBaseObject : MonoBehaviour
+    public class SofaBaseObject : MonoBehaviour
     {
         ////////////////////////////////////////////
         /////        Object members API        /////
@@ -109,7 +109,7 @@ namespace SofaUnity
 
                 if (m_context == null)
                 {
-                    sofaLog("SBaseObject::loadContext - GetComponent<SofaContext> failed.", 2);
+                    sofaLog("SofaBaseObject::loadContext - GetComponent<SofaContext> failed.", 2);
                     return false;
                 }
 
@@ -143,7 +143,7 @@ namespace SofaUnity
             }
             else
             {
-                sofaLog("SBaseObject::loadContext - No SofaContext found.", 2);
+                sofaLog("SofaBaseObject::loadContext - No SofaContext found.", 2);
                 return false;
             }
         }
@@ -184,7 +184,7 @@ namespace SofaUnity
         /// Method called at GameObject init (after creation or when starting play). To be implemented by child class.
         void Start()
         {
-            sofaLog("SBaseObject::Start called.");
+            sofaLog("SofaBaseObject::Start called.");
 
             // Increment life cycle
             cptLifeCycle++;
@@ -194,7 +194,7 @@ namespace SofaUnity
         /// Method called to update GameObject, called once per frame. To be implemented by child class.
         void Update()
         {
-            //sofaLog("SBaseObject::Update " + this.name + " called.");
+            //sofaLog("SofaBaseObject::Update " + this.name + " called.");
 
             if (!Application.isPlaying)
             {

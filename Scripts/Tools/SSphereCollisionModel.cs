@@ -12,7 +12,7 @@ using System;
 /// The spheres are mapped into collision models in Sofa
 /// </summary>
 [ExecuteInEditMode]
-public class SSphereCollisionModel : MonoBehaviour
+public class SofaSphereCollisionModel : MonoBehaviour
 {
     ////////////////////////////////////////////
     /////          Object members          /////
@@ -59,7 +59,7 @@ public class SSphereCollisionModel : MonoBehaviour
     void Awake()
     {
         if (m_log)
-            Debug.Log("UNITY_EDITOR - SSphereCollisionModel::Awake - " + this.name);
+            Debug.Log("UNITY_EDITOR - SofaSphereCollisionModel::Awake - " + this.name);
 
         if (!m_startOnPlay)
             return;
@@ -75,7 +75,7 @@ public class SSphereCollisionModel : MonoBehaviour
     protected bool loadContext()
     {
         if (m_log)
-            Debug.Log("UNITY_EDITOR - SSphereCollisionModel::loadContext");
+            Debug.Log("UNITY_EDITOR - SofaSphereCollisionModel::loadContext");
 
         // Search for SofaContext
         GameObject _contextObject = GameObject.Find("SofaContext");
@@ -86,7 +86,7 @@ public class SSphereCollisionModel : MonoBehaviour
 
             if (m_sofaContext == null)
             {
-                Debug.LogError("Error SSphereCollisionModel::loadContext: Context not found");
+                Debug.LogError("Error SofaSphereCollisionModel::loadContext: Context not found");
                 return false;
             }
 
@@ -106,7 +106,7 @@ public class SSphereCollisionModel : MonoBehaviour
         }
         else
         {
-            Debug.LogError("SSphereCollisionModel::loadContext - No SofaContext found.");
+            Debug.LogError("SofaSphereCollisionModel::loadContext - No SofaContext found.");
             return false;
         }    
     }
@@ -116,7 +116,7 @@ public class SSphereCollisionModel : MonoBehaviour
     protected virtual void createObject()
     {
         if (m_log)
-            Debug.Log("UNITY_EDITOR - SSphereCollisionModel::createObject");
+            Debug.Log("UNITY_EDITOR - SofaSphereCollisionModel::createObject");
 
         // Get access to the sofaContext
         IntPtr _simu = m_sofaContext.getSimuContext();

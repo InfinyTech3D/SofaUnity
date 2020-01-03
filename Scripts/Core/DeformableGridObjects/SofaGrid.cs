@@ -4,11 +4,11 @@ using System;
 namespace SofaUnity
 {
     /// <summary>
-    /// Specific class to create a deformable Grid Mesh, inherite from SDeformableMesh 
+    /// Specific class to create a deformable Grid Mesh, inherite from SofaDeformableMesh 
     /// This class will prepare the creation of specific Grid by adding texture and material to the renderer.
     /// </summary>
     [ExecuteInEditMode]
-    public class SGrid : SDeformableMesh
+    public class SofaGrid : SofaDeformableMesh
     {
         /// Parameter to use texCoords and recompute them.
         protected bool m_useTex = true;
@@ -20,7 +20,7 @@ namespace SofaUnity
         /// Method called by @sa Awake() method. As post process method after creation.
         protected override void awakePostProcess()
         {
-            // Call SRigidMesh.awakePostProcess(); to create MeshRenderer
+            // Call SofaRigidMesh.awakePostProcess(); to create MeshRenderer
             base.awakePostProcess();
 
             // Add default material to the MeshRenderer
@@ -67,7 +67,7 @@ namespace SofaUnity
         public override void updateImpl()
         {
             if (m_log)
-                Debug.Log("SGrid::updateImpl called.");
+                Debug.Log("SofaGrid::updateImpl called.");
 
             if (m_impl != null) {
                 // TODO: need to find why velocity doesn't work for grid

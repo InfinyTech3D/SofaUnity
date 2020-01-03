@@ -253,7 +253,7 @@ namespace SofaUnity
     {
         public string m_type = "None";
 
-        public old_SofaData(string nameID, string type, SBaseObject owner)
+        public old_SofaData(string nameID, string type, SofaBaseObject owner)
             : base(nameID, owner)
         {
             m_type = type;

@@ -5,7 +5,7 @@ using SofaUnity;
 /// Script that create a 2D texture from a raw data.
 /// work in progress.
 /// </summary>
-public class Texture2DFromRaw : SBaseObject
+public class Texture2DFromRaw : SofaBaseObject
 {
     ////////////////////////////////////////////
     /////          Object members          /////
@@ -43,7 +43,7 @@ public class Texture2DFromRaw : SBaseObject
     ////////////////////////////////////////////
     void Awake()
     {
-        // override the default SBaseObject Awake
+        // override the default SofaBaseObject Awake
     }
 
     public void Start()

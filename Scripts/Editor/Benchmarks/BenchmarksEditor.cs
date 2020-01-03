@@ -24,8 +24,8 @@ public class Benchmark01Editor : Editor
         {
             for (int j = 0; j < 3; ++j)
             {
-                GameObject cube = SofaScripts.Benchmarks.createCube("SBox_" + i + "_" + j);
-                SBox box = cube.GetComponent<SBox>();
+                GameObject cube = SofaScripts.Benchmarks.createCube("SofaBox_" + i + "_" + j);
+                SofaBox box = cube.GetComponent<SofaBox>();
                 box.m_translation[0] = -2 + j * 2;
                 box.m_translation[1] = 6+i*2;
             }
@@ -54,13 +54,13 @@ public class Benchmark02Editor : Editor
 
         // Add a floor        
         GameObject floor = SofaScripts.Benchmarks.createFloor();
-        SRigidPlane _sofaPlane = floor.GetComponent<SRigidPlane>();
+        SofaRigidPlane _sofaPlane = floor.GetComponent<SofaRigidPlane>();
 
         // Add Spheres
         for (int i = 0; i < 5; ++i)
         {
-            GameObject obj = SofaScripts.Benchmarks.createSphere("SSphere_" + i);
-            SSphere objImpl = obj.GetComponent<SSphere>();
+            GameObject obj = SofaScripts.Benchmarks.createSphere("SofaSphere_" + i);
+            SofaSphere objImpl = obj.GetComponent<SofaSphere>();
             objImpl.m_translation[0] = -3;
             objImpl.m_translation[1] = 6 + i * 2;
         }
@@ -68,8 +68,8 @@ public class Benchmark02Editor : Editor
         // Add Cubes
         for (int i = 0; i < 5; ++i)
         {
-            GameObject obj = SofaScripts.Benchmarks.createCube("SBox_" + i);
-            SBox objImpl = obj.GetComponent<SBox>();
+            GameObject obj = SofaScripts.Benchmarks.createCube("SofaBox_" + i);
+            SofaBox objImpl = obj.GetComponent<SofaBox>();
             objImpl.m_translation[0] = 0;
             objImpl.m_translation[1] = 6 + i * 2;
         }
@@ -77,8 +77,8 @@ public class Benchmark02Editor : Editor
         // Add Cylinders
         for (int i = 0; i < 5; ++i)
         {
-            GameObject obj = SofaScripts.Benchmarks.createCylinder("SCylinder_" + i);
-            SCylinder objImpl = obj.GetComponent<SCylinder>();
+            GameObject obj = SofaScripts.Benchmarks.createCylinder("SofaCylinder_" + i);
+            SofaCylinder objImpl = obj.GetComponent<SofaCylinder>();
             objImpl.m_translation[0] = 3;
             objImpl.m_translation[1] = 5.5f + i * 2;
         }

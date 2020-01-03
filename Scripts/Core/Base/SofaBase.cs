@@ -52,7 +52,7 @@ namespace SofaUnity
             m_sofaContext = sofacontext;
             if (m_sofaContext == null)
             {
-                SofaLog("SBaseObject::loadContext - GetComponent<SofaContext> failed.", 2);
+                SofaLog("SofaBaseObject::loadContext - GetComponent<SofaContext> failed.", 2);
                 return;
             }
         }

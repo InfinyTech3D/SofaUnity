@@ -55,9 +55,9 @@ namespace SofaUnity
     {
         protected string m_nameID = "";
         protected bool m_isReadOnly = false;
-        private SBaseObject m_owner;
+        private SofaBaseObject m_owner;
 
-        public old_SofaBaseData(string nameID, SBaseObject owner)
+        public old_SofaBaseData(string nameID, SofaBaseObject owner)
         {
             m_nameID = nameID;
             m_owner = owner;
