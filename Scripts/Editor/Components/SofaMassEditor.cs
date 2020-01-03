@@ -4,10 +4,12 @@ using SofaUnity;
 using System.Collections.Generic;
 
 [CustomEditor(typeof(SofaMass), true)]
-public class SofaMassEditor : Editor
+public class SofaMassEditor : SofaBaseComponentEditor
 {
-    //public override void OnInspectorGUI()
-    //{
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+    }
     //    Debug.Log("SofaMassEditor OnInspectorGUI");
     //    SofaMass _object = (SofaMass)this.target;
 

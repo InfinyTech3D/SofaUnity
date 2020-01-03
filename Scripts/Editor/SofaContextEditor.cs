@@ -30,17 +30,17 @@ public class SofaContextEditor : Editor
     /// <summary>
     ///  Create Sofa logo for the Editor Menu
     /// </summary>
-    private static Texture2D m_sofaLogo;
+    private static Texture2D m_SofaLogo;
     public static Texture2D SofaLogo
     {
         get
         {
-            if (m_sofaLogo == null)
+            if (m_SofaLogo == null)
             {
                 Object logo = Resources.Load("sofa_logo");
-                m_sofaLogo = (Texture2D)logo;
+                m_SofaLogo = (Texture2D)logo;
             }
-            return m_sofaLogo;
+            return m_SofaLogo;
         }
     }
 
