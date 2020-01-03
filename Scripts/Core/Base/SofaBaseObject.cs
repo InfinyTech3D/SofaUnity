@@ -88,7 +88,7 @@ namespace SofaUnity
                 else
                 {
                     m_uniqueNameId = this.name;
-                    m_uniqueNameId += "_" + m_sofaContext.objectcpt;
+                    //m_uniqueNameId += "_" + m_sofaContext.objectcpt;
                 }
 
                 SofaLog("this.name : " + this.name + " - m_uniqueNameId: " + m_uniqueNameId);
@@ -97,11 +97,11 @@ namespace SofaUnity
                 createObject();
 
                 // Increment counter if objectis created from loading scene process
-                m_sofaContext.countCreated();
+                //m_sofaContext.countCreated();
 
-                // Increment the context object counter for names.
-                m_sofaContext.objectcpt = m_sofaContext.objectcpt + 1;
-                m_sofaContext.registerObject(this);
+                //// Increment the context object counter for names.
+                //m_sofaContext.objectcpt = m_sofaContext.objectcpt + 1;
+                //m_sofaContext.registerObject(this);
 
                 return true;
             }

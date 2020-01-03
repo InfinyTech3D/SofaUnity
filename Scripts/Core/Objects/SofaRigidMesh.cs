@@ -36,8 +36,8 @@ namespace SofaUnity
             }
 
             // Increment Context name counter if object has been created.
-            if (m_impl != null) // TODO: duplicate code with baseObject method?
-                m_sofaContext.objectcpt = m_sofaContext.objectcpt + 1;
+            //if (m_impl != null) // TODO: duplicate code with baseObject method?
+            //    m_sofaContext.objectcpt = m_sofaContext.objectcpt + 1;
         }
 
         /// Method called by @sa Awake() method. As post process method after creation.

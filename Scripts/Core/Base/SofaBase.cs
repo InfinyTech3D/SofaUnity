@@ -64,7 +64,7 @@ namespace SofaUnity
         }
 
         /// Parameter to activate logging of this Sofa GameObject
-        public bool m_log = true;
+        public bool m_log = false;
 
 
         /// Parameter storing the fact that the object is fully init

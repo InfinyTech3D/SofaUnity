@@ -10,7 +10,7 @@ namespace SofaUnity
 
         void Start()
         {
-            Debug.Log("##!!!## SofaMass: Start: ");
+            //Debug.Log("##!!!## SofaMass: Start: ");
             //foreach (string key in m_dataMap.Keys)
             //{
             //    string val = m_dataMap[key];
@@ -45,7 +45,7 @@ namespace SofaUnity
             if (m_impl != null)
             {
                 string type = m_impl.GetComponentType();
-                Debug.Log("##!!!## SofaMass: " + type);
+                //Debug.Log("##!!!## SofaMass: " + type);
             }
             else
                 Debug.LogError("SofaMass No Impl at Init: ");
@@ -53,7 +53,7 @@ namespace SofaUnity
 
         protected override void FillDataStructure()
         {
-            Debug.Log("##!!!## SofaMass: FillDataStructure: ");
+            //Debug.Log("##!!!## SofaMass: FillDataStructure: ");
             //foreach (SofaData data in m_datas)
             //{
                 

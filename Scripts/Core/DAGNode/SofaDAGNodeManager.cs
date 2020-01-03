@@ -107,7 +107,6 @@ namespace SofaUnity
 
             return found;
         }
-        //hand = GameObject.Find("Hand");
 
 
         public void loadGraph()
@@ -121,7 +120,12 @@ namespace SofaUnity
             for (int i=0; i<nbrNode; i++)            
             {
                 string NodeName = m_sofaContextAPI.getDAGNodeName(i);
-                if (NodeName != "Error")
+                if (NodeName == "root")
+                {
+                    //m_sofaContext.AddComponent<SofaDAGNode>();
+                    continue;
+                }
+                else if (NodeName != "Error")
                 {
                     GameObject nodeGO = new GameObject("SofaNode - " + NodeName);
                     SofaDAGNode dagNode = nodeGO.AddComponent<SofaDAGNode>();
@@ -133,6 +137,10 @@ namespace SofaUnity
                     m_dagNodes.Add(dagNode);
                     nodeGO.transform.parent = m_sofaContext.gameObject.transform;
                 }
+                else
+                {
+                    Debug.LogError("SofaDAGNodeManager Error loading node: " + i + "return error: " + NodeName);
+                }
             }
             value += nbrNode;
             Debug.Log(Application.isPlaying + " value: " + value);
@@ -142,6 +150,9 @@ namespace SofaUnity
             {
                 string parentName = snode.getParentName();
                 if (parentName == "None") // root node
+                    continue;
+
+                if (parentName == "root") // under root node
                     continue;
 
                 // search for parent (no optimisation needed here)

@@ -97,10 +97,10 @@ public class SofaSphereCollisionModel : MonoBehaviour
             createObject();
 
             // Increment counter if objectis created from loading scene process
-            m_sofaContext.countCreated();
+            //m_sofaContext.countCreated();
 
-            // Increment the context object counter for names.
-            m_sofaContext.objectcpt = m_sofaContext.objectcpt + 1;
+            //// Increment the context object counter for names.
+            //m_sofaContext.objectcpt = m_sofaContext.objectcpt + 1;
 
             return true;
         }
@@ -167,10 +167,10 @@ public class SofaSphereCollisionModel : MonoBehaviour
         createObject();
 
         // Increment counter if objectis created from loading scene process
-        m_sofaContext.countCreated();
+        //m_sofaContext.countCreated();
 
-        // Increment the context object counter for names.
-        m_sofaContext.objectcpt = m_sofaContext.objectcpt + 1;
+        //// Increment the context object counter for names.
+        //m_sofaContext.objectcpt = m_sofaContext.objectcpt + 1;
 
         // Call a post process method for additional codes.
         awakePostProcess();

@@ -43,7 +43,6 @@ namespace SofaUnity
 
         List<SRayCaster> m_casters = null;
 
-        private SofaObjectHierarchy m_hierarchyPtr = null;
         private SofaDAGNodeManager m_nodeGraphMgr = null;
 
         public bool testAsync = false;
@@ -166,40 +165,6 @@ namespace SofaUnity
             cptBreaker = 0;
         }
 
-        /// Getter/Setter of current objectcpt @see m_objectCpt
-        public int objectcpt
-        {
-            get
-            {
-                if (m_hierarchyPtr == null)
-                    initHierarchy();
-
-                return m_hierarchyPtr.m_objectCpt;
-            }
-            set
-            {
-                if (m_hierarchyPtr == null)
-                    initHierarchy();
-                m_hierarchyPtr.m_objectCpt = value;
-            }
-        }
-
-        /// Getter to the number of object loaded from Sofa Scene.
-        public int nbrObject
-        {
-            get
-            {
-                if (m_hierarchyPtr == null)
-                    initHierarchy();
-                return m_hierarchyPtr.m_nbrObject;
-            }
-        }
-
-        public void registerObject(SofaBaseObject obj)
-        {
-            if (m_hierarchyPtr != null)
-                m_hierarchyPtr.registerSObject(obj);
-        }
 
         public void registerCaster(SRayCaster obj)
         {
@@ -319,14 +284,6 @@ namespace SofaUnity
             //m_impl.loadPlugin(Application.dataPath + pluginPath + "MultiCoreGPU.dll");
         }
 
-        public void initHierarchy()
-        {
-            if (m_hierarchyPtr == null)
-                m_hierarchyPtr = new SofaObjectHierarchy(this);
-
-            if (m_hierarchyPtr.m_objects == null)
-                m_hierarchyPtr.m_objects = new List<SofaBaseObject>();
-        }
 
         /// Internal Method to init the SofaContext object
         void init()
@@ -353,8 +310,6 @@ namespace SofaUnity
                 {
                     Debug.Log("## m_nodeGraphMgr already created...");
                 }
-                //if (m_hierarchyPtr == null)
-                //    initHierarchy();
 
                 catchSofaMessages();
                 loadPlugins();
@@ -400,12 +355,6 @@ namespace SofaUnity
                     {
                         m_nodeGraphMgr.ReconnectNodeGraph();
                     }
-                    // Set counter of object creation to 0
-                    //m_hierarchyPtr.cptCreated = 0;
-                    //m_hierarchyPtr.m_nbrObject = m_impl.getNumberObjects();
-
-                    //if (m_log)
-                    //    Debug.Log("init - m_nbrObject: " + m_hierarchyPtr.m_nbrObject);
 
                     //m_timeStep = m_impl.timeStep;
                     //m_gravity = m_impl.getGravity();
@@ -576,12 +525,8 @@ namespace SofaUnity
             foreach (GameObject child in childToDestroy)
                 DestroyImmediate(child);
 
-
             // destroy sofaContext
             m_impl.Dispose();
-
-            // recreate hierarchy
-            //m_hierarchyPtr = new SofaObjectHierarchy(this);
 
             // recreate sofaContext
             m_impl = new SofaContextAPI(testAsync);
@@ -598,55 +543,7 @@ namespace SofaUnity
         {
             Debug.Log("## SofaContext ## loadFilename " + Application.dataPath + m_filename);
             m_impl.loadScene(Application.dataPath + m_filename);
-            //m_hierarchyPtr.m_nbrObject = m_impl.getNumberObjects();
 
-            //if (m_log)
-            //    Debug.Log("## SofaContext ## loadFilename - getNumberObjects: " + m_hierarchyPtr.m_nbrObject);
-
-            // Add 1 fictive object to be sure this method reach the end of the object creation loop
-            // before calling recreateHiearchy(); As the creation is asynchronous. call countCreated() at the end to compensate that +1.
-            //m_hierarchyPtr.m_nbrObject += 1; 
-            //for (int i = 0; i < m_hierarchyPtr.m_nbrObject; ++i)
-            //{
-            //    string name = m_impl.getObjectName(i);
-            //    string type = m_impl.getObjectType(i);
-
-            //    GameObject go;
-            //    if (type.Contains("SofaVisual"))
-            //    {
-            //        go = new GameObject("SofaVisualMesh - " + name);
-            //        go.AddComponent<SofaVisualMesh>();
-            //    }
-            //    else if (type.Contains("SofaDeformable3DObject"))
-            //    {
-            //        go = new GameObject("SMesh - " + name);
-            //        go.AddComponent<SofaDeformableMesh>();
-            //    }
-            //    else if (type.Contains("SofaRigid3DObject"))
-            //    {
-            //        go = new GameObject("SMesh - " + name);
-            //        go.AddComponent<SofaRigidMesh>();
-            //    }
-            //    else if (type.Contains("SofaComponentObject"))
-            //    {
-            //        go = new GameObject("SComponent - " + name);
-            //        go.AddComponent<SComponentObject>();
-            //    }
-            //    else if (type.Contains("SofaStatic3DObject"))
-            //    {
-            //        go = new GameObject("SMesh - " + name);
-            //        go.AddComponent<SofaDeformableMesh>();
-            //    }
-            //    else
-            //    {
-            //        Debug.LogWarning("Object not added: " + name + " of type: " + type);
-            //        continue;
-            //    }
-
-            //    go.transform.parent = this.gameObject.transform;
-            //}
-
-            //countCreated();
             m_nodeGraphMgr.loadGraph();
 
             int nbrObj = m_impl.getNumberObjects();
@@ -656,17 +553,5 @@ namespace SofaUnity
                 Debug.Log(i + " -> " + m_impl.getObjectName(i));
             }
         }
-
-
-        /// Count the number of object created, when all created, will move them to recreate Sofa hierarchy.
-        public void countCreated()
-        {
-            //    m_hierarchyPtr.cptCreated++;
-
-            //    if (m_hierarchyPtr.cptCreated == m_hierarchyPtr.m_nbrObject)
-            //        m_hierarchyPtr.recreateHiearchy();
-        }
-
-
     }
 }

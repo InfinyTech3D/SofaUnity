@@ -71,12 +71,12 @@ public class Texture2DFromRaw : SofaBaseObject
         {
             // Get Sofa context
             SofaContext _sofaContext = _contextObject.GetComponent<SofaUnity.SofaContext>();
-            if (_sofaContext == null)
-            {
+            //if (_sofaContext == null)
+            //{
                 Debug.LogError("Texture2DFromRaw::loadContext - GetComponent<SofaUnity.SofaContext> failed.");
-            }
-            else
-                _sofaContext.registerObject(this);
+            //}
+            //else
+            //    _sofaContext.registerObject(this);
         }
         else
         {
