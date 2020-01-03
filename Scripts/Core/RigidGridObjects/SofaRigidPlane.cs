@@ -16,7 +16,7 @@ namespace SofaUnity
             // Get access to the sofaContext
             IntPtr _simu = m_context.getSimuContext();
             if (_simu != IntPtr.Zero) // Create the API object for Sofa Regular Grid Mesh in 2D
-                m_impl = new SofaPlane(_simu, m_nameId, true);
+                m_impl = new SofaPlaneAPI(_simu, m_nameId, true);
 
             if (m_impl == null || !m_impl.m_isCreated)
             {

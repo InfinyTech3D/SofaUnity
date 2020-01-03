@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 /// <summary>
 /// Class used to handle bindings to the Sofa Plane object, using a Regular Grid topology in 2D.
 /// </summary>
-public class SofaPlane : SofaBaseMeshAPI
+public class SofaPlaneAPI : SofaBaseMeshAPI
 {
     /// <summary>
     /// Default constructor
@@ -13,14 +13,14 @@ public class SofaPlane : SofaBaseMeshAPI
     /// <param name="simu">Pointer to the SofaPhysicsAPI</param>
     /// <param name="nameID">Name of this Object</param>
     /// <param name="isRigid">Type rigid or deformable</param>
-    public SofaPlane(IntPtr simu, string nameID, bool isRigid)
+    public SofaPlaneAPI(IntPtr simu, string nameID, bool isRigid)
         : base(simu, nameID, isRigid)
     {
 
     }
 
     /// Destructor
-    ~SofaPlane()
+    ~SofaPlaneAPI()
     {
         Dispose(false);
     }
@@ -36,7 +36,7 @@ public class SofaPlane : SofaBaseMeshAPI
 
             if (res != 0)
             {
-                Debug.LogError("SofaPlane::createObject plane creation method return error: " + SofaDefines.msg_error[res] + " for object " + m_name);
+                Debug.LogError("SofaPlaneAPI::createObject plane creation method return error: " + SofaDefines.msg_error[res] + " for object " + m_name);
                 return false;
             }
 
@@ -49,7 +49,7 @@ public class SofaPlane : SofaBaseMeshAPI
             
             if (res1[0] != 0 || m_native == IntPtr.Zero)
             {
-                Debug.LogError("SofaPlane::createObject get3DObject method returns: " + SofaDefines.msg_error[res1[0]]);
+                Debug.LogError("SofaPlaneAPI::createObject get3DObject method returns: " + SofaDefines.msg_error[res1[0]]);
                 res1 = null;
                 return false;
             }

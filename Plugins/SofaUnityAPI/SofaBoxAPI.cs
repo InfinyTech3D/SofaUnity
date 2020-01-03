@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 /// <summary>
 /// Class used to handle bindings to the Sofa Cube object, using a RegularGrid.
 /// </summary>
-public class SofaBox : SofaBaseMeshAPI
+public class SofaBoxAPI : SofaBaseMeshAPI
 {
     /// <summary>
     /// Default constructor
@@ -13,14 +13,14 @@ public class SofaBox : SofaBaseMeshAPI
     /// <param name="simu">Pointer to the SofaPhysicsAPI</param>
     /// <param name="nameID">Name of this Object</param>
     /// <param name="isRigid">Type rigid or deformable</param>
-    public SofaBox(IntPtr simu, string nameID, bool isRigid) 
+    public SofaBoxAPI(IntPtr simu, string nameID, bool isRigid) 
         : base (simu, nameID, isRigid)        
     {
 
     }
 
     /// Destructor
-    ~SofaBox()
+    ~SofaBoxAPI()
     {
         Dispose(false);
     }
@@ -36,7 +36,7 @@ public class SofaBox : SofaBaseMeshAPI
 
             if (res != 0)
             {
-                Debug.LogError("SofaBox::createObject cube creation method return error: " + SofaDefines.msg_error[res] + " for object " + m_name);
+                Debug.LogError("SofaBoxAPI::createObject cube creation method return error: " + SofaDefines.msg_error[res] + " for object " + m_name);
                 return false;
             }
 
@@ -50,7 +50,7 @@ public class SofaBox : SofaBaseMeshAPI
             m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name, res1);
             if (res1[0] != 0 || m_native == IntPtr.Zero)
             {
-                Debug.LogError("SofaBox::createObject get3DObject method returns: " + SofaDefines.msg_error[res1[0]]);
+                Debug.LogError("SofaBoxAPI::createObject get3DObject method returns: " + SofaDefines.msg_error[res1[0]]);
                 res1 = null;
                 return false;
             }

@@ -17,7 +17,7 @@ namespace SofaUnity
             // Get access to the sofaContext
             IntPtr _simu = m_context.getSimuContext();
             if (_simu != IntPtr.Zero) // Create the API object for Sofa Sphere Grid Mesh
-                m_impl = new SofaSphere(_simu, m_nameId, true);
+                m_impl = new SofaSphereAPI(_simu, m_nameId, true);
 
             if (m_impl == null || !m_impl.m_isCreated)
             {
