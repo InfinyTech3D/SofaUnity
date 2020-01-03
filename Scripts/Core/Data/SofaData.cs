@@ -205,6 +205,46 @@ namespace SofaUnity
 
 
 
+    [System.Serializable]
+    public class SofaVec2Data : SofaBaseData
+    {
+        [SerializeField]
+        protected Vector2 m_value;
+
+        [SerializeField]
+        protected bool m_isDouble;
+
+        public SofaVec2Data(SofaBaseComponent owner, string nameID, Vector2 value, bool isDouble)
+            : base(owner, nameID, "Vec2")
+        {
+            m_value = new Vector2(value.x, value.y);
+            m_isDouble = isDouble;
+        }
+
+        public Vector2 Value
+        {
+            get { return m_value; }
+            set
+            {
+                if (m_value != value)
+                {
+                    Debug.Log("Set value: " + m_dataName + " = " + m_value);
+                    m_value = value;
+                    if (m_owner.m_impl != null)
+                    {
+                        m_owner.m_impl.SetVector2Value(m_dataName, m_value, m_isDouble);
+                        m_isEdited = true;
+                    }
+                }
+            }
+        }
+
+        public void Log()
+        {
+            Debug.Log(m_owner.UniqueNameId + "{" + m_dataType + "}: " + m_dataName + " => " + m_value);
+        }
+    }
+
 
     [System.Serializable]
     public class SofaVec3Data : SofaBaseData
@@ -247,7 +287,7 @@ namespace SofaUnity
     }
 
 
-    [System.Serializable]
+   [System.Serializable]
     public class SofaVec4Data : SofaBaseData
     {
         [SerializeField]
@@ -284,6 +324,24 @@ namespace SofaUnity
         public void Log()
         {
             Debug.Log(m_owner.UniqueNameId + "{" + m_dataType + "}: " + m_dataName + " => " + m_value);
+        }
+    }
+
+
+    [System.Serializable]
+    public class SofaVectorData : SofaBaseData
+    {
+        [SerializeField]
+        protected string m_vecType = "";
+
+        [SerializeField]
+        protected int m_vecSize = 0;
+
+        public SofaVectorData(SofaBaseComponent owner, string nameID, string dataType, string vecType, int size)
+            : base(owner, nameID, dataType)
+        {
+            m_vecType = vecType;
+            m_vecSize = size;
         }
     }
 

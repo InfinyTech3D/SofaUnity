@@ -58,6 +58,11 @@ public class SofaBaseComponentEditor : Editor
                 SofaDoubleData data = dataArchiver.GetDoubleIntData(dataName);
                 data.Value = EditorGUILayout.FloatField(data.DataName, data.Value);
             }
+            else if (dataType == "Vec2f" || dataType == "Vec2d")
+            {
+                SofaVec2Data data = dataArchiver.GetSofaVec2Data(dataName);
+                data.Value = EditorGUILayout.Vector2Field(data.DataName, data.Value);
+            }
             else if (dataType == "Vec3f" || dataType == "Vec3d")
             {
                 SofaVec3Data data = dataArchiver.GetSofaVec3Data(dataName);
@@ -71,7 +76,7 @@ public class SofaBaseComponentEditor : Editor
             else
             {
                 SofaData data = dataArchiver.GetGenericData(dataName);
-                EditorGUILayout.TextField(data.DataName, "Unsopported type: " + data.DataType);
+                EditorGUILayout.TextField(data.DataName, "Unsupported type: " + data.DataType);
             }
     
         }
@@ -82,7 +87,7 @@ public class SofaBaseComponentEditor : Editor
         {
             string dataName = dataArchiver.m_otherNames[i];
             SofaData data = dataArchiver.GetGenericData(dataName);
-            EditorGUILayout.TextField(data.DataName, "Unsopported type: " + data.DataType);
+            EditorGUILayout.TextField(data.DataName, "Unsupported type: " + data.DataType);
 
 
         }

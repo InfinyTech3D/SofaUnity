@@ -18,6 +18,7 @@ public class SofaDataArchiver //: MonoBehaviour, ISerializationCallbackReceiver
     public List<SofaDoubleData> m_doubleData = null;
 
     // vector types
+    public List<SofaVec2Data> m_vec2Data = null;
     public List<SofaVec3Data> m_vec3Data = null;
     public List<SofaVec4Data> m_vec4Data = null;
 
@@ -60,6 +61,16 @@ public class SofaDataArchiver //: MonoBehaviour, ISerializationCallbackReceiver
         {
             float value = owner.m_impl.GetDoubleValue(dataName);
             AddDoubleData(owner, dataName, value);
+        }
+        else if (dataType == "Vec2f")
+        {
+            Vector2 value = owner.m_impl.GetVector2Value(dataName);
+            AddVec2Data(owner, dataName, value, false);
+        }
+        else if (dataType == "Vec2d")
+        {
+            Vector2 value = owner.m_impl.GetVector2Value(dataName, true);
+            AddVec2Data(owner, dataName, value, true);
         }
         else if (dataType == "Vec3f")
         {
@@ -152,6 +163,14 @@ public class SofaDataArchiver //: MonoBehaviour, ISerializationCallbackReceiver
     }
 
 
+    public void AddVec2Data(SofaBaseComponent owner, string nameID, Vector2 value, bool isDouble = false)
+    {
+        if (m_vec2Data == null) // first time
+            m_vec2Data = new List<SofaVec2Data>();
+
+        m_vec2Data.Add(new SofaVec2Data(owner, nameID, value, isDouble));
+    }
+
     public void AddVec3Data(SofaBaseComponent owner, string nameID, Vector3 value, bool isDouble = false)
     {
         if (m_vec3Data == null) // first time
@@ -222,6 +241,16 @@ public class SofaDataArchiver //: MonoBehaviour, ISerializationCallbackReceiver
     public SofaDoubleData GetDoubleIntData(string dataName)
     {
         foreach (SofaDoubleData data in m_doubleData)
+        {
+            if (data.DataName == dataName)
+                return data;
+        }
+        return null;
+    }
+
+    public SofaVec2Data GetSofaVec2Data(string dataName)
+    {
+        foreach (SofaVec2Data data in m_vec2Data)
         {
             if (data.DataName == dataName)
                 return data;
