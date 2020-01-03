@@ -73,20 +73,20 @@ namespace SofaUnity
         /// Method to check which deformable parameters coubld be set in the GUI
         protected override void initParameters()
         {
-            if (m_poisson == float.MinValue)
-                m_poisson = m_impl.poissonRatio;
+            //if (m_poisson == float.MinValue)
+            //    m_poisson = m_impl.poissonRatio;
 
-            if (m_mass == float.MinValue)
-                m_mass = m_impl.mass;
+            //if (m_mass == float.MinValue)
+            //    m_mass = m_impl.mass;
 
-            if (m_young == float.MinValue)
-                m_young = m_impl.youngModulus;
+            //if (m_young == float.MinValue)
+            //    m_young = m_impl.youngModulus;
 
-            if (m_stiffness == float.MinValue)
-                m_stiffness = m_impl.stiffness;
+            //if (m_stiffness == float.MinValue)
+            //    m_stiffness = m_impl.stiffness;
 
-            if (m_damping == float.MinValue)
-                m_damping = m_impl.damping;
+            //if (m_damping == float.MinValue)
+            //    m_damping = m_impl.damping;
         }
 
 
@@ -119,8 +119,8 @@ namespace SofaUnity
                 if (value != m_mass)
                 {
                     m_mass = value;
-                    if (m_impl != null)
-                        m_impl.mass = m_mass;
+                    //if (m_impl != null)
+                    //    m_impl.mass = m_mass;
                 }
             }
         }
@@ -134,8 +134,8 @@ namespace SofaUnity
                 if (value != m_young)
                 {
                     m_young = value;
-                    if (m_impl != null)
-                        m_impl.youngModulus = m_young;
+                    //if (m_impl != null)
+                    //    m_impl.youngModulus = m_young;
                 }
             }
         }
@@ -148,9 +148,9 @@ namespace SofaUnity
             {
                 if (value != m_poisson)
                 {
-                    m_poisson = value;
-                    if (m_impl != null)
-                        m_impl.poissonRatio = m_poisson;
+                    //m_poisson = value;
+                    //if (m_impl != null)
+                    //    m_impl.poissonRatio = m_poisson;
                 }
             }
         }
@@ -164,8 +164,8 @@ namespace SofaUnity
                 if (value != m_stiffness)
                 {
                     m_stiffness = value;
-                    if (m_impl != null)
-                        m_impl.stiffness = m_stiffness;
+                    //if (m_impl != null)
+                    //    m_impl.stiffness = m_stiffness;
                 }
             }
         }
@@ -179,8 +179,8 @@ namespace SofaUnity
                 if (value != m_damping)
                 {
                     m_damping = value;
-                    if (m_impl != null)
-                        m_impl.damping = m_damping;
+                    //if (m_impl != null)
+                    //    m_impl.damping = m_damping;
                 }
             }
         }
@@ -235,16 +235,16 @@ namespace SofaUnity
             //m_impl.recomputeTriangles(m_mesh);
 
             // Set the FEM and spring parameters.
-            if (m_mass != float.MinValue) // Otherwise means it has been unactivated from scene parsing
-                m_impl.mass = m_mass;
-            if (m_young != float.MinValue)
-                m_impl.youngModulus = m_young;
-            if (m_poisson != float.MinValue)
-                m_impl.poissonRatio = m_poisson;
-            if (m_stiffness != float.MinValue)
-                m_impl.stiffness = m_stiffness;
-            if (m_damping != float.MinValue)
-                m_impl.damping = m_damping;
+            //if (m_mass != float.MinValue) // Otherwise means it has been unactivated from scene parsing
+            //    m_impl.mass = m_mass;
+            //if (m_young != float.MinValue)
+            //    m_impl.youngModulus = m_young;
+            //if (m_poisson != float.MinValue)
+            //    m_impl.poissonRatio = m_poisson;
+            //if (m_stiffness != float.MinValue)
+            //    m_impl.stiffness = m_stiffness;
+            //if (m_damping != float.MinValue)
+            //    m_impl.damping = m_damping;
 
             base.initMesh(false);
 

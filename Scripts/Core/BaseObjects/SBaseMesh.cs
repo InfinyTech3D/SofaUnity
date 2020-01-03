@@ -24,13 +24,6 @@ namespace SofaUnity
         public SofaBaseMeshAPI m_impl = null;
 
 
-        /// Initial Translation from Sofa Object at init
-        protected Vector3 m_initTranslation;
-        /// Initial Rotation from Sofa Object at init
-        protected Vector3 m_initRotation;
-        /// Initial Scale from Sofa Object at init
-        protected Vector3 m_initScale = new Vector3(1.0f, 1.0f, 1.0f);
-
         /// Current Translation of this object (same as in Unity Editor and Sofa object)
         public Vector3 m_translation;
         /// Current Rotation of this object (same as in Unity Editor and Sofa object)
@@ -53,13 +46,7 @@ namespace SofaUnity
         /// Current collision sphere contact stiffness
         protected float m_contactStiffness = 100.0f;
 
-        /// Initial sphere radius from Sofa Object at init
-        protected float m_initRadius = 1.0f;
-        /// Initial contact stiffness from Sofa Object at init
-        protected float m_initContactStiffness = 100.0f;
-
-
-
+        
 
         ////////////////////////////////////////////
         /////       Object creation API        /////
@@ -69,14 +56,6 @@ namespace SofaUnity
         protected override void createObject()
         {
             // Get initial transformation
-            m_initTranslation = m_impl.translation;
-            m_initRotation = m_impl.rotation;
-            m_initScale = m_impl.scale;
-
-            // Copy the initial transformation as the current one for init
-            m_translation = m_initTranslation;
-            m_rotation = m_initRotation;
-            m_scale = m_initScale;
 
             // Copy info if mesh has collision
             float test = m_impl.getFloatValue("radius");
@@ -85,10 +64,8 @@ namespace SofaUnity
             else
             {
                 m_hasCollisionSphere = true;
-                m_initRadius = test;
                 m_radius = test;
                 m_contactStiffness = m_impl.getFloatValue("contactStiffness");
-                m_initContactStiffness = m_impl.getFloatValue("contactStiffness");
             }
         }
 
@@ -144,16 +121,6 @@ namespace SofaUnity
             if (m_impl == null)
                 return;
 
-            // Only apply transformation if different from init one (change from editor)
-            if (m_translation != m_initTranslation)
-                m_impl.translation = m_translation;
-
-            if (m_rotation != m_initRotation)
-                m_impl.rotation = m_rotation;
-
-            if (m_scale != m_initScale)
-                m_impl.scale = m_scale;
-
             if (m_invertNormals)
             {
                 m_impl.m_invertNormals = m_invertNormals;
@@ -168,7 +135,6 @@ namespace SofaUnity
             else
             {
                 m_hasCollisionSphere = true;
-                m_initRadius = test;
                 m_contactStiffness = m_impl.getFloatValue("contactStiffness");
             }
 
@@ -239,7 +205,7 @@ namespace SofaUnity
                     m_translation = value;
                     if (m_impl != null)
                     {
-                        m_impl.translation = diffTrans;
+                        //m_impl.translation = diffTrans;
                         m_impl.updateMesh(m_mesh);
                     }
                 }
@@ -258,7 +224,7 @@ namespace SofaUnity
                     m_rotation = value;
                     if (m_impl != null)
                     {
-                        m_impl.rotation = diffRot;
+                        //m_impl.rotation = diffRot;
                         m_impl.updateMesh(m_mesh);
                     }
                 }
@@ -277,7 +243,7 @@ namespace SofaUnity
                     m_scale = value;
                     if (m_impl != null)
                     {
-                        m_impl.scale = diffScale;
+                        //m_impl.scale = diffScale;
                         m_impl.updateMesh(m_mesh);
                     }
                 }

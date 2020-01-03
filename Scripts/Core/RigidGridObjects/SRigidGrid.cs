@@ -49,7 +49,7 @@ namespace SofaUnity
             m_mesh.name = "SofaRigidGrid";
 
             // Set the grid resolution and update texCoords.
-            m_impl.setGridResolution(m_gridSize);
+            //m_impl.setGridResolution(m_gridSize);
 
             // Some grid need to recompute normals or topology
             m_impl.recomputeTopology(m_mesh);
@@ -70,8 +70,8 @@ namespace SofaUnity
                 if (value != m_gridSize)
                 {
                     m_gridSize = value;
-                    if (m_impl != null)
-                        m_impl.setGridResolution(m_gridSize);
+                    //if (m_impl != null)
+                    //    m_impl.setGridResolution(m_gridSize);
                 }
             }
         }

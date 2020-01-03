@@ -39,7 +39,7 @@ namespace SofaUnity
 
             // By default create a plane with Y normal.
             m_gridSize = new Vector3(10, 1, 10);
-            m_impl.setGridResolution(m_gridSize);
+            //m_impl.setGridResolution(m_gridSize);
             
             if (toUpdate)
                 m_impl.updateMesh(m_mesh);
@@ -57,8 +57,8 @@ namespace SofaUnity
                     m_gridSize = value;
                     m_gridSize[1] = 1; // TODO: allow plane in other direction
 
-                    if (m_impl != null)
-                        m_impl.setGridResolution(m_gridSize);
+                    //if (m_impl != null)
+                    //    m_impl.setGridResolution(m_gridSize);
                 }
             }
         }
