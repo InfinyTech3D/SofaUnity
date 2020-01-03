@@ -7,7 +7,7 @@ using SofaUnityAPI;
 namespace SofaUnity
 {
     // manage specific component class implementation
-    static public class SComponentFactory
+    static public class SofaComponentFactory
     {
         static public void CreateSofaComponent(string nameId, string componentType, SofaDAGNode sofaNodeOwner, GameObject parent)
         {

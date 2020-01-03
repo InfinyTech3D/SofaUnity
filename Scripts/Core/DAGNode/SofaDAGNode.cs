@@ -65,7 +65,7 @@ namespace SofaUnity
                 if (baseType.Contains("Error"))
                     SofaLog("Component " + compoName + " returns baseType: " + baseType, 2);                    
                 else
-                    SComponentFactory.CreateSofaComponent(compoName, baseType, this, this.gameObject);
+                    SofaComponentFactory.CreateSofaComponent(compoName, baseType, this, this.gameObject);
             }
 
             m_parentNodeName = m_impl.GetParentNodeName();
