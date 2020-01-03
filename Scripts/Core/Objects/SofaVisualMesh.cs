@@ -18,11 +18,11 @@ namespace SofaUnity
         protected override void createObject()
         {
             // Get access to the sofaContext
-            IntPtr _simu = m_context.getSimuContext();
+            IntPtr _simu = m_sofaContext.getSimuContext();
             if (_simu != IntPtr.Zero)
             {
                 // Create the API object for SofaMesh
-                m_impl = new SofaMeshAPI(_simu, m_nameId, false);
+                m_impl = new SofaMeshAPI(_simu, m_uniqueNameId, false);
 
                 // TODO: check if this is still needed (and why not in children)
                 m_impl.loadObject();
@@ -32,7 +32,7 @@ namespace SofaUnity
             }
 
             if (m_impl == null)
-                sofaLog("SofaVisualMesh:: Object creation failed.", 2);
+                SofaLog("SofaVisualMesh:: Object creation failed.", 2);
         }
 
 
@@ -128,7 +128,7 @@ namespace SofaUnity
         /// Method called by @sa Update() method.
         public override void updateImpl()
         {
-            sofaLog("SofaVisualMesh::updateImpl called.");
+            SofaLog("SofaVisualMesh::updateImpl called.");
 
             if (m_impl != null)
             {
@@ -146,9 +146,9 @@ namespace SofaUnity
                 }
                 else
                 {
-                    int res = m_impl.updateMeshVelocity(m_mesh, m_context.timeStep);
+                    int res = m_impl.updateMeshVelocity(m_mesh, m_sofaContext.timeStep);
                     if (res == -1)
-                        m_context.breakerProcedure();
+                        m_sofaContext.breakerProcedure();
                 }
                 m_mesh.RecalculateBounds();
             }

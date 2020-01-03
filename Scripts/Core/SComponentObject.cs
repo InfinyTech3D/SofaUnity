@@ -52,11 +52,11 @@ namespace SofaUnity
         protected override void createObject()
         {
             // Get access to the sofaContext
-            IntPtr _simu = m_context.getSimuContext();
+            IntPtr _simu = m_sofaContext.getSimuContext();
             if (_simu != IntPtr.Zero)
             {
                 // Create the API object for SofaComponent
-                m_impl = new SofaComponentObjectAPI(_simu, m_nameId, false);
+                m_impl = new SofaComponentObjectAPI(_simu, m_uniqueNameId, false);
 
                 if (m_impl == null)
                 {
@@ -106,7 +106,7 @@ namespace SofaUnity
         void Start()
         {
             if (m_log)
-                Debug.Log("UNITY_EDITOR - SComponentObject::start - " + m_nameId);
+                Debug.Log("UNITY_EDITOR - SComponentObject::start - " + m_uniqueNameId);
         }
 
         /// Getter of parentName of this Sofa Object.

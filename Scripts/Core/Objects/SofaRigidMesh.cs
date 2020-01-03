@@ -22,11 +22,11 @@ namespace SofaUnity
         protected override void createObject()
         {
             // Get access to the sofaContext
-            IntPtr _simu = m_context.getSimuContext();
+            IntPtr _simu = m_sofaContext.getSimuContext();
             if (_simu != IntPtr.Zero)
             {
                 // Create the API object for SofaMesh
-                m_impl = new SofaMeshAPI(_simu, m_nameId, false);
+                m_impl = new SofaMeshAPI(_simu, m_uniqueNameId, false);
 
                 // TODO: check if this is still needed (and why not in children)
                 m_impl.loadObject();
@@ -37,7 +37,7 @@ namespace SofaUnity
 
             // Increment Context name counter if object has been created.
             if (m_impl != null) // TODO: duplicate code with baseObject method?
-                m_context.objectcpt = m_context.objectcpt + 1;
+                m_sofaContext.objectcpt = m_sofaContext.objectcpt + 1;
         }
 
         /// Method called by @sa Awake() method. As post process method after creation.

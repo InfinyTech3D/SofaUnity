@@ -51,11 +51,11 @@ namespace SofaUnity
         protected override void createObject()
         {
             // Get access to the sofaContext
-            IntPtr _simu = m_context.getSimuContext();
+            IntPtr _simu = m_sofaContext.getSimuContext();
             if (_simu != IntPtr.Zero)
             {
                 // Create the API object for SofaMesh
-                m_impl = new SofaMeshAPI(_simu, m_nameId, false);
+                m_impl = new SofaMeshAPI(_simu, m_uniqueNameId, false);
 
                 // TODO: check if this is still needed (and why not in children)
                 m_impl.loadObject();
@@ -222,7 +222,7 @@ namespace SofaUnity
                 nbTetra = m_impl.getNbTetrahedra();
                 if (nbTetra > 0)
                 {
-                    sofaLog("Tetra found! Number: " + nbTetra);
+                    SofaLog("Tetra found! Number: " + nbTetra);
                     m_tetra = new int[nbTetra * 4];
 
                     m_impl.getTetrahedra(m_tetra);
@@ -261,7 +261,7 @@ namespace SofaUnity
         /// Method called by @sa Update() method.
         public override void updateImpl()
         {
-            //sofaLog("SofaDeformableMesh::updateImpl called.");
+            //SofaLog("SofaDeformableMesh::updateImpl called.");
 
             MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();            
 
@@ -282,7 +282,7 @@ namespace SofaUnity
                 if (nbTetra > 0)
                     updateTetraMesh();
                 else if (mr.enabled == true) // which is true
-                    m_impl.updateMeshVelocity(m_mesh, m_context.timeStep);
+                    m_impl.updateMeshVelocity(m_mesh, m_sofaContext.timeStep);
                 else // pass from false to true.
                 {
                     m_impl.updateMesh(m_mesh);

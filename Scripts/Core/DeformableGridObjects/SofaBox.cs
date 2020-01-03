@@ -14,13 +14,13 @@ namespace SofaUnity
         protected override void createObject()
         {
             // Get access to the sofaContext
-            IntPtr _simu = m_context.getSimuContext();
+            IntPtr _simu = m_sofaContext.getSimuContext();
             if (_simu != IntPtr.Zero) // Create the API object for Sofa Regular Grid Mesh
-                m_impl = new SofaBoxAPI(_simu, m_nameId, false);
+                m_impl = new SofaBoxAPI(_simu, m_uniqueNameId, false);
 
             if (m_impl == null || !m_impl.m_isCreated)
             {
-                Debug.LogError("SofaBox:: Object creation failed: " + m_nameId);
+                Debug.LogError("SofaBox:: Object creation failed: " + m_uniqueNameId);
                 this.enabled = false;
             }
         }

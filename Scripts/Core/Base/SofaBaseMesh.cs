@@ -89,7 +89,7 @@ namespace SofaUnity
         /// Method called at GameObject init (after creation or when starting play).
         private void Start()
         {
-            sofaLog("SofaBaseMesh::start - " + m_nameId);
+            SofaLog("SofaBaseMesh::start - " + m_uniqueNameId);
 
             if (m_impl != null)
             {
@@ -100,7 +100,7 @@ namespace SofaUnity
                 Mesh meshCopy = new Mesh();
                 m_mesh = mf.mesh = meshCopy;                    //Assign the copy to the meshes
 
-                sofaLog("SMesh::Start editor mode.");
+                SofaLog("SMesh::Start editor mode.");
 #else
                 //do this in play mode
                 m_mesh = GetComponent<MeshFilter>().mesh;
@@ -111,7 +111,7 @@ namespace SofaUnity
                 initMesh(true);
             }
 
-            sofaLog("SofaBaseMesh::Start " + this.name);
+            SofaLog("SofaBaseMesh::Start " + this.name);
         }
 
 

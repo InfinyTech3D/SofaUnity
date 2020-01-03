@@ -8,35 +8,17 @@ namespace SofaUnity
     /// Base class to map a Sofa3DObject with a Unity GameObject
     /// This class control the creation of the Sofa3DObject as well as the link to the SofaContext 
     /// </summary>
-    public class SofaBaseObject : MonoBehaviour
+    public class SofaBaseObject : SofaBase
     {
         ////////////////////////////////////////////
         /////        Object members API        /////
         ////////////////////////////////////////////
-
-        /// Pointer to the Sofa context this GameObject belongs to.
-        protected SofaContext m_context = null;
-
-        /// Parameter to activate logging of this Sofa GameObject
-        public bool m_log = false;
 
         protected bool directChild = true;
 
         /// Parameter storing the fact that the object is fully init
         protected bool m_isAwake = false;
         public bool isAwake() { return m_isAwake; }
-
-        /// Name of the Sofa3DObject mapped to this Unity GameObject
-        protected string m_nameId;
-        public string nameId
-        {
-            get { return m_nameId; }
-            set { m_nameId = value; }
-        }
-
-        /// bool to store the status of this GameObject. Used to update the mesh if is dirty.
-        protected bool m_isDirty = true;
-        public void setDirty() { m_isDirty = true; }
 
         /// Method to get the parent node name of this object.
         public virtual string parentName()
@@ -45,24 +27,6 @@ namespace SofaUnity
         }
 
         protected static int cptLifeCycle = 0;
-
-        // priority 0 = debug, 1 = warning, 2 = error
-        protected void sofaLog(string msg, int priority = 0, bool forceLog = false)
-        {
-            string mode = "PlayMode";
-            if (!Application.isPlaying)
-                mode = "EditorMode";
-
-            if (priority == 0)
-            {
-                if (forceLog || m_log)
-                    Debug.Log("## " + Time.fixedTime + " " + mode + "## " + this.name + " >> " + msg);
-            }
-            else if (priority == 1)
-                Debug.LogWarning("## " + Time.fixedTime + " " + mode + "## " + this.name + " >> " + msg);
-            else if (priority == 2)
-                Debug.LogError("## " + Time.fixedTime + " " + mode + "## " + this.name + " >> " + msg);
-        }
 
 
         ////////////////////////////////////////////
@@ -73,7 +37,7 @@ namespace SofaUnity
 
         void Awake()
         {
-            sofaLog("Awake - " + m_nameId);
+            SofaLog("Awake - " + m_uniqueNameId);
 
             // First load the Sofa context and create the object.
             loadContext();
@@ -98,18 +62,18 @@ namespace SofaUnity
         /// Method called to update GameObject, called once per frame. To be implemented by child class.
         protected bool loadContext()
         {
-            sofaLog("Awake - loadContext");
+            SofaLog("Awake - loadContext");
 
             // Search for SofaContext
             GameObject _contextObject = GameObject.Find("SofaContext");
             if (_contextObject != null)
             {
                 // Get Sofa context
-                m_context = _contextObject.GetComponent<SofaContext>();
+                m_sofaContext = _contextObject.GetComponent<SofaContext>();
 
-                if (m_context == null)
+                if (m_sofaContext == null)
                 {
-                    sofaLog("SofaBaseObject::loadContext - GetComponent<SofaContext> failed.", 2);
+                    SofaLog("SofaBaseObject::loadContext - GetComponent<SofaContext> failed.", 2);
                     return false;
                 }
 
@@ -120,30 +84,30 @@ namespace SofaUnity
                 // Look for node a name. Remove unneeded parts of the name (like _Node)
                 int pos = this.name.IndexOf("-");
                 if (pos != -1)
-                    m_nameId = this.name.Substring(pos + 2, this.name.Length - (pos + 2)); // remove the space
+                    m_uniqueNameId = this.name.Substring(pos + 2, this.name.Length - (pos + 2)); // remove the space
                 else
                 {
-                    m_nameId = this.name;
-                    m_nameId += "_" + m_context.objectcpt;
+                    m_uniqueNameId = this.name;
+                    m_uniqueNameId += "_" + m_sofaContext.objectcpt;
                 }
 
-                sofaLog("this.name : " + this.name + " - m_nameId: " + m_nameId);
+                SofaLog("this.name : " + this.name + " - m_uniqueNameId: " + m_uniqueNameId);
 
                 // Really Create the gameObject linked to sofaObject
                 createObject();
 
                 // Increment counter if objectis created from loading scene process
-                m_context.countCreated();
+                m_sofaContext.countCreated();
 
                 // Increment the context object counter for names.
-                m_context.objectcpt = m_context.objectcpt + 1;
-                m_context.registerObject(this);
+                m_sofaContext.objectcpt = m_sofaContext.objectcpt + 1;
+                m_sofaContext.registerObject(this);
 
                 return true;
             }
             else
             {
-                sofaLog("SofaBaseObject::loadContext - No SofaContext found.", 2);
+                SofaLog("SofaBaseObject::loadContext - No SofaContext found.", 2);
                 return false;
             }
         }
@@ -184,7 +148,7 @@ namespace SofaUnity
         /// Method called at GameObject init (after creation or when starting play). To be implemented by child class.
         void Start()
         {
-            sofaLog("SofaBaseObject::Start called.");
+            SofaLog("SofaBaseObject::Start called.");
 
             // Increment life cycle
             cptLifeCycle++;
@@ -194,7 +158,7 @@ namespace SofaUnity
         /// Method called to update GameObject, called once per frame. To be implemented by child class.
         void Update()
         {
-            //sofaLog("SofaBaseObject::Update " + this.name + " called.");
+            //SofaLog("SofaBaseObject::Update " + this.name + " called.");
 
             if (!Application.isPlaying)
             {
