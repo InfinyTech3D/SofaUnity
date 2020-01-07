@@ -63,6 +63,7 @@ namespace SofaUnity
 
         protected override void InitImpl()
         {
+            m_log = true;
             if (m_impl == null)
             {
                 // Creation method of Sofa component API
@@ -115,7 +116,23 @@ namespace SofaUnity
 
         protected override void ReconnectImpl()
         {
+            m_log = true;
+            // 1- reconnect with SofaBaseComponentAPI
             CreateSofaAPI();
+
+            // 2- reconnect and update edited data
+            if (m_dataArchiver == null)
+            {
+                SofaLog("SofaBaseComponent::ReconnectImpl has a null DataArchiver.", 2);
+                return;
+            }
+
+            bool modified = m_dataArchiver.UpdateEditedData();
+            if (modified)
+            {
+                SofaLog("SofaBaseComponent::ReconnectImpl some Data modified will reinit component.");
+                // call reinit here?
+            }
         }
 
 
@@ -130,7 +147,7 @@ namespace SofaUnity
         ////////////////////////////////////////////
 
         [SerializeField]
-        public SofaDataArchiver m_dataArchiver;
+        public SofaDataArchiver m_dataArchiver = null;
 
         /// List of Data parsed
         //protected List<SofaData> m_datas = null;

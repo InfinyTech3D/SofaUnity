@@ -98,6 +98,10 @@ public class SofaDataArchiver //: MonoBehaviour, ISerializationCallbackReceiver
             Vector4 value = owner.m_impl.GetVector4Value(dataName, true);
             AddVec4Data(owner, dataName, value, true);
         }
+        //else if(dataType.Contains("vector<"))
+        //{
+        //    //owner.m_impl.getV
+        //}
         //else if (dataType == "vector < float >" || dataType == "vector<float>")
         //{
 
@@ -125,6 +129,70 @@ public class SofaDataArchiver //: MonoBehaviour, ISerializationCallbackReceiver
             m_names.Add(dataName);
             m_types.Add(dataType);
         }
+    }
+
+
+    public bool UpdateEditedData()
+    {
+        bool modified = false;
+        if (m_stringData != null)
+        {
+            foreach (SofaStringData data in m_stringData)
+                if (data.SetValueIfEdited())
+                    modified = true;
+        }
+
+        if (m_boolData != null)
+        {
+            foreach (SofaBoolData data in m_boolData)
+                if (data.SetValueIfEdited())
+                    modified = true;
+        }
+
+        if (m_intData != null)
+        {
+            foreach (SofaIntData data in m_intData)
+                if (data.SetValueIfEdited())
+                    modified = true;
+        }
+
+        if (m_floatData != null)
+        {
+            foreach (SofaFloatData data in m_floatData)
+                if (data.SetValueIfEdited())
+                    modified = true;
+        }
+
+        if (m_doubleData != null)
+        {
+            foreach (SofaDoubleData data in m_doubleData)
+                if (data.SetValueIfEdited())
+                    modified = true;
+        }
+
+
+        if (m_vec2Data != null)
+        {
+            foreach (SofaVec2Data data in m_vec2Data)
+                if (data.SetValueIfEdited())
+                    modified = true;
+        }
+
+        if (m_vec3Data != null)
+        {
+            foreach (SofaVec3Data data in m_vec3Data)
+                if (data.SetValueIfEdited())
+                    modified = true;
+        }
+
+        if (m_vec4Data != null)
+        {
+            foreach (SofaVec4Data data in m_vec4Data)
+                if (data.SetValueIfEdited())
+                    modified = true;
+        }
+
+        return modified;
     }
 
 
