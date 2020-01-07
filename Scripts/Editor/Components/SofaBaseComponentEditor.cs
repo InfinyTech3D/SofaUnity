@@ -1,10 +1,19 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using SofaUnity;
+using UnityEditor.AnimatedValues;
 
 [CustomEditor(typeof(SofaBaseComponent), true)]
 public class SofaBaseComponentEditor : Editor
 {
+    AnimBool m_ShowUnsupportedFields;
+
+    void OnEnable()
+    {
+        m_ShowUnsupportedFields = new AnimBool(false);
+        m_ShowUnsupportedFields.valueChanged.AddListener(Repaint);
+    }
+
     public override void OnInspectorGUI()
     {
         SofaBaseComponent compo = (SofaBaseComponent)this.target;
@@ -82,17 +91,19 @@ public class SofaBaseComponentEditor : Editor
         }
 
         EditorGUILayout.Separator();
-
-        for (int i = 0; i < dataArchiver.m_otherNames.Count; i++)
+        m_ShowUnsupportedFields.target = EditorGUILayout.ToggleLeft("Show unsupported Data", m_ShowUnsupportedFields.target);
+        if (EditorGUILayout.BeginFadeGroup(m_ShowUnsupportedFields.faded))
         {
-            string dataName = dataArchiver.m_otherNames[i];
-            SofaData data = dataArchiver.GetGenericData(dataName);
-            EditorGUILayout.TextField(data.DataName, "Unsupported type: " + data.DataType);
+            for (int i = 0; i < dataArchiver.m_otherNames.Count; i++)
+            {
+                string dataName = dataArchiver.m_otherNames[i];
+                SofaData data = dataArchiver.GetGenericData(dataName);
+                EditorGUILayout.TextField(data.DataName, "Unsupported type: " + data.DataType);
 
 
+            }
         }
-        //
         EditorGUILayout.Separator();
-
+        EditorGUILayout.EndFadeGroup();
     }
 }
