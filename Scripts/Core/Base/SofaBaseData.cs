@@ -60,6 +60,11 @@ namespace SofaUnity
         {
             return false;
         }
+
+        protected virtual bool GetValueImpl()
+        {
+            return false;
+        }
     }
 
 

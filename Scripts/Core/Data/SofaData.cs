@@ -34,8 +34,12 @@ namespace SofaUnity
         {
             get
             {
+                if (m_isDirty) // nothing to do
+                    GetValueImpl();
+
                 return m_value;
             }
+
             set
             {
                 if (m_value != value)
@@ -64,6 +68,17 @@ namespace SofaUnity
             m_owner.m_impl.SetBoolValue(m_dataName, m_value);
             return true;
         }
+
+        protected override bool GetValueImpl()
+        {
+            if (m_owner.m_impl == null)
+                return false;
+
+            m_value = m_owner.m_impl.GetBoolValue(m_dataName);
+            Debug.Log("Get value: " + m_dataName + " = " + m_value);
+            m_isDirty = false;
+            return true;
+        }
     }
 
 
@@ -85,7 +100,14 @@ namespace SofaUnity
 
         public int Value
         {
-            get { return m_value; }
+            get
+            {
+                if (m_isDirty) // nothing to do
+                    GetValueImpl();
+
+                return m_value;
+            }
+
             set
             {
                 if (m_value != value)
@@ -118,6 +140,20 @@ namespace SofaUnity
 
             return true;
         }
+
+        protected override bool GetValueImpl()
+        {
+            if (m_owner.m_impl == null)
+                return false;
+
+            if (m_isUnsigned)
+                m_value = m_owner.m_impl.GetUIntValue(m_dataName);
+            else
+                m_value = m_owner.m_impl.GetIntValue(m_dataName);
+            Debug.Log("Get value: " + m_dataName + " = " + m_value);
+            m_isDirty = false;
+            return true;
+        }
     }
 
 
@@ -135,7 +171,14 @@ namespace SofaUnity
 
         public float Value
         {
-            get { return m_value; }
+            get
+            {
+                if (m_isDirty) // nothing to do
+                    GetValueImpl();
+
+                return m_value;
+            }
+
             set
             {
                 if (m_value != value)
@@ -164,6 +207,17 @@ namespace SofaUnity
             m_owner.m_impl.SetFloatValue(m_dataName, m_value);
             return true;
         }
+
+        protected override bool GetValueImpl()
+        {
+            if (m_owner.m_impl == null)
+                return false;
+
+            m_value = m_owner.m_impl.GetFloatValue(m_dataName);
+            Debug.Log("Get value: " + m_dataName + " = " + m_value);
+            m_isDirty = false;
+            return true;
+        }
     }
 
 
@@ -181,7 +235,14 @@ namespace SofaUnity
 
         public float Value
         {
-            get { return m_value; }
+            get
+            {
+                if (m_isDirty) // nothing to do
+                    GetValueImpl();
+
+                return m_value;
+            }
+
             set
             {
                 if (m_value != value)
@@ -210,6 +271,17 @@ namespace SofaUnity
             m_owner.m_impl.SetDoubleValue(m_dataName, m_value);
             return true;
         }
+
+        protected override bool GetValueImpl()
+        {
+            if (m_owner.m_impl == null)
+                return false;
+
+            m_value = m_owner.m_impl.GetDoubleValue(m_dataName);
+            Debug.Log("Get value: " + m_dataName + " = " + m_value);
+            m_isDirty = false;
+            return true;
+        }
     }
 
 
@@ -228,7 +300,14 @@ namespace SofaUnity
 
         public string Value
         {
-            get { return m_value; }
+            get
+            {
+                if (m_isDirty) // nothing to do
+                    GetValueImpl();
+
+                return m_value;
+            }
+
             set
             {
                 if (m_value != value)
@@ -257,6 +336,17 @@ namespace SofaUnity
             m_owner.m_impl.SetStringValue(m_dataName, m_value);
             return true;
         }
+
+        protected override bool GetValueImpl()
+        {
+            if (m_owner.m_impl == null)
+                return false;
+
+            m_value = m_owner.m_impl.getStringValue(m_dataName);
+            Debug.Log("Get value: " + m_dataName + " = " + m_value);
+            m_isDirty = false;
+            return true;
+        }
     }
 
 
@@ -279,7 +369,14 @@ namespace SofaUnity
 
         public Vector2 Value
         {
-            get { return m_value; }
+            get
+            {
+                if (m_isDirty) // nothing to do
+                    GetValueImpl();
+
+                return m_value;
+            }
+
             set
             {
                 if (m_value != value)
@@ -305,7 +402,18 @@ namespace SofaUnity
             if (m_owner.m_impl == null)
                 return false;
 
-            m_owner.m_impl.SetVector2Value(m_dataName, m_value);
+            m_owner.m_impl.SetVector2Value(m_dataName, m_value, m_isDouble);
+            return true;
+        }
+
+        protected override bool GetValueImpl()
+        {
+            if (m_owner.m_impl == null)
+                return false;
+
+            m_value = m_owner.m_impl.GetVector2Value(m_dataName, m_isDouble);
+            Debug.Log("Get value: " + m_dataName + " = " + m_value);
+            m_isDirty = false;
             return true;
         }
     }
@@ -329,7 +437,14 @@ namespace SofaUnity
 
         public Vector3 Value
         {
-            get { return m_value; }
+            get
+            {
+                if (m_isDirty) // nothing to do
+                    GetValueImpl();
+
+                return m_value;
+            }
+
             set
             {
                 if (m_value != value)
@@ -355,7 +470,18 @@ namespace SofaUnity
             if (m_owner.m_impl == null)
                 return false;
 
-            m_owner.m_impl.SetVector3Value(m_dataName, m_value);
+            m_owner.m_impl.SetVector3Value(m_dataName, m_value, m_isDouble);
+            return true;
+        }
+
+        protected override bool GetValueImpl()
+        {
+            if (m_owner.m_impl == null)
+                return false;
+
+            m_value = m_owner.m_impl.GetVector3Value(m_dataName, m_isDouble);
+            Debug.Log("Get value: " + m_dataName + " = " + m_value);
+            m_isDirty = false;
             return true;
         }
     }
@@ -379,7 +505,14 @@ namespace SofaUnity
 
         public Vector4 Value
         {
-            get { return m_value; }
+            get
+            {
+                if (m_isDirty) // nothing to do
+                    GetValueImpl();
+
+                return m_value;
+            }
+
             set
             {
                 if (m_value != value)
@@ -405,7 +538,18 @@ namespace SofaUnity
             if (m_owner.m_impl == null)
                 return false;
 
-            m_owner.m_impl.SetVector4Value(m_dataName, m_value);
+            m_owner.m_impl.SetVector4Value(m_dataName, m_value, m_isDouble);
+            return true;
+        }
+
+        protected override bool GetValueImpl()
+        {
+            if (m_owner.m_impl == null)
+                return false;
+
+            m_value = m_owner.m_impl.GetVector4Value(m_dataName, m_isDouble);
+            Debug.Log("Get value: " + m_dataName + " = " + m_value);
+            m_isDirty = false;
             return true;
         }
     }
