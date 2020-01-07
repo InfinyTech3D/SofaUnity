@@ -56,7 +56,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
 
             if (res == 0)
                 return val[0];
-            else if (displayLog)
+            else
                 Debug.LogError("Method getBoolValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]); 
         }
 
@@ -71,7 +71,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
         if (checkNativePointer())
         {
             int res = sofaComponentAPI_setBoolValue(m_simu, m_name, dataName, value);
-            if (res != 0 && displayLog)
+            if (res != 0)
                 Debug.LogError("Method setBoolValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
         }
     }
@@ -83,13 +83,13 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     public int GetIntValue(string dataName)
     {
         if (checkNativePointer())
-        {
+        {            
             int[] val = new int[1];
             int res = sofaComponentAPI_getIntValue(m_simu, m_name, dataName, val);
 
             if (res == 0)
                 return val[0];
-            else if (displayLog)
+            else
                 Debug.LogError("Method getIntValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]); 
         }
 
@@ -105,7 +105,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
         {
             int res = sofaComponentAPI_setIntValue(m_simu, m_name, dataName, value);
 
-            if (res != 0 && displayLog)
+            if (res != 0)
                 Debug.LogError("Method setIntValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
         }
     }
@@ -123,7 +123,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
 
             if (res == 0)
                 return val[0];
-            else if (displayLog)
+            else
                 Debug.LogError("Method getFloatValue of Data: " + dataName + " of object: " + m_name + ", returns error: " + SofaDefines.msg_error[res]);
         }
 
@@ -139,7 +139,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
         {
             int res = sofaComponentAPI_setFloatValue(m_simu, m_name, dataName, value);
 
-            if (res != 0 && displayLog)
+            if (res != 0)
                 Debug.LogError("Method setFloatValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
         }
     }
@@ -157,7 +157,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
 
             if (res == 0)
                 return (float)val[0];
-            else if (displayLog)
+            else
                 Debug.LogError("Method GetDoubleValue of Data: " + dataName + " of object: " + m_name + ", returns error: " + SofaDefines.msg_error[res]);
         }
 
@@ -173,7 +173,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
         {
             int res = sofaComponentAPI_setDoubleValue(m_simu, m_name, dataName, (double)value);
 
-            if (res != 0 && displayLog)
+            if (res != 0)
                 Debug.LogError("Method SetDoubleValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
         }
     }
@@ -201,7 +201,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
         if (checkNativePointer())
         {
             int res = sofaComponentAPI_setStringValue(m_simu, m_name, dataName, value);
-            if (res != 0 && displayLog)
+            if (res != 0)
                 Debug.LogError("Method setStringValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
         }
     }
@@ -223,7 +223,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
                 for (int i = 0; i < 2; ++i)
                     values[i] = val[i];
             }
-            else if (displayLog)
+            else
                 Debug.LogError("Method getVector2iValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
         }
 
@@ -243,7 +243,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
 
             int res = sofaComponentAPI_setVec2iValue(m_simu, m_name, dataName, val);
 
-            if (res != 0 && displayLog)
+            if (res != 0)
                 Debug.LogError("Method setVector2iValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
         }
     }
@@ -271,7 +271,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
                 for (int i = 0; i < 2; ++i)
                     values[i] = val[i];
             }
-            else if (displayLog)
+            else
                 Debug.LogError("Method getVector2Value of Data: " + dataName + " of object: " + m_name + " in double: " + doubleValue + " returns error: " + SofaDefines.msg_error[res]);
         }
 
@@ -296,7 +296,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
             else
                 res = sofaComponentAPI_setVec2fValue(m_simu, m_name, dataName, val);
 
-            if (res != 0 && displayLog)
+            if (res != 0)
                 Debug.LogError("Method setVector2Value of Data: " + dataName + " of object: " + m_name + " in double: " + doubleValue + " returns error: " + SofaDefines.msg_error[res]);
         }
     }
@@ -318,7 +318,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
                 for (int i = 0; i < 3; ++i)
                     values[i] = val[i];
             }
-            else if (displayLog)
+            else
                 Debug.LogError("Method getVector3iValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
         }
 
@@ -338,7 +338,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
 
             int res = sofaComponentAPI_setVec3iValue(m_simu, m_name, dataName, val);
 
-            if (res != 0 && displayLog)
+            if (res != 0)
                 Debug.LogError("Method setVector3iValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
         }
     }
@@ -366,7 +366,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
                 for (int i = 0; i < 3; ++i)
                     values[i] = val[i];
             }
-            else if (displayLog)
+            else
                 Debug.LogError("Method getVector3Value of Data: " + dataName + " of object: " + m_name + " in double: " + doubleValue + " returns error: " + SofaDefines.msg_error[res]);
         }
 
@@ -391,7 +391,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
             else
                 res = sofaComponentAPI_setVec3fValue(m_simu, m_name, dataName, val);
 
-            if (res != 0 && displayLog)
+            if (res != 0)
                 Debug.LogError("Method setVector3fValue of Data: " + dataName + " of object: " + m_name + " in double: " + doubleValue + " returns error: " + SofaDefines.msg_error[res]);
         }
     }
@@ -419,7 +419,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
                 for (int i = 0; i < 4; ++i)
                     values[i] = val[i];
             }
-            else if (displayLog)
+            else
                 Debug.LogError("Method getVector4Value of Data: " + dataName + " of object: " + m_name + " in double: " + doubleValue + " returns error: " + SofaDefines.msg_error[res]);
         }
 
@@ -444,7 +444,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
             else
                 res = sofaComponentAPI_setVec4fValue(m_simu, m_name, dataName, val);
 
-            if (res != 0 && displayLog)
+            if (res != 0)
                 Debug.LogError("Method setVector4fValue of Data: " + dataName + " of object: " + m_name + " in double: " + doubleValue + " returns error: " + SofaDefines.msg_error[res]);
         }
     }
@@ -459,7 +459,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
         if (checkNativePointer())
         {
             int res = sofaComponentAPI_getRigid3fValue(m_simu, m_name, dataName, values);
-            if (res != 0 && displayLog)
+            if (res != 0)
                 Debug.LogError("Method getRigidfValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
             return res;
         }
@@ -476,7 +476,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
         if (checkNativePointer())
         {
             int res = sofaComponentAPI_setRigid3fValue(m_simu, m_name, dataName, values);
-            if (res != 0 && displayLog)
+            if (res != 0)
                 Debug.LogError("Method setRigid3fValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
             return res;
         }
@@ -497,7 +497,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
             string dataType = "int";
             int res = sofaComponentAPI_getVectorSize(m_simu, m_name, dataName, dataType, val);
 
-            if (res != 0 && displayLog)
+            if (res != 0)
             {
                 Debug.LogError("Method getVecfSize of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
                 return res;
@@ -521,7 +521,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
             string dataType = "float";
             int res = sofaComponentAPI_getVectorSize(m_simu, m_name, dataName, dataType, val);
 
-            if (res != 0 && displayLog)
+            if (res != 0)
             {
                 Debug.LogError("Method getVecfSize of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
                 return res;
@@ -544,7 +544,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
         if (checkNativePointer())
         {
             int res = sofaComponentAPI_getVectorfValue(m_simu, m_name, dataName, size, values);
-            if (res != 0 && displayLog)
+            if (res != 0)
                 Debug.LogError("Method getVectorfValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
             return res;
         }
@@ -562,7 +562,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
         if (checkNativePointer())
         {
             int res = sofaComponentAPI_setVectorfValue(m_simu, m_name, dataName, size, values);
-            if (res != 0 && displayLog)
+            if (res != 0)
                 Debug.LogError("Method setVectorfValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
             return res;
         }
@@ -581,7 +581,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
         if (checkNativePointer())
         {
             int res = sofaComponentAPI_getVectoriValue(m_simu, m_name, dataName, size, values);
-            if (res != 0 && displayLog)
+            if (res != 0)
                 Debug.LogError("Method getVeciValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
             return res;
         }
@@ -599,7 +599,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
         if (checkNativePointer())
         {
             int res = sofaComponentAPI_setVectoriValue(m_simu, m_name, dataName, size, values);
-            if (res != 0 && displayLog)
+            if (res != 0)
                 Debug.LogError("Method setVeciValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
             return res;
         }
@@ -620,7 +620,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
             val[0] = -2;
             int res = sofaComponentAPI_getVecofVec3fSize(m_simu, m_name, dataName, val);
 
-            if (res != 0 && displayLog)
+            if (res != 0)
             {
                 Debug.LogError("Method setVeciValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
                 return res;
@@ -643,7 +643,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
         if (checkNativePointer())
         {
             int res = sofaComponentAPI_getVecofVec3fValue(m_simu, m_name, dataName, size, values);
-            if (res != 0 && displayLog)
+            if (res != 0)
                 Debug.LogError("Method getVecofVec3fValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
             return res;
         }
@@ -662,7 +662,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
         if (checkNativePointer())
         {
             int res = sofaComponentAPI_setVecofVec3fValue(m_simu, m_name, dataName, size, values);
-            if (res != 0 && displayLog)
+            if (res != 0)
                 Debug.LogError("Method setVecofVec3fValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
             return res;
         }
