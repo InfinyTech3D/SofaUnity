@@ -98,12 +98,12 @@ namespace SofaUnity
             if (priority == 0)
             {
                 if (forceLog || m_log)
-                    Debug.Log("##" + Time.fixedTime + " - " + mode + "## " + this.name + " >> " + msg);
+                    Debug.Log("## " + Time.fixedTime + " - " + mode + " ##    " + this.name + "   >>>>   " + msg);
             }
             else if (priority == 1)
-                Debug.LogWarning("## " + Time.fixedTime + " - " + mode + "## " + this.name + " >> " + msg);
+                Debug.LogWarning("## " + Time.fixedTime + " - " + mode + "## " + this.name + "   >>>>   " + msg);
             else if (priority == 2)
-                Debug.LogError("## " + Time.fixedTime + " - " + mode + "## " + this.name + " >> " + msg);
+                Debug.LogError("## " + Time.fixedTime + " - " + mode + "## " + this.name + "   >>>>   " + msg);
         }
 
 
