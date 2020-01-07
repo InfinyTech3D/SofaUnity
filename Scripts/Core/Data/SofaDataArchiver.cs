@@ -50,7 +50,13 @@ public class SofaDataArchiver //: MonoBehaviour, ISerializationCallbackReceiver
         else if (dataType == "int")
         {
             int value = owner.m_impl.GetIntValue(dataName);
-            AddIntData(owner, dataName, value);
+            AddIntData(owner, dataName, value, false);
+        }
+        else if (dataType == "unsigned int")
+        {
+            int value = owner.m_impl.GetUIntValue(dataName);
+            AddIntData(owner, dataName, value, true);
+            dataType = "uint";
         }
         else if (dataType == "float")
         {
@@ -138,14 +144,14 @@ public class SofaDataArchiver //: MonoBehaviour, ISerializationCallbackReceiver
         m_boolData.Add(new SofaBoolData(owner, dataName, value));
     }
     
-    public void AddIntData(SofaBaseComponent owner, string dataName, int value)
+    public void AddIntData(SofaBaseComponent owner, string dataName, int value, bool isUnsigned = false)
     {
         if (m_intData == null) // first time
             m_intData = new List<SofaIntData>();
 
-        m_intData.Add(new SofaIntData(owner, dataName, value));
+        m_intData.Add(new SofaIntData(owner, dataName, value, isUnsigned));
     }
-    
+
     public void AddFloatData(SofaBaseComponent owner, string nameID, float value)
     {
         if (m_floatData == null) // first time

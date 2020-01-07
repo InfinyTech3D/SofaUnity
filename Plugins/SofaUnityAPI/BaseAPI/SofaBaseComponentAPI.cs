@@ -111,6 +111,42 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     }
 
 
+    /// <summary> Generic method to get value of a Data<unsigned int> field. </summary>
+    /// <param name="dataName"> Name of the Data field requested. </param>
+    /// <returns> unsigned int value cast in int of the Data field, return int.MinValue if field is not found. </returns>
+    public int GetUIntValue(string dataName)
+    {
+        if (checkNativePointer())
+        {
+            uint[] val = new uint[1];
+            int res = sofaComponentAPI_getUIntValue(m_simu, m_name, dataName, val);
+
+            if (res == 0)
+                return (int)val[0]; // TODO see if conversion limit test is needed
+            else
+                Debug.LogError("Method getUIntValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
+        }
+
+        return int.MinValue;
+    }
+
+
+    /// <summary> Generic method to set value of a Data<int> field. </summary>
+    /// <param name="dataName"> Name of the Data field requested. </param>
+    /// <param name="value"> New unsigned int value of the Data. </param>
+    public void SetUIntValue(string dataName, int value)
+    {
+        if (checkNativePointer())
+        {
+            uint val = (uint)value;
+            int res = sofaComponentAPI_setUIntValue(m_simu, m_name, dataName, val);
+
+            if (res != 0)
+                Debug.LogError("Method setUIntValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
+        }
+    }
+
+
     /// <summary> Generic method to get value of a Data<float> field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <returns> Float value of the Data field, return float.MinValue if field is not found. </returns>
@@ -533,6 +569,31 @@ public class SofaBaseComponentAPI : SofaBaseAPI
         return -1;
     }
 
+    /// <summary> Generic method to get size of a Data< vector<double> > field. </summary>
+    /// <param name="dataName"> Name of the Data field requested. </param>
+    /// <returns> size of the Data vector. Return negative value if field not found or error encountered. </returns>
+    public int GetVecdSize(string dataName)
+    {
+        if (checkNativePointer())
+        {
+            int[] val = new int[1];
+            val[0] = -2;
+            string dataType = "double";
+            int res = sofaComponentAPI_getVectorSize(m_simu, m_name, dataName, dataType, val);
+
+            if (res != 0)
+            {
+                Debug.LogError("Method getVecdSize of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
+                return res;
+            }
+            else
+                return val[0];
+        }
+
+        return -1;
+    }
+
+
 
     /// <summary> Generic method to get values of a Data< vector<float> > field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
@@ -707,6 +768,14 @@ public class SofaBaseComponentAPI : SofaBaseAPI
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_setIntValue(IntPtr obj, string componentName, string dataName, int value);
+
+
+    /// UInt API
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_getUIntValue(IntPtr obj, string componentName, string dataName, uint[] value);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_setUIntValue(IntPtr obj, string componentName, string dataName, uint value);
 
 
     /// Float API

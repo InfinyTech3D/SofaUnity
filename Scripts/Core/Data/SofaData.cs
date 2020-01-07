@@ -61,10 +61,14 @@ namespace SofaUnity
         [SerializeField]
         protected int m_value = int.MinValue;
 
-        public SofaIntData(SofaBaseComponent owner, string nameID, int value)
+        [SerializeField]
+        protected bool m_isUnsigned;
+
+        public SofaIntData(SofaBaseComponent owner, string nameID, int value, bool isUnsigned = false)
             : base(owner, nameID, "int")
         {
             m_value = value;
+            m_isUnsigned = isUnsigned;
         }
 
         public int Value
@@ -78,7 +82,10 @@ namespace SofaUnity
                     m_value = value;
                     if (m_owner.m_impl != null)
                     {
-                        m_owner.m_impl.SetIntValue(m_dataName, m_value);
+                        if (m_isUnsigned)
+                            m_owner.m_impl.SetUIntValue(m_dataName, m_value);
+                        else
+                            m_owner.m_impl.SetIntValue(m_dataName, m_value);
                         m_isEdited = true;
                     }
                 }

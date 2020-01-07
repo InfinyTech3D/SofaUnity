@@ -43,10 +43,10 @@ public class SofaBaseComponentEditor : Editor
                 SofaBoolData data = dataArchiver.GetSofaBoolData(dataName);
                 data.Value = EditorGUILayout.Toggle(data.DataName, data.Value);
             }
-            else if (dataType == "int")
+            else if (dataType == "int" || dataType == "uint")
             {
                 SofaIntData data = dataArchiver.GetSofaIntData(dataName);
-                data.Value = EditorGUILayout.IntField(data.DataName, data.Value);
+                data.Value = EditorGUILayout.IntField(data.DataName, data.Value);                
             }
             else if (dataType == "float")
             {
