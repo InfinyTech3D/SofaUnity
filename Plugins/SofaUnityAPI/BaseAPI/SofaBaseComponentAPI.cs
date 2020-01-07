@@ -43,6 +43,14 @@ public class SofaBaseComponentAPI : SofaBaseAPI
             return "None";
     }
 
+    public int ReinitComponent()
+    {
+        if (m_isReady)
+            return sofaComponentAPI_reinitComponent(m_simu, m_name);
+        else
+            return -1;
+    }
+
 
     /// <summary> Generic method to get value of a Data<bool> field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
@@ -748,6 +756,9 @@ public class SofaBaseComponentAPI : SofaBaseAPI
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern string sofaComponentAPI_getDataFields(IntPtr obj, string componentName);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_reinitComponent(IntPtr obj, string componentName);
 
 
     /////////////////////////////////////////////////////////////////////////////////////////

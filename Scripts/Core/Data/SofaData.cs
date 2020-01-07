@@ -32,18 +32,21 @@ namespace SofaUnity
 
         public bool Value
         {
-            get { return m_value; }
+            get
+            {
+                return m_value;
+            }
             set
             {
                 if (m_value != value)
-                {
-                    Debug.Log("Set value: " + m_dataName + " = " + m_value);
+                {                    
                     m_value = value;
-                    if (m_owner.m_impl != null)
+                    if (SetValueImpl())
                     {
-                        m_owner.m_impl.SetBoolValue(m_dataName, m_value);
+                        m_owner.m_impl.ReinitComponent();
                         m_isEdited = true;
-                    }
+                        Debug.Log("Set value: " + m_dataName + " = " + m_value);
+                    }                     
                 }
             }
         }
@@ -51,6 +54,15 @@ namespace SofaUnity
         public void Log()
         {
             Debug.Log(m_owner.UniqueNameId + "{" + m_dataType + "}: " + m_dataName + " => " + m_value);
+        }
+
+        protected override bool SetValueImpl()
+        {
+            if (m_owner.m_impl == null)
+                return false;
+
+            m_owner.m_impl.SetBoolValue(m_dataName, m_value);
+            return true;
         }
     }
 
@@ -77,16 +89,13 @@ namespace SofaUnity
             set
             {
                 if (m_value != value)
-                {
-                    Debug.Log("Set value: " + m_dataName + " = " + m_value);
+                {                    
                     m_value = value;
-                    if (m_owner.m_impl != null)
+                    if (SetValueImpl())
                     {
-                        if (m_isUnsigned)
-                            m_owner.m_impl.SetUIntValue(m_dataName, m_value);
-                        else
-                            m_owner.m_impl.SetIntValue(m_dataName, m_value);
+                        m_owner.m_impl.ReinitComponent();
                         m_isEdited = true;
+                        Debug.Log("Set value: " + m_dataName + " = " + m_value);
                     }
                 }
             }
@@ -95,6 +104,19 @@ namespace SofaUnity
         public void Log()
         {
             Debug.Log(m_owner.UniqueNameId + "{" + m_dataType + "}: " + m_dataName + " => " + m_value);
+        }
+
+        protected override bool SetValueImpl()
+        {
+            if (m_owner.m_impl == null)
+                return false;
+
+            if (m_isUnsigned)
+                m_owner.m_impl.SetUIntValue(m_dataName, m_value);
+            else
+                m_owner.m_impl.SetIntValue(m_dataName, m_value);
+
+            return true;
         }
     }
 
@@ -117,13 +139,13 @@ namespace SofaUnity
             set
             {
                 if (m_value != value)
-                {
-                    Debug.Log("Set value: " + m_dataName + " = " + m_value);
+                {                    
                     m_value = value;
-                    if (m_owner.m_impl != null)
+                    if (SetValueImpl())
                     {
-                        m_owner.m_impl.SetFloatValue(m_dataName, m_value);
+                        m_owner.m_impl.ReinitComponent();
                         m_isEdited = true;
+                        Debug.Log("Set value: " + m_dataName + " = " + m_value);
                     }
                 }
             }
@@ -132,6 +154,15 @@ namespace SofaUnity
         public void Log()
         {
             Debug.Log(m_owner.UniqueNameId + "{" + m_dataType + "}: " + m_dataName + " => " + m_value);
+        }
+
+        protected override bool SetValueImpl()
+        {
+            if (m_owner.m_impl == null)
+                return false;
+
+            m_owner.m_impl.SetFloatValue(m_dataName, m_value);
+            return true;
         }
     }
 
@@ -155,12 +186,12 @@ namespace SofaUnity
             {
                 if (m_value != value)
                 {
-                    Debug.Log("Set value: " + m_dataName + " = " + m_value);
                     m_value = value;
-                    if (m_owner.m_impl != null)
+                    if (SetValueImpl())
                     {
-                        m_owner.m_impl.SetDoubleValue(m_dataName, m_value);
+                        m_owner.m_impl.ReinitComponent();
                         m_isEdited = true;
+                        Debug.Log("Set value: " + m_dataName + " = " + m_value);
                     }
                 }
             }
@@ -169,6 +200,15 @@ namespace SofaUnity
         public void Log()
         {
             Debug.Log(m_owner.UniqueNameId + "{" + m_dataType + "}: " + m_dataName + " => " + m_value);
+        }
+
+        protected override bool SetValueImpl()
+        {
+            if (m_owner.m_impl == null)
+                return false;
+
+            m_owner.m_impl.SetDoubleValue(m_dataName, m_value);
+            return true;
         }
     }
 
@@ -192,13 +232,13 @@ namespace SofaUnity
             set
             {
                 if (m_value != value)
-                {
-                    Debug.Log("Set value: " + m_dataName + " = " + m_value);
+                {                    
                     m_value = value;
-                    if (m_owner.m_impl != null)
+                    if (SetValueImpl())
                     {
-                        m_owner.m_impl.SetStringValue(m_dataName, m_value);
+                        m_owner.m_impl.ReinitComponent();
                         m_isEdited = true;
+                        Debug.Log("Set value: " + m_dataName + " = " + m_value);
                     }
                 }
             }
@@ -207,6 +247,15 @@ namespace SofaUnity
         public void Log()
         {
             Debug.Log(m_owner.UniqueNameId + "{" + m_dataType + "}: " + m_dataName + " => " + m_value);
+        }
+
+        protected override bool SetValueImpl()
+        {
+            if (m_owner.m_impl == null)
+                return false;
+
+            m_owner.m_impl.SetStringValue(m_dataName, m_value);
+            return true;
         }
     }
 
@@ -235,12 +284,12 @@ namespace SofaUnity
             {
                 if (m_value != value)
                 {
-                    Debug.Log("Set value: " + m_dataName + " = " + m_value);
                     m_value = value;
-                    if (m_owner.m_impl != null)
+                    if (SetValueImpl())
                     {
-                        m_owner.m_impl.SetVector2Value(m_dataName, m_value, m_isDouble);
+                        m_owner.m_impl.ReinitComponent();
                         m_isEdited = true;
+                        Debug.Log("Set value: " + m_dataName + " = " + m_value);
                     }
                 }
             }
@@ -249,6 +298,15 @@ namespace SofaUnity
         public void Log()
         {
             Debug.Log(m_owner.UniqueNameId + "{" + m_dataType + "}: " + m_dataName + " => " + m_value);
+        }
+
+        protected override bool SetValueImpl()
+        {
+            if (m_owner.m_impl == null)
+                return false;
+
+            m_owner.m_impl.SetVector2Value(m_dataName, m_value);
+            return true;
         }
     }
 
@@ -276,12 +334,12 @@ namespace SofaUnity
             {
                 if (m_value != value)
                 {
-                    Debug.Log("Set value: " + m_dataName + " = " + m_value);
                     m_value = value;
-                    if (m_owner.m_impl != null)
+                    if (SetValueImpl())
                     {
-                        m_owner.m_impl.SetVector3Value(m_dataName, m_value, m_isDouble);
+                        m_owner.m_impl.ReinitComponent();
                         m_isEdited = true;
+                        Debug.Log("Set value: " + m_dataName + " = " + m_value);
                     }
                 }
             }
@@ -290,6 +348,15 @@ namespace SofaUnity
         public void Log()
         {
             Debug.Log(m_owner.UniqueNameId + "{" + m_dataType + "}: " + m_dataName + " => " + m_value);
+        }
+
+        protected override bool SetValueImpl()
+        {
+            if (m_owner.m_impl == null)
+                return false;
+
+            m_owner.m_impl.SetVector3Value(m_dataName, m_value);
+            return true;
         }
     }
 
@@ -317,12 +384,12 @@ namespace SofaUnity
             {
                 if (m_value != value)
                 {
-                    Debug.Log("Set value: " + m_dataName + " = " + m_value);
                     m_value = value;
-                    if (m_owner.m_impl != null)
+                    if (SetValueImpl())
                     {
-                        m_owner.m_impl.SetVector4Value(m_dataName, m_value, m_isDouble);
+                        m_owner.m_impl.ReinitComponent();
                         m_isEdited = true;
+                        Debug.Log("Set value: " + m_dataName + " = " + m_value);
                     }
                 }
             }
@@ -331,6 +398,15 @@ namespace SofaUnity
         public void Log()
         {
             Debug.Log(m_owner.UniqueNameId + "{" + m_dataType + "}: " + m_dataName + " => " + m_value);
+        }
+
+        protected override bool SetValueImpl()
+        {
+            if (m_owner.m_impl == null)
+                return false;
+
+            m_owner.m_impl.SetVector4Value(m_dataName, m_value);
+            return true;
         }
     }
 

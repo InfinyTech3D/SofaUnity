@@ -45,6 +45,21 @@ namespace SofaUnity
         {
             get { return m_isReadOnly; }
         }
+
+
+        public bool SetValueIfEdited()
+        {
+            if (m_isEdited == true)
+                return SetValueImpl();
+            else
+                return false;
+        }
+
+
+        protected virtual bool SetValueImpl()
+        {
+            return false;
+        }
     }
 
 
