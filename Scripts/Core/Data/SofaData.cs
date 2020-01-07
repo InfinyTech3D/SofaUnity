@@ -111,7 +111,10 @@ namespace SofaUnity
             set
             {
                 if (m_value != value)
-                {                    
+                {
+                    if (m_isUnsigned && value < 0)
+                        return;
+
                     m_value = value;
                     if (SetValueImpl())
                     {
