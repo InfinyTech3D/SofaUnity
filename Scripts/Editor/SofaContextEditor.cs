@@ -101,6 +101,13 @@ public class SofaContextEditor : Editor
     {
         EditorGUILayout.Separator();
         EditorGUI.BeginDisabledGroup(true);
+
+        if (context.PluginManager == null)
+        {
+            EditorGUILayout.IntField("Plugins Count", 0);
+            return;
+        }
+
         int nbrPlugin = EditorGUILayout.IntField("Plugins Count", context.PluginManager.NbrPlugin);
         context.PluginManager.NbrPlugin = nbrPlugin;
         EditorGUI.indentLevel += 1;
