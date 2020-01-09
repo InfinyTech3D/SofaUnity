@@ -132,6 +132,14 @@ namespace SofaUnity
                 }
             }
         }
+
+        public void PropagateSetDirty(bool value)
+        {
+            foreach (SofaBaseComponent scompo in m_sofaComponents)
+            {
+                scompo.SetDirty(value);
+            }
+        }
     }
 
 } // namespace SofaUnity

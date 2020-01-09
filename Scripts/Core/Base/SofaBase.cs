@@ -85,7 +85,7 @@ namespace SofaUnity
 
         /// bool to store the status of this GameObject. Used to update the mesh if is dirty.
         protected bool m_isDirty = true;
-        public void SetDirty() { m_isDirty = true; }
+        public void SetDirty(bool value) { m_isDirty = value; }
 
 
         // priority 0 = debug, 1 = warning, 2 = error
@@ -154,7 +154,7 @@ namespace SofaUnity
 
 
             // Call internal method that can be overwritten. Only if dirty
-            //if (m_isDirty)
+            if (m_isDirty)
             {
                 UpdateImpl();
                 m_isDirty = false;

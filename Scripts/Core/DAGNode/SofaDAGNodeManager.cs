@@ -170,17 +170,12 @@ namespace SofaUnity
         }
 
 
-        // Start is called before the first frame update
-        void Start()
+        public void PropagateSetDirty(bool value)
         {
-
-        }
-
-
-        // Update is called once per frame
-        void Update()
-        {
-
+            foreach (SofaDAGNode snode in m_dagNodes)
+            {
+                snode.PropagateSetDirty(value);
+            }
         }
     }
 }

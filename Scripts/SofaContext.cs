@@ -369,14 +369,8 @@ namespace SofaUnity
 
                 m_impl.step();
 
-                //if (m_hierarchyPtr.m_objects != null)
-                //{
-                //    // Set all objects to dirty to force and update.
-                //    foreach (SofaBaseObject child in m_hierarchyPtr.m_objects)
-                //    {
-                //        child.setDirty();
-                //    }
-                //}
+                if (m_nodeGraphMgr != null)
+                    m_nodeGraphMgr.PropagateSetDirty(true);
             }
         }
 
