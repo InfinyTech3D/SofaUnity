@@ -235,7 +235,7 @@ namespace SofaUnityAPI
             if (m_isReady)
             {
                 double[] grav = new double[3];
-                int res = sofaPhysicsAPI_gravity(m_native, grav);
+                int res = sofaPhysicsAPI_getGravity(m_native, grav);
 
                 if (res == 0)
                 {
@@ -480,9 +480,10 @@ namespace SofaUnityAPI
         public static extern double sofaPhysicsAPI_timeStep(IntPtr obj);
 
         [DllImport("SofaAdvancePhysicsAPI")]
-        public static extern void sofaPhysicsAPI_setGravity(IntPtr obj, double[] values);
+        public static extern int sofaPhysicsAPI_getGravity(IntPtr obj, double[] values);
         [DllImport("SofaAdvancePhysicsAPI")]
-        public static extern int sofaPhysicsAPI_gravity(IntPtr obj, double[] values);
+        public static extern int sofaPhysicsAPI_setGravity(IntPtr obj, double[] values);
+        
         
 
         /// Bindings tests
