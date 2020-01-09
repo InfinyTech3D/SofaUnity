@@ -63,7 +63,6 @@ namespace SofaUnity
 
         protected override void InitImpl()
         {
-            m_log = true;
             if (m_impl == null)
             {
                 // Creation method of Sofa component API
@@ -116,7 +115,6 @@ namespace SofaUnity
 
         protected override void ReconnectImpl()
         {
-            m_log = true;
             // 1- reconnect with SofaBaseComponentAPI
             CreateSofaAPI();
 

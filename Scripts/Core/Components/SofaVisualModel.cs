@@ -42,21 +42,17 @@ namespace SofaUnity
 
         protected void InitBaseMeshAPI()
         {
-            Debug.Log("SofaVisualModel::InitBaseMeshAPI");
-
             if (m_sofaMeshAPI == null)
             {
                 // Get access to the sofaContext
                 IntPtr _simu = m_sofaContext.getSimuContext();
-
-                Debug.Log("UniqueNameId: " + UniqueNameId);
 
                 if (_simu == IntPtr.Zero)
                     return;
                 
                 // Create the API object for SofaMesh
                 m_sofaMeshAPI = new SofaBaseMeshAPI(m_sofaContext.getSimuContext(), UniqueNameId, false);
-                Debug.Log("SofaVisualModel::InitBaseMeshAPI object created");
+                SofaLog("SofaVisualModel::InitBaseMeshAPI object created");
 
                 m_sofaMeshAPI.loadObject();
 
@@ -98,7 +94,6 @@ namespace SofaUnity
         /// Method called by \sa Start() method to init the current object and impl. @param toUpdate indicate if updateMesh has to be called.
         protected void initMesh(bool toUpdate)
         {
-            Debug.Log("SofaVisualModel::initMesh");
             if (m_sofaMeshAPI == null)
                 return;
 
@@ -108,8 +103,7 @@ namespace SofaUnity
             //Mesh meshCopy = Mesh.Instantiate(mf.sharedMesh) as Mesh;  //make a deep copy
             Mesh meshCopy = new Mesh();
             m_mesh = mf.mesh = meshCopy;                    //Assign the copy to the meshes
-
-            SofaLog("SMesh::Start editor mode.");
+            
 #else
             //do this in play mode
             m_mesh = GetComponent<MeshFilter>().mesh;
@@ -123,6 +117,7 @@ namespace SofaUnity
             m_mesh.triangles = m_sofaMeshAPI.createTriangulation();
             m_sofaMeshAPI.recomputeTexCoords(m_mesh);
 
+            SofaLog("SofaVisualModel::initMesh ok: " + m_mesh.vertices.Length);
             //base.initMesh(false);
 
             if (toUpdate)
@@ -133,9 +128,7 @@ namespace SofaUnity
         /// Method called by @sa Update() method.
         protected override void UpdateImpl()
         {
-            //SofaLog("SofaVisualMesh::updateImpl called.");
-            //return;
-
+            SofaLog("SofaVisualMesh::updateImpl called.");
 
             if (m_sofaMeshAPI != null)
             {
