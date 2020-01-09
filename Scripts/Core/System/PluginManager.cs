@@ -5,9 +5,22 @@ using SofaUnityAPI;
 
 namespace SofaUnity
 {
+    [System.Serializable]
     public class PluginManager
     {
-        
+        protected SofaContextAPI m_sofaAPI = null;
+
+        public PluginManager(SofaContextAPI sofaAPI)
+        {
+            m_sofaAPI = sofaAPI;
+            InitDefaultPlugins();
+        }
+
+        public void SetSofaContextAPI(SofaContextAPI sofaAPI)
+        {
+            m_sofaAPI = sofaAPI;
+        }
+
         [SerializeField]
         protected List<string> m_plugins = null;
 
@@ -45,15 +58,7 @@ namespace SofaUnity
             if (id < m_plugins.Count)
                 m_plugins[id] = value;
         }
-
-        protected SofaContextAPI m_sofaAPI = null;
-
-        public PluginManager(SofaContextAPI sofaAPI)
-        {
-            m_sofaAPI = sofaAPI;
-            InitDefaultPlugins();
-        }
-
+        
 
         public void LoadPlugins()
         {

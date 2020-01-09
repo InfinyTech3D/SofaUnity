@@ -296,8 +296,11 @@ namespace SofaUnity
                     Debug.Log("## m_nodeGraphMgr already created...");
                 }
 
+                // handle sofa plugins
                 if (m_pluginMgr == null)
                     m_pluginMgr = new PluginManager(m_impl);
+                else
+                    m_pluginMgr.SetSofaContextAPI(m_impl);
 
                 catchSofaMessages();
                 m_pluginMgr.LoadPlugins();
