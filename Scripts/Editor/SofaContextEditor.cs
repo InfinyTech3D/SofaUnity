@@ -70,6 +70,10 @@ public class SofaContextEditor : Editor
         context.StartOnPlay = EditorGUILayout.Toggle("Start Sofa on Play", context.StartOnPlay);
         context.StepbyStep = EditorGUILayout.Toggle("StepByStep", context.StepbyStep);
 
+        // Add pluigin section
+        PluginSection(context);
+
+
         if (GUILayout.Button("Step"))
         {
             context.StepbyStep = true;
@@ -92,4 +96,22 @@ public class SofaContextEditor : Editor
             EditorUtility.SetDirty(context);
         }
     }
+
+    void PluginSection(SofaContext context)
+    {
+        EditorGUILayout.Separator();
+        EditorGUI.BeginDisabledGroup(true);
+        int nbrPlugin = EditorGUILayout.IntField("Plugins Count", context.PluginManager.NbrPlugin);
+        context.PluginManager.NbrPlugin = nbrPlugin;
+        EditorGUI.indentLevel += 1;
+        for (int i = 0; i < nbrPlugin; i++)
+        {
+            string pluginName = EditorGUILayout.TextField("Plugin Name: ", context.PluginManager.GetPluginName(i));
+            context.PluginManager.SetPluginName(i, pluginName);
+        }
+        EditorGUI.indentLevel -= 1;
+        EditorGUI.EndDisabledGroup();
+        EditorGUILayout.Separator();
+    }
+
 }

@@ -46,6 +46,13 @@ namespace SofaUnity
         private SofaDAGNodeManager m_nodeGraphMgr = null;
 
         public bool testAsync = false;
+        [SerializeField]
+        private PluginManager m_pluginMgr = null;
+        public PluginManager PluginManager
+        {
+            get { return m_pluginMgr; }
+        }
+
 
 
         /// Getter of current Sofa Context API, @see m_impl
@@ -100,7 +107,7 @@ namespace SofaUnity
             {
                 if (value != m_filename)
                 {
-                    if (File.Exists(Application.dataPath + value))
+                    if (File.Exists(Application.dataPath+value))
                     {
                         bool reload = false;
                         if (m_filename != "")
@@ -148,7 +155,7 @@ namespace SofaUnity
 
         public float getFactorUnityToSofa(int dir = -1)
         {
-            float factor = getFactorSofaToUnity(dir);
+            float factor = getFactorSofaToUnity(dir);               
             if (factor != 0.0f) factor = 1 / factor;
 
             return factor;
@@ -196,7 +203,7 @@ namespace SofaUnity
         /// Method called at GameObject destruction.
         void OnDestroy()
         {
-            if (m_log)
+            if(m_log)
                 Debug.Log("SofaContext::OnDestroy stop called.");
             if (m_impl != null)
             {
@@ -262,28 +269,6 @@ namespace SofaUnity
             }
         }
 
-        void loadPlugins()
-        {
-            string pluginPath = "";
-            if (Application.isEditor)
-                pluginPath = "/SofaUnity/Plugins/Native/x64/";
-            else
-                pluginPath = "/Plugins/";
-
-            // Default plugin to be loaded
-            m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaOpenglVisual.dll");
-            m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaMiscCollision.dll");
-            //m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaSparseSolver.dll");
-            //m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaPreconditioner.dll");
-
-            //m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaSphFluid.dll");
-            //m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaHaptics.dll");
-            //m_impl.loadPlugin(Application.dataPath + pluginPath + "Geomagic.dll");
-            //m_impl.loadPlugin(Application.dataPath + pluginPath + "InteractionTools.dll");
-
-            //m_impl.loadPlugin(Application.dataPath + pluginPath + "MultiCoreGPU.dll");
-        }
-
 
         /// Internal Method to init the SofaContext object
         void init()
@@ -311,12 +296,15 @@ namespace SofaUnity
                     Debug.Log("## m_nodeGraphMgr already created...");
                 }
 
+                if (m_pluginMgr == null)
+                    m_pluginMgr = new PluginManager(m_impl);
+
                 catchSofaMessages();
-                loadPlugins();
+                m_pluginMgr.LoadPlugins();
 
                 if (m_log)
                     Debug.Log("## SofaContext status before start: " + m_impl.contextStatus());
-
+                                   
                 m_impl.start();
 
                 if (m_log)
@@ -373,9 +361,9 @@ namespace SofaUnity
                 Debug.LogError("### SofaContext init No Impl");
             }
 
-
+            
         }
-
+        
         // Update is called once per fix frame
         void FixedUpdate()
         {
@@ -388,7 +376,7 @@ namespace SofaUnity
         void Update()
         {
             // only if scene is playing or if sofa is running
-            if (IsSofaUpdating == false || Application.isPlaying == false) return;
+            if (IsSofaUpdating == false || Application.isPlaying == false) return; 
 
             if (testAsync)
                 updateImplASync();
@@ -445,8 +433,8 @@ namespace SofaUnity
                 // if physics simulation async step is still running do not wait and return the control to Unity
                 if (m_impl.isAsyncStepCompleted())
                 {
-                    // Debug.Log("isAsyncStepCompleted: YES ");
-
+                   // Debug.Log("isAsyncStepCompleted: YES ");
+                    
                     // physics simulation step completed and is not running
                     // perform data synchronization safely (no need of synchronization locks)                        
                     //if (m_hierarchyPtr.m_objects != null)
@@ -492,7 +480,7 @@ namespace SofaUnity
                 m_impl.activateMessageHandler(true);
                 isMsgHandlerActivated = true;
             }
-            else if (!CatchSofaMessages && isMsgHandlerActivated)
+            else if(!CatchSofaMessages && isMsgHandlerActivated)
             {
                 m_impl.activateMessageHandler(false);
                 isMsgHandlerActivated = false;
@@ -500,7 +488,7 @@ namespace SofaUnity
 
             if (isMsgHandlerActivated)
             {
-                m_impl.DisplayMessages();
+                 m_impl.DisplayMessages();
             }
         }
 
@@ -527,12 +515,12 @@ namespace SofaUnity
 
             // destroy sofaContext
             m_impl.Dispose();
-
+            
             // recreate sofaContext
             m_impl = new SofaContextAPI(testAsync);
-            loadPlugins();
+            m_pluginMgr.LoadPlugins();
             m_impl.start();
-
+            
             // loadFilename
             loadFilename();
         }
@@ -552,6 +540,6 @@ namespace SofaUnity
             {
                 Debug.Log(i + " -> " + m_impl.getObjectName(i));
             }
-        }
+        }        
     }
 }
