@@ -5,13 +5,13 @@ using SofaUnityAPI;
 
 namespace SofaUnity
 {
+    //[System.Serializable]
     public class SofaDAGNodeManager
     {
 
         static int value = -1;
 
         /// List of SofaDAGNode in the graph
-        [SerializeField]
         public List<SofaDAGNode> m_dagNodes = null;
 
         /// pointer to the SofaContext root object
@@ -36,6 +36,8 @@ namespace SofaUnity
             m_dagNodes = new List<SofaDAGNode>();
             value++;
         }
+
+
 
 
         public void RegisterNode(string NodeName)

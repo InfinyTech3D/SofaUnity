@@ -38,6 +38,7 @@ namespace SofaUnity
         
         public bool StepbyStep = false;
 
+        //[SerializeField]
         private SofaDAGNodeManager m_nodeGraphMgr = null;
 
         [SerializeField]
@@ -272,6 +273,7 @@ namespace SofaUnity
                 }
                 else
                 {
+                    // TODO make this serializable might help for custom simulation in futur.
                     Debug.Log("## m_nodeGraphMgr already created...");
                 }
 
@@ -299,8 +301,10 @@ namespace SofaUnity
                     m_sceneFileMgr.SetSofaContext(this);
 
                 if (m_sceneFileMgr.HasScene)
-                    m_sceneFileMgr.LoadFilename();
-
+                {
+                    //m_sceneFileMgr.LoadFilename();
+                    ReconnectSofaScene();
+                }
 
                 catchSofaMessages();
                 if (m_log)
@@ -482,7 +486,7 @@ namespace SofaUnity
             if (m_sceneFileMgr == null)
                 return;
 
-            Debug.Log("## SofaContext ## loadFilename " + m_sceneFileMgr.AbsoluteFilename());
+            Debug.Log("## SofaContext ## loadFilename: " + m_sceneFileMgr.AbsoluteFilename());
             // load scene file in SOFA
             m_impl.loadScene(m_sceneFileMgr.AbsoluteFilename());
 
@@ -499,6 +503,21 @@ namespace SofaUnity
             {
                 Debug.Log(i + " -> " + m_impl.getObjectName(i));
             }
+        }
+
+        protected void ReconnectSofaScene()
+        {
+            if (m_sceneFileMgr == null)
+                return;
+
+            Debug.Log("## SofaContext ## ReconnectSofaScene: " + m_sceneFileMgr.AbsoluteFilename());
+            // load scene file in SOFA
+            m_impl.loadScene(m_sceneFileMgr.AbsoluteFilename());
+
+            // Do not retrieve timestep of gravity in case it has been changed in editor
+
+            // reconnect node hiearchy in unity
+            m_nodeGraphMgr.ReconnectNodeGraph();
         }
 
         public void ClearSofaScene()
