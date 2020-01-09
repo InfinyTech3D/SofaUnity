@@ -13,6 +13,10 @@ namespace SofaUnity
         protected string m_parentNodeName = "None";
         public string getParentName() { return m_parentNodeName; }
 
+        /// List of SofaBaseComponent in this DAGNode
+        public List<SofaBaseComponent> m_sofaComponents = null;
+        
+
 
         /// init() is called by nodeMgr with sofaContext and names
         /// - Set sofaContext and name and call InitImpl()
@@ -34,7 +38,7 @@ namespace SofaUnity
 
         protected override void InitImpl()  // if launch by awake should only retrive pointer to sofaContext + name to reconnect to sofaDAGNodeAPI
         {
-            if (m_impl == null) 
+            if (m_impl == null)
                 CreateSofaAPI();
             else
                 SofaLog("SofaDAGNode::InitImpl, already created: " + UniqueNameId, 1);
@@ -51,21 +55,25 @@ namespace SofaUnity
 
             m_impl = new SofaDAGNodeAPI(m_sofaContext.getSimuContext(), UniqueNameId);
 
-            string componentsS = m_impl.GetDAGNodeComponents();            
+            string componentsS = m_impl.GetDAGNodeComponents();
             if (componentsS.Length == 0)
                 return;
 
             SofaLog("####### SofaDAGNode: " + UniqueNameId + " -> " + componentsS);
-
+            m_sofaComponents = new List<SofaBaseComponent>();
             List<string> compoNames = ConvertStringToList(componentsS);
             foreach (string compoName in compoNames)
             {
                 string baseType = m_impl.GetBaseComponentType(compoName);
 
                 if (baseType.Contains("Error"))
-                    SofaLog("Component " + compoName + " returns baseType: " + baseType, 2);                    
+                    SofaLog("Component " + compoName + " returns baseType: " + baseType, 2);
                 else
-                    SofaComponentFactory.CreateSofaComponent(compoName, baseType, this, this.gameObject);
+                {
+                    SofaBaseComponent compo = SofaComponentFactory.CreateSofaComponent(compoName, baseType, this, this.gameObject);
+                    if (compo != null)
+                        m_sofaComponents.Add(compo);
+                }
             }
 
             m_parentNodeName = m_impl.GetParentNodeName();
@@ -92,6 +100,7 @@ namespace SofaUnity
                 return;
 
             List<string> compoNames = ConvertStringToList(componentsS);
+            m_sofaComponents = new List<SofaBaseComponent>();
             foreach (string compoName in compoNames)
             {
                 bool found = false;
@@ -101,7 +110,7 @@ namespace SofaUnity
                 {
                     if (child.name == compoGOName)
                     {
-                        componentGO = child.gameObject;                       
+                        componentGO = child.gameObject;
                         found = true;
                         break;
                     }
@@ -114,9 +123,12 @@ namespace SofaUnity
 
                 if (found)
                 {
-                    SofaBase component = componentGO.GetComponent<SofaBase>();
+                    SofaBaseComponent component = componentGO.GetComponent<SofaBaseComponent>();
                     if (component != null)
+                    {
                         component.Reconnect(this.m_sofaContext);
+                        m_sofaComponents.Add(component);
+                    }
                 }
             }
         }

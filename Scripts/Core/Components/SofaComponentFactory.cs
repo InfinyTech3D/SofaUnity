@@ -9,7 +9,7 @@ namespace SofaUnity
     // manage specific component class implementation
     static public class SofaComponentFactory
     {
-        static public void CreateSofaComponent(string nameId, string componentType, SofaDAGNode sofaNodeOwner, GameObject parent)
+        static public SofaBaseComponent CreateSofaComponent(string nameId, string componentType, SofaDAGNode sofaNodeOwner, GameObject parent)
         {
             GameObject compoGO = new GameObject("SofaComponent - " + nameId);
             SofaBaseComponent sofaCompo = null;
@@ -48,14 +48,16 @@ namespace SofaUnity
             else
             {
                 Debug.LogError("Component type not handled: " + componentType);
-                return;
+                return null;
             }
 
             // set generic parameters
             sofaCompo.setDAGNode(sofaNodeOwner);
             sofaCompo.Init(sofaNodeOwner.m_sofaContext, nameId);
             sofaCompo.m_baseComponentType = sofaCompo.BaseTypeFromString(componentType);
-            compoGO.transform.parent = parent.gameObject.transform;         
+            compoGO.transform.parent = parent.gameObject.transform;
+
+            return sofaCompo;
         }
     }
 
