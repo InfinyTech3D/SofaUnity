@@ -25,10 +25,7 @@ namespace SofaUnity
         public Vector3 m_gravity = new Vector3(0f, -9.8f, 0f);
         /// Parameter: Float representing the simulation timestep to use.
         public float m_timeStep = 0.02f; // ~ 1/60
-
-        /// Parameter: String representing the Path to the Sofa scene.
-        public string m_filename = "";
-
+        
         /// Booleen to update sofa simulation
         public bool IsSofaUpdating = true;
 
@@ -38,14 +35,11 @@ namespace SofaUnity
         /// Booleen to start Sofa simulation on Play
         [SerializeField]
         public bool StartOnPlay = true;
-
+        
         public bool StepbyStep = false;
-
-        List<SRayCaster> m_casters = null;
 
         private SofaDAGNodeManager m_nodeGraphMgr = null;
 
-        public bool testAsync = false;
         [SerializeField]
         private PluginManager m_pluginMgr = null;
         public PluginManager PluginManager
@@ -53,7 +47,18 @@ namespace SofaUnity
             get { return m_pluginMgr; }
         }
 
+        [SerializeField]
+        private SceneFileManager m_sceneFileMgr = null;
+        public SceneFileManager SceneFileMgr
+        {
+            get { return m_sceneFileMgr; }
+        }
 
+
+        List<SRayCaster> m_casters = null;
+
+        public bool testAsync = false;
+        
 
         /// Getter of current Sofa Context API, @see m_impl
         public IntPtr getSimuContext()
@@ -99,32 +104,6 @@ namespace SofaUnity
             }
         }
 
-        /// Getter/Setter of current filename @see m_filename
-        public string filename
-        {
-            get { return m_filename; }
-            set
-            {
-                if (value != m_filename)
-                {
-                    if (File.Exists(Application.dataPath+value))
-                    {
-                        bool reload = false;
-                        if (m_filename != "")
-                            reload = true;
-
-                        m_filename = value;
-
-                        if (reload)
-                            reloadFilename();
-                        else
-                            loadFilename();
-                    }
-                    else
-                        Debug.LogError("Error file doesn't exist: " + Application.dataPath + value);
-                }
-            }
-        }
 
         public Vector3 getScaleSofaToUnity()
         {
@@ -302,60 +281,28 @@ namespace SofaUnity
                 else
                     m_pluginMgr.SetSofaContextAPI(m_impl);
 
-                catchSofaMessages();
                 m_pluginMgr.LoadPlugins();
 
+                // start sofa instance
                 if (m_log)
                     Debug.Log("## SofaContext status before start: " + m_impl.contextStatus());
-                                   
+
                 m_impl.start();
 
                 if (m_log)
                     Debug.Log("## SofaContext status after start: " + m_impl.contextStatus());
 
+                // handle SOFA scene file
+                if (m_sceneFileMgr == null)
+                    m_sceneFileMgr = new SceneFileManager(this);
+                else
+                    m_sceneFileMgr.SetSofaContext(this);
 
-                if (m_filename != "")
-                {
-                    if (m_log)
-                        Debug.Log("## SofaContext ## m_filename " + m_filename);
+                if (m_sceneFileMgr.HasScene)
+                    m_sceneFileMgr.LoadFilename();
 
-                    if (!File.Exists(Application.dataPath + m_filename))
-                    {
-                        int pos = m_filename.IndexOf("Assets", 0);
-                        if (pos > 0)
-                        {
-                            m_filename = m_filename.Substring(pos + 6); // remove all path until Assets/ to make it relative
-                        }
 
-                        // Fix due to change of scene folder:
-                        int pos2 = m_filename.IndexOf("SofaUnity", 0);
-                        if (pos2 < 0)
-                            m_filename = "/SofaUnity/" + m_filename;
-                    }
-
-                    if (!File.Exists(Application.dataPath + m_filename)) // still not found
-                    {
-                        Debug.LogError("Error file can't be found: " + Application.dataPath + m_filename);
-                        return;
-                    }
-
-                    // load the file
-                    m_impl.loadScene(Application.dataPath + m_filename);
-
-                    if (m_nodeGraphMgr != null)
-                    {
-                        m_nodeGraphMgr.ReconnectNodeGraph();
-                    }
-
-                    //m_timeStep = m_impl.timeStep;
-                    //m_gravity = m_impl.getGravity();
-                }
-                //else
-                //{
-                m_impl.timeStep = m_timeStep;
-                m_impl.setGravity(m_gravity);
-                //}              
-
+                catchSofaMessages();
                 if (m_log)
                     Debug.Log("## SofaContext status end init: " + m_impl.contextStatus());
             }
@@ -495,46 +442,55 @@ namespace SofaUnity
             }
         }
 
-        protected void reloadFilename()
-        {
-            // stop simulation first
-            m_impl.stop();
-            m_impl.freeGlutGlew();
+        //protected void reloadFilename()
+        //{
+        //    // stop simulation first
+        //    m_impl.stop();
+        //    m_impl.freeGlutGlew();
 
-            // clear hierarchy
-            //m_hierarchyPtr.clearHierarchy();
-            List<GameObject> childToDestroy = new List<GameObject>();
-            foreach (Transform child in this.transform)
-            {
-                SofaBaseObject obj = child.GetComponent<SofaBaseObject>();
-                if (obj != null)
-                {
-                    childToDestroy.Add(child.gameObject);
-                }
-            }
+        //    // clear hierarchy
+        //    //m_hierarchyPtr.clearHierarchy();
+        //    List<GameObject> childToDestroy = new List<GameObject>();
+        //    foreach (Transform child in this.transform)
+        //    {
+        //        SofaBaseObject obj = child.GetComponent<SofaBaseObject>();
+        //        if (obj != null)
+        //        {
+        //            childToDestroy.Add(child.gameObject);
+        //        }
+        //    }
 
-            foreach (GameObject child in childToDestroy)
-                DestroyImmediate(child);
+        //    foreach (GameObject child in childToDestroy)
+        //        DestroyImmediate(child);
 
-            // destroy sofaContext
-            m_impl.Dispose();
+        //    // destroy sofaContext
+        //    m_impl.Dispose();
             
-            // recreate sofaContext
-            m_impl = new SofaContextAPI(testAsync);
-            m_pluginMgr.LoadPlugins();
-            m_impl.start();
+        //    // recreate sofaContext
+        //    m_impl = new SofaContextAPI(testAsync);
+        //    m_pluginMgr.LoadPlugins();
+        //    m_impl.start();
             
-            // loadFilename
-            loadFilename();
-        }
+        //    // loadFilename
+        //    loadFilename();
+        //}
 
 
         /// Method to load a filename and create GameObject per Sofa object found.
-        protected void loadFilename()
+        public void LoadSofaScene()
         {
-            Debug.Log("## SofaContext ## loadFilename " + Application.dataPath + m_filename);
-            m_impl.loadScene(Application.dataPath + m_filename);
+            if (m_sceneFileMgr == null)
+                return;
 
+            Debug.Log("## SofaContext ## loadFilename " + m_sceneFileMgr.AbsoluteFilename());
+            // load scene file in SOFA
+            m_impl.loadScene(m_sceneFileMgr.AbsoluteFilename());
+
+            // Retrieve current timestep and gravity
+            m_timeStep = m_impl.timeStep;
+            m_gravity = m_impl.getGravity();
+
+            // recreate node hiearchy in unity
             m_nodeGraphMgr.loadGraph();
 
             int nbrObj = m_impl.getNumberObjects();
@@ -543,6 +499,15 @@ namespace SofaUnity
             {
                 Debug.Log(i + " -> " + m_impl.getObjectName(i));
             }
-        }        
+        }
+
+        public void ClearSofaScene()
+        {
+            m_impl.stop();
+            m_impl.unload();
+            //m_nodeGraphMgr.clear();
+            m_impl.start();
+        }
+
     }
 }

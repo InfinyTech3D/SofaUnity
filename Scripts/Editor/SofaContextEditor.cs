@@ -80,17 +80,10 @@ public class SofaContextEditor : Editor
             context.IsSofaUpdating = true;
         }
 
-        // Add Button to load a filename
-        if (GUILayout.Button("Load Scene"))
-        {
-            string absolutePath = EditorUtility.OpenFilePanel("Load file scene (*.scn)", "", "scn");
-            context.filename = absolutePath.Substring(Application.dataPath.Length);
-            EditorGUILayout.Separator();
-        }
-        // Label of the filename loaded
-        EditorGUILayout.LabelField("filename", context.filename);
 
-        
+        // Add scene file section
+        SceneFileSection(context);
+
         if (GUI.changed)
         {
             EditorUtility.SetDirty(context);
@@ -119,4 +112,27 @@ public class SofaContextEditor : Editor
         EditorGUILayout.Separator();
     }
 
+
+    void SceneFileSection(SofaContext context)
+    {
+        EditorGUILayout.Separator();
+        if (context.SceneFileMgr == null)
+        {
+            EditorGUILayout.LabelField("No scene file manager available");
+            return;
+        }
+
+        // Add Button to load a filename
+        if (GUILayout.Button("Load SOFA Scene (.scn) file"))
+        {
+            string absolutePath = EditorUtility.OpenFilePanel("Load file scene (*.scn)", "", "scn");
+            context.SceneFileMgr.SceneFilename = absolutePath.Substring(Application.dataPath.Length);
+            EditorGUILayout.Separator();
+        }
+        // Label of the filename loaded
+        EditorGUILayout.LabelField("Scene Filename: ", context.SceneFileMgr.SceneFilename);
+
+        EditorGUILayout.Separator();
+    }
+    
 }
