@@ -309,6 +309,10 @@ namespace SofaUnity
                 catchSofaMessages();
                 if (m_log)
                     Debug.Log("## SofaContext status end init: " + m_impl.contextStatus());
+
+                // set gravity and timestep if changed in editor
+                m_impl.timeStep = m_timeStep;
+                m_impl.setGravity(m_gravity);
             }
             else
             {
