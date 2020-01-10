@@ -16,7 +16,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     {
         if (m_isReady)
         {
-            string type = sofaPhysicsAPI_getPossibleTypes(m_simu, m_name);
+            string type = sofaComponentAPI_getPossibleTypes(m_simu, m_name);
             return type;
         }
         else
@@ -27,7 +27,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     {
         if (m_isReady)
         {
-            string type = sofaPhysicsAPI_getComponentType(m_simu, m_name);
+            string type = sofaComponentAPI_getComponentType(m_simu, m_name);
             return type;
         }
         else
@@ -748,17 +748,17 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     /////////////////////////////////////////////////////////////////////////////////////////
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern string sofaPhysicsAPI_getPossibleTypes(IntPtr obj, string componentName);
+    public static extern string sofaComponentAPI_getPossibleTypes(IntPtr obj, string componentName);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern string sofaPhysicsAPI_getComponentType(IntPtr obj, string componentName);
+    public static extern string sofaComponentAPI_getComponentType(IntPtr obj, string componentName);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_reinitComponent(IntPtr obj, string componentName);
 
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern string sofaComponentAPI_getDataFields(IntPtr obj, string componentName);
-
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaComponentAPI_reinitComponent(IntPtr obj, string componentName);
 
 
     /////////////////////////////////////////////////////////////////////////////////////////

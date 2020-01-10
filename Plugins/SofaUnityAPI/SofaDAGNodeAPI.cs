@@ -43,7 +43,7 @@ public class SofaDAGNodeAPI : SofaBaseAPI
     {
         if (m_isReady)
         {
-            string type = sofaPhysicsAPI_getBaseComponentType(m_simu, componentName);
+            string type = sofaComponentAPI_getBaseComponentType(m_simu, componentName);
             return type;
         }
         else
@@ -66,14 +66,12 @@ public class SofaDAGNodeAPI : SofaBaseAPI
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern string sofaPhysicsAPI_getDAGNodeComponentsName(IntPtr obj, string nodeName);
 
-
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern string sofaPhysicsAPI_getBaseComponentTypes(IntPtr obj);
-
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern string sofaPhysicsAPI_getBaseComponentType(IntPtr obj, string componentName);
-
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern string sofaPhysicsAPI_getDAGNodeParentName(IntPtr obj, string nodeName);
+
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern string sofaComponentAPI_getBaseComponentType(IntPtr obj, string componentName);
+
     
 }
