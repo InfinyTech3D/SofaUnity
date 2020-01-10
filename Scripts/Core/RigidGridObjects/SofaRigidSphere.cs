@@ -15,7 +15,7 @@ namespace SofaUnity
         protected override void createObject()
         {
             // Get access to the sofaContext
-            IntPtr _simu = m_sofaContext.getSimuContext();
+            IntPtr _simu = m_sofaContext.GetSimuContext();
             if (_simu != IntPtr.Zero) // Create the API object for Sofa Sphere Grid Mesh
                 m_impl = new SofaSphereAPI(_simu, m_uniqueNameId, true);
 

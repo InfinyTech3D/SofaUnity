@@ -18,7 +18,7 @@ namespace SofaUnity
         protected override void createObject()
         {
             // Get access to the sofaContext
-            IntPtr _simu = m_sofaContext.getSimuContext();
+            IntPtr _simu = m_sofaContext.GetSimuContext();
             if (_simu != IntPtr.Zero)
             {
                 // Create the API object for SofaMesh
@@ -146,7 +146,7 @@ namespace SofaUnity
                 }
                 else
                 {
-                    int res = m_impl.updateMeshVelocity(m_mesh, m_sofaContext.timeStep);
+                    int res = m_impl.updateMeshVelocity(m_mesh, m_sofaContext.TimeStep);
                     //if (res == -1)
                     //    m_sofaContext.breakerProcedure();
                 }

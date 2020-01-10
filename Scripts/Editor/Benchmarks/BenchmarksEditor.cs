@@ -50,7 +50,7 @@ public class Benchmark02Editor : Editor
         // Add sofa context first
         GameObject context = SofaScripts.Benchmarks.createSofaContext();
         SofaContext _sofaContext = context.GetComponent<SofaContext>();
-        _sofaContext.timeStep = 0.01f;
+        _sofaContext.TimeStep = 0.01f;
 
         // Add a floor        
         GameObject floor = SofaScripts.Benchmarks.createFloor();

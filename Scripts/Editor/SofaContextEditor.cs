@@ -59,11 +59,11 @@ public class SofaContextEditor : Editor
         EditorGUILayout.LabelField(new GUIContent(SofaLogo), GUILayout.MinHeight(100.0f), GUILayout.ExpandWidth(true));
 
         // Add field for gravity
-        context.gravity = EditorGUILayout.Vector3Field("Gravity", context.gravity);
+        context.Gravity = EditorGUILayout.Vector3Field("Gravity", context.Gravity);
         EditorGUILayout.Separator();
 
         // Add field for timestep
-        context.timeStep = EditorGUILayout.FloatField("TimeStep", context.timeStep);
+        context.TimeStep = EditorGUILayout.FloatField("TimeStep", context.TimeStep);
         EditorGUILayout.Separator();
 
         {

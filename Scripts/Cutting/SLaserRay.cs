@@ -95,11 +95,11 @@ public class SLaserRay : SRayCaster
         this.activeTool(false);
 
         // Get access to the sofaContext
-        IntPtr _simu = m_sofaContext.getSimuContext();
+        IntPtr _simu = m_sofaContext.GetSimuContext();
         if (_simu != IntPtr.Zero && m_sofaRC == null)
         {
 
-            float raySofaLength = length * m_sofaContext.getFactorUnityToSofa(1);
+            float raySofaLength = length * m_sofaContext.GetFactorUnityToSofa(1);
             if (m_laserType == SofaDefines.SRayInteraction.CuttingTool)
             {
                 m_sofaRC = new SofaRayCaster(_simu, 0, base.name, raySofaLength*2);

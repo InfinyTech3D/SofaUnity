@@ -119,7 +119,7 @@ public class SofaSphereCollisionModel : MonoBehaviour
             Debug.Log("UNITY_EDITOR - SofaSphereCollisionModel::createObject");
 
         // Get access to the sofaContext
-        IntPtr _simu = m_sofaContext.getSimuContext();
+        IntPtr _simu = m_sofaContext.GetSimuContext();
 
         if (_simu != IntPtr.Zero) // Create the API object for Sofa Regular Grid Mesh
             m_impl = new SofaCustomMeshAPI(_simu, this.name);            
@@ -178,7 +178,7 @@ public class SofaSphereCollisionModel : MonoBehaviour
         if (m_impl != null)
         {
             m_impl.setFloatValue("contactStiffness", m_stiffness);
-            m_impl.setFloatValue("radius", m_radius * m_sofaContext.getFactorUnityToSofa(1));
+            m_impl.setFloatValue("radius", m_radius * m_sofaContext.GetFactorUnityToSofa(1));
         }
     }
 
@@ -199,7 +199,7 @@ public class SofaSphereCollisionModel : MonoBehaviour
         if (m_impl != null)
         {
             m_impl.setFloatValue("contactStiffness", m_stiffness);
-            m_impl.setFloatValue("radius", m_radius * m_sofaContext.getFactorUnityToSofa(1));
+            m_impl.setFloatValue("radius", m_radius * m_sofaContext.GetFactorUnityToSofa(1));
         }
     }
 
@@ -241,7 +241,7 @@ public class SofaSphereCollisionModel : MonoBehaviour
         List<Vector3> bufferTotal = new List<Vector3>();
         int cpt = 0;
 
-        float contextFactor = m_sofaContext.getFactorUnityToSofa();
+        float contextFactor = m_sofaContext.GetFactorUnityToSofa();
         for (int i = 0; i < buffer.Length; ++i)
         {
             bufferTotal.Add(buffer[i]);
@@ -352,7 +352,7 @@ public class SofaSphereCollisionModel : MonoBehaviour
             {
                 m_radius = value;
                 if (m_impl != null)
-                    m_impl.setFloatValue("radius", m_radius * m_sofaContext.getFactorUnityToSofa(1));
+                    m_impl.setFloatValue("radius", m_radius * m_sofaContext.GetFactorUnityToSofa(1));
             }
             else
                 m_radius = value;
@@ -396,11 +396,11 @@ public class SofaSphereCollisionModel : MonoBehaviour
             return;
 
         Gizmos.color = Color.yellow;
-        //float factor = m_sofaContext.getFactorSofaToUnity();
+        //float factor = m_sofaContext.GetFactorSofaToUnity();
         
         foreach (Vector3 vert in m_centers)
         {
-            Gizmos.DrawSphere(this.transform.TransformPoint(vert), m_radius/**m_sofaContext.getFactorSofaToUnity(1)*/);
+            Gizmos.DrawSphere(this.transform.TransformPoint(vert), m_radius/**m_sofaContext.GetFactorSofaToUnity(1)*/);
         }
     }
 }

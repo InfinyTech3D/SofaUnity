@@ -37,7 +37,7 @@ public class tableController : MonoBehaviour {
     {
         this.transform.eulerAngles = new Vector3(this.transform.eulerAngles.x + 0.5f, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
         if (sofaContext != null)
-            sofaContext.gravity = new Vector3(this.transform.forward.x * 10.0f, this.transform.forward.y * 10.0f, this.transform.forward.z * 200.0f);
+            sofaContext.Gravity = new Vector3(this.transform.forward.x * 10.0f, this.transform.forward.y * 10.0f, this.transform.forward.z * 200.0f);
         //Debug.Log(this.transform.forward);
     }
 

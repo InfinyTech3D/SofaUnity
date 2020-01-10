@@ -51,7 +51,7 @@ namespace SofaUnity
         protected override void createObject()
         {
             // Get access to the sofaContext
-            IntPtr _simu = m_sofaContext.getSimuContext();
+            IntPtr _simu = m_sofaContext.GetSimuContext();
             if (_simu != IntPtr.Zero)
             {
                 // Create the API object for SofaMesh
@@ -282,7 +282,7 @@ namespace SofaUnity
                 if (nbTetra > 0)
                     updateTetraMesh();
                 else if (mr.enabled == true) // which is true
-                    m_impl.updateMeshVelocity(m_mesh, m_sofaContext.timeStep);
+                    m_impl.updateMeshVelocity(m_mesh, m_sofaContext.TimeStep);
                 else // pass from false to true.
                 {
                     m_impl.updateMesh(m_mesh);

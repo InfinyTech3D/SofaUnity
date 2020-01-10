@@ -14,7 +14,7 @@ namespace SofaUnity
         protected override void createObject()
         {
             // Get access to the sofaContext
-            IntPtr _simu = m_sofaContext.getSimuContext();
+            IntPtr _simu = m_sofaContext.GetSimuContext();
             if (_simu != IntPtr.Zero) // Create the API object for Sofa Regular Grid Mesh in 2D
                 m_impl = new SofaPlaneAPI(_simu, m_uniqueNameId, true);
 

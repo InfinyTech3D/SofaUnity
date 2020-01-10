@@ -41,6 +41,6 @@ public class SofaPlayer : MonoBehaviour
     {
         Debug.Log("restartSofaSimulation");
         if (m_sofaContext != null)
-            m_sofaContext.resetSofa();
+            m_sofaContext.ResetSofa();
     }
 }

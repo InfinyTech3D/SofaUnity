@@ -26,14 +26,14 @@ namespace SofaUnity
                 return;
             }
 
-            if (m_sofaContext.getSimuContext() == null)
+            if (m_sofaContext.GetSimuContext() == null)
             {
-                SofaLog("CreateSofaAPI: " + UniqueNameId + " m_sofaContext.getSimuContext() is null", 1);
+                SofaLog("CreateSofaAPI: " + UniqueNameId + " m_sofaContext.GetSimuContext() is null", 1);
                 return;
             }
 
-            SofaLog("SofaVisualModel::CreateSofaAPI: " + UniqueNameId + " | m_sofaContext: " + m_sofaContext + " | m_sofaContext.getSimuContext(): " + m_sofaContext.getSimuContext());
-            m_impl = new SofaVisualModelAPI(m_sofaContext.getSimuContext(), UniqueNameId);
+            SofaLog("SofaVisualModel::CreateSofaAPI: " + UniqueNameId + " | m_sofaContext: " + m_sofaContext + " | m_sofaContext.GetSimuContext(): " + m_sofaContext.GetSimuContext());
+            m_impl = new SofaVisualModelAPI(m_sofaContext.GetSimuContext(), UniqueNameId);
 
 
             InitBaseMeshAPI();
@@ -45,13 +45,13 @@ namespace SofaUnity
             if (m_sofaMeshAPI == null)
             {
                 // Get access to the sofaContext
-                IntPtr _simu = m_sofaContext.getSimuContext();
+                IntPtr _simu = m_sofaContext.GetSimuContext();
 
                 if (_simu == IntPtr.Zero)
                     return;
                 
                 // Create the API object for SofaMesh
-                m_sofaMeshAPI = new SofaBaseMeshAPI(m_sofaContext.getSimuContext(), UniqueNameId, false);
+                m_sofaMeshAPI = new SofaBaseMeshAPI(m_sofaContext.GetSimuContext(), UniqueNameId, false);
                 SofaLog("SofaVisualModel::InitBaseMeshAPI object created");
 
                 m_sofaMeshAPI.loadObject();

@@ -96,14 +96,14 @@ namespace SofaUnity
                 return;
             }
 
-            if (m_sofaContext.getSimuContext() == null)
+            if (m_sofaContext.GetSimuContext() == null)
             {
-                SofaLog("CreateSofaAPI: " + UniqueNameId + " m_sofaContext.getSimuContext() is null", 1);
+                SofaLog("CreateSofaAPI: " + UniqueNameId + " m_sofaContext.GetSimuContext() is null", 1);
                 return;
             }
 
-            SofaLog("SofaBaseComponent::CreateSofaAPI: " + UniqueNameId + " | m_sofaContext: " + m_sofaContext + " | m_sofaContext.getSimuContext(): " + m_sofaContext.getSimuContext());
-            m_impl = new SofaBaseComponentAPI(m_sofaContext.getSimuContext(), UniqueNameId);
+            SofaLog("SofaBaseComponent::CreateSofaAPI: " + UniqueNameId + " | m_sofaContext: " + m_sofaContext + " | m_sofaContext.GetSimuContext(): " + m_sofaContext.GetSimuContext());
+            m_impl = new SofaBaseComponentAPI(m_sofaContext.GetSimuContext(), UniqueNameId);
         }
 
 

@@ -23,10 +23,10 @@ namespace SofaUnity
         private SofaContextAPI m_impl;
 
         /// Getter of current Sofa Context API, @see m_impl
-        public IntPtr getSimuContext()
+        public IntPtr GetSimuContext()
         {
             if (m_impl == null)
-                init();
+                Init();
 
             if (m_impl == null) // still null
             {
@@ -86,7 +86,7 @@ namespace SofaUnity
         protected Vector3 m_gravity = new Vector3(0f, -9.8f, 0f);
 
         /// Getter/Setter of current gravity @see m_gravity
-        public Vector3 gravity
+        public Vector3 Gravity
         {
             get { return m_gravity; }
             set
@@ -105,7 +105,7 @@ namespace SofaUnity
         protected float m_timeStep = 0.02f; // ~ 1/60
 
         /// Getter/Setter of current timeStep @see m_timeStep
-        public float timeStep
+        public float TimeStep
         {
             get { return m_timeStep; }
             set
@@ -125,12 +125,12 @@ namespace SofaUnity
         ////////      scale conversions      ///////
         ////////////////////////////////////////////
 
-        public Vector3 getScaleSofaToUnity()
+        public Vector3 GetScaleSofaToUnity()
         {
             return new Vector3(this.transform.localScale.x, this.transform.localScale.y, this.transform.localScale.z);
         }
 
-        public Vector3 getScaleUnityToSofa()
+        public Vector3 GetScaleUnityToSofa()
         {
             Vector3 scale = new Vector3(this.transform.localScale.x, this.transform.localScale.y, this.transform.localScale.z);
             for (int i = 0; i < 3; i++)
@@ -140,7 +140,7 @@ namespace SofaUnity
             return scale;
         }
 
-        public float getFactorSofaToUnity(int dir = -1)
+        public float GetFactorSofaToUnity(int dir = -1)
         {
             Vector3 scale = this.transform.localScale;
             float factor;
@@ -152,9 +152,9 @@ namespace SofaUnity
             return factor;
         }
 
-        public float getFactorUnityToSofa(int dir = -1)
+        public float GetFactorUnityToSofa(int dir = -1)
         {
-            float factor = getFactorSofaToUnity(dir);               
+            float factor = GetFactorSofaToUnity(dir);               
             if (factor != 0.0f) factor = 1 / factor;
 
             return factor;
@@ -247,7 +247,7 @@ namespace SofaUnity
         void StartSofa()
         {
             // Call the init method to create the Sofa Context
-            init();
+            Init();
 
             if (m_impl == null)
             {
@@ -260,7 +260,7 @@ namespace SofaUnity
             //cptBreaker = 0;
         }
 
-        public void resetSofa()
+        public void ResetSofa()
         {
             if (m_impl != null)
             {
@@ -270,14 +270,14 @@ namespace SofaUnity
 
 
         /// Internal Method to init the SofaContext object
-        void init()
+        void Init()
         {
-            if (this.transform.localScale.x > 0)
-            {
-                Vector3 scale = this.transform.localScale;
-                //scale.x *= -1;
-                this.transform.localScale = scale;
-            }
+            //if (this.transform.localScale.x > 0)
+            //{
+            //    Vector3 scale = this.transform.localScale;
+            //    //scale.x *= -1;
+            //    this.transform.localScale = scale;
+            //}
 
             if (m_log)
                 Debug.Log("## SofaContext ## init ");
@@ -325,7 +325,7 @@ namespace SofaUnity
                     ReconnectSofaScene();
                 }
 
-                catchSofaMessages();
+                DoCatchSofaMessages();
                 if (m_log)
                     Debug.Log("## SofaContext status end init: " + m_impl.contextStatus());
 
@@ -352,12 +352,12 @@ namespace SofaUnity
             if (IsSofaUpdating == false || Application.isPlaying == false) return; 
 
             if (testAsync)
-                updateImplASync();
+                UpdateImplASync();
             else
-                updateImplSync();
+                UpdateImplSync();
 
             // log sofa messages
-            catchSofaMessages();
+            DoCatchSofaMessages();
 
             // counter if need to freeze the simulation for several iterations
             //cptBreaker++;
@@ -377,7 +377,7 @@ namespace SofaUnity
 
         private float nextUpdate = 0.0f;
 
-        protected void updateImplSync()
+        protected void UpdateImplSync()
         {
             if (Time.time >= nextUpdate)
             {
@@ -390,7 +390,7 @@ namespace SofaUnity
             }
         }
 
-        protected void updateImplASync()
+        protected void UpdateImplASync()
         {
             if (Time.time >= nextUpdate)
             {
@@ -440,7 +440,7 @@ namespace SofaUnity
         }
 
         private bool isMsgHandlerActivated = false;
-        protected void catchSofaMessages()
+        protected void DoCatchSofaMessages()
         {
             // first time activated
             if (CatchSofaMessages && !isMsgHandlerActivated)

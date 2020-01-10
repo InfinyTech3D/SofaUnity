@@ -14,7 +14,7 @@ namespace SofaUnity
         protected override void createObject()
         {
             /// Method called by @sa loadContext() method. To create the object when Sofa context has been found.
-            IntPtr _simu = m_sofaContext.getSimuContext();
+            IntPtr _simu = m_sofaContext.GetSimuContext();
             if (_simu != IntPtr.Zero) // Create the API object for Sofa Sphere Grid Mesh
                 m_impl = new SofaSphereAPI(_simu, m_uniqueNameId, false);
 
