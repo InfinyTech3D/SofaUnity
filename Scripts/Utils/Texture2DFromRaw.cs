@@ -93,7 +93,7 @@ public class Texture2DFromRaw : SofaBaseObject
     //public override void updateImpl()
     public void Update()
     {
-        int resId = m_object.impl.getIntValue("frameId");
+        int resId = m_object.impl.getIntValue_deprecated("frameId");
         
         if (resId == textId)
             return;
@@ -105,7 +105,7 @@ public class Texture2DFromRaw : SofaBaseObject
             if (m_texture == null && rawImg != null) // first time create init texture
             {
                 //Debug.Log("Texture2DFromRaw::updateImpl:   m_object != null ");
-                int res = m_object.impl.getVecfSize(rawImg.nameID);
+                int res = m_object.impl.getVecfSize_deprecated(rawImg.nameID);
                 if (res == 0)
                 {
                     Debug.LogError("Texture2DFromRaw image size is 0");
@@ -120,7 +120,7 @@ public class Texture2DFromRaw : SofaBaseObject
                 }
 
 
-                int resValue = m_object.impl.getVectorfValue(rawImg.nameID, res, m_rawData);
+                int resValue = m_object.impl.getVectorfValue_deprecated(rawImg.nameID, res, m_rawData);
                 int cpt = 0;
                 int cpt1 = 0;
                 //var line = "";
@@ -153,7 +153,7 @@ public class Texture2DFromRaw : SofaBaseObject
 
             if (m_texture != null && rawImgDiff != null) // second time, init diff image (used for optimisation as sparse data)
             {
-                int resDiff = m_object.impl.getVecfSize(rawImgDiff.nameID);
+                int resDiff = m_object.impl.getVecfSize_deprecated(rawImgDiff.nameID);
                 //Debug.Log("resDiff : " + resDiff);
                 if (resDiff == 0)
                     return;
@@ -164,7 +164,7 @@ public class Texture2DFromRaw : SofaBaseObject
                     initDiff = true;
                 }
 
-                int resValue = m_object.impl.getVectorfValue(rawImgDiff.nameID, resDiff, m_rawData);
+                int resValue = m_object.impl.getVectorfValue_deprecated(rawImgDiff.nameID, resDiff, m_rawData);
 
                 for (int i = 0; i < resDiff; i += 2)
                 {

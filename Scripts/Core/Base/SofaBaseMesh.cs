@@ -58,14 +58,14 @@ namespace SofaUnity
             // Get initial transformation
 
             // Copy info if mesh has collision
-            float test = m_impl.getFloatValue("radius");
+            float test = m_impl.getFloatValue_deprecated("radius");
             if (test == float.MinValue) // no sphere
                 m_hasCollisionSphere = false;
             else
             {
                 m_hasCollisionSphere = true;
                 m_radius = test;
-                m_contactStiffness = m_impl.getFloatValue("contactStiffness");
+                m_contactStiffness = m_impl.getFloatValue_deprecated("contactStiffness");
             }
         }
 
@@ -128,14 +128,14 @@ namespace SofaUnity
             }
 
             // Copy info if collision
-            float test = m_impl.getFloatValue("radius");
+            float test = m_impl.getFloatValue_deprecated("radius");
             //Debug.Log("radius: " + test);
             if (test == float.MinValue) // no sphere
                 m_hasCollisionSphere = false;
             else
             {
                 m_hasCollisionSphere = true;
-                m_contactStiffness = m_impl.getFloatValue("contactStiffness");
+                m_contactStiffness = m_impl.getFloatValue_deprecated("contactStiffness");
             }
 
             //if (m_hasCollisionSphere)

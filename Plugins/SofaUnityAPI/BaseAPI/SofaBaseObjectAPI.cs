@@ -93,19 +93,9 @@ public class SofaBaseObjectAPI : IDisposable
     /// <summary> Generic method to get value of a Data<float> field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <returns> Float value of the Data field, return float.MinValue if field is not found. </returns>
-    public float getFloatValue(string dataName)
+    public float getFloatValue_deprecated(string dataName)
     {
-        if (checkNativePointerForGetData(dataName))
-        { 
-            float[] val = new float[1];
-            int res = sofaPhysics3DObject_getFloatValue(m_simu, m_name, dataName, val);
-
-            if (res == 0)
-                return val[0];
-            else if(displayLog)
-                Debug.LogError("Method getFloatValue of Data: " + dataName + " of object: " + m_name + ", returns error: " + SofaDefines.msg_error[res]);
-        }
-
+        Debug.LogError("Method is deprecated and should not be used anymore.");
         return float.MinValue;
     }
 
@@ -113,34 +103,18 @@ public class SofaBaseObjectAPI : IDisposable
     /// <summary> Generic method to set value of a Data<float> field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <param name="value"> New float value of the Data. </param>
-    public void setFloatValue(string dataName, float value)
+    public void setFloatValue_deprecated(string dataName, float value)
     {
-        if (checkNativePointerForSetData(dataName))
-        {
-            int res = sofaPhysics3DObject_setFloatValue(m_simu, m_name, dataName, value);
-
-            if (res != 0 && displayLog)
-                Debug.LogError("Method setFloatValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
-        }
+        Debug.LogError("Method is deprecated and should not be used anymore.");
     }
 
 
     /// <summary> Generic method to get value of a Data<int> field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <returns> Int value of the Data field, return int.MinValue if field is not found. </returns>
-    public int getIntValue(string dataName)
+    public int getIntValue_deprecated(string dataName)
     {
-        if (checkNativePointerForGetData(dataName))
-        {
-            int[] val = new int[1];
-            int res = sofaPhysics3DObject_getIntValue(m_simu, m_name, dataName, val);
-
-            if (res == 0)
-                return val[0];
-            else if (displayLog)
-                Debug.LogError("Method getIntValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
-        }
-
+        Debug.LogError("Method is deprecated and should not be used anymore.");
         return int.MinValue;
     }
 
@@ -148,34 +122,18 @@ public class SofaBaseObjectAPI : IDisposable
     /// <summary> Generic method to set value of a Data<int> field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <param name="value"> New int value of the Data. </param>
-    public void setIntValue(string dataName, int value)
+    public void setIntValue_deprecated(string dataName, int value)
     {
-        if (checkNativePointerForSetData(dataName))
-        {
-            int res = sofaPhysics3DObject_setIntValue(m_simu, m_name, dataName, value);
-
-            if (res != 0 && displayLog)
-                Debug.LogError("Method setIntValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
-        }
+        Debug.LogError("Method is deprecated and should not be used anymore.");
     }
 
 
     /// <summary> Generic method to get value of a Data<bool> field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <returns> Bool value of the Data field, return false if field is not found. </returns>
-    public bool getBoolValue(string dataName)
+    public bool getBoolValue_deprecated(string dataName)
     {
-        if (checkNativePointerForGetData(dataName))
-        {
-            bool[] val = new bool[1];
-            int res = sofaPhysics3DObject_getBoolValue(m_simu, m_name, dataName, val);
-
-            if (res == 0)
-                return val[0];
-            else if (displayLog)
-                Debug.LogError("Method getBoolValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
-        }
-
+        Debug.LogError("Method is deprecated and should not be used anymore.");
         return false;
     }
 
@@ -183,28 +141,18 @@ public class SofaBaseObjectAPI : IDisposable
     /// <summary> Generic method to set value of a Data<bool> field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <param name="value"> New bool value of the Data. </param>
-    public void setBoolValue(string dataName, bool value)
+    public void setBoolValue_deprecated(string dataName, bool value)
     {
-        if (checkNativePointerForSetData(dataName))
-        {
-            int res = sofaPhysics3DObject_setBoolValue(m_simu, m_name, dataName, value);
-            if (res != 0 && displayLog)
-                Debug.LogError("Method setBoolValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
-        }
+        Debug.LogError("Method is deprecated and should not be used anymore.");
     }
 
 
     /// <summary> Generic method to get value of a Data<string> field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <returns> String value of the Data field, return "None" if field is not found. </returns>
-    public string getStringValue(string dataName)
+    public string getStringValue_deprecated(string dataName)
     {
-        if (checkNativePointerForGetData(dataName))
-        {
-            string res = sofaPhysics3DObject_getStringValue(m_simu, m_name, dataName);
-            return res;
-        }
-
+        Debug.LogError("Method is deprecated and should not be used anymore.");
         return "None";
     }
 
@@ -212,37 +160,19 @@ public class SofaBaseObjectAPI : IDisposable
     /// <summary> Generic method to set value of a Data<string> field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <param name="value"> New string value of the Data. </param>
-    public void setStringValue(string dataName, string value)
+    public void setStringValue_deprecated(string dataName, string value)
     {
-        if (checkNativePointerForSetData(dataName))
-        {
-            int res = sofaPhysics3DObject_setStringValue(m_simu, m_name, dataName, value);
-            if (res != 0 && displayLog)
-                Debug.LogError("Method setStringValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
-        }
+        Debug.LogError("Method is deprecated and should not be used anymore.");
     }
 
 
     /// <summary> Generic method to get value of a Data<Vec3f> field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <returns> Vector3 of the Data field, return Vector3 of float.MinValue if field is not found. </returns>
-    public Vector3 getVector3fValue(string dataName)
+    public Vector3 getVector3fValue_deprecated(string dataName)
     {
         Vector3 values = new Vector3(float.MinValue, float.MinValue, float.MinValue);
-        if (checkNativePointerForGetData(dataName))
-        {
-            float[] val = new float[3];
-            int res = sofaPhysics3DObject_getVec3fValue(m_simu, m_name, dataName, val);
-
-            if (res == 0)
-            {
-                for (int i = 0; i < 3; ++i)
-                    values[i] = val[i];
-            }
-            else if (displayLog)
-                Debug.LogError("Method getVector3fValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
-        }
-
+        Debug.LogError("Method is deprecated and should not be used anymore.");
         return values;
     }
 
@@ -251,19 +181,9 @@ public class SofaBaseObjectAPI : IDisposable
     /// <summary> Generic method to set value of a Data<Vec3f> field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <param name="values"> New Vector3 values of the Data. </param>
-    public void setVector3fValue(string dataName, Vector3 values)
+    public void setVector3fValue_deprecated(string dataName, Vector3 values)
     {
-        if (checkNativePointerForSetData(dataName))
-        {
-            float[] val = new float[3];
-            for (int i = 0; i < 3; ++i)
-                val[i] = values[i];
-
-            int res = sofaPhysics3DObject_setVec3fValue(m_simu, m_name, dataName, val);
-
-            if (res != 0 && displayLog)
-                Debug.LogError("Method setVector3fValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
-        }
+        Debug.LogError("Method is deprecated and should not be used anymore.");
     }
 
 
@@ -271,23 +191,9 @@ public class SofaBaseObjectAPI : IDisposable
     /// <summary> Generic method to get size of a Data< vector<float> > field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <returns> size of the Data vector. Return negative value if field not found or error encountered. </returns>
-    public int getVecfSize(string dataName)
+    public int getVecfSize_deprecated(string dataName)
     {
-        if (checkNativePointerForGetData(dataName))
-        {
-            int[] val = new int[1];
-            val[0] = -2;
-            int res = sofaPhysics3DObject_getVecfSize(m_simu, m_name, dataName, val);
-
-            if (res != 0 && displayLog)
-            {
-                Debug.LogError("Method getVecfSize of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
-                return res;
-            }
-            else
-                return val[0];
-        }
-
+        Debug.LogError("Method is deprecated and should not be used anymore.");
         return -1;
     }
 
@@ -297,16 +203,9 @@ public class SofaBaseObjectAPI : IDisposable
     /// <param name="size"> Size of the Data vector. </param>
     /// <param name="values"> Values of the Data vector field returned. </param>
     /// <returns> Int error code. Negative value if method failed, 0 otherwise. </returns>
-    public int getVectorfValue(string dataName, int size, float[] values)
+    public int getVectorfValue_deprecated(string dataName, int size, float[] values)
     {
-        if (checkNativePointerForGetData(dataName))
-        {
-            int res = sofaPhysics3DObject_getVectorfValue(m_simu, m_name, dataName, size, values);
-            if (res != 0 && displayLog)
-                Debug.LogError("Method getVectorfValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
-            return res;
-        }
-
+        Debug.LogError("Method is deprecated and should not be used anymore.");
         return -1;
     }
 
@@ -316,16 +215,9 @@ public class SofaBaseObjectAPI : IDisposable
     /// <param name="size"> Size of the Data vector. </param>
     /// <param name="values"> New values to set to the Data vector field. </param>
     /// <returns> Int error code. Negative value if method failed, 0 otherwise. </returns>
-    public int setVectorfValue(string dataName, int size, float[] values)
+    public int setVectorfValue_deprecated(string dataName, int size, float[] values)
     {
-        if (checkNativePointerForSetData(dataName))
-        {
-            int res = sofaPhysics3DObject_setVectorfValue(m_simu, m_name, dataName, size, values);
-            if (res != 0 && displayLog)
-                Debug.LogError("Method setVectorfValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
-            return res;
-        }
-
+        Debug.LogError("Method is deprecated and should not be used anymore.");
         return -1;
     }
 
@@ -334,23 +226,9 @@ public class SofaBaseObjectAPI : IDisposable
     /// <summary> Generic method to get size of a Data< vector<int> > field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <returns> size of the Data vector. Return negative value if field not found or error encountered. </returns>
-    public int getVeciSize(string dataName)
+    public int getVeciSize_deprecated(string dataName)
     {
-        if (checkNativePointerForGetData(dataName))
-        {
-            int[] val = new int[1];
-            val[0] = -2;
-            int res = sofaPhysics3DObject_getVeciSize(m_simu, m_name, dataName, val);
-
-            if (res != 0 && displayLog)
-            {
-                Debug.LogError("Method setVectorfValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
-                return res;
-            }
-            else
-                return val[0];
-        }
-
+        Debug.LogError("Method is deprecated and should not be used anymore.");
         return -1;
     }
 
@@ -359,16 +237,9 @@ public class SofaBaseObjectAPI : IDisposable
     /// <param name="size"> Size of the Data vector. </param>
     /// <param name="values"> Values of the Data vector field returned. </param>
     /// <returns> Int error code. Negative value if method failed, 0 otherwise. </returns>
-    public int getVeciValue(string dataName, int size, int[] values)
+    public int getVeciValue_deprecated(string dataName, int size, int[] values)
     {
-        if (m_native != IntPtr.Zero)
-        {
-            int res = sofaPhysics3DObject_getVeciValue(m_simu, m_name, dataName, size, values);
-            if (res != 0 && displayLog)
-                Debug.LogError("Method getVeciValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
-            return res;
-        }
-
+        Debug.LogError("Method is deprecated and should not be used anymore.");
         return -1;
     }
 
@@ -378,16 +249,9 @@ public class SofaBaseObjectAPI : IDisposable
     /// <param name="size"> Size of the Data vector. </param>
     /// <param name="values"> New values to set to the Data vector field. </param>
     /// <returns> Int error code. Negative value if method failed, 0 otherwise. </returns>
-    public int setVeciValue(string dataName, int size, int[] values)
+    public int setVeciValue_deprecated(string dataName, int size, int[] values)
     {
-        if (checkNativePointerForSetData(dataName))
-        {
-            int res = sofaPhysics3DObject_setVeciValue(m_simu, m_name, dataName, size, values);
-            if (res != 0 && displayLog)
-                Debug.LogError("Method setVeciValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
-            return res;
-        }
-
+        Debug.LogError("Method is deprecated and should not be used anymore.");
         return -1;
     }
 
@@ -396,23 +260,9 @@ public class SofaBaseObjectAPI : IDisposable
     /// <summary> Generic method to get size of a Data< vector<float> > field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <returns> size of the Data vector. Return negative value if field not found or error encountered. </returns>
-    public int getVecofVec3fSize(string dataName)
+    public int getVecofVec3fSize_deprecated(string dataName)
     {
-        if (checkNativePointerForGetData(dataName))
-        {
-            int[] val = new int[1];
-            val[0] = -2;
-            int res = sofaPhysics3DObject_getVecofVec3fSize(m_simu, m_name, dataName, val);
-
-            if (res != 0 && displayLog)
-            {
-                Debug.LogError("Method setVeciValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
-                return res;
-            }
-            else
-                return val[0];
-        }
-
+        Debug.LogError("Method is deprecated and should not be used anymore.");
         return -1;
     }
 
@@ -422,16 +272,9 @@ public class SofaBaseObjectAPI : IDisposable
     /// <param name="size"> Size of the Data vector. </param>
     /// <param name="values"> Values of the Data vector field returned. </param>
     /// <returns> Int error code. Negative value if method failed, 0 otherwise. </returns>
-    public int getVecofVec3fValue(string dataName, int size, float[] values)
+    public int getVecofVec3fValue_deprecated(string dataName, int size, float[] values)
     {
-        if (checkNativePointerForGetData(dataName))
-        {
-            int res = sofaPhysics3DObject_getVecofVec3fValue(m_simu, m_name, dataName, size, values);
-            if (res != 0 && displayLog)
-                Debug.LogError("Method getVecofVec3fValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
-            return res;
-        }
-
+        Debug.LogError("Method is deprecated and should not be used anymore.");
         return -1;
     }
 
@@ -441,16 +284,9 @@ public class SofaBaseObjectAPI : IDisposable
     /// <param name="size"> Size of the Data vector. </param>
     /// <param name="values"> New values to set to the Data vector field. </param>
     /// <returns> Int error code. Negative value if method failed, 0 otherwise. </returns>
-    public int setVecofVec3fValue(string dataName, int size, float[] values)
+    public int setVecofVec3fValue_deprecated(string dataName, int size, float[] values)
     {
-        if (checkNativePointerForSetData(dataName))
-        {
-            int res = sofaPhysics3DObject_setVecofVec3fValue(m_simu, m_name, dataName, size, values);
-            if (res != 0 && displayLog)
-                Debug.LogError("Method setVecofVec3fValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
-            return res;
-        }
-
+        Debug.LogError("Method is deprecated and should not be used anymore.");
         return -1;
     }
 
@@ -459,81 +295,39 @@ public class SofaBaseObjectAPI : IDisposable
 
 
 
-    public int getVecfValue(string dataName, string dataType, float[] values)
+    public int getVecfValue_deprecated(string dataName, string dataType, float[] values)
     {
-        if (checkNativePointerForGetData(dataName))
-        {
-            int res = sofaPhysics3DObject_getVecfValue(m_simu, m_name, dataName, dataType, values);
-            if (res != 0 && displayLog)
-                Debug.LogError("Method getVecfValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
-            return res;
-        }
-
+        Debug.LogError("Method is deprecated and should not be used anymore.");
         return -1;
     }
 
-    public int setVecfValue(string dataName, string dataType, float[] values)
+    public int setVecfValue_deprecated(string dataName, string dataType, float[] values)
     {
-        if (checkNativePointerForSetData(dataName))
-        {
-            int res = sofaPhysics3DObject_setVecfValue(m_simu, m_name, dataName, dataType, values);
-            if (res != 0 && displayLog)
-                Debug.LogError("Method setVecfValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
-            return res;
-        }
-
+        Debug.LogError("Method is deprecated and should not be used anymore.");
         return -1;
     }
 
-    public int getRigidfValue(string dataName, string dataType, float[] values)
+    public int getRigidfValue_deprecated(string dataName, string dataType, float[] values)
     {
-        if (checkNativePointerForGetData(dataName))
-        {
-            int res = sofaPhysics3DObject_getRigidfValue(m_simu, m_name, dataName, dataType, values);
-            if (res != 0 && displayLog)
-                Debug.LogError("Method getRigidfValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
-            return res;
-        }
-
+        Debug.LogError("Method is deprecated and should not be used anymore.");
         return -1;
     }
 
-    public int setRigidfValue(string dataName, string dataType, float[] values)
+    public int setRigidfValue_deprecated(string dataName, string dataType, float[] values)
     {
-        if (checkNativePointerForSetData(dataName))
-        {
-            int res = sofaPhysics3DObject_setRigidfValue(m_simu, m_name, dataName, dataType, values);
-            if (res != 0 && displayLog)
-                Debug.LogError("Method setRigidfValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
-            return res;
-        }
-
+        Debug.LogError("Method is deprecated and should not be used anymore.");
         return -1;
     }
 
-    public int getRigiddValue(string dataName, string dataType, double[] values)
+    public int getRigiddValue_deprecated(string dataName, string dataType, double[] values)
     {
-        if (checkNativePointerForGetData(dataName))
-        {
-            int res = sofaPhysics3DObject_getRigiddValue(m_simu, m_name, dataName, dataType, values);
-            if (res != 0 && displayLog)
-                Debug.LogError("Method getRigiddValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
-            return res;
-        }
-
+        Debug.LogError("Method is deprecated and should not be used anymore.");
         return -1;
     }
 
-    public int setRigiddValue(string dataName, string dataType, double[] values)
+    public int setRigiddValue_deprecated(string dataName, string dataType, double[] values)
     {
-        if (checkNativePointerForSetData(dataName))
-        {
-            int res = sofaPhysics3DObject_setRigiddValue(m_simu, m_name, dataName, dataType, values);
-            if (res != 0 && displayLog)
-                Debug.LogError("Method setRigiddValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
-            return res;
-        }
-
+        Debug.LogError("Method is deprecated and should not be used anymore.");
         return -1;
     }
 
@@ -590,115 +384,5 @@ public class SofaBaseObjectAPI : IDisposable
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern string sofaPhysicsAPI_getParentNodeName(IntPtr obj, string name);
 
-
-
-    /////////////////////////////////////////////////////////////////////////////////////////
-    ///////////      Communication API to set/get basic values into Sofa     ////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////
-
-    /// String API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern string sofaPhysics3DObject_getStringValue(IntPtr obj, string objectName, string dataName);
-
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_setStringValue(IntPtr obj, string objectName, string dataName, string value);
-
-
-    /// Float API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_getFloatValue(IntPtr obj, string objectName, string dataName, float[] value);
-
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_setFloatValue(IntPtr obj, string objectName, string dataName, float value);
-
-
-    /// Int API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_getIntValue(IntPtr obj, string objectName, string dataName, int[] value);
-
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_setIntValue(IntPtr obj, string objectName, string dataName, int value);
-
-
-    /// Bool API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_getBoolValue(IntPtr obj, string objectName, string dataName, bool[] value);
-
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_setBoolValue(IntPtr obj, string objectName, string dataName, bool value);
-
-
-    /// Vec3f API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_getVec3fValue(IntPtr obj, string objectName, string dataName, float[] values);
-
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_setVec3fValue(IntPtr obj, string objectName, string dataName, float[] values);
-
-
-    /// Vec3i API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_getVec3iValue(IntPtr obj, string objectName, string dataName, int[] values);
-
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_setVec3iValue(IntPtr obj, string objectName, string dataName, int[] values);
-
-
-    /// Vector<float> API, need to get the size before set/get
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_getVecfSize(IntPtr obj, string objectName, string dataName, int[] value);
-
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_getVectorfValue(IntPtr obj, string objectName, string dataName, int size, float[] values);
-
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_setVectorfValue(IntPtr obj, string objectName, string dataName, int size, float[] values);
-
-
-    /// Vector<int> API, need to get the size before set/get
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_getVeciSize(IntPtr obj, string objectName, string dataName, int[] value);
-
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_getVeciValue(IntPtr obj, string objectName, string dataName, int size, int[] values);
-
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_setVeciValue(IntPtr obj, string objectName, string dataName, int size, int[] values);
-
-
-    /// Vector <vec3f> API, need to get the size before set/get: size the number of vec3f
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_getVecofVec3fSize(IntPtr obj, string objectName, string dataName, int[] value);
-
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_setVecofVec3fValue(IntPtr obj, string objectName, string dataName, int size, float[] values);
-
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_getVecofVec3fValue(IntPtr obj, string objectName, string dataName, int size, float[] values);
-
-    ///
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_setVeciValue(IntPtr obj, string objectName, string dataName, string dataType, int[] values);
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_setVecfValue(IntPtr obj, string objectName, string dataName, string dataType, float[] values);
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_setVecdValue(IntPtr obj, string objectName, string dataName, string dataType, double[] values);
-
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_getVeciValue(IntPtr obj, string objectName, string dataName, string dataType, int[] values);
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_getVecfValue(IntPtr obj, string objectName, string dataName, string dataType, float[] values);
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_getVecdValue(IntPtr obj, string objectName, string dataName, string dataType, double[] values);
-
-
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_setRigidfValue(IntPtr obj, string objectName, string dataName, string dataType, float[] values);
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_setRigiddValue(IntPtr obj, string objectName, string dataName, string dataType, double[] values);
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_getRigidfValue(IntPtr obj, string objectName, string dataName, string dataType, float[] values);
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_getRigiddValue(IntPtr obj, string objectName, string dataName, string dataType, double[] values);
 
 }

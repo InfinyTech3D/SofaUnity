@@ -177,8 +177,8 @@ public class SofaSphereCollisionModel : MonoBehaviour
 
         if (m_impl != null)
         {
-            m_impl.setFloatValue("contactStiffness", m_stiffness);
-            m_impl.setFloatValue("radius", m_radius * m_sofaContext.GetFactorUnityToSofa(1));
+            m_impl.setFloatValue_deprecated("contactStiffness", m_stiffness);
+            m_impl.setFloatValue_deprecated("radius", m_radius * m_sofaContext.GetFactorUnityToSofa(1));
         }
     }
 
@@ -198,8 +198,8 @@ public class SofaSphereCollisionModel : MonoBehaviour
     {
         if (m_impl != null)
         {
-            m_impl.setFloatValue("contactStiffness", m_stiffness);
-            m_impl.setFloatValue("radius", m_radius * m_sofaContext.GetFactorUnityToSofa(1));
+            m_impl.setFloatValue_deprecated("contactStiffness", m_stiffness);
+            m_impl.setFloatValue_deprecated("radius", m_radius * m_sofaContext.GetFactorUnityToSofa(1));
         }
     }
 
@@ -352,7 +352,7 @@ public class SofaSphereCollisionModel : MonoBehaviour
             {
                 m_radius = value;
                 if (m_impl != null)
-                    m_impl.setFloatValue("radius", m_radius * m_sofaContext.GetFactorUnityToSofa(1));
+                    m_impl.setFloatValue_deprecated("radius", m_radius * m_sofaContext.GetFactorUnityToSofa(1));
             }
             else
                 m_radius = value;
@@ -369,7 +369,7 @@ public class SofaSphereCollisionModel : MonoBehaviour
             {
                 m_stiffness = value;
                 if (m_impl != null)
-                    m_impl.setFloatValue("contactStiffness", m_stiffness);
+                    m_impl.setFloatValue_deprecated("contactStiffness", m_stiffness);
             }
             else
                 m_stiffness = value;
