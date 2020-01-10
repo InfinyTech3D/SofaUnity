@@ -30,7 +30,7 @@ public class SofaDataArchiver //: MonoBehaviour, ISerializationCallbackReceiver
     public void AddData(SofaBaseComponent owner, string dataName, string dataType)
     {
         // filter unwanted data
-        if (dataName.Contains("show"))
+        if (dataName.Contains("show") || dataName.Contains("draw"))
             return;
 
         if (dataName == "name" || dataName == "componentState")
