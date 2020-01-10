@@ -150,10 +150,10 @@ public class SLaserRay : SRayCaster
             return;
 
         m_axisDirection.Normalize();
-        if (m_sofaContext.testAsync == true)
-            m_sofaContext.registerCaster(this);
-        else
-            automaticCast = true;
+        //if (m_sofaContext.testAsync == true)
+        //    m_sofaContext.registerCaster(this);
+        //else
+        //    automaticCast = true;
     }
 
     // Update is called once per frame

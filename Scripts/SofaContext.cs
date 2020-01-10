@@ -165,6 +165,7 @@ namespace SofaUnity
         ////////       Behavior methods      ///////
         ////////////////////////////////////////////
 
+        /*
         public bool breakerActivated = false;
         private int cptBreaker = 0;
         private int countDownBreaker = 10;
@@ -181,6 +182,7 @@ namespace SofaUnity
                 m_casters = new List<SRayCaster>();
             m_casters.Add(obj);
         }
+        */
 
         /// Method called at GameObject creation.
         void Awake()
@@ -254,8 +256,8 @@ namespace SofaUnity
                 return;
             }
 
-            breakerActivated = false;
-            cptBreaker = 0;
+            //breakerActivated = false;
+            //cptBreaker = 0;
         }
 
         public void resetSofa()
@@ -358,12 +360,12 @@ namespace SofaUnity
             catchSofaMessages();
 
             // counter if need to freeze the simulation for several iterations
-            cptBreaker++;
-            if (cptBreaker == countDownBreaker)
-            {
-                cptBreaker = 0;
-                breakerActivated = false;
-            }
+            //cptBreaker++;
+            //if (cptBreaker == countDownBreaker)
+            //{
+            //    cptBreaker = 0;
+            //    breakerActivated = false;
+            //}
 
             if (StepbyStep)
             {

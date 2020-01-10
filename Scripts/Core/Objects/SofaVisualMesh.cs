@@ -147,8 +147,8 @@ namespace SofaUnity
                 else
                 {
                     int res = m_impl.updateMeshVelocity(m_mesh, m_sofaContext.timeStep);
-                    if (res == -1)
-                        m_sofaContext.breakerProcedure();
+                    //if (res == -1)
+                    //    m_sofaContext.breakerProcedure();
                 }
                 m_mesh.RecalculateBounds();
             }

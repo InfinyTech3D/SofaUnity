@@ -64,10 +64,10 @@ public class SRayCaster : RayCaster
         // Call internal method that will create a ray caster in Sofa.
         createSofaRayCaster();
 
-        if (m_sofaContext.testAsync == true)
-            m_sofaContext.registerCaster(this);
-        else
-            automaticCast = true;        
+        //if (m_sofaContext.testAsync == true)
+        //    m_sofaContext.registerCaster(this);
+        //else
+        //    automaticCast = true;        
     }
 
     public void unloadSofaRayCaster()
