@@ -16,12 +16,14 @@ public class SofaContextEditor : Editor
     [MenuItem("GameObject/Create Other/SofaUnity/SofaContext")]  //right click menu
     public static GameObject CreateNew()
     {
+        int cpt = 0;
         if (GameObject.FindObjectOfType<SofaContext>() != null)
         {
-            Debug.LogError("The Scene already includes a SofaContext. Only one context is possible.");
-            return null;
+            Debug.LogWarning("The Scene already includes a SofaContext. Only one context is possible.");
+            //return null;
+            cpt++;
         }
-        GameObject go = new GameObject("SofaContext");
+        GameObject go = new GameObject("SofaContext_" + cpt.ToString());
         go.AddComponent<SofaContext>();
 
         return go;
@@ -64,22 +66,31 @@ public class SofaContextEditor : Editor
         context.timeStep = EditorGUILayout.FloatField("TimeStep", context.timeStep);
         EditorGUILayout.Separator();
 
+        {
+            context.CatchSofaMessages = EditorGUILayout.Toggle("Activate Sofa Logs", context.CatchSofaMessages);
+            context.IsSofaUpdating = EditorGUILayout.Toggle("Animate SOFA simulation", context.IsSofaUpdating);
+            EditorGUILayout.Separator();
+
+            if (GUILayout.Button("Step"))
+            {
+                context.StepbyStep = true;
+                context.IsSofaUpdating = true;
+            }
+        }
+
+        
         // Add field for simulation
-        context.IsSofaUpdating = EditorGUILayout.Toggle("Activate Simulation", context.IsSofaUpdating);
-        context.CatchSofaMessages = EditorGUILayout.Toggle("Activate Sofa Logs", context.CatchSofaMessages);
-        context.StartOnPlay = EditorGUILayout.Toggle("Start Sofa on Play", context.StartOnPlay);
-        context.StepbyStep = EditorGUILayout.Toggle("StepByStep", context.StepbyStep);
+        EditorGUI.BeginDisabledGroup(true);
+        
+        EditorGUI.EndDisabledGroup();
+
+        EditorGUILayout.Separator();        
+        EditorGUILayout.Separator();
+
 
         // Add plugin section
         PluginSection(context);
-
-
-        if (GUILayout.Button("Step"))
-        {
-            context.StepbyStep = true;
-            context.IsSofaUpdating = true;
-        }
-
+        EditorGUILayout.Separator();
 
         // Add scene file section
         SceneFileSection(context);
