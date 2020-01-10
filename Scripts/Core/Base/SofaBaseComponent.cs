@@ -147,20 +147,6 @@ namespace SofaUnity
         [SerializeField]
         public SofaDataArchiver m_dataArchiver = null;
 
-        /// List of Data parsed
-        //protected List<SofaData> m_datas = null;
-        //public List<SofaData> datas
-        //{
-        //    get { return m_datas; }
-        //}
-
-        /// Map of the Data parsed. Key is the dataName of the Data, value is the type of this Data.
-        //protected Dictionary<string, string> m_dataMap = null;
-        //public Dictionary<string, string> dataMap
-        //{
-        //    get { return m_dataMap; }
-        //}
-
         virtual protected void GetAllData()
         {
             if (m_impl != null)

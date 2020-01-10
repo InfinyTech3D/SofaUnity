@@ -36,11 +36,11 @@ public class SofaComponentObjectAPI : SofaBaseObjectAPI
 
             if (m_native == IntPtr.Zero)
                 Debug.LogError("Error Component can't be found: " + m_name);
-            else
-            {
-                //Debug.Log("Load Node Name: " + m_name);
-                m_parent = sofaPhysicsAPI_getParentNodeName(m_simu, m_name);
-            }
+            //else
+            //{
+            //    //Debug.Log("Load Node Name: " + m_name);
+            //    m_parent = sofaPhysicsAPI_getParentNodeName(m_simu, m_name);
+            //}
 
             
         }

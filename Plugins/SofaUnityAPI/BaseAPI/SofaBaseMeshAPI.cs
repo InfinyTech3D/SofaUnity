@@ -40,8 +40,8 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
             // Check if creation failed otherwise get parent name
             if (m_native == IntPtr.Zero)
                 Debug.LogError("Error Mesh can't be found: " + m_name);
-            else
-                m_parent = sofaPhysicsAPI_getParentNodeName(m_simu, m_name);
+            //else
+            //    m_parent = sofaPhysicsAPI_getParentNodeName(m_simu, m_name);
         }
     }
 
