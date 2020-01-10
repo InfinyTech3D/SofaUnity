@@ -336,7 +336,7 @@ public class SofaVR_API : MonoBehaviour
         if (m_sofaContext != null)
         {
             Debug.Log("restartSofaSimulation");
-            m_sofaContext.resetSofa();
+            m_sofaContext.ResetSofa();
         }
     }
 

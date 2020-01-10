@@ -58,7 +58,7 @@ public class CarvingController : MonoBehaviour {
             position = new Vector3(position.x, position.z, position.y);
 
 
-            position = position * m_sofaObject.getFactorUnityToSofa();
+            position = position * m_sofaObject.GetFactorUnityToSofa();
             m_object.m_impl.setNewPosition(position);
             Debug.Log("position : " + position + " sofaContextPosition " + sofaContextPosition);
             oldPosition = position;
