@@ -90,6 +90,9 @@ namespace SofaUnity
         ////////////////////////////////////////////
         /////       Object behavior API        /////
         ////////////////////////////////////////////
+        protected Vector3[] m_vertCenter = null;
+        protected Vector3[] m_vertices = null;
+        protected bool m_linearMesh = false;
 
         /// Method called by \sa Start() method to init the current object and impl. @param toUpdate indicate if updateMesh has to be called.
         protected void initMesh(bool toUpdate)
@@ -119,6 +122,7 @@ namespace SofaUnity
             if (nbrF == 0)
             {
                 SofaLog("SofaVisualModel::initMesh EdgeSetMesh", 0, true);
+                m_linearMesh = true;
                 CreateLinearMesh();
                 return;
             }
@@ -133,6 +137,7 @@ namespace SofaUnity
             if (toUpdate)
                 m_sofaMeshAPI.updateMesh(m_mesh);
         }
+
 
 
         /// Method called by @sa Update() method.
@@ -154,13 +159,17 @@ namespace SofaUnity
                     m_sofaMeshAPI.updateMesh(m_mesh);
                     m_mesh.RecalculateNormals();
                 }
+                else if (m_linearMesh == true)
+                {
+                    m_sofaMeshAPI.updateVertices(m_vertCenter);
+                    UpdateLinearMesh();
+                }
                 else
                 {
                     //int res = m_sofaMeshAPI.updateMeshVelocity(m_mesh, m_sofaContext.timeStep);                    
                     //if (res == -1)
                     //    m_sofaContext.breakerProcedure();
                     m_sofaMeshAPI.updateMesh(m_mesh);
-                    UpdateLinearMesh();
                 }
                 m_mesh.RecalculateBounds();
             }
@@ -169,7 +178,7 @@ namespace SofaUnity
 
         protected int BeamDiscretisation = 4;
         protected float Beamradius = 0.5f;
-        protected Vector3[] m_verts = null;
+        
         protected void CreateLinearMesh()
         {
             int nbrV = m_mesh.vertices.Length;
@@ -178,40 +187,55 @@ namespace SofaUnity
             if (nbrV < 2)
                 return;
 
-            m_verts = new Vector3[nbrV * BeamDiscretisation * 4];
+            m_vertCenter = new Vector3[m_mesh.vertices.Length];
+            for (int i = 0; i < nbrV; i++)
+                m_vertCenter[i] = m_mesh.vertices[i];
 
+            int nbrP = nbrV * 4 * BeamDiscretisation + 2; // +2 for the centers
+            //Debug.Log("nbrV: " + nbrV);
+            //Debug.Log("nbrP: " + nbrP);
 
-            // update first:
-            UpdateLine(m_mesh.vertices[0], m_mesh.vertices[1], 0);
+            m_vertices = new Vector3[nbrP];
+            m_vertices[0] = m_vertCenter[0];
+            m_vertices[nbrP - 1] = m_vertCenter[nbrV - 1];
+            //Debug.Log("m_vertices: " + m_vertices.Length);
+            //Debug.Log("m_vertCenter: " + m_vertCenter.Length);
+            // update first circle:
+            UpdateLine(m_vertCenter[0], m_vertCenter[1], 0);
             // update intermediate points
             for (int i = 1; i < nbrV - 1; i++)
             {
-                UpdateLine(m_mesh.vertices[i], m_mesh.vertices[i + 1], i);
+                UpdateLine(m_vertCenter[i], m_vertCenter[i + 1], i);
             }
 
-            //update last
-            UpdateLine(m_mesh.vertices[nbrV - 2], m_mesh.vertices[nbrV - 1], nbrV - 1);
+            //update last circle
+            UpdateLine(m_vertCenter[nbrV - 2], m_vertCenter[nbrV - 1], nbrV - 1);
+            m_mesh.vertices = m_vertices;
+
+            // create triangles here
+            createLinearMeshTriangulation();
         }
 
 
         protected void UpdateLinearMesh()
         {
-            int nbrV = m_mesh.vertices.Length;
+            int nbrV = m_vertCenter.Length;
 
             // nothing to do
             if (nbrV < 2)
                 return;
 
             // update first:
-            UpdateLine(m_mesh.vertices[0], m_mesh.vertices[1], 0, true);
+            UpdateLine(m_vertCenter[0], m_vertCenter[1], 0, true);
             // update intermediate points
             for (int i = 1; i < nbrV - 1; i++)
             {
-                UpdateLine(m_mesh.vertices[i], m_mesh.vertices[i + 1], i);
+                UpdateLine(m_vertCenter[i], m_vertCenter[i + 1], i);
             }
 
             //update last
-            UpdateLine(m_mesh.vertices[nbrV - 2], m_mesh.vertices[nbrV - 1], nbrV-1);
+            UpdateLine(m_vertCenter[nbrV - 2], m_vertCenter[nbrV - 1], nbrV-1);
+            m_mesh.vertices = m_vertices;
         }
 
         protected void UpdateLine(Vector3 pointA, Vector3 pointB, int nbrCyl, bool firstPoint = false)
@@ -232,14 +256,14 @@ namespace SofaUnity
             corners[2] = center - cyl_N1 * Beamradius;
             corners[3] = center - cyl_N2 * Beamradius;
 
-            int increment = nbrCyl * BeamDiscretisation * 4;
+            int increment = nbrCyl * BeamDiscretisation * 4 + 1; // to skip first center point
             if (BeamDiscretisation > 1)
             {
                 float factor = 1.0f / BeamDiscretisation;
                 for (int i = 0; i < 4; i++)
                 {
                     // add corner first
-                    m_verts[increment] = corners[i];
+                    m_vertices[increment] = corners[i];
                     // tangente
                     Vector3 dirT = corners[(i + 1) % 4] - corners[i];
                     increment++;
@@ -248,12 +272,12 @@ namespace SofaUnity
                     for (int j = 1; j < BeamDiscretisation; j++)
                     {
                         // not at radius length
-                        m_verts[increment] = corners[i] + factor * j * dirT;
+                        m_vertices[increment] = corners[i] + factor * j * dirT;
 
                         // apply radius
-                        Vector3 dirPoint = m_verts[increment] - center;
+                        Vector3 dirPoint = m_vertices[increment] - center;
                         dirPoint.Normalize();
-                        m_verts[increment] = center + dirPoint * Beamradius;
+                        m_vertices[increment] = center + dirPoint * Beamradius;
                         increment++;
                     }
                 }
@@ -263,10 +287,16 @@ namespace SofaUnity
                 // add corners only
                 for (int i = 0; i < 4; i++)
                 {
-                    m_verts[increment] = corners[i];
+                    m_vertices[increment] = corners[i];
                     increment++;
                 }
             }
+        }
+
+
+        protected void createLinearMeshTriangulation()
+        {
+
         }
 
         /// Method to draw debug information like the vertex being grabed
@@ -285,10 +315,10 @@ namespace SofaUnity
                 Gizmos.DrawSphere(this.transform.TransformPoint(vert), 0.05f);
             }
 
-            foreach (Vector3 vert in m_verts)
-            {
-                Gizmos.DrawSphere(this.transform.TransformPoint(vert), 0.01f);
-            }
+            //foreach (Vector3 vert in m_verts)
+            //{
+            //    Gizmos.DrawSphere(this.transform.TransformPoint(vert), 0.01f);
+            //}
         }
     }
 

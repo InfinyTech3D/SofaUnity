@@ -98,6 +98,37 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
         return nbrTris + nbrQuads;
     }
 
+    public virtual void updateVertices(Vector3[] unityVertices)
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            int nbrV = sofaPhysicsAPI_getNbVertices(m_simu, m_name);
+
+            if (nbrV < 0)
+                return;
+
+            if (nbrV != unityVertices.Length)
+            {
+                Debug.LogError("updateVertices, not the same number of vertices: " + nbrV + "compare to unity buffer: " + unityVertices.Length);
+                return;
+            }
+
+            // get access to sofa buffers
+            float[] vertices = new float[nbrV * 3];
+            int resV = sofaPhysics3DObject_getVertices(m_simu, m_name, vertices);
+
+            if (displayLog)
+                Debug.Log(m_name + " | Number of vertices: " + nbrV + " with resV: " + SofaDefines.msg_error[resV]);
+
+            for (int i = 0; i < nbrV; ++i)
+            {
+                unityVertices[i].x = vertices[i * 3];
+                unityVertices[i].y = vertices[i * 3 + 1];
+                unityVertices[i].z = vertices[i * 3 + 2];
+            }
+        }
+    }
+
     /// Method to create the triangulation from Sofa topology to Unity buffers
     public virtual int[] createTriangulation()
     {
