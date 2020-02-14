@@ -198,8 +198,8 @@ namespace SofaUnity
             m_vertices = new Vector3[nbrP];
             m_vertices[0] = m_vertCenter[0];
             m_vertices[nbrP - 1] = m_vertCenter[nbrV - 1];
-            //Debug.Log("m_vertices: " + m_vertices.Length);
-            //Debug.Log("m_vertCenter: " + m_vertCenter.Length);
+            Debug.Log("m_vertices: " + m_vertices.Length);
+            Debug.Log("m_vertCenter: " + m_vertCenter.Length);
             // update first circle:
             UpdateLine(m_vertCenter[0], m_vertCenter[1], 0);
             // update intermediate points
@@ -213,7 +213,7 @@ namespace SofaUnity
             m_mesh.vertices = m_vertices;
 
             // create triangles here
-            createLinearMeshTriangulation();
+            CreateLinearMeshTriangulation(nbrV-1);
         }
 
 
@@ -294,9 +294,61 @@ namespace SofaUnity
         }
 
 
-        protected void createLinearMeshTriangulation()
+        protected void CreateLinearMeshTriangulation(int nbrCylinder)
         {
+            int nbrPointPerCircle = BeamDiscretisation * 4;
+            int nbrTriPerBorder = nbrPointPerCircle;
+            int nbrTriPerCylinder = nbrPointPerCircle * 2;
+            int[] tris = new int[(nbrCylinder * nbrTriPerCylinder + 2 * nbrTriPerBorder)*3];
 
+            //Debug.Log("nbrPointPerCircle: " + nbrPointPerCircle);
+            //Debug.Log("tris: " + (nbrCylinder * nbrTriPerCylinder + 2 * nbrTriPerBorder)*3);
+
+            int cptTri = 0;
+            // create first border
+            for (int i=0; i< nbrPointPerCircle; i++)
+            {
+                tris[cptTri + 1] = 0;
+                tris[cptTri] = i + 1;
+                tris[cptTri + 2] = (i+1)% nbrPointPerCircle + 1;
+
+                cptTri += 3;
+            }
+            
+            // create cylinders
+            for (int i=0; i< nbrCylinder; i++)
+            {
+                int idC1 = i * nbrPointPerCircle + 1;
+                int idC2 = (i + 1)* nbrPointPerCircle + 1;
+
+                for (int j=0; j< nbrPointPerCircle; ++j)
+                {
+                    tris[cptTri] = idC1 + j;
+                    tris[cptTri + 1] = idC2 + j;
+                    tris[cptTri + 2] = idC2 + (j + 1) % nbrPointPerCircle;
+
+                    tris[cptTri + 3] = idC1 + j;
+                    tris[cptTri + 4] = idC2 + (j + 1) % nbrPointPerCircle;
+                    tris[cptTri + 5] = idC1 + (j + 1) % nbrPointPerCircle;
+
+                    cptTri += 6;
+                }
+            }
+
+            // create last border
+            int idP = 1 + nbrPointPerCircle * nbrCylinder;
+            int idLast = 1 + nbrPointPerCircle * (nbrCylinder + 1);
+
+            for (int i = 0; i < nbrPointPerCircle; i++)
+            {
+                tris[cptTri] = idLast;
+                tris[cptTri + 1] = idP + i;
+                tris[cptTri + 2] = idP + (i + 1) % nbrPointPerCircle;
+
+                cptTri += 3;
+            }
+
+            m_mesh.triangles = tris;
         }
 
         /// Method to draw debug information like the vertex being grabed
