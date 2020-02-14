@@ -167,7 +167,7 @@ namespace SofaUnity
 
         }
 
-        protected int BeamDiscretisation = 1;
+        protected int BeamDiscretisation = 4;
         protected float Beamradius = 0.5f;
         protected Vector3[] m_verts = null;
         protected void CreateLinearMesh()
@@ -242,7 +242,6 @@ namespace SofaUnity
                     m_verts[increment] = corners[i];
                     // tangente
                     Vector3 dirT = corners[(i + 1) % 4] - corners[i];
-                    dirT.Normalize();
                     increment++;
 
                     // add subpoints
