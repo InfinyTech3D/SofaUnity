@@ -90,6 +90,14 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
     }
 
 
+    public int getNumberOfFaces()
+    {
+        int nbrTris = sofaPhysics3DObject_getNbTriangles(m_simu, m_name);
+        int nbrQuads = sofaPhysics3DObject_getNbQuads(m_simu, m_name);
+
+        return nbrTris + nbrQuads;
+    }
+
     /// Method to create the triangulation from Sofa topology to Unity buffers
     public virtual int[] createTriangulation()
     {
