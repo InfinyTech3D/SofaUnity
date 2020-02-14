@@ -92,6 +92,7 @@ namespace SofaUnity
         ////////////////////////////////////////////
         protected Vector3[] m_vertCenter = null;
         protected Vector3[] m_vertices = null;
+        protected Vector3[] m_normals = null;
         protected bool m_linearMesh = false;
 
         /// Method called by \sa Start() method to init the current object and impl. @param toUpdate indicate if updateMesh has to be called.
@@ -196,10 +197,17 @@ namespace SofaUnity
             //Debug.Log("nbrP: " + nbrP);
 
             m_vertices = new Vector3[nbrP];
+            m_normals = new Vector3[nbrP];
+
+            //Debug.Log("m_vertices: " + m_vertices.Length);
+            //Debug.Log("m_vertCenter: " + m_vertCenter.Length);
+
+            // update borders first
             m_vertices[0] = m_vertCenter[0];
             m_vertices[nbrP - 1] = m_vertCenter[nbrV - 1];
-            Debug.Log("m_vertices: " + m_vertices.Length);
-            Debug.Log("m_vertCenter: " + m_vertCenter.Length);
+            m_normals[0] = m_vertCenter[0] - m_vertCenter[1];
+            m_normals[nbrP - 1] = m_vertCenter[nbrV - 1] - m_vertCenter[nbrV - 2];
+
             // update first circle:
             UpdateLine(m_vertCenter[0], m_vertCenter[1], 0);
             // update intermediate points
@@ -211,9 +219,32 @@ namespace SofaUnity
             //update last circle
             UpdateLine(m_vertCenter[nbrV - 2], m_vertCenter[nbrV - 1], nbrV - 1);
             m_mesh.vertices = m_vertices;
+            m_mesh.normals = m_normals;
 
             // create triangles here
             CreateLinearMeshTriangulation(nbrV-1);
+
+            // create fake uv
+            Vector2[] uv = new Vector2[nbrP];
+            int nbrPointPerCircle = BeamDiscretisation * 4;
+            int nbrCircles = nbrV;
+            uv[0] = Vector2.zero;
+            uv[nbrP-1] = Vector2.zero;
+
+            float incrementU = (float)(1.0f / (nbrPointPerCircle-1));
+            float incrementV = (float)(1.0f / (nbrCircles-1));
+
+            for (int i=0; i< nbrCircles; i++)
+            {
+                int incr = i * nbrPointPerCircle + 1;
+                float vvalue = i * incrementV;
+                for (int j = 0; j < nbrPointPerCircle; j++)
+                {
+                    uv[incr + j].x = j * incrementU;
+                    uv[incr + j].y = vvalue;
+                }
+            }
+            m_mesh.uv = uv;
         }
 
 
@@ -224,6 +255,13 @@ namespace SofaUnity
             // nothing to do
             if (nbrV < 2)
                 return;
+
+            // update borders first
+            int idLast = m_vertices.Length - 1;
+            m_vertices[0] = m_vertCenter[0];
+            m_vertices[idLast] = m_vertCenter[nbrV - 1];
+            m_normals[0] = m_vertCenter[0] - m_vertCenter[1];
+            m_normals[idLast] = m_vertCenter[nbrV - 1] - m_vertCenter[nbrV - 2];
 
             // update first:
             UpdateLine(m_vertCenter[0], m_vertCenter[1], 0, true);
@@ -236,6 +274,7 @@ namespace SofaUnity
             //update last
             UpdateLine(m_vertCenter[nbrV - 2], m_vertCenter[nbrV - 1], nbrV-1);
             m_mesh.vertices = m_vertices;
+            m_mesh.normals = m_normals;
         }
 
         protected void UpdateLine(Vector3 pointA, Vector3 pointB, int nbrCyl, bool firstPoint = false)
@@ -264,6 +303,7 @@ namespace SofaUnity
                 {
                     // add corner first
                     m_vertices[increment] = corners[i];
+                    m_normals[increment] = corners[i] - center;
                     // tangente
                     Vector3 dirT = corners[(i + 1) % 4] - corners[i];
                     increment++;
@@ -277,6 +317,7 @@ namespace SofaUnity
                         // apply radius
                         Vector3 dirPoint = m_vertices[increment] - center;
                         dirPoint.Normalize();
+                        m_normals[increment] = dirPoint;
                         m_vertices[increment] = center + dirPoint * Beamradius;
                         increment++;
                     }
@@ -288,6 +329,7 @@ namespace SofaUnity
                 for (int i = 0; i < 4; i++)
                 {
                     m_vertices[increment] = corners[i];
+                    m_normals[increment] = corners[i] - center;
                     increment++;
                 }
             }
@@ -323,12 +365,12 @@ namespace SofaUnity
 
                 for (int j=0; j< nbrPointPerCircle; ++j)
                 {
-                    tris[cptTri] = idC1 + j;
-                    tris[cptTri + 1] = idC2 + j;
+                    tris[cptTri + 1] = idC1 + j;
+                    tris[cptTri] = idC2 + j;
                     tris[cptTri + 2] = idC2 + (j + 1) % nbrPointPerCircle;
 
-                    tris[cptTri + 3] = idC1 + j;
-                    tris[cptTri + 4] = idC2 + (j + 1) % nbrPointPerCircle;
+                    tris[cptTri + 4] = idC1 + j;
+                    tris[cptTri + 3] = idC2 + (j + 1) % nbrPointPerCircle;
                     tris[cptTri + 5] = idC1 + (j + 1) % nbrPointPerCircle;
 
                     cptTri += 6;
@@ -352,26 +394,26 @@ namespace SofaUnity
         }
 
         /// Method to draw debug information like the vertex being grabed
-        void OnDrawGizmosSelected()
-        {
-            if (m_sofaMeshAPI == null || m_sofaContext == null)
-                return;
+        //void OnDrawGizmosSelected()
+        //{
+        //    if (m_sofaMeshAPI == null || m_sofaContext == null)
+        //        return;
 
-            
 
-            Gizmos.color = Color.yellow;
-            //float factor = m_sofaContext.GetFactorSofaToUnity();
 
-            foreach (Vector3 vert in m_mesh.vertices)
-            {
-                Gizmos.DrawSphere(this.transform.TransformPoint(vert), 0.05f);
-            }
+        //    Gizmos.color = Color.yellow;
+        //    //float factor = m_sofaContext.GetFactorSofaToUnity();
 
-            //foreach (Vector3 vert in m_verts)
-            //{
-            //    Gizmos.DrawSphere(this.transform.TransformPoint(vert), 0.01f);
-            //}
-        }
+        //    foreach (Vector3 vert in m_mesh.vertices)
+        //    {
+        //        Gizmos.DrawSphere(this.transform.TransformPoint(vert), 0.05f);
+        //    }
+
+        //    //foreach (Vector3 vert in m_verts)
+        //    //{
+        //    //    Gizmos.DrawSphere(this.transform.TransformPoint(vert), 0.01f);
+        //    //}
+        //}
     }
 
 } // namespace SofaUnity
