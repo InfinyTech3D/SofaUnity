@@ -92,7 +92,7 @@ public class SofaBaseComponentEditor : Editor
 
         // Add the links
         SofaLinkArchiver linkArchiver = compo.m_linkArchiver;
-        if (linkArchiver != null)
+        if (linkArchiver != null && linkArchiver.m_links != null)
         {
             EditorGUILayout.Separator();
             EditorGUI.BeginDisabledGroup(true);
