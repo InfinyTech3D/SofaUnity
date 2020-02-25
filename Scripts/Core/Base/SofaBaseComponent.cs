@@ -68,9 +68,12 @@ namespace SofaUnity
             {
                 // Creation method of Sofa component API
                 CreateSofaAPI();
-
+                
                 // overide method to fill specific possible types
                 FillPossibleTypes();
+
+                // overide name with current type
+                SetComponentType();
 
                 // Generic Data section
                 GetAllData();
@@ -111,9 +114,17 @@ namespace SofaUnity
         }
 
 
+        protected virtual void SetComponentType()
+        {
+            // overide name with current type
+            m_componentType = m_impl.GetComponentType();
+            this.gameObject.name = m_componentType + "  -  " + m_uniqueNameId;
+        }
+
+
         protected virtual void FillPossibleTypes()
         {
-
+            
         }
 
 

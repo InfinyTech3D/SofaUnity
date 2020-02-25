@@ -49,6 +49,12 @@ namespace SofaUnity
         }
 
 
+        protected override void SetComponentType()
+        {
+            // overide name with current type
+            m_componentType = m_impl.GetComponentType();
+            this.gameObject.name = "SofaMesh" + "  -  " + m_uniqueNameId;
+        }
 
         ///// public method that return the number of vertices, override base method by returning potentially the number of vertices from tetra topology.
         //public override int nbVertices()
