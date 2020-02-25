@@ -90,6 +90,21 @@ public class SofaBaseComponentEditor : Editor
     
         }
 
+        // Add the links
+        SofaLinkArchiver linkArchiver = compo.m_linkArchiver;
+        if (linkArchiver != null)
+        {
+            EditorGUILayout.Separator();
+            EditorGUI.BeginDisabledGroup(true);
+            foreach (SofaLink link in linkArchiver.m_links)
+            {
+                EditorGUILayout.TextField("@" + link.LinkName, link.LinkPath);
+            }
+            EditorGUI.EndDisabledGroup();
+        }
+        
+
+
         EditorGUILayout.Separator();
         m_ShowUnsupportedFields.target = EditorGUILayout.ToggleLeft("Show unsupported Data", m_ShowUnsupportedFields.target);
         if (EditorGUILayout.BeginFadeGroup(m_ShowUnsupportedFields.faded))

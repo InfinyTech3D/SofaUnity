@@ -43,6 +43,14 @@ public class SofaBaseComponentAPI : SofaBaseAPI
             return "None";
     }
 
+    public string LoadAllLinks()
+    {
+        if (m_isReady)
+            return sofaComponentAPI_getLinks(m_simu, m_name);
+        else
+            return "None";
+    }
+
     public int ReinitComponent()
     {
         if (m_isReady)
@@ -760,6 +768,8 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern string sofaComponentAPI_getDataFields(IntPtr obj, string componentName);
 
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern string sofaComponentAPI_getLinks(IntPtr obj, string componentName);
 
     /////////////////////////////////////////////////////////////////////////////////////////
     ///////////      Communication API to set/get basic values into Sofa     ////////////////

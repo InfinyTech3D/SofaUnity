@@ -72,8 +72,11 @@ namespace SofaUnity
                 // overide method to fill specific possible types
                 FillPossibleTypes();
 
-                // Genereic Data section
+                // Generic Data section
                 GetAllData();
+
+                // Generic Link section
+                GetAllLinks();
 
                 // overide method to fill specific data section
                 FillDataStructure();
@@ -148,6 +151,10 @@ namespace SofaUnity
         [SerializeField]
         public SofaDataArchiver m_dataArchiver = null;
 
+        [SerializeField]
+        public SofaLinkArchiver m_linkArchiver = null;
+
+
         virtual protected void GetAllData()
         {
             if (m_impl != null)
@@ -166,6 +173,36 @@ namespace SofaUnity
                     if (values.GetLength(0) == 2)
                     {
                         m_dataArchiver.AddData(this, values[0], values[1]);
+                    }
+                }
+            }
+            else
+            {
+                SofaLog("GetAllData: m_impl is null.", 1);
+            }
+        }
+
+
+        virtual protected void GetAllLinks()
+        {
+            if (m_impl != null)
+            {
+                string allLinks = m_impl.LoadAllLinks();
+                if (allLinks == "None" || allLinks.Length == 0)
+                    return;
+
+                List<String> links = allLinks.Split(';').ToList();
+                if (m_linkArchiver == null)
+                    m_linkArchiver = new SofaLinkArchiver();
+
+                foreach (String link in links)
+                {
+                    Debug.Log(m_uniqueNameId + " | links: " + link);
+                    String[] values = link.Split(',');
+                    
+                    if (values.GetLength(0) == 3)
+                    {
+                        m_linkArchiver.AddLink(this, values[0], values[2]);
                     }
                 }
             }
