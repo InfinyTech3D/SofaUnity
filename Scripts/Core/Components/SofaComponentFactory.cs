@@ -41,6 +41,10 @@ namespace SofaUnity
             {
                 sofaCompo = compoGO.AddComponent<SofaCollisionModel>();
             }
+            else if (componentType == "SofaConstraint")
+            {
+                sofaCompo = compoGO.AddComponent<SofaConstraint>();
+            }
             else if (componentType == "SofaVisualModel")
             {
                 sofaCompo = compoGO.AddComponent<SofaVisualModel>();

@@ -17,6 +17,7 @@ namespace SofaUnity
         SofaFEMForceField,
         SofaMechanicalMapping,
         SofaCollisionModel,
+        SofaConstraint,
         SofaVisualModel,
         SofaUnknown
     };  
