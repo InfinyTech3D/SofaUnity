@@ -98,6 +98,73 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
         return nbrTris + nbrQuads;
     }
 
+
+    /// Method to get the number of hexahedron in the current SOFA object
+    public int getNbHexahedra()
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            int nbrElem = sofaPhysics3DObject_getNbHexahedra(m_simu, m_name);
+            return nbrElem;
+        }
+        else
+            return 0;
+    }
+
+
+    /// Method to get the number of tetrahedron in the current SOFA object
+    public int getNbTetrahedra()
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            int nbrElem = sofaPhysics3DObject_getNbTetrahedra(m_simu, m_name);
+            return nbrElem;
+        }
+        else
+            return 0;
+    }
+
+
+    /// Method to get the number of quads in the current SOFA object
+    public int getNbQuads()
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            int nbrElem = sofaPhysics3DObject_getNbQuads(m_simu, m_name);
+            return nbrElem;
+        }
+        else
+            return 0;
+    }
+
+
+    /// Method to get the number of triangles in the current SOFA object
+    public int getNbTriangles()
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            int nbrElem = sofaPhysics3DObject_getNbTriangles(m_simu, m_name);
+            return nbrElem;
+        }
+        else
+            return 0;
+    }
+
+
+    /// Method to get the number of triangles in the current SOFA object
+    public int getNbEdges()
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            int nbrElem = sofaPhysics3DObject_getNbEdges(m_simu, m_name);
+            return nbrElem;
+        }
+        else
+            return 0;
+    }
+
+
+
     public virtual void updateVertices(Vector3[] unityVertices)
     {
         if (m_native != IntPtr.Zero)
@@ -372,19 +439,6 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
             return -5;
     }
 
-
-    /// Method to get the number of tetrahedron in the current SOFA object
-    public int getNbTetrahedra()
-    {
-        if (m_native != IntPtr.Zero)
-        {
-            int nbrTetra = sofaPhysics3DObject_getNbTetrahedra(m_simu, m_name);
-            return nbrTetra;
-        }
-        else
-            return 0;
-    }
-
     
     /// Method to get the buffer of tetrahedra from the current SOFA object
     public void getTetrahedra(int[] tetra)
@@ -637,6 +691,14 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
     ///////////            API to Communication with mesh topology           ////////////////
     /////////////////////////////////////////////////////////////////////////////////////////
 
+    /// Binding to Edges API
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getNbEdges(IntPtr obj, string name);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getEdges(IntPtr obj, string name, int[] arr);
+    
+
     /// Binding to Triangles API
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysics3DObject_getNbTriangles(IntPtr obj, string name);
@@ -660,6 +722,14 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysics3DObject_getTetrahedra(IntPtr obj, string name, int[] arr);
 
+
+    /// Binding to Hexa API
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getNbHexahedra(IntPtr obj, string name);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaPhysics3DObject_getHexahedra(IntPtr obj, string name, int[] arr);
+    
 
     /// Binding to Topology change API
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
