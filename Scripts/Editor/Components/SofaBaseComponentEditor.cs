@@ -102,23 +102,23 @@ public class SofaBaseComponentEditor : Editor
             }
             EditorGUI.EndDisabledGroup();
         }
-        
 
 
-        EditorGUILayout.Separator();
-        m_ShowUnsupportedFields.target = EditorGUILayout.ToggleLeft("Show unsupported Data", m_ShowUnsupportedFields.target);
-        if (EditorGUILayout.BeginFadeGroup(m_ShowUnsupportedFields.faded))
+        if (dataArchiver.m_otherNames.Count > 0)
         {
-            for (int i = 0; i < dataArchiver.m_otherNames.Count; i++)
+            EditorGUILayout.Separator();
+            m_ShowUnsupportedFields.target = EditorGUILayout.ToggleLeft("Show unsupported Data", m_ShowUnsupportedFields.target);
+            if (EditorGUILayout.BeginFadeGroup(m_ShowUnsupportedFields.faded))
             {
-                string dataName = dataArchiver.m_otherNames[i];
-                SofaData data = dataArchiver.GetGenericData(dataName);
-                EditorGUILayout.TextField(data.DataName, "Unsupported type: " + data.DataType);
-
-
+                for (int i = 0; i < dataArchiver.m_otherNames.Count; i++)
+                {
+                    string dataName = dataArchiver.m_otherNames[i];
+                    SofaData data = dataArchiver.GetGenericData(dataName);
+                    EditorGUILayout.TextField(data.DataName, "Unsupported type: " + data.DataType);
+                }
             }
+            EditorGUILayout.Separator();
+            EditorGUILayout.EndFadeGroup();
         }
-        EditorGUILayout.Separator();
-        EditorGUILayout.EndFadeGroup();
     }
 }
