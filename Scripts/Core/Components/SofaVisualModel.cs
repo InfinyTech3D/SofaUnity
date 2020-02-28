@@ -119,7 +119,7 @@ namespace SofaUnity
             m_mesh.vertices = new Vector3[0];
             m_sofaMeshAPI.updateMesh(m_mesh);
 
-            int nbrF = m_sofaMeshAPI.getNumberOfFaces();
+            int nbrF = m_sofaMeshAPI.GetNumberOfFaces();
             if (nbrF == 0)
             {
                 SofaLog("SofaVisualModel::initMesh EdgeSetMesh", 0, true);

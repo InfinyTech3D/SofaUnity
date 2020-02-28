@@ -145,7 +145,7 @@ namespace SofaUnity
             // Special part for tetra
             if (nbTetra == 0)
             {
-                nbTetra = m_sofaMeshAPI.getNbTetrahedra();
+                nbTetra = m_sofaMeshAPI.GetNbTetrahedra();
                 if (nbTetra > 0)
                 {
                     SofaLog("Tetra found! Number: " + nbTetra, 1, true);

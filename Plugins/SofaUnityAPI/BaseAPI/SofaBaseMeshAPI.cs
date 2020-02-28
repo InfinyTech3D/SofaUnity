@@ -90,7 +90,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
     }
 
 
-    public int getNumberOfFaces()
+    public int GetNumberOfFaces()
     {
         int nbrTris = sofaPhysics3DObject_getNbTriangles(m_simu, m_name);
         int nbrQuads = sofaPhysics3DObject_getNbQuads(m_simu, m_name);
@@ -100,7 +100,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
 
 
     /// Method to get the number of hexahedron in the current SOFA object
-    public int getNbHexahedra()
+    public int GetNbHexahedra()
     {
         if (m_native != IntPtr.Zero)
         {
@@ -113,7 +113,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
 
 
     /// Method to get the number of tetrahedron in the current SOFA object
-    public int getNbTetrahedra()
+    public int GetNbTetrahedra()
     {
         if (m_native != IntPtr.Zero)
         {
@@ -126,7 +126,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
 
 
     /// Method to get the number of quads in the current SOFA object
-    public int getNbQuads()
+    public int GetNbQuads()
     {
         if (m_native != IntPtr.Zero)
         {
@@ -139,7 +139,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
 
 
     /// Method to get the number of triangles in the current SOFA object
-    public int getNbTriangles()
+    public int GetNbTriangles()
     {
         if (m_native != IntPtr.Zero)
         {
@@ -152,7 +152,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
 
 
     /// Method to get the number of triangles in the current SOFA object
-    public int getNbEdges()
+    public int GetNbEdges()
     {
         if (m_native != IntPtr.Zero)
         {
@@ -163,6 +163,75 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
             return 0;
     }
 
+
+    public virtual int[] GetHexahedraArray(int nbElem)
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            int[] elems = new int[nbElem * 8];
+            sofaPhysics3DObject_getHexahedra(m_simu, m_name, elems);
+            return elems;
+        }
+        else
+            return null;
+
+    }
+
+
+    public virtual int[] GetTetrahedraArray(int nbElem)
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            int[] elems = new int[nbElem * 4];
+            sofaPhysics3DObject_getTetrahedra(m_simu, m_name, elems);
+            return elems;
+        }
+        else
+            return null;
+
+    }
+
+
+    public virtual int[] GetQuadsArray(int nbElem)
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            int[] elems = new int[nbElem * 4];
+            sofaPhysics3DObject_getQuads(m_simu, m_name, elems);
+            return elems;
+        }
+        else
+            return null;
+
+    }
+
+
+    public virtual int[] GetTrianglesArray(int nbElem)
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            int[] elems = new int[nbElem * 3];
+            sofaPhysics3DObject_getTriangles(m_simu, m_name, elems);
+            return elems;
+        }
+        else
+            return null;
+
+    }
+
+
+    public virtual int[] GetEdgesArray(int nbElem)
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            int[] elems = new int[nbElem * 2];
+            sofaPhysics3DObject_getEdges(m_simu, m_name, elems);
+            return elems;
+        }
+        else
+            return null;
+
+    }
 
 
     public virtual void updateVertices(Vector3[] unityVertices)

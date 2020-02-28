@@ -219,7 +219,7 @@ namespace SofaUnity
             // Special part for tetra
             if (nbTetra == 0)
             {
-                nbTetra = m_impl.getNbTetrahedra();
+                nbTetra = m_impl.GetNbTetrahedra();
                 if (nbTetra > 0)
                 {
                     SofaLog("Tetra found! Number: " + nbTetra);
