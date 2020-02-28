@@ -546,12 +546,12 @@ public class SofaBaseComponentAPI : SofaBaseAPI
         {
             int[] val = new int[1];
             val[0] = -2;
-            string dataType = "int";
+            string dataType = "unsigned int";
             int res = sofaComponentAPI_getVectorSize(m_simu, m_name, dataName, dataType, val);
 
             if (res != 0)
             {
-                Debug.LogError("Method getVecfSize of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
+                Debug.LogError("Method getVeciSize of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
                 return res;
             }
             else

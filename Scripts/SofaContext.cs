@@ -470,6 +470,8 @@ namespace SofaUnity
 
             Debug.Log("## SofaContext ## loadFilename: " + m_sceneFileMgr.AbsoluteFilename());
             // load scene file in SOFA
+            if (m_impl == null)
+                Debug.LogError("m_impl is null");
             m_impl.loadScene(m_sceneFileMgr.AbsoluteFilename());
 
             // Retrieve current timestep and gravity

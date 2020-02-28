@@ -208,7 +208,6 @@ namespace SofaUnity
 
                 foreach (String link in links)
                 {
-                    Debug.Log(m_uniqueNameId + " | links: " + link);
                     String[] values = link.Split(',');
                     
                     if (values.GetLength(0) == 3)
@@ -219,7 +218,7 @@ namespace SofaUnity
             }
             else
             {
-                SofaLog("GetAllData: m_impl is null.", 1);
+                SofaLog("GetAllLinks: m_impl is null.", 1);
             }
         }
     }
