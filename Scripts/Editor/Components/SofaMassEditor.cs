@@ -9,6 +9,13 @@ public class SofaMassEditor : SofaBaseComponentEditor
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
+
+        SofaMass _object = (SofaMass)this.target;
+        EditorGUILayout.ObjectField("Sofa Context", _object.m_sofaContext, typeof(Object), true);
+        //int[] m_VectorProp = new int[10];
+        
+        //SerializedProperty m_VectorProp = serializedObject.FindProperty("myTab");
+        //EditorGUILayout.PropertyField(m_VectorProp, true);
     }
     //    Debug.Log("SofaMassEditor OnInspectorGUI");
     //    SofaMass _object = (SofaMass)this.target;

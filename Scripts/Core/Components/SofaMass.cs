@@ -7,7 +7,8 @@ namespace SofaUnity
 {
     public class SofaMass : SofaBaseComponent
     {
-
+        public int[] myTab;
+        public Vector3 m_MyVector = new Vector3(20, 1, 0);
         void Start()
         {
             //Debug.Log("##!!!## SofaMass: Start: ");
@@ -42,6 +43,9 @@ namespace SofaUnity
             m_possibleComponentTypes = ConvertStringToList(typesS);
             m_componentType = m_impl.GetComponentType();
 
+            myTab = new int[10];
+            myTab[0] = 1;
+            myTab[1] = 1;
             if (m_impl != null)
             {
                 string type = m_impl.GetComponentType();

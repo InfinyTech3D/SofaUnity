@@ -98,6 +98,18 @@ public class SofaDataArchiver //: MonoBehaviour, ISerializationCallbackReceiver
             Vector4 value = owner.m_impl.GetVector4Value(dataName, true);
             AddVec4Data(owner, dataName, value, true);
         }
+        //else if (dataType == "vector < int >" || dataType == "vector<int>")
+        //{
+        //    Debug.Log(owner.UniqueNameId + " VEC: " + dataType);
+        //    int res = owner.m_impl.GetVeciSize(dataName);
+        //    Debug.Log(dataName + " size: " + res);
+        //}
+        //else if (dataType == "vector < unsigned int >" || dataType == "vector<unsigned int>")
+        //{
+        //    Debug.Log(owner.UniqueNameId + " VEC: " + dataType);
+        //    int res = owner.m_impl.GetVeciSize(dataName);
+        //    Debug.Log(dataName + " size: " + res);
+        //}
         //else if(dataType.Contains("vector<"))
         //{
         //    //owner.m_impl.getV
@@ -106,10 +118,7 @@ public class SofaDataArchiver //: MonoBehaviour, ISerializationCallbackReceiver
         //{
 
         //}
-        //else if (dataType == "vector < int >" || dataType == "vector<int>")
-        //{
 
-        //}
 
 
         //else if (dataType == "Rigid3dTypes::Coord")
