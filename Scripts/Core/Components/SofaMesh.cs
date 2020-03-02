@@ -80,28 +80,6 @@ namespace SofaUnity
 
                 m_sofaMeshAPI.loadObject();
 
-                // Add a MeshFilter to the GameObject
-                MeshFilter mf = gameObject.GetComponent<MeshFilter>();
-                if (mf == null)
-                    gameObject.AddComponent<MeshFilter>();
-
-                //to see it, we have to add a renderer
-                MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();
-                if (mr == null)
-                {
-                    mr = gameObject.AddComponent<MeshRenderer>();
-                    mr.enabled = false;
-                }
-
-                if (mr.sharedMaterial == null)
-                {
-                    mr.sharedMaterial = new Material(Shader.Find("Diffuse"));
-                }
-
-                //MeshCollider collid = gameObject.GetComponent<MeshCollider>();
-                //if (collid == null)
-                //    gameObject.AddComponent<MeshCollider>();
-
                 initMesh(true);
             }
         }
@@ -117,23 +95,8 @@ namespace SofaUnity
             if (m_sofaMeshAPI == null)
                 return;
 
-#if UNITY_EDITOR
-            //Only do this in the editor
-            MeshFilter mf = GetComponent<MeshFilter>();   //a better way of getting the meshfilter using Generics
-            //Mesh meshCopy = Mesh.Instantiate(mf.sharedMesh) as Mesh;  //make a deep copy
-            Mesh meshCopy = new Mesh();
-            m_mesh = mf.mesh = meshCopy;                    //Assign the copy to the meshes
 
-#else
-            //do this in play mode
-            m_mesh = GetComponent<MeshFilter>().mesh;
-            if (m_log)
-                Debug.Log("SofaBox::Start play mode.");
-#endif
 
-            m_mesh.name = "SofaMesh";
-            m_mesh.vertices = new Vector3[0];
-            m_sofaMeshAPI.updateMesh(m_mesh);
 
 
             // Special part for tetra
@@ -187,18 +150,19 @@ namespace SofaUnity
                 //        m_impl.updateMesh(m_mesh);
                 //}
 
-                if (nbTetra > 0)
-                    updateTetraMesh();
-                else if (mr.enabled == true) // which is true
-                    m_sofaMeshAPI.updateMeshVelocity(m_mesh, m_sofaContext.TimeStep);
-                else // pass from false to true.
-                {
-                    m_sofaMeshAPI.updateMesh(m_mesh);
-                }
+                //if (nbTetra > 0)
+                //    updateTetraMesh();
+                //else if (mr.enabled == true) // which is true
+                //    m_sofaMeshAPI.updateMeshVelocity(m_mesh, m_sofaContext.TimeStep);
+                //else // pass from false to true.
+                //{
+                //    m_sofaMeshAPI.updateMesh(m_mesh);
+                //}
             }
         }
 
 
+       
     }
 
 } // namespace SofaUnity
