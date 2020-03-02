@@ -36,7 +36,7 @@ namespace SofaUnity
             {
                 Hexahedron hexa = new Hexahedron(elems[i * 8], elems[i * 8 + 1], elems[i * 8 + 2], elems[i * 8 + 3],
                     elems[i * 8 + 4], elems[i * 8 + 5], elems[i * 8 + 6], elems[i * 8 + 7]);
-                m_hexahedron[i] = hexa;
+                m_hexahedron.Add(hexa);
             }
 
             m_topologyType = TopologyObjectType.HEXAHEDRON;
@@ -52,8 +52,7 @@ namespace SofaUnity
             for (int i = 0; i < nbElem; ++i)
             {
                 Tetrahedron tetra = new Tetrahedron(elems[i * 4], elems[i * 4 + 1], elems[i * 4 + 2], elems[i * 4 + 3]);
-                    
-                m_tetrahedra[i] = tetra;
+                m_tetrahedra.Add(tetra);
             }
 
             m_topologyType = TopologyObjectType.TETRAHEDRON;
@@ -70,7 +69,7 @@ namespace SofaUnity
             {
                 Quad quad = new Quad(elems[i * 4], elems[i * 4 + 1], elems[i * 4 + 2], elems[i * 4 + 3]);
 
-                m_quads[i] = quad;
+                m_quads.Add(quad);
             }
 
             m_topologyType = TopologyObjectType.QUAD;
@@ -87,7 +86,7 @@ namespace SofaUnity
             {
                 Triangle tri = new Triangle(elems[i * 3], elems[i * 3 + 1], elems[i * 3 + 2]);
 
-                m_triangles[i] = tri;
+                m_triangles.Add(tri);
             }
 
             m_topologyType = TopologyObjectType.TRIANGLE;
@@ -104,7 +103,7 @@ namespace SofaUnity
             {
                 Edge edge = new Edge(elems[i * 2], elems[i * 2 + 1]);
 
-                m_edges[i] = edge;
+                m_edges.Add(edge);
             }
 
             m_topologyType = TopologyObjectType.EDGE;
