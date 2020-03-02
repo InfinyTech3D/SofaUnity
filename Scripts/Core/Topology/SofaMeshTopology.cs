@@ -19,6 +19,19 @@ namespace SofaUnity
         protected List<Tetrahedron> m_tetrahedra = null;
         protected List<Hexahedron> m_hexahedron = null;
 
+        public float[] m_vertexBuffer = null;
+
+
+
+        /// Member: if tetrahedron is detected, will gather the number of element
+        protected int nbTetra = 0;
+        /// Member: if tetrahedron is detected, will store the tetrahedron topology
+        protected int[] m_tetra;
+        /// Member: if tetrahedron is detected, will store the vertex mapping between triangulation and tetrahedron topology
+        protected Dictionary<int, int> mappingVertices;
+
+
+
         public TopologyObjectType TopologyType
         {
             get { return m_topologyType; }
@@ -119,5 +132,87 @@ namespace SofaUnity
         {
             
         }
+
+
+        /// Method to compute the TetrahedronFEM topology and store it as triangle in Unity Mesh, will store the vertex mapping into @see mappingVertices
+        public int[] computeForceField()
+        {
+            //int[] tris = new int[nbTetra * 12];
+            //Vector3[] verts = new Vector3[nbTetra * 4];//m_mesh.vertices;
+            //Vector3[] norms = new Vector3[nbTetra * 4];//m_mesh.normals;
+            //Vector2[] uv = new Vector2[nbTetra * 4];
+            //mappingVertices = new Dictionary<int, int>();
+            //nbVert = m_mesh.vertices.Length;
+
+            //for (int i = 0; i < nbTetra; ++i)
+            //{
+            //    int[] id = new int[4];
+            //    int[] old_id = new int[4];
+
+            //    int idTet = i * 4;
+            //    for (int j = 0; j < 4; ++j)
+            //    {
+            //        id[j] = idTet + j;
+            //        old_id[j] = m_tetra[idTet + j];
+
+            //        verts[id[j]] = m_mesh.vertices[old_id[j]];
+            //        norms[id[j]] = m_mesh.normals[old_id[j]];
+            //        mappingVertices.Add(id[j], old_id[j]);
+
+            //        m_tetra[idTet + j] = id[j];
+            //        uv[idTet + j].x = j / 4;
+            //        uv[idTet + j].y = uv[i * 4 + j].x;
+            //    }
+
+
+            //    tris[i * 12 + 0] = id[0];
+            //    tris[i * 12 + 1] = id[2];
+            //    tris[i * 12 + 2] = id[1];
+
+            //    tris[i * 12 + 3] = id[1];
+            //    tris[i * 12 + 4] = id[2];
+            //    tris[i * 12 + 5] = id[3];
+
+            //    tris[i * 12 + 6] = id[2];
+            //    tris[i * 12 + 7] = id[0];
+            //    tris[i * 12 + 8] = id[3];
+
+            //    tris[i * 12 + 9] = id[0];
+            //    tris[i * 12 + 10] = id[1];
+            //    tris[i * 12 + 11] = id[3];
+            //}
+
+            //m_mesh.vertices = verts;
+            //m_mesh.normals = norms;
+            //m_mesh.uv = uv;
+
+            return null;
+        }
+
+
+        /// Method to update the TetrahedronFEM topology using the vertex mapping.
+        //public void updateTetraMesh()
+        //{
+        //    // first update the vertices dissociated
+        //    m_sofaMeshAPI.updateMeshTetra(m_mesh, mappingVertices);
+
+        //    // Compute the barycenters of each tetra and update the vertices
+        //    Vector3[] verts = m_mesh.vertices;
+        //    for (int i = 0; i < nbTetra; ++i)
+        //    {
+        //        Vector3 bary = new Vector3(0.0f, 0.0f, 0.0f);
+        //        int idI = i * 4;
+        //        // compute tetra barycenter
+        //        for (int j = 0; j < 4; ++j)
+        //            bary += verts[m_tetra[idI + j]];
+        //        bary /= 4;
+
+        //        // reduce the tetra size according to the barycenter
+        //        for (int j = 0; j < 4; ++j)
+        //            verts[m_tetra[idI + j]] = bary + (verts[m_tetra[idI + j]] - bary) * 0.5f;
+        //    }
+
+        //    m_mesh.vertices = verts;
+        //}
     }
 }
