@@ -234,6 +234,35 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
     }
 
 
+    public int GetVertices(float[] vertices)
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            int resV = sofaPhysics3DObject_getVertices(m_simu, m_name, vertices);
+            return resV;
+        }
+        else
+        {
+            Debug.LogError("GetVertices: Native Pointer to Sofa3DObject is null");
+            return -1;
+        }
+    }
+
+    public int GetVelocities(float[] velocities)
+    {
+        if (m_native != IntPtr.Zero)
+        {
+            int resV = sofaPhysics3DObject_getVelocities(m_simu, m_name, velocities);
+            return resV;
+        }
+        else
+        {
+            Debug.LogError("GetVelocities: Native Pointer to Sofa3DObject is null");
+            return -1;
+        }
+    }
+
+
     public virtual void updateVertices(Vector3[] unityVertices)
     {
         if (m_native != IntPtr.Zero)

@@ -8,12 +8,17 @@ namespace SofaUnity
     public class SofaMesh : SofaBaseComponent
     {
         /// Member: Unity Mesh object of this GameObject
-        protected Mesh m_mesh;
+        protected SofaMeshTopology m_topology = null;
+
         /// Pointer to the corresponding SOFA API object
         protected SofaBaseMeshAPI m_sofaMeshAPI = null;
 
-        /// Initial number of vertices
-        int nbVert = 0;
+        protected int m_nbVertices = 0;
+        protected int m_nbEdges = 0;
+        protected int m_nbTriangles = 0;
+        protected int m_nbQuads = 0;
+        protected int m_nbTetrahedra = 0;
+        protected int m_nbHexahedra = 0;
 
         protected override void CreateSofaAPI()
         {
@@ -49,20 +54,39 @@ namespace SofaUnity
             m_componentType = m_impl.GetComponentType();
             this.gameObject.name = "SofaMesh" + "  -  " + m_uniqueNameId;
         }
+        
 
         ///// public method that return the number of vertices, override base method by returning potentially the number of vertices from tetra topology.
-        //public override int nbVertices()
-        //{
-        //    return nbVert;
-        //}
+        public int NbVertices()
+        {
+            return m_nbVertices;
+        }
 
-        ///// public method that return the number of elements, override base method by returning potentially the number of tetrahedra.
-        //public override int nbTriangles()
-        //{
-        //    return nbTetra;
-        //}
+        public int NbEdges()
+        {
+            return m_nbEdges;
+        }
 
+        public int NbTriangles()
+        {
+            return m_nbTriangles;
+        }
 
+        public int NbQuads()
+        {
+            return m_nbQuads;
+        }
+
+        public int NbTetrahedra()
+        {
+            return m_nbTetrahedra;
+        }
+
+        public int NbHexahedra()
+        {
+            return m_nbHexahedra;
+        }
+        
 
         protected void InitBaseMeshAPI()
         {
@@ -80,7 +104,7 @@ namespace SofaUnity
 
                 m_sofaMeshAPI.loadObject();
 
-                initMesh(true);
+                InitTopology();
             }
         }
 
@@ -90,40 +114,68 @@ namespace SofaUnity
         ////////////////////////////////////////////
 
         /// Method called by \sa Start() method to init the current object and impl. @param toUpdate indicate if updateMesh has to be called.
-        protected void initMesh(bool toUpdate)
+        protected void InitTopology()
         {
             if (m_sofaMeshAPI == null)
                 return;
 
+            m_topology = new SofaMeshTopology();
 
+            m_nbVertices = m_sofaMeshAPI.getNbVertices();
+            m_topology.CreateVertexBuffer(m_nbVertices);
 
+            m_sofaMeshAPI.GetVertices(m_topology.m_vertexBuffer);
 
+            // here get topology type
+            // createTopologyBuffer depending of the type set the type to sofaMeshTopology
+            // Filltopology(int`[] fromm_sofaMeshAPI)
+            // compute final mapping
 
-            // Special part for tetra
-            if (nbTetra == 0)
+            // updateMesh normally(float[] velocities frim m_sofaMeshAPI
+            //update mesh from SofaMeshTopology knows how to update Mesh structure using mapping or not)
+
+            bool HasTopo = false;
+            m_nbHexahedra = m_sofaMeshAPI.GetNbHexahedra();
+            if (m_nbHexahedra > 0)
             {
-                nbTetra = m_sofaMeshAPI.GetNbTetrahedra();
-                if (nbTetra > 0)
-                {
-                    SofaLog("Tetra found! Number: " + nbTetra, 1, true);
-                    m_tetra = new int[nbTetra * 4];
-
-                    m_sofaMeshAPI.getTetrahedra(m_tetra);
-                    m_mesh.triangles = this.computeForceField();
-                }
-                else
-                    m_mesh.triangles = m_sofaMeshAPI.createTriangulation();
+                m_topology.CreateHexahedronBuffer(m_nbHexahedra, m_sofaMeshAPI.GetHexahedraArray(m_nbHexahedra));
+                HasTopo = true;
             }
 
-            SofaLog("SofaVisualModel::initMesh ok: " + m_mesh.vertices.Length);
-            //base.initMesh(false);
-
-            if (toUpdate)
+            if (!HasTopo)
             {
-                if (nbTetra > 0)
-                    updateTetraMesh();
-                else
-                    m_sofaMeshAPI.updateMesh(m_mesh);
+                m_nbTetrahedra = m_sofaMeshAPI.GetNbTetrahedra();
+                if (m_nbTetrahedra > 0)
+                {
+                    m_topology.CreateTetrahedronBuffer(m_nbTetrahedra, m_sofaMeshAPI.GetTetrahedraArray(m_nbTetrahedra));
+                    HasTopo = true;
+                }
+            }
+
+            if (!HasTopo)
+            {
+                m_nbQuads = m_sofaMeshAPI.GetNbTriangles();
+                m_nbTriangles = m_sofaMeshAPI.GetNbQuads();
+                if (m_nbQuads > 0)
+                {
+                    m_topology.CreateQuadBuffer(m_nbQuads, m_sofaMeshAPI.GetQuadsArray(m_nbQuads));
+                    HasTopo = true;
+                }
+                if (m_nbTriangles > 0)
+                {
+                    m_topology.CreateTriangleBuffer(m_nbTriangles, m_sofaMeshAPI.GetTrianglesArray(m_nbTriangles));
+                    HasTopo = true;
+                }
+            }
+
+            if (!HasTopo)
+            {
+                m_nbEdges = m_sofaMeshAPI.GetNbEdges();
+                if (m_nbEdges > 0)
+                {
+                    m_topology.CreateEdgeBuffer(m_nbEdges, m_sofaMeshAPI.GetEdgesArray(m_nbEdges));
+                    HasTopo = true;
+                }
             }
                 
         }

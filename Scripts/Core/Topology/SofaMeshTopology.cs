@@ -123,9 +123,9 @@ namespace SofaUnity
         }
 
 
-        public void CreateVertexBuffer()
+        public void CreateVertexBuffer(int nbVertices)
         {
-            m_vertices = new List<Vector3>();
+            m_vertexBuffer = new float[nbVertices];
         }
 
         public void addVertex(float x, float y, float z)
