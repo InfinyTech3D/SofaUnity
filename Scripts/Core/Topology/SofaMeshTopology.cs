@@ -6,8 +6,7 @@ namespace SofaUnity
 {
     public class SofaMeshTopology
     {
-
-        protected TopologyObjectType m_topologyType;
+        protected TopologyObjectType m_topologyType = TopologyObjectType.NO_TOPOLOGY;
 
         public Mesh m_mesh = null;
 

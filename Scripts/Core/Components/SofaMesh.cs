@@ -54,7 +54,30 @@ namespace SofaUnity
             m_componentType = m_impl.GetComponentType();
             this.gameObject.name = "SofaMesh" + "  -  " + m_uniqueNameId;
         }
-        
+
+
+        public bool HasTopology()
+        {
+            if (m_topology != null)
+                return true;
+            else
+                return false;
+        }
+
+        public SofaMeshTopology SofaMeshTopology
+        {
+            get { return m_topology; }
+        }
+
+
+        public TopologyObjectType TopologyType()
+        {
+            if (m_topology != null)
+                return m_topology.TopologyType;
+            else
+                return TopologyObjectType.NO_TOPOLOGY;
+        }
+
 
         ///// public method that return the number of vertices, override base method by returning potentially the number of vertices from tetra topology.
         public int NbVertices()

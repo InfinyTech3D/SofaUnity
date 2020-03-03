@@ -12,7 +12,8 @@ namespace SofaUnity
         TRIANGLE,
         QUAD,
         TETRAHEDRON,
-        HEXAHEDRON
+        HEXAHEDRON,
+        NO_TOPOLOGY
     };
 
     //TODO: find how to use template in C# .... :(
