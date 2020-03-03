@@ -109,6 +109,7 @@ namespace SofaUnity
         {
             return m_nbHexahedra;
         }
+
         
 
         protected void InitBaseMeshAPI()
@@ -200,6 +201,11 @@ namespace SofaUnity
                     HasTopo = true;
                 }
             }
+
+            if (HasTopo)
+            {
+                m_topology.ComputeMesh();
+            }
                 
         }
 
@@ -207,37 +213,40 @@ namespace SofaUnity
         /// Method called by @sa Update() method.
         protected override void UpdateImpl()
         {
-            SofaLog("SofaVisualMesh::updateImpl called.");
+            Debug.Log("SofaMesh UpdateImpl");
+            // TODO: for the moment the recompute of tetra is too expensive. Only update the number of vertices and tetra
+            // Need to find another solution.
+            //if (m_impl.hasTopologyChanged())
+            //{
+            //    m_impl.setTopologyChange(false);
 
-            MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();
+            //    if (nbTetra > 0)
+            //        updateTetraMesh();
+            //    else
+            //        m_impl.updateMesh(m_mesh);
+            //}
 
-            if (m_impl != null && (m_forceUpdate || mr.enabled))
-            {
-                // TODO: for the moment the recompute of tetra is too expensive. Only update the number of vertices and tetra
-                // Need to find another solution.
-                //if (m_impl.hasTopologyChanged())
-                //{
-                //    m_impl.setTopologyChange(false);
+            if (m_sofaMeshAPI != null && m_forceUpdate)
+            {  
+                if (this.TopologyType() == TopologyObjectType.TRIANGLE)
+                {
+                    m_sofaMeshAPI.updateMeshVelocity(m_topology.m_mesh, m_sofaContext.TimeStep);
+                }
+                else if (this.TopologyType() == TopologyObjectType.EDGE)
+                {
 
-                //    if (nbTetra > 0)
-                //        updateTetraMesh();
-                //    else
-                //        m_impl.updateMesh(m_mesh);
-                //}
-
-                //if (nbTetra > 0)
-                //    updateTetraMesh();
-                //else if (mr.enabled == true) // which is true
-                //    m_sofaMeshAPI.updateMeshVelocity(m_mesh, m_sofaContext.TimeStep);
-                //else // pass from false to true.
-                //{
-                //    m_sofaMeshAPI.updateMesh(m_mesh);
-                //}
+                }
+                else if (this.TopologyType() == TopologyObjectType.TETRAHEDRON)
+                {
+                    m_sofaMeshAPI.updateMeshTetra(m_topology.m_mesh, m_topology.mappingVertices);
+                    //else // pass from false to true.
+                    //{
+                    //    m_sofaMeshAPI.updateMesh(m_mesh);
+                    //}
+                }
             }
         }
 
-
-       
     }
 
 } // namespace SofaUnity
