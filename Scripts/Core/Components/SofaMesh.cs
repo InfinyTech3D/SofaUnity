@@ -192,7 +192,7 @@ namespace SofaUnity
 
         public bool m_forceUpdate = false;
         /// Method called by @sa Update() method.
-        protected override void UpdateImpl()
+        protected override void Update_impl()
         {
             Debug.Log("SofaMesh UpdateImpl");
             // TODO: for the moment the recompute of tetra is too expensive. Only update the number of vertices and tetra

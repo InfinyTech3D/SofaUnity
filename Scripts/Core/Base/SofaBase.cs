@@ -118,25 +118,25 @@ namespace SofaUnity
         }
                 
         // call by a thrid party, should do the same as awake but here we directly give the pointer to sofaContext
-        public void Init(SofaContext sofacontext, string name)
+        public void Create(SofaContext sofacontext, string name)
         {
             SofaLog("####### SofaBase::Init: " + UniqueNameId);
             UniqueNameId = name;
             SetSofaContext(sofacontext);
-            InitImpl();
+            Create_impl();
         }
 
         public void Reconnect(SofaContext sofacontext)
         {
             SofaLog("####### SofaBase::Reconnect: " + UniqueNameId);
             SetSofaContext(sofacontext);
-            ReconnectImpl();
+            Reconnect_impl();
         }        
 
         void Start()
         {
             SofaLog("####### SofaBase::Start: " + UniqueNameId);
-            
+            Init_impl();
         }
 
         private bool firstUpdate = true;
@@ -158,7 +158,7 @@ namespace SofaUnity
             // Call internal method that can be overwritten. Only if dirty
             if (m_isDirty)
             {
-                UpdateImpl();
+                Update_impl();
                 m_isDirty = false;
             }
         }
@@ -173,19 +173,23 @@ namespace SofaUnity
 
         }
 
-        protected virtual void InitImpl()
+        protected virtual void Create_impl()
+        {
+
+        }        
+
+        protected virtual void Reconnect_impl()
         {
 
         }
 
-        protected virtual void ReconnectImpl()
+        protected virtual void Init_impl()
         {
 
         }
-        
 
         /// Method called by @sa Update() method. To be implemented by child class.
-        protected virtual void UpdateImpl()
+        protected virtual void Update_impl()
         {
 
         }

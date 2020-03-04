@@ -36,7 +36,7 @@ namespace SofaUnity
         /// ---> Start()
 
 
-        protected override void InitImpl()  // if launch by awake should only retrive pointer to sofaContext + name to reconnect to sofaDAGNodeAPI
+        protected override void Create_impl()  // if launch by awake should only retrive pointer to sofaContext + name to reconnect to sofaDAGNodeAPI
         {
             if (m_impl == null)
                 CreateSofaAPI();
@@ -85,7 +85,7 @@ namespace SofaUnity
         }
 
 
-        protected override void ReconnectImpl()
+        protected override void Reconnect_impl()
         {
             if (m_impl != null)
             {

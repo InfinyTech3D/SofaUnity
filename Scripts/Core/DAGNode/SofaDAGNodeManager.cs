@@ -133,7 +133,7 @@ namespace SofaUnity
                     SofaDAGNode dagNode = nodeGO.AddComponent<SofaDAGNode>();
                     //dagNode.UniqueNameId = NodeName;
                     //dagNode.SetSofaContext(m_sofaContext);
-                    dagNode.Init(m_sofaContext, NodeName);
+                    dagNode.Create(m_sofaContext, NodeName);
                     // need init?
 
                     m_dagNodes.Add(dagNode);

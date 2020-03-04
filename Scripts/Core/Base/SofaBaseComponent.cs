@@ -62,7 +62,7 @@ namespace SofaUnity
         /////          Component API           /////
         ////////////////////////////////////////////
 
-        protected override void InitImpl()
+        protected override void Create_impl()
         {
             if (m_impl == null)
             {
@@ -133,7 +133,7 @@ namespace SofaUnity
         }
 
 
-        protected override void ReconnectImpl()
+        protected override void Reconnect_impl()
         {
             // 1- reconnect with SofaBaseComponentAPI
             CreateSofaAPI();

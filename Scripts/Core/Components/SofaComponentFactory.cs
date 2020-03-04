@@ -57,7 +57,7 @@ namespace SofaUnity
 
             // set generic parameters
             sofaCompo.setDAGNode(sofaNodeOwner);
-            sofaCompo.Init(sofaNodeOwner.m_sofaContext, nameId);
+            sofaCompo.Create(sofaNodeOwner.m_sofaContext, nameId);
             sofaCompo.m_baseComponentType = sofaCompo.BaseTypeFromString(componentType);
             compoGO.transform.parent = parent.gameObject.transform;
 
