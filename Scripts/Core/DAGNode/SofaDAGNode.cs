@@ -59,7 +59,7 @@ namespace SofaUnity
             if (componentsS.Length == 0)
                 return;
 
-            SofaLog("####### SofaDAGNode: " + UniqueNameId + " -> " + componentsS);
+            SofaLog("####### SofaDAGNode::CreateSofaAPI " + UniqueNameId + " -> " + componentsS);
             m_sofaComponents = new List<SofaBaseComponent>();
             List<string> compoNames = ConvertStringToList(componentsS);
             foreach (string compoName in compoNames)
@@ -99,37 +99,27 @@ namespace SofaUnity
             if (componentsS.Length == 0)
                 return;
 
+            SofaLog("####### SofaDAGNode::Reconnect_impl " + UniqueNameId + " -> " + componentsS);
             List<string> compoNames = ConvertStringToList(componentsS);
             m_sofaComponents = new List<SofaBaseComponent>();
+
             foreach (string compoName in compoNames)
             {
                 bool found = false;
-                GameObject componentGO = null;
-                string compoGOName = "SofaComponent - " + compoName;
                 foreach (Transform child in this.gameObject.transform)
                 {
-                    if (child.name == compoGOName)
+                    SofaBaseComponent component = child.GetComponent<SofaBaseComponent>();
+                    if (component != null && component.UniqueNameId == compoName)
                     {
-                        componentGO = child.gameObject;
+                        component.Reconnect(this.m_sofaContext);
+                        m_sofaComponents.Add(component);
                         found = true;
                         break;
                     }
                 }
 
                 if (!found)
-                {
-                    componentGO = GameObject.Find(compoGOName);
-                }
-
-                if (found)
-                {
-                    SofaBaseComponent component = componentGO.GetComponent<SofaBaseComponent>();
-                    if (component != null)
-                    {
-                        component.Reconnect(this.m_sofaContext);
-                        m_sofaComponents.Add(component);
-                    }
-                }
+                    Debug.LogError("Component: " + compoName + " not found under DAGNode: " + UniqueNameId);
             }
         }
 
