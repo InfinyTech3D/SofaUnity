@@ -64,7 +64,7 @@ namespace SofaUnity
         }
 
         /// Parameter to activate logging of this Sofa GameObject
-        public bool m_log = false;
+        public bool m_log = true;
 
 
         /// Parameter storing the fact that the object is fully init
@@ -114,12 +114,13 @@ namespace SofaUnity
         //// Start is called before the first frame update
         void Awake()
         {
-
+            SofaLog("####### SofaBase::Awake: " + UniqueNameId);
         }
                 
         // call by a thrid party, should do the same as awake but here we directly give the pointer to sofaContext
         public void Init(SofaContext sofacontext, string name)
         {
+            SofaLog("####### SofaBase::Init: " + UniqueNameId);
             UniqueNameId = name;
             SetSofaContext(sofacontext);
             InitImpl();
@@ -127,6 +128,7 @@ namespace SofaUnity
 
         public void Reconnect(SofaContext sofacontext)
         {
+            SofaLog("####### SofaBase::Reconnect: " + UniqueNameId);
             SetSofaContext(sofacontext);
             ReconnectImpl();
         }        

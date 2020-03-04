@@ -22,7 +22,7 @@ namespace SofaUnity
 
         protected override void CreateSofaAPI_Impl()
         {
-            SofaLog("SofaVisualModel::CreateSofaAPI_Impl: " + UniqueNameId + " | m_sofaContext: " + m_sofaContext + " | m_sofaContext.GetSimuContext(): " + m_sofaContext.GetSimuContext());
+            SofaLog("SofaMesh::CreateSofaAPI_Impl: " + UniqueNameId + " | m_sofaContext: " + m_sofaContext + " | m_sofaContext.GetSimuContext(): " + m_sofaContext.GetSimuContext());
             m_impl = new SofaVisualModelAPI(m_sofaContext.GetSimuContext(), UniqueNameId);
 
             InitBaseMeshAPI();
@@ -105,7 +105,7 @@ namespace SofaUnity
 
                 // Create the API object for SofaMesh
                 m_sofaMeshAPI = new SofaBaseMeshAPI(m_sofaContext.GetSimuContext(), UniqueNameId, false);
-                SofaLog("SofaVisualModel::InitBaseMeshAPI object created");
+                SofaLog("SofaMesh::InitBaseMeshAPI object created");
 
                 m_sofaMeshAPI.loadObject();
 
