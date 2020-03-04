@@ -111,10 +111,10 @@ namespace SofaUnity
         }
 
 
-        public void loadGraph()
+        public void LoadNodeGraph()
         {
             int nbrNode = m_sofaContextAPI.getNbrDAGNode();
-            Debug.Log("## SofaDAGNodeManager loadGraph: nbr DAG: " + nbrNode);
+            //Debug.Log("## SofaDAGNodeManager loadGraph: nbr DAG: " + nbrNode);
 
             if (nbrNode <= 0)
                 return;
@@ -144,8 +144,7 @@ namespace SofaUnity
                     Debug.LogError("SofaDAGNodeManager Error loading node: " + i + "return error: " + NodeName);
                 }
             }
-            value += nbrNode;
-            Debug.Log(Application.isPlaying + " value: " + value);
+            value += nbrNode;            
 
             // reorder nodes
             foreach (SofaDAGNode snode in m_dagNodes)

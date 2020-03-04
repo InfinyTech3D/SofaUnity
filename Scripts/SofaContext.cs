@@ -479,7 +479,7 @@ namespace SofaUnity
             m_gravity = m_impl.getGravity();
 
             // recreate node hiearchy in unity
-            m_nodeGraphMgr.loadGraph();
+            m_nodeGraphMgr.LoadNodeGraph();
 
             int nbrObj = m_impl.getNumberObjects();
             Debug.Log("######### nbr Objects: " + nbrObj);
