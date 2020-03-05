@@ -39,7 +39,7 @@ namespace SofaUnity
     /// Base class of SOFA Unity GameObject
     /// This class control the commun members and methods to all GameObject of SOFA-Unity
     /// </summary>
-    //[ExecuteInEditMode]
+    [ExecuteInEditMode]
     public class SofaBase : MonoBehaviour
     {
         ////////////////////////////////////////////

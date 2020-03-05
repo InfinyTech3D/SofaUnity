@@ -186,6 +186,8 @@ namespace SofaUnity
             if (HasTopo)
             {
                 m_topology.ComputeMesh();
+                m_sofaMeshAPI.updateMeshTetra(m_topology.m_mesh, m_topology.mappingVertices);
+                m_topology.updateTetraMesh();
             }
                 
         }
@@ -231,7 +233,6 @@ namespace SofaUnity
                 }
                 else if (this.TopologyType() == TopologyObjectType.TETRAHEDRON)
                 {
-                    Debug.Log("updateMeshTetra: " + m_listenerCounter);
                     m_sofaMeshAPI.updateMeshTetra(m_topology.m_mesh, m_topology.mappingVertices);
                     m_topology.updateTetraMesh();
                     //else // pass from false to true.
