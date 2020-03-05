@@ -85,7 +85,10 @@ namespace SofaUnity
                         m_collisionElement = null;
                     }
                     else
+                    {
                         m_collisionVisuInit = true;
+                        return;
+                    }
                 }
 
                 int nbrSpheres = m_sofaMesh.NbVertices();
