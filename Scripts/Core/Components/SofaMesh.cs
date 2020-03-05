@@ -240,6 +240,10 @@ namespace SofaUnity
                     //    m_sofaMeshAPI.updateMesh(m_mesh);
                     //}
                 }
+                else if (this.TopologyType() == TopologyObjectType.NO_TOPOLOGY)
+                {
+                    m_sofaMeshAPI.GetVertices(m_topology.m_vertexBuffer);
+                }
             }
         }
 
