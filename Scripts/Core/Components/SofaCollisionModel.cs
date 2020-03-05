@@ -6,15 +6,15 @@ namespace SofaUnity
 {
     public class SofaCollisionModel : SofaBaseComponent
     {
-        public bool m_drawCollision = true;
-
+        [SerializeField]
+        protected bool m_drawCollision = false;
         protected bool m_collisionVisuInit = false;
 
         private SofaMesh m_sofaMesh = null;
         private bool m_oldStatus = false;
 
         [SerializeField]
-        private List<GameObject> m_collisionElement;
+        private List<GameObject> m_collisionElement = null;
 
         protected override void Init_impl()
         {
@@ -77,17 +77,16 @@ namespace SofaUnity
         {
             if (this.m_componentType == "SphereCollisionModel")
             {
-                Debug.Log("CreateCollisionElements");
-
                 if (m_collisionElement != null)
                 {
                     if (m_collisionElement.Count != m_sofaMesh.NbVertices())
-                        Debug.LogError("SphereCollisionModel, not the same number of spheres as the mesh vertices count.");
+                    {
+                        //Debug.LogError("SphereCollisionModel, not the same number of spheres as the mesh vertices count: " + m_collisionElement.Count + " vs " + m_sofaMesh.NbVertices());
+                        m_collisionElement = null;
+                    }
                     else
                         m_collisionVisuInit = true;
-                    return;
                 }
-                    Debug.Log("m_collisionElement exists");
 
                 int nbrSpheres = m_sofaMesh.NbVertices();
                 m_collisionElement = new List<GameObject>();
@@ -121,8 +120,28 @@ namespace SofaUnity
             }
         }
 
+        public bool DrawCollision
+        {
+            get { return m_drawCollision; }
+            set
+            {
+                if (m_drawCollision != value)
+                {
+                    m_drawCollision = value;
+                    if (m_drawCollision)
+                        ShowCollisionElements();
+                    else
+                        HideCollisionElements();
+                }
+            }
+        }
+            
+
         protected void ShowCollisionElements()
         {
+            if (m_collisionElement == null || m_collisionElement.Count == 0)
+                CreateCollisionElements();
+
             foreach(GameObject elem in m_collisionElement)
             {
                 elem.SetActive(true);
