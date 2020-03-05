@@ -190,11 +190,23 @@ namespace SofaUnity
                 
         }
 
+        protected int m_listenerCounter = 0;
+        public void AddListener()
+        {
+            m_listenerCounter++;
+        }
+
+        public void RemoveListener()
+        {
+            m_listenerCounter--;
+        }
+
         public bool m_forceUpdate = false;
         /// Method called by @sa Update() method.
         protected override void Update_impl()
         {
-            Debug.Log("SofaMesh UpdateImpl");
+            //Debug.Log("SofaMesh UpdateImpl");
+
             // TODO: for the moment the recompute of tetra is too expensive. Only update the number of vertices and tetra
             // Need to find another solution.
             //if (m_impl.hasTopologyChanged())
@@ -207,7 +219,7 @@ namespace SofaUnity
             //        m_impl.updateMesh(m_mesh);
             //}
 
-            if (m_sofaMeshAPI != null && m_forceUpdate)
+            if (m_sofaMeshAPI != null && m_listenerCounter > 0)
             {  
                 if (this.TopologyType() == TopologyObjectType.TRIANGLE)
                 {
@@ -219,7 +231,9 @@ namespace SofaUnity
                 }
                 else if (this.TopologyType() == TopologyObjectType.TETRAHEDRON)
                 {
+                    Debug.Log("updateMeshTetra: " + m_listenerCounter);
                     m_sofaMeshAPI.updateMeshTetra(m_topology.m_mesh, m_topology.mappingVertices);
+                    m_topology.updateTetraMesh();
                     //else // pass from false to true.
                     //{
                     //    m_sofaMeshAPI.updateMesh(m_mesh);

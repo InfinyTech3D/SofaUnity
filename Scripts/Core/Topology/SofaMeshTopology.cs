@@ -64,9 +64,15 @@ namespace SofaUnity
                 Capacity = nbElem
             };
 
+            m_tetra = new int[nbElem * 4];
             for (int i = 0; i < nbElem; ++i)
             {
                 Tetrahedron tetra = new Tetrahedron(elems[i * 4], elems[i * 4 + 1], elems[i * 4 + 2], elems[i * 4 + 3]);
+                m_tetra[i * 4] = elems[i * 4];
+                m_tetra[i * 4 + 1] = elems[i * 4 + 1];
+                m_tetra[i * 4 + 2] = elems[i * 4 + 2];
+                m_tetra[i * 4 + 3] = elems[i * 4 + 3];
+                
                 m_tetrahedra.Add(tetra);
             }
 
@@ -188,7 +194,6 @@ namespace SofaUnity
         {
             nbTetra = m_tetrahedra.Count;
             int[] tris = new int[nbTetra * 12];
-            m_tetra = new int[nbTetra * 4];
 
             Vector3[] verts = new Vector3[nbTetra * 4];
             Vector3[] norms = new Vector3[nbTetra * 4];
@@ -237,6 +242,7 @@ namespace SofaUnity
             m_mesh.vertices = verts;
             m_mesh.normals = norms;
             m_mesh.uv = uv;
+            m_mesh.triangles = tris;
         }
 
 
@@ -268,28 +274,25 @@ namespace SofaUnity
 
 
         /// Method to update the TetrahedronFEM topology using the vertex mapping.
-        //public void updateTetraMesh()
-        //{
-        //    // first update the vertices dissociated
-        //    m_sofaMeshAPI.updateMeshTetra(m_mesh, mappingVertices);
+        public void updateTetraMesh()
+        {
+            // Compute the barycenters of each tetra and update the vertices
+            Vector3[] verts = m_mesh.vertices;
+            for (int i = 0; i < nbTetra; ++i)
+            {
+                Vector3 bary = new Vector3(0.0f, 0.0f, 0.0f);
+                int idI = i * 4;
+                // compute tetra barycenter
+                for (int j = 0; j < 4; ++j)
+                    bary += verts[m_tetra[idI + j]];
+                bary /= 4;
 
-        //    // Compute the barycenters of each tetra and update the vertices
-        //    Vector3[] verts = m_mesh.vertices;
-        //    for (int i = 0; i < nbTetra; ++i)
-        //    {
-        //        Vector3 bary = new Vector3(0.0f, 0.0f, 0.0f);
-        //        int idI = i * 4;
-        //        // compute tetra barycenter
-        //        for (int j = 0; j < 4; ++j)
-        //            bary += verts[m_tetra[idI + j]];
-        //        bary /= 4;
+                // reduce the tetra size according to the barycenter
+                for (int j = 0; j < 4; ++j)
+                    verts[m_tetra[idI + j]] = bary + (verts[m_tetra[idI + j]] - bary) * 0.5f;
+            }
 
-        //        // reduce the tetra size according to the barycenter
-        //        for (int j = 0; j < 4; ++j)
-        //            verts[m_tetra[idI + j]] = bary + (verts[m_tetra[idI + j]] - bary) * 0.5f;
-        //    }
-
-        //    m_mesh.vertices = verts;
-        //}
+            m_mesh.vertices = verts;
+        }
     }
 }
