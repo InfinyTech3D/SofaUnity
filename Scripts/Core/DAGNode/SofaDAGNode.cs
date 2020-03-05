@@ -15,7 +15,8 @@ namespace SofaUnity
 
         /// List of SofaBaseComponent in this DAGNode
         public List<SofaBaseComponent> m_sofaComponents = null;
-        
+
+        protected SofaMesh m_nodeMesh = null;
 
 
         /// init() is called by nodeMgr with sofaContext and names
@@ -72,7 +73,13 @@ namespace SofaUnity
                 {
                     SofaBaseComponent compo = SofaComponentFactory.CreateSofaComponent(compoName, baseType, this, this.gameObject);
                     if (compo != null)
+                    {
+                        if (baseType == "SofaMesh")
+                        {
+                            m_nodeMesh = compo as SofaMesh;
+                        }
                         m_sofaComponents.Add(compo);
+                    }
                 }
             }
 
@@ -129,6 +136,33 @@ namespace SofaUnity
             {
                 scompo.SetDirty(value);
             }
+        }
+
+
+
+        public SofaMesh GetSofaMesh()
+        {
+            return m_nodeMesh;
+        }
+        
+        public SofaMesh FindSofaMesh()
+        {
+            if (m_nodeMesh != null)
+                return m_nodeMesh;
+
+            GameObject DAGNode = this.gameObject;
+
+            foreach (Transform child in DAGNode.transform)
+            {
+                SofaMesh sofaMesh = child.GetComponent<SofaMesh>();
+                if (sofaMesh != null)
+                {
+                    m_nodeMesh = sofaMesh;
+                    break;
+                }
+            }
+
+            return m_nodeMesh;
         }
     }
 

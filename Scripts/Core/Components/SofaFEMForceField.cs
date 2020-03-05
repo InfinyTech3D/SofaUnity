@@ -34,40 +34,21 @@ namespace SofaUnity
                 m_renderer.sharedMaterial = new Material(Shader.Find("Diffuse"));
             }
 
-            //MeshCollider collid = gameObject.GetComponent<MeshCollider>();
-            //if (collid == null)
-            //    gameObject.AddComponent<MeshCollider>();
-
-            // FindSofaMesh();
             m_meshInit = false;
         }
 
         bool m_meshInit = false;
-
-        protected bool FindSofaMesh()
-        {
-            GameObject DAGNode = m_ownerNode.gameObject;
-
-            bool found = false;
-            foreach (Transform child in DAGNode.transform)
-            {                
-                SofaMesh sofaMesh = child.GetComponent<SofaMesh>();
-                if (sofaMesh != null)
-                {
-                    m_sofaMesh = sofaMesh;
-                    found = true;
-                }
-            }
-
-            return found;
-        }
 
         Mesh meshCopy = null;
         protected override void Init_impl()
         {
             if (m_meshInit == false)
             {
-                if (FindSofaMesh())
+                m_sofaMesh = m_ownerNode.GetSofaMesh();
+                if (m_sofaMesh == null)
+                    m_sofaMesh = m_ownerNode.FindSofaMesh();
+
+                if (m_sofaMesh)
                 {
                     m_meshInit = true;
 
