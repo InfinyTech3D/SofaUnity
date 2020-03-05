@@ -64,7 +64,7 @@ public class SofaBaseComponentEditor : Editor
             }
             else if (dataType == "double")
             {
-                SofaDoubleData data = dataArchiver.GetDoubleIntData(dataName);
+                SofaDoubleData data = dataArchiver.GetSofaDoubleData(dataName);
                 data.Value = EditorGUILayout.FloatField(data.DataName, data.Value);
             }
             else if (dataType == "Vec2f" || dataType == "Vec2d")

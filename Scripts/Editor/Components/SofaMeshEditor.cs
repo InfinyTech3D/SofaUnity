@@ -38,6 +38,10 @@ public class SofaMeshEditor : SofaBaseComponentEditor
         {
             EditorGUILayout.IntField("Nb Edges", compo.NbEdges());
         }
+        else
+        {
+            EditorGUILayout.IntField("Nb Points", compo.NbVertices());
+        }
         EditorGUI.EndDisabledGroup();
     }   
 }

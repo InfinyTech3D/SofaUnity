@@ -321,7 +321,7 @@ public class SofaDataArchiver //: MonoBehaviour, ISerializationCallbackReceiver
         return null;
     }
 
-    public SofaDoubleData GetDoubleIntData(string dataName)
+    public SofaDoubleData GetSofaDoubleData(string dataName)
     {
         foreach (SofaDoubleData data in m_doubleData)
         {
