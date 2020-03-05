@@ -6,6 +6,10 @@ namespace SofaUnity
 {
     public class SofaFEMForceField : SofaBaseComponent
     {
+        private SofaMesh m_sofaMesh = null;
+        private MeshRenderer m_renderer;
+        private bool m_oldStatus = false;
+
         protected override void CreateSofaAPI_Impl()
         {            
             SofaLog("SofaFEMForceField::CreateSofaAPI_Impl: " + UniqueNameId + " | m_sofaContext: " + m_sofaContext + " | m_sofaContext.GetSimuContext(): " + m_sofaContext.GetSimuContext());
@@ -17,16 +21,17 @@ namespace SofaUnity
                 gameObject.AddComponent<MeshFilter>();
 
             //to see it, we have to add a renderer
-            MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();
-            if (mr == null)
+            m_renderer = gameObject.GetComponent<MeshRenderer>();
+            if (m_renderer == null)
             {
-                mr = gameObject.AddComponent<MeshRenderer>();
-                mr.enabled = false;
+                m_renderer = gameObject.AddComponent<MeshRenderer>();
+                m_renderer.enabled = false;
+                m_oldStatus = false;
             }
 
-            if (mr.sharedMaterial == null)
+            if (m_renderer.sharedMaterial == null)
             {
-                mr.sharedMaterial = new Material(Shader.Find("Diffuse"));
+                m_renderer.sharedMaterial = new Material(Shader.Find("Diffuse"));
             }
 
             //MeshCollider collid = gameObject.GetComponent<MeshCollider>();
@@ -44,26 +49,75 @@ namespace SofaUnity
             Debug.Log("SofaFEMForceField FindSofaMesh in: " + m_ownerNode.UniqueNameId);
             GameObject DAGNode = m_ownerNode.gameObject;
 
+            bool found = false;
             foreach (Transform child in DAGNode.transform)
-            {
-                Debug.Log("Sibling name: " + child.name);
+            {                
+                SofaMesh sofaMesh = child.GetComponent<SofaMesh>();
+                if (sofaMesh != null)
+                {
+                    Debug.Log("Sofa Mesh: " + child.name);
+                    m_sofaMesh = sofaMesh;
+                    found = true;
+                }
             }
 
-            return false;
+            return found;
         }
 
+        protected override void Init_impl()
+        {
+            if (m_meshInit == false)
+            {
+                if (FindSofaMesh())
+                {
+                    m_meshInit = true;
+
+                    //Only do this in the editor
+                    MeshFilter mf = GetComponent<MeshFilter>();
+                    Debug.Log("Sofa Mesh: " + mf.name);
+                    mf.mesh = m_sofaMesh.SofaMeshTopology.m_mesh;
+                    Debug.Log("SofaMeshTopology.m_mesh: " + m_sofaMesh.SofaMeshTopology.m_mesh.vertices.Length);
+                    Debug.Log("mf.mesh vertices: " + mf.mesh.vertices.Length);
+                    Debug.Log("mf.mesh triangles: " + mf.mesh.triangles.Length);
+
+                    //for (int i=0; i< mf.mesh.vertices.Length; ++i)
+                    //{
+                    //    Debug.Log("-> " + mf.mesh.vertices[i]);
+                    //}
+                }
+            }
+        }
 
         protected override void FillPossibleTypes()
         {
             //SofaLog("FillPossibleTypes SofaFEMForceField");
         }
 
-        /// Method called by @sa Update() method.
+        
+        /// Method called by @sa Update() method.        
         protected override void Update_impl()
         {
-            if (m_meshInit == false)
+            if (m_renderer.enabled != m_oldStatus)
             {
-                FindSofaMesh();
+                m_oldStatus = m_renderer.enabled;
+                if (m_oldStatus)
+                {
+                    m_sofaMesh.AddListener();
+                }
+                else
+                {
+                    m_sofaMesh.RemoveListener();
+                }
+            }
+
+
+            if (m_renderer.enabled)
+            {
+                MeshFilter mf = GetComponent<MeshFilter>();
+                Debug.Log("mf.mesh vertices: " + mf.mesh.vertices.Length);
+                Debug.Log("mf.mesh triangles: " + mf.mesh.triangles.Length);
+                Debug.Log("tri: " + mf.mesh.triangles[0] + " " + mf.mesh.triangles[1] + " " + mf.mesh.triangles[2]);
+                Debug.Log("tri: " + mf.mesh.vertices[0] + " " + mf.mesh.vertices[2] + " " + mf.mesh.vertices[1]);
             }
         }
         

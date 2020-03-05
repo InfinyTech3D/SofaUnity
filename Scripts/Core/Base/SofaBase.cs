@@ -39,6 +39,7 @@ namespace SofaUnity
     /// Base class of SOFA Unity GameObject
     /// This class control the commun members and methods to all GameObject of SOFA-Unity
     /// </summary>
+    //[ExecuteInEditMode]
     public class SofaBase : MonoBehaviour
     {
         ////////////////////////////////////////////
@@ -64,7 +65,7 @@ namespace SofaUnity
         }
 
         /// Parameter to activate logging of this Sofa GameObject
-        public bool m_log = true;
+        public bool m_log = false;
 
 
         /// Parameter storing the fact that the object is fully init
@@ -114,13 +115,13 @@ namespace SofaUnity
         //// Start is called before the first frame update
         void Awake()
         {
-            SofaLog("####### SofaBase::Awake: " + UniqueNameId);
+            
         }
                 
         // call by a thrid party, should do the same as awake but here we directly give the pointer to sofaContext
         public void Create(SofaContext sofacontext, string name)
         {
-            SofaLog("####### SofaBase::Init: " + UniqueNameId);
+            SofaLog("####### SofaBase::Create: " + UniqueNameId);
             UniqueNameId = name;
             SetSofaContext(sofacontext);
             Create_impl();
@@ -134,8 +135,7 @@ namespace SofaUnity
         }        
 
         void Start()
-        {
-            SofaLog("####### SofaBase::Start: " + UniqueNameId);
+        {            
             Init_impl();
         }
 
@@ -145,7 +145,7 @@ namespace SofaUnity
         {
             if(firstUpdate)
             {
-                SofaLog("####### SofaBase::Update: " + UniqueNameId);
+                SofaLog("####### SofaBase::First Update: " + UniqueNameId);
                 firstUpdate = false;
             }
             if (!Application.isPlaying)
