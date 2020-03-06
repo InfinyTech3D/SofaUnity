@@ -35,7 +35,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
             m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name, res1);
 
             if (res1[0] != 0)
-                Debug.LogError("SofaBaseMesh::loadObject get3DObject method returns: " + SofaDefines.msg_error[res1[0]]);
+                Debug.LogError("SofaBaseMeshAPI::loadObject get3DObject method returns: " + SofaDefines.msg_error[res1[0]] + " for object: " + m_name);
 
             // Check if creation failed otherwise get parent name
             if (m_native == IntPtr.Zero)
@@ -83,6 +83,12 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
         if (m_native != IntPtr.Zero)
         {
             int nbrV = sofaPhysicsAPI_getNbVertices(m_simu, m_name);
+            if (nbrV < 0)
+            {
+                Debug.LogError("SofaBaseMeshAPI::getNbVertices method returns: " + SofaDefines.msg_error[nbrV] + " for object: " + m_name);
+                return 0;
+            }
+
             return nbrV;
         }
         else
@@ -93,7 +99,18 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
     public int GetNumberOfFaces()
     {
         int nbrTris = sofaPhysics3DObject_getNbTriangles(m_simu, m_name);
+        if (nbrTris < 0)
+        {
+            Debug.LogError("SofaBaseMeshAPI::GetNumberOfFaces method returns: " + SofaDefines.msg_error[nbrTris] + " for object: " + m_name);
+            nbrTris = 0;
+        }
+
         int nbrQuads = sofaPhysics3DObject_getNbQuads(m_simu, m_name);
+        if (nbrQuads < 0)
+        {
+            Debug.LogError("SofaBaseMeshAPI::GetNumberOfFaces method returns: " + SofaDefines.msg_error[nbrQuads] + " for object: " + m_name);
+            nbrQuads = 0;
+        }
 
         return nbrTris + nbrQuads;
     }
@@ -105,6 +122,11 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
         if (m_native != IntPtr.Zero)
         {
             int nbrElem = sofaPhysics3DObject_getNbHexahedra(m_simu, m_name);
+            if (nbrElem < 0)
+            {
+                Debug.LogError("SofaBaseMeshAPI::GetNbHexahedra method returns: " + SofaDefines.msg_error[nbrElem] + " for object: " + m_name);
+                nbrElem = 0;
+            }
             return nbrElem;
         }
         else
@@ -118,6 +140,11 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
         if (m_native != IntPtr.Zero)
         {
             int nbrElem = sofaPhysics3DObject_getNbTetrahedra(m_simu, m_name);
+            if (nbrElem < 0)
+            {
+                Debug.LogError("SofaBaseMeshAPI::GetNbTetrahedra method returns: " + SofaDefines.msg_error[nbrElem] + " for object: " + m_name);
+                nbrElem = 0;
+            }
             return nbrElem;
         }
         else
@@ -131,6 +158,11 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
         if (m_native != IntPtr.Zero)
         {
             int nbrElem = sofaPhysics3DObject_getNbQuads(m_simu, m_name);
+            if (nbrElem < 0)
+            {
+                Debug.LogError("SofaBaseMeshAPI::GetNbQuads method returns: " + SofaDefines.msg_error[nbrElem] + " for object: " + m_name);
+                nbrElem = 0;
+            }
             return nbrElem;
         }
         else
@@ -144,6 +176,11 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
         if (m_native != IntPtr.Zero)
         {
             int nbrElem = sofaPhysics3DObject_getNbTriangles(m_simu, m_name);
+            if (nbrElem < 0)
+            {
+                Debug.LogError("SofaBaseMeshAPI::GetNbTriangles method returns: " + SofaDefines.msg_error[nbrElem] + " for object: " + m_name);
+                nbrElem = 0;
+            }
             return nbrElem;
         }
         else
@@ -157,6 +194,11 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
         if (m_native != IntPtr.Zero)
         {
             int nbrElem = sofaPhysics3DObject_getNbEdges(m_simu, m_name);
+            if (nbrElem < 0)
+            {
+                Debug.LogError("SofaBaseMeshAPI::GetNbEdges method returns: " + SofaDefines.msg_error[nbrElem] + " for object: " + m_name);
+                nbrElem = 0;
+            }
             return nbrElem;
         }
         else
