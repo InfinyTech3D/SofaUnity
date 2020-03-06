@@ -159,8 +159,8 @@ namespace SofaUnity
 
             if (!HasTopo)
             {
-                m_nbQuads = m_sofaMeshAPI.GetNbTriangles();
-                m_nbTriangles = m_sofaMeshAPI.GetNbQuads();
+                m_nbQuads = m_sofaMeshAPI.GetNbQuads();
+                m_nbTriangles = m_sofaMeshAPI.GetNbTriangles();
                 if (m_nbQuads > 0)
                 {
                     m_topology.CreateQuadBuffer(m_nbQuads, m_sofaMeshAPI.GetQuadsArray(m_nbQuads));
@@ -186,8 +186,7 @@ namespace SofaUnity
             if (HasTopo)
             {
                 m_topology.ComputeMesh();
-                m_sofaMeshAPI.updateMeshTetra(m_topology.m_mesh, m_topology.mappingVertices);
-                m_topology.updateTetraMesh();
+                UpdateTopology();
             }
                 
         }
@@ -222,28 +221,31 @@ namespace SofaUnity
             //}
 
             if (m_sofaMeshAPI != null && m_listenerCounter > 0)
-            {  
-                if (this.TopologyType() == TopologyObjectType.TRIANGLE)
-                {
-                    m_sofaMeshAPI.updateMeshVelocity(m_topology.m_mesh, m_sofaContext.TimeStep);
-                }
-                else if (this.TopologyType() == TopologyObjectType.EDGE)
-                {
+            {
+                UpdateTopology();
+            }
+        }
 
-                }
-                else if (this.TopologyType() == TopologyObjectType.TETRAHEDRON)
-                {
-                    m_sofaMeshAPI.updateMeshTetra(m_topology.m_mesh, m_topology.mappingVertices);
-                    m_topology.updateTetraMesh();
-                    //else // pass from false to true.
-                    //{
-                    //    m_sofaMeshAPI.updateMesh(m_mesh);
-                    //}
-                }
-                else if (this.TopologyType() == TopologyObjectType.NO_TOPOLOGY)
-                {
-                    m_sofaMeshAPI.GetVertices(m_topology.m_vertexBuffer);
-                }
+
+        protected void UpdateTopology()
+        {
+            if (this.TopologyType() == TopologyObjectType.TRIANGLE)
+            {
+                m_sofaMeshAPI.updateMesh(m_topology.m_mesh);
+                //m_sofaMeshAPI.updateMeshVelocity(m_topology.m_mesh, m_sofaContext.TimeStep);
+            }
+            else if (this.TopologyType() == TopologyObjectType.EDGE)
+            {
+
+            }
+            else if (this.TopologyType() == TopologyObjectType.TETRAHEDRON)
+            {
+                m_sofaMeshAPI.updateMeshTetra(m_topology.m_mesh, m_topology.mappingVertices);
+                m_topology.UpdateTetraMesh();
+            }
+            else if (this.TopologyType() == TopologyObjectType.NO_TOPOLOGY)
+            {
+                m_sofaMeshAPI.GetVertices(m_topology.m_vertexBuffer);
             }
         }
 

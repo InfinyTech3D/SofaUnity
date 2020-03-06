@@ -104,10 +104,10 @@ namespace SofaUnity
 #if UNITY_EDITOR
             //Only do this in the editor
             MeshFilter mf = GetComponent<MeshFilter>();   //a better way of getting the meshfilter using Generics
-            //Mesh meshCopy = Mesh.Instantiate(mf.sharedMesh) as Mesh;  //make a deep copy
-            Mesh meshCopy = new Mesh();
-            m_mesh = mf.mesh = meshCopy;                    //Assign the copy to the meshes
-            
+                                                          //Mesh meshCopy = Mesh.Instantiate(mf.sharedMesh) as Mesh;  //make a deep copy
+                                                          //Mesh meshCopy = new Mesh();
+                                                          // m_mesh = ;// = meshCopy;                    //Assign the copy to the meshes
+            m_mesh = mf.mesh = new Mesh();
 #else
             //do this in play mode
             m_mesh = GetComponent<MeshFilter>().mesh;
@@ -137,6 +137,8 @@ namespace SofaUnity
 
             if (toUpdate)
                 m_sofaMeshAPI.updateMesh(m_mesh);
+
+            
         }
 
 

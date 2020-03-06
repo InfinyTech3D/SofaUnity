@@ -23,13 +23,17 @@ namespace SofaUnity
         public float[] m_vertexBuffer = null;
 
 
+        protected int nbTriangles = 0;
+        protected int[] m_trianglesBuffer;
+
 
         /// Member: if tetrahedron is detected, will gather the number of element
         protected int nbTetra = 0;
         /// Member: if tetrahedron is detected, will store the tetrahedron topology
-        protected int[] m_tetra;
+        protected int[] m_tetraBuffer;
         /// Member: if tetrahedron is detected, will store the vertex mapping between triangulation and tetrahedron topology
         public Dictionary<int, int> mappingVertices;
+
 
 
 
@@ -64,14 +68,14 @@ namespace SofaUnity
                 Capacity = nbElem
             };
 
-            m_tetra = new int[nbElem * 4];
+            m_tetraBuffer = new int[nbElem * 4];
             for (int i = 0; i < nbElem; ++i)
             {
                 Tetrahedron tetra = new Tetrahedron(elems[i * 4], elems[i * 4 + 1], elems[i * 4 + 2], elems[i * 4 + 3]);
-                m_tetra[i * 4] = elems[i * 4];
-                m_tetra[i * 4 + 1] = elems[i * 4 + 1];
-                m_tetra[i * 4 + 2] = elems[i * 4 + 2];
-                m_tetra[i * 4 + 3] = elems[i * 4 + 3];
+                m_tetraBuffer[i * 4] = elems[i * 4];
+                m_tetraBuffer[i * 4 + 1] = elems[i * 4 + 1];
+                m_tetraBuffer[i * 4 + 2] = elems[i * 4 + 2];
+                m_tetraBuffer[i * 4 + 3] = elems[i * 4 + 3];
                 
                 m_tetrahedra.Add(tetra);
             }
@@ -103,9 +107,13 @@ namespace SofaUnity
                 Capacity = nbElem
             };
 
+            m_trianglesBuffer = new int[nbElem * 3];
             for (int i = 0; i < nbElem; ++i)
             {
                 Triangle tri = new Triangle(elems[i * 3], elems[i * 3 + 1], elems[i * 3 + 2]);
+                m_trianglesBuffer[i * 3] = elems[i * 3];
+                m_trianglesBuffer[i * 3 + 1] = elems[i * 3 + 1];
+                m_trianglesBuffer[i * 3 + 2] = elems[i * 3 + 2];
 
                 m_triangles.Add(tri);
             }
@@ -159,7 +167,7 @@ namespace SofaUnity
             }
             m_mesh.vertices = unityVertices;
             m_mesh.normals = new Vector3[m_nbVertices];
-
+            m_mesh.uv = new Vector2[m_nbVertices];
 
             if (m_topologyType == TopologyObjectType.HEXAHEDRON)
             {
@@ -210,13 +218,13 @@ namespace SofaUnity
                 for (int j = 0; j < 4; ++j)
                 {
                     id[j] = idTet + j;
-                    old_id[j] = m_tetra[idTet + j];
+                    old_id[j] = m_tetraBuffer[idTet + j];
 
                     verts[id[j]] = m_mesh.vertices[old_id[j]];
                     norms[id[j]] = m_mesh.normals[old_id[j]];
                     mappingVertices.Add(id[j], old_id[j]);
 
-                    m_tetra[idTet + j] = id[j];
+                    m_tetraBuffer[idTet + j] = id[j];
                     uv[idTet + j].x = j / 4;
                     uv[idTet + j].y = uv[i * 4 + j].x;
                 }
@@ -254,7 +262,7 @@ namespace SofaUnity
 
         protected void ComputeMeshFromTriangle()
         {
-            Debug.LogError("SofaMeshTopology::ComputeMeshFromTriangle() method not yet implemented!");
+            m_mesh.triangles = m_trianglesBuffer;
         }
 
 
@@ -274,7 +282,7 @@ namespace SofaUnity
 
 
         /// Method to update the TetrahedronFEM topology using the vertex mapping.
-        public void updateTetraMesh()
+        public void UpdateTetraMesh()
         {
             // Compute the barycenters of each tetra and update the vertices
             Vector3[] verts = m_mesh.vertices;
@@ -284,12 +292,12 @@ namespace SofaUnity
                 int idI = i * 4;
                 // compute tetra barycenter
                 for (int j = 0; j < 4; ++j)
-                    bary += verts[m_tetra[idI + j]];
+                    bary += verts[m_tetraBuffer[idI + j]];
                 bary /= 4;
 
                 // reduce the tetra size according to the barycenter
                 for (int j = 0; j < 4; ++j)
-                    verts[m_tetra[idI + j]] = bary + (verts[m_tetra[idI + j]] - bary) * 0.5f;
+                    verts[m_tetraBuffer[idI + j]] = bary + (verts[m_tetraBuffer[idI + j]] - bary) * 0.5f;
             }
 
             m_mesh.vertices = verts;
