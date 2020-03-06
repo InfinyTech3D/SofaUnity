@@ -256,7 +256,7 @@ namespace SofaUnity
 
         protected void ComputeMeshFromQuad()
         {
-            Debug.LogError("SofaMeshTopology::ComputeMeshFromQuad() method not yet implemented!");
+            Debug.LogWarning("SofaMeshTopology::ComputeMeshFromQuad() method not yet implemented!");
         }
 
 
@@ -268,7 +268,7 @@ namespace SofaUnity
 
         protected void ComputeMeshFromEdge()
         {
-            Debug.LogError("SofaMeshTopology::ComputeMeshFromEdge() method not yet implemented!");
+            Debug.LogWarning("SofaMeshTopology::ComputeMeshFromEdge() method not yet implemented!");
         }
 
 

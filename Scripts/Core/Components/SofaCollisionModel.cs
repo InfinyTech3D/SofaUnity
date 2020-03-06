@@ -211,7 +211,7 @@ namespace SofaUnity
                 for (int i = 0; i < nbrSpheres; i++)
                 {
                     GameObject sphere = m_collisionElement[i];
-                    sphere.transform.position = new Vector3(vertices[i * 3], vertices[i * 3 + 1], vertices[i * 3 + 2]);
+                    sphere.transform.localPosition = new Vector3(vertices[i * 3], vertices[i * 3 + 1], vertices[i * 3 + 2]);
                 }
             }
             else if (this.m_componentType == "TriangleCollisionModel")
