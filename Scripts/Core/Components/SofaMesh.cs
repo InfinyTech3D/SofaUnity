@@ -236,7 +236,7 @@ namespace SofaUnity
             }
             else if (this.TopologyType() == TopologyObjectType.EDGE)
             {
-
+                m_sofaMeshAPI.GetVertices(m_topology.m_vertexBuffer);
             }
             else if (this.TopologyType() == TopologyObjectType.TETRAHEDRON)
             {
