@@ -1,6 +1,8 @@
 <?xml version="1.0" ?>
 <Node name="root" gravity="0 -1000 0" dt="0.04">
-    <VisualStyle displayFlags="showVisual  " /> <!--showBehaviorModels showCollisionModels-->
+    <VisualStyle displayFlags="showVisual  " /> 
+    <RequiredPlugin pluginName='SofaOpenglVisual'/>
+    
     <LCPConstraintSolver tolerance="1e-3" maxIt="1000" initial_guess="false" build_lcp="false"  printLog="0" mu="0.2"/>
     <FreeMotionAnimationLoop />
     <DefaultPipeline depth="15" verbose="0" draw="0" />
@@ -9,13 +11,14 @@
 
     <DefaultContactManager name="Response" response="FrictionContact" />
     <Node name="Snake" >
-        <SparseGridRamification name="grid" n="4 12 3" fileTopology="mesh/snake_body.obj" nbVirtualFinerLevels="3" finestConnectivity="0"/>
+        <SparseGridRamificationTopology name="grid" n="4 12 3" fileTopology="mesh/snake_body.obj" nbVirtualFinerLevels="3" finestConnectivity="0"/>
 
         <EulerImplicitSolver name="cg_odesolver" rayleighMass="1" rayleighStiffness="0.03" />
         <CGLinearSolver name="linear solver" iterations="20" tolerance="1e-12" threshold="1e-18" />
 		<MechanicalObject name="dofs"  dy="2" position="@grid.position"/>
         <UniformMass totalMass="1.0" />
-        <HexahedronFEMForceField name="FEM" youngModulus="30000.0" poissonRatio="0.3" method="large" updateStiffnessMatrix="false" printLog="0" />
+        <HexahedronFEMForceField name="FEM" youngModulus="30000.0" poissonRatio="0.3" method="large" 
+        updateStiffnessMatrix="false" printLog="0" topology="@grid"/>
 
 		<UncoupledConstraintCorrection />
 
@@ -51,21 +54,20 @@
 
     <Node name="Base" >
         <Node name="Stick">
-                 <MeshObjLoader name="loader" filename="mesh/collision_batons.obj" />
-                 <MeshTopology src="@loader" />
-                 <MechanicalObject src="@loader" name="CollisModel" />
-                 <LineCollisionModel simulated="false" moving="false" />
-                 <PointCollisionModel simulated="false"  moving="false"/>
+            <MeshObjLoader name="loader" filename="mesh/collision_batons.obj" />
+            <MeshTopology src="@loader" />
+            <MechanicalObject src="@loader" name="CollisModel" />
+            <LineCollisionModel simulated="false" moving="false" />
+            <PointCollisionModel simulated="false"  moving="false"/>
         </Node>
         <Node name="Blobs">
-                 <MeshObjLoader name="loader" filename="mesh/collision_boules_V3.obj" />
-                 <MeshTopology src="@loader" />
-                 <MechanicalObject src="@loader" name="CollisModel" />
-                 <TriangleCollisionModel simulated="false" moving="false"/>
-                 <LineCollisionModel simulated="false" moving="false"/>
-                 <PointCollisionModel simulated="false" moving="false"/>
+            <MeshObjLoader name="loader" filename="mesh/collision_boules_V3.obj" />
+            <MeshTopology src="@loader" />
+            <MechanicalObject src="@loader" name="CollisModel" />
+            <TriangleCollisionModel simulated="false" moving="false"/>
+            <LineCollisionModel simulated="false" moving="false"/>
+            <PointCollisionModel simulated="false" moving="false"/>
         </Node>
-
             <Node name="Foot">
             <MeshObjLoader name="loader" filename="mesh/collision_pied.obj" />
             <MeshTopology src="@loader" />
@@ -80,13 +82,5 @@
             <OglModel  name="OglModel" src="@loader" />
         </Node>
     </Node>
-	
-    <!--      
-    <Node name="test">
-        <MechanicalObject name="tool" scale3d="1 1 1" position="50 50 0"/>
-       <StiffSpringForceField name="force" object1="@../Snake/Collis/CollisModel" object2="@tool" stiffness="1000" indices1="0" indices2="0"/>
-   
-        <Sphere radius="0.5"  selfCollision="0" group="1"/>
-        <FixedConstraint indices="0" />
-    </Node>-->
+
 </Node>

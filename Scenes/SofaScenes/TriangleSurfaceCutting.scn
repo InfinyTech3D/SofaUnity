@@ -1,6 +1,9 @@
 <!-- Mechanical MassSpring Group Basic Example -->
 <Node name="root" dt="0.05" showBoundingTree="0" gravity="0 -9 1">
+    <RequiredPlugin pluginName='SofaOpenglVisual'/>
+    <RequiredPlugin pluginName='SofaMiscCollision'/>
     <VisualStyle displayFlags="showVisual showBehaviorModels" />
+    
     <DefaultPipeline verbose="0" />
     <BruteForceDetection name="N2" />
     <DefaultContactManager response="default" />
@@ -19,7 +22,7 @@
 		<UniformMass template="Vec3d" name="uniformMass2" totalMass="10" />
 		<FixedConstraint template="Vec3d" name="fixedConstraint1"  indices="0 1" />
 		<TriangularFEMForceField name="FEM" youngModulus="200" poissonRatio="0.3" method="large" />
-	    <TriangularBendingSprings name="FEM-Bend" stiffness="200" damping="1.0" />
+	    <TriangularBendingSprings name="FEM-Bend" stiffness="200" damping="1.0" topology="@Container" />
 		<TriangleCollisionModel template="Vec3d" name="tTriangleModel1" />
         
 		<Node name="Visu">

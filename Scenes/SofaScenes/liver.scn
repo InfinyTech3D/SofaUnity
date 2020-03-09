@@ -1,10 +1,10 @@
 <?xml version="1.0" ?>
 <Node name="lroot" gravity="0 -9.8 0" dt="0.02">
+    <RequiredPlugin pluginName='SofaOpenglVisual'/>
+    
     <DefaultPipeline name="CollisionPipeline" verbose="0" />
     <BruteForceDetection name="N2" />
     <DefaultContactManager name="collision response" response="default" />
-    <!--<DiscreteIntersection/>-->
-	
 	<MinProximityIntersection name="Proximity" alarmDistance="0.8" contactDistance="0.5" />
 	
 	<EulerImplicitSolver name="cg_odesolver"  />
@@ -15,20 +15,21 @@
         <TetrahedronSetTopologyContainer name="topo" src="@meshLoader" />
         <MechanicalObject name="dofs" src="@meshLoader"/>
         <TetrahedronSetGeometryAlgorithms template="Vec3d" name="GeomAlgo" />
-        <DiagonalMass  name="computed using mass density" massDensity="0.1" />
+        <DiagonalMass  name="computed using mass density" massDensity="0.1" topology="@topo" />
         <TetrahedralCorotationalFEMForceField template="Vec3d" name="FEM" method="large" poissonRatio="0.3" 
-		youngModulus="600" computeGlobalMatrix="0" />
+		youngModulus="600" computeGlobalMatrix="0" topology="@topo" />
         <FixedConstraint  name="FixedConstraint" indices="3 39 64" />
         
 		<Node name="VisuLiver" tags="Visual" gravity="0 -9.81 0">
-            <OglModel  name="VisualModel" fileMesh="mesh/liver-smooth.obj"/>
+            <MeshObjLoader name="meshLoaderVisu" filename="mesh/liver-smooth.obj" handleSeams="1" />
+            <OglModel  name="VisualModel" src="@meshLoaderVisu"/>
             <BarycentricMapping name="visual mapping" input="@../dofs" output="@VisualModel" />
         </Node>
 		
         <Node name="SurfLiver" gravity="0 -9.81 0">
             <SphereLoader name="sphereLoader" filename="mesh/liver.sph" />
             <MechanicalObject name="spheres" position="@[-1].position"/>
-            <TSphereModel name="CollisionModel" radius="0.85" />
+            <SphereCollisionModel name="CollisionModel" radius="0.85" />
             <BarycentricMapping name="sphere mapping" input="@../dofs" output="@spheres" />
         </Node>
 		
