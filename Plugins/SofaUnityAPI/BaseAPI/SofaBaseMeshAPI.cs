@@ -101,14 +101,14 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
         int nbrTris = sofaPhysics3DObject_getNbTriangles(m_simu, m_name);
         if (nbrTris < 0)
         {
-            Debug.LogError("SofaBaseMeshAPI::GetNumberOfFaces method returns: " + SofaDefines.msg_error[nbrTris] + " for object: " + m_name);
+            //Debug.LogError("SofaBaseMeshAPI::GetNumberOfFaces method returns: " + SofaDefines.msg_error[nbrTris] + " for object: " + m_name);
             nbrTris = 0;
         }
 
         int nbrQuads = sofaPhysics3DObject_getNbQuads(m_simu, m_name);
         if (nbrQuads < 0)
         {
-            Debug.LogError("SofaBaseMeshAPI::GetNumberOfFaces method returns: " + SofaDefines.msg_error[nbrQuads] + " for object: " + m_name);
+            //Debug.LogError("SofaBaseMeshAPI::GetNumberOfFaces method returns: " + SofaDefines.msg_error[nbrQuads] + " for object: " + m_name);
             nbrQuads = 0;
         }
 
@@ -124,7 +124,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
             int nbrElem = sofaPhysics3DObject_getNbHexahedra(m_simu, m_name);
             if (nbrElem < 0)
             {
-                Debug.LogError("SofaBaseMeshAPI::GetNbHexahedra method returns: " + SofaDefines.msg_error[nbrElem] + " for object: " + m_name);
+                //Debug.LogError("SofaBaseMeshAPI::GetNbHexahedra method returns: " + SofaDefines.msg_error[nbrElem] + " for object: " + m_name);
                 nbrElem = 0;
             }
             return nbrElem;
@@ -142,7 +142,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
             int nbrElem = sofaPhysics3DObject_getNbTetrahedra(m_simu, m_name);
             if (nbrElem < 0)
             {
-                Debug.LogError("SofaBaseMeshAPI::GetNbTetrahedra method returns: " + SofaDefines.msg_error[nbrElem] + " for object: " + m_name);
+                //Debug.LogError("SofaBaseMeshAPI::GetNbTetrahedra method returns: " + SofaDefines.msg_error[nbrElem] + " for object: " + m_name);
                 nbrElem = 0;
             }
             return nbrElem;
@@ -160,7 +160,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
             int nbrElem = sofaPhysics3DObject_getNbQuads(m_simu, m_name);
             if (nbrElem < 0)
             {
-                Debug.LogError("SofaBaseMeshAPI::GetNbQuads method returns: " + SofaDefines.msg_error[nbrElem] + " for object: " + m_name);
+                //Debug.LogError("SofaBaseMeshAPI::GetNbQuads method returns: " + SofaDefines.msg_error[nbrElem] + " for object: " + m_name);
                 nbrElem = 0;
             }
             return nbrElem;
@@ -178,7 +178,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
             int nbrElem = sofaPhysics3DObject_getNbTriangles(m_simu, m_name);
             if (nbrElem < 0)
             {
-                Debug.LogError("SofaBaseMeshAPI::GetNbTriangles method returns: " + SofaDefines.msg_error[nbrElem] + " for object: " + m_name);
+                //Debug.LogError("SofaBaseMeshAPI::GetNbTriangles method returns: " + SofaDefines.msg_error[nbrElem] + " for object: " + m_name);
                 nbrElem = 0;
             }
             return nbrElem;
@@ -196,7 +196,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
             int nbrElem = sofaPhysics3DObject_getNbEdges(m_simu, m_name);
             if (nbrElem < 0)
             {
-                Debug.LogError("SofaBaseMeshAPI::GetNbEdges method returns: " + SofaDefines.msg_error[nbrElem] + " for object: " + m_name);
+                //Debug.LogError("SofaBaseMeshAPI::GetNbEdges method returns: " + SofaDefines.msg_error[nbrElem] + " for object: " + m_name);
                 nbrElem = 0;
             }
             return nbrElem;
