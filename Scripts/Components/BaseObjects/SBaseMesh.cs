@@ -334,6 +334,14 @@ namespace SofaUnity
                 return -1;
         }
 
+        public Mesh getMesh()
+        {
+            if (m_mesh)
+                return m_mesh;
+            else
+                return null;
+        }
+
 
 
         /// Method to knwo if mesh has collision

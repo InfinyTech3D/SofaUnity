@@ -41,6 +41,7 @@ namespace SofaUnity
         /// Parameter to define the uniform damping for all the springs of this deformable Object
         public float m_damping = float.MinValue;
 
+        public bool m_forceUpdate = false;
 
         ////////////////////////////////////////////
         /////       Object creation API        /////
@@ -264,7 +265,7 @@ namespace SofaUnity
 
             MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();            
 
-            if (m_impl != null && mr.enabled)
+            if (m_impl != null && (m_forceUpdate || mr.enabled))
             {
                 // TODO: for the moment the recompute of tetra is too expensive. Only update the number of vertices and tetra
                 // Need to find another solution.

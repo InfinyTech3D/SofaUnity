@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LoadSceneScript : MonoBehaviour
 {
@@ -11,7 +12,8 @@ public class LoadSceneScript : MonoBehaviour
         if (loadingImage)
             loadingImage.SetActive(true);
 
-        Application.LoadLevel(level);
+        //Application.LoadLevel(level);
+        SceneManager.LoadScene(level);
     }
 
     public void testMethod(int level)
