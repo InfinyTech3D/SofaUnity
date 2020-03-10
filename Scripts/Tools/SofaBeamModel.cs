@@ -5,7 +5,7 @@ using UnityEngine;
 namespace SofaUnity
 {
     [ExecuteInEditMode]
-    public class BeamModel : MonoBehaviour
+    public class SofaBeamModel : MonoBehaviour
     {
         public SofaMesh m_sofaMesh = null;
 
@@ -16,9 +16,44 @@ namespace SofaUnity
         protected Vector3[] m_vertCenter = null;
         protected Vector3[] m_vertices = null;
         protected Vector3[] m_normals = null;
-        protected int BeamDiscretisation = 4;
-        protected float Beamradius = 0.5f;
 
+        [SerializeField]
+        protected int m_beamDiscretisation = 4;
+        [SerializeField]
+        protected float m_beamRadius = 0.5f;
+        
+        public int BeamDiscretisation
+        {
+            get { return m_beamDiscretisation; }
+            set
+            {
+                int tmp = value;
+                if (tmp <= 0)
+                    tmp = 1;
+
+                if (tmp != m_beamDiscretisation)
+                {
+                    m_beamDiscretisation = tmp;
+                    m_doComputeMesh = true;
+                }
+            }
+        }
+
+        public float BeamRadius
+        {
+            get { return m_beamRadius; }
+            set
+            {
+                if (value != m_beamRadius)
+                {
+                    m_beamRadius = value;
+                    UpdateLinearMesh();
+                }
+            }
+        }
+
+
+        protected int m_savedBeamDiscretisation;
 
         void Awake()
         {
@@ -64,7 +99,7 @@ namespace SofaUnity
 
         // Update is called once per frame
         void Update()
-        {            
+        {
             if (m_doComputeMesh)
                 CreateLinearMesh();
 
@@ -84,7 +119,7 @@ namespace SofaUnity
                 return;
 
             //Debug.Log("BeamModel::CreateLinearMesh");
-
+            m_mesh.Clear();
             float[] sofaVertices = m_sofaMesh.SofaMeshTopology.m_vertexBuffer;
             m_vertCenter = new Vector3[nbrV];
             for (int i = 0; i < nbrV; i++)
@@ -92,7 +127,7 @@ namespace SofaUnity
                 m_vertCenter[i] = new Vector3(sofaVertices[i * 3], sofaVertices[i * 3 + 1], sofaVertices[i * 3 + 2]);
             }
 
-            int nbrP = nbrV * 4 * BeamDiscretisation + 2; // +2 for the centers
+            int nbrP = nbrV * 4 * m_beamDiscretisation + 2; // +2 for the centers
             //Debug.Log("nbrV: " + nbrV);
             //Debug.Log("nbrP: " + nbrP);
 
@@ -126,7 +161,7 @@ namespace SofaUnity
 
             // create fake uv
             Vector2[] uv = new Vector2[nbrP];
-            int nbrPointPerCircle = BeamDiscretisation * 4;
+            int nbrPointPerCircle = m_beamDiscretisation * 4;
             int nbrCircles = nbrV;
             uv[0] = Vector2.zero;
             uv[nbrP - 1] = Vector2.zero;
@@ -147,6 +182,7 @@ namespace SofaUnity
             m_mesh.uv = uv;
 
             m_doComputeMesh = false;
+            m_savedBeamDiscretisation = m_beamDiscretisation;
             m_sofaMesh.AddListener();
         }
 
@@ -162,8 +198,7 @@ namespace SofaUnity
             if (nbrV < 2)
                 return;
 
-            //Debug.Log("BeamModel::UpdateLinearMesh");
-
+            //Debug.Log("BeamModel::UpdateLinearMesh");            
             float[] sofaVertices = m_sofaMesh.SofaMeshTopology.m_vertexBuffer;
             for (int i = 0; i < nbrV; i++)
             {
@@ -205,15 +240,15 @@ namespace SofaUnity
                 center = pointA;
 
             Vector3[] corners = new Vector3[4];
-            corners[0] = center + cyl_N1 * Beamradius;
-            corners[1] = center + cyl_N2 * Beamradius;
-            corners[2] = center - cyl_N1 * Beamradius;
-            corners[3] = center - cyl_N2 * Beamradius;
+            corners[0] = center + cyl_N1 * m_beamRadius;
+            corners[1] = center + cyl_N2 * m_beamRadius;
+            corners[2] = center - cyl_N1 * m_beamRadius;
+            corners[3] = center - cyl_N2 * m_beamRadius;
 
-            int increment = nbrCyl * BeamDiscretisation * 4 + 1; // to skip first center point
-            if (BeamDiscretisation > 1)
+            int increment = nbrCyl * m_beamDiscretisation * 4 + 1; // to skip first center point
+            if (m_beamDiscretisation > 1)
             {
-                float factor = 1.0f / BeamDiscretisation;
+                float factor = 1.0f / m_beamDiscretisation;
                 for (int i = 0; i < 4; i++)
                 {
                     // add corner first
@@ -224,7 +259,7 @@ namespace SofaUnity
                     increment++;
 
                     // add subpoints
-                    for (int j = 1; j < BeamDiscretisation; j++)
+                    for (int j = 1; j < m_beamDiscretisation; j++)
                     {
                         // not at radius length
                         m_vertices[increment] = corners[i] + factor * j * dirT;
@@ -233,7 +268,7 @@ namespace SofaUnity
                         Vector3 dirPoint = m_vertices[increment] - center;
                         dirPoint.Normalize();
                         m_normals[increment] = dirPoint;
-                        m_vertices[increment] = center + dirPoint * Beamradius;
+                        m_vertices[increment] = center + dirPoint * m_beamRadius;
                         increment++;
                     }
                 }
@@ -253,7 +288,7 @@ namespace SofaUnity
 
         protected void CreateLinearMeshTriangulation(int nbrCylinder)
         {
-            int nbrPointPerCircle = BeamDiscretisation * 4;
+            int nbrPointPerCircle = m_beamDiscretisation * 4;
             int nbrTriPerBorder = nbrPointPerCircle;
             int nbrTriPerCylinder = nbrPointPerCircle * 2;
             int[] tris = new int[(nbrCylinder * nbrTriPerCylinder + 2 * nbrTriPerBorder) * 3];
