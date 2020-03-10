@@ -4,18 +4,63 @@ using UnityEngine;
 
 namespace SofaUnity
 {
+    /// <summary>
+    /// Specific class describing a Sofa collision component 
+    /// Only SphereCollisionModel and TriangleCollisionModel are handle yet
+    /// </summary>
     public class SofaCollisionModel : SofaBaseComponent
     {
+        ////////////////////////////////////////////
+        //////   SofaCollisionModel members    /////
+        ////////////////////////////////////////////
+
+        /// Pointer to the SofaMesh this FEM is related to.
+        private SofaMesh m_sofaMesh = null;
+
+        /// Option to show/hide collision objects
         [SerializeField]
         protected bool m_drawCollision = false;
+
+        /// Bool to store the info is this collision mesh has been init.
         protected bool m_collisionVisuInit = false;
 
-        private SofaMesh m_sofaMesh = null;
+        /// Bool to store the info if collision was enabled or not.
         private bool m_oldStatus = false;
 
+        /// List of Gameobject representing the collision elements
         [SerializeField]
         private List<GameObject> m_collisionElement = null;
 
+
+
+        ////////////////////////////////////////////
+        //////   SofaCollisionModel accessors  /////
+        ////////////////////////////////////////////
+
+        /// Getter / setter to draw the collision objects, will call either \sa ShowCollisionElements() or \sa HideCollisionElements()
+        public bool DrawCollision
+        {
+            get { return m_drawCollision; }
+            set
+            {
+                if (m_drawCollision != value)
+                {
+                    m_drawCollision = value;
+                    if (m_drawCollision)
+                        ShowCollisionElements();
+                    else
+                        HideCollisionElements();
+                }
+            }
+        }
+
+
+
+        ////////////////////////////////////////////
+        //////     SofaCollisionModel API      /////
+        ////////////////////////////////////////////
+
+        /// Method called by @sa SofaBaseComponent::Start() method. to add more init steps
         protected override void Init_impl()
         {
             if (m_sofaMesh == null)
@@ -31,6 +76,8 @@ namespace SofaUnity
             }
         }
 
+
+        /// Method called by @sa SofaBaseComponent::Create_impl() method. To specify specific types of components
         protected override void FillPossibleTypes()
         {
             //SofaLog("FillPossibleTypes SofaCollisionModel");
@@ -73,6 +120,12 @@ namespace SofaUnity
         }
 
 
+
+        ////////////////////////////////////////////
+        ////// SofaCollisionModel internal API /////
+        ////////////////////////////////////////////
+
+        /// Method called to create the collision element will redirect to specialised method according to the type of collision element
         protected void CreateCollisionElements()
         {
             if (this.m_componentType == "SphereCollisionModel")
@@ -86,6 +139,7 @@ namespace SofaUnity
         }
 
 
+        /// Specialized method to create the triangle collision elements
         protected void CreateSphereCollisionModel()
         {
             if (m_collisionElement != null)
@@ -134,6 +188,7 @@ namespace SofaUnity
         }
 
 
+        /// Specialized method to create the sphere collision elements
         protected void CreateTriangleCollisionModel()
         {
             if (m_collisionElement != null)
@@ -164,25 +219,9 @@ namespace SofaUnity
             m_collisionElement = new List<GameObject>();
             m_collisionElement.Add(triangulation);
         }
-        
 
-        public bool DrawCollision
-        {
-            get { return m_drawCollision; }
-            set
-            {
-                if (m_drawCollision != value)
-                {
-                    m_drawCollision = value;
-                    if (m_drawCollision)
-                        ShowCollisionElements();
-                    else
-                        HideCollisionElements();
-                }
-            }
-        }
-            
 
+        /// Method to show the collision elements
         protected void ShowCollisionElements()
         {
             if (m_collisionElement == null || m_collisionElement.Count == 0)
@@ -194,6 +233,7 @@ namespace SofaUnity
             }
         }
 
+        /// Method to hide the collision elements
         protected void HideCollisionElements()
         {
             foreach (GameObject elem in m_collisionElement)
@@ -202,6 +242,7 @@ namespace SofaUnity
             }
         }
 
+        /// Method to update the collision elements positions
         protected void UpdateCollisionElements()
         {
             if (this.m_componentType == "SphereCollisionModel")

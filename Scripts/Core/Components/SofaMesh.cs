@@ -5,38 +5,51 @@ using System;
 
 namespace SofaUnity
 {
+    /// <summary>
+    /// Specific class describing a Sofa MechanicalOBject and the Topology components in a single class 
+    /// </summary>
     public class SofaMesh : SofaBaseComponent
     {
-        /// Member: Unity Mesh object of this GameObject
+        ////////////////////////////////////////////
+        //////        SofaMesh members         /////
+        ////////////////////////////////////////////
+
+        /// Pointer to a SofaMeshTopology class that hold the Mesh and method to compute it
         protected SofaMeshTopology m_topology = null;
 
         /// Pointer to the corresponding SOFA API object
         protected SofaBaseMeshAPI m_sofaMeshAPI = null;
 
+        /// counter of number of component relying on this mesh. Used to know if update is needed
+        protected int m_listenerCounter = 0;
+
+
+        /// Number of vertices stored in this mesh
         protected int m_nbVertices = 0;
+        /// Number of edges stored in this mesh
         protected int m_nbEdges = 0;
+        /// Number of triangles stored in this mesh
         protected int m_nbTriangles = 0;
+        /// Number of quads stored in this mesh
         protected int m_nbQuads = 0;
+        /// Number of tetrahedra stored in this mesh
         protected int m_nbTetrahedra = 0;
+        /// Number of hexahedra stored in this mesh
         protected int m_nbHexahedra = 0;
 
-        protected override void CreateSofaAPI_Impl()
-        {
-            SofaLog("SofaMesh::CreateSofaAPI_Impl: " + UniqueNameId + " | m_sofaContext: " + m_sofaContext + " | m_sofaContext.GetSimuContext(): " + m_sofaContext.GetSimuContext());
-            m_impl = new SofaVisualModelAPI(m_sofaContext.GetSimuContext(), UniqueNameId);
 
-            InitBaseMeshAPI();
+
+        ////////////////////////////////////////////
+        //////        SofaMesh accessors       /////
+        ////////////////////////////////////////////
+
+        /// Getter to the topology class \sa SofaMeshTopology m_topology.
+        public SofaMeshTopology SofaMeshTopology
+        {
+            get { return m_topology; }
         }
 
-
-        protected override void SetComponentType()
-        {
-            // overide name with current type
-            m_componentType = m_impl.GetComponentType();
-            this.gameObject.name = "SofaMesh" + "  -  " + m_uniqueNameId;
-        }
-
-
+        /// Getter to check if Topology has already been created.
         public bool HasTopology()
         {
             if (m_topology != null)
@@ -45,12 +58,7 @@ namespace SofaUnity
                 return false;
         }
 
-        public SofaMeshTopology SofaMeshTopology
-        {
-            get { return m_topology; }
-        }
-
-
+        /// Method to find the type of the topology hold by this class.
         public TopologyObjectType TopologyType()
         {
             if (m_topology != null)
@@ -59,40 +67,112 @@ namespace SofaUnity
                 return TopologyObjectType.NO_TOPOLOGY;
         }
 
+        /// Method to add a new listener to the counter \sa m_listenerCounter
+        public void AddListener()
+        {
+            m_listenerCounter++;
+        }
 
-        ///// public method that return the number of vertices, override base method by returning potentially the number of vertices from tetra topology.
+        /// Method to remove a listener to the counter \sa m_listenerCounter
+        public void RemoveListener()
+        {
+            m_listenerCounter--;
+        }
+
+
+        /// Gette to the number of vertices
         public int NbVertices()
         {
             return m_nbVertices;
         }
 
+        /// Gette to the number of edges
         public int NbEdges()
         {
             return m_nbEdges;
         }
 
+        /// Gette to the number of triangles
         public int NbTriangles()
         {
             return m_nbTriangles;
         }
 
+        /// Gette to the number of quads
         public int NbQuads()
         {
             return m_nbQuads;
         }
 
+        /// Gette to the number of tetrahedra
         public int NbTetrahedra()
         {
             return m_nbTetrahedra;
         }
 
+        /// Gette to the number of hexahedra
         public int NbHexahedra()
         {
             return m_nbHexahedra;
         }
 
-        
 
+
+
+        ////////////////////////////////////////////
+        //////          SofaMesh API           /////
+        ////////////////////////////////////////////
+
+        /// Method called by @sa CreateSofaAPI() method. To be implemented by child class if specific ComponentAPI has to be created.
+        protected override void CreateSofaAPI_Impl()
+        {
+            SofaLog("SofaMesh::CreateSofaAPI_Impl: " + UniqueNameId + " | m_sofaContext: " + m_sofaContext + " | m_sofaContext.GetSimuContext(): " + m_sofaContext.GetSimuContext());
+            m_impl = new SofaBaseComponentAPI(m_sofaContext.GetSimuContext(), UniqueNameId);
+
+            InitBaseMeshAPI();
+        }
+
+
+        /// Method called by @sa Create_impl() method. to specify the type of component
+        protected override void SetComponentType()
+        {
+            // overide name with current type
+            m_componentType = m_impl.GetComponentType();
+            this.gameObject.name = "SofaMesh" + "  -  " + m_uniqueNameId;
+        }
+
+
+        public bool m_forceUpdate = false;
+        /// Method called by @sa Update() method.
+        protected override void Update_impl()
+        {
+            //Debug.Log("SofaMesh UpdateImpl");
+
+            // TODO: for the moment the recompute of tetra is too expensive. Only update the number of vertices and tetra
+            // Need to find another solution.
+            //if (m_impl.hasTopologyChanged())
+            //{
+            //    m_impl.setTopologyChange(false);
+
+            //    if (nbTetra > 0)
+            //        updateTetraMesh();
+            //    else
+            //        m_impl.updateMesh(m_mesh);
+            //}
+
+            if (m_sofaMeshAPI != null && m_listenerCounter > 0)
+            {
+                UpdateTopology();
+            }
+        }
+
+
+
+        ////////////////////////////////////////////
+        //////      SofaMesh internal API      /////
+        ////////////////////////////////////////////
+
+        /// Method called by \sa CreateSofaAPI_Impl to init mesh at start
         protected void InitBaseMeshAPI()
         {
             if (m_sofaMeshAPI == null)
@@ -114,11 +194,7 @@ namespace SofaUnity
         }
 
 
-        ////////////////////////////////////////////
-        /////       Object behavior API        /////
-        ////////////////////////////////////////////
-
-        /// Method called by \sa Start() method to init the current object and impl. @param toUpdate indicate if updateMesh has to be called.
+        /// Method called by \sa InitBaseMeshAPI() to init the topology
         protected void InitTopology()
         {
             if (m_sofaMeshAPI == null)
@@ -131,13 +207,6 @@ namespace SofaUnity
 
             m_sofaMeshAPI.GetVertices(m_topology.m_vertexBuffer);
 
-            // here get topology type
-            // createTopologyBuffer depending of the type set the type to sofaMeshTopology
-            // Filltopology(int`[] fromm_sofaMeshAPI)
-            // compute final mapping
-
-            // updateMesh normally(float[] velocities frim m_sofaMeshAPI
-            //update mesh from SofaMeshTopology knows how to update Mesh structure using mapping or not)
 
             bool HasTopo = false;
             m_nbHexahedra = m_sofaMeshAPI.GetNbHexahedra();
@@ -191,42 +260,8 @@ namespace SofaUnity
                 
         }
 
-        protected int m_listenerCounter = 0;
-        public void AddListener()
-        {
-            m_listenerCounter++;
-        }
 
-        public void RemoveListener()
-        {
-            m_listenerCounter--;
-        }
-
-        public bool m_forceUpdate = false;
-        /// Method called by @sa Update() method.
-        protected override void Update_impl()
-        {
-            //Debug.Log("SofaMesh UpdateImpl");
-
-            // TODO: for the moment the recompute of tetra is too expensive. Only update the number of vertices and tetra
-            // Need to find another solution.
-            //if (m_impl.hasTopologyChanged())
-            //{
-            //    m_impl.setTopologyChange(false);
-
-            //    if (nbTetra > 0)
-            //        updateTetraMesh();
-            //    else
-            //        m_impl.updateMesh(m_mesh);
-            //}
-
-            if (m_sofaMeshAPI != null && m_listenerCounter > 0)
-            {
-                UpdateTopology();
-            }
-        }
-
-
+        /// Method called by \sa update_impl() to update the topology
         protected void UpdateTopology()
         {
             if (this.TopologyType() == TopologyObjectType.TRIANGLE)

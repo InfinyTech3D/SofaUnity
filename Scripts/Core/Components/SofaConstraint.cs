@@ -4,8 +4,12 @@ using UnityEngine;
 
 namespace SofaUnity
 {
+    /// <summary>
+    /// Specific class describing a Sofa Constraint component 
+    /// </summary>
     public class SofaConstraint : SofaBaseComponent
     {
+        /// Method called by @sa SofaBaseComponent::Create_impl() method. To specify specific types of components
         protected override void FillPossibleTypes()
         {
             //SofaLog("FillPossibleTypes SofaConstraint");

@@ -4,8 +4,12 @@ using UnityEngine;
 
 namespace SofaUnity
 {
+    /// <summary>
+    /// Specific class describing a Sofa Loader component 
+    /// </summary>
     public class SofaLoader : SofaBaseComponent
     {
+        /// Method called by @sa SofaBaseComponent::Create_impl() method. To specify specific types of components
         protected override void FillPossibleTypes()
         {
             //SofaLog("FillPossibleTypes SofaLoader");

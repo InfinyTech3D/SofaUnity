@@ -5,8 +5,12 @@ using System;
 
 namespace SofaUnity
 {
+    /// <summary>
+    /// Specific class describing a Sofa Mass component 
+    /// </summary>
     public class SofaMass : SofaBaseComponent
     {
+        // For editor tests
         public int[] myTab;
         public Vector3 m_MyVector = new Vector3(20, 1, 0);
         void Start()
@@ -35,6 +39,7 @@ namespace SofaUnity
             //SofaLog("UpdateImpl SofaMass");
         }
 
+        /// Method called by @sa SofaBaseComponent::Create_impl() method. To specify specific types of components
         protected override void FillPossibleTypes()
         {
             string typesS = m_impl.GetPossiblesTypes();
@@ -57,12 +62,7 @@ namespace SofaUnity
 
         protected override void FillDataStructure()
         {
-            //Debug.Log("##!!!## SofaMass: FillDataStructure: ");
-            //foreach (SofaData data in m_datas)
-            //{
-                
-            //    Debug.Log(data.nameID + " | type:  " + data.GetType());
-            //}
+
         }
     }
 

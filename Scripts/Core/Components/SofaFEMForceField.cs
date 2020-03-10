@@ -4,12 +4,36 @@ using UnityEngine;
 
 namespace SofaUnity
 {
+    /// <summary>
+    /// Specific class describing a Sofa FEM component 
+    /// Only Tetrahedron and Triangle FEM handle yet.
+    /// </summary>
     public class SofaFEMForceField : SofaBaseComponent
     {
-        private SofaMesh m_sofaMesh = null;
-        private MeshRenderer m_renderer;
-        private bool m_oldStatus = false;
+        ////////////////////////////////////////////
+        //////    SofaFEMForceField members    /////
+        ////////////////////////////////////////////
 
+        /// Pointer to the SofaMesh this FEM is related to.
+        private SofaMesh m_sofaMesh = null;
+
+        /// Pointer to the MeshRenderer to display the FEM structure.
+        private MeshRenderer m_renderer;
+
+        /// Bool to store the info is this mesh has been init.
+        private bool m_meshInit = false;
+
+        /// Bool to store the info if renderer was enabled or not.
+        private bool m_oldRendererStatus = false;
+
+
+        
+
+        ////////////////////////////////////////////
+        //////      SofaFEMForceField API      /////
+        ////////////////////////////////////////////
+
+        /// Method called by @sa SofaBaseComponent::CreateSofaAPI() method. to add more creation step
         protected override void CreateSofaAPI_Impl()
         {            
             SofaLog("SofaFEMForceField::CreateSofaAPI_Impl: " + UniqueNameId + " | m_sofaContext: " + m_sofaContext + " | m_sofaContext.GetSimuContext(): " + m_sofaContext.GetSimuContext());
@@ -26,7 +50,7 @@ namespace SofaUnity
             {
                 m_renderer = gameObject.AddComponent<MeshRenderer>();
                 m_renderer.enabled = false;
-                m_oldStatus = false;
+                m_oldRendererStatus = false;
             }
 
             if (m_renderer.sharedMaterial == null)
@@ -37,9 +61,9 @@ namespace SofaUnity
             m_meshInit = false;
         }
 
-        bool m_meshInit = false;
 
-        Mesh meshCopy = null;
+
+        /// Method called by @sa SofaBaseComponent::Start() method. to add more init steps
         protected override void Init_impl()
         {
             if (m_meshInit == false)
@@ -59,6 +83,8 @@ namespace SofaUnity
             }
         }
 
+
+        /// Method called by @sa SofaBaseComponent::Create_impl() method. To specify specific types of components
         protected override void FillPossibleTypes()
         {
             //SofaLog("FillPossibleTypes SofaFEMForceField");
@@ -68,10 +94,10 @@ namespace SofaUnity
         /// Method called by @sa Update() method.        
         protected override void Update_impl()
         {
-            if (m_renderer.enabled != m_oldStatus)
+            if (m_renderer.enabled != m_oldRendererStatus)
             {
-                m_oldStatus = m_renderer.enabled;
-                if (m_oldStatus)
+                m_oldRendererStatus = m_renderer.enabled;
+                if (m_oldRendererStatus)
                 {
                     m_sofaMesh.AddListener();
                 }
@@ -90,23 +116,6 @@ namespace SofaUnity
             }
         }
 
-
-        /// Method to draw objects for debug only
-        void OnDrawGizmosSelected()
-        {
-            return;
-            //if (m_hasCollisionSphere && m_showCollisionSphere)
-            if (meshCopy)
-            {
-
-                Gizmos.color = Color.yellow;
-                foreach (Vector3 vert in meshCopy.vertices)
-                {
-                    Gizmos.DrawSphere(this.transform.TransformPoint(vert), 1.0f);
-                }
-            }
-
-        }
     }
 
 } // namespace SofaUnity

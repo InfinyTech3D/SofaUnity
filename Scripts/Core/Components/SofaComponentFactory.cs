@@ -6,7 +6,8 @@ using SofaUnityAPI;
 
 namespace SofaUnity
 {
-    // manage specific component class implementation
+    /// manage specific component class implementation and creation 
+    /// TODO: how to create a real factory in C# ??
     static public class SofaComponentFactory
     {
         static public SofaBaseComponent CreateSofaComponent(string nameId, string componentType, SofaDAGNode sofaNodeOwner, GameObject parent)
