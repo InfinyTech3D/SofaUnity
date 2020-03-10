@@ -6,29 +6,52 @@ using System.IO;
 
 namespace SofaUnity
 {
+    /// <summary>
+    /// Class to manage the Sofa scene file loaded.
+    /// </summary>
     [System.Serializable]
     public class SceneFileManager
     {
+        ////////////////////////////////////////////
+        //////    SceneFileManager members     /////
+        ////////////////////////////////////////////
+
+        /// Pointer to the SofaContext
         protected SofaContext m_sofaContext = null;
+
+        [SerializeField]
+        protected bool m_hasScene = false;
+
+        [SerializeField]
+        protected string m_filename = "";
+
+
+        ////////////////////////////////////////////
+        //////   SceneFileManager accessors    /////
+        ////////////////////////////////////////////
+
+        /// Default constructor taking a SofaContext as argument
         public SceneFileManager(SofaContext sofaContext)
         {
             m_sofaContext = sofaContext;
         }
 
+
+        /// Method to set the SofaContext to be used by this FileManager
         public void SetSofaContext(SofaContext sofaContext)
         {
             m_sofaContext = sofaContext;
         }
 
-        [SerializeField]
-        protected bool m_hasScene = false;
+
+        /// getter to \sa m_hasScene
         public bool HasScene
         {
             get { return m_hasScene; }
         }
 
-        [SerializeField]
-        protected string m_filename = "";
+
+        /// getter/setter of the \sa m_filename
         public string SceneFilename
         {
             get { return m_filename; }
@@ -47,12 +70,20 @@ namespace SofaUnity
             }
         }
 
+
+        /// method to get the full path of the file inside the unity asset
         public string AbsoluteFilename()
         {
             return Application.dataPath + m_filename;
         }
 
 
+
+        ////////////////////////////////////////////
+        //////  SceneFileManager internal API  /////
+        ////////////////////////////////////////////
+
+        /// Internal method to check if the filename is valid
         protected bool CheckValidFilename(string newFilename)
         {
             if (!File.Exists(Application.dataPath + newFilename)) // if not found test with relative path
@@ -79,7 +110,8 @@ namespace SofaUnity
             return true;
         }
 
-        public void LoadFilename()
+        /// Internal method to load the file in the SofaContext.
+        protected void LoadFilename()
         {
             m_sofaContext.LoadSofaScene();
             m_hasScene = true;
