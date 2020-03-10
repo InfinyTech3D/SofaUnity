@@ -7,7 +7,9 @@ using System.Linq;
 
 namespace SofaUnity
 {
-    // TODO find a way to interactively add more type if plugin are loaded
+    /// Enum listing the different Base type of SOFA component
+    /// 
+    /// TODO find a way to interactively add more type if plugin are loaded
     public enum SBaseComponentType
     {
         SofaSolver,
@@ -20,26 +22,53 @@ namespace SofaUnity
         SofaConstraint,
         SofaVisualModel,
         SofaUnknown
-    };  
+    };
 
+    /// <summary>
+    /// Base class representing a SOFA component in the simulation as a GameObject.
+    /// Will hold the list of Sofa Data and links inside the \sa m_dataArchiver and \sa m_linkArchiver
+    /// </summary>
     public class SofaBaseComponent : SofaBase
     {
-        // do generic stuff for baseComponent here
+        ////////////////////////////////////////////
+        //////    SofaBaseComponent members    /////
+        ////////////////////////////////////////////
+
+        /// Pointer to the DAGNode parent of this object.
         public SofaDAGNode m_ownerNode = null;
         
+        /// base type of this component
         public SBaseComponentType m_baseComponentType;
-        protected List<string> m_possibleComponentTypes;
+        
+        /// specialisation type of this component        
         public string m_componentType;
+        /// List of possible specialisation of this component
+        protected List<string> m_possibleComponentTypes;
 
         /// Pointer to the Sofa Context API.
         public SofaBaseComponentAPI m_impl = null;
 
+        /// Pointer to this component Data archiver \sa SofaDataArchiver
+        [SerializeField] // todo check if needed?
+        public SofaDataArchiver m_dataArchiver = null;
 
+        /// Pointer to this component Link archiver \sa SofaLinkArchiver
+        [SerializeField]
+        public SofaLinkArchiver m_linkArchiver = null;
+
+
+
+        ////////////////////////////////////////////
+        //////   SofaBaseComponent accessors   /////
+        ////////////////////////////////////////////
+
+        /// convert a BaseComponentType into string 
         public string BaseTypeToString(SBaseComponentType type)
         {
             return type.ToString();
         }
 
+        /// convert a string into a BaseComponentType 
         public SBaseComponentType BaseTypeFromString(string typeS)
         {
             SBaseComponentType enumRes = SBaseComponentType.SofaUnknown;
@@ -51,17 +80,20 @@ namespace SofaUnity
             return enumRes;
         }
 
-        public void setDAGNode(SofaDAGNode _node)
+        /// Set this DAGnode holder
+        public void SetDAGNode(SofaDAGNode _node)
         {
             m_ownerNode = _node;
             m_sofaContext = m_ownerNode.m_sofaContext;
         }
 
 
+
         ////////////////////////////////////////////
-        /////          Component API           /////
+        /////  SofaBaseComponent internal API  /////
         ////////////////////////////////////////////
 
+        /// Method called by @sa SofaBase::Create() when creating objects. Will create this component and its Data and link.
         protected override void Create_impl()
         {
             if (m_impl == null)
@@ -89,7 +121,30 @@ namespace SofaUnity
         }
 
 
-        protected virtual void CreateSofaAPI()
+        /// Method called by @sa SofaBase::Reconnect() when reloading objects. Will reconnect the component to its Sofa real component
+        protected override void Reconnect_impl()
+        {
+            // 1- reconnect with SofaBaseComponentAPI
+            CreateSofaAPI();
+
+            // 2- reconnect and update edited data
+            if (m_dataArchiver == null)
+            {
+                SofaLog("SofaBaseComponent::ReconnectImpl has a null DataArchiver.", 2);
+                return;
+            }
+
+            bool modified = m_dataArchiver.UpdateEditedData();
+            if (modified)
+            {
+                SofaLog("SofaBaseComponent::ReconnectImpl some Data modified will reinit component.");
+                // call reinit here?
+            }
+        }
+
+
+        /// Internal method to check SofaContext status and create/link to the real Sofa component. Will call CreateSofaAPI_Impl()
+        protected void CreateSofaAPI()
         {
             if (m_impl != null)
             {
@@ -112,6 +167,12 @@ namespace SofaUnity
             CreateSofaAPI_Impl();
         }
 
+
+        ////////////////////////////////////////////
+        /////   SofaBaseComponent virtual API  /////
+        ////////////////////////////////////////////
+
+        /// Method called by @sa CreateSofaAPI() method. To be implemented by child class if specific ComponentAPI has to be created.
         protected virtual void CreateSofaAPI_Impl()
         {
             SofaLog("SofaBaseComponent::CreateSofaAPI_Impl: " + UniqueNameId + " | m_sofaContext: " + m_sofaContext + " | m_sofaContext.GetSimuContext(): " + m_sofaContext.GetSimuContext());
@@ -119,6 +180,7 @@ namespace SofaUnity
         }
 
 
+        /// Method called by @sa Create_impl() method. To be implemented by child class if specific type need to be set.
         protected virtual void SetComponentType()
         {
             // overide name with current type
@@ -127,33 +189,14 @@ namespace SofaUnity
         }
 
 
+        /// Method called by @sa Create_impl() method. To be implemented by child class.
         protected virtual void FillPossibleTypes()
         {
             
         }
 
 
-        protected override void Reconnect_impl()
-        {
-            // 1- reconnect with SofaBaseComponentAPI
-            CreateSofaAPI();
-
-            // 2- reconnect and update edited data
-            if (m_dataArchiver == null)
-            {
-                SofaLog("SofaBaseComponent::ReconnectImpl has a null DataArchiver.", 2);
-                return;
-            }
-
-            bool modified = m_dataArchiver.UpdateEditedData();
-            if (modified)
-            {
-                SofaLog("SofaBaseComponent::ReconnectImpl some Data modified will reinit component.");
-                // call reinit here?
-            }
-        }
-
-
+        /// Method called by @sa Create_impl() method. To be implemented by child class.
         protected virtual void FillDataStructure()
         {
 
@@ -161,16 +204,10 @@ namespace SofaUnity
 
 
         ////////////////////////////////////////////
-        /////        Internal Sata API         /////
+        /////        Internal DATA API         /////
         ////////////////////////////////////////////
 
-        [SerializeField]
-        public SofaDataArchiver m_dataArchiver = null;
-
-        [SerializeField]
-        public SofaLinkArchiver m_linkArchiver = null;
-
-
+        /// Get this component list of Data and fill the DataArchiver
         virtual protected void GetAllData()
         {
             if (m_impl != null)
@@ -199,6 +236,7 @@ namespace SofaUnity
         }
 
 
+        /// Get this component list of Links and fill the LinkArchiver
         virtual protected void GetAllLinks()
         {
             if (m_impl != null)

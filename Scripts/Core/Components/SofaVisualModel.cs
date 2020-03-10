@@ -12,29 +12,10 @@ namespace SofaUnity
         /// Pointer to the corresponding SOFA API object
         protected SofaBaseMeshAPI m_sofaMeshAPI = null;
 
-        protected override void CreateSofaAPI()
+        protected override void CreateSofaAPI_Impl()
         {
-            if (m_impl != null)
-            {
-                Debug.LogError("SofaBaseComponent " + UniqueNameId + " already has a SofaBaseComponentAPI.");
-                return;
-            }
-
-            if (m_sofaContext == null)
-            {
-                SofaLog("CreateSofaAPI: " + UniqueNameId + " m_sofaContext is null", 1);
-                return;
-            }
-
-            if (m_sofaContext.GetSimuContext() == null)
-            {
-                SofaLog("CreateSofaAPI: " + UniqueNameId + " m_sofaContext.GetSimuContext() is null", 1);
-                return;
-            }
-
             SofaLog("SofaVisualModel::CreateSofaAPI: " + UniqueNameId + " | m_sofaContext: " + m_sofaContext + " | m_sofaContext.GetSimuContext(): " + m_sofaContext.GetSimuContext());
             m_impl = new SofaVisualModelAPI(m_sofaContext.GetSimuContext(), UniqueNameId);
-
 
             InitBaseMeshAPI();
         }
@@ -79,13 +60,6 @@ namespace SofaUnity
             }
         }
         
-        /// Method called by @sa Awake() method. As post process method after creation.
-        protected override void AwakePostProcess()
-        {
-            
-        }
-
-
 
         ////////////////////////////////////////////
         /////       Object behavior API        /////

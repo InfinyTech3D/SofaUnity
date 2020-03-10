@@ -5,55 +5,110 @@ using SofaUnityAPI;
 
 namespace SofaUnity
 {
+    /// <summary>
+    /// Class representing a DAGNode inside SOFA simulation scene.
+    /// Animation loop process: 
+    /// init() is called by nodeMgr with sofaContext and names
+    /// - Set sofaContext and name and call InitImpl()
+    /// - create connection with the good api
+    /// - create Object if needed
+    /// - get all data + types
+    /// - get data values and fill data with default values or loaded values
+    /// 
+    /// When play
+    /// - Awake should be done delayed (loop) while SofaContext is init
+    /// - GraphNodeMgr should only init itself with empty vectors
+    /// - Awake is called on each DAGNode which should retrieve SofaContext pointer
+    /// - Using saved Name, connect to API
+    /// - Register to GraphNodeMgr
+    /// - get all data + types
+    /// - Set value modified by editor!!!!!
+    /// ---> Start()
+    /// </summary>
     public class SofaDAGNode : SofaBase
     {
-        /// Pointer to the Sofa Context API.
-        SofaDAGNodeAPI m_impl = null;
+        ////////////////////////////////////////////
+        //////       SofaDAGNode members       /////
+        ////////////////////////////////////////////
 
+        /// Pointer to the Sofa Context API.
+        private SofaDAGNodeAPI m_impl = null;
+
+        /// Name of this parent DAGNode
         protected string m_parentNodeName = "None";
-        public string getParentName() { return m_parentNodeName; }
 
         /// List of SofaBaseComponent in this DAGNode
         public List<SofaBaseComponent> m_sofaComponents = null;
 
+        /// Pointer to the SofaMesh component (if one) in this DAGNode
         protected SofaMesh m_nodeMesh = null;
 
 
-        /// init() is called by nodeMgr with sofaContext and names
-        /// - Set sofaContext and name and call InitImpl()
-        /// - create connection with the good api
-        /// - create Object if needed
-        /// - get all data + types
-        /// - get data values and fill data with default values or loaded values
-        /// 
-        /// When play
-        /// - Awake should be done delayed (loop) while SofaContext is init
-        /// - GraphNodeMgr should only init itself with empty vectors
-        /// - Awake is called on each DAGNode which should retrieve SofaContext pointer
-        /// - Using saved Name, connect to API
-        /// - Register to GraphNodeMgr
-        /// - get all data + types
-        /// - Set value modified by editor!!!!!
-        /// ---> Start()
 
+        ////////////////////////////////////////////
+        //////      SofaDAGNode accessors      /////
+        ////////////////////////////////////////////
 
-        protected override void Create_impl()  // if launch by awake should only retrive pointer to sofaContext + name to reconnect to sofaDAGNodeAPI
+        /// Getter to \sa m_parentNodeName
+        public string getParentName() { return m_parentNodeName; }
+
+        /// Getter to \sa m_nodeMesh
+        public SofaMesh GetSofaMesh()
         {
-            if (m_impl == null)
-                CreateSofaAPI();
-            else
-                SofaLog("SofaDAGNode::InitImpl, already created: " + UniqueNameId, 1);
+            return m_nodeMesh;
+        }
+
+        /// Getter to \sa m_nodeMesh if pointer is null will look for it in the DAGnode component list and return one if found.
+        public SofaMesh FindSofaMesh()
+        {
+            if (m_nodeMesh != null)
+                return m_nodeMesh;
+
+            GameObject DAGNode = this.gameObject;
+
+            foreach (Transform child in DAGNode.transform)
+            {
+                SofaMesh sofaMesh = child.GetComponent<SofaMesh>();
+                if (sofaMesh != null)
+                {
+                    m_nodeMesh = sofaMesh;
+                    break;
+                }
+            }
+
+            return m_nodeMesh;
         }
 
 
-        protected void CreateSofaAPI()
+
+        ////////////////////////////////////////////
+        /////      SofaDAGNode public API      /////
+        ////////////////////////////////////////////
+
+        /// Method to set all components of this Node to dirty. Does not propagate to child DAGNode, is it done by DAGNodeMgr
+        public void PropagateSetDirty(bool value)
+        {
+            foreach (SofaBaseComponent scompo in m_sofaComponents)
+            {
+                scompo.SetDirty(value);
+            }
+        }
+
+
+
+        ////////////////////////////////////////////
+        /////     SofaDAGNode internal API     /////
+        ////////////////////////////////////////////
+
+        /// Method called by @sa SofaBase::Create() when creating objects. Will create all Sofa components.
+        protected override void Create_impl()
         {
             if (m_impl != null)
             {
                 SofaLog("SofaDAGNode " + UniqueNameId + " already has a SofaDAGNodeAPI.", 2);
                 return;
             }
-
+            
             m_impl = new SofaDAGNodeAPI(m_sofaContext.GetSimuContext(), UniqueNameId);
 
             string componentsS = m_impl.GetDAGNodeComponents();
@@ -92,6 +147,7 @@ namespace SofaUnity
         }
 
 
+        /// Method called by @sa SofaBase::Reconnect() when reloading objects. Will reconnect all Sofa objects
         protected override void Reconnect_impl()
         {
             if (m_impl != null)
@@ -128,41 +184,6 @@ namespace SofaUnity
                 if (!found)
                     Debug.LogError("Component: " + compoName + " not found under DAGNode: " + UniqueNameId);
             }
-        }
-
-        public void PropagateSetDirty(bool value)
-        {
-            foreach (SofaBaseComponent scompo in m_sofaComponents)
-            {
-                scompo.SetDirty(value);
-            }
-        }
-
-
-
-        public SofaMesh GetSofaMesh()
-        {
-            return m_nodeMesh;
-        }
-        
-        public SofaMesh FindSofaMesh()
-        {
-            if (m_nodeMesh != null)
-                return m_nodeMesh;
-
-            GameObject DAGNode = this.gameObject;
-
-            foreach (Transform child in DAGNode.transform)
-            {
-                SofaMesh sofaMesh = child.GetComponent<SofaMesh>();
-                if (sofaMesh != null)
-                {
-                    m_nodeMesh = sofaMesh;
-                    break;
-                }
-            }
-
-            return m_nodeMesh;
         }
     }
 
