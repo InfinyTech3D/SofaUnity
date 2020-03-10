@@ -5,14 +5,14 @@ using System.Runtime.InteropServices;
 /// <summary>
 /// Class to create a ray caster in SofaAdvancePhysicsAPI and to comunicate with it.
 /// </summary>
-public class SofaRayCaster : IDisposable
+public class SofaRayCasterAPI : IDisposable
 {
     /// <summary> Default constuctor of the sofa ray caster. </summary>
     /// <param name="simu">Pointer to the implicit sofaAPI</param>
     /// <param name="type">type of tool to attach to this ray caster</param>
     /// <param name="nameID">unique name id of this ray caster</param>
     /// <param name="length">length of the ray</param>
-    public SofaRayCaster(IntPtr simu, int type, string nameID, float length)
+    public SofaRayCasterAPI(IntPtr simu, int type, string nameID, float length)
     {
         m_simu = simu;
         m_name = nameID;
@@ -74,7 +74,7 @@ public class SofaRayCaster : IDisposable
         val = null;
 
         if (res != 0)
-            Debug.LogError("SofaRayCaster::setToolAttribute return error: " + SofaDefines.msg_error[res]);
+            Debug.LogError("SofaRayCasterAPI::setToolAttribute return error: " + SofaDefines.msg_error[res]);
 
         return res;
     }

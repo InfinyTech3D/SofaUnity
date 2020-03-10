@@ -13,7 +13,7 @@ public class SRayCaster : RayCaster
     protected SofaUnity.SofaContext m_sofaContext = null;
 
     /// Pointer to the corresponding SOFA API object
-    protected SofaRayCaster m_sofaRC = null;
+    protected SofaRayCasterAPI m_sofaRC = null;
 
     public bool startOnPlay = true;
     public bool automaticCast = false;

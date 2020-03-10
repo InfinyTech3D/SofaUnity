@@ -102,17 +102,17 @@ public class SLaserRay : SRayCaster
             float raySofaLength = length * m_sofaContext.GetFactorUnityToSofa(1);
             if (m_laserType == SofaDefines.SRayInteraction.CuttingTool)
             {
-                m_sofaRC = new SofaRayCaster(_simu, 0, base.name, raySofaLength*2);
+                m_sofaRC = new SofaRayCasterAPI(_simu, 0, base.name, raySofaLength*2);
                 Debug.Log(this.name + " create SofaRayCaster CuttingTool with length: " + raySofaLength);
             }
             else if (m_laserType == SofaDefines.SRayInteraction.AttachTool)
             {
-                m_sofaRC = new SofaRayCaster(_simu, 1, base.name, raySofaLength);
+                m_sofaRC = new SofaRayCasterAPI(_simu, 1, base.name, raySofaLength);
                 Debug.Log(this.name + " create SofaRayCaster AttachTool with length: " + raySofaLength);
             }
             else if (m_laserType == SofaDefines.SRayInteraction.FixTool)
             {
-                m_sofaRC = new SofaRayCaster(_simu, 2, base.name, raySofaLength);
+                m_sofaRC = new SofaRayCasterAPI(_simu, 2, base.name, raySofaLength);
                 Debug.Log(this.name + " create SofaRayCaster FixTool with length: " + raySofaLength);
             }
             else
