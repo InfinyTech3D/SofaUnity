@@ -16,46 +16,25 @@ namespace SofaUnity
     public class SofaContext : MonoBehaviour
     {
         ////////////////////////////////////////////
-        ////////       Manager pointers      ///////
+        //////       SofaContext members       /////
         ////////////////////////////////////////////
-        
+
         /// Pointer to the Sofa Context API.
         private SofaContextAPI m_impl;
 
-        /// Getter of current Sofa Context API, @see m_impl
-        public IntPtr GetSimuContext()
-        {
-            if (m_impl == null)
-                Init();
-
-            if (m_impl == null) // still null
-            {
-                Debug.LogError("Error: SofaContext has not be created. method getSimuContext return IntPtr.Zero");
-                return IntPtr.Zero;
-            }
-            return m_impl.getSimuContext();
-        }
-
         /// Pointer to the SofaDAGNodeManager which is used to recreate the SOFA node hierarchy
-        //[SerializeField]
         private SofaDAGNodeManager m_nodeGraphMgr = null;
 
         /// Pointer to the PluginManager which hold the list of sofa plugin to be loaded
         [SerializeField]
         private PluginManager m_pluginMgr = null;
-        public PluginManager PluginManager
-        {
-            get { return m_pluginMgr; }
-        }
 
         /// Pointer to the SceneFileManager which is used to check the file and hold the filename and paths.
         [SerializeField]
         private SceneFileManager m_sceneFileMgr = null;
-        public SceneFileManager SceneFileMgr
-        {
-            get { return m_sceneFileMgr; }
-        }
 
+
+        List<SRayCaster> m_casters = null;
 
         ////////////////////////////////////////////
         ////////          parameters         ///////
@@ -75,16 +54,48 @@ namespace SofaUnity
 
         public bool StepbyStep = false;
 
-
-
-        List<SRayCaster> m_casters = null;
-
         public bool testAsync = false;
-                
 
         /// Parameter: Vector representing the gravity force.
+        [SerializeField]
         protected Vector3 m_gravity = new Vector3(0f, -9.8f, 0f);
 
+        /// Parameter: Float representing the simulation timestep to use.
+        [SerializeField]
+        protected float m_timeStep = 0.02f; // ~ 1/60
+
+
+        ////////////////////////////////////////////
+        //////      SofaContext accessors      /////
+        ////////////////////////////////////////////
+
+        /// Getter of current Sofa Context API, @see m_impl
+        public IntPtr GetSimuContext()
+        {
+            if (m_impl == null)
+                Init();
+
+            if (m_impl == null) // still null
+            {
+                Debug.LogError("Error: SofaContext has not be created. method getSimuContext return IntPtr.Zero");
+                return IntPtr.Zero;
+            }
+            return m_impl.getSimuContext();
+        }
+
+        /// getter to the \sa PluginManager m_pluginMgr
+        public PluginManager PluginManager
+        {
+            get { return m_pluginMgr; }
+        }
+
+        /// getter to the \sa SceneFileManager m_sceneFileMgr
+        public SceneFileManager SceneFileMgr
+        {
+            get { return m_sceneFileMgr; }
+        }
+
+        
         /// Getter/Setter of current gravity @see m_gravity
         public Vector3 Gravity
         {
@@ -100,9 +111,6 @@ namespace SofaUnity
             }
         }
 
-
-        /// Parameter: Float representing the simulation timestep to use.
-        protected float m_timeStep = 0.02f; // ~ 1/60
 
         /// Getter/Setter of current timeStep @see m_timeStep
         public float TimeStep
