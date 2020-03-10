@@ -12,8 +12,8 @@ public class SofaCylinderEditor : SofaGridEditor
     ///  Add SofaCylinder Object creation to the SofaUnity Menu
     /// </summary>
     /// <returns>Pointer to the SofaCylinder GameObject</returns>
-    [MenuItem("SofaUnity/Sofa 3D Object/SofaCylinder")]
-    [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SofaCylinder")]
+    [MenuItem("SofaUnity/SofaObject/SofaCylinder")]
+    [MenuItem("GameObject/Create Other/SofaUnity/SofaDeformableObject/SofaCylinder")]
     new public static GameObject CreateNew()
     {
         GameObject go = new GameObject("SofaCylinder");
@@ -42,8 +42,8 @@ public class SofaRigidCylinderEditor : SofaRigidGridEditor
     ///  Add SofaRigidCylinder Object creation to the SofaUnity Menu
     /// </summary>
     /// <returns>Pointer to the SofaRigidCylinder GameObject</returns>
-    [MenuItem("SofaUnity/Sofa 3D Object/SofaRigidCylinder")]
-    [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SofaRigidCylinder")]
+    [MenuItem("SofaUnity/SofaObject/SofaRigidCylinder")]
+    [MenuItem("GameObject/Create Other/SofaUnity/SofaRigidObject/SofaRigidCylinder")]
     new public static GameObject CreateNew()
     {
         GameObject go = new GameObject("SofaRigidCylinder");

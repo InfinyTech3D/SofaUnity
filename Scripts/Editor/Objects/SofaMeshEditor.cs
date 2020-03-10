@@ -15,8 +15,8 @@ public class SofaDeformableMeshEditor : Editor
     ///  Add SofaDeformableMesh Object creation to the SofaUnity Menu
     /// </summary>
     /// <returns>Pointer to the SofaDeformableMesh GameObject</returns>
-    [MenuItem("SofaUnity/Sofa 3D Object/SofaDeformableMesh")]
-    [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SofaDeformableMesh")]
+    [MenuItem("SofaUnity/SofaObject/SofaDeformableMesh")]
+    [MenuItem("GameObject/Create Other/SofaUnity/SofaDeformableObject/SofaDeformableMesh")]
     public static GameObject CreateNew()
     {
         GameObject go = new GameObject("SofaDeformableMesh");
@@ -104,8 +104,8 @@ public class SofaRigidMeshEditor : Editor
     ///  Add SofaRigidMesh Object creation to the SofaUnity Menu
     /// </summary>
     /// <returns>Pointer to the SofaRigidMesh GameObject</returns>
-    [MenuItem("SofaUnity/Sofa 3D Object/SofaRigidMesh")]
-    [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SofaRigidMesh")]
+    [MenuItem("SofaUnity/SofaObject/SofaRigidMesh")]
+    [MenuItem("GameObject/Create Other/SofaUnity/SofaRigidObject/SofaRigidMesh")]
     public static GameObject CreateNew()
     {
         GameObject go = new GameObject("SofaRigidMesh");

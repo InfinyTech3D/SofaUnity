@@ -12,8 +12,8 @@ public class SofaBoxEditor : SofaGridEditor
     ///  Add SofaBox Object creation to the SofaUnity Menu
     /// </summary>
     /// <returns>Pointer to the SofaBox GameObject</returns>
-    [MenuItem("SofaUnity/Sofa 3D Object/SofaBox")]
-    [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SofaBox")]
+    [MenuItem("SofaUnity/SofaObject/SofaBox")]
+    [MenuItem("GameObject/Create Other/SofaUnity/SofaDeformableObject/SofaBox")]
     new public static GameObject CreateNew()
     {
         GameObject go = new GameObject("SofaBox");
@@ -42,8 +42,8 @@ public class SofaRigidBoxEditor : SofaRigidGridEditor
     ///  Add SofaRigidBox Object creation to the SofaUnity Menu
     /// </summary>
     /// <returns>Pointer to the SofaRigidBox GameObject</returns>
-    [MenuItem("SofaUnity/Sofa 3D Object/SofaRigidBox")]
-    [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SofaRigidBox")]
+    [MenuItem("SofaUnity/SofaObject/SofaRigidBox")]
+    [MenuItem("GameObject/Create Other/SofaUnity/SofaRigidObject/SofaRigidBox")]
     new public static GameObject CreateNew()
     {
         GameObject go = new GameObject("SofaRigidBox");

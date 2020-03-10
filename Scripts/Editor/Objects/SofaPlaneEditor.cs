@@ -12,8 +12,8 @@ public class SofaRigidPlaneEditor : SofaRigidGridEditor
     ///  Add SofaRigidPlane Object creation to the SofaUnity Menu
     /// </summary>
     /// <returns>Pointer to the SofaRigidPlane GameObject</returns>
-    [MenuItem("SofaUnity/Sofa 3D Object/SofaRigidPlane")]
-    [MenuItem("GameObject/Create Other/SofaUnity/Sofa 3D Object/SofaRigidPlane")]
+    [MenuItem("SofaUnity/SofaObject/SofaRigidPlane")]
+    [MenuItem("GameObject/Create Other/SofaUnity/SofaRigidObject/SofaRigidPlane")]
     new public static GameObject CreateNew()
     {
         GameObject go = new GameObject("SofaRigidPlane");
