@@ -1,0 +1,269 @@
+fileFormatVersion: 2
+guid: 4057208cf79ca3c4db345e7441a35df3
+timeCreated: 1548811535
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Board
+    100002: Board.001
+    100004: Box
+    100006: Box.001
+    100008: Chair
+    100010: Cube
+    100012: Cube.016
+    100014: CupBoard
+    100016: CupBoard.001
+    100018: Drawer
+    100020: Drawer.001
+    100022: Drawer.002
+    100024: Drawer.003
+    100026: Glass
+    100028: Knob
+    100030: Knob.001
+    100032: Knob.002
+    100034: Knob.003
+    100036: Lamp
+    100038: Lamp.001
+    100040: LCD
+    100042: Pipe
+    100044: Pipe.001
+    100046: Pipe.002
+    100048: Point.000
+    100050: Point.001
+    100052: Point.002
+    100054: //RootNode
+    100056: Support
+    100058: Table
+    100060: Wall
+    400000: Board
+    400002: Board.001
+    400004: Box
+    400006: Box.001
+    400008: Chair
+    400010: Cube
+    400012: Cube.016
+    400014: CupBoard
+    400016: CupBoard.001
+    400018: Drawer
+    400020: Drawer.001
+    400022: Drawer.002
+    400024: Drawer.003
+    400026: Glass
+    400028: Knob
+    400030: Knob.001
+    400032: Knob.002
+    400034: Knob.003
+    400036: Lamp
+    400038: Lamp.001
+    400040: LCD
+    400042: Pipe
+    400044: Pipe.001
+    400046: Pipe.002
+    400048: Point.000
+    400050: Point.001
+    400052: Point.002
+    400054: //RootNode
+    400056: Support
+    400058: Table
+    400060: Wall
+    2100000: Black
+    2100002: Wood
+    2100004: Material.002
+    2100006: Chrome
+    2100008: Glass
+    2100010: Leather
+    2300000: Board
+    2300002: Board.001
+    2300004: Box
+    2300006: Box.001
+    2300008: Chair
+    2300010: Cube
+    2300012: Cube.016
+    2300014: CupBoard
+    2300016: CupBoard.001
+    2300018: Drawer
+    2300020: Drawer.001
+    2300022: Drawer.002
+    2300024: Drawer.003
+    2300026: Glass
+    2300028: Knob
+    2300030: Knob.001
+    2300032: Knob.002
+    2300034: Knob.003
+    2300036: Lamp
+    2300038: Lamp.001
+    2300040: LCD
+    2300042: Pipe
+    2300044: Pipe.001
+    2300046: Pipe.002
+    2300048: Support
+    2300050: Table
+    2300052: Wall
+    3300000: Board
+    3300002: Board.001
+    3300004: Box
+    3300006: Box.001
+    3300008: Chair
+    3300010: Cube
+    3300012: Cube.016
+    3300014: CupBoard
+    3300016: CupBoard.001
+    3300018: Drawer
+    3300020: Drawer.001
+    3300022: Drawer.002
+    3300024: Drawer.003
+    3300026: Glass
+    3300028: Knob
+    3300030: Knob.001
+    3300032: Knob.002
+    3300034: Knob.003
+    3300036: Lamp
+    3300038: Lamp.001
+    3300040: LCD
+    3300042: Pipe
+    3300044: Pipe.001
+    3300046: Pipe.002
+    3300048: Support
+    3300050: Table
+    3300052: Wall
+    4300000: Wall
+    4300002: LCD
+    4300004: Lamp
+    4300006: Lamp.001
+    4300008: Table
+    4300010: CupBoard
+    4300012: Cube.016
+    4300014: CupBoard.001
+    4300016: Cube
+    4300018: Board.001
+    4300020: Box
+    4300022: Drawer.001
+    4300024: Knob.001
+    4300026: Drawer.002
+    4300028: Knob.002
+    4300030: Drawer.003
+    4300032: Knob.003
+    4300034: Drawer
+    4300036: Knob
+    4300038: Pipe.002
+    4300040: Pipe.001
+    4300042: Glass
+    4300044: Pipe
+    4300046: Box.001
+    4300048: Support
+    4300050: Board
+    4300052: Chair
+    10800000: Point.000
+    10800002: Point.001
+    10800004: Point.002
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Black
+    second: {fileID: 2100000, guid: 7ba71824cd5954944b437801f7cdd381, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Chrome
+    second: {fileID: 2100000, guid: cae6acc574fdc04478f2f1c23968be75, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Glass
+    second: {fileID: 2100000, guid: 3867d30896308b24893687e4556af40d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Leather
+    second: {fileID: 2100000, guid: bb08256007f5ee845a45c2242f905196, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: 2100000, guid: 74b048118b1b331498c35e59669adc4e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood
+    second: {fileID: 2100000, guid: b21e72b513f42e746b5594df19162c00, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
