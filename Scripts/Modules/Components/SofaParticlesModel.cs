@@ -3,24 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using SofaUnity;
 
-public class DofToSprit : MonoBehaviour
+/// <summary>
+/// Gameobject to transform a list of particle position into a unity sprite mesh.
+/// </summary>
+public class SofaParticlesModel : MonoBehaviour
 {
-    /// Pointer to the particle System pointer
-    public ParticleSystem m_pSystem = null;
+    ////////////////////////////////////////////
+    //////   SofaParticlesModel members    /////
+    ////////////////////////////////////////////
 
-    /// Pointer to Sofa deformable Mesh
-    public SofaDeformableMesh m_sofaObject = null;
-
-    /// Vector of particles
-    private ParticleSystem.Particle[] m_particles = null;
+    /// Pointer to the SofaMesh this ParticlesModel is related to.
+    public SofaMesh m_sofaMesh = null;
 
     /// Size of each particle
     public float m_particleSize = 0.5f;
 
+    /// Material to use for this particleSystem
     public Material m_particleMaterial = null;
 
+
+    /// Pointer to the particle System pointer
+    public ParticleSystem m_pSystem = null;
+
+    /// Max number of particles
     protected int m_nbrMax = 1000;
 
+    /// Vector of particles inside the ParticleSystem \sa m_pSystem
+    protected ParticleSystem.Particle[] m_particles = null;
+
+
+    ////////////////////////////////////////////
+    //////      SofaParticlesModel API     /////
+    ////////////////////////////////////////////
+
+    /// Method call by Unity animation loop when object is created
     public void Awake()
     {
         // Create a Particle System.
@@ -49,29 +65,12 @@ public class DofToSprit : MonoBehaviour
     }
 
 
-    // Start is called before the first frame update
+    /// Start is called by Unity animation loop before the first frame update
     void Start()
     {       
-        if (m_sofaObject != null)
-        {
-            Mesh mesh = m_sofaObject.getMesh();
-            if (mesh != null)
-            {
-                int nbr = mesh.vertices.Length;
-                Debug.Log("awk mesh.vertices: " + nbr);
-            }
-            m_sofaObject.m_forceUpdate = true;
-        }
-
         if (m_particles == null) // first time
         {
-            Debug.Log("init m_particles");
-        //    m_pSystem.GetParticles(m_particles);
-            m_particles = new ParticleSystem.Particle[m_nbrMax];
-            var emitParams = new ParticleSystem.EmitParams();
-            //emitParams.startColor = Color.red;
-            emitParams.startSize = m_particleSize;
-            m_pSystem.Emit(emitParams, m_nbrMax);
+            InitParticleSystem();
         }
 
         if (m_pSystem)
@@ -84,17 +83,18 @@ public class DofToSprit : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+
+    /// Update is called by Unity animation loop once per frame
     void Update()
     {
-        if (m_sofaObject == null)
+        if (m_sofaMesh == null)
             return;
 
-        Mesh mesh = m_sofaObject.getMesh();
-        int nbrV = mesh.vertices.Length;
+        int nbrV = m_sofaMesh.NbVertices();
 
         //Debug.Log(Time.fixedTime + " - nbrV: " + nbrV);
 
+        // 1. Resize particle system if needed
         if (m_pSystem.particleCount != 0)
         {
             m_pSystem.GetParticles(m_particles);
@@ -111,11 +111,13 @@ public class DofToSprit : MonoBehaviour
         }
 
         //Debug.Log(Time.fixedTime + " - m_pSystem.particleCount: " + m_pSystem.particleCount + " | m_particles: " + m_particles.Length);
-        // Update particles
+        
+        // 2. Update particles
+        float[] sofaVertices = m_sofaMesh.SofaMeshTopology.m_vertexBuffer;
         for (int i = 0; i < nbrV; ++i)
         {
             //ParticleSystem.Particle part = m_particles[i];
-            m_particles[i].position = mesh.vertices[i];
+            m_particles[i].position = new Vector3(sofaVertices[i * 3], sofaVertices[i * 3 + 1], sofaVertices[i * 3 + 2]);
             m_particles[i].startSize = m_particleSize;
             //m_particles[i].remainingLifetime = 1000.0f;
             //part.remainingLifetime = 10000.0f;
@@ -129,5 +131,23 @@ public class DofToSprit : MonoBehaviour
         }
         //Debug.Log("m_particles: " + m_particles.Length);
         m_pSystem.SetParticles(m_particles, nbrV);
-    }   
+    }
+
+
+    ////////////////////////////////////////////
+    ////// SofaParticlesModel internal API /////
+    ////////////////////////////////////////////
+
+    protected void InitParticleSystem()
+    {
+        Debug.Log("init m_particles");
+        //    m_pSystem.GetParticles(m_particles);
+        m_particles = new ParticleSystem.Particle[m_nbrMax];
+        var emitParams = new ParticleSystem.EmitParams();
+        //emitParams.startColor = Color.red;
+        emitParams.startSize = m_particleSize;
+        m_pSystem.Emit(emitParams, m_nbrMax);
+
+        m_sofaMesh.AddListener();
+    }
 }
