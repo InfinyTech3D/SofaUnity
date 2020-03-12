@@ -124,6 +124,10 @@ public class SofaLaserModel : SofaRayCaster
             lightSource.transform.position = m_origin + transLocal;
 
 
+        // cast ray here
+        CastRay();
+
+
         // Update the laser drawing
         if (drawRay)
             this.draw(m_origin, m_origin + m_direction * m_length);

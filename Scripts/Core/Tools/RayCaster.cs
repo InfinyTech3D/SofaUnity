@@ -19,13 +19,15 @@ public class RayCaster : MonoBehaviour
     protected Vector3 m_direction;
 
     /// Ray length in Unity world
+    [SerializeField]
     protected float m_length = 1f;
 
     ///Ray status, if is casting ray or not
+    [SerializeField]
     protected bool m_activateRay = false;
 
-
     ///Ray internal status, if ray has well be init
+    [SerializeField]
     protected bool m_initialized = false;
     
 

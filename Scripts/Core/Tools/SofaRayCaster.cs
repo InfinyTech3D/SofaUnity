@@ -23,9 +23,11 @@ public class SofaRayCaster : RayCaster
     public bool startOnPlay = true;
 
     /// Booleen to activate or not that tool
+    [SerializeField]
     protected bool m_isActivated = false;
 
     /// Enum that set the type of interaction to plug to this tool on sofa side
+    [SerializeField]
     protected SofaDefines.SRayInteraction m_rayType;
 
 
@@ -33,6 +35,7 @@ public class SofaRayCaster : RayCaster
 
 
     /// Specific parameter for attach tool interaction
+    [SerializeField]
     protected float m_stiffness = 10000f;
 
 
@@ -188,6 +191,9 @@ public class SofaRayCaster : RayCaster
         if (m_sofaRC != null)
         {
             m_sofaRC.activateTool(m_isActivated);
+
+            if (m_rayType == SofaDefines.SRayInteraction.AttachTool)
+                m_sofaRC.setToolAttribute("stiffness", m_stiffness);
         }
     }
 
@@ -208,7 +214,7 @@ public class SofaRayCaster : RayCaster
             }
             else if (m_rayType == SofaDefines.SRayInteraction.AttachTool)
             {
-                m_sofaRC = new SofaRayCasterAPI(_simu, 1, base.name, raySofaLength);
+                m_sofaRC = new SofaRayCasterAPI(_simu, 1, base.name, raySofaLength);                
                 Debug.Log(this.name + " create SofaRayCaster AttachTool with length: " + raySofaLength);
             }
             else if (m_rayType == SofaDefines.SRayInteraction.FixTool)
