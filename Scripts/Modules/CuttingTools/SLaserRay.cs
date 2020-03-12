@@ -53,7 +53,7 @@ public class SLaserRay : SofaRayCaster
 
 
     /// Protected method that will really create the Sofa ray caster
-    protected override void createSofaRayCaster()
+    public override void CreateSofaRayCaster()
     {
         // Create Laser
         if (laser == null)
@@ -86,7 +86,7 @@ public class SLaserRay : SofaRayCaster
 
         this.activeTool(false);
 
-        base.createSofaRayCaster();
+        base.CreateSofaRayCaster();
     }
 
     //private void OnDestroy()
@@ -114,7 +114,7 @@ public class SLaserRay : SofaRayCaster
     // Update is called once per frame
     void Update()
     {
-        if (!m_isReady)
+        if (!m_initialized)
             return;
 
         if (Input.GetKey(KeyCode.A))
@@ -160,7 +160,7 @@ public class SLaserRay : SofaRayCaster
 
     public override void updateImpl()
     {
-        if (!m_isReady)
+        if (!m_initialized)
             return;
         
         Vector3 transLocal = transform.TransformVector(m_translation);

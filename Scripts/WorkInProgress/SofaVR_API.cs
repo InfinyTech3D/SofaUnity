@@ -383,13 +383,13 @@ public class SofaVR_API : MonoBehaviour
         if (m_leftRayCaster != null)
         {
             m_leftRayCaster.m_laserType = sceneInfo.m_leftToolType;
-            m_leftRayCaster.startSofaRayCaster(m_sofaContext);
+            m_leftRayCaster.LoadSofaRayCaster(m_sofaContext);
         }
 
         if (m_rightRayCaster != null)
         {
             m_rightRayCaster.m_laserType = sceneInfo.m_rightToolType;
-            m_rightRayCaster.startSofaRayCaster(m_sofaContext);
+            m_rightRayCaster.LoadSofaRayCaster(m_sofaContext);
         }
 
         // update scene info here

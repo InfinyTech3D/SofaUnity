@@ -26,7 +26,7 @@ public class RayCaster : MonoBehaviour
     public bool useHighlight = false;
     private GameObject newTriangle;
     protected bool gotHit = false;
-    private bool initialized = false;
+    protected bool m_initialized = false;
 
 
    
@@ -60,10 +60,10 @@ public class RayCaster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {        
-        if (m_activateRay)
+        if (m_initialized && m_activateRay)
         {
-            m_origin = transform.position;
-            m_direction = transform.forward;
+            //m_origin = transform.position;
+            //m_direction = transform.forward;
             CastRay();
         }
     }

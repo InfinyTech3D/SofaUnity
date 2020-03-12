@@ -30,8 +30,6 @@ public class SofaRayCaster : RayCaster
     public bool startOnPlay = true;
     public bool automaticCast = false;
 
-    protected bool m_isReady = false;
-
     /// Enum that set the type of interaction to plug to this tool on sofa side
     public SofaDefines.SRayInteraction m_laserType;
 
@@ -49,7 +47,7 @@ public class SofaRayCaster : RayCaster
             m_sofaRC.Dispose();
             m_sofaRC = null;
         }
-        m_isReady = false;
+        m_isActivated = false;
     }
 
     public virtual void activeTool(bool value)
@@ -67,42 +65,37 @@ public class SofaRayCaster : RayCaster
         if (!startOnPlay)
             return;
 
-        if (_contextObject != null)
+        CreateSofaRayCaster();
+    }
+
+    public virtual void CreateSofaRayCaster()
+    {
+        if (m_sofaContext == null)
         {
-            // Get Sofa context
-            m_sofaContext = _contextObject.GetComponent<SofaUnity.SofaContext>();
-        }
-        else
-        {
-            Debug.LogError("RayCaster::loadContext - No SofaContext found.");
             GameObject _contextObject = GameObject.FindGameObjectWithTag("GameController");
+            if (_contextObject != null)
+            {
+                // Get Sofa context
+                m_sofaContext = _contextObject.GetComponent<SofaUnity.SofaContext>();
+            }
+            else
+            {
+                Debug.LogError("RayCaster::loadContext - No SofaContext found.");
+                return;
+            }
         }
 
         // Call internal method that will create a ray caster in Sofa.
-        createSofaRayCaster();
+        CreateSofaRayCaster_impl();
     }
 
-    private void Start()
+    public void LoadSofaRayCaster(SofaUnity.SofaContext _context)
     {
-        
-    }
-
-    public void startSofaRayCaster(SofaUnity.SofaContext _context)
-    {
-        if (m_sofaContext != null || m_sofaRC != null)
-        {
-            stopRay();
-        }
-
+        stopRay();
         m_sofaContext = _context;
 
         // Call internal method that will create a ray caster in Sofa.
-        createSofaRayCaster();
-
-        if (m_sofaContext.testAsync == true)
-            m_sofaContext.RegisterRayCaster(this);
-        else
-            automaticCast = true;        
+        CreateSofaRayCaster_impl();
     }
 
     public void unloadSofaRayCaster()
@@ -110,9 +103,12 @@ public class SofaRayCaster : RayCaster
         stopRay();
         m_sofaContext = null;
     }
-    
+
+        
+
+
     /// Method called by @sa loadContext() method. To create the object when Sofa context has been found. To be implemented by child class.
-    protected virtual void createSofaRayCaster()
+    protected virtual void CreateSofaRayCaster_impl()
     {
         // Get access to the sofaContext
         IntPtr _simu = m_sofaContext.GetSimuContext();
@@ -138,7 +134,7 @@ public class SofaRayCaster : RayCaster
             else
             {
                 m_sofaRC = null;
-                m_isReady = false;
+                m_initialized = false;
             }
         }
 
@@ -148,9 +144,14 @@ public class SofaRayCaster : RayCaster
         }
         else
         {
-            m_isReady = true;
+            m_initialized = true;
+            if (m_sofaContext.testAsync == true)
+                m_sofaContext.RegisterRayCaster(this);
+            else
+                automaticCast = true;
         }
     }
+
 
     /// Method to display touched triangle. Not yet implemented from Sofa-Unity.
     public override void HighlightTriangle()
@@ -159,21 +160,13 @@ public class SofaRayCaster : RayCaster
     }
 
     public override bool CastRay()
-    {
-        return false;
-    }
-
-    private void Update()
-    {
-        if (!m_isReady)
-            return;
-
+    {        
         // compute the direction and origin of the ray by adding object transform + additional manual transform
         Vector3 transLocal = transform.TransformVector(m_translation);
         m_origin = transform.position + transLocal;
         m_direction = transform.forward * m_axisDirection[0] + transform.right * m_axisDirection[1] + transform.up * m_axisDirection[2];
 
-
+        Debug.Log("SofaRayCaster: " + automaticCast);
         if (automaticCast && m_sofaRC != null)
         {
             int triId = -1;
@@ -183,8 +176,8 @@ public class SofaRayCaster : RayCaster
                 Vector3 originS = m_sofaContext.transform.InverseTransformPoint(m_origin);
                 Vector3 directionS = m_sofaContext.transform.InverseTransformDirection(m_direction);
                 triId = m_sofaRC.castRay(originS, directionS);
-                //if (triId >= 0)
-                //    Debug.Log("origin: " + origin + " => originS: " + originS + " |  directionS: " + directionS + " | triId: " + triId);
+                if (triId >= 0)
+                    Debug.Log("origin: " + m_origin + " => originS: " + originS + " |  directionS: " + directionS + " | triId: " + triId);
 
                 //if (m_laserType == SofaDefines.SRayInteraction.AttachTool)
                 //{
@@ -196,6 +189,8 @@ public class SofaRayCaster : RayCaster
                 //}
             }
         }
+
+        return false;
     }
 
     public virtual void updateImpl()
