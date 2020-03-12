@@ -11,13 +11,22 @@ public class RayCaster : MonoBehaviour
     //////        RayCaster members        /////
     ////////////////////////////////////////////
 
+    /// Ray Origin position in Unity world
     protected Vector3 m_origin;
+
+    /// Ray direction in Unity world
     protected Vector3 m_direction;
+
+    /// Ray length in Unity world
     protected float m_length = 1f;
 
-    public bool m_activateRay = true;
-    protected bool m_initialized = false;
+    ///Ray status, if is casting ray or not
+    protected bool m_activateRay = false;
 
+
+    ///Ray internal status, if ray has well be init
+    protected bool m_initialized = false;
+    
 
     //old struct {
     protected RaycastHit hit;
@@ -26,47 +35,64 @@ public class RayCaster : MonoBehaviour
     public bool useHighlight = false;
     //private GameObject newTriangle;
     protected bool gotHit = false;
-    
+
     //}
 
     ////////////////////////////////////////////
     //////       RayCaster accessors       /////
     ////////////////////////////////////////////
 
+    /// Getter/Setter of the ray origin \sa m_origin
     public Vector3 Origin
     {
         get { return m_origin; }
         set { m_origin = value; }
     }
 
+    /// Getter/Setter of the ray direction \sa m_direction
     public Vector3 Direction
     {
         get { return m_direction; }
         set { m_direction = value; }
     }
 
+    /// Getter/Setter of the ray length \sa m_length
     public float Length
     {
         get { return m_length; }
         set { m_length = value; }
     }
-    
 
+    /// Getter/Setter of the status \sa m_activateRay
+    public bool ActivateRay
+    {
+        get { return m_activateRay; }
+        set {
+            if (m_activateRay != value)
+            {
+                m_activateRay = value;
+                if (m_activateRay)
+                    StartRay();
+                else
+                    StopRay();
+            }
+        }
+    }
 
 
     ////////////////////////////////////////////
     //////      RayCaster public API       /////
     ////////////////////////////////////////////
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
-    {        
+    {
+        if (Input.GetKey(KeyCode.Keypad0))
+            StartRay();
+        else if (Input.GetKey(KeyCode.Keypad1))
+            StopRay();
+
+
         if (m_initialized && m_activateRay)
         {
             //m_origin = transform.position;
@@ -75,18 +101,22 @@ public class RayCaster : MonoBehaviour
         }
     }
 
-
+    /// Public Method to start this Ray casting \sa m_activateRay
     public virtual void StartRay()
     {
+        Debug.Log("StartRay");
         m_activateRay = true;
     }
 
+    /// Public Method to stop this Ray casting \sa m_activateRay
     public virtual void StopRay()
     {
+        Debug.Log("StopRay");
         m_activateRay = false;
     }
 
-    //cast ray
+    
+    /// Main method to cast ray
     public virtual bool CastRay()
     {
         if (checkBackfaces)

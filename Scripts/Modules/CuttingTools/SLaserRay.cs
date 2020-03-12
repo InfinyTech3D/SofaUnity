@@ -17,8 +17,11 @@ public class SLaserRay : SofaRayCaster
     public bool drawRay = false;
 
 
+    /// Direction of the laser ray in local coordinate 
+    public Vector3 m_axisDirection = new Vector3(1.0f, 0.0f, 0.0f);
+    /// Translation of the origin of the laser ray from the origin of the GameObject in world coordinate
+    public Vector3 m_translation = new Vector3(0.0f, 0.0f, 0.0f);
 
-    
 
 
     /// Laser object
@@ -84,7 +87,7 @@ public class SLaserRay : SofaRayCaster
         if (drawRay)
             initialiseRay();
 
-        this.activeTool(false);
+        //this.activeTool(false);
 
         base.CreateSofaRayCaster();
     }
@@ -117,8 +120,7 @@ public class SLaserRay : SofaRayCaster
         if (!m_initialized)
             return;
 
-        if (Input.GetKey(KeyCode.A))
-            activeTool(true);
+      
 
         // compute the direction and origin of the ray by adding object transform + additional manual transform
         Vector3 transLocal = transform.TransformVector(m_translation);
@@ -158,7 +160,7 @@ public class SLaserRay : SofaRayCaster
             this.draw(m_origin, m_origin + m_direction * m_length);
     }
 
-    public override void updateImpl()
+    public void updateImpl()
     {
         if (!m_initialized)
             return;
@@ -182,18 +184,18 @@ public class SLaserRay : SofaRayCaster
 
 
     /// Internal method to activate or not the tool, will also update the rendering
-    public override void activeTool(bool value)
-    {
-        if (value)
-            this.endColor = Color.red;
-        else
-            this.endColor = Color.green;
+    //public override void activeTool(bool value)
+    //{
+    //    if (value)
+    //        this.endColor = Color.red;
+    //    else
+    //        this.endColor = Color.green;
 
-        if (drawLaserParticles || drawRay)
-            this.updateLaser();
+    //    if (drawLaserParticles || drawRay)
+    //        this.updateLaser();
 
-        base.activeTool(value);
-    }
+    //    base.activeTool(value);
+    //}
 
 
     private void initialiseRay()

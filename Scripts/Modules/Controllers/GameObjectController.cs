@@ -74,7 +74,7 @@ public class GameObjectController : ObjectController
             }
 
             if (toolImpl)
-                toolImpl.activeTool(true);
+                toolImpl.ActivateTool = true;
         }
         else if (Input.GetKey(KeyCode.V))
         {
@@ -85,7 +85,7 @@ public class GameObjectController : ObjectController
             }
 
             if (toolImpl)
-                toolImpl.activeTool(false);
+                toolImpl.ActivateTool = false;
         }
     }
 

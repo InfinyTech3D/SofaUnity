@@ -19,38 +19,61 @@ public class SofaRayCaster : RayCaster
     /// Pointer to the corresponding SOFA API object
     protected SofaRayCasterAPI m_sofaRC = null;
 
-    /// Direction of the laser ray in local coordinate 
-    public Vector3 m_axisDirection = new Vector3(1.0f, 0.0f, 0.0f);
-    /// Translation of the origin of the laser ray from the origin of the GameObject in world coordinate
-    public Vector3 m_translation = new Vector3(0.0f, 0.0f, 0.0f);
+    /// Parameter to activate or unactivate ray at game start
+    public bool startOnPlay = true;
 
     /// Booleen to activate or not that tool
-    public bool m_isActivated = false;
-
-
-    public bool startOnPlay = true;
-    public bool automaticCast = false;
+    protected bool m_isActivated = false;
 
     /// Enum that set the type of interaction to plug to this tool on sofa side
     public SofaDefines.SRayInteraction m_laserType;
 
+
+    public bool automaticCast = false;
+
+    
+    
     public float m_stiffness = 10000f;
     protected float oldStiffness = 10000f;
 
-    
+
 
     ////////////////////////////////////////////
     //////     SofaRayCaster accessors     /////
     ////////////////////////////////////////////
 
+    /// Public Method to change the tool activation of this Ray \sa m_isActivated will call \sa SofaRayCasterAPI.activateTool
+    public bool ActivateTool
+    {
+        get { return m_isActivated; }
+        set
+        {
+            if (m_isActivated != value)
+            {
+                m_isActivated = value;
+                if (m_sofaRC != null)
+                {
+                    m_sofaRC.activateTool(m_isActivated);
+                }
+            }
+        }
+    }
 
+    //if (m_laserType == SofaDefines.SRayInteraction.AttachTool)
+    //{
+    //    if (oldStiffness != m_stiffness)
+    //    {
+    //        oldStiffness = m_stiffness;
+    //        m_sofaRC.setToolAttribute("stiffness", m_stiffness);
+    //    }
+    //}
 
 
     ////////////////////////////////////////////
     //////     SofaRayCaster public API    /////
     ////////////////////////////////////////////
 
-    /// Method called at GameObject creation. Will search for SofaContext @sa loadContext() which call @sa createObject() . Then call @see awakePostProcess()
+    /// Method called at GameObject creation. Will call \sa CreateSofaRayCaster() if startOnPlay is set to true
     void Awake()
     {
         if (!startOnPlay)
@@ -59,6 +82,8 @@ public class SofaRayCaster : RayCaster
         CreateSofaRayCaster();
     }
 
+
+    /// Method to search for SofaContext if needed then call internal method \sa CreateSofaRayCaster_impl
     public virtual void CreateSofaRayCaster()
     {
         if (m_sofaContext == null)
@@ -80,6 +105,8 @@ public class SofaRayCaster : RayCaster
         CreateSofaRayCaster_impl();
     }
 
+
+    /// Method to create the SofaRayCaster using a given SofaContext
     public void LoadSofaRayCaster(SofaUnity.SofaContext _context)
     {
         StopRay();
@@ -89,14 +116,19 @@ public class SofaRayCaster : RayCaster
         CreateSofaRayCaster_impl();
     }
 
-    public void unloadSofaRayCaster()
+
+    /// Method to unload the Sofacontext from this SofaRayCaster, Will call \sa StopRay()
+    public void UnloadSofaRayCaster()
     {
         StopRay();
         m_sofaContext = null;
     }
 
+    
+    /// Public Method to stop this Ray casting \sa m_activateRay
     public override void StopRay()
     {
+        Debug.Log("SofaRayCaster StopRay");
         if (m_sofaRC != null)
         {
             m_sofaRC.activateTool(false);
@@ -106,16 +138,33 @@ public class SofaRayCaster : RayCaster
         base.StopRay();
     }
 
-    public virtual void activeTool(bool value)
+   
+    /// 
+    public override bool CastRay()
     {
-        m_isActivated = value;
+        if (automaticCast && m_sofaRC != null)
+        {
+            int triId = -1;
+            // get the id of the selected triangle. If < 0, no intersection
+            if (m_isActivated)
+            {
+                Vector3 originS = m_sofaContext.transform.InverseTransformPoint(m_origin);
+                Vector3 directionS = m_sofaContext.transform.InverseTransformDirection(m_direction);
+                triId = m_sofaRC.castRay(originS, directionS);
+                if (triId >= 0)
+                    Debug.Log("origin: " + m_origin + " => originS: " + originS + " |  directionS: " + directionS + " | triId: " + triId);
+            }
+        }
 
-        if (m_sofaRC != null)
-            m_sofaRC.activateTool(m_isActivated);
+        return false;
     }
 
 
-    /// Method called by @sa loadContext() method. To create the object when Sofa context has been found. To be implemented by child class.
+    ////////////////////////////////////////////
+    //////    SofaRayCaster internal API   /////
+    ////////////////////////////////////////////
+
+    /// Internal Method called by \sa CreateSofaRayCaster or \sa LoadSofaRayCaster to create a SofaRayCasterAPI to interact with SOFA ray
     protected virtual void CreateSofaRayCaster_impl()
     {
         // Get access to the sofaContext
@@ -157,60 +206,6 @@ public class SofaRayCaster : RayCaster
                 m_sofaContext.RegisterRayCaster(this);
             else
                 automaticCast = true;
-        }
-    }
-
-
-    public override bool CastRay()
-    {        
-        // compute the direction and origin of the ray by adding object transform + additional manual transform
-        Vector3 transLocal = transform.TransformVector(m_translation);
-        m_origin = transform.position + transLocal;
-        m_direction = transform.forward * m_axisDirection[0] + transform.right * m_axisDirection[1] + transform.up * m_axisDirection[2];
-
-        
-        if (automaticCast && m_sofaRC != null)
-        {
-            int triId = -1;
-            // get the id of the selected triangle. If < 0, no intersection
-            if (m_isActivated)
-            {
-                Vector3 originS = m_sofaContext.transform.InverseTransformPoint(m_origin);
-                Vector3 directionS = m_sofaContext.transform.InverseTransformDirection(m_direction);
-                triId = m_sofaRC.castRay(originS, directionS);
-                if (triId >= 0)
-                    Debug.Log("origin: " + m_origin + " => originS: " + originS + " |  directionS: " + directionS + " | triId: " + triId);
-
-                //if (m_laserType == SofaDefines.SRayInteraction.AttachTool)
-                //{
-                //    if (oldStiffness != m_stiffness)
-                //    {
-                //        oldStiffness = m_stiffness;
-                //        m_sofaRC.setToolAttribute("stiffness", m_stiffness);
-                //    }
-                //}
-            }
-        }
-
-        return false;
-    }
-
-    public virtual void updateImpl()
-    {
-        Vector3 transLocal = transform.TransformVector(m_translation);
-        m_origin = transform.position + transLocal;
-        m_direction = transform.forward * m_axisDirection[0] + transform.right * m_axisDirection[1] + transform.up * m_axisDirection[2];
-
-        if (m_sofaRC != null)
-        {
-            int triId = -1;
-            // get the id of the selected triangle. If < 0, no intersection
-            if (m_isActivated)
-            {
-                Vector3 originS = m_sofaContext.transform.InverseTransformPoint(m_origin);
-                Vector3 directionS = m_sofaContext.transform.InverseTransformDirection(m_direction);
-                triId = m_sofaRC.castRay(originS, directionS);
-            }
         }
     }
 }

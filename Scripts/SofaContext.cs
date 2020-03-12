@@ -433,7 +433,7 @@ namespace SofaUnity
                         foreach (SofaRayCaster child in m_casters)
                         {
                             //child.setDirty();
-                            child.updateImpl();
+                            child.CastRay();
                             //Debug.Log(child.name);
                         }
                     }

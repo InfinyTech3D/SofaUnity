@@ -155,7 +155,7 @@ public class SofaVR_API : MonoBehaviour
             if (m_rightCtrlActivated) // was activated and now view mode
             {
                 m_rightCollisionModel.activated = false;
-                m_rightRayCaster.activeTool(false);
+                m_rightRayCaster.ActivateTool = false;
                 m_rightCtrlActivated = false;
             }
             return;
@@ -174,12 +174,12 @@ public class SofaVR_API : MonoBehaviour
         {
             if (trigR)
             {
-                m_rightRayCaster.activeTool(true);
+                m_rightRayCaster.ActivateTool = true;
                 m_rightCtrlActivated = true;
             }
             else if (m_rightCtrlActivated)
             {
-                m_rightRayCaster.activeTool(false);
+                m_rightRayCaster.ActivateTool = false;
                 m_rightCtrlActivated = false;
             }
         }
@@ -187,12 +187,12 @@ public class SofaVR_API : MonoBehaviour
         {
             if (trigR)
             {
-                m_rightRayCaster.activeTool(true);
+                m_rightRayCaster.ActivateTool = true;
                 m_rightCtrlActivated = true;
             }
             else if (m_rightCtrlActivated)
             {
-                m_rightRayCaster.activeTool(false);
+                m_rightRayCaster.ActivateTool = false;
                 m_rightCtrlActivated = false;
             }
         }
@@ -209,7 +209,7 @@ public class SofaVR_API : MonoBehaviour
             if (m_leftCtrlActivated) // was activated and now view mode
             {
                 m_leftCollisionModel.activated = false;
-                m_leftRayCaster.activeTool(false);
+                m_leftRayCaster.ActivateTool = false;
                 m_leftCtrlActivated = false;
             }
             return;
@@ -228,12 +228,12 @@ public class SofaVR_API : MonoBehaviour
         {
             if (trigL)
             {
-                m_leftRayCaster.activeTool(true);
+                m_leftRayCaster.ActivateTool = true;
                 m_leftCtrlActivated = true;
             }
             else if (m_leftCtrlActivated)
             {
-                m_leftRayCaster.activeTool(false);
+                m_leftRayCaster.ActivateTool = false;
                 m_leftCtrlActivated = false;
             }
         }
@@ -241,12 +241,12 @@ public class SofaVR_API : MonoBehaviour
         {
             if (trigL)
             {
-                m_leftRayCaster.activeTool(true);
+                m_leftRayCaster.ActivateTool = true;
                 m_leftCtrlActivated = true;
             }
             else if (m_leftCtrlActivated)
             {
-                m_leftRayCaster.activeTool(false);
+                m_leftRayCaster.ActivateTool = false;
                 m_leftCtrlActivated = false;
             }
         }
@@ -283,12 +283,12 @@ public class SofaVR_API : MonoBehaviour
 
         if (m_leftRayCaster != null)
         {
-            m_leftRayCaster.unloadSofaRayCaster();
+            m_leftRayCaster.UnloadSofaRayCaster();
         }
 
         if (m_rightRayCaster != null)
         {
-            m_rightRayCaster.unloadSofaRayCaster();
+            m_rightRayCaster.UnloadSofaRayCaster();
         }
 
         if (m_sceneInfo != null)
