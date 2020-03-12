@@ -249,7 +249,7 @@ namespace SofaUnity
                 foreach (SofaRayCaster child in m_casters)
                 {
                     if (child != null)
-                        child.stopRay();
+                        child.StopRay();
                 }
             }
         }

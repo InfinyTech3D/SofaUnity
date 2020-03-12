@@ -24,7 +24,8 @@ public class SofaRayCaster : RayCaster
     /// Translation of the origin of the laser ray from the origin of the GameObject in world coordinate
     public Vector3 m_translation = new Vector3(0.0f, 0.0f, 0.0f);
 
-
+    /// Booleen to activate or not that tool
+    public bool m_isActivated = false;
 
 
     public bool startOnPlay = true;
@@ -36,28 +37,18 @@ public class SofaRayCaster : RayCaster
     public float m_stiffness = 10000f;
     protected float oldStiffness = 10000f;
 
-    /// Booleen to activate or not that tool
-    public bool m_isActivated = false;
+    
 
-    public void stopRay()
-    {
-        if (m_sofaRC != null)
-        {
-            m_sofaRC.activateTool(false);
-            m_sofaRC.Dispose();
-            m_sofaRC = null;
-        }
-        m_isActivated = false;
-    }
+    ////////////////////////////////////////////
+    //////     SofaRayCaster accessors     /////
+    ////////////////////////////////////////////
 
-    public virtual void activeTool(bool value)
-    {
-        m_isActivated = value;
 
-        if (m_sofaRC != null)
-            m_sofaRC.activateTool(m_isActivated);
-    }
 
+
+    ////////////////////////////////////////////
+    //////     SofaRayCaster public API    /////
+    ////////////////////////////////////////////
 
     /// Method called at GameObject creation. Will search for SofaContext @sa loadContext() which call @sa createObject() . Then call @see awakePostProcess()
     void Awake()
@@ -91,7 +82,7 @@ public class SofaRayCaster : RayCaster
 
     public void LoadSofaRayCaster(SofaUnity.SofaContext _context)
     {
-        stopRay();
+        StopRay();
         m_sofaContext = _context;
 
         // Call internal method that will create a ray caster in Sofa.
@@ -100,11 +91,28 @@ public class SofaRayCaster : RayCaster
 
     public void unloadSofaRayCaster()
     {
-        stopRay();
+        StopRay();
         m_sofaContext = null;
     }
 
-        
+    public override void StopRay()
+    {
+        if (m_sofaRC != null)
+        {
+            m_sofaRC.activateTool(false);
+            m_sofaRC.Dispose();
+            m_sofaRC = null;
+        }
+        base.StopRay();
+    }
+
+    public virtual void activeTool(bool value)
+    {
+        m_isActivated = value;
+
+        if (m_sofaRC != null)
+            m_sofaRC.activateTool(m_isActivated);
+    }
 
 
     /// Method called by @sa loadContext() method. To create the object when Sofa context has been found. To be implemented by child class.
@@ -153,12 +161,6 @@ public class SofaRayCaster : RayCaster
     }
 
 
-    /// Method to display touched triangle. Not yet implemented from Sofa-Unity.
-    public override void HighlightTriangle()
-    {
-
-    }
-
     public override bool CastRay()
     {        
         // compute the direction and origin of the ray by adding object transform + additional manual transform
@@ -166,7 +168,7 @@ public class SofaRayCaster : RayCaster
         m_origin = transform.position + transLocal;
         m_direction = transform.forward * m_axisDirection[0] + transform.right * m_axisDirection[1] + transform.up * m_axisDirection[2];
 
-        Debug.Log("SofaRayCaster: " + automaticCast);
+        
         if (automaticCast && m_sofaRC != null)
         {
             int triId = -1;

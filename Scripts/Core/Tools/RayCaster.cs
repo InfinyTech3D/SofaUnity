@@ -16,20 +16,22 @@ public class RayCaster : MonoBehaviour
     protected float m_length = 1f;
 
     public bool m_activateRay = true;
-
-
-    protected RaycastHit hit;
-
-    
-    public LayerMask mask;
-    public bool checkBackfaces = false;
-    public bool useHighlight = false;
-    private GameObject newTriangle;
-    protected bool gotHit = false;
     protected bool m_initialized = false;
 
 
-   
+    //old struct {
+    protected RaycastHit hit;
+    public LayerMask mask;
+    public bool checkBackfaces = false;
+    public bool useHighlight = false;
+    //private GameObject newTriangle;
+    protected bool gotHit = false;
+    
+    //}
+
+    ////////////////////////////////////////////
+    //////       RayCaster accessors       /////
+    ////////////////////////////////////////////
 
     public Vector3 Origin
     {
@@ -48,8 +50,13 @@ public class RayCaster : MonoBehaviour
         get { return m_length; }
         set { m_length = value; }
     }
+    
 
 
+
+    ////////////////////////////////////////////
+    //////      RayCaster public API       /////
+    ////////////////////////////////////////////
 
     // Use this for initialization
     void Start()
@@ -68,6 +75,17 @@ public class RayCaster : MonoBehaviour
         }
     }
 
+
+    public virtual void StartRay()
+    {
+        m_activateRay = true;
+    }
+
+    public virtual void StopRay()
+    {
+        m_activateRay = false;
+    }
+
     //cast ray
     public virtual bool CastRay()
     {
@@ -81,6 +99,13 @@ public class RayCaster : MonoBehaviour
 
         return gotHit;
     }
+
+
+
+
+    ////////////////////////////////////////////
+    //////     RayCaster internal API      /////
+    ////////////////////////////////////////////
 
     //function to handle backfaces and faces close to others when raycasting -> might cause performance issues depending on distance
     private bool HelpRay()
