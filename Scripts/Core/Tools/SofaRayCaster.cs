@@ -26,15 +26,14 @@ public class SofaRayCaster : RayCaster
     protected bool m_isActivated = false;
 
     /// Enum that set the type of interaction to plug to this tool on sofa side
-    public SofaDefines.SRayInteraction m_laserType;
+    protected SofaDefines.SRayInteraction m_rayType;
 
 
     public bool automaticCast = false;
 
-    
-    
-    public float m_stiffness = 10000f;
-    protected float oldStiffness = 10000f;
+
+    /// Specific parameter for attach tool interaction
+    protected float m_stiffness = 10000f;
 
 
 
@@ -59,14 +58,37 @@ public class SofaRayCaster : RayCaster
         }
     }
 
-    //if (m_laserType == SofaDefines.SRayInteraction.AttachTool)
-    //{
-    //    if (oldStiffness != m_stiffness)
-    //    {
-    //        oldStiffness = m_stiffness;
-    //        m_sofaRC.setToolAttribute("stiffness", m_stiffness);
-    //    }
-    //}
+    /// Getter/setter to access this SofaRayCaster type \sa m_rayType
+    public SofaDefines.SRayInteraction RayInteractionType
+    {
+        get { return m_rayType; }
+        set
+        {
+            if (m_rayType != value)
+            {
+                m_rayType = value;
+                //StopRay();
+                //CreateSofaRayCaster_impl();
+            }
+        }
+    }
+
+    /// Getter/setter to change AttachStiffness of this SofaRayCaster type \sa m_stiffness
+    public float AttachStiffness
+    {
+        get { return m_stiffness; }
+        set
+        {
+            if (m_stiffness != value)
+            {
+                m_stiffness = value;
+                if (m_sofaRC != null)
+                {
+                    m_sofaRC.setToolAttribute("stiffness", m_stiffness);
+                }
+            }
+        }
+    }
 
 
     ////////////////////////////////////////////
@@ -173,17 +195,17 @@ public class SofaRayCaster : RayCaster
         {
 
             float raySofaLength = m_length * m_sofaContext.GetFactorUnityToSofa(1);
-            if (m_laserType == SofaDefines.SRayInteraction.CuttingTool)
+            if (m_rayType == SofaDefines.SRayInteraction.CuttingTool)
             {
                 m_sofaRC = new SofaRayCasterAPI(_simu, 0, base.name, raySofaLength * 2);
                 Debug.Log(this.name + " create SofaRayCaster CuttingTool with length: " + raySofaLength);
             }
-            else if (m_laserType == SofaDefines.SRayInteraction.AttachTool)
+            else if (m_rayType == SofaDefines.SRayInteraction.AttachTool)
             {
                 m_sofaRC = new SofaRayCasterAPI(_simu, 1, base.name, raySofaLength);
                 Debug.Log(this.name + " create SofaRayCaster AttachTool with length: " + raySofaLength);
             }
-            else if (m_laserType == SofaDefines.SRayInteraction.FixTool)
+            else if (m_rayType == SofaDefines.SRayInteraction.FixTool)
             {
                 m_sofaRC = new SofaRayCasterAPI(_simu, 2, base.name, raySofaLength);
                 Debug.Log(this.name + " create SofaRayCaster FixTool with length: " + raySofaLength);

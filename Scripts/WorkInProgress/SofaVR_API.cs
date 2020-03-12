@@ -170,7 +170,7 @@ public class SofaVR_API : MonoBehaviour
                 m_rightCollisionModel.activated = false;
         }
 
-        if (m_rightRayCaster.m_laserType == SofaDefines.SRayInteraction.AttachTool) // need trigger
+        if (m_rightRayCaster.RayInteractionType == SofaDefines.SRayInteraction.AttachTool) // need trigger
         {
             if (trigR)
             {
@@ -183,7 +183,7 @@ public class SofaVR_API : MonoBehaviour
                 m_rightCtrlActivated = false;
             }
         }
-        else if (m_rightRayCaster.m_laserType == SofaDefines.SRayInteraction.CuttingTool) // need grip
+        else if (m_rightRayCaster.RayInteractionType == SofaDefines.SRayInteraction.CuttingTool) // need grip
         {
             if (trigR)
             {
@@ -196,7 +196,7 @@ public class SofaVR_API : MonoBehaviour
                 m_rightCtrlActivated = false;
             }
         }
-        else if (m_rightRayCaster.m_laserType == SofaDefines.SRayInteraction.FixTool) // not yet
+        else if (m_rightRayCaster.RayInteractionType == SofaDefines.SRayInteraction.FixTool) // not yet
         {
 
         }
@@ -224,7 +224,7 @@ public class SofaVR_API : MonoBehaviour
         }
 
 
-        if (m_leftRayCaster.m_laserType == SofaDefines.SRayInteraction.AttachTool) // need trigger
+        if (m_leftRayCaster.RayInteractionType == SofaDefines.SRayInteraction.AttachTool) // need trigger
         {
             if (trigL)
             {
@@ -237,7 +237,7 @@ public class SofaVR_API : MonoBehaviour
                 m_leftCtrlActivated = false;
             }
         }
-        else if (m_leftRayCaster.m_laserType == SofaDefines.SRayInteraction.CuttingTool) // need grip
+        else if (m_leftRayCaster.RayInteractionType == SofaDefines.SRayInteraction.CuttingTool) // need grip
         {
             if (trigL)
             {
@@ -250,7 +250,7 @@ public class SofaVR_API : MonoBehaviour
                 m_leftCtrlActivated = false;
             }
         }
-        else if (m_leftRayCaster.m_laserType == SofaDefines.SRayInteraction.FixTool) // not yet
+        else if (m_leftRayCaster.RayInteractionType == SofaDefines.SRayInteraction.FixTool) // not yet
         {
 
         }
@@ -382,13 +382,13 @@ public class SofaVR_API : MonoBehaviour
         ScenesManager.SceneMenuInfo sceneInfo = m_scenes.getSceneInfo(m_currentSceneId);        
         if (m_leftRayCaster != null)
         {
-            m_leftRayCaster.m_laserType = sceneInfo.m_leftToolType;
+            m_leftRayCaster.RayInteractionType = sceneInfo.m_leftToolType;
             m_leftRayCaster.LoadSofaRayCaster(m_sofaContext);
         }
 
         if (m_rightRayCaster != null)
         {
-            m_rightRayCaster.m_laserType = sceneInfo.m_rightToolType;
+            m_rightRayCaster.RayInteractionType = sceneInfo.m_rightToolType;
             m_rightRayCaster.LoadSofaRayCaster(m_sofaContext);
         }
 

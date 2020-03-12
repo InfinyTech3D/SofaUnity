@@ -24,12 +24,18 @@ public class SofaRayCasterEditor : Editor
         EditorGUILayout.Separator();
 
         /// SofaRayCaster inspector
-        System.Enum toto = EditorGUILayout.EnumPopup("Tool interaction", model.m_laserType);
-        
-       // model.m_laserType = (SofaDefines.SRayInteraction);
-        model.startOnPlay = EditorGUILayout.Toggle("StartOnPlay mode", model.startOnPlay);
-        model.ActivateTool = EditorGUILayout.Toggle("Activate Tool", model.ActivateTool);
+        model.RayInteractionType = (SofaDefines.SRayInteraction)EditorGUILayout.EnumPopup("Tool interaction", model.RayInteractionType);
 
+        if (model.RayInteractionType != SofaDefines.SRayInteraction.None)
+        {
+            model.startOnPlay = EditorGUILayout.Toggle("StartOnPlay mode", model.startOnPlay);
+            model.ActivateTool = EditorGUILayout.Toggle("Activate Tool", model.ActivateTool);
+        }
 
+        if (model.RayInteractionType == SofaDefines.SRayInteraction.AttachTool)
+        {
+            EditorGUILayout.Separator();
+            model.AttachStiffness = EditorGUILayout.FloatField("Tool Attach Stiffness", model.AttachStiffness);
+        }     
     }
 }
