@@ -183,14 +183,14 @@ namespace SofaUnity
             cptBreaker = 0;
         }
 
-
-        public void registerCaster(SRayCaster obj)
+     */
+        public void RegisterRayCaster(SofaRayCaster obj)
         {
             if (m_casters == null)
-                m_casters = new List<SRayCaster>();
+                m_casters = new List<SofaRayCaster>();
             m_casters.Add(obj);
         }
-        */
+       
 
         /// Method called at GameObject creation.
         void Awake()

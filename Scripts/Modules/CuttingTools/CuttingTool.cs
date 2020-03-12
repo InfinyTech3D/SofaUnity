@@ -28,10 +28,10 @@ public class CuttingTool : RayCaster {
 	// Update is called once per frame
 	void Update () {
 
-        origin = transform.position;
-        direction = transform.forward;
+        m_origin = transform.position;
+        m_direction = transform.forward;
 
-        if (!castRay())
+        if (!CastRay())
             return;
         
         if (hit.triangleIndex != -1)

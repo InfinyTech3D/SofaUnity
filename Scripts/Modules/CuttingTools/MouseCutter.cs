@@ -8,7 +8,7 @@ public class MouseCutter : TriangleCutter
     // Use this for initialization
     void Start()
     {
-        length = 1000f;
+        m_length = 1000f;
     }
 
     // Update is called once per frame
@@ -17,10 +17,10 @@ public class MouseCutter : TriangleCutter
         //get ray from current mouse position
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        origin = ray.origin;
-        direction = ray.direction;
+        m_origin = ray.origin;
+        m_direction = ray.direction;
 
-        castRay();
+        CastRay();
 
         if (Input.GetMouseButton(2))
         {

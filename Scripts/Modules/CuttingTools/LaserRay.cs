@@ -53,12 +53,12 @@ public class LaserRay : RayCaster {
 	// Update is called once per frame
 	void Update () {
 
-        origin = transform.position;
-        direction = transform.forward;
+        m_origin = transform.position;
+        m_direction = transform.forward;
 
         updateLaser();
 
-        castRay();
+        CastRay();
 
         if (useParticleSystem && !psInitialized)
             initializeParticles();

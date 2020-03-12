@@ -11,22 +11,14 @@ using System;
 /// </summary>
 public class SLaserRay : SofaRayCaster
 {    
-    /// Direction of the laser ray in local coordinate 
-    public Vector3 m_axisDirection = new Vector3(1.0f, 0.0f, 0.0f);
-    /// Translation of the origin of the laser ray from the origin of the GameObject in world coordinate
-    public Vector3 m_translation = new Vector3(0.0f, 0.0f, 0.0f);
-
-    /// Booleen to activate or not that tool
-    public bool m_isActivated = false;
+    
 
     /// Booleen to draw the effective ray sent to Sofa ray caster
     public bool drawRay = false;
 
-    public float m_stiffness = 10000f;
-    protected float oldStiffness = 10000f;
 
-    /// Enum that set the type of interaction to plug to this tool on sofa side
-    public SofaDefines.SRayInteraction m_laserType;
+
+    
 
 
     /// Laser object
@@ -94,44 +86,7 @@ public class SLaserRay : SofaRayCaster
 
         this.activeTool(false);
 
-        // Get access to the sofaContext
-        IntPtr _simu = m_sofaContext.GetSimuContext();
-        if (_simu != IntPtr.Zero && m_sofaRC == null)
-        {
-
-            float raySofaLength = length * m_sofaContext.GetFactorUnityToSofa(1);
-            if (m_laserType == SofaDefines.SRayInteraction.CuttingTool)
-            {
-                m_sofaRC = new SofaRayCasterAPI(_simu, 0, base.name, raySofaLength*2);
-                Debug.Log(this.name + " create SofaRayCaster CuttingTool with length: " + raySofaLength);
-            }
-            else if (m_laserType == SofaDefines.SRayInteraction.AttachTool)
-            {
-                m_sofaRC = new SofaRayCasterAPI(_simu, 1, base.name, raySofaLength);
-                Debug.Log(this.name + " create SofaRayCaster AttachTool with length: " + raySofaLength);
-            }
-            else if (m_laserType == SofaDefines.SRayInteraction.FixTool)
-            {
-                m_sofaRC = new SofaRayCasterAPI(_simu, 2, base.name, raySofaLength);
-                Debug.Log(this.name + " create SofaRayCaster FixTool with length: " + raySofaLength);
-            }
-            else
-            {
-                m_sofaRC = null;
-                m_isReady = false;
-            }
-
-            base.createSofaRayCaster();
-        }
-
-        if (m_sofaRC == null)
-        {
-            Debug.Log(this.name + " No SofaRayCaster created");
-        }
-        else
-        {
-            m_isReady = true;
-        }
+        base.createSofaRayCaster();
     }
 
     //private void OnDestroy()
@@ -167,12 +122,12 @@ public class SLaserRay : SofaRayCaster
 
         // compute the direction and origin of the ray by adding object transform + additional manual transform
         Vector3 transLocal = transform.TransformVector(m_translation);
-        origin = transform.position + transLocal;
-        direction = transform.forward * m_axisDirection[0] + transform.right * m_axisDirection[1] + transform.up * m_axisDirection[2];
+        m_origin = transform.position + transLocal;
+        m_direction = transform.forward * m_axisDirection[0] + transform.right * m_axisDirection[1] + transform.up * m_axisDirection[2];
 
         // update the light source
         if (drawLaserParticles && lightSource)
-            lightSource.transform.position = origin + transLocal;
+            lightSource.transform.position = m_origin + transLocal;
 
 
         if (automaticCast && m_sofaRC != null)
@@ -181,8 +136,8 @@ public class SLaserRay : SofaRayCaster
             // get the id of the selected triangle. If < 0, no intersection
             if (m_isActivated)
             {
-                Vector3 originS = m_sofaContext.transform.InverseTransformPoint(origin);
-                Vector3 directionS = m_sofaContext.transform.InverseTransformDirection(direction);
+                Vector3 originS = m_sofaContext.transform.InverseTransformPoint(m_origin);
+                Vector3 directionS = m_sofaContext.transform.InverseTransformDirection(m_direction);
                 triId = m_sofaRC.castRay(originS, directionS);
                 //if (triId >= 0)
                 //    Debug.Log("origin: " + origin + " => originS: " + originS + " |  directionS: " + directionS + " | triId: " + triId);
@@ -200,7 +155,7 @@ public class SLaserRay : SofaRayCaster
 
         // Update the laser drawing
         if (drawRay)
-            this.draw(origin, origin + direction * length);
+            this.draw(m_origin, m_origin + m_direction * m_length);
     }
 
     public override void updateImpl()
@@ -209,8 +164,8 @@ public class SLaserRay : SofaRayCaster
             return;
         
         Vector3 transLocal = transform.TransformVector(m_translation);
-        origin = transform.position + transLocal;
-        direction = transform.forward * m_axisDirection[0] + transform.right * m_axisDirection[1] + transform.up * m_axisDirection[2];
+        m_origin = transform.position + transLocal;
+        m_direction = transform.forward * m_axisDirection[0] + transform.right * m_axisDirection[1] + transform.up * m_axisDirection[2];
 
         if (m_sofaRC != null)
         {
@@ -218,8 +173,8 @@ public class SLaserRay : SofaRayCaster
             // get the id of the selected triangle. If < 0, no intersection
             if (m_isActivated)
             {
-                Vector3 originS = m_sofaContext.transform.InverseTransformPoint(origin);
-                Vector3 directionS = m_sofaContext.transform.InverseTransformDirection(direction);
+                Vector3 originS = m_sofaContext.transform.InverseTransformPoint(m_origin);
+                Vector3 directionS = m_sofaContext.transform.InverseTransformDirection(m_direction);
                 triId = m_sofaRC.castRay(originS, directionS);
             }
         }
@@ -227,13 +182,8 @@ public class SLaserRay : SofaRayCaster
 
 
     /// Internal method to activate or not the tool, will also update the rendering
-    public void activeTool(bool value)
+    public override void activeTool(bool value)
     {
-        m_isActivated = value;
-
-        if (m_sofaRC != null)
-            m_sofaRC.activateTool(m_isActivated);
-
         if (value)
             this.endColor = Color.red;
         else
@@ -241,6 +191,8 @@ public class SLaserRay : SofaRayCaster
 
         if (drawLaserParticles || drawRay)
             this.updateLaser();
+
+        base.activeTool(value);
     }
 
 
@@ -291,7 +243,7 @@ public class SLaserRay : SofaRayCaster
             em.rateOverTime = 1000;
             var psmain = ps.main;
             psmain.startSize = 1.0f;
-            psmain.startLifetime = length * 0.1f;
+            psmain.startLifetime = m_length * 0.1f;
             psmain.startSpeed = 100;
             psmain.maxParticles = 800;
             psmain.startColor = new Color(1, 1, 1, 0.25f);
