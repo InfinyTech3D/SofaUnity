@@ -9,7 +9,7 @@ using System;
 /// Will comunicate with Sofa ray caster and allow several interaction using a ray:
 /// Grasping and fixing pointes and deleting elements.
 /// </summary>
-public class SLaserRay : SRayCaster
+public class SLaserRay : SofaRayCaster
 {    
     /// Direction of the laser ray in local coordinate 
     public Vector3 m_axisDirection = new Vector3(1.0f, 0.0f, 0.0f);

@@ -6,7 +6,7 @@ using UnityEngine;
 /// RayCaster class, inherite from RayCaster which is a MonoBehavior.
 /// This class will link to Sofa Ray casting system and will not use Unity raycasting.
 /// </summary>
-public class SRayCaster : RayCaster
+public class SofaRayCaster : RayCaster
 {
 
     /// Pointer to the Sofa context this GameObject belongs to.

@@ -34,7 +34,7 @@ namespace SofaUnity
         private SceneFileManager m_sceneFileMgr = null;
 
 
-        List<SRayCaster> m_casters = null;
+        List<SofaRayCaster> m_casters = null;
 
         ////////////////////////////////////////////
         ////////          parameters         ///////
@@ -244,7 +244,7 @@ namespace SofaUnity
         {
             if (m_casters != null)
             {
-                foreach (SRayCaster child in m_casters)
+                foreach (SofaRayCaster child in m_casters)
                 {
                     if (child != null)
                         child.stopRay();
@@ -428,7 +428,7 @@ namespace SofaUnity
                     if (m_casters != null)
                     {
                         // Set all objects to dirty to force and update.
-                        foreach (SRayCaster child in m_casters)
+                        foreach (SofaRayCaster child in m_casters)
                         {
                             //child.setDirty();
                             child.updateImpl();
