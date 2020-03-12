@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// RayCaster class, inherite from RayCaster which is a MonoBehavior.
+/// SofaRayCaster class, inherite from RayCaster which is a MonoBehavior.
 /// This class will link to Sofa Ray casting system and will not use Unity raycasting.
 /// </summary>
 public class SofaRayCaster : RayCaster
@@ -49,11 +49,7 @@ public class SofaRayCaster : RayCaster
         {
             if (m_isActivated != value)
             {
-                m_isActivated = value;
-                if (m_sofaRC != null)
-                {
-                    m_sofaRC.activateTool(m_isActivated);
-                }
+                ActivateTool_impl(value);
             }
         }
     }
@@ -185,6 +181,16 @@ public class SofaRayCaster : RayCaster
     ////////////////////////////////////////////
     //////    SofaRayCaster internal API   /////
     ////////////////////////////////////////////
+
+    protected virtual void ActivateTool_impl(bool value)
+    {
+        m_isActivated = value;
+        if (m_sofaRC != null)
+        {
+            m_sofaRC.activateTool(m_isActivated);
+        }
+    }
+
 
     /// Internal Method called by \sa CreateSofaRayCaster or \sa LoadSofaRayCaster to create a SofaRayCasterAPI to interact with SOFA ray
     protected virtual void CreateSofaRayCaster_impl()

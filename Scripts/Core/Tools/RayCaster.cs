@@ -4,6 +4,7 @@ using UnityEngine;
 
 /// <summary>
 /// Base class inherite from MonoBehavior that design a Ray casting object.
+/// From a Vector3 origin to Vector3 direction and a float length.
 /// </summary>
 public class RayCaster : MonoBehaviour
 {
