@@ -15,13 +15,7 @@ public class SofaLaserModel : SofaRayCaster
     //////      SofaLaserModel members     /////
     ////////////////////////////////////////////
 
-    /// Booleen to draw the effective ray sent to Sofa ray caster
-    public bool drawRay = false;
 
-    /// Direction of the laser ray in local coordinate 
-    public Vector3 m_axisDirection = new Vector3(1.0f, 0.0f, 0.0f);
-    /// Translation of the origin of the laser ray from the origin of the GameObject in world coordinate
-    public Vector3 m_translation = new Vector3(0.0f, 0.0f, 0.0f);
 
     /// Laser object
     /// {    
@@ -33,8 +27,6 @@ public class SofaLaserModel : SofaRayCaster
     /// Booleen to draw the laser object
     public bool drawLaserParticles = false;
 
-    /// Laser renderer
-    protected LineRenderer lr;
     [SerializeField]
     public Color startColor = Color.green;
     [SerializeField]
@@ -83,23 +75,11 @@ public class SofaLaserModel : SofaRayCaster
                 initializeParticles();            
         }
 
-        if (drawRay)
-            initialiseRay();
-
         //this.activeTool(false);
 
         base.CreateSofaRayCaster();
     }
 
-
-    // Use this for initialization
-    void Start()
-    {
-        if (!startOnPlay)
-            return;
-
-        m_axisDirection.Normalize();
-    }
 
     // Update is called once per frame
     void Update()
@@ -113,59 +93,27 @@ public class SofaLaserModel : SofaRayCaster
 
     public void UpdateImpl()
     {
-        // compute the direction and origin of the ray by adding object transform + additional manual transform
-        Vector3 transLocal = transform.TransformVector(m_translation);
-        m_origin = transform.position + transLocal;
-        m_direction = transform.forward * m_axisDirection[0] + transform.right * m_axisDirection[1] + transform.up * m_axisDirection[2];
-
+        // update ray transform from this gameObject transform
+        m_origin = transform.position;
+        m_direction = transform.forward;
 
         // update the light source
         if (drawLaserParticles && lightSource)
-            lightSource.transform.position = m_origin + transLocal;
+            lightSource.transform.position = m_origin;
 
 
         // cast ray here
         CastRay();
-
-
-        // Update the laser drawing
-        if (drawRay)
-            this.draw(m_origin, m_origin + m_direction * m_length);
     }
 
 
     /// Internal method to activate or not the tool, will also update the rendering
     protected override void ActivateTool_impl(bool value)
     {
-        if (value)
-            this.endColor = Color.red;
-        else
-            this.endColor = Color.green;
-
-        if (drawLaserParticles || drawRay)
+        if (drawLaserParticles || m_drawRay)
             this.updateLaser();
 
         base.ActivateTool_impl(value);
-    }
-
-
-    private void initialiseRay()
-    {
-        //create linerenderer
-        laser.AddComponent<LineRenderer>();
-        lr = laser.GetComponent<LineRenderer>();
-        if (laserMat == null)
-            laserMat = Resources.Load("Materials/laser") as Material;
-
-        lr.sharedMaterial = laserMat;
-        lr.startWidth = width;
-        lr.endWidth = width;
-
-#if UNITY_5_5 || UNITY_5_4 || UNITY_5_3 || UNITY_5_2 || UNITY_5_1
-            lr.numPositions = 2;
-#else
-        lr.positionCount = 2;
-#endif
     }
 
     /// Internal method to create the laser line renderer and light
@@ -211,27 +159,10 @@ public class SofaLaserModel : SofaRayCaster
         }
     }
 
-    /// Method to update the position of the laser to render
-    public void draw(Vector3 start, Vector3 end)
-    {
-        if (drawRay)
-        {
-            lr.SetPosition(0, start);
-            lr.SetPosition(1, end);
-        }
-    }
 
     /// Method to update the laser rendering when tool status change
     public void updateLaser()
     {
-        if (drawRay)
-        {
-            lr.startColor = startColor;
-            lr.endColor = endColor;
-            lr.startWidth = width;
-            lr.endWidth = width;
-        }
-
         if (drawLaserParticles)
         {
             ps = laser.GetComponent<ParticleSystem>();

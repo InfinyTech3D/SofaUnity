@@ -30,6 +30,16 @@ public class SofaRayCaster : RayCaster
     [SerializeField]
     protected SofaDefines.SRayInteraction m_rayType;
 
+    /// Booleen to draw the effective ray sent to Sofa ray caster
+    [SerializeField]
+    public bool m_drawRay = false;
+
+    /// Laser renderer
+    protected LineRenderer m_rayRenderer = null;
+    [SerializeField]
+    protected Color m_rayColor = Color.green;
+    [SerializeField]
+    protected float m_width = 0.5f;
 
     public bool automaticCast = false;
 
@@ -71,6 +81,35 @@ public class SofaRayCaster : RayCaster
             }
         }
     }
+
+    /// Getter/setter for ray width drawing \sa m_width
+    public float RayWidth
+    {
+        get { return m_width; }
+        set
+        {
+            if (m_width != value)
+            {
+                m_width = value;
+                UpdateRay();
+            }
+        }
+    }
+
+    /// Getter/setter for ray color drawing \sa m_rayColor
+    public Color RayColor
+    {
+        get { return m_rayColor; }
+        set
+        {
+            if (m_rayColor != value)
+            {
+                m_rayColor = value;
+                UpdateRay();
+            }
+        }
+    }
+
 
     /// Getter/setter to change AttachStiffness of this SofaRayCaster type \sa m_stiffness
     public float AttachStiffness
@@ -177,6 +216,10 @@ public class SofaRayCaster : RayCaster
             }
         }
 
+        // Update the ray drawing
+        if (m_drawRay)
+            DrawRay();
+
         return false;
     }
 
@@ -194,6 +237,14 @@ public class SofaRayCaster : RayCaster
 
             if (m_rayType == SofaDefines.SRayInteraction.AttachTool)
                 m_sofaRC.setToolAttribute("stiffness", m_stiffness);
+        }
+
+        if (m_rayRenderer)
+        {
+            if (value)
+                m_rayRenderer.endColor = Color.red;
+            else
+                m_rayRenderer.endColor = m_rayColor;
         }
     }
 
@@ -241,5 +292,35 @@ public class SofaRayCaster : RayCaster
             else
                 automaticCast = true;
         }
+    }
+
+
+    /// Internal method to drawRay, more for debug info
+    protected void DrawRay()
+    {
+        if (m_rayRenderer == null)
+            InitialiseRay();
+
+        Vector3 end = m_origin + m_direction * m_length;
+        m_rayRenderer.SetPosition(0, m_origin);
+        m_rayRenderer.SetPosition(1, end);        
+    }
+
+    /// Internal method to initialize ray renderer
+    protected void InitialiseRay()
+    {
+        m_rayRenderer = this.gameObject.AddComponent<LineRenderer>();
+
+        m_rayRenderer.material = Resources.Load("Materials/laser") as Material;
+        m_rayRenderer.startWidth = m_width;
+        m_rayRenderer.endWidth = m_width;
+    }
+
+    protected void UpdateRay()
+    {
+        m_rayRenderer.startColor = m_rayColor;
+        m_rayRenderer.endColor = m_rayColor;
+        m_rayRenderer.startWidth = m_width;
+        m_rayRenderer.endWidth = m_width;
     }
 }

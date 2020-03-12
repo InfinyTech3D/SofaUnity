@@ -19,7 +19,14 @@ public class SofaRayCasterEditor : Editor
         model.Length = EditorGUILayout.FloatField("Ray Length", model.Length);
 
         model.ActivateRay = EditorGUILayout.Toggle("Activate Ray", model.ActivateRay);
+        model.m_drawRay = EditorGUILayout.Toggle("Draw Ray", model.m_drawRay);
 
+        if (model.m_drawRay)
+        {
+            EditorGUILayout.Separator();
+            model.RayWidth = EditorGUILayout.FloatField("Ray Width", model.RayWidth);
+            model.RayColor = EditorGUILayout.ColorField("Ray Color", model.RayColor);
+        }
 
         EditorGUILayout.Separator();
 
