@@ -203,6 +203,8 @@ namespace SofaUnity
             //if (Application.isPlaying && StartOnPlay == false)
             //    return;
 
+            this.gameObject.tag = "GameController";
+
             StartSofa();
         }
 

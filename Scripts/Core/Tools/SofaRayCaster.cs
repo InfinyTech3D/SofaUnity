@@ -67,7 +67,6 @@ public class SofaRayCaster : RayCaster
         if (!startOnPlay)
             return;
 
-        GameObject _contextObject = GameObject.Find("SofaContext");
         if (_contextObject != null)
         {
             // Get Sofa context
@@ -76,6 +75,7 @@ public class SofaRayCaster : RayCaster
         else
         {
             Debug.LogError("RayCaster::loadContext - No SofaContext found.");
+            GameObject _contextObject = GameObject.FindGameObjectWithTag("GameController");
         }
 
         // Call internal method that will create a ray caster in Sofa.
