@@ -8,7 +8,7 @@ public class GameObjectController : ObjectController
     /// Pointer to the current Mesh of the GameObject
     public GameObject light = null;
     public GameObject otherTool = null;
-    public SLaserRay toolImpl = null;
+    public SofaLaserModel toolImpl = null;
     
     public bool m_isactive = false;
     protected GameObjectController otherObjectCtrl = null;

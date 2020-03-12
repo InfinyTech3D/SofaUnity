@@ -5,24 +5,23 @@ using System;
 
 
 /// <summary>
-/// Specialisation of SRayCaster class
+/// Specialisation of SofaRayCaster class into a laserModel object
 /// Will comunicate with Sofa ray caster and allow several interaction using a ray:
 /// Grasping and fixing pointes and deleting elements.
 /// </summary>
-public class SLaserRay : SofaRayCaster
-{    
-    
+public class SofaLaserModel : SofaRayCaster
+{
+    ////////////////////////////////////////////
+    //////      SofaLaserModel members     /////
+    ////////////////////////////////////////////
 
     /// Booleen to draw the effective ray sent to Sofa ray caster
     public bool drawRay = false;
-
 
     /// Direction of the laser ray in local coordinate 
     public Vector3 m_axisDirection = new Vector3(1.0f, 0.0f, 0.0f);
     /// Translation of the origin of the laser ray from the origin of the GameObject in world coordinate
     public Vector3 m_translation = new Vector3(0.0f, 0.0f, 0.0f);
-
-
 
     /// Laser object
     /// {    
@@ -92,14 +91,6 @@ public class SLaserRay : SofaRayCaster
         base.CreateSofaRayCaster();
     }
 
-    //private void OnDestroy()
-    //{
-    //    if (m_sofaRC != null)
-    //    {
-    //        m_sofaRC.Dispose();
-    //        m_sofaRC = null;
-    //    }
-    //}
 
     // Use this for initialization
     void Start()
@@ -108,94 +99,50 @@ public class SLaserRay : SofaRayCaster
             return;
 
         m_axisDirection.Normalize();
-        //if (m_sofaContext.testAsync == true)
-        //    m_sofaContext.registerCaster(this);
-        //else
-        //    automaticCast = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!m_initialized)
-            return;
+        if (m_initialized && m_activateRay)
+        {
+            UpdateImpl();
+        }
+    }
 
-      
 
+    public void UpdateImpl()
+    {
         // compute the direction and origin of the ray by adding object transform + additional manual transform
         Vector3 transLocal = transform.TransformVector(m_translation);
         m_origin = transform.position + transLocal;
         m_direction = transform.forward * m_axisDirection[0] + transform.right * m_axisDirection[1] + transform.up * m_axisDirection[2];
+
 
         // update the light source
         if (drawLaserParticles && lightSource)
             lightSource.transform.position = m_origin + transLocal;
 
 
-        if (automaticCast && m_sofaRC != null)
-        {
-            int triId = -1;
-            // get the id of the selected triangle. If < 0, no intersection
-            if (m_isActivated)
-            {
-                Vector3 originS = m_sofaContext.transform.InverseTransformPoint(m_origin);
-                Vector3 directionS = m_sofaContext.transform.InverseTransformDirection(m_direction);
-                triId = m_sofaRC.castRay(originS, directionS);
-                //if (triId >= 0)
-                //    Debug.Log("origin: " + origin + " => originS: " + originS + " |  directionS: " + directionS + " | triId: " + triId);
-
-                //if (m_laserType == SofaDefines.SRayInteraction.AttachTool)
-                //{
-                //    if (oldStiffness != m_stiffness)
-                //    {
-                //        oldStiffness = m_stiffness;
-                //        m_sofaRC.setToolAttribute("stiffness", m_stiffness);
-                //    }
-                //}
-            }                
-        }
-
         // Update the laser drawing
         if (drawRay)
             this.draw(m_origin, m_origin + m_direction * m_length);
     }
 
-    public void updateImpl()
-    {
-        if (!m_initialized)
-            return;
-        
-        Vector3 transLocal = transform.TransformVector(m_translation);
-        m_origin = transform.position + transLocal;
-        m_direction = transform.forward * m_axisDirection[0] + transform.right * m_axisDirection[1] + transform.up * m_axisDirection[2];
-
-        if (m_sofaRC != null)
-        {
-            int triId = -1;
-            // get the id of the selected triangle. If < 0, no intersection
-            if (m_isActivated)
-            {
-                Vector3 originS = m_sofaContext.transform.InverseTransformPoint(m_origin);
-                Vector3 directionS = m_sofaContext.transform.InverseTransformDirection(m_direction);
-                triId = m_sofaRC.castRay(originS, directionS);
-            }
-        }
-    }
-
 
     /// Internal method to activate or not the tool, will also update the rendering
-    //public override void activeTool(bool value)
-    //{
-    //    if (value)
-    //        this.endColor = Color.red;
-    //    else
-    //        this.endColor = Color.green;
+    protected override void ActivateTool_impl(bool value)
+    {
+        if (value)
+            this.endColor = Color.red;
+        else
+            this.endColor = Color.green;
 
-    //    if (drawLaserParticles || drawRay)
-    //        this.updateLaser();
+        if (drawLaserParticles || drawRay)
+            this.updateLaser();
 
-    //    base.activeTool(value);
-    //}
+        base.ActivateTool_impl(value);
+    }
 
 
     private void initialiseRay()
