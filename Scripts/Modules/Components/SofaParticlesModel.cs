@@ -26,7 +26,7 @@ public class SofaParticlesModel : MonoBehaviour
     public ParticleSystem m_pSystem = null;
 
     /// Max number of particles
-    protected int m_nbrMax = 1000;
+    public int m_nbrMax = 1000;
 
     /// Vector of particles inside the ParticleSystem \sa m_pSystem
     protected ParticleSystem.Particle[] m_particles = null;
@@ -98,15 +98,13 @@ public class SofaParticlesModel : MonoBehaviour
         if (m_pSystem.particleCount != 0)
         {
             m_pSystem.GetParticles(m_particles);
-            
+
             if (nbrV > m_nbrMax && nbrV > m_pSystem.particleCount)
             {
-                //Debug.Log(Time.fixedTime + " - Resize m_pSystem.particleCount: " + m_pSystem.particleCount);
+                //Debug.Log(Time.fixedTime + " - Resize m_pSystem.particleCount: " + m_pSystem.particleCount + " -> " + nbrV);
                 m_particles = new ParticleSystem.Particle[nbrV];
                 var main = m_pSystem.main;
-                main.maxParticles = nbrV;
-
-                  // m_pSystem.Emit(5000);
+                main.maxParticles = nbrV;                
             }
         }
 
@@ -129,8 +127,11 @@ public class SofaParticlesModel : MonoBehaviour
             //part.lifetime = 1.0f;
             //part.randomValue = 0.0f;
         }
-        //Debug.Log("m_particles: " + m_particles.Length);
         m_pSystem.SetParticles(m_particles, nbrV);
+        
+        //Debug.Log("m_particles: " + m_particles.Length);
+        //Debug.Log("m_pSystem.particleCount: " + m_pSystem.particleCount);
+        
     }
 
 
@@ -140,7 +141,7 @@ public class SofaParticlesModel : MonoBehaviour
 
     protected void InitParticleSystem()
     {
-        Debug.Log("init m_particles");
+        //Debug.Log("init m_particles");
         //    m_pSystem.GetParticles(m_particles);
         m_particles = new ParticleSystem.Particle[m_nbrMax];
         var emitParams = new ParticleSystem.EmitParams();

@@ -280,6 +280,14 @@ namespace SofaUnity
             }
             else if (this.TopologyType() == TopologyObjectType.NO_TOPOLOGY)
             {
+                int _nbV = m_sofaMeshAPI.getNbVertices();
+                if (m_nbVertices != _nbV)
+                {
+                    m_nbVertices = _nbV;
+                   // Debug.Log("UpdateTopology: " + m_nbVertices);
+                    m_topology.CreateVertexBuffer(m_nbVertices);
+                }
+
                 m_sofaMeshAPI.GetVertices(m_topology.m_vertexBuffer);
             }
         }
