@@ -15,73 +15,110 @@ public class SofaLaserModel : SofaRayCaster
     //////      SofaLaserModel members     /////
     ////////////////////////////////////////////
 
-
-
-    /// Laser object
-    /// {    
-    /// Laser material
-    public Material laserMat = null;
-    /// Laser GameObject
-    protected GameObject laser = null;
-
     /// Booleen to draw the laser object
-    public bool drawLaserParticles = false;
-
     [SerializeField]
-    public Color startColor = Color.green;
+    protected bool m_drawLaser = false;
+
+
+    /// Laser width parameter
     [SerializeField]
-    public Color endColor = Color.green;
+    protected float m_laserWidth = 0.5f;
+
+    /// Laser color parameter at origin
     [SerializeField]
-    public float width = 0.15f;
-
-    // Light emitted by the laser origin
-    protected GameObject lightSource = null;
-    protected Light light;
-
-    // Light Particle system following the lineRenderer
-    protected ParticleSystem ps;
-    protected bool psInitialized = false;
-    public Material particleMat;
-    /// }
-    protected float m_startSpeed = 100;
+    protected Color m_laserStartColor = Color.green;
+    /// Laser color parameter at extremity
+    [SerializeField]
+    protected Color m_laserEndColor = Color.green;
 
 
-    /// Protected method that will really create the Sofa ray caster
-    public override void CreateSofaRayCaster()
+
+    /// Parameter to store status of rendering laser if init
+    [SerializeField]
+    protected bool m_renderingInit = false;
+
+    /// Light Gameobject to set the origine of the light emitted by the laser
+    protected GameObject m_lightSource = null;
+
+    /// light emitted by the laser at origin
+    protected Light m_light = null;
+
+    // Light Particle system to draw the laser
+    protected ParticleSystem m_ps = null;
+
+    /// Material used by the particle system
+    public Material m_particleMat = null;
+
+
+
+    ////////////////////////////////////////////
+    //////     SofaLaserModel accessors    /////
+    ////////////////////////////////////////////
+
+    /// Getter/setter for laser width rendering \sa m_laserWidth
+    public bool DrawLaser
     {
-        // Create Laser
-        if (laser == null)
+        get { return m_drawLaser; }
+        set
         {
-            laser = new GameObject("Laser");
-            laser.transform.parent = this.transform;
-            laser.transform.localPosition = Vector3.zero;
-            laser.transform.localRotation = Quaternion.identity;
-            laser.transform.localScale = Vector3.one * 0.1f;
+            if (m_drawLaser != value)
+            {
+                m_drawLaser = value;
+                UpdateLaserRendering();
+            }
         }
+    }
 
-        if (drawLaserParticles && lightSource == null)
+    /// Getter/setter for laser width rendering \sa m_laserWidth
+    public float LaserWidth
+    {
+        get { return m_laserWidth; }
+        set
         {
-            // Create light source
-            lightSource = new GameObject("Light");
-            lightSource.transform.parent = laser.transform;
-            lightSource.transform.localPosition = Vector3.zero;
-            lightSource.transform.localRotation = Quaternion.identity;
-            lightSource.transform.localScale = Vector3.one;
-
-            initializeLaser();
-
-            // initialise for the first time the particule system
-            if (psInitialized == false)
-                initializeParticles();            
+            if (m_laserWidth != value)
+            {
+                m_laserWidth = value;
+                UpdateLaserRendering();
+            }
         }
+    }
 
-        //this.activeTool(false);
-
-        base.CreateSofaRayCaster();
+    /// Getter/setter for laser color at origin \sa m_laserStartColor
+    public Color LaserStartColor
+    {
+        get { return m_laserStartColor; }
+        set
+        {
+            if (m_laserStartColor != value)
+            {
+                m_laserStartColor = value;
+                UpdateLaserRendering();
+            }
+        }
     }
 
 
-    // Update is called once per frame
+    /// Getter/setter for laser color at end \sa m_laserEndColor
+    public Color LaserEndColor
+    {
+        get { return m_laserEndColor; }
+        set
+        {
+            if (m_laserEndColor != value)
+            {
+                m_laserEndColor = value;
+                UpdateLaserRendering();
+            }
+        }
+    }
+
+
+
+    ////////////////////////////////////////////
+    //////    SofaLaserModel public API    /////
+    ////////////////////////////////////////////
+    
+    /// Update is called once per frame in unity animation loop
     void Update()
     {
         if (m_initialized && m_activateRay)
@@ -91,6 +128,7 @@ public class SofaLaserModel : SofaRayCaster
     }
 
 
+    /// 
     public void UpdateImpl()
     {
         // update ray transform from this gameObject transform
@@ -98,8 +136,8 @@ public class SofaLaserModel : SofaRayCaster
         m_direction = transform.forward;
 
         // update the light source
-        if (drawLaserParticles && lightSource)
-            lightSource.transform.position = m_origin;
+        if (m_drawLaser && m_lightSource)
+            m_lightSource.transform.position = m_origin;
 
 
         // cast ray here
@@ -110,39 +148,64 @@ public class SofaLaserModel : SofaRayCaster
     /// Internal method to activate or not the tool, will also update the rendering
     protected override void ActivateTool_impl(bool value)
     {
-        if (drawLaserParticles || m_drawRay)
-            this.updateLaser();
+        if (m_drawLaser)
+            this.UpdateLaserRendering();
 
         base.ActivateTool_impl(value);
     }
 
-    /// Internal method to create the laser line renderer and light
-    private void initializeLaser()
+    
+    
+    ////////////////////////////////////////////
+    //////    SofaLaserModel internal API  /////
+    ////////////////////////////////////////////
+
+    /// Protected method that will really create the Sofa ray caster
+    protected override void CreateSofaRayCaster_impl()
     {
-        //create light
-        light = lightSource.AddComponent<Light>();
-        light = lightSource.GetComponent<Light>();
-        light.intensity = width * 10;
-        light.bounceIntensity = width * 10;
-        light.range = width / 4;
-        light.color = endColor;
+        if (m_drawLaser)
+        {
+            if (!m_renderingInit)
+                InitializeLaserRendering();
+        }
+
+        base.CreateSofaRayCaster_impl();
     }
 
-    /// Internal method to create the laser particle system rendering
-    private void initializeParticles()
+
+    /// Internal method to create the laser line renderer and light
+    private void InitializeLaserRendering()
     {
-        psInitialized = true;
-        //create particlesystem
-        //TODO: add scaling/size with laser width
-        if (drawLaserParticles)
+        if (m_lightSource == null)
         {
-            ps = laser.AddComponent<ParticleSystem>();
-            var shape = ps.shape;
+            // Create light source
+            m_lightSource = new GameObject("Light");
+            m_lightSource.transform.parent = this.transform;
+            m_lightSource.transform.localPosition = Vector3.zero;
+            m_lightSource.transform.localRotation = Quaternion.identity;
+            m_lightSource.transform.localScale = Vector3.one;
+        }
+
+        //create light
+        if (m_light == null)
+        {
+            m_light = m_lightSource.AddComponent<Light>();
+            m_light.intensity = m_laserWidth * 10;
+            m_light.bounceIntensity = m_laserWidth * 10;
+            m_light.range = m_laserWidth / 4;
+            m_light.color = m_laserEndColor;
+        }
+
+        // create particle system
+        if (m_ps == null)
+        {
+            m_ps = this.gameObject.AddComponent<ParticleSystem>();
+            var shape = m_ps.shape;
             shape.angle = 0;
             shape.radius = 0.2f;
-            var em = ps.emission;
+            var em = m_ps.emission;
             em.rateOverTime = 1000;
-            var psmain = ps.main;
+            var psmain = m_ps.main;
             psmain.startSize = 1.0f;
             psmain.startLifetime = m_length * 0.1f;
             psmain.startSpeed = 100;
@@ -150,30 +213,38 @@ public class SofaLaserModel : SofaRayCaster
             psmain.startColor = new Color(1, 1, 1, 0.25f);
             //var pscolor = ps.colorOverLifetime;
             //pscolor.color = new ParticleSystem.MinMaxGradient(startColor, endColor);
-        
-            var psrenderer = ps.GetComponent<ParticleSystemRenderer>();
-            if (particleMat == null)
-                particleMat = new Material(Shader.Find("Particles/Default-Particle"));
 
-            psrenderer.material = particleMat;
+            ParticleSystemRenderer psrenderer = m_ps.GetComponent<ParticleSystemRenderer>();
+            if (m_particleMat == null)
+                m_particleMat = Resources.Load("Materials/laser") as Material;
+
+            psrenderer.material = m_particleMat;
         }
     }
 
-
+    
     /// Method to update the laser rendering when tool status change
-    public void updateLaser()
+    protected void UpdateLaserRendering()
     {
-        if (drawLaserParticles)
-        {
-            ps = laser.GetComponent<ParticleSystem>();
-            var psmain = ps.main;
-            psmain.startColor = new Color(endColor.r, endColor.g, endColor.b, 0.25f); ;
-        
-            light.color = endColor;
-            light.intensity = width * 100;
-            light.bounceIntensity = width * 3;
-            light.range = width / 2.5f;
-        }
-    }
+        if (!m_renderingInit)
+            InitializeLaserRendering();
 
+        m_lightSource.SetActive(m_drawLaser);
+        ParticleSystemRenderer psrenderer = m_ps.GetComponent<ParticleSystemRenderer>();
+        psrenderer.enabled = m_drawLaser;
+        m_light.enabled = m_drawLaser;
+
+        if (!m_drawLaser)
+        {
+            return;
+        }
+        
+        var psmain = m_ps.main;
+        psmain.startColor = new Color(m_laserEndColor.r, m_laserEndColor.g, m_laserEndColor.b, 0.25f); ;
+
+        m_light.color = m_laserEndColor;
+        m_light.intensity = m_laserWidth * 100;
+        m_light.bounceIntensity = m_laserWidth * 3;
+        m_light.range = m_laserWidth / 2.5f;
+    }
 }

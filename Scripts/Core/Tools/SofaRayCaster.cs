@@ -37,9 +37,11 @@ public class SofaRayCaster : RayCaster
     /// Laser renderer
     protected LineRenderer m_rayRenderer = null;
     [SerializeField]
+    /// Ray color parameter for drawing
     protected Color m_rayColor = Color.green;
+    /// Ray width parameter for drawing
     [SerializeField]
-    protected float m_width = 0.5f;
+    protected float m_rayWidth = 0.5f;
 
     public bool automaticCast = false;
 
@@ -82,16 +84,16 @@ public class SofaRayCaster : RayCaster
         }
     }
 
-    /// Getter/setter for ray width drawing \sa m_width
+    /// Getter/setter for ray width drawing \sa m_rayWidth
     public float RayWidth
     {
-        get { return m_width; }
+        get { return m_rayWidth; }
         set
         {
-            if (m_width != value)
+            if (m_rayWidth != value)
             {
-                m_width = value;
-                UpdateRay();
+                m_rayWidth = value;
+                UpdateRayRenderer();
             }
         }
     }
@@ -105,7 +107,7 @@ public class SofaRayCaster : RayCaster
             if (m_rayColor != value)
             {
                 m_rayColor = value;
-                UpdateRay();
+                UpdateRayRenderer();
             }
         }
     }
@@ -199,7 +201,7 @@ public class SofaRayCaster : RayCaster
     }
 
    
-    /// 
+    /// Main method to propagate ray info from unity cast the ray in SOFA engine.
     public override bool CastRay()
     {
         if (automaticCast && m_sofaRC != null)
@@ -224,10 +226,12 @@ public class SofaRayCaster : RayCaster
     }
 
 
+
     ////////////////////////////////////////////
     //////    SofaRayCaster internal API   /////
     ////////////////////////////////////////////
 
+    /// Internal method called by ActiveTool setter to change ray internal parameters
     protected virtual void ActivateTool_impl(bool value)
     {
         m_isActivated = value;
@@ -295,11 +299,16 @@ public class SofaRayCaster : RayCaster
     }
 
 
+
+    ////////////////////////////////////////////
+    //////    SofaRayCaster drawing API    /////
+    ////////////////////////////////////////////
+
     /// Internal method to drawRay, more for debug info
     protected void DrawRay()
     {
         if (m_rayRenderer == null)
-            InitialiseRay();
+            InitialiseRayRenderer();
 
         Vector3 end = m_origin + m_direction * m_length;
         m_rayRenderer.SetPosition(0, m_origin);
@@ -307,20 +316,21 @@ public class SofaRayCaster : RayCaster
     }
 
     /// Internal method to initialize ray renderer
-    protected void InitialiseRay()
+    protected void InitialiseRayRenderer()
     {
         m_rayRenderer = this.gameObject.AddComponent<LineRenderer>();
 
         m_rayRenderer.material = Resources.Load("Materials/laser") as Material;
-        m_rayRenderer.startWidth = m_width;
-        m_rayRenderer.endWidth = m_width;
+        m_rayRenderer.startWidth = m_rayWidth;
+        m_rayRenderer.endWidth = m_rayWidth;
     }
 
-    protected void UpdateRay()
+    /// Internal method to udpate the ray drawing parameter
+    protected void UpdateRayRenderer()
     {
         m_rayRenderer.startColor = m_rayColor;
         m_rayRenderer.endColor = m_rayColor;
-        m_rayRenderer.startWidth = m_width;
-        m_rayRenderer.endWidth = m_width;
+        m_rayRenderer.startWidth = m_rayWidth;
+        m_rayRenderer.endWidth = m_rayWidth;
     }
 }
