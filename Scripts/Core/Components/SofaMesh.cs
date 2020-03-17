@@ -38,7 +38,6 @@ namespace SofaUnity
         protected int m_nbHexahedra = 0;
 
 
-
         ////////////////////////////////////////////
         //////        SofaMesh accessors       /////
         ////////////////////////////////////////////
@@ -116,7 +115,14 @@ namespace SofaUnity
             return m_nbHexahedra;
         }
 
-
+        /// Getter to the inner topology revision
+        public int GetTopologyRevision()
+        {
+            if (m_sofaMeshAPI == null)
+                return 0;
+            else
+                return m_sofaMeshAPI.GetTopologyRevision();
+        }
 
 
         ////////////////////////////////////////////
@@ -146,24 +152,21 @@ namespace SofaUnity
         /// Method called by @sa Update() method.
         protected override void Update_impl()
         {
-            //Debug.Log("SofaMesh UpdateImpl");
+            if (m_sofaMeshAPI == null)
+                return;
 
-            // TODO: for the moment the recompute of tetra is too expensive. Only update the number of vertices and tetra
-            // Need to find another solution.
-            //if (m_impl.hasTopologyChanged())
-            //{
-            //    m_impl.setTopologyChange(false);
+            if (m_listenerCounter == 0)
+                return;
+            else if (m_listenerCounter < 0)
+                Debug.LogError("SofaMesh has " + m_listenerCounter + " listerners, this should not be possible");
 
-            //    if (nbTetra > 0)
-            //        updateTetraMesh();
-            //    else
-            //        m_impl.updateMesh(m_mesh);
-            //}
-
-            if (m_sofaMeshAPI != null && m_listenerCounter > 0)
+            if (m_sofaMeshAPI.HasTopologyChanged())
             {
-                UpdateTopology();
+                Debug.Log("SofaMesh::updateImpl TopologyChanged");
+                HandleTopologyChange();
             }
+
+            UpdateTopology();            
         }
 
 
@@ -258,6 +261,34 @@ namespace SofaUnity
                 UpdateTopology();
             }
                 
+        }
+
+
+        /// Method called by \sa update_impl() to recompute the topology if changed
+        protected void HandleTopologyChange()
+        {
+            if (this.TopologyType() == TopologyObjectType.TRIANGLE)
+            {
+                Debug.LogError("HandleTopologyChange for TRIANGLE not implemented yet!");
+            }
+            else if (this.TopologyType() == TopologyObjectType.EDGE)
+            {
+                int _nbV = m_sofaMeshAPI.getNbVertices();
+                if (m_nbVertices != _nbV)
+                {
+                    m_nbVertices = _nbV;
+                    m_topology.CreateVertexBuffer(m_nbVertices);
+                }
+            }
+            else if (this.TopologyType() == TopologyObjectType.TETRAHEDRON)
+            {
+                m_nbTetrahedra = m_sofaMeshAPI.GetNbTetrahedra();
+                if (m_nbTetrahedra > 0)
+                {
+                    m_topology.CreateTetrahedronBuffer(m_nbTetrahedra, m_sofaMeshAPI.GetTetrahedraArray(m_nbTetrahedra));
+                    m_topology.ComputeMesh();
+                }
+            }
         }
 
 

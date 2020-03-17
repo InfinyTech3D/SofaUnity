@@ -26,6 +26,7 @@ namespace SofaUnity
         /// Bool to store the info if renderer was enabled or not.
         private bool m_oldRendererStatus = false;
 
+        private int m_trackedTopologyRevision = 0;
 
         
 
@@ -78,7 +79,8 @@ namespace SofaUnity
 
                     //Only do this in the editor
                     MeshFilter mf = GetComponent<MeshFilter>();
-                    mf.mesh = m_sofaMesh.SofaMeshTopology.m_mesh;                    
+                    mf.mesh = m_sofaMesh.SofaMeshTopology.m_mesh;
+                    m_trackedTopologyRevision = m_sofaMesh.GetTopologyRevision();
                 }
             }
         }
@@ -109,8 +111,15 @@ namespace SofaUnity
 
 
             if (m_renderer.enabled)
-            {               
+            {
                 MeshFilter mf = GetComponent<MeshFilter>();
+                int tmpRev = m_sofaMesh.GetTopologyRevision();
+                if (m_trackedTopologyRevision != tmpRev)
+                {
+                    m_trackedTopologyRevision = tmpRev;
+                    mf.mesh.triangles = m_sofaMesh.SofaMeshTopology.m_mesh.triangles;
+                }
+
                 mf.mesh.vertices = m_sofaMesh.SofaMeshTopology.m_mesh.vertices;
                 mf.mesh.normals = m_sofaMesh.SofaMeshTopology.m_mesh.normals;
             }
