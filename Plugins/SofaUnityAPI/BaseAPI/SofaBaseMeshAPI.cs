@@ -85,7 +85,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
             int nbrV = sofaPhysicsAPI_getNbVertices(m_simu, m_name);
             if (nbrV < 0)
             {
-                Debug.LogError("SofaBaseMeshAPI::getNbVertices method returns: " + SofaDefines.msg_error[nbrV] + " for object: " + m_name);
+                Debug.LogError("SofaBaseMeshAPI::getNbVertices method returns error: " + nbrV + ": " + SofaDefines.msg_error[nbrV] + " for object: " + m_name);
                 return 0;
             }
 
@@ -542,15 +542,14 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
     private int m_topologyRevision = -5;
 
     /// Method to check if the topology of this mesh has changed since last update.
-    public bool hasTopologyChanged()
+    public bool HasTopologyChanged()
     {
         if (m_native != IntPtr.Zero)
         {
-            int value = sofaPhysicsAPI_getTopologyRevision(m_simu, m_name);            
+            int value = sofaPhysicsAPI_getTopologyRevision(m_simu, m_name);
             if (value < 0)
             {
-                if (displayLog)
-                    Debug.LogError("getTopologyRevision: " + m_name + " method returns error: " + SofaDefines.msg_error[value]);
+                Debug.LogError("getTopologyRevision: " + m_name + " method returns error: " + SofaDefines.msg_error[value]);
                 return false;
             }
             else
@@ -566,6 +565,12 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
         }
         else
             return false;
+    }
+
+    /// Method to directly get the revision of the topology
+    public int GetTopologyRevision()
+    {
+        return m_topologyRevision;
     }
 
     /// Method to set that the change of topology of this mesh has well be handle in this update.

@@ -39,32 +39,30 @@ namespace SofaUnity
         /// Method called by @sa Update() method.
         protected override void Update_impl()
         {
-            SofaLog("SofaVisualModel::updateImpl called.");
-
-            if (m_sofaMeshAPI != null)
+            if (m_sofaMeshAPI == null)
+                return;
+            
+            if (m_sofaMeshAPI.HasTopologyChanged())
             {
-                if (false)//(m_sofaMeshAPI.hasTopologyChanged())
-                {
-                    m_mesh.triangles = m_sofaMeshAPI.createTriangulation();
-                    //if (m_invertNormals)
-                    //{
-                    //    m_sofaMeshAPI.m_invertNormals = m_invertNormals;
-                    //    invertMeshNormals();
-                    //}
-                    m_sofaMeshAPI.setTopologyChange(false);
-                    m_sofaMeshAPI.updateMesh(m_mesh);
-                    m_mesh.RecalculateNormals();
-                }
-                else
-                {
-                    //int res = m_sofaMeshAPI.updateMeshVelocity(m_mesh, m_sofaContext.timeStep);                    
-                    //if (res == -1)
-                    //    m_sofaContext.breakerProcedure();
-                    m_sofaMeshAPI.updateMesh(m_mesh);
-                }
-                m_mesh.RecalculateBounds();
+                Debug.Log("SofaVisualModel::updateImpl TopologyChanged");
+                m_mesh.triangles = m_sofaMeshAPI.createTriangulation();
+                //if (m_invertNormals)
+                //{
+                //    m_sofaMeshAPI.m_invertNormals = m_invertNormals;
+                //    invertMeshNormals();
+                //}
+                m_sofaMeshAPI.setTopologyChange(false);
+                m_sofaMeshAPI.updateMesh(m_mesh);
+                m_mesh.RecalculateNormals();
             }
-
+            else
+            {
+                //int res = m_sofaMeshAPI.updateMeshVelocity(m_mesh, m_sofaContext.timeStep);                    
+                //if (res == -1)
+                //    m_sofaContext.breakerProcedure();
+                m_sofaMeshAPI.updateMesh(m_mesh);
+            }
+            m_mesh.RecalculateBounds();
         }
 
 

@@ -269,7 +269,7 @@ namespace SofaUnity
             {
                 // TODO: for the moment the recompute of tetra is too expensive. Only update the number of vertices and tetra
                 // Need to find another solution.
-                if (m_impl.hasTopologyChanged() )
+                if (m_impl.HasTopologyChanged() )
                 {                    
                     m_impl.setTopologyChange(false);
 

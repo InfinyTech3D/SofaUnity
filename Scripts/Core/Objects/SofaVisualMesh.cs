@@ -132,7 +132,7 @@ namespace SofaUnity
 
             if (m_impl != null)
             {
-                if (m_impl.hasTopologyChanged())
+                if (m_impl.HasTopologyChanged())
                 {
                     m_mesh.triangles = m_impl.createTriangulation();
                     if (m_invertNormals)
