@@ -143,40 +143,39 @@ public class SofaDataArchiver //: MonoBehaviour, ISerializationCallbackReceiver
 
     public bool UpdateEditedData()
     {
-        bool modified = false;
         if (m_stringData != null)
         {
             foreach (SofaStringData data in m_stringData)
                 if (data.SetValueIfEdited())
-                    modified = true;
+                    return true;
         }
 
         if (m_boolData != null)
         {
             foreach (SofaBoolData data in m_boolData)
                 if (data.SetValueIfEdited())
-                    modified = true;
+                    return true;
         }
 
         if (m_intData != null)
         {
             foreach (SofaIntData data in m_intData)
                 if (data.SetValueIfEdited())
-                    modified = true;
+                    return true;
         }
 
         if (m_floatData != null)
         {
             foreach (SofaFloatData data in m_floatData)
                 if (data.SetValueIfEdited())
-                    modified = true;
+                    return true;
         }
 
         if (m_doubleData != null)
         {
             foreach (SofaDoubleData data in m_doubleData)
                 if (data.SetValueIfEdited())
-                    modified = true;
+                    return true;
         }
 
 
@@ -184,24 +183,24 @@ public class SofaDataArchiver //: MonoBehaviour, ISerializationCallbackReceiver
         {
             foreach (SofaVec2Data data in m_vec2Data)
                 if (data.SetValueIfEdited())
-                    modified = true;
+                    return true;
         }
 
         if (m_vec3Data != null)
         {
             foreach (SofaVec3Data data in m_vec3Data)
                 if (data.SetValueIfEdited())
-                    modified = true;
+                    return true;
         }
 
         if (m_vec4Data != null)
         {
             foreach (SofaVec4Data data in m_vec4Data)
                 if (data.SetValueIfEdited())
-                    modified = true;
+                    return true;
         }
 
-        return modified;
+        return false;
     }
 
 
