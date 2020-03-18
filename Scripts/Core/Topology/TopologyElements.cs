@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Set of classes to define the topology elements in SofaUnity. WIP!!
+/// </summary>
 namespace SofaUnity
 {
-
+    /// Enum to store the type of topology
     public enum TopologyObjectType
     {
         POINT,
@@ -16,7 +19,9 @@ namespace SofaUnity
         NO_TOPOLOGY
     };
 
+
     //TODO: find how to use template in C# .... :(
+    /// Class to define the Edge structure
     public class Edge
     {
         public int a, b;
@@ -27,6 +32,8 @@ namespace SofaUnity
         }
     }
 
+
+    /// Class to define the Triangle structure
     public class Triangle
     {
         public int a, b, c;
@@ -38,6 +45,8 @@ namespace SofaUnity
         }
     }
 
+
+    /// Class to define the Quad structure
     public class Quad
     {
         public int a, b, c, d;
@@ -50,6 +59,8 @@ namespace SofaUnity
         }
     }
 
+
+    /// Class to define the Tetrahedron structure
     public class Tetrahedron
     {
         public int a, b, c, d;
@@ -62,6 +73,8 @@ namespace SofaUnity
         }
     }
 
+
+    /// Class to define the Hexahedron structure
     public class Hexahedron
     {
         public int a, b, c, d, e, f, g, h;
@@ -77,6 +90,4 @@ namespace SofaUnity
             h = _h;
         }
     }
-
-    
 }

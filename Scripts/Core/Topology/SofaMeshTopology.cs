@@ -4,10 +4,21 @@ using UnityEngine;
 
 namespace SofaUnity
 {
+    /// <summary>
+    /// WIP Class to store a serie of List of the different topology elements. 
+    /// This class should be used internally inside a component dealing with topology like a SofaMesh.
+    /// This class will convert SOFA topology architecture into a Unity mesh
+    /// </summary>
     public class SofaMeshTopology
     {
+        ////////////////////////////////////////////
+        //////     SofaMeshTopology members    /////
+        ////////////////////////////////////////////
+
+        /// Higher level of topology handle in this class
         protected TopologyObjectType m_topologyType = TopologyObjectType.NO_TOPOLOGY;
 
+        /// Pointer to the Unity Mesh structure
         public Mesh m_mesh = null;
 
         // Do we need dynamic or static buffer here??
@@ -17,13 +28,15 @@ namespace SofaUnity
         protected List<Quad> m_quads = null;
         protected List<Tetrahedron> m_tetrahedra = null;
         protected List<Hexahedron> m_hexahedron = null;
-
-        // real buffer sent to SOFA
+        
+        /// number of points inside this mesh
         protected int m_nbVertices = 0;
+        /// real buffer sent to SOFA
         public float[] m_vertexBuffer = null;
 
-
+        /// number of triangles inside this mesh
         protected int nbTriangles = 0;
+        /// real buffer sent to SOFA
         protected int[] m_trianglesBuffer;
 
 
@@ -35,15 +48,18 @@ namespace SofaUnity
         public Dictionary<int, int> mappingVertices;
 
 
+        ////////////////////////////////////////////
+        //////    SofaMeshTopology accessors   /////
+        ////////////////////////////////////////////
 
-
+        /// Getter of the higher topology type stored in this class.
         public TopologyObjectType TopologyType
         {
             get { return m_topologyType; }
         }
 
 
-
+        /// Method to create a Hexahedron static buffer given the number of elements
         public void CreateHexahedronBuffer(int nbElem, int[] elems)
         {
             m_hexahedron = new List<Hexahedron>
@@ -61,6 +77,8 @@ namespace SofaUnity
             m_topologyType = TopologyObjectType.HEXAHEDRON;
         }
 
+
+        /// Method to create a Tetrahedron static buffer given the number of elements
         public void CreateTetrahedronBuffer(int nbElem, int[] elems)
         {
             m_tetrahedra = new List<Tetrahedron>
@@ -83,6 +101,8 @@ namespace SofaUnity
             m_topologyType = TopologyObjectType.TETRAHEDRON;
         }
 
+
+        /// Method to create a Quad static buffer given the number of elements
         public void CreateQuadBuffer(int nbElem, int[] elems)
         {
             m_quads = new List<Quad>
@@ -100,6 +120,8 @@ namespace SofaUnity
             m_topologyType = TopologyObjectType.QUAD;
         }
 
+
+        /// Method to create a Triangle static buffer given the number of elements
         public void CreateTriangleBuffer(int nbElem, int[] elems)
         {
             m_triangles = new List<Triangle>
@@ -121,6 +143,8 @@ namespace SofaUnity
             m_topologyType = TopologyObjectType.TRIANGLE;
         }
 
+
+        /// Method to create a Edge static buffer given the number of elements
         public void CreateEdgeBuffer(int nbElem, int[] elems)
         {
             m_edges = new List<Edge>
@@ -138,22 +162,16 @@ namespace SofaUnity
             m_topologyType = TopologyObjectType.EDGE;
         }
 
-        
+
+        /// Method to create a vertex static float buffer given the number of vertices
         public void CreateVertexBuffer(int nbVertices)
         {
             m_nbVertices = nbVertices;
             m_vertexBuffer = new float[nbVertices * 3];
         }
 
-
-        //public void UpdateVelocity()
-
-        //public void addVertex(float x, float y, float z)
-        //{
-            
-        //}
-
-
+        
+        /// Main method to compute the mesh given its topology type and static buffer. Will call internal method according to the type.
         public void ComputeMesh()
         {
             m_mesh = new Mesh();
@@ -192,12 +210,18 @@ namespace SofaUnity
         }
 
 
+        ////////////////////////////////////////////
+        //////  SofaMeshTopology internal API  /////
+        ////////////////////////////////////////////
+
+        /// Internal method to create the unity Mesh structure given a Hexahedron topology. Called by @sa ComputeMesh()
         protected void ComputeMeshFromHexahedron()
         {
             Debug.LogError("SofaMeshTopology::ComputeMeshFromHexahedron() method not yet implemented!");
         }
 
 
+        /// Internal method to create the unity Mesh structure given a Tetrahedron topology. Called by @sa ComputeMesh()
         protected void ComputeMeshFromTetrahedron()
         {
             nbTetra = m_tetrahedra.Count;
@@ -254,34 +278,30 @@ namespace SofaUnity
         }
 
 
+        /// Internal method to create the unity Mesh structure given a Quad topology. Called by @sa ComputeMesh()
         protected void ComputeMeshFromQuad()
         {
             Debug.LogWarning("SofaMeshTopology::ComputeMeshFromQuad() method not yet implemented!");
         }
 
 
+        /// Internal method to create the unity Mesh structure given a Triangle topology. Called by @sa ComputeMesh()
         protected void ComputeMeshFromTriangle()
         {
             m_mesh.triangles = m_trianglesBuffer;
         }
 
 
+        /// Internal method to create the unity Mesh structure given a Edge topology. Called by @sa ComputeMesh()
         protected void ComputeMeshFromEdge()
         {
             Debug.LogWarning("SofaMeshTopology::ComputeMeshFromEdge() method not yet implemented!");
         }
 
 
-        /// Method to compute the TetrahedronFEM topology and store it as triangle in Unity Mesh, will store the vertex mapping into @see mappingVertices
-        public int[] computeForceField()
-        {
-            
 
-            return null;
-        }
-
-
-        /// Method to update the TetrahedronFEM topology using the vertex mapping.
+        /// Method to update the tetrahedron topology using the vertex mapping.
+        /// TODO: like ComputeMesh and handle the different cases
         public void UpdateTetraMesh()
         {
             // Compute the barycenters of each tetra and update the vertices
