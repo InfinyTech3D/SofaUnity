@@ -3,12 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using SofaUnity;
 
+/// <summary>
+/// Class to create SofaLink and store them in List
+/// </summary>
 [System.Serializable]
 public class SofaLinkArchiver
 {
+    /// List of main SofaLink stored in this archiver. Create if a link is added
     public List<SofaLink> m_links = null;
+
+    /// List of slave SofaLink stored in this archiver. Create if a link is added
     public List<SofaLink> m_slaveLinks = null;
 
+    /// Method to add a link to be stored with all the info to create it
     public void AddLink(SofaBaseComponent owner, string linkName, string linkPath)
     {
         if (linkName == "slaves")
@@ -27,7 +34,7 @@ public class SofaLinkArchiver
         }
     }
 
-
+    /// Method to get the SofaLink given its name
     public SofaLink GetLink(string linkName)
     {
         foreach (SofaLink link in m_links)
