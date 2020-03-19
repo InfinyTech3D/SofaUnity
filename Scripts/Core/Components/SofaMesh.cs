@@ -160,7 +160,7 @@ namespace SofaUnity
             else if (m_listenerCounter < 0)
                 Debug.LogError("SofaMesh has " + m_listenerCounter + " listerners, this should not be possible");
 
-            if (m_sofaMeshAPI.HasTopologyChanged())
+            if (this.TopologyType() != TopologyObjectType.NO_TOPOLOGY && m_sofaMeshAPI.HasTopologyChanged())
             {
                 Debug.Log("SofaMesh::updateImpl TopologyChanged");
                 HandleTopologyChange();
