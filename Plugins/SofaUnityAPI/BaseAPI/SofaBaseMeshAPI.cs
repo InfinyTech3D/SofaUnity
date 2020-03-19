@@ -539,7 +539,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
 
     }
 
-    private int m_topologyRevision = -5;
+    private int m_topologyRevision = 0;
 
     /// Method to check if the topology of this mesh has changed since last update.
     public bool HasTopologyChanged()
@@ -549,7 +549,8 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
             int value = sofaPhysicsAPI_getTopologyRevision(m_simu, m_name);
             if (value < 0)
             {
-                Debug.LogError("getTopologyRevision: " + m_name + " method returns error: " + SofaDefines.msg_error[value]);
+                if (value != -2) // no topology...
+                    Debug.LogError("getTopologyRevision: " + m_name + " method returns error: " + SofaDefines.msg_error[value]);
                 return false;
             }
             else
