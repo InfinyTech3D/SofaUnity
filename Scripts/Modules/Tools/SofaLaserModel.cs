@@ -18,6 +18,8 @@ public class SofaLaserModel : SofaRayCaster
     /// Booleen to draw the laser object
     [SerializeField]
     protected bool m_drawLaser = false;
+    [SerializeField]
+    protected bool m_drawLight = false;
 
 
     /// Laser width parameter
@@ -38,12 +40,15 @@ public class SofaLaserModel : SofaRayCaster
     protected bool m_renderingInit = false;
 
     /// Light Gameobject to set the origine of the light emitted by the laser
+    [SerializeField]
     protected GameObject m_lightSource = null;
 
     /// light emitted by the laser at origin
+    [SerializeField]
     protected Light m_light = null;
 
     // Light Particle system to draw the laser
+    [SerializeField]
     protected ParticleSystem m_ps = null;
 
     /// Material used by the particle system
@@ -113,11 +118,25 @@ public class SofaLaserModel : SofaRayCaster
     }
 
 
+    /// Getter/setter for laser width rendering \sa m_laserWidth
+    public bool DrawLight
+    {
+        get { return m_drawLight; }
+        set
+        {
+            if (m_drawLight != value)
+            {
+                m_drawLight = value;
+                UpdateLaserRendering();
+            }
+        }
+    }
+
 
     ////////////////////////////////////////////
     //////    SofaLaserModel public API    /////
     ////////////////////////////////////////////
-    
+
     /// Update is called once per frame in unity animation loop
     void Update()
     {
@@ -148,10 +167,10 @@ public class SofaLaserModel : SofaRayCaster
     /// Internal method to activate or not the tool, will also update the rendering
     protected override void ActivateTool_impl(bool value)
     {
-        if (m_drawLaser)
-            this.UpdateLaserRendering();
-
         base.ActivateTool_impl(value);
+
+        if (m_drawLaser || m_drawLight)
+            this.UpdateLaserRendering();
     }
 
     
@@ -194,6 +213,7 @@ public class SofaLaserModel : SofaRayCaster
             m_light.bounceIntensity = m_laserWidth * 10;
             m_light.range = m_laserWidth / 4;
             m_light.color = m_laserEndColor;
+            m_light.enabled = true;
         }
 
         // create particle system
@@ -220,6 +240,8 @@ public class SofaLaserModel : SofaRayCaster
 
             psrenderer.material = m_particleMat;
         }
+
+        m_renderingInit = true;
     }
 
     
@@ -229,22 +251,34 @@ public class SofaLaserModel : SofaRayCaster
         if (!m_renderingInit)
             InitializeLaserRendering();
 
-        m_lightSource.SetActive(m_drawLaser);
+        // update light
+        m_lightSource.SetActive(m_drawLight);
+
+        // update particles
         ParticleSystemRenderer psrenderer = m_ps.GetComponent<ParticleSystemRenderer>();
         psrenderer.enabled = m_drawLaser;
-        m_light.enabled = m_drawLaser;
 
-        if (!m_drawLaser)
+        // update laser color and parameters
+        if (m_drawLaser)
         {
-            return;
+            var psmain = m_ps.main;
+            if (m_isActivated)
+                psmain.startColor = Color.red;
+            else
+                psmain.startColor = new Color(m_laserEndColor.r, m_laserEndColor.g, m_laserEndColor.b, 0.25f); ;
         }
-        
-        var psmain = m_ps.main;
-        psmain.startColor = new Color(m_laserEndColor.r, m_laserEndColor.g, m_laserEndColor.b, 0.25f); ;
 
-        m_light.color = m_laserEndColor;
-        m_light.intensity = m_laserWidth * 100;
-        m_light.bounceIntensity = m_laserWidth * 3;
-        m_light.range = m_laserWidth / 2.5f;
+        // update llight color and parameters
+        if (m_drawLight)
+        {
+            m_light.intensity = m_length * 100;
+            m_light.bounceIntensity = m_rayWidth * 3;
+            m_light.range = m_rayWidth;
+            if (m_isActivated)
+                m_light.color = Color.red;
+            else
+                m_light.color = m_laserEndColor;
+        }
+
     }
 }

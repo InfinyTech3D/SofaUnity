@@ -35,12 +35,20 @@ public class SofaLaserModelEditor : SofaRayCasterEditor
         EditorGUILayout.Separator();
         EditorGUILayout.Separator();
 
+        model.DrawLight = EditorGUILayout.Toggle("Draw Laser Light", model.DrawLight);
+        if (model.DrawLight)
+        {
+            model.LaserStartColor = EditorGUILayout.ColorField("Laser Color", model.LaserStartColor);
+            EditorGUILayout.Separator();
+            EditorGUILayout.Separator();
+        }
 
         model.DrawLaser = EditorGUILayout.Toggle("Draw Laser Particles", model.DrawLaser);
         if (model.DrawLaser)
         {
             model.LaserWidth = EditorGUILayout.FloatField("Laser Width", model.LaserWidth);
-            model.LaserStartColor = EditorGUILayout.ColorField("Laser start Color", model.LaserStartColor);
+            if (!model.DrawLight)
+                model.LaserStartColor = EditorGUILayout.ColorField("Laser start Color", model.LaserStartColor);
             model.LaserEndColor = EditorGUILayout.ColorField("Laser end Color", model.LaserEndColor);
 
             model.m_particleMat = (Material)EditorGUILayout.ObjectField("Laser Material", model.m_particleMat, typeof(Material));

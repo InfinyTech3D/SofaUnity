@@ -145,6 +145,12 @@ public class SofaRayCaster : RayCaster
     }
 
 
+    void Start()
+    {
+        // Call internal method that will create a ray caster in Sofa.
+        CreateSofaRayCaster_impl();
+    }
+
     /// Method to search for SofaContext if needed then call internal method \sa CreateSofaRayCaster_impl
     public virtual void CreateSofaRayCaster()
     {
@@ -162,9 +168,6 @@ public class SofaRayCaster : RayCaster
                 return;
             }
         }
-
-        // Call internal method that will create a ray caster in Sofa.
-        CreateSofaRayCaster_impl();
     }
 
 
@@ -213,8 +216,8 @@ public class SofaRayCaster : RayCaster
                 Vector3 originS = m_sofaContext.transform.InverseTransformPoint(m_origin);
                 Vector3 directionS = m_sofaContext.transform.InverseTransformDirection(m_direction);
                 triId = m_sofaRC.castRay(originS, directionS);
-                if (triId >= 0)
-                    Debug.Log("origin: " + m_origin + " => originS: " + originS + " |  directionS: " + directionS + " | triId: " + triId);
+                //if (triId >= 0)
+                //    Debug.Log("origin: " + m_origin + " => originS: " + originS + " |  directionS: " + directionS + " | triId: " + triId);
             }
         }
 
