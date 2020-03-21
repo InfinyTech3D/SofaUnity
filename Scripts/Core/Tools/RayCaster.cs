@@ -27,7 +27,6 @@ public class RayCaster : MonoBehaviour
     protected bool m_activateRay = false;
 
     ///Ray internal status, if ray has well be init
-    [SerializeField]
     protected bool m_initialized = false;
     
 

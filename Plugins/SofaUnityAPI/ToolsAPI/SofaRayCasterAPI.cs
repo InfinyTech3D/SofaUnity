@@ -101,6 +101,15 @@ public class SofaRayCasterAPI : IDisposable
         return res;
     }
 
+    public string getTouchedObjectName()
+    {
+        if (m_simu == IntPtr.Zero)
+            return "Error";
+
+        string res = sofaPhysicsAPI_getInteractObjectName(m_simu, m_name);
+        return res;
+    }
+
 
 
     /////////////////////////////////////////////////////////////////////////////////////////
@@ -129,4 +138,9 @@ public class SofaRayCasterAPI : IDisposable
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_setToolAttribute(IntPtr obj, string toolName, string dataName, float[] value);
 
+    /// Binding to get the name of the mesh touched by the ray.
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern string sofaPhysicsAPI_getInteractObjectName(IntPtr obj, string toolName);
+
+    
 }

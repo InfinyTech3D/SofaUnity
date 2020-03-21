@@ -135,6 +135,8 @@ namespace SofaUnity
             SofaLog("SofaMesh::CreateSofaAPI_Impl: " + UniqueNameId + " | m_sofaContext: " + m_sofaContext + " | m_sofaContext.GetSimuContext(): " + m_sofaContext.GetSimuContext());
             m_impl = new SofaBaseComponentAPI(m_sofaContext.GetSimuContext(), UniqueNameId);
 
+            this.gameObject.tag = "Player";
+
             InitBaseMeshAPI();
         }
 
