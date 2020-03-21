@@ -3,11 +3,16 @@ using UnityEditor;
 using SofaUnity;
 using System.Collections.Generic;
 
+/// <summary>
+/// Editor class corresponding to @sa SofaLaserModelEditor
+/// This editor is a specialization of @sa SofaRayCasterEditor to add Laser display parameters
+/// Provide method to create SofaLaserModel from Unity Menu
+/// </summary>
 [CustomEditor(typeof(SofaLaserModel), true)]
 public class SofaLaserModelEditor : SofaRayCasterEditor
 {
     /// <summary>
-    ///  
+    ///  Add SofaLaserModel creation to SofaUnity Menu
     /// </summary>
     /// <returns>Pointer to the SofaLaserModel GameObject</returns>
     [MenuItem("SofaUnity/SofaComponent/SofaLaserModel")]
@@ -24,8 +29,10 @@ public class SofaLaserModelEditor : SofaRayCasterEditor
     }
 
 
+    /// Method to create parameters GUI
     public override void OnInspectorGUI()
     {
+        // display SofaRayCasterEditor first
         base.OnInspectorGUI();
 
         SofaLaserModel model = this.target as SofaLaserModel;

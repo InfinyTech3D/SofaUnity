@@ -3,10 +3,15 @@ using UnityEditor;
 using SofaUnity;
 using System.Collections.Generic;
 
+/// <summary>
+/// Editor class corresponding to @sa SofaRayCaster
+/// Provide interface for RayCaster parameters like origin, direction and length and option to draw it.
+/// Provide interface for SofaRayCaster like the type of interaction and option to activate and start on play.
+/// </summary>
 [CustomEditor(typeof(SofaRayCaster), true)]
 public class SofaRayCasterEditor : Editor
 {
-
+    /// Method to create parameters GUI
     public override void OnInspectorGUI()
     {
         SofaRayCaster model = this.target as SofaRayCaster;
