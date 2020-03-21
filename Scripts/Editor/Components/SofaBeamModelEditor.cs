@@ -3,6 +3,11 @@ using UnityEditor;
 using SofaUnity;
 using System.Collections.Generic;
 
+/// <summary>
+/// Editor class corresponding to @sa SofaBeamModel
+/// Provide create method to create SofaBeamModel from Unity Menu
+/// Provide interface to change beam radius and discretisation
+/// </summary>
 [CustomEditor(typeof(SofaBeamModel), true)]
 public class SofaBeamModelEditor : Editor
 {
@@ -50,6 +55,7 @@ public class SofaBeamModelEditor : Editor
         return null;
     }
 
+    /// Method to create parameters GUI
     public override void OnInspectorGUI()
     {
         SofaBeamModel model = this.target as SofaBeamModel;

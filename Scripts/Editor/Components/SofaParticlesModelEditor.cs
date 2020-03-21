@@ -3,13 +3,17 @@ using UnityEditor;
 using SofaUnity;
 using System.Collections.Generic;
 
+/// <summary>
+/// Editor class corresponding to @sa SofaParticlesModel
+/// Provide only a create method to create SofaParticlesModel from Unity Menu
+/// </summary>
 [CustomEditor(typeof(SofaParticlesModel), true)]
 public class SofaParticlesModelEditor : Editor
 {
     /// <summary>
-    ///  Add SofaBeamModel creation to the SofaUnity Menu
+    ///  Add SofaParticlesModel creation to the SofaUnity Menu
     /// </summary>
-    /// <returns>Pointer to the SofaBeamModel GameObject</returns>
+    /// <returns>Pointer to the SofaParticlesModel GameObject</returns>
     [MenuItem("SofaUnity/SofaComponent/SofaParticlesModel")]
     [MenuItem("GameObject/Create Other/SofaUnity/SofaComponent/SofaParticlesModel")]
     public static GameObject CreateNew()
