@@ -3,17 +3,24 @@ using UnityEditor;
 using SofaUnity;
 using UnityEditor.AnimatedValues;
 
+/// <summary>
+/// Editor class corresponding to @sa SofaBaseComponent
+/// Provide interface for all component inheriting from @sa SofaBaseComponent which will display all Data.
+/// Not all Data types are shown, for example vectors. Option to show unsupported Data is availble.
+/// </summary>
 [CustomEditor(typeof(SofaBaseComponent), true)]
 public class SofaBaseComponentEditor : Editor
 {
     AnimBool m_ShowUnsupportedFields;
 
+    /// Callback method to show or not unsupported Data
     void OnEnable()
     {
         m_ShowUnsupportedFields = new AnimBool(false);
         m_ShowUnsupportedFields.valueChanged.AddListener(Repaint);
     }
 
+    /// Method to create parameters GUI
     public override void OnInspectorGUI()
     {
         SofaBaseComponent compo = (SofaBaseComponent)this.target;

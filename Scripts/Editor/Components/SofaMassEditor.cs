@@ -3,6 +3,11 @@ using UnityEditor;
 using SofaUnity;
 using System.Collections.Generic;
 
+/// <summary>
+/// Editor class corresponding to @sa SofaMass
+/// This class inherite from @sa SofaBaseComponentEditor and will add specific data after the Data display
+/// WIP tests
+/// </summary>
 [CustomEditor(typeof(SofaMass), true)]
 public class SofaMassEditor : SofaBaseComponentEditor
 {

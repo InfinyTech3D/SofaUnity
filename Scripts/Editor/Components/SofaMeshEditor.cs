@@ -3,9 +3,15 @@ using UnityEditor;
 using SofaUnity;
 using System.Collections.Generic;
 
+/// <summary>
+/// Editor class corresponding to @sa SofaMesh
+/// This class inherite from @sa SofaBaseComponentEditor and will add specific data after the Data display
+/// Provides some information regarding the sofa topology handle by this Mesh
+/// </summary>
 [CustomEditor(typeof(SofaMesh), true)]
 public class SofaMeshEditor : SofaBaseComponentEditor
 {
+    /// Method to create parameters GUI
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
