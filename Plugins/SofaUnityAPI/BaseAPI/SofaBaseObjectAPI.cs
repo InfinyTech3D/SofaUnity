@@ -31,7 +31,8 @@ public class SofaBaseObjectAPI : IDisposable
     /// Pointer to the SofaPhysicsAPI 
     protected IntPtr m_simu = IntPtr.Zero;
     /// Pointer to the Sofa 3D object. TODO: check why this pointer messed up in use.
-    protected IntPtr m_native = IntPtr.Zero;
+    //protected IntPtr m_native = IntPtr.Zero;
+    protected bool m_hasObject = false;
 
     // TODO: check if needed
     bool m_isDisposed;
@@ -338,7 +339,7 @@ public class SofaBaseObjectAPI : IDisposable
     /// <returns> True if pointer is valid otherwise return false. </returns>
     protected bool checkNativePointerForGetData(string dataName)
     {
-        if (m_native == IntPtr.Zero)
+        if (!m_hasObject)
         {
             Debug.LogError("Error getting parameter: " + dataName + " of object: " + m_name + " . Can't access Object Pointer m_native.");
             return false;
@@ -353,7 +354,7 @@ public class SofaBaseObjectAPI : IDisposable
     /// <returns> True if pointer is valid otherwise return false. </returns>
     protected bool checkNativePointerForSetData(string dataName)
     {
-        if (m_native == IntPtr.Zero)
+        if (!m_hasObject)
         {
             Debug.LogError("Error setting parameter: " + dataName + " in object: " + m_name + " . Can't access Object Pointer m_native.");
             return false;
@@ -378,7 +379,7 @@ public class SofaBaseObjectAPI : IDisposable
 
     /// Get Object from Name
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern IntPtr sofaPhysicsAPI_get3DObject(IntPtr obj, string name, int[] res);
+    public static extern int sofaPhysicsAPI_has3DObject(IntPtr obj, string name);
 
 
 

@@ -28,20 +28,15 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
     public override void loadObject()
     {
         // first time create object only
-        if (m_native == IntPtr.Zero) 
+        if (m_hasObject == false) 
         {
-            // Create object first
-            int[] res1 = new int[1];
-            m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name, res1);
+            // Create object first            
+            int res = sofaPhysicsAPI_has3DObject(m_simu, m_name);
 
-            if (res1[0] != 0)
-                Debug.LogError("SofaBaseMeshAPI::loadObject get3DObject method returns: " + SofaDefines.msg_error[res1[0]] + " for object: " + m_name);
-
-            // Check if creation failed otherwise get parent name
-            if (m_native == IntPtr.Zero)
-                Debug.LogError("Error Mesh can't be found: " + m_name);
-            //else
-            //    m_parent = sofaPhysicsAPI_getParentNodeName(m_simu, m_name);
+            if (res == 0)
+                m_hasObject = true;
+            else
+                Debug.LogError("SofaBaseMeshAPI::loadObject get3DObject method returns: " + SofaDefines.msg_error[res] + " for object: " + m_name);
         }
     }
 
@@ -80,7 +75,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
     /// Method to get the number of vertices in the current SOFA object
     public int getNbVertices()
     {
-        if (m_native != IntPtr.Zero)
+        if (m_hasObject)
         {
             int nbrV = sofaPhysicsAPI_getNbVertices(m_simu, m_name);
             if (nbrV < 0)
@@ -119,7 +114,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
     /// Method to get the number of hexahedron in the current SOFA object
     public int GetNbHexahedra()
     {
-        if (m_native != IntPtr.Zero)
+        if (m_hasObject)
         {
             int nbrElem = sofaPhysics3DObject_getNbHexahedra(m_simu, m_name);
             if (nbrElem < 0)
@@ -137,7 +132,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
     /// Method to get the number of tetrahedron in the current SOFA object
     public int GetNbTetrahedra()
     {
-        if (m_native != IntPtr.Zero)
+        if (m_hasObject)
         {
             int nbrElem = sofaPhysics3DObject_getNbTetrahedra(m_simu, m_name);
             if (nbrElem < 0)
@@ -155,7 +150,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
     /// Method to get the number of quads in the current SOFA object
     public int GetNbQuads()
     {
-        if (m_native != IntPtr.Zero)
+        if (m_hasObject)
         {
             int nbrElem = sofaPhysics3DObject_getNbQuads(m_simu, m_name);
             if (nbrElem < 0)
@@ -173,7 +168,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
     /// Method to get the number of triangles in the current SOFA object
     public int GetNbTriangles()
     {
-        if (m_native != IntPtr.Zero)
+        if (m_hasObject)
         {
             int nbrElem = sofaPhysics3DObject_getNbTriangles(m_simu, m_name);
             if (nbrElem < 0)
@@ -191,7 +186,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
     /// Method to get the number of triangles in the current SOFA object
     public int GetNbEdges()
     {
-        if (m_native != IntPtr.Zero)
+        if (m_hasObject)
         {
             int nbrElem = sofaPhysics3DObject_getNbEdges(m_simu, m_name);
             if (nbrElem < 0)
@@ -208,7 +203,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
 
     public virtual int[] GetHexahedraArray(int nbElem)
     {
-        if (m_native != IntPtr.Zero)
+        if (m_hasObject)
         {
             int[] elems = new int[nbElem * 8];
             sofaPhysics3DObject_getHexahedra(m_simu, m_name, elems);
@@ -222,7 +217,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
 
     public virtual int[] GetTetrahedraArray(int nbElem)
     {
-        if (m_native != IntPtr.Zero)
+        if (m_hasObject)
         {
             int[] elems = new int[nbElem * 4];
             sofaPhysics3DObject_getTetrahedra(m_simu, m_name, elems);
@@ -236,7 +231,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
 
     public virtual int[] GetQuadsArray(int nbElem)
     {
-        if (m_native != IntPtr.Zero)
+        if (m_hasObject)
         {
             int[] elems = new int[nbElem * 4];
             sofaPhysics3DObject_getQuads(m_simu, m_name, elems);
@@ -250,7 +245,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
 
     public virtual int[] GetTrianglesArray(int nbElem)
     {
-        if (m_native != IntPtr.Zero)
+        if (m_hasObject)
         {
             int[] elems = new int[nbElem * 3];
             sofaPhysics3DObject_getTriangles(m_simu, m_name, elems);
@@ -264,7 +259,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
 
     public virtual int[] GetEdgesArray(int nbElem)
     {
-        if (m_native != IntPtr.Zero)
+        if (m_hasObject)
         {
             int[] elems = new int[nbElem * 2];
             sofaPhysics3DObject_getEdges(m_simu, m_name, elems);
@@ -278,7 +273,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
 
     public int GetVertices(float[] vertices)
     {
-        if (m_native != IntPtr.Zero)
+        if (m_hasObject)
         {
             int resV = sofaPhysics3DObject_getVertices(m_simu, m_name, vertices);
             return resV;
@@ -292,7 +287,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
 
     public int GetVelocities(float[] velocities)
     {
-        if (m_native != IntPtr.Zero)
+        if (m_hasObject)
         {
             int resV = sofaPhysics3DObject_getVelocities(m_simu, m_name, velocities);
             return resV;
@@ -307,7 +302,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
 
     public virtual void updateVertices(Vector3[] unityVertices)
     {
-        if (m_native != IntPtr.Zero)
+        if (m_hasObject)
         {
             int nbrV = sofaPhysicsAPI_getNbVertices(m_simu, m_name);
 
@@ -390,7 +385,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
     /// If topology has change, createTriangulation method need to be called before this method.
     public virtual void updateMesh(Mesh mesh)
     {
-        if (m_native != IntPtr.Zero)
+        if (m_hasObject)
         {
             int nbrV = sofaPhysicsAPI_getNbVertices(m_simu, m_name);
 
@@ -467,7 +462,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
     /// If topology has change, createTriangulation method need to be called before this method.
     public virtual int updateMeshVelocity(Mesh mesh, float timestep)
     {
-        if (m_native == IntPtr.Zero)
+        if (!m_hasObject)
             return 0;
 
         bool highMov = false;
@@ -544,7 +539,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
     /// Method to check if the topology of this mesh has changed since last update.
     public bool HasTopologyChanged()
     {
-        if (m_native != IntPtr.Zero)
+        if (m_hasObject)
         {
             int value = sofaPhysicsAPI_getTopologyRevision(m_simu, m_name);
             if (value < 0)
@@ -577,7 +572,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
     /// Method to set that the change of topology of this mesh has well be handle in this update.
     public int setTopologyChange(bool value)
     {
-        if (m_native != IntPtr.Zero)
+        if (m_hasObject)
         {
             return sofaPhysicsAPI_setTopologyChanged(m_simu, m_name, value);
         }
@@ -589,7 +584,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
     /// Method to get the buffer of tetrahedra from the current SOFA object
     public void getTetrahedra(int[] tetra)
     {
-        if (m_native != IntPtr.Zero)
+        if (m_hasObject)
         {
             sofaPhysics3DObject_getTetrahedra(m_simu, m_name, tetra);
         }
@@ -599,7 +594,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
     /// Method to update the Unity mesh buffers (vertices and normals) from a tetrahedron topology object. Assume no topology change here.
     public virtual void updateMeshTetra(Mesh mesh, Dictionary<int, int> mapping)
     {
-        if (m_native != IntPtr.Zero)
+        if (m_hasObject)
         {
             int nbrV = sofaPhysicsAPI_getNbVertices(m_simu, m_name);
 
@@ -794,7 +789,7 @@ public class SofaBaseMeshAPI : SofaBaseObjectAPI
 
     public void setNewPosition(Vector3 value)
     {
-        if (m_native == IntPtr.Zero)
+        if (!m_hasObject)
             return;
 
         float[] val = new float[3];

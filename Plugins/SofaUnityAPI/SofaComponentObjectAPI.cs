@@ -25,24 +25,14 @@ public class SofaComponentObjectAPI : SofaBaseObjectAPI
     public override void loadObject()
     {
         //if (m_native != IntPtr.Zero)        
-        if (m_native == IntPtr.Zero) // first time create object only
+        if (m_hasObject == false) // first time create object only
         {
-            int[] res1 = new int[1];
-            m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name, res1);
+            int res1 = sofaPhysicsAPI_has3DObject(m_simu, m_name);
 
-            if (res1[0] != 0)
-                Debug.LogError("SofaComponent::loadObject get3DObject method returns: " + SofaDefines.msg_error[res1[0]]);
-
-
-            if (m_native == IntPtr.Zero)
-                Debug.LogError("Error Component can't be found: " + m_name);
-            //else
-            //{
-            //    //Debug.Log("Load Node Name: " + m_name);
-            //    m_parent = sofaPhysicsAPI_getParentNodeName(m_simu, m_name);
-            //}
-
-            
+            if (res1 == 0)
+                m_hasObject = true;
+            else
+                Debug.LogError("SofaComponent::loadObject get3DObject method returns: " + SofaDefines.msg_error[res1]);           
         }
     }
 
@@ -50,7 +40,7 @@ public class SofaComponentObjectAPI : SofaBaseObjectAPI
     /// Method to get all data listen by this component as a json unique string.
     public string loadAllData()
     {
-        if (m_native != IntPtr.Zero)
+        if (m_hasObject)
             return sofaPhysics3DObject_getDataFields(m_simu, m_name);
         else
             return "None";

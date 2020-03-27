@@ -28,7 +28,7 @@ public class SofaCylinderAPI : SofaBaseMeshAPI
     /// Implicit method to really create object and link to Sofa object. Called by SofaBaseObject constructor
     protected override bool createObject()
     {
-        if (m_native == IntPtr.Zero) // first time create object only
+        if (m_hasObject == false) // first time create object only
         {
             // Create the cylinder
             int res = sofaPhysicsAPI_addCylinder(m_simu, m_name, m_isRigid);
@@ -44,18 +44,16 @@ public class SofaCylinderAPI : SofaBaseMeshAPI
                 Debug.Log("cylinder Added! " + m_name);
 
             // Set created object to native pointer
-            int[] res1 = new int[1];
-            res1[0] = -101;
-
-            m_native = sofaPhysicsAPI_get3DObject(m_simu, m_name, res1);
-            if (res1[0] != 0 || m_native == IntPtr.Zero)
+            int res1 = sofaPhysicsAPI_has3DObject(m_simu, m_name);
+            if (res == 0)
+                m_hasObject = true;
+            else
             {
-                Debug.LogError("SofaCylinderAPI::createObject get3DObject method returns: " + SofaDefines.msg_error[res1[0]]);
-                res1 = null;
+                Debug.LogError("SofaCylinderAPI::createObject get3DObject method returns: " + SofaDefines.msg_error[res1]);
+                m_hasObject = false;
                 return false;
             }
 
-            res1 = null;
             return true;
         }
 
