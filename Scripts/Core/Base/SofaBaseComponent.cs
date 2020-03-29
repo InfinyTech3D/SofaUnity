@@ -56,7 +56,8 @@ namespace SofaUnity
         [SerializeField]
         public SofaLinkArchiver m_linkArchiver = null;
 
-
+        /// Bool to check if name the gameobject owner need to be updated by this object.
+        protected bool m_propagateName = true;
 
         ////////////////////////////////////////////
         //////   SofaBaseComponent accessors   /////
@@ -87,6 +88,11 @@ namespace SofaUnity
             m_sofaContext = m_ownerNode.m_sofaContext;
         }
 
+        /// Setter for @sa m_propagateName
+        public void SetPropagateName(bool value)
+        {
+            m_propagateName = value;
+        }
 
 
         ////////////////////////////////////////////
@@ -185,7 +191,8 @@ namespace SofaUnity
         {
             // overide name with current type
             m_componentType = m_impl.GetComponentType();
-            this.gameObject.name = m_componentType + "  -  " + m_uniqueNameId;
+            if (this.gameObject && m_propagateName)
+                this.gameObject.name = m_componentType + "  -  " + m_uniqueNameId;
         }
 
 
