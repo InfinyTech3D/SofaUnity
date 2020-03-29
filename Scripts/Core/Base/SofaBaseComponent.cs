@@ -12,18 +12,33 @@ namespace SofaUnity
     /// TODO find a way to interactively add more type if plugin are loaded
     public enum SBaseComponentType
     {
-        SofaSolver,
-        SofaLoader,
-        SofaMesh,
-        SofaMass,
-        SofaFEMForceField,
-        SofaMechanicalMapping,
+        SofaAnimationLoop,
+        SofaBehaviorModel,
+        SofaCollisionAlgorithm,
+        SofaCollisionDetection,
+        SofaCollisionIntersection,
         SofaCollisionModel,
+        SofaCollisionPipeline,
+        SofaConfigurationSetting,
         SofaConstraint,
+        SofaConstraintSolver,
+        SofaContextObject,
+        SofaController,
+        SofaEngine,
+        SofaFEMForceField,
+        SofaForceFieldAndMass,
+        SofaInteractionForceField,
+        SofaLoader,
+        SofaMass,
+        SofaMechanicalMapping,
+        SofaMesh,
+        SofaRequiredPlugin,
+        SofaSolver,
         SofaVisualModel,
         SofaUnknown
     };
 
+    
     /// <summary>
     /// Base class representing a SOFA component in the simulation as a GameObject.
     /// Will hold the list of Sofa Data and links inside the \sa m_dataArchiver and \sa m_linkArchiver
