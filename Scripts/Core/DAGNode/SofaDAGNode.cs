@@ -115,7 +115,7 @@ namespace SofaUnity
             if (componentsS.Length == 0)
                 return;
 
-            SofaLog("####### SofaDAGNode::CreateSofaAPI " + UniqueNameId + " -> " + componentsS);
+            SofaLog("####### SofaDAGNode::CreateSofaAPI " + UniqueNameId + " -> " + componentsS, 0, true);
             m_sofaComponents = new List<SofaBaseComponent>();
             List<string> compoNames = ConvertStringToList(componentsS);
             foreach (string compoName in compoNames)
@@ -126,6 +126,7 @@ namespace SofaUnity
                     SofaLog("Component " + compoName + " returns baseType: " + baseType, 2);
                 else
                 {
+                    Debug.Log("############## CREATE SofaBaseComponent - " + compoName + " " + baseType);
                     SofaBaseComponent compo = SofaComponentFactory.CreateSofaComponent(compoName, baseType, this, this.gameObject);
                     if (compo != null)
                     {
