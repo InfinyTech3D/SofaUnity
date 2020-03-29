@@ -123,7 +123,7 @@ namespace SofaUnity
             }
             else if (componentType == "SofaAnimationLoop")
             {
-                sofaCompo = compoGO.AddComponent<SofaComponent>();
+                sofaCompo = compoGO.AddComponent<SofaAnimationLoop>();
             }
             else
             {
