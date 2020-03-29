@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 using SofaUnityAPI;
 
 namespace SofaUnity
@@ -10,8 +10,71 @@ namespace SofaUnity
     /// TODO: how to create a real factory in C# ??
     static public class SofaComponentFactory
     {
+        static public SofaBaseComponent CreateSofaCollisionPipeline(string nameId, string componentType, SofaDAGNode sofaNodeOwner, GameObject parent)
+        {
+            Debug.Log("########## CreateSofaCollisionPipeline " + componentType);
+            GameObject UnityNode = sofaNodeOwner.gameObject;
+            GameObject collisionUnityObject = null;
+            foreach (Transform child in UnityNode.transform)
+            {
+                if (child.gameObject.name == "SofaCollisionPipeline")
+                {
+                    collisionUnityObject = child.gameObject;
+                    break;
+                }
+            }
+
+
+            SofaCollisionPipeline collisionPipe = null;
+            if (collisionUnityObject == null)
+            {
+                Debug.Log("collisionUnityObject to be created");
+                collisionUnityObject = new GameObject("SofaCollisionPipeline");
+                collisionPipe = collisionUnityObject.AddComponent<SofaCollisionPipeline>();
+                collisionUnityObject.transform.parent = parent.gameObject.transform;
+            }
+            else
+            {
+                Debug.Log("collisionUnityObject found");
+                collisionPipe = collisionUnityObject.GetComponent<SofaCollisionPipeline>();
+            }
+
+
+            SofaComponent sofaCompo = collisionUnityObject.AddComponent<SofaComponent>();
+            sofaCompo.SetDAGNode(sofaNodeOwner);
+            sofaCompo.SetPropagateName(false);
+            sofaCompo.ShowData = false;
+            sofaCompo.Create(sofaNodeOwner.m_sofaContext, nameId);
+            sofaCompo.m_baseComponentType = sofaCompo.BaseTypeFromString(componentType);
+
+            if (componentType == "SofaCollisionPipeline")
+            {
+                collisionPipe.SetCollisionPipelineComponent(sofaCompo);
+            }
+            else if (componentType == "SofaCollisionAlgorithm")
+            {
+                collisionPipe.SetCollisionResponseComponent(sofaCompo);
+            }
+            else if (componentType == "SofaCollisionDetection")
+            {
+                collisionPipe.SetBroadPhaseComponent(sofaCompo);
+            }
+            else if (componentType == "SofaCollisionIntersection")
+            {
+                collisionPipe.SetNarrowPhaseComponent(sofaCompo);
+            }
+
+            return sofaCompo;
+        }
+
+
         static public SofaBaseComponent CreateSofaComponent(string nameId, string componentType, SofaDAGNode sofaNodeOwner, GameObject parent)
         {
+            
+            if (componentType != "SofaCollisionModel" && componentType.IndexOf("SofaCollision") != -1)
+                return CreateSofaCollisionPipeline(nameId, componentType, sofaNodeOwner, parent);                    
+
+
             GameObject compoGO = new GameObject("SofaComponent - " + nameId);
             SofaBaseComponent sofaCompo = null;
             if (componentType == "SofaSolver")
@@ -50,9 +113,22 @@ namespace SofaUnity
             {
                 sofaCompo = compoGO.AddComponent<SofaVisualModel>();
             }
+            else if (componentType == "SofaRequiredPlugin")
+            {
+                // not handled here. TODO: do that better
+                //compoGO.destr
+                compoGO = null;
+                //Destroy(compoGO);
+                return null;
+            }
+            else if (componentType == "SofaAnimationLoop")
+            {
+                sofaCompo = compoGO.AddComponent<SofaComponent>();
+            }
             else
             {
-                Debug.LogError("Component type not handled: " + componentType);
+                compoGO = null;
+                Debug.LogWarning("Component type not handled: " + componentType);
                 return null;
             }
 
