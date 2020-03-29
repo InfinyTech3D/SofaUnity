@@ -12,7 +12,6 @@ namespace SofaUnity
     {
         static public SofaBaseComponent CreateSofaCollisionPipeline(string nameId, string componentType, SofaDAGNode sofaNodeOwner, GameObject parent)
         {
-            Debug.Log("########## CreateSofaCollisionPipeline " + componentType);
             GameObject UnityNode = sofaNodeOwner.gameObject;
             GameObject collisionUnityObject = null;
             foreach (Transform child in UnityNode.transform)
@@ -28,14 +27,12 @@ namespace SofaUnity
             SofaCollisionPipeline collisionPipe = null;
             if (collisionUnityObject == null)
             {
-                Debug.Log("collisionUnityObject to be created");
                 collisionUnityObject = new GameObject("SofaCollisionPipeline");
                 collisionPipe = collisionUnityObject.AddComponent<SofaCollisionPipeline>();
                 collisionUnityObject.transform.parent = parent.gameObject.transform;
             }
             else
             {
-                Debug.Log("collisionUnityObject found");
                 collisionPipe = collisionUnityObject.GetComponent<SofaCollisionPipeline>();
             }
 

@@ -59,7 +59,6 @@ namespace SofaUnity
                 string NodeName = m_sofaContextAPI.getDAGNodeName(i);
                 if (NodeName == "root") // skip root node
                 {
-                    Debug.Log("############## CREATE SofaRootNode - " + NodeName);
                     SofaDAGNode dagNode = m_sofaContext.gameObject.AddComponent<SofaDAGNode>();
                     dagNode.Create(m_sofaContext, NodeName);
                     m_dagNodes.Add(dagNode);
@@ -72,7 +71,6 @@ namespace SofaUnity
                     //dagNode.SetSofaContext(m_sofaContext);
                     dagNode.Create(m_sofaContext, NodeName);
                     // need init?
-                    Debug.Log("############## CREATE SofaNode - " + NodeName);
 
                     m_dagNodes.Add(dagNode);
                     nodeGO.transform.parent = m_sofaContext.gameObject.transform;
