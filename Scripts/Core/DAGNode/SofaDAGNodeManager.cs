@@ -15,14 +15,58 @@ namespace SofaUnity
         /////////////////////////////////////////////
 
         /// List of SofaDAGNode in the graph
-        public List<SofaDAGNode> m_dagNodes = null;
+        private List<SofaDAGNode> m_dagNodes = null;
 
         /// pointer to the SofaContext root object
         private SofaContext m_sofaContext = null;
 
-        /// pointer to the SofaContextAPI of the siulation
+        /// pointer to the SofaContextAPI of the simulation
         private SofaContextAPI m_sofaContextAPI = null;
 
+        /// Pointer to the root DAGNode of this simulation
+        private SofaDAGNode m_rootDAGNode = null;
+
+
+        /////////////////////////////////////////////
+        //////   SofaDAGNodeManager accessors   /////
+        /////////////////////////////////////////////
+
+        /// Return the number of node registered in this manager
+        public int NumberOfDAGNodes()
+        {
+            if (m_dagNodes != null)
+                return m_dagNodes.Count;
+            else
+                return 0;
+        }
+
+
+        /// Return the SofaDAGNode given its name. return null object if not found
+        SofaDAGNode GetDAGNodeByName(string nodeName)
+        {
+            if (m_dagNodes == null)
+                return null;
+
+            foreach(SofaDAGNode node in m_dagNodes)
+            {
+                if (node.UniqueNameId == nodeName)
+                    return node;
+            }
+
+            return null;
+        }
+
+        /// Return the SofaDAGNode given its range. return null object if out of range
+        SofaDAGNode GetDAGNodeById(int nodeId)
+        {
+            if (m_dagNodes == null)
+                return null;
+
+            if (nodeId >= m_dagNodes.Count)
+                return null;
+
+            return m_dagNodes[nodeId];
+        }
 
 
         ////////////////////////////////////////////
@@ -43,12 +87,20 @@ namespace SofaUnity
 
             // create the list of SofaBaseObject
             m_dagNodes = new List<SofaDAGNode>();
+
+            // create root Node at start
+            m_rootDAGNode = m_sofaContext.gameObject.AddComponent<SofaDAGNode>();
+            m_rootDAGNode.Create(m_sofaContext, "root");
+            m_dagNodes.Add(m_rootDAGNode);
         }
 
 
         /// Principal method to parse the SOFA simulation scene and create the same DAGNode Graph
         public void LoadNodeGraph()
         {
+            // first clear previous hiearchy
+            ClearManager();
+
             int nbrNode = m_sofaContextAPI.getNbrDAGNode();
 
             if (nbrNode <= 0)
@@ -153,10 +205,23 @@ namespace SofaUnity
         }
 
 
-        /// Method to register a node into this graph
-        public void RegisterNode(string NodeName)
+        /// Method to register a node into this graph under another parentNode, if parent is not found, will add it under root
+        public void RegisterNode(string nodeName, string parentNodeName)
         {
             Debug.LogError("Method RegisterNode has not yet been implemented.");
+            SofaDAGNode parentNode = GetDAGNodeByName(parentNodeName);
+            if (parentNode == null)
+            {
+                Debug.LogWarning("Parent Node name " + parentNodeName + " not found in graph. Will add Node " + nodeName + " under root node.");
+                parentNode = m_rootDAGNode;
+            }
+
+            GameObject nodeGO = new GameObject("SofaNode - " + nodeName);
+            SofaDAGNode dagNode = nodeGO.AddComponent<SofaDAGNode>();
+            dagNode.Create(m_sofaContext, nodeName);
+
+            m_dagNodes.Add(dagNode);
+            nodeGO.transform.parent = parentNode.gameObject.transform;
         }
 
 
@@ -186,6 +251,21 @@ namespace SofaUnity
             }
 
             return found;
+        }
+
+
+        /// Internal Method to clear a previous Node hierarchy
+        protected void ClearManager()
+        {
+            for (int i=0; i<m_dagNodes.Count; i++)
+            {
+                SofaDAGNode node = m_dagNodes[i];
+                node.ClearNode();
+                node = null;
+            }
+            m_dagNodes.Clear();
+
+            m_rootDAGNode = null;
         }
     }
 }

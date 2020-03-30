@@ -94,7 +94,11 @@ namespace SofaUnity
             }
         }
 
-
+        public void ClearNode()
+        {
+            Debug.LogWarning("SofaDAGNode::ClearNode() not yet implemented!");
+        }
+        
 
         ////////////////////////////////////////////
         /////     SofaDAGNode internal API     /////
