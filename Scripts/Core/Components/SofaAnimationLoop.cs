@@ -12,14 +12,17 @@ namespace SofaUnity
         /// Method called by @sa SofaBaseComponent::Create_impl() method. To specify specific types of components
         protected override void FillPossibleTypes()
         {
-            //SofaLog("FillPossibleTypes SofaLoader");
+            Debug.Log("FillPossibleTypes SofaAnimationLoop");
+            string typesS = m_impl.GetPossiblesTypes();
+            m_possibleComponentTypes = ConvertStringToList(typesS);
+            Debug.Log("typesS: " + m_possibleComponentTypes);
         }
 
 
         /// Method called by @sa Update() method.
         protected override void Update_impl()
         {
-            //SofaLog("UpdateImpl SofaLoader");
+            Debug.Log("UpdateImpl SofaAnimationLoop");
         }
     }
 
