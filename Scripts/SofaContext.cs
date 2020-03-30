@@ -95,7 +95,13 @@ namespace SofaUnity
             get { return m_sceneFileMgr; }
         }
 
-        
+        /// getter to the \sa SofaDAGNodeManager m_nodeGraphMgr
+        public SofaDAGNodeManager NodeGraphMgr
+        {
+            get { return m_nodeGraphMgr; }
+        }
+
+
         /// Getter/Setter of current gravity @see m_gravity
         public Vector3 Gravity
         {
