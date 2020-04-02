@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 /// <summary>
 /// Class used to handle bindings to the Sofa Cylinder object, using a Cylindric Grid topology.
 /// </summary>
-public class SofaCylinderAPI : SofaBaseMeshAPI
+public class SofaCylinderAPI : SofaBaseObjectAPI
 {
     /// <summary>
     /// Default constructor

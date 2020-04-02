@@ -189,10 +189,8 @@ namespace SofaUnity
                     return;
 
                 // Create the API object for SofaMesh
-                m_sofaMeshAPI = new SofaBaseMeshAPI(m_sofaContext.GetSimuContext(), UniqueNameId, false);
+                m_sofaMeshAPI = new SofaBaseMeshAPI(m_sofaContext.GetSimuContext(), UniqueNameId);
                 SofaLog("SofaMesh::InitBaseMeshAPI object created");
-
-                m_sofaMeshAPI.loadObject();
 
                 InitTopology();
             }

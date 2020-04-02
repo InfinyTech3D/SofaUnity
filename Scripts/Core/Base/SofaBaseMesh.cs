@@ -21,7 +21,7 @@ namespace SofaUnity
         /// Member: Unity Mesh object of this GameObject
         protected Mesh m_mesh;
         /// Pointer to the corresponding SOFA API object
-        public SofaBaseMeshAPI m_impl = null;
+        public SofaBaseObjectAPI m_impl = null;
 
 
         /// Current Translation of this object (same as in Unity Editor and Sofa object)
@@ -58,15 +58,15 @@ namespace SofaUnity
             // Get initial transformation
 
             // Copy info if mesh has collision
-            float test = m_impl.getFloatValue_deprecated("radius");
-            if (test == float.MinValue) // no sphere
-                m_hasCollisionSphere = false;
-            else
-            {
-                m_hasCollisionSphere = true;
-                m_radius = test;
-                m_contactStiffness = m_impl.getFloatValue_deprecated("contactStiffness");
-            }
+            //float test = m_impl.getFloatValue_deprecated("radius");
+            //if (test == float.MinValue) // no sphere
+            //    m_hasCollisionSphere = false;
+            //else
+            //{
+            //    m_hasCollisionSphere = true;
+            //    m_radius = test;
+            //    m_contactStiffness = m_impl.getFloatValue_deprecated("contactStiffness");
+            //}
         }
 
 
@@ -128,15 +128,15 @@ namespace SofaUnity
             }
 
             // Copy info if collision
-            float test = m_impl.getFloatValue_deprecated("radius");
-            //Debug.Log("radius: " + test);
-            if (test == float.MinValue) // no sphere
-                m_hasCollisionSphere = false;
-            else
-            {
-                m_hasCollisionSphere = true;
-                m_contactStiffness = m_impl.getFloatValue_deprecated("contactStiffness");
-            }
+            //float test = m_impl.getFloatValue_deprecated("radius");
+            ////Debug.Log("radius: " + test);
+            //if (test == float.MinValue) // no sphere
+            //    m_hasCollisionSphere = false;
+            //else
+            //{
+            //    m_hasCollisionSphere = true;
+            //    m_contactStiffness = m_impl.getFloatValue_deprecated("contactStiffness");
+            //}
 
             //if (m_hasCollisionSphere)
             //{
@@ -180,16 +180,16 @@ namespace SofaUnity
         /// Getter of parentName of this Sofa Object.
         public override string parentName()
         {
-            if (m_impl == null)
+            //if (m_impl == null)
                 return "No impl";
-            else
-            {
-                string p = m_impl.parent;
-                if (p == null)
-                    p = "root";
+            //else
+            //{
+            //    string p = m_impl.parent;
+            //    if (p == null)
+            //        p = "root";
 
-                return p;
-            }
+            //    return p;
+            //}
         }
 
 

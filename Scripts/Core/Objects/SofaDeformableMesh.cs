@@ -55,7 +55,7 @@ namespace SofaUnity
             if (_simu != IntPtr.Zero)
             {
                 // Create the API object for SofaMesh
-                m_impl = new SofaMeshAPI(_simu, m_uniqueNameId, false);
+                m_impl = new SofaBaseObjectAPI(_simu, m_uniqueNameId, false);
 
                 // TODO: check if this is still needed (and why not in children)
                 m_impl.loadObject();
@@ -217,20 +217,20 @@ namespace SofaUnity
             //m_impl.updateMesh(m_mesh);
 
             // Special part for tetra
-            if (nbTetra == 0)
-            {
-                nbTetra = m_impl.GetNbTetrahedra();
-                if (nbTetra > 0)
-                {
-                    SofaLog("Tetra found! Number: " + nbTetra);
-                    m_tetra = new int[nbTetra * 4];
+            //if (nbTetra == 0)
+            //{
+            //    nbTetra = m_impl.GetNbTetrahedra();
+            //    if (nbTetra > 0)
+            //    {
+            //        SofaLog("Tetra found! Number: " + nbTetra);
+            //        m_tetra = new int[nbTetra * 4];
 
-                    m_impl.getTetrahedra(m_tetra);
-                    m_mesh.triangles = this.computeForceField();
-                }
-                else
-                    m_mesh.triangles = m_impl.createTriangulation();
-            }
+            //        m_impl.getTetrahedra(m_tetra);
+            //        m_mesh.triangles = this.computeForceField();
+            //    }
+            //    else
+            //        m_mesh.triangles = m_impl.createTriangulation();
+            //}
 
             //m_impl.recomputeTriangles(m_mesh);
 
@@ -269,24 +269,24 @@ namespace SofaUnity
             {
                 // TODO: for the moment the recompute of tetra is too expensive. Only update the number of vertices and tetra
                 // Need to find another solution.
-                if (m_impl.HasTopologyChanged() )
-                {                    
-                    m_impl.setTopologyChange(false);
+                //if (m_impl.HasTopologyChanged() )
+                //{                    
+                //    m_impl.setTopologyChange(false);
 
-                    if (nbTetra > 0)
-                        updateTetraMesh();
-                    else
-                        m_impl.updateMesh(m_mesh);                    
-                }
+                //    if (nbTetra > 0)
+                //        updateTetraMesh();
+                //    else
+                //        m_impl.updateMesh(m_mesh);                    
+                //}
 
-                if (nbTetra > 0)
-                    updateTetraMesh();
-                else if (mr.enabled == true) // which is true
-                    m_impl.updateMeshVelocity(m_mesh, m_sofaContext.TimeStep);
-                else // pass from false to true.
-                {
-                    m_impl.updateMesh(m_mesh);
-                }
+                //if (nbTetra > 0)
+                //    updateTetraMesh();
+                //else if (mr.enabled == true) // which is true
+                //    m_impl.updateMeshVelocity(m_mesh, m_sofaContext.TimeStep);
+                //else // pass from false to true.
+                //{
+                //    m_impl.updateMesh(m_mesh);
+                //}
             }
         }
 
@@ -351,25 +351,25 @@ namespace SofaUnity
         public void updateTetraMesh()
         {
             // first update the vertices dissociated
-            m_impl.updateMeshTetra(m_mesh, mappingVertices);
+            //m_impl.updateMeshTetra(m_mesh, mappingVertices);
 
-            // Compute the barycenters of each tetra and update the vertices
-            Vector3[] verts = m_mesh.vertices;
-            for (int i = 0; i < nbTetra; ++i)
-            {
-                Vector3 bary = new Vector3(0.0f, 0.0f, 0.0f);
-                int idI = i * 4;
-                // compute tetra barycenter
-                for (int j = 0; j < 4; ++j)
-                    bary += verts[m_tetra[idI + j]];
-                bary /= 4;
+            //// Compute the barycenters of each tetra and update the vertices
+            //Vector3[] verts = m_mesh.vertices;
+            //for (int i = 0; i < nbTetra; ++i)
+            //{
+            //    Vector3 bary = new Vector3(0.0f, 0.0f, 0.0f);
+            //    int idI = i * 4;
+            //    // compute tetra barycenter
+            //    for (int j = 0; j < 4; ++j)
+            //        bary += verts[m_tetra[idI + j]];
+            //    bary /= 4;
 
-                // reduce the tetra size according to the barycenter
-                for (int j = 0; j < 4; ++j)
-                    verts[m_tetra[idI + j]] = bary + (verts[m_tetra[idI + j]] - bary) * 0.5f;
-            }
+            //    // reduce the tetra size according to the barycenter
+            //    for (int j = 0; j < 4; ++j)
+            //        verts[m_tetra[idI + j]] = bary + (verts[m_tetra[idI + j]] - bary) * 0.5f;
+            //}
 
-            m_mesh.vertices = verts;
+            //m_mesh.vertices = verts;
         }
         
     }

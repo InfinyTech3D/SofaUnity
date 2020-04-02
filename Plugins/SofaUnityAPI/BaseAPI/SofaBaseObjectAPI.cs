@@ -91,6 +91,61 @@ public class SofaBaseObjectAPI : IDisposable
     }
 
 
+    /// BoundingBox min Value in 3D
+    protected Vector3 m_min = new Vector3(100000, 100000, 100000);
+    /// BoundingBox max Value in 3D
+    protected Vector3 m_max = new Vector3(-100000, -100000, -100000);
+
+    /// Method to compute the Mesh BoundingBox
+    public virtual void computeBoundingBox(Mesh mesh)
+    {
+        Vector3[] verts = mesh.vertices;
+        int nbrV = verts.Length;
+
+        // Get min and max of the mesh
+        for (int i = 0; i < nbrV; i++)
+        {
+            if (verts[i].x > m_max.x)
+                m_max.x = verts[i].x;
+            if (verts[i].y > m_max.y)
+                m_max.y = verts[i].y;
+            if (verts[i].z > m_max.z)
+                m_max.z = verts[i].z;
+
+            if (verts[i].x < m_min.x)
+                m_min.x = verts[i].x;
+            if (verts[i].y < m_min.y)
+                m_min.y = verts[i].y;
+            if (verts[i].z < m_min.z)
+                m_min.z = verts[i].z;
+        }
+    }
+
+
+    /// Booleen to warn mesh normals have to be inverted
+    public bool m_invertNormals = false;
+
+    public virtual int[] createTriangulation()
+    {
+        return new int[0];
+    }
+
+    public virtual void updateMesh(Mesh mesh)
+    {
+
+    }
+
+    public virtual void recomputeTexCoords(Mesh mesh)
+    {
+
+    }
+
+    public virtual void recomputeTopology(Mesh mesh)
+    {
+
+    }
+
+
     /// <summary> Generic method to get value of a Data<float> field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <returns> Float value of the Data field, return float.MinValue if field is not found. </returns>

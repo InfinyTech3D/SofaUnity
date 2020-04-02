@@ -22,10 +22,10 @@ namespace SofaUnity
             if (_simu != IntPtr.Zero)
             {
                 // Create the API object for SofaMesh
-                m_impl = new SofaMeshAPI(_simu, m_uniqueNameId, false);
+                m_impl = new SofaBaseObjectAPI(_simu, m_uniqueNameId, false);
 
                 // TODO: check if this is still needed (and why not in children)
-                m_impl.loadObject();
+                //m_impl.loadObject();
 
                 // Call SofaBaseMesh.createObject() to init value loaded from the scene.// Set init value loaded from the scene.
                 base.createObject();
@@ -130,28 +130,28 @@ namespace SofaUnity
         {
             SofaLog("SofaVisualMesh::updateImpl called.");
 
-            if (m_impl != null)
-            {
-                if (m_impl.HasTopologyChanged())
-                {
-                    m_mesh.triangles = m_impl.createTriangulation();
-                    if (m_invertNormals)
-                    {
-                        m_impl.m_invertNormals = m_invertNormals;
-                        invertMeshNormals();
-                    }
-                    m_impl.setTopologyChange(false);
-                    m_impl.updateMesh(m_mesh);
-                    m_mesh.RecalculateNormals();                    
-                }
-                else
-                {
-                    int res = m_impl.updateMeshVelocity(m_mesh, m_sofaContext.TimeStep);
-                    //if (res == -1)
-                    //    m_sofaContext.breakerProcedure();
-                }
-                m_mesh.RecalculateBounds();
-            }
+            //if (m_impl != null)
+            //{
+            //    if (m_impl.HasTopologyChanged())
+            //    {
+            //        m_mesh.triangles = m_impl.createTriangulation();
+            //        if (m_invertNormals)
+            //        {
+            //            m_impl.m_invertNormals = m_invertNormals;
+            //            invertMeshNormals();
+            //        }
+            //        m_impl.setTopologyChange(false);
+            //        m_impl.updateMesh(m_mesh);
+            //        m_mesh.RecalculateNormals();                    
+            //    }
+            //    else
+            //    {
+            //        int res = m_impl.updateMeshVelocity(m_mesh, m_sofaContext.TimeStep);
+            //        //if (res == -1)
+            //        //    m_sofaContext.breakerProcedure();
+            //    }
+            //    m_mesh.RecalculateBounds();
+            //}
             
         }
     }
