@@ -12,6 +12,8 @@ public class SofaBaseAPI : IDisposable
 
     protected bool m_isReady = false;
 
+    protected bool m_isCustom = false;
+
     // TODO: check if needed
     bool m_isDisposed;
 
@@ -21,11 +23,12 @@ public class SofaBaseAPI : IDisposable
     /// <summary> Default constructor, will call impl method: @see createObject() </summary>
     /// <param name="simu">Pointer to the SofaPhysicsAPI</param>
     /// <param name="nameID">Name of this Object</param>
-    public SofaBaseAPI(IntPtr simu, string nameID)
+    public SofaBaseAPI(IntPtr simu, string nameID, bool isCustom)
     {
         m_isReady = false;
         m_simu = simu;
         m_name = nameID;
+        m_isCustom = isCustom;
 
         if (m_simu == IntPtr.Zero)
         {

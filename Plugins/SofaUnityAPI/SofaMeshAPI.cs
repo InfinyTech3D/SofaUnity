@@ -13,8 +13,8 @@ public class SofaMeshAPI : SofaBaseMeshAPI
     /// <param name="simu">Pointer to the SofaPhysicsAPI</param>
     /// <param name="nameID">Name of this Object</param>
     /// <param name="isRigid">Type rigid or deformable</param>
-    public SofaMeshAPI(IntPtr simu, string nameID)
-        : base(simu, nameID)
+    public SofaMeshAPI(IntPtr simu, string nameID, bool isCustom = false)
+        : base(simu, nameID, isCustom)
     {
 
     }
