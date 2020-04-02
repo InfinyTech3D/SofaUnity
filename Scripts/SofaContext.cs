@@ -134,7 +134,19 @@ namespace SofaUnity
         }
 
 
+        public bool UnLoadScene
+        {
+            set
+            {
+                if (value && m_impl != null)
+                {
+                    Debug.Log("UnLoadScene " + value);
+                    ClearSofaScene();
+                }
+            }
+        }
 
+        
         ////////////////////////////////////////////
         ////////      scale conversions      ///////
         ////////////////////////////////////////////
@@ -298,74 +310,70 @@ namespace SofaUnity
             if (m_log)
                 Debug.Log("## SofaContext ## init ");
 
+            // Check and get the Sofa context
             if (m_impl == null)
-            {
                 m_impl = new SofaContextAPI(testAsync);
 
-                if (m_nodeGraphMgr == null)
-                {
-                    m_nodeGraphMgr = new SofaDAGNodeManager(this, m_impl);
-                }
-                else
-                {
-                    // TODO make this serializable might help for custom simulation in futur.
-                    Debug.Log("## m_nodeGraphMgr already created...");
-                }
-
-                // handle sofa plugins
-                if (m_pluginMgr == null)
-                    m_pluginMgr = new PluginManager(m_impl);
-                else
-                    m_pluginMgr.SetSofaContextAPI(m_impl);
-
-                m_pluginMgr.LoadPlugins();
-
-                // start sofa instance
-                if (m_log)
-                    Debug.Log("## SofaContext status before start: " + m_impl.contextStatus());
-
-                m_impl.start();
-
-                if (m_log)
-                    Debug.Log("## SofaContext status after start: " + m_impl.contextStatus());
-
-                // handle SOFA scene file
-                if (m_sceneFileMgr == null)
-                    m_sceneFileMgr = new SceneFileManager(this);
-                else
-                    m_sceneFileMgr.SetSofaContext(this);
-
-                if (m_sceneFileMgr.HasScene)
-                {
-                    //m_sceneFileMgr.LoadFilename();
-                    ReconnectSofaScene();
-                }
-
-                DoCatchSofaMessages();
-                if (m_log)
-                    Debug.Log("## SofaContext status end init: " + m_impl.contextStatus());
-
-                // set gravity and timestep if changed in editor
-                m_impl.timeStep = m_timeStep;
-                m_impl.setGravity(m_gravity);
-            }
-            else
+            if (m_impl == null)
             {
-                Debug.LogError("### SofaContext init No Impl");
+                Debug.LogError("Error while creating SofaContextAPI");
+                return;
             }
+
+
+            // Create the NodeMgr
+            if (m_nodeGraphMgr == null)
+                m_nodeGraphMgr = new SofaDAGNodeManager(this, m_impl);
+            else // TODO make this serializable might help for custom simulation in futur.
+                Debug.LogWarning("## m_nodeGraphMgr already created...");
+
+
+            // Craete Plugin Mgr. // TODO: Need to connect that with the scene loading
+            if (m_pluginMgr == null)
+                m_pluginMgr = new PluginManager(m_impl);
+            else
+                m_pluginMgr.SetSofaContextAPI(m_impl);
+
+            // Load SOFA plugins
+            m_pluginMgr.LoadPlugins();
+
+            // start sofa instance
+            if (m_log)
+                Debug.Log("## SofaContext status before start: " + m_impl.contextStatus());
+
+            m_impl.start();
+
+            if (m_log)
+                Debug.Log("## SofaContext status after start: " + m_impl.contextStatus());
+
+            // Create SOFA scene file manager
+            if (m_sceneFileMgr == null)
+                m_sceneFileMgr = new SceneFileManager(this);
+            else
+                m_sceneFileMgr.SetSofaContext(this);
+
+            // If already has a scene, reconnect it in DAGNode mgr
+            if (m_sceneFileMgr.HasScene)
+                ReconnectSofaScene();
+            else
+                m_nodeGraphMgr.LoadNodeGraph();
+
+            if (m_log)
+                Debug.Log("## SofaContext status end init: " + m_impl.contextStatus());
+            
+            // set gravity and timestep if changed in editor
+            m_impl.timeStep = m_timeStep;
+            m_impl.setGravity(m_gravity);
+
+            // Check message form SOFA side at end of Init
+            DoCatchSofaMessages();
         }
-        
+
         // Update is called once per fix frame
         void FixedUpdate()
         {
-
-        }
-        
-        // Update is called once per frame
-        void Update()
-        {
             // only if scene is playing or if sofa is running
-            if (IsSofaUpdating == false || Application.isPlaying == false) return; 
+            if (IsSofaUpdating == false || Application.isPlaying == false) return;
 
             if (testAsync)
                 UpdateImplASync();
@@ -389,6 +397,35 @@ namespace SofaUnity
                 StepbyStep = false;
             }
         }
+        
+        //// Update is called once per frame
+        //void Update()
+        //{
+        //    // only if scene is playing or if sofa is running
+        //    if (IsSofaUpdating == false || Application.isPlaying == false) return; 
+
+        //    if (testAsync)
+        //        UpdateImplASync();
+        //    else
+        //        UpdateImplSync();
+
+        //    // log sofa messages
+        //    DoCatchSofaMessages();
+
+        //    // counter if need to freeze the simulation for several iterations
+        //    //cptBreaker++;
+        //    //if (cptBreaker == countDownBreaker)
+        //    //{
+        //    //    cptBreaker = 0;
+        //    //    breakerActivated = false;
+        //    //}
+
+        //    if (StepbyStep)
+        //    {
+        //        IsSofaUpdating = false;
+        //        StepbyStep = false;
+        //    }
+        //}
         
 
         private float nextUpdate = 0.0f;
@@ -495,6 +532,7 @@ namespace SofaUnity
             m_gravity = m_impl.getGravity();
 
             // recreate node hiearchy in unity
+            Debug.Log("!!! m_nodeGraphMgr.LoadNodeGraph()");
             m_nodeGraphMgr.LoadNodeGraph();
 
             int nbrObj = m_impl.getNumberObjects();
@@ -503,6 +541,8 @@ namespace SofaUnity
             {
                 Debug.Log(i + " -> " + m_impl.getObjectName(i));
             }
+
+            DoCatchSofaMessages();
         }
 
         protected void ReconnectSofaScene()
@@ -518,13 +558,15 @@ namespace SofaUnity
 
             // reconnect node hiearchy in unity
             m_nodeGraphMgr.ReconnectNodeGraph();
+
+            DoCatchSofaMessages();
         }
 
         public void ClearSofaScene()
         {
             m_impl.stop();
             m_impl.unload();
-            //m_nodeGraphMgr.clear();
+            m_nodeGraphMgr.LoadNodeGraph();
             m_impl.start();
         }
 

@@ -85,13 +85,8 @@ namespace SofaUnity
                 return;
             }
 
-            // create the list of SofaBaseObject
+            // create empty the list of SofaBaseObject
             m_dagNodes = new List<SofaDAGNode>();
-
-            // create root Node at start
-            m_rootDAGNode = m_sofaContext.gameObject.AddComponent<SofaDAGNode>();
-            m_rootDAGNode.Create(m_sofaContext, "root");
-            m_dagNodes.Add(m_rootDAGNode);
         }
 
 
@@ -102,7 +97,6 @@ namespace SofaUnity
             ClearManager();
 
             int nbrNode = m_sofaContextAPI.getNbrDAGNode();
-
             if (nbrNode <= 0)
                 return;
 
@@ -111,9 +105,16 @@ namespace SofaUnity
                 string NodeName = m_sofaContextAPI.getDAGNodeName(i);
                 if (NodeName == "root") // skip root node
                 {
-                    SofaDAGNode dagNode = m_sofaContext.gameObject.AddComponent<SofaDAGNode>();
-                    dagNode.Create(m_sofaContext, NodeName);
-                    m_dagNodes.Add(dagNode);
+                    if (m_rootDAGNode == null)
+                    {
+                        m_rootDAGNode = m_sofaContext.gameObject.AddComponent<SofaDAGNode>();
+                        m_rootDAGNode.Create(m_sofaContext, NodeName);
+                        m_dagNodes.Add(m_rootDAGNode);
+                    }
+                    else
+                    {
+                        m_rootDAGNode.Create(m_sofaContext, NodeName);
+                    }
                 }
                 else if (NodeName != "Error")
                 {
@@ -208,7 +209,6 @@ namespace SofaUnity
         /// Method to register a node into this graph under another parentNode, if parent is not found, will add it under root
         public void RegisterNode(string nodeName, string parentNodeName)
         {
-            Debug.LogError("Method RegisterNode has not yet been implemented.");
             SofaDAGNode parentNode = GetDAGNodeByName(parentNodeName);
             if (parentNode == null)
             {
@@ -260,12 +260,14 @@ namespace SofaUnity
             for (int i=0; i<m_dagNodes.Count; i++)
             {
                 SofaDAGNode node = m_dagNodes[i];
-                node.ClearNode();
+                node.DestroyDAGNode(true);
                 node = null;
             }
             m_dagNodes.Clear();
 
-            m_rootDAGNode = null;
+            // copy back the root node pointer
+            if (m_rootDAGNode != null)
+                m_dagNodes.Add(m_rootDAGNode);
         }
     }
 }

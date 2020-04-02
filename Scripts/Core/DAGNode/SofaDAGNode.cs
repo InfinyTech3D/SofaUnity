@@ -132,8 +132,9 @@ namespace SofaUnity
         {
             if (m_impl != null)
             {
-                SofaLog("SofaDAGNode " + UniqueNameId + " already has a SofaDAGNodeAPI.", 2);
-                return;
+                if (UniqueNameId != "root")
+                    SofaLog("SofaDAGNode " + UniqueNameId + " already has a SofaDAGNodeAPI.", 1);
+                m_impl = null;
             }
             
             m_impl = new SofaDAGNodeAPI(m_sofaContext.GetSimuContext(), UniqueNameId);
