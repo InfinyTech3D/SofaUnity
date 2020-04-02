@@ -143,6 +143,7 @@ public class SofaContextEditor : Editor
         // Label of the filename loaded
         EditorGUILayout.LabelField("Scene Filename: ", context.SceneFileMgr.SceneFilename);
 
+        context.UnLoadScene = GUILayout.Button("Unload Scene file");
         EditorGUILayout.Separator();
     }
     

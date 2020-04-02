@@ -112,7 +112,6 @@ namespace SofaUnity
         /// Method to destroy this component
         public void DestroyComponent(bool killGameObject = false)
         {
-            Debug.Log("!!! DestroyComponent " + UniqueNameId);
             if (killGameObject)
             {
                 Component[] components;
@@ -123,7 +122,6 @@ namespace SofaUnity
             }
 
             DestroyImmediate(this);
-            Debug.Log("!!! DestroyComponent " + UniqueNameId + " end");
         }
 
         ////////////////////////////////////////////

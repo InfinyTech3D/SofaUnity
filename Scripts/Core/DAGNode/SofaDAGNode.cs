@@ -97,7 +97,6 @@ namespace SofaUnity
         /// Method to destroy this component DAGNode and all component beneath
         public void DestroyDAGNode(bool killGameObject = false)
         {
-            Debug.Log("!!! DestroyDAGNode " + UniqueNameId);
             // first clear all components
             foreach (SofaBaseComponent scompo in m_sofaComponents)
             {
@@ -107,7 +106,7 @@ namespace SofaUnity
 
             if (UniqueNameId == "root")
             {
-                Debug.Log("!!! DestroyDAGNode " + UniqueNameId + " end");
+                // Do not delete object nor component for root node
                 return;
             }
 
@@ -117,7 +116,6 @@ namespace SofaUnity
             }
 
             DestroyImmediate(this);
-            Debug.Log("!!! DestroyDAGNode " + UniqueNameId + " end");
             //if (UniqueNameId== "root")
             //    GUIUtility.ExitGUI();
         }
