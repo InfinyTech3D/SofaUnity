@@ -35,7 +35,7 @@ namespace SofaUnity
 
         protected override void CreateSofaAPI_Impl()
         {
-            m_impl = new SofaBaseComponentAPI(m_sofaContext.GetSimuContext(), UniqueNameId);
+            m_impl = new SofaBaseComponentAPI(m_sofaContext.GetSimuContext(), UniqueNameId, m_isCustom);
         }
 
         /// Method called by @sa SofaBaseComponent::Create_impl() method. To specify specific types of components

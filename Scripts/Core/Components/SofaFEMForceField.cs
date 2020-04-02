@@ -38,7 +38,7 @@ namespace SofaUnity
         protected override void CreateSofaAPI_Impl()
         {            
             SofaLog("SofaFEMForceField::CreateSofaAPI_Impl: " + UniqueNameId + " | m_sofaContext: " + m_sofaContext + " | m_sofaContext.GetSimuContext(): " + m_sofaContext.GetSimuContext());
-            m_impl = new SofaBaseComponentAPI(m_sofaContext.GetSimuContext(), UniqueNameId);
+            m_impl = new SofaBaseComponentAPI(m_sofaContext.GetSimuContext(), UniqueNameId, m_isCustom);
 
             // Add a MeshFilter to the GameObject
             MeshFilter mf = gameObject.GetComponent<MeshFilter>();

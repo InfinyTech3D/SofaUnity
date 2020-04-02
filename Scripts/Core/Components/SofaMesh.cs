@@ -133,7 +133,7 @@ namespace SofaUnity
         protected override void CreateSofaAPI_Impl()
         {
             SofaLog("SofaMesh::CreateSofaAPI_Impl: " + UniqueNameId + " | m_sofaContext: " + m_sofaContext + " | m_sofaContext.GetSimuContext(): " + m_sofaContext.GetSimuContext());
-            m_impl = new SofaBaseComponentAPI(m_sofaContext.GetSimuContext(), UniqueNameId);
+            m_impl = new SofaBaseComponentAPI(m_sofaContext.GetSimuContext(), UniqueNameId, m_isCustom);
 
             this.gameObject.tag = "Player";
 
@@ -189,7 +189,7 @@ namespace SofaUnity
                     return;
 
                 // Create the API object for SofaMesh
-                m_sofaMeshAPI = new SofaBaseMeshAPI(m_sofaContext.GetSimuContext(), UniqueNameId);
+                m_sofaMeshAPI = new SofaBaseMeshAPI(m_sofaContext.GetSimuContext(), UniqueNameId, m_isCustom);
                 SofaLog("SofaMesh::InitBaseMeshAPI object created");
 
                 InitTopology();

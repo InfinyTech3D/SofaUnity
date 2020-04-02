@@ -135,7 +135,7 @@ namespace SofaUnity
                 m_impl = null;
             }
             
-            m_impl = new SofaDAGNodeAPI(m_sofaContext.GetSimuContext(), UniqueNameId);
+            m_impl = new SofaDAGNodeAPI(m_sofaContext.GetSimuContext(), UniqueNameId, m_isCustom);
 
             string componentsS = m_impl.GetDAGNodeComponents();
             if (componentsS.Length == 0)
@@ -185,7 +185,7 @@ namespace SofaUnity
                 return;
             }
 
-            m_impl = new SofaDAGNodeAPI(m_sofaContext.GetSimuContext(), UniqueNameId);
+            m_impl = new SofaDAGNodeAPI(m_sofaContext.GetSimuContext(), UniqueNameId, m_isCustom);
 
             string componentsS = m_impl.GetDAGNodeComponents();
             if (componentsS.Length == 0)

@@ -82,7 +82,7 @@ namespace SofaUnity
                     return;
                 
                 // Create the API object for SofaMesh
-                m_sofaMeshAPI = new SofaBaseMeshAPI(m_sofaContext.GetSimuContext(), UniqueNameId);
+                m_sofaMeshAPI = new SofaBaseMeshAPI(m_sofaContext.GetSimuContext(), UniqueNameId, m_isCustom);
                 SofaLog("SofaVisualModel::InitBaseMeshAPI object created");
 
                 // Add a MeshFilter to the GameObject

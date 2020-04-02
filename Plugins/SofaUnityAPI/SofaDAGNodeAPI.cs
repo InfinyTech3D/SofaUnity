@@ -6,7 +6,7 @@ public class SofaDAGNodeAPI : SofaBaseAPI
 {
     protected string m_componentListS = "";
 
-    public SofaDAGNodeAPI(IntPtr simu, string nameID, bool isCustom = false)
+    public SofaDAGNodeAPI(IntPtr simu, string nameID, bool isCustom)
         : base(simu, nameID, isCustom)
     {
 

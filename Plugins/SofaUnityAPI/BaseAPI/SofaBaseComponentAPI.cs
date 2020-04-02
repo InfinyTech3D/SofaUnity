@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 public class SofaBaseComponentAPI : SofaBaseAPI
 {
 
-    public SofaBaseComponentAPI(IntPtr simu, string nameID, bool isCustom = false)
+    public SofaBaseComponentAPI(IntPtr simu, string nameID, bool isCustom)
         : base(simu, nameID, isCustom)
     { 
 
