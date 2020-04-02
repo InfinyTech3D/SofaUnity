@@ -41,9 +41,7 @@ public class SofaDAGNodeEditor : Editor
             }
 
             SofaDAGNodeManager nodeMgr = parentDagN.m_sofaContext.NodeGraphMgr;
-            int idNode = nodeMgr.NumberOfDAGNodes() + 1;
-            string dagNodeName = "SofaNode_" + idNode.ToString();
-            nodeMgr.RegisterNode(dagNodeName, parentDagN.UniqueNameId);
+            nodeMgr.RegisterCustomNode("default", parentDagN.UniqueNameId);
         }
         else
         {

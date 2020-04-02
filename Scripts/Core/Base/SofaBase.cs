@@ -35,6 +35,9 @@ namespace SofaUnity
         /// bool to store the status of this GameObject. Used to update the mesh if is dirty.
         protected bool m_isDirty = true;
 
+        /// Parameter to store if this component has been created from Unity side
+        protected bool m_isCustom = false;
+
 
 
         ////////////////////////////////////////////
@@ -78,10 +81,11 @@ namespace SofaUnity
         }
 
         /// call by a thrid party, should do the same as awake but here we directly give the pointer to sofaContext. Will call \sa Create_impl()
-        public void Create(SofaContext sofacontext, string name)
+        public void Create(SofaContext sofacontext, string name, bool isCustom = false)
         {
             SofaLog("####### SofaBase::Create: " + UniqueNameId);
             UniqueNameId = name;
+            m_isCustom = isCustom;
             SetSofaContext(sofacontext);
             Create_impl();
         }

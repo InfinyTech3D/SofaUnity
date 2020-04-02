@@ -207,7 +207,7 @@ namespace SofaUnity
 
 
         /// Method to register a node into this graph under another parentNode, if parent is not found, will add it under root
-        public void RegisterNode(string nodeName, string parentNodeName)
+        public void RegisterCustomNode(string nodeName, string parentNodeName)
         {
             SofaDAGNode parentNode = GetDAGNodeByName(parentNodeName);
             if (parentNode == null)
@@ -216,14 +216,16 @@ namespace SofaUnity
                 parentNode = m_rootDAGNode;
             }
 
+            int idNode = m_dagNodes.Count + 1;
+            nodeName = nodeName + "_" + idNode.ToString();
+
             GameObject nodeGO = new GameObject("SofaNode - " + nodeName);
             SofaDAGNode dagNode = nodeGO.AddComponent<SofaDAGNode>();
-            dagNode.Create(m_sofaContext, nodeName);
+            dagNode.Create(m_sofaContext, nodeName, true);
 
             m_dagNodes.Add(dagNode);
             nodeGO.transform.parent = parentNode.gameObject.transform;
         }
-
 
 
         ////////////////////////////////////////////

@@ -19,8 +19,8 @@ public class SofaContextEditor : Editor
         int cpt = 0;
         if (GameObject.FindObjectOfType<SofaContext>() != null)
         {
-            Debug.LogWarning("The Scene already includes a SofaContext. Only one context is possible.");
-            //return null;
+            Debug.LogWarning("The Scene already includes a SofaContext. Only one context is possible for the moment.");
+            return null;
             cpt++;
         }
         GameObject go = new GameObject("SofaContext_" + cpt.ToString());
