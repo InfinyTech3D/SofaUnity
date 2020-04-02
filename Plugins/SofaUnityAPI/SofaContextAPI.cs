@@ -140,7 +140,7 @@ namespace SofaUnityAPI
             {
                 int res = sofaPhysicsAPI_loadScene(m_native, filename);
                 if (res != 0)
-                    Debug.LogError("SofaContextAPI::loadScene method returns: " + SofaDefines.msg_error[res]);
+                    Debug.LogError("SofaContextAPI::loadScene method returns: " + SofaDefines.msg_error[res] + " for scene: " + filename);
             }
             else
                 Debug.LogError("SofaContextAPI::loadScene can't load file: " + filename + "no sofaPhysicsAPI created!");

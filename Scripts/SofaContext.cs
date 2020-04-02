@@ -353,10 +353,12 @@ namespace SofaUnity
                 m_sceneFileMgr.SetSofaContext(this);
 
             // If already has a scene, reconnect it in DAGNode mgr
-            if (m_sceneFileMgr.HasScene)
-                ReconnectSofaScene();
-            else
+            SofaDAGNode rootNode = this.gameObject.GetComponent<SofaDAGNode>();
+            if (rootNode == null) // first creation
                 m_nodeGraphMgr.LoadNodeGraph();
+            else
+                ReconnectSofaScene();
+                
 
             if (m_log)
                 Debug.Log("## SofaContext status end init: " + m_impl.contextStatus());
@@ -550,9 +552,9 @@ namespace SofaUnity
             if (m_sceneFileMgr == null)
                 return;
 
-            Debug.Log("## SofaContext ## ReconnectSofaScene: " + m_sceneFileMgr.AbsoluteFilename());
             // load scene file in SOFA
-            m_impl.loadScene(m_sceneFileMgr.AbsoluteFilename());
+            if (m_sceneFileMgr.SceneFilename.Length != 0)
+                m_impl.loadScene(m_sceneFileMgr.AbsoluteFilename());
 
             // Do not retrieve timestep of gravity in case it has been changed in editor
 
