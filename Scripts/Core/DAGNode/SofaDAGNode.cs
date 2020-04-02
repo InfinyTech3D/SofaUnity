@@ -94,9 +94,32 @@ namespace SofaUnity
             }
         }
 
-        public void ClearNode()
+        /// Method to destroy this component DAGNode and all component beneath
+        public void DestroyDAGNode(bool killGameObject = false)
         {
-            Debug.LogWarning("SofaDAGNode::ClearNode() not yet implemented!");
+            Debug.Log("!!! DestroyDAGNode " + UniqueNameId);
+            // first clear all components
+            foreach (SofaBaseComponent scompo in m_sofaComponents)
+            {
+                scompo.DestroyComponent(killGameObject);
+            }
+            m_sofaComponents.Clear();
+
+            if (UniqueNameId == "root")
+            {
+                Debug.Log("!!! DestroyDAGNode " + UniqueNameId + " end");
+                return;
+            }
+
+            if (killGameObject)
+            {
+                DestroyImmediate(this.gameObject);
+            }
+
+            DestroyImmediate(this);
+            Debug.Log("!!! DestroyDAGNode " + UniqueNameId + " end");
+            //if (UniqueNameId== "root")
+            //    GUIUtility.ExitGUI();
         }
         
 

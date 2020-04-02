@@ -109,6 +109,22 @@ namespace SofaUnity
             m_propagateName = value;
         }
 
+        /// Method to destroy this component
+        public void DestroyComponent(bool killGameObject = false)
+        {
+            Debug.Log("!!! DestroyComponent " + UniqueNameId);
+            if (killGameObject)
+            {
+                Component[] components;
+                components = gameObject.GetComponents(typeof(SofaBaseComponent));
+
+                if (components.Length == 1)
+                    DestroyImmediate(gameObject);
+            }
+
+            DestroyImmediate(this);
+            Debug.Log("!!! DestroyComponent " + UniqueNameId + " end");
+        }
 
         ////////////////////////////////////////////
         /////  SofaBaseComponent internal API  /////
