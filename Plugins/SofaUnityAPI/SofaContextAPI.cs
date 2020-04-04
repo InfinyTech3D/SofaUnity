@@ -47,7 +47,10 @@ namespace SofaUnityAPI
                 //Debug.Log("sharePath: " + sharePath);
             }
             else
+            {
                 Debug.LogError("SofaContextAPI scene creation return: " + SofaDefines.msg_error[res]);
+                m_isReady = false;
+            }
         }
 
         /// Destructor
