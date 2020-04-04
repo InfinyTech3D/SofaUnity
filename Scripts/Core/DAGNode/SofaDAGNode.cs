@@ -49,8 +49,12 @@ namespace SofaUnity
         //////      SofaDAGNode accessors      /////
         ////////////////////////////////////////////
 
-        /// Getter to \sa m_parentNodeName
-        public string getParentName() { return m_parentNodeName; }
+        /// Getter/setter to \sa m_parentNodeName
+        public string ParentNodeName
+        {
+            set { m_parentNodeName = value; }
+            get { return m_parentNodeName; }
+        }
 
         /// Getter to \sa m_nodeMesh
         public SofaMesh GetSofaMesh()
@@ -135,14 +139,16 @@ namespace SofaUnity
                 m_impl = null;
             }
             
-            m_impl = new SofaDAGNodeAPI(m_sofaContext.GetSimuContext(), UniqueNameId, m_isCustom);
+            m_impl = new SofaDAGNodeAPI(m_sofaContext.GetSimuContext(), UniqueNameId, m_parentNodeName, m_isCustom);
+
+            m_sofaComponents = new List<SofaBaseComponent>();
 
             string componentsS = m_impl.GetDAGNodeComponents();
             if (componentsS.Length == 0)
                 return;
 
             SofaLog("####### SofaDAGNode::CreateSofaAPI " + UniqueNameId + " -> " + componentsS);
-            m_sofaComponents = new List<SofaBaseComponent>();
+
             List<string> compoNames = ConvertStringToList(componentsS);
             foreach (string compoName in compoNames)
             {
@@ -185,7 +191,7 @@ namespace SofaUnity
                 return;
             }
 
-            m_impl = new SofaDAGNodeAPI(m_sofaContext.GetSimuContext(), UniqueNameId, m_isCustom);
+            m_impl = new SofaDAGNodeAPI(m_sofaContext.GetSimuContext(), UniqueNameId, m_parentNodeName, m_isCustom);
 
             string componentsS = m_impl.GetDAGNodeComponents();
             if (componentsS.Length == 0)

@@ -41,7 +41,7 @@ public class SofaDAGNodeEditor : Editor
             }
 
             SofaDAGNodeManager nodeMgr = parentDagN.m_sofaContext.NodeGraphMgr;
-            nodeMgr.RegisterCustomNode("default", parentDagN.UniqueNameId);
+            nodeMgr.RegisterCustomNode("Node", parentDagN.UniqueNameId);
         }
         else
         {
@@ -61,14 +61,15 @@ public class SofaDAGNodeEditor : Editor
 
         EditorGUI.BeginDisabledGroup(true);        
         EditorGUILayout.ObjectField("Sofa Context", node.m_sofaContext, typeof(Object), true);
-        EditorGUILayout.TextField("Parent DAGNode", node.getParentName());        
+        EditorGUILayout.TextField("Parent DAGNode", node.ParentNodeName);        
         EditorGUI.EndDisabledGroup();
 
         EditorGUILayout.TextField("DAGNode Name", node.UniqueNameId);
         
 
         EditorGUI.BeginDisabledGroup(true);
-        EditorGUILayout.IntField("Number of Components", node.m_sofaComponents.Count);
+        if (node.m_sofaComponents != null)
+            EditorGUILayout.IntField("Number of Components", node.m_sofaComponents.Count);
         EditorGUI.EndDisabledGroup();
     }
 }

@@ -137,7 +137,7 @@ namespace SofaUnity
             // reorder nodes
             foreach (SofaDAGNode snode in m_dagNodes)
             {
-                string parentName = snode.getParentName();
+                string parentName = snode.ParentNodeName;
                 if (parentName == "None") // root node
                     continue;
 
@@ -216,11 +216,12 @@ namespace SofaUnity
                 parentNode = m_rootDAGNode;
             }
 
-            int idNode = m_dagNodes.Count + 1;
+            int idNode = m_dagNodes.Count;
             nodeName = nodeName + "_" + idNode.ToString();
 
             GameObject nodeGO = new GameObject("SofaNode - " + nodeName);
             SofaDAGNode dagNode = nodeGO.AddComponent<SofaDAGNode>();
+            dagNode.ParentNodeName = parentNodeName;
             dagNode.Create(m_sofaContext, nodeName, true);
 
             m_dagNodes.Add(dagNode);
