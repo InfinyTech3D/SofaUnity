@@ -467,11 +467,13 @@ public class SofaVR_API : MonoBehaviour
         {
             showWireFrameChilds(child, value);
             SofaVisualMesh obj = child.GetComponent<SofaVisualMesh>();
-            if (obj != null)
-            {
-                if (obj.m_isSelected)
-                    obj.ShowWireframe(!obj.m_isWireframe);
-            }
+
+            // TODO: restore that
+            //if (obj != null)
+            //{
+            //    if (obj.m_isSelected)
+            //        obj.ShowWireframe(!obj.m_isWireframe);
+            //}
         }
 
         firstWireClick = false;
@@ -483,12 +485,13 @@ public class SofaVR_API : MonoBehaviour
         {
             showWireFrameChilds(child, value);
 
-            SofaVisualMesh obj = child.GetComponent<SofaVisualMesh>();
-            if (obj != null)
-            {
-                if (obj.m_isSelected)
-                    obj.ShowWireframe(!obj.m_isWireframe);
-            }
+            // TODO: restore that
+            //SofaVisualMesh obj = child.GetComponent<SofaVisualMesh>();
+            //if (obj != null)
+            //{
+            //    if (obj.m_isSelected)
+            //        obj.ShowWireframe(!obj.m_isWireframe);
+            //}
         }
     }
 }

@@ -35,7 +35,7 @@ namespace SofaUnity
         void Update()
         {
             Text txt = textUI.GetComponent<Text>();
-            SofaBaseMesh baseMesh = this.GetComponent<SofaBaseMesh>();
+            SofaMeshObject baseMesh = this.GetComponent<SofaMeshObject>();
 
             int nbV = baseMesh.nbVertices();
             int nbTri = baseMesh.nbTriangles();

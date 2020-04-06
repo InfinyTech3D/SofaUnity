@@ -66,14 +66,14 @@ namespace SofaUnity
                 SofaBaseObject obj = child.GetComponent<SofaBaseObject>();
 
                 if (m_sofaContext.m_log)
-                    Debug.Log("## SofaObjectHierarchy::IsPlaying: " + Application.isPlaying + " parent: " + obj.parentName());
-                if (hierarchy.ContainsKey(obj.parentName()))
-                    hierarchy[obj.parentName()].Add(child.name);
+                    Debug.Log("## SofaObjectHierarchy::IsPlaying: " + Application.isPlaying + " parent: " + obj.ParentName());
+                if (hierarchy.ContainsKey(obj.ParentName()))
+                    hierarchy[obj.ParentName()].Add(child.name);
                 else
                 {
                     List<string> children = new List<string>();
                     children.Add(child.name);
-                    hierarchy.Add(obj.parentName(), children);
+                    hierarchy.Add(obj.ParentName(), children);
                 }
             }
 
