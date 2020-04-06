@@ -36,7 +36,7 @@ public class SofaSphereEditor : SofaGridEditor
 /// Editor Class to define the creation and UI of SofaRigidSphere GameObject
 /// </summary>
 [CustomEditor(typeof(SofaRigidSphere), true)]
-public class SofaRigidSphereEditor : SofaRigidGridEditor
+public class SofaRigidSphereEditor : SofaGridEditor
 {
     /// <summary>
     ///  Add SofaRigidSphere Object creation to the SofaUnity Menu

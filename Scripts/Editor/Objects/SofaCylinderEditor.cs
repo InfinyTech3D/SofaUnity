@@ -36,7 +36,7 @@ public class SofaCylinderEditor : SofaGridEditor
 /// Editor Class to define the creation and UI of SofaRigidCylinder GameObject
 /// </summary>
 [CustomEditor(typeof(SofaRigidCylinder), true)]
-public class SofaRigidCylinderEditor : SofaRigidGridEditor
+public class SofaRigidCylinderEditor : SofaGridEditor
 {
     /// <summary>
     ///  Add SofaRigidCylinder Object creation to the SofaUnity Menu

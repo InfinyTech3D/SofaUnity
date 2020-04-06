@@ -6,7 +6,7 @@ using SofaUnity;
 /// Editor Class to define the creation and UI of SofaRigidPlane GameObject
 /// </summary>
 [CustomEditor(typeof(SofaRigidPlane), true)]
-public class SofaRigidPlaneEditor : SofaRigidGridEditor
+public class SofaRigidPlaneEditor : SofaGridEditor
 {
     /// <summary>
     ///  Add SofaRigidPlane Object creation to the SofaUnity Menu

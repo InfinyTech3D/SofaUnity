@@ -14,11 +14,45 @@ public class SofaBoxEditor : SofaGridEditor
     /// <returns>Pointer to the SofaBox GameObject</returns>
     [MenuItem("SofaUnity/SofaObject/SofaBox")]
     [MenuItem("GameObject/Create Other/SofaUnity/SofaDeformableObject/SofaBox")]
-    new public static GameObject CreateNew()
+    public static void CreateNew()
     {
-        GameObject go = new GameObject("SofaBox");
-        go.AddComponent<SofaBox>();        
-        return go;
+        if (Selection.activeTransform != null)
+        {
+            GameObject selectObj = Selection.activeGameObject;
+            SofaDAGNode parentDagN = selectObj.GetComponent<SofaDAGNode>();
+
+            if (parentDagN == null)
+            {
+                // not a DAGNode selected. Check if SofaComponent
+                SofaBaseComponent sofaComponent = selectObj.GetComponent<SofaBaseComponent>();
+
+                // If neither a sofa component, nothing can be done
+                if (sofaComponent == null)
+                {
+                    Debug.LogError("Error2 creating SofaDAGNode GameObject. No valid SofaDAGNode or SofaComponent selected.");
+                    return;
+                }
+
+                // otherwise  will search for DAGNode owner of this component and add New DAGNode as child of this owner
+                parentDagN = sofaComponent.m_ownerNode;
+                if (parentDagN == null)
+                {
+                    Debug.LogError("Error3 creating SofaDAGNode GameObject. SofaComponent selected has no valid SofaDAGNode owner.");
+                    return;
+                }
+            }
+
+            GameObject go = new GameObject("SofaBox");
+            go.AddComponent<SofaBox>();
+
+            SofaDAGNodeManager nodeMgr = parentDagN.m_sofaContext.NodeGraphMgr;
+            nodeMgr.RegisterCustomObject(go, parentDagN);
+        }
+        else
+        {
+            Debug.LogError("Error1 creating SofaDAGNode GameObject. No valid SofaContext nor SofaDAGNode selected.");
+        }
+
     }
 
     /// <summary>
@@ -36,7 +70,7 @@ public class SofaBoxEditor : SofaGridEditor
 /// Editor Class to define the creation and UI of SofaRigidBox GameObject
 /// </summary>
 [CustomEditor(typeof(SofaRigidBox), true)]
-public class SofaRigidBoxEditor : SofaRigidGridEditor
+public class SofaRigidBoxEditor : SofaGridEditor
 {
     /// <summary>
     ///  Add SofaRigidBox Object creation to the SofaUnity Menu
