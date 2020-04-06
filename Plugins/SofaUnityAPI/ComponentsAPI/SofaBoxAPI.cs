@@ -13,8 +13,8 @@ public class SofaBoxAPI : SofaBaseObjectAPI
     /// <param name="simu">Pointer to the SofaPhysicsAPI</param>
     /// <param name="nameID">Name of this Object</param>
     /// <param name="isRigid">Type rigid or deformable</param>
-    public SofaBoxAPI(IntPtr simu, string nameID, bool isRigid) 
-        : base (simu, nameID, isRigid)        
+    public SofaBoxAPI(IntPtr simu, string nameID, string parentName, bool isRigid) 
+        : base (simu, nameID, parentName, isRigid)        
     {
 
     }
@@ -31,7 +31,7 @@ public class SofaBoxAPI : SofaBaseObjectAPI
         if (m_hasObject == false) // first time create object only
         {
             // Create the cube
-            int res = sofaPhysicsAPI_addCube(m_simu, m_name, m_isRigid);
+            int res = sofaPhysicsAPI_addCube(m_simu, m_name, m_parentName, m_isRigid);
             m_name += "_node";
 
             if (res != 0)
@@ -234,6 +234,6 @@ public class SofaBoxAPI : SofaBaseObjectAPI
     /////////////////////////////////////////////////////////////////////////////////////////
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysicsAPI_addCube(IntPtr obj, string name, bool isRigid);
+    public static extern int sofaPhysicsAPI_addCube(IntPtr obj, string nodeName, string parentNodeName, bool isRigid);
 
 }

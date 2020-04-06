@@ -122,7 +122,7 @@ public class SofaSphereCollisionModel : MonoBehaviour
         IntPtr _simu = m_sofaContext.GetSimuContext();
 
         if (_simu != IntPtr.Zero) // Create the API object for Sofa Regular Grid Mesh
-            m_impl = new SofaCustomMeshAPI(_simu, this.name);            
+            m_impl = new SofaCustomMeshAPI(_simu, this.name, "root");            
 
         if (m_impl == null || !m_impl.m_isCreated)
         {

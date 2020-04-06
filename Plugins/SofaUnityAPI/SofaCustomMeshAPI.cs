@@ -12,8 +12,8 @@ public class SofaCustomMeshAPI : SofaBaseObjectAPI
     /// <summary> Default constructor, will call impl method: @see createObject() </summary>
     /// <param name="simu">Pointer to the SofaPhysicsAPI</param>
     /// <param name="nameID">Name of this Object</param>
-    public SofaCustomMeshAPI(IntPtr simu, string nameID)
-        : base(simu, nameID, true)
+    public SofaCustomMeshAPI(IntPtr simu, string parentName, string nameID)
+        : base(simu, nameID, parentName, true)
     {
 
     }

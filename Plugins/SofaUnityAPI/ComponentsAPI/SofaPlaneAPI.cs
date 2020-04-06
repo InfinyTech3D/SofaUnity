@@ -13,8 +13,8 @@ public class SofaPlaneAPI : SofaBaseObjectAPI
     /// <param name="simu">Pointer to the SofaPhysicsAPI</param>
     /// <param name="nameID">Name of this Object</param>
     /// <param name="isRigid">Type rigid or deformable</param>
-    public SofaPlaneAPI(IntPtr simu, string nameID, bool isRigid)
-        : base(simu, nameID, isRigid)
+    public SofaPlaneAPI(IntPtr simu, string nameID, string parentName, bool isRigid)
+        : base(simu, nameID, parentName, isRigid)
     {
 
     }

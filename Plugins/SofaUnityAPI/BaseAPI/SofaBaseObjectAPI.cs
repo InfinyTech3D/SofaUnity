@@ -12,11 +12,12 @@ public class SofaBaseObjectAPI : IDisposable
     /// <param name="simu">Pointer to the SofaPhysicsAPI</param>
     /// <param name="nameID">Name of this Object</param>
     /// <param name="isRigid">Type rigid or deformable</param>
-    public SofaBaseObjectAPI(IntPtr simu, string nameID, bool isRigid)
+    public SofaBaseObjectAPI(IntPtr simu, string nameID, string parentName, bool isRigid)
     {
         m_simu = simu;
         m_name = nameID;
         m_isRigid = isRigid;
+        m_parentName = parentName;
 
         m_isCreated = createObject();
     }
@@ -44,8 +45,7 @@ public class SofaBaseObjectAPI : IDisposable
     /// Type of Sofa 3D Object mapped to this Object.
     protected string m_type;
     /// Sofa 3D Object parent name in Sofa simulation Tree.
-    protected string m_parent;
-
+    protected string m_parentName;
     /// Parameter to store the information if the object is rigid or deformable.
     protected bool m_isRigid = false;
 
@@ -87,7 +87,7 @@ public class SofaBaseObjectAPI : IDisposable
     /// Getter of the sofa 3D Object parent name.
     public string parent
     {
-        get { return m_parent; }
+        get { return m_parentName; }
     }
 
 
