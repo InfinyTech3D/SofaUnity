@@ -163,14 +163,14 @@ namespace SofaUnity
         //////   SofaBaseObject internal API    /////
         /////////////////////////////////////////////
 
-            /// called by @sa Awake method.
+        /// called by @sa CreateObject method, once the sofaContext and all parameters have been set.  To be implemented by child class.
         protected virtual void Create_impl()
         {
 
         }
 
 
-        /// Method called by @sa Reconnect() method. To be implemented by child class.
+        /// Method called by @sa Reconnect() method from SofaContext. To be implemented by child class.
         protected virtual void Reconnect_impl()
         {
 
