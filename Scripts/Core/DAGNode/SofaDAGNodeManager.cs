@@ -26,6 +26,8 @@ namespace SofaUnity
         /// Pointer to the root DAGNode of this simulation
         private SofaDAGNode m_rootDAGNode = null;
 
+        /// List of SofaDAGNode in the graph
+        private List<SofaBaseObject> m_objects = null;
 
         /////////////////////////////////////////////
         //////   SofaDAGNodeManager accessors   /////
@@ -87,6 +89,7 @@ namespace SofaUnity
 
             // create empty the list of SofaBaseObject
             m_dagNodes = new List<SofaDAGNode>();
+            m_objects = new List<SofaBaseObject>();
         }
 
 
@@ -226,6 +229,34 @@ namespace SofaUnity
 
             m_dagNodes.Add(dagNode);
             nodeGO.transform.parent = parentNode.gameObject.transform;
+        }
+
+
+        public void RegisterCustomObject(GameObject sofaGameObject, SofaDAGNode parentNode)
+        {
+            SofaBaseObject obj = sofaGameObject.GetComponent<SofaBaseObject>();
+            if (obj == null)
+            {
+                Debug.LogWarning("SofaBaseObject component not found in gameobject: " + sofaGameObject.name);
+                return;
+            }
+
+            // move this new node below the parentNode
+            sofaGameObject.transform.parent = parentNode.gameObject.transform;
+
+            // create the sofa object
+            int idNode = m_dagNodes.Count;
+            string objectName = sofaGameObject.name + "_" + idNode.ToString();
+            obj.CreateObject(m_sofaContext, objectName, parentNode.UniqueNameId);
+            m_objects.Add(obj);
+
+            // parse node now
+            if (obj.IsCreated())
+            {
+                string nodeName = objectName + "_node";
+                SofaDAGNode dagNode = sofaGameObject.AddComponent<SofaDAGNode>();
+                dagNode.Create(m_sofaContext, nodeName);
+            }
         }
 
 
