@@ -130,17 +130,21 @@ namespace SofaUnity
         {
             if (this.m_componentType == "SphereCollisionModel")
             {
-                CreateSphereCollisionModel();
+                CreateSphereCollisionModel(0.0f);
             }
             else if (this.m_componentType == "TriangleCollisionModel")
             {
                 CreateTriangleCollisionModel();
             }
+            else if (this.m_componentType == "PointCollisionModel")
+            {
+                CreateSphereCollisionModel(0.1f);
+            }
         }
 
 
         /// Specialized method to create the triangle collision elements
-        protected void CreateSphereCollisionModel()
+        protected void CreateSphereCollisionModel(float fixedRadius)
         {
             if (m_collisionElement != null)
             {
@@ -163,14 +167,20 @@ namespace SofaUnity
 
             // get sphere radius
             float radius = 1.0f;
-            SofaDoubleData datad = this.m_dataArchiver.GetSofaDoubleData("radius");
-            if (datad != null)
-                radius = datad.Value;
-            else
+            if (fixedRadius == 0.0f)
             {
-                SofaFloatData dataf = this.m_dataArchiver.GetSofaFloatData("radius");
-                radius = dataf.Value;
+                SofaDoubleData datad = this.m_dataArchiver.GetSofaDoubleData("radius");
+                if (datad != null)
+                    radius = datad.Value;
+                else
+                {
+                    SofaFloatData dataf = this.m_dataArchiver.GetSofaFloatData("radius");
+                    if (datad != null)
+                        radius = dataf.Value;
+                }
             }
+            else
+                radius = fixedRadius;
 
             Vector3 scaleRadius = new Vector3(radius * 2, radius * 2, radius * 2);
 
@@ -225,7 +235,13 @@ namespace SofaUnity
         protected void ShowCollisionElements()
         {
             if (m_collisionElement == null || m_collisionElement.Count == 0)
+            {
                 CreateCollisionElements();
+
+                // still null
+                if (m_collisionElement == null)
+                    return;
+            }
 
             foreach(GameObject elem in m_collisionElement)
             {
@@ -236,6 +252,9 @@ namespace SofaUnity
         /// Method to hide the collision elements
         protected void HideCollisionElements()
         {
+            if (m_collisionElement == null)
+                return;
+
             foreach (GameObject elem in m_collisionElement)
             {
                 elem.SetActive(false);
@@ -261,6 +280,10 @@ namespace SofaUnity
                 MeshFilter mf = triangulation.GetComponent<MeshFilter>();
                 mf.mesh.vertices = m_sofaMesh.SofaMeshTopology.m_mesh.vertices;
                 mf.mesh.normals = m_sofaMesh.SofaMeshTopology.m_mesh.normals;
+            }
+            else if (this.m_componentType == "PointCollisionModel")
+            {
+                Debug.Log("UpdateCollisionElements::PointCollisionModel");
             }
         }
     }
