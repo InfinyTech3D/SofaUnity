@@ -3,7 +3,10 @@ using UnityEditor;
 using SofaUnity;
 
 /// <summary>
-/// Editor Class to define the creation and UI of SofaBox GameObject
+/// Editor class corresponding to @sa SofaBox object
+/// This class inherite from @sa SofaGridEditor and will add specific parameter for Box deformable object.
+/// Provide create method to create SofaBox from Unity Menu and register it inside DAGNodeManager
+/// Provide interface for user interaction
 /// </summary>
 [CustomEditor(typeof(SofaBox), true)]
 public class SofaBoxEditor : SofaGridEditor
@@ -12,13 +15,13 @@ public class SofaBoxEditor : SofaGridEditor
     ///  Add SofaBox Object creation to the SofaUnity Menu
     /// </summary>
     /// <returns>Pointer to the SofaBox GameObject</returns>
-    [MenuItem("SofaUnity/SofaObject/SofaBox")]
-    [MenuItem("GameObject/Create Other/SofaUnity/SofaDeformableObject/SofaBox")]
-    public static void CreateNew()
+    [MenuItem("SofaUnity/PrimitiveObject/SofaBox")]
+    [MenuItem("GameObject/Create Other/SofaPrimitiveObject/SofaBox")]
+    new public static GameObject CreateNew()
     {
         SofaDAGNode parentDagN = GetDAGNodeSelected();
         if (parentDagN == null)
-            return;
+            return null;
 
         GameObject go = new GameObject("SofaBox");
         go.AddComponent<SofaBox>();
@@ -28,7 +31,11 @@ public class SofaBoxEditor : SofaGridEditor
             nodeMgr.RegisterCustomObject(go, parentDagN);
         else
             Debug.LogError("Error creating SofaBox object. Can't access SofaDAGNodeManager.");
+
+        return go;
     }
+
+
 
     /// <summary>
     /// Method to set the UI of the SofaBox GameObject
@@ -41,8 +48,14 @@ public class SofaBoxEditor : SofaGridEditor
 }
 
 
+
+
+
 /// <summary>
-/// Editor Class to define the creation and UI of SofaRigidBox GameObject
+/// Editor class corresponding to @sa SofaRigidBox object
+/// This class inherite from @sa SofaGridEditor and will add specific parameter for Box regid object.
+/// Provide create method to create SofaRigidBox from Unity Menu and register it inside DAGNodeManager
+/// Provide interface for user interaction
 /// </summary>
 [CustomEditor(typeof(SofaRigidBox), true)]
 public class SofaRigidBoxEditor : SofaGridEditor
@@ -51,12 +64,23 @@ public class SofaRigidBoxEditor : SofaGridEditor
     ///  Add SofaRigidBox Object creation to the SofaUnity Menu
     /// </summary>
     /// <returns>Pointer to the SofaRigidBox GameObject</returns>
-    [MenuItem("SofaUnity/SofaObject/SofaRigidBox")]
-    [MenuItem("GameObject/Create Other/SofaUnity/SofaRigidObject/SofaRigidBox")]
+    [MenuItem("SofaUnity/PrimitiveObject/SofaRigidBox")]
+    [MenuItem("GameObject/Create Other/SofaPrimitiveObject/SofaRigidBox")]
     new public static GameObject CreateNew()
     {
+        SofaDAGNode parentDagN = GetDAGNodeSelected();
+        if (parentDagN == null)
+            return null;
+
         GameObject go = new GameObject("SofaRigidBox");
-        go.AddComponent<SofaRigidBox>();        
+        go.AddComponent<SofaRigidBox>();
+
+        SofaDAGNodeManager nodeMgr = parentDagN.m_sofaContext.NodeGraphMgr;
+        if (nodeMgr != null)
+            nodeMgr.RegisterCustomObject(go, parentDagN);
+        else
+            Debug.LogError("Error creating SofaRigidBox object. Can't access SofaDAGNodeManager.");
+
         return go;
     }
 

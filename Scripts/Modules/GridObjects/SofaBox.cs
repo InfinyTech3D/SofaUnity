@@ -10,11 +10,20 @@ namespace SofaUnity
     [ExecuteInEditMode]
     public class SofaBox : SofaGrid
     {
+        /////////////////////////////////////////////
+        //////        SofaBox API members       /////
+        /////////////////////////////////////////////
+
         /// Pointer to the Sofa Context API.
-        public SofaBoxAPI m_impl = null;
+        protected SofaBoxAPI m_impl = null;
 
 
-        ///// Method called by @sa CreateObject() method. To create the object when Sofa context has been set.
+
+        /////////////////////////////////////////////
+        //////      SofaBox internal API        /////
+        /////////////////////////////////////////////
+
+        /// Method called by @sa CreateObject() method. To create the object when Sofa context has been set.
         protected override void Create_impl()
         {
             if (m_impl == null)
@@ -33,6 +42,7 @@ namespace SofaUnity
         }
 
 
+        /// Method called by @sa Reconnect() method from SofaContext when scene is resctructed/reloaded.
         protected override void Reconnect_impl()
         {
             // nothing different.

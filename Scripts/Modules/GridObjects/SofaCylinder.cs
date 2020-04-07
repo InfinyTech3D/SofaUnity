@@ -5,40 +5,48 @@ namespace SofaUnity
 {
     /// <summary>
     /// Specific class for a Deformable Cylinder Mesh, inherite from SofaGrid 
-    /// This class will create a SofaBox API object to load the topology from Sofa Cylinder Grid Mesh.
+    /// This class will create a SofaCylinder API object to load the topology from Sofa Cylinder Grid Mesh.
     /// </summary>
     [ExecuteInEditMode]
     public class SofaCylinder : SofaGrid
     {
-        ///// Method called by @sa loadContext() method. To create the object when Sofa context has been found.
-        //protected override void createObject()
-        //{
-        //    // Get access to the sofaContext
-        //    IntPtr _simu = m_sofaContext.GetSimuContext();
-        //    if (_simu != IntPtr.Zero) // Create the API object for Sofa Cylinder Grid Mesh
-        //        m_impl = new SofaCylinderAPI(_simu, m_uniqueNameId, false);
+        /////////////////////////////////////////////
+        //////     SofaCylinder API members     /////
+        /////////////////////////////////////////////
 
-        //    if (m_impl == null || !m_impl.m_isCreated)
-        //    {
-        //        Debug.LogError("SofaCylinder:: Object creation failed: " + m_uniqueNameId);
-        //        this.enabled = false;
-        //    }
-        //}
+        /// Pointer to the Sofa Context API.
+        protected SofaCylinderAPI m_impl = null;
 
-        //// Update is called once per frame
-        //public override void updateImpl()
-        //{
-        //    if (m_log)
-        //        Debug.Log("SofaCylinder::updateImpl called.");
 
-        //    if (m_impl != null)
-        //    {
-        //        // TODO: need to find why velocity doesn't work for grid
-        //        //m_impl.updateMeshVelocity(m_mesh, m_context.timeStep);
-        //        m_impl.updateMesh(m_mesh);
-        //        m_mesh.RecalculateBounds();
-        //        m_mesh.RecalculateNormals(); // TODO check if needed
-        //    }
-        //}
+
+        /////////////////////////////////////////////
+        //////    SofaCylinder internal API     /////
+        /////////////////////////////////////////////
+
+        /// Method called by @sa CreateObject() method. To create the object when Sofa context has been set.
+        protected override void Create_impl()
+        {
+            if (m_impl == null)
+            {
+                m_impl = new SofaCylinderAPI(m_sofaContext.GetSimuContext(), m_uniqueNameId, m_parentName, false);
+                if (m_impl == null || !m_impl.m_isCreated)
+                {
+                    SofaLog("SofaCylinder:: Object creation failed: " + m_uniqueNameId, 2);
+                    this.enabled = false;
+                }
+                else
+                    m_isCreated = true;
+            }
+            else
+                SofaLog("SofaCylinder::Create_impl, SofaCylinderAPI already created: " + UniqueNameId, 1);
+        }
+
+
+        /// Method called by @sa Reconnect() method from SofaContext when scene is resctructed/reloaded.
+        protected override void Reconnect_impl()
+        {
+            // nothing different.
+            Create_impl();
+        }
     }
 }
