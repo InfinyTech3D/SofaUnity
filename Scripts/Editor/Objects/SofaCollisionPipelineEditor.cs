@@ -32,7 +32,10 @@ public class SofaCollisionPipelineEditor : Editor
         }
 
         GameObject go = new GameObject("SofaCollisionPipeline");
-
+        SofaCollisionPipeline pipe = go.AddComponent<SofaCollisionPipeline>();
+        go.transform.parent = sofaContext.gameObject.transform;
+        pipe.CreateObject(sofaContext, "SofaCollisionPipeline", "root");
+        sofaContext.RegisterSofaObject(pipe);
     }
 
     /// Method to create parameters GUI
@@ -40,7 +43,7 @@ public class SofaCollisionPipelineEditor : Editor
     {
         SofaCollisionPipeline collCompo = (SofaCollisionPipeline)this.target;
 
-        if (collCompo.BroadPhase != null)
+        if (collCompo.CollisionPipeline != null)
             EditorGUILayout.TextField("Collision Pipeline", collCompo.CollisionPipeline.m_componentType);
 
         if (collCompo.BroadPhase != null)

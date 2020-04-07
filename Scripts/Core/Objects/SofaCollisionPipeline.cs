@@ -55,6 +55,7 @@ namespace SofaUnity
 
         protected override void Create_impl()
         {
+            SofaLog("####### SofaCollisionPipeline::Create_impl: " + UniqueNameId);
             if (m_impl == null)
             {
                 m_impl = new SofaCollisionPipelineAPI(m_sofaContext.GetSimuContext(), m_uniqueNameId);
@@ -62,12 +63,77 @@ namespace SofaUnity
                 {
                     SofaLog("SofaCollisionPipeline:: Object creation failed: " + m_uniqueNameId, 2);
                     this.enabled = false;
+                    return;
                 }
-                else
-                    m_isCreated = true;
+
+                // create objects
+                CreateCollisionObjects();
+                m_isCreated = true;
             }
             else
                 SofaLog("SofaCollisionPipeline::Create_impl, SofaCollisionPipeline already created: " + UniqueNameId, 1);
+        }
+
+        protected override void Reconnect_impl()
+        {            
+            SofaLog("####### SofaCollisionPipeline::Reconnect_impl: " + UniqueNameId);
+
+            if (m_impl == null)
+            {
+                m_impl = new SofaCollisionPipelineAPI(m_sofaContext.GetSimuContext(), m_uniqueNameId);
+                if (m_impl == null || !m_impl.m_isCreated)
+                {
+                    SofaLog("SofaCollisionPipeline:: Object creation failed: " + m_uniqueNameId, 2);
+                    this.enabled = false;
+                    return;
+                }
+
+                // create objects
+                m_isCreated = true;
+            }
+            else
+                SofaLog("SofaCollisionPipeline::Create_impl, SofaCollisionPipeline already created: " + UniqueNameId, 1);
+        }
+
+
+        protected override void Init_impl()
+        {
+            if (!m_isCreated)
+                return;
+
+            SofaComponent[] components = this.gameObject.GetComponents<SofaComponent>();
+            foreach (SofaComponent component in components)
+            {
+                string baseType = component.BaseTypeToString(component.m_baseComponentType);
+                if (baseType == "SofaCollisionPipeline")
+                {
+                    m_collisionPipeline = component;
+                }
+                else if (baseType == "SofaCollisionAlgorithm")
+                {
+                    m_collisionresponse = component;
+                }
+                else if (baseType == "SofaCollisionDetection")
+                {
+                    m_broadPhase = component;
+                }
+                else if (baseType == "SofaCollisionIntersection")
+                {
+                    m_narrowPhase = component;
+                }
+            }
+        }
+
+        protected void CreateCollisionObjects()
+        {
+            SofaDAGNode rootNode = m_sofaContext.gameObject.GetComponent<SofaDAGNode>();
+            if (rootNode == null)
+            {
+                SofaLog("SofaCollisionPipeline:: root Node not found in GameObject: " + m_sofaContext.gameObject.name, 2);
+                return;
+            }
+
+            rootNode.RefreshNodeChildren();
         }
     }
 

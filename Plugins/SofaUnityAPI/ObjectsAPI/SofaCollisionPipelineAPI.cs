@@ -34,7 +34,7 @@ public class SofaCollisionPipelineAPI : SofaBaseObjectAPI
                 return false;
             }
 
-            //if (displayLog)
+            if (displayLog)
                 Debug.Log("SofaCollisionPipeline Added! " + m_name);
 
             //// Set created object to native pointer            
