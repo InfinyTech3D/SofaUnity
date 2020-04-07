@@ -246,10 +246,10 @@ namespace SofaUnity
             m_impl = new SofaDAGNodeAPI(m_sofaContext.GetSimuContext(), UniqueNameId, m_parentNodeName, m_isCustom);
 
             string componentsS = m_impl.GetDAGNodeComponents();
+            SofaLog("####### SofaDAGNode::Reconnect_impl " + UniqueNameId + " -> " + componentsS, 0, true);
             if (componentsS.Length == 0)
                 return;
-
-            SofaLog("####### SofaDAGNode::Reconnect_impl " + UniqueNameId + " -> " + componentsS);
+            
             List<string> compoNames = ConvertStringToList(componentsS);
             m_sofaComponents = new List<SofaBaseComponent>();
 
@@ -258,13 +258,16 @@ namespace SofaUnity
                 bool found = false;
                 foreach (Transform child in this.gameObject.transform)
                 {
-                    SofaBaseComponent component = child.GetComponent<SofaBaseComponent>();
-                    if (component != null && component.UniqueNameId == compoName)
+                    SofaBaseComponent[] components = child.GetComponents<SofaBaseComponent>();
+                    foreach (SofaBaseComponent component in components)
                     {
-                        component.Reconnect(this.m_sofaContext);
-                        m_sofaComponents.Add(component);
-                        found = true;
-                        break;
+                        if (component != null && component.UniqueNameId == compoName)
+                        {
+                            component.Reconnect(this.m_sofaContext);
+                            m_sofaComponents.Add(component);
+                            found = true;
+                            break;
+                        }
                     }
                 }
 
