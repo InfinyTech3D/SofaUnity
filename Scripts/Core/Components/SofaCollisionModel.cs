@@ -138,7 +138,7 @@ namespace SofaUnity
             }
             else if (this.m_componentType == "PointCollisionModel")
             {
-                CreateSphereCollisionModel(0.1f);
+                CreateSphereCollisionModel(0.01f);
             }
         }
 
@@ -264,7 +264,7 @@ namespace SofaUnity
         /// Method to update the collision elements positions
         protected void UpdateCollisionElements()
         {
-            if (this.m_componentType == "SphereCollisionModel")
+            if (this.m_componentType == "SphereCollisionModel" || this.m_componentType == "PointCollisionModel")
             {
                 int nbrSpheres = m_collisionElement.Count;
                 float[] vertices = m_sofaMesh.SofaMeshTopology.m_vertexBuffer;
@@ -280,10 +280,6 @@ namespace SofaUnity
                 MeshFilter mf = triangulation.GetComponent<MeshFilter>();
                 mf.mesh.vertices = m_sofaMesh.SofaMeshTopology.m_mesh.vertices;
                 mf.mesh.normals = m_sofaMesh.SofaMeshTopology.m_mesh.normals;
-            }
-            else if (this.m_componentType == "PointCollisionModel")
-            {
-                Debug.Log("UpdateCollisionElements::PointCollisionModel");
             }
         }
     }
