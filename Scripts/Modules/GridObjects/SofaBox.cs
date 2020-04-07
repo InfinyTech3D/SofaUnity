@@ -10,35 +10,26 @@ namespace SofaUnity
     [ExecuteInEditMode]
     public class SofaBox : SofaGrid
     {
-        ///// Method called by @sa loadContext() method. To create the object when Sofa context has been found.
-        //protected override void createObject()
-        //{
-        //    // Get access to the sofaContext
-        //    IntPtr _simu = m_sofaContext.GetSimuContext();
-        //    if (_simu != IntPtr.Zero) // Create the API object for Sofa Regular Grid Mesh
-        //        m_impl = new SofaBoxAPI(_simu, m_uniqueNameId, false);
+        /// Pointer to the Sofa Context API.
+        public SofaBoxAPI m_impl = null;
 
-        //    if (m_impl == null || !m_impl.m_isCreated)
-        //    {
-        //        Debug.LogError("SofaBox:: Object creation failed: " + m_uniqueNameId);
-        //        this.enabled = false;
-        //    }
-        //}
 
-        //// Update is called once per frame
-        //public override void updateImpl()
-        //{
-        //    if (m_log)
-        //        Debug.Log("SofaBox::updateImpl called.");
-
-        //    if (m_impl != null)
-        //    {
-        //        // TODO: need to find why velocity doesn't work for grid
-        //        //m_impl.updateMeshVelocity(m_mesh, m_context.timeStep);
-        //        m_impl.updateMesh(m_mesh);
-        //        m_mesh.RecalculateBounds();
-        //        m_mesh.RecalculateNormals(); // TODO check if needed
-        //    }
-        //}
+        ///// Method called by @sa CreateObject() method. To create the object when Sofa context has been set.
+        protected override void Create_impl()
+        {
+            if (m_impl == null)
+            {
+                m_impl = new SofaBoxAPI(m_sofaContext.GetSimuContext(), m_uniqueNameId, m_parentName, false);
+                if (m_impl == null || !m_impl.m_isCreated)
+                {
+                    SofaLog("SofaBox:: Object creation failed: " + m_uniqueNameId, 2);
+                    this.enabled = false;
+                }
+                else
+                    m_isCreated = true;
+            }
+            else
+                SofaLog("SofaBox::Create_impl, SofaBoxAPI already created: " + UniqueNameId, 1);
+        }
     }    
 }

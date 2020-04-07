@@ -32,7 +32,7 @@ public class SofaMeshObjectEditor : Editor
     public override void OnInspectorGUI()
     {     
         SofaMeshObject mesh = (SofaMeshObject)this.target;
-        if (mesh.isAwake() == false)
+        if (mesh.IsAwake() == false)
             return;
 
         // Check box to change normals direction

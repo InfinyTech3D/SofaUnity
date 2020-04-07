@@ -15,16 +15,26 @@ namespace SofaUnity
         //////    SofaBaseObject API members    /////
         /////////////////////////////////////////////
 
-        /// Parameter storing the fact that the object is fully init
-        protected bool m_isAwake = false;
+        /// Pointer to the Sofa context this GameObject belongs to.
+        protected SofaContext m_sofaContext = null;
+
+        /// Name of this object, should be unique and will be used for the DAGNode and component names
+        [SerializeField]
+        protected string m_uniqueNameId = "None";
+
+        /// Name of the Node parent name
+        [SerializeField]
+        protected string m_parentName = "None";
 
         /// Parameter to activate logging of this SOFA GameObject
         public bool m_log = false;
 
-        /// Name of this object, should be unique
-        [SerializeField]
-        protected string m_uniqueNameId = "Not set";
 
+        /// Parameter storing the fact that the gameObject has been created. Different from @sa m_isCreated
+        protected bool m_isAwake = false;
+
+        /// Paramter storing the fact that the SofaObject has been created.
+        protected bool m_isCreated = false;
 
 
         /////////////////////////////////////////////
@@ -41,11 +51,26 @@ namespace SofaUnity
         /// Method to get the parent node name of this object.
         public virtual string ParentName()
         {
-            return "No impl";
+            return m_parentName;
         }
 
-        public bool isAwake() { return m_isAwake; }
+        /// Getter for the parameter @sa m_isCreated
+        public bool IsCreated() { return m_isCreated; }
 
+        /// Getter for the parameter @sa m_isAwake
+        public bool IsAwake() { return m_isAwake; }
+
+
+        /// Setter for SofaContext \sa m_sofaContext
+        public void SetSofaContext(SofaContext sofacontext)
+        {
+            m_sofaContext = sofacontext;
+            if (m_sofaContext == null)
+            {
+                SofaLog("SofaBaseObject::loadContext - GetComponent<SofaContext> failed.", 2);
+                return;
+            }
+        }
 
         /////////////////////////////////////////////
         //////    SofaBaseObject public API     /////
@@ -70,17 +95,17 @@ namespace SofaUnity
         }
 
 
-        /// Method called at GameObject creation. Will search for SofaContext @sa loadContext() which call @sa createObject() . Then call @see awakePostProcess()
+        /// Method called at GameObject creation. Will call internal method @see awakePostProcess()
         void Awake()
         {
             SofaLog("Awake - " + m_uniqueNameId);
 
+            // add specific preprocessing here?
+
+
             // Call a post process method for additional codes.
-//            awakePostProcess();
-
-            // Store the fact that awake has finished.
-            m_isAwake = true;
-
+            if (AwakePostProcess())
+                m_isAwake = true;
         }
 
 
@@ -89,6 +114,7 @@ namespace SofaUnity
         {
             SofaLog("Start - " + m_uniqueNameId);
 
+            Init_impl();
         }
 
 
@@ -111,31 +137,43 @@ namespace SofaUnity
             //}
         }
 
-        
+
+        public void CreateObject(SofaContext sofacontext, string name, string parentName)
+        {
+            SofaLog("####### SofaBase::Create: " + UniqueNameId);
+            UniqueNameId = name;
+            m_parentName = parentName;
+            SetSofaContext(sofacontext);
+
+            if (m_sofaContext != null)
+                Create_impl();
+            else
+                SofaLog("SofaBaseObject::CreateObject has a null m_sofaContext.", 2);
+        }
+
 
         /////////////////////////////////////////////
         //////   SofaBaseObject internal API    /////
         /////////////////////////////////////////////
 
         /// called by @sa Awake method.
-        protected virtual void CreateObject()
-        {
-
-        }
-
-
-        /// 
-        protected virtual void LoadSofaContext(SofaUnity.SofaContext _context)
+        protected virtual void Create_impl()
         {
 
         }
 
 
         ///// Method called by @sa Awake() method. As post process method after creation. To be implemented by child class.
-        //protected virtual void awakePostProcess()
-        //{
+        protected virtual bool AwakePostProcess()
+        {
+            return true;
+        }
 
-        //}
+        /// Method called by @sa Start() method. To be implemented by child class.
+        protected virtual void Init_impl()
+        {
+
+        }
 
 
         ///// Method called by @sa Update() method. To be implemented by child class.
