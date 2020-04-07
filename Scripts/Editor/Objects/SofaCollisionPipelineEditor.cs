@@ -4,24 +4,52 @@ using UnityEditor;
 using UnityEngine;
 using SofaUnity;
 
+/// <summary>
+/// Editor class corresponding to @sa SofaCollisionPipeline 
+/// Provide create method to create SofaCollisionPipeline from Unity Menu
+/// Provide interface to see the different Sofa objects used to solve the SOFA collision pipeline
+/// </summary>
 [CustomEditor(typeof(SofaCollisionPipeline), true)]
 public class SofaCollisionPipelineEditor : Editor
 {
+    [MenuItem("SofaUnity/SofaCollisionPipeline")]
+    [MenuItem("GameObject/Create Other/SofaUnity/SofaCollisionPipeline")]
+    public static void CreateNew()
+    {
+        if (Selection.activeTransform == null)
+        {
+            Debug.LogError("Error1 creating SofaCollisionPipeline object. No SofaContext GameObject selected.");
+            return;
+        }
+
+        GameObject selectObj = Selection.activeGameObject;
+        SofaContext sofaContext = selectObj.GetComponent<SofaContext>();
+
+        if (sofaContext == null)
+        {
+            Debug.LogError("Error2 creating SofaCollisionPipeline object. No GameObject with a valid sofaContext selected.");
+            return;
+        }
+
+        GameObject go = new GameObject("SofaCollisionPipeline");
+
+    }
+
     /// Method to create parameters GUI
     public override void OnInspectorGUI()
     {
         SofaCollisionPipeline collCompo = (SofaCollisionPipeline)this.target;
 
         if (collCompo.BroadPhase != null)
-            EditorGUILayout.TextField("CollisionPipeline", collCompo.BroadPhase.m_componentType);
+            EditorGUILayout.TextField("Collision Pipeline", collCompo.CollisionPipeline.m_componentType);
+
+        if (collCompo.BroadPhase != null)
+            EditorGUILayout.TextField("Broad Phase", collCompo.BroadPhase.m_componentType);
 
         if (collCompo.NarrowPhase != null)
-            EditorGUILayout.TextField("BroadPhase", collCompo.NarrowPhase.m_componentType);
-
-        if (collCompo.CollisionPipeline != null)
-            EditorGUILayout.TextField("NarrowPhase", collCompo.CollisionPipeline.m_componentType);
+            EditorGUILayout.TextField("Narrow Phase", collCompo.NarrowPhase.m_componentType);
 
         if (collCompo.Collisionresponse != null)
-            EditorGUILayout.TextField("Collisionresponse", collCompo.Collisionresponse.m_componentType);
+            EditorGUILayout.TextField("Collision Response", collCompo.Collisionresponse.m_componentType);
     }
 }

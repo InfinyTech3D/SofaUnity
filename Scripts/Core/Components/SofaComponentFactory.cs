@@ -46,19 +46,19 @@ namespace SofaUnity
 
             if (componentType == "SofaCollisionPipeline")
             {
-                collisionPipe.SetCollisionPipelineComponent(sofaCompo);
+                collisionPipe.CollisionPipeline = sofaCompo;
             }
             else if (componentType == "SofaCollisionAlgorithm")
             {
-                collisionPipe.SetCollisionResponseComponent(sofaCompo);
+                collisionPipe.Collisionresponse = sofaCompo;
             }
             else if (componentType == "SofaCollisionDetection")
             {
-                collisionPipe.SetBroadPhaseComponent(sofaCompo);
+                collisionPipe.BroadPhase = sofaCompo;
             }
             else if (componentType == "SofaCollisionIntersection")
             {
-                collisionPipe.SetNarrowPhaseComponent(sofaCompo);
+                collisionPipe.NarrowPhase = sofaCompo;
             }
 
             return sofaCompo;

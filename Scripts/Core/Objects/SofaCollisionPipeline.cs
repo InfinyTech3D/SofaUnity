@@ -7,7 +7,7 @@ namespace SofaUnity
     /// <summary>
     /// Specific class describing a Sofa Collision pipeline components 
     /// </summary>
-    public class SofaCollisionPipeline : MonoBehaviour
+    public class SofaCollisionPipeline : SofaBaseObject
     {
         ////////////////////////////////////////////
         //////  SofaCollisionPipeline members  /////
@@ -18,56 +18,57 @@ namespace SofaUnity
         protected SofaComponent m_collisionPipeline = null;
         protected SofaComponent m_collisionresponse = null;
 
-
-        ////////////////////////////////////////////
-        //////  SofaCollisionPipeline members  /////
-        ////////////////////////////////////////////
-
-        public SofaComponent BroadPhase
-        {
-            get { return m_broadPhase; }
-        }
-
-        public SofaComponent NarrowPhase
-        {
-            get { return m_narrowPhase; }
-        }
-
-        public SofaComponent CollisionPipeline
-        {
-            get { return m_collisionPipeline; }
-        }
-
-        public SofaComponent Collisionresponse
-        {
-            get { return m_collisionresponse; }
-        }
-
+        protected SofaCollisionPipelineAPI m_impl = null;
 
         ////////////////////////////////////////////
         ////// SofaCollisionPipeline accessors /////
         ////////////////////////////////////////////
 
-        public void SetBroadPhaseComponent(SofaComponent compo)
+        public SofaComponent BroadPhase
         {
-            m_broadPhase = compo;
+            get { return m_broadPhase; }
+            set { m_broadPhase = value; }
         }
 
-        public void SetNarrowPhaseComponent(SofaComponent compo)
+        public SofaComponent NarrowPhase
         {
-            m_narrowPhase = compo;
+            get { return m_narrowPhase; }
+            set { m_narrowPhase = value; }
         }
 
-        public void SetCollisionPipelineComponent(SofaComponent compo)
+        public SofaComponent CollisionPipeline
         {
-            m_collisionPipeline = compo;
+            get { return m_collisionPipeline; }
+            set { m_collisionPipeline = value; }
         }
 
-        public void SetCollisionResponseComponent(SofaComponent compo)
+        public SofaComponent Collisionresponse
         {
-            m_collisionresponse = compo;
+            get { return m_collisionresponse; }
+            set { m_collisionresponse = value; }
         }
 
+
+        /////////////////////////////////////////////
+        ////// SofaCollisionPipeline Object API /////
+        /////////////////////////////////////////////
+
+        protected override void Create_impl()
+        {
+            if (m_impl == null)
+            {
+                m_impl = new SofaCollisionPipelineAPI(m_sofaContext.GetSimuContext(), m_uniqueNameId);
+                if (m_impl == null || !m_impl.m_isCreated)
+                {
+                    SofaLog("SofaCollisionPipeline:: Object creation failed: " + m_uniqueNameId, 2);
+                    this.enabled = false;
+                }
+                else
+                    m_isCreated = true;
+            }
+            else
+                SofaLog("SofaCollisionPipeline::Create_impl, SofaCollisionPipeline already created: " + UniqueNameId, 1);
+        }
     }
 
 } // namespace SofaUnity
