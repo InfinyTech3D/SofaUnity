@@ -30,7 +30,7 @@ public class SofaDAGNodeAPI : SofaBaseAPI
             m_componentListS = sofaPhysicsAPI_getDAGNodeComponentsName(m_simu, m_name);
         }
         //Debug.Log("SofaDAGNodeAPI::Init(): " + m_name);
-        Debug.Log("SofaDAGNodeAPI::Init() Found: " + m_componentListS);
+        //Debug.Log("SofaDAGNodeAPI::Init() Found: " + m_componentListS);
         return true;
     }
 
@@ -44,8 +44,8 @@ public class SofaDAGNodeAPI : SofaBaseAPI
     {
         if (m_isReady)
         {
-            string type = sofaPhysicsAPI_getDAGNodeComponentsName(m_simu, m_name);
-            return type;
+            m_componentListS = sofaPhysicsAPI_getDAGNodeComponentsName(m_simu, m_name);
+            return m_componentListS;
         }
         else
             return "Error";

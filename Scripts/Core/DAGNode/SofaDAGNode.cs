@@ -123,6 +123,58 @@ namespace SofaUnity
             //if (UniqueNameId== "root")
             //    GUIUtility.ExitGUI();
         }
+
+
+        public void RefreshNodeChildren(bool recursive = false)
+        {
+            Debug.Log("RefreshNodeChildren " + UniqueNameId);
+            if (m_impl == null)
+            {
+                SofaLog("SofaDAGNode " + UniqueNameId + " can't be refreshed, SofaDAGNodeAPI is null.", 2);
+                return;
+            }
+
+            string componentsS = m_impl.RecomputeDAGNodeComponents();
+            SofaLog("####### SofaDAGNode::CreateSofaAPI " + UniqueNameId + " -> " + componentsS, 0, true);
+            if (componentsS.Length == 0)
+                return;
+
+            List<string> compoNames = ConvertStringToList(componentsS);
+            foreach (string compoName in compoNames)
+            {
+                bool found = false;
+                foreach(SofaBaseComponent compo in m_sofaComponents)
+                {
+                    if (compo.UniqueNameId == compoName)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found) // new component to be added
+                {
+                    string baseType = m_impl.GetBaseComponentType(compoName);
+                    if (baseType.Contains("Error"))
+                    {
+                        SofaLog("Component " + compoName + " returns baseType: " + baseType, 2);
+                    }
+                    else
+                    {
+                        SofaLog("############## CREATE SofaBaseComponent - " + compoName + " " + baseType);
+                        SofaBaseComponent compo = SofaComponentFactory.CreateSofaComponent(compoName, baseType, this, this.gameObject);
+                        if (compo != null)
+                        {
+                            if (baseType == "SofaMesh")
+                            {
+                                m_nodeMesh = compo as SofaMesh;
+                            }
+                            m_sofaComponents.Add(compo);
+                        }
+                    }
+                }
+            }
+        }
         
 
         ////////////////////////////////////////////
