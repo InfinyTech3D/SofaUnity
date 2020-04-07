@@ -31,5 +31,12 @@ namespace SofaUnity
             else
                 SofaLog("SofaBox::Create_impl, SofaBoxAPI already created: " + UniqueNameId, 1);
         }
-    }    
+
+
+        protected override void Reconnect_impl()
+        {
+            // nothing different.
+            Create_impl();
+        }
+    }
 }

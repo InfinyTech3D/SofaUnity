@@ -24,7 +24,10 @@ public class SofaBoxEditor : SofaGridEditor
         go.AddComponent<SofaBox>();
 
         SofaDAGNodeManager nodeMgr = parentDagN.m_sofaContext.NodeGraphMgr;
-        nodeMgr.RegisterCustomObject(go, parentDagN);
+        if (nodeMgr != null)
+            nodeMgr.RegisterCustomObject(go, parentDagN);
+        else
+            Debug.LogError("Error creating SofaBox object. Can't access SofaDAGNodeManager.");
     }
 
     /// <summary>

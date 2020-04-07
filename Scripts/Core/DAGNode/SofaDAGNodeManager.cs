@@ -254,6 +254,10 @@ namespace SofaUnity
                 string nodeName = objectName + "_node";
                 SofaDAGNode dagNode = sofaGameObject.AddComponent<SofaDAGNode>();
                 dagNode.Create(m_sofaContext, nodeName);
+                m_dagNodes.Add(dagNode);
+
+                // in case several nodes have been created below
+                RefreshDAGNodeGraph();
             }
         }
 
