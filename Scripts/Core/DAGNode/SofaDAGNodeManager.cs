@@ -160,31 +160,35 @@ namespace SofaUnity
         public void ReconnectNodeGraph()
         {
             int nbrNode = m_sofaContextAPI.getNbrDAGNode();
+            Debug.Log("ReconnectNodeGraph: " + nbrNode);
             if (nbrNode <= 0)
                 return;
 
-            for (int i = 0; i < nbrNode; i++)
+            // add root node first
+            SofaDAGNode dagNode = m_sofaContext.GetComponent<SofaDAGNode>();
+            if (dagNode == null)
             {
-                string NodeName = m_sofaContextAPI.getDAGNodeName(i);
-                if (NodeName == "Error")
-                {
-                    Debug.LogError("NodeName: " + NodeName);
-                    continue;
-                }
+                Debug.LogError("SofaDAGNodeManager Error accessing root node: ");
+                return;
+            }
+            m_dagNodes.Add(dagNode);
 
-                string nodeGOName = "SofaNode - " + NodeName;
+            // Find all other DAGNode
+            FindDAGNodeGameObject(m_sofaContext.transform);
 
-                // will look first for node child of SofaContext
-                bool res = FindNodeGameObject(m_sofaContext.transform, nodeGOName);
-                if (res == false) // not found
-                {
-                    GameObject GONode = GameObject.Find(nodeGOName);
-                    if (GONode != null)
-                    {
-                        SofaDAGNode dagNode = GONode.GetComponent<SofaDAGNode>();
-                        m_dagNodes.Add(dagNode);
-                    }
-                }
+            if (nbrNode != m_dagNodes.Count)
+            {
+                Debug.LogError("SofaDAGNodeManager Error while reconnecting the graph: " + m_dagNodes.Count + " DAGNode found instead of : " + nbrNode);
+                string NodeToFound = "";
+                for (int i = 0; i < nbrNode; i++)
+                    NodeToFound = m_sofaContextAPI.getDAGNodeName(i) + ",";
+                Debug.LogError("Node to be found: " + NodeToFound);
+
+                string NodeFound = "";
+                for (int i = 0; i < m_dagNodes.Count; i++)
+                    NodeFound = m_dagNodes[i].UniqueNameId + ",";
+                Debug.LogError("Node found: " + NodeFound);
+                return;
             }
 
             // Reconnect each Node
@@ -260,27 +264,19 @@ namespace SofaUnity
         /////  SofaDAGNodeManager internalAPI  /////
         ////////////////////////////////////////////
         
-        /// Internal Method to search a component inside a the children of a GameObject.
-        protected bool FindNodeGameObject(Transform parentTransform, string NodeName)
-        {
-            bool found = false;
-            
+        /// Internal Method to search a component inside the children of a GameObject.
+        protected void FindDAGNodeGameObject(Transform parentTransform)
+        {          
             foreach (Transform child in parentTransform)
             {
-                found = FindNodeGameObject(child, NodeName);
+                FindDAGNodeGameObject(child);
 
-                if (found)
-                    return found;
-
-                if (child.name == NodeName)
-                {                    
-                    SofaDAGNode dagNode = child.GetComponent<SofaDAGNode>();
+                SofaDAGNode dagNode = child.GetComponent<SofaDAGNode>();
+                if (dagNode)
+                {
                     m_dagNodes.Add(dagNode);
-                    return true;
                 }
             }
-
-            return found;
         }
 
 
