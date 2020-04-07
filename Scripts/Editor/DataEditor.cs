@@ -10,8 +10,8 @@ public class DataEditor : Editor
     ///  Add ComponentDataTest Object creation to the SofaUnity Menu
     /// </summary>
     /// <returns>Pointer to the SofaRigidPlane GameObject</returns>
-    [MenuItem("SofaUnity/ComponentDataTest")]
-    [MenuItem("GameObject/Create Other/SofaUnity/ComponentDataTest")]
+    [MenuItem("SofaUnity/Test/ComponentDataTest")]
+    [MenuItem("GameObject/Create Other/Test/ComponentDataTest")]
     public static GameObject CreateNew()
     {
         GameObject go = new GameObject("ComponentDataTest");

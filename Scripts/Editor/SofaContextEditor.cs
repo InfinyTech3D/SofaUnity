@@ -13,7 +13,7 @@ public class SofaContextEditor : Editor
     /// </summary>
     /// <returns>Pointer to the SofaContext GameObject</returns>
     [MenuItem("SofaUnity/SofaContext")]
-    [MenuItem("GameObject/Create Other/SofaUnity/SofaContext")]  //right click menu
+    [MenuItem("GameObject/Create Other/SofaContext")]  //right click menu
     public static GameObject CreateNew()
     {
         int cpt = 0;

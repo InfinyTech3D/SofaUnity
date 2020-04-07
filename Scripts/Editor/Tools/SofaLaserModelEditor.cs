@@ -16,7 +16,7 @@ public class SofaLaserModelEditor : SofaRayCasterEditor
     /// </summary>
     /// <returns>Pointer to the SofaLaserModel GameObject</returns>
     [MenuItem("SofaUnity/SofaComponent/SofaLaserModel")]
-    [MenuItem("GameObject/Create Other/SofaUnity/SofaComponent/SofaLaserModel")]
+    [MenuItem("GameObject/Create Other/SofaComponent/SofaLaserModel")]
     public static GameObject CreateNew()
     {
         GameObject go = new GameObject("SofaLaserModel");

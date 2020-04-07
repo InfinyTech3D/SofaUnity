@@ -15,7 +15,7 @@ public class SofaParticlesModelEditor : Editor
     /// </summary>
     /// <returns>Pointer to the SofaParticlesModel GameObject</returns>
     [MenuItem("SofaUnity/SofaComponent/SofaParticlesModel")]
-    [MenuItem("GameObject/Create Other/SofaUnity/SofaComponent/SofaParticlesModel")]
+    [MenuItem("GameObject/Create Other/SofaComponent/SofaParticlesModel")]
     public static GameObject CreateNew()
     {
         if (Selection.activeTransform != null)

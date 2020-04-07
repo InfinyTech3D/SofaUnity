@@ -13,7 +13,7 @@ using SofaUnity;
 public class SofaCollisionPipelineEditor : Editor
 {
     [MenuItem("SofaUnity/SofaCollisionPipeline")]
-    [MenuItem("GameObject/Create Other/SofaUnity/SofaCollisionPipeline")]
+    [MenuItem("GameObject/Create Other/SofaCollisionPipeline")]
     public static void CreateNew()
     {
         if (Selection.activeTransform == null)

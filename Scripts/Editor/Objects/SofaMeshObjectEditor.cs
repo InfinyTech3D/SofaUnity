@@ -52,7 +52,7 @@ public class SofaMeshObjectEditor : Editor
     /// </summary>
     /// <returns>Pointer to the SofaMeshObject GameObject</returns>
     [MenuItem("SofaUnity/SofaObject/SofaMeshObject")]
-    [MenuItem("GameObject/Create Other/SofaUnity/SofaDeformableObject/SofaMeshObject")]
+    [MenuItem("GameObject/Create Other/SofaObject/SofaMeshObject")]
     public static GameObject CreateNew()
     {
         GameObject go = new GameObject("SofaMeshObject");

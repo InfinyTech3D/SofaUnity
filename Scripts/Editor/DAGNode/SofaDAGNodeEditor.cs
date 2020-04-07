@@ -11,7 +11,7 @@ public class SofaDAGNodeEditor : Editor
 {
 
     [MenuItem("SofaUnity/SofaDAGNode")]
-    [MenuItem("GameObject/Create Other/SofaUnity/SofaDAGNode")]
+    [MenuItem("GameObject/Create Other/SofaDAGNode")]
     public static void CreateNew()
     {
         if (Selection.activeTransform != null)
