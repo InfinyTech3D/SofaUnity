@@ -24,10 +24,7 @@ namespace SofaUnity
         private SofaContextAPI m_sofaContextAPI = null;
 
         /// Pointer to the root DAGNode of this simulation
-        private SofaDAGNode m_rootDAGNode = null;
-
-        /// List of SofaDAGNode in the graph
-        private List<SofaBaseObject> m_objects = null;
+        private SofaDAGNode m_rootDAGNode = null;        
 
         /////////////////////////////////////////////
         //////   SofaDAGNodeManager accessors   /////
@@ -89,7 +86,6 @@ namespace SofaUnity
 
             // create empty the list of SofaBaseObject
             m_dagNodes = new List<SofaDAGNode>();
-            m_objects = new List<SofaBaseObject>();
         }
 
 
@@ -248,7 +244,7 @@ namespace SofaUnity
             int idNode = m_dagNodes.Count;
             string objectName = sofaGameObject.name + "_" + idNode.ToString();
             obj.CreateObject(m_sofaContext, objectName, parentNode.UniqueNameId);
-            m_objects.Add(obj);
+            m_sofaContext.RegisterSofaObject(obj);
 
             // parse node now
             if (obj.IsCreated())

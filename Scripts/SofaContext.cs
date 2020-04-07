@@ -208,6 +208,16 @@ namespace SofaUnity
                 m_casters = new List<SofaRayCaster>();
             m_casters.Add(obj);
         }
+
+
+        /// List of SofaDAGNode in the graph
+        [SerializeField]
+        private List<SofaBaseObject> m_objects = null;
+
+        public void RegisterSofaObject(SofaBaseObject obj)
+        {
+            m_objects.Add(obj);
+        }
        
 
         /// Method called at GameObject creation.
@@ -222,6 +232,8 @@ namespace SofaUnity
             //    return;
 
             this.gameObject.tag = "GameController";
+            if (m_objects == null)
+                m_objects = new List<SofaBaseObject>();
 
             StartSofa();
         }
@@ -357,7 +369,16 @@ namespace SofaUnity
             if (rootNode == null) // first creation
                 m_nodeGraphMgr.LoadNodeGraph();
             else
+            {
+                // re-create objects first
+                foreach (SofaBaseObject obj in m_objects)
+                {
+                    obj.Reconnect(this);
+                }
+
+                // reconnect the full graph
                 ReconnectSofaScene();
+            }
                 
 
             if (m_log)

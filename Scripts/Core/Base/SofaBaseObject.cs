@@ -152,12 +152,26 @@ namespace SofaUnity
         }
 
 
+        public void Reconnect(SofaContext sofacontext)
+        {
+            SofaLog("####### SofaBase::Reconnect: " + UniqueNameId);
+            SetSofaContext(sofacontext);
+            Reconnect_impl();
+        }
+
         /////////////////////////////////////////////
         //////   SofaBaseObject internal API    /////
         /////////////////////////////////////////////
 
-        /// called by @sa Awake method.
+            /// called by @sa Awake method.
         protected virtual void Create_impl()
+        {
+
+        }
+
+
+        /// Method called by @sa Reconnect() method. To be implemented by child class.
+        protected virtual void Reconnect_impl()
         {
 
         }
