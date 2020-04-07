@@ -31,7 +31,7 @@ public class SofaCylinderAPI : SofaBaseObjectAPI
         if (m_hasObject == false) // first time create object only
         {
             // Create the cylinder
-            int res = sofaPhysicsAPI_addCylinder(m_simu, m_name, m_isRigid);
+            int res = sofaPhysicsAPI_addCylinder(m_simu, m_name, m_parentName, m_isRigid);
             m_name += "_node";
 
             if (res != 0)
@@ -111,5 +111,5 @@ public class SofaCylinderAPI : SofaBaseObjectAPI
     /////////////////////////////////////////////////////////////////////////////////////////
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysicsAPI_addCylinder(IntPtr obj, string name, bool isRigid);
+    public static extern int sofaPhysicsAPI_addCylinder(IntPtr obj, string name, string parentNodeName, bool isRigid);
 }
