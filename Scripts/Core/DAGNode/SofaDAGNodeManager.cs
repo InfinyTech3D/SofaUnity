@@ -119,12 +119,10 @@ namespace SofaUnity
                 {
                     GameObject nodeGO = new GameObject("SofaNode - " + NodeName);
                     SofaDAGNode dagNode = nodeGO.AddComponent<SofaDAGNode>();
-                    //dagNode.UniqueNameId = NodeName;
-                    //dagNode.SetSofaContext(m_sofaContext);
                     dagNode.Create(m_sofaContext, NodeName);
-                    // need init?
-
                     m_dagNodes.Add(dagNode);
+
+                    // temporary child of sofaContext until reordering ndoes
                     nodeGO.transform.parent = m_sofaContext.gameObject.transform;
                 }
                 else
@@ -294,6 +292,64 @@ namespace SofaUnity
             // copy back the root node pointer
             if (m_rootDAGNode != null)
                 m_dagNodes.Add(m_rootDAGNode);
+        }
+
+
+        protected void RefreshDAGNodeGraph()
+        {
+            int nbrNode = m_sofaContextAPI.getNbrDAGNode();
+            if (nbrNode == m_dagNodes.Count) // nothing to do
+                return;
+
+
+            List<SofaDAGNode> tmpNodes = new List<SofaDAGNode>();
+            // search for new nodes
+            for (int i = 0; i < nbrNode; i++)
+            {
+                string nodeName = m_sofaContextAPI.getDAGNodeName(i);
+                bool found = false;
+                foreach (SofaDAGNode node in m_dagNodes)
+                {
+                    if (node.UniqueNameId == nodeName)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found) // new node, need to be added
+                {
+                    GameObject nodeGO = new GameObject("SofaNode - " + nodeName);
+                    SofaDAGNode dagNode = nodeGO.AddComponent<SofaDAGNode>();
+                    dagNode.Create(m_sofaContext, nodeName);
+                    m_dagNodes.Add(dagNode);
+
+                    // add in tmp list before reordering
+                    tmpNodes.Add(dagNode);
+                }
+            }
+
+
+            // reorder new nodes
+            foreach (SofaDAGNode snode in tmpNodes)
+            {
+                string parentName = snode.ParentNodeName;
+                if (parentName == "None") // root node
+                    continue;
+
+                if (parentName == "root") // under root node
+                    continue;
+
+                // search for parent (no optimisation needed here)
+                foreach (SofaDAGNode snodeP in m_dagNodes)
+                {
+                    if (snodeP.UniqueNameId == parentName)
+                    {
+                        snode.gameObject.transform.parent = snodeP.gameObject.transform;
+                        break;
+                    }
+                }
+            }
         }
     }
 }
