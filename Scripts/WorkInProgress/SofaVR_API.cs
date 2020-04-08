@@ -17,8 +17,8 @@ public class SofaVR_API : MonoBehaviour
     public GameObject m_rightTooltip = null;
     public GameObject m_leftTooltip = null;
 
-    public SofaSphereCollisionModel m_rightCollisionModel = null;
-    public SofaSphereCollisionModel m_leftCollisionModel = null;
+    public SofaSphereCollisionObject m_rightCollisionModel = null;
+    public SofaSphereCollisionObject m_leftCollisionModel = null;
 
     protected HandlerController m_rightHandCtrl = null;
     protected HandlerController m_leftHandCtrl = null;
@@ -372,11 +372,11 @@ public class SofaVR_API : MonoBehaviour
         }
 
         // set sofaContext to collision model
-        if (m_rightCollisionModel != null)
-            m_rightCollisionModel.setSofaContext(m_sofaContext);
+        //if (m_rightCollisionModel != null)
+        //    m_rightCollisionModel.setSofaContext(m_sofaContext);
 
-        if (m_leftCollisionModel != null)
-            m_leftCollisionModel.setSofaContext(m_sofaContext);
+        //if (m_leftCollisionModel != null)
+        //    m_leftCollisionModel.setSofaContext(m_sofaContext);
 
         // update actions here.
         ScenesManager.SceneMenuInfo sceneInfo = m_scenes.getSceneInfo(m_currentSceneId);        
