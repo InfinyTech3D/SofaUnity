@@ -125,6 +125,7 @@ namespace SofaUnity
         }
 
 
+        /// Method to refresh the list of components child of this Node. Will ask the new list of component on the sofa side and compare to what is stored
         public void RefreshNodeChildren(bool recursive = false)
         {
             Debug.Log("RefreshNodeChildren " + UniqueNameId);

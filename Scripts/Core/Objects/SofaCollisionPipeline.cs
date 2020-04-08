@@ -13,35 +13,44 @@ namespace SofaUnity
         //////  SofaCollisionPipeline members  /////
         ////////////////////////////////////////////
 
+        /// Pointer to the Sofa Broad phase component
         protected SofaComponent m_broadPhase = null;
+        /// Pointer to the Sofa Narrow phase component
         protected SofaComponent m_narrowPhase = null;
+        /// Pointer to the Sofa collision pipeline component
         protected SofaComponent m_collisionPipeline = null;
+        /// Pointer to the Sofa collision response component
         protected SofaComponent m_collisionresponse = null;
 
+        /// Pointer to the internal API to create the Collision pipeline object
         protected SofaCollisionPipelineAPI m_impl = null;
 
         ////////////////////////////////////////////
         ////// SofaCollisionPipeline accessors /////
         ////////////////////////////////////////////
 
+        /// Getter/Setter on the @sa m_broadPhase component
         public SofaComponent BroadPhase
         {
             get { return m_broadPhase; }
             set { m_broadPhase = value; }
         }
 
+        /// Getter/Setter on the @sa m_narrowPhase component
         public SofaComponent NarrowPhase
         {
             get { return m_narrowPhase; }
             set { m_narrowPhase = value; }
         }
 
+        /// Getter/Setter on the @sa m_collisionPipeline component
         public SofaComponent CollisionPipeline
         {
             get { return m_collisionPipeline; }
             set { m_collisionPipeline = value; }
         }
 
+        /// Getter/Setter on the @sa m_collisionresponse component
         public SofaComponent Collisionresponse
         {
             get { return m_collisionresponse; }
@@ -53,6 +62,7 @@ namespace SofaUnity
         ////// SofaCollisionPipeline Object API /////
         /////////////////////////////////////////////
 
+        /// Method called by @sa CreateObject method to really create the CollisionPipeline on SOFA side
         protected override void Create_impl()
         {
             SofaLog("####### SofaCollisionPipeline::Create_impl: " + UniqueNameId);
@@ -74,6 +84,7 @@ namespace SofaUnity
                 SofaLog("SofaCollisionPipeline::Create_impl, SofaCollisionPipeline already created: " + UniqueNameId, 1);
         }
 
+        /// Method called by @sa Reconnect method to recreate the CollisionPipeline on SOFA side but not add Unity objects
         protected override void Reconnect_impl()
         {            
             SofaLog("####### SofaCollisionPipeline::Reconnect_impl: " + UniqueNameId);
@@ -96,7 +107,8 @@ namespace SofaUnity
         }
 
 
-        protected override void Init_impl()
+        /// Method called by @sa Start() method. Will reconnect pointers to other objects
+        protected override void Start_impl()
         {
             if (!m_isCreated)
                 return;
@@ -124,6 +136,8 @@ namespace SofaUnity
             }
         }
 
+
+        /// Internal method to ask current owner node to refresh its list of components
         protected void CreateCollisionObjects()
         {
             SofaDAGNode rootNode = m_sofaContext.gameObject.GetComponent<SofaDAGNode>();

@@ -114,30 +114,11 @@ namespace SofaUnity
         {
             SofaLog("Start - " + m_uniqueNameId);
 
-            Init_impl();
+            Start_impl();
         }
 
 
-        /// Method called to update GameObject, called once per frame. To be implemented by child class.
-        void Update()
-        {
-            //SofaLog("SofaBaseObject::Update " + this.name + " called.");
-
-            //if (!Application.isPlaying)
-            //{
-            //    updateInEditor();
-            //    return;
-            //}
-
-            //// Call internal method that can be overwritten. Only if dirty
-            //if (m_isDirty)
-            //{
-            //    updateImpl();
-            //    m_isDirty = false;
-            //}
-        }
-
-
+        /// Main method to create and init this object from Unity side. Either by UI or DAGNodeMgr. Will call internal methods @sa Create_impl and @sa Init_impl
         public void CreateObject(SofaContext sofacontext, string name, string parentName)
         {
             SofaLog("####### SofaBase::Create: " + UniqueNameId);
@@ -146,12 +127,17 @@ namespace SofaUnity
             SetSofaContext(sofacontext);
 
             if (m_sofaContext != null)
+            {
                 Create_impl();
+
+                Init_impl();
+            }
             else
                 SofaLog("SofaBaseObject::CreateObject has a null m_sofaContext.", 2);
         }
 
 
+        /// Main method to reconnect the object when Unity animation start or scene is reloaded. Will be called by SofaContext.
         public void Reconnect(SofaContext sofacontext)
         {
             SofaLog("####### SofaBase::Reconnect: " + UniqueNameId);
@@ -170,6 +156,13 @@ namespace SofaUnity
         }
 
 
+        /// Method called by @sa CreateObject() method. Just after @sa Create_impl. To be implemented by child class.
+        protected virtual void Init_impl()
+        {
+
+        }
+
+
         /// Method called by @sa Reconnect() method from SofaContext. To be implemented by child class.
         protected virtual void Reconnect_impl()
         {
@@ -177,31 +170,18 @@ namespace SofaUnity
         }
 
 
-        ///// Method called by @sa Awake() method. As post process method after creation. To be implemented by child class.
+        /// Method called by @sa Awake() method. As post process method after creation. To be implemented by child class.
         protected virtual bool AwakePostProcess()
         {
             return true;
         }
 
+
         /// Method called by @sa Start() method. To be implemented by child class.
-        protected virtual void Init_impl()
+        protected virtual void Start_impl()
         {
 
         }
-
-
-        ///// Method called by @sa Update() method. To be implemented by child class.
-        //public virtual void updateImpl()
-        //{
-
-        //}
-
-
-        ///// Method called by @sa Update() method. When Unity is not playing.
-        //public virtual void updateInEditor()
-        //{
-
-        //}
 
     }
 }

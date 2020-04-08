@@ -230,6 +230,7 @@ namespace SofaUnity
         }
 
 
+        /// Method to register a SofaObject. Will create the object, store it inside SofaContext for serialisation and refresh the DAGNode graph
         public void RegisterCustomObject(GameObject sofaGameObject, SofaDAGNode parentNode)
         {
             SofaBaseObject obj = sofaGameObject.GetComponent<SofaBaseObject>();
@@ -299,6 +300,7 @@ namespace SofaUnity
         }
 
 
+        /// Method to refresh the full DAGNode graph. Will ask the number of DAGNode on the Sofa side and compare to what is stored.
         protected void RefreshDAGNodeGraph()
         {
             int nbrNode = m_sofaContextAPI.getNbrDAGNode();
