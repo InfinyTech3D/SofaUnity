@@ -24,8 +24,15 @@ static public class SofaDefines
         {-4, "Method called is deprecated."},
         {-5, "Method called has not yet been implemented."},
         {-6, "Glew init error."},
+
         {-10, "Sofa simulation scene creation failed."},
         {-11, "Sofa plugin loading failed."},
+        {-12, "Invalid SofaDAGNodeManager pointer (Object not found or null)."},
+        {-13, "Invalid SofaComponentManager pointer (Object not found or null)."},
+        {-14, "Invalid SofaSimulationManager pointer (Object not found or null)."},
+
+        {-18, "Simulation scene file (.scn) not found."},
+        {-19, "Simulation scene file (.scn) is empty."},
 
         {-21, "Sofa object creation failed due to incorrect name."},
         {-22, "Sofa object creation failed because simulation can't be reached."},
@@ -33,6 +40,7 @@ static public class SofaDefines
         {-24, "Sofa object creation failed because this type is not handled."},
         {-25, "Sofa object creation failed because no mechanicalObject has been found."},
         {-26, "Sofa object creation failed because no collision model has been found."},
+        {-27, "Sofa object duplicated objects found."},
 
         {-30, "Invalid SofaAPI impl object (Object not found or null)."},
         {-31, "Invalid SofaAPI object pointer access (Object not found or null)."},
@@ -50,6 +58,26 @@ static public class SofaDefines
         {-52, "Invalid Mesh (Visual mesh or topology not found or null)."},
         {-53, "Multiple Sofa object of requested type found in the same Node."},
         {-54, "Invalid case scenario reached (good luck)."},
+        {-55, "Duplicated Sofa object found in simulation graph."},
+
+        {-60, "Invalid DAGNode access (DAGNode not found or null)."},
+        {-61, "Invalid embedded Sofa Node access (DAGNode not found or null)."},
+        {-62, "Invalid DAGNode root access (DAGNode not found or null)."},
+        {-63, "Invalid DAGNode name, DAGNode not found in API."},
+        {-64, "Invalid DAGNode access. DAGNode not found in API."},
+        {-65, "Invalid DAGNode parent access (DAGNode not found or null)."},
+        {-66, "Invalid DAGNode ID. Out of bounds."},
+
+        {-70, "Invalid Component access (Component not found or null)."},
+        {-71, "Invalid Component name. Component not found in API."},
+        {-72, "Invalid Component base type. (Base type not found in API)."},
+        {-73, "Invalid Component type, Type not found in component available types."},
+        {-74, "Error, component creation fails during the process."},
+
+        {-80, "Invalid Mesh Interface implementation. MeshIO specialisation is needed."},
+        {-81, "Invalid Mesh Interface type. Request can't be process for this type of MeshIO"},
+        {-82, "Invalid Mesh Interface access (MeshIO not found or null)."},
+        {-83, "Invalid Mesh ID, out of bounds."},
 
         {-9999, "License initialization failed at step 1."},
         {-9998, "License initialization failed at step 2."},
@@ -70,6 +98,8 @@ static public class SofaDefines
         {-407, "Ray casting, no valid mechanical mapper found."},
         {-408, "Ray casting, no valid mechanical state found."},
         {-409, "Ray casting, attribute name given is invalid."},
+        {-410, "Ray casting, already in contact."},
+        {-411, "Ray casting method not implemented."},
         {400, "Ray casting, already in contact."},
 
         {-500, "Garsping plugin not found."},
@@ -82,7 +112,12 @@ static public class SofaDefines
         {-602, "Entact tool not found."},
 
         {-700, "Geomagic plugin not found."},
-        {-701, "Geomagic manager not found."}
+        {-701, "Geomagic manager not found."},
+
+        {-800, "SofaCUDA is disable."},
+        {-666, "SofaAPAPI test id."}
     };
 }
+
+
 
