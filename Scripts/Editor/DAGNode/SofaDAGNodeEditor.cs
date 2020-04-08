@@ -65,7 +65,21 @@ public class SofaDAGNodeEditor : Editor
         EditorGUI.EndDisabledGroup();
 
         EditorGUILayout.TextField("DAGNode Name", node.UniqueNameId);
-        
+
+        if (node.HasTransform()) // no tranformation for root node
+        {
+            EditorGUILayout.Separator();
+            // Add Triansformation fields
+            node.Translation = EditorGUILayout.Vector3Field("SOFA Translation", node.Translation);
+            EditorGUILayout.Separator();
+
+            node.Rotation = EditorGUILayout.Vector3Field("SOFA Rotation", node.Rotation);
+            EditorGUILayout.Separator();
+
+            node.Scale = EditorGUILayout.Vector3Field("SOFA Scale", node.Scale);
+            EditorGUILayout.Separator();
+            EditorGUILayout.Separator();
+        }        
 
         EditorGUI.BeginDisabledGroup(true);
         if (node.m_sofaComponents != null)

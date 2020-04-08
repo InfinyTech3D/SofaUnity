@@ -44,6 +44,31 @@ namespace SofaUnity
         protected SofaMesh m_nodeMesh = null;
 
 
+        /// Bool parameter to check if transformation can be applied to this DAGNode
+        [SerializeField]
+        protected bool m_hasTransformEngine = false;
+
+        /// Current Translation of this object (same as in Unity Editor and Sofa object)
+        [SerializeField]
+        protected Vector3 m_translation;
+        /// Bool parameter to store the fact that translation has been changed manually in unity.
+        [SerializeField]
+        protected bool m_isTranslationCustom = false;
+
+        /// Current Rotation of this object (same as in Unity Editor and Sofa object)
+        [SerializeField]
+        protected Vector3 m_rotation;
+        /// Bool parameter to store the fact that rotation has been changed manually in unity.
+        [SerializeField]
+        protected bool m_isRotationCustom = false;
+
+        /// Current Scale of this object (same as in Unity Editor and Sofa object)
+        [SerializeField]
+        protected Vector3 m_scale = new Vector3(1.0f, 1.0f, 1.0f);
+        /// Bool parameter to store the fact that scale has been changed manually in unity.
+        [SerializeField]
+        protected bool m_isScaleCustom = false;
+
 
         ////////////////////////////////////////////
         //////      SofaDAGNode accessors      /////
@@ -83,6 +108,62 @@ namespace SofaUnity
             return m_nodeMesh;
         }
 
+
+
+        public Vector3 Translation
+        {
+            get { return m_translation; }
+            set
+            {
+                if (m_translation != value)
+                {
+                    m_translation = value;
+                    m_isTranslationCustom = true;
+
+                    if (m_impl != null)
+                    {
+                        m_impl.SetTransformation("translation", m_translation);
+                        //PropagateSetDirty(true);
+                    }
+                }
+            }
+        }
+
+
+        public Vector3 Rotation
+        {
+            get { return m_rotation; }
+            set
+            {
+                if (m_rotation != value)
+                {
+                    m_rotation = value;
+                    m_isRotationCustom = true;
+
+                    if (m_impl != null)
+                        m_impl.SetTransformation("rotation", m_rotation);
+                }
+            }
+        }
+
+
+        public Vector3 Scale
+        {
+            get { return m_scale; }
+            set
+            {
+                if (m_scale != value)
+                {
+                    m_scale = value;
+                    m_isScaleCustom = true;
+
+                    if (m_impl != null)
+                        m_impl.SetTransformation("scale3d", m_scale);
+                }
+            }
+        }
+
+        public bool HasTransform() { return m_hasTransformEngine; }
 
 
         ////////////////////////////////////////////
@@ -275,6 +356,39 @@ namespace SofaUnity
                 if (!found)
                     Debug.LogError("Component: " + compoName + " not found under DAGNode: " + UniqueNameId);
             }
+        }
+
+
+        /// Method called by @sa Start() method. Will check transformation values
+        protected override void Init_impl()
+        {
+            if (m_impl == null)
+                return;
+
+            m_hasTransformEngine = m_impl.GetTransformationTest("translation");
+            if (m_hasTransformEngine == false)
+                return;
+
+            if (m_isTranslationCustom)
+            {
+                Debug.Log("Translation Set CUSTOM!");
+                m_impl.SetTransformation("translation", m_translation);
+            }
+            else
+            {
+                Debug.Log("Translation GEt normal!");
+                m_translation = m_impl.GetTransformation("translation");
+            }
+
+            if (m_isRotationCustom)
+                m_impl.SetTransformation("rotation", m_rotation);
+            else
+                m_rotation = m_impl.GetTransformation("rotation");
+
+            if (m_isScaleCustom)
+                m_impl.SetTransformation("scale3d", m_scale);
+            else
+                m_scale = m_impl.GetTransformation("scale3d");
         }
     }
 
