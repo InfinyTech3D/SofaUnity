@@ -24,7 +24,7 @@ public class SofaCustomMeshAPI : SofaBaseObjectAPI
         if (m_hasObject == false) // first time create object only
         {
             // Create a Node in Sofa simulation tree and add a mechanicalObject into it
-            int res = sofaPhysicsAPI_addMechanicalObject(m_simu, m_name);
+            int res = sofaPhysicsAPI_addSphereCollisionsObject(m_simu, m_name, m_parentName);
             m_name += "_node";
 
             if (res != 0)
@@ -99,7 +99,7 @@ public class SofaCustomMeshAPI : SofaBaseObjectAPI
     /////////////////////////////////////////////////////////////////////////////////////////
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysicsAPI_addMechanicalObject(IntPtr obj, string name);
+    public static extern int sofaPhysicsAPI_addSphereCollisionsObject(IntPtr obj, string name, string parentNodeName);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_setNbVertices(IntPtr obj, string name, int nbrV);

@@ -34,10 +34,15 @@ namespace SofaUnity
         //public float m_damping = float.MinValue;
 
         /// Current Translation of this object (same as in Unity Editor and Sofa object)
+        [SerializeField]
         public Vector3 m_translation;
+        
         /// Current Rotation of this object (same as in Unity Editor and Sofa object)
+        [SerializeField]
         public Vector3 m_rotation;
+        
         /// Current Scale of this object (same as in Unity Editor and Sofa object)
+        [SerializeField]
         public Vector3 m_scale = new Vector3(1.0f, 1.0f, 1.0f);
 
 
@@ -135,6 +140,12 @@ namespace SofaUnity
             //}
             //m_mesh.SetTriangles(triangles, 0);
         }
+
+        protected override void Init_impl()
+        {
+
+        }
+
 
         // TODO: restore that
         public int nbVertices()

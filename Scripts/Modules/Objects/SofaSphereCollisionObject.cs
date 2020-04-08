@@ -12,21 +12,14 @@ using System;
 /// The spheres are mapped into collision models in Sofa
 /// </summary>
 [ExecuteInEditMode]
-public class SofaSphereCollisionModel : MonoBehaviour
+public class SofaSphereCollisionObject : SofaBaseObject
 {
-    ////////////////////////////////////////////
-    /////          Object members          /////
-    ////////////////////////////////////////////
-
-    /// Pointer to the Sofa context this GameObject belongs to.
-    protected SofaContext m_sofaContext = null;
+    /////////////////////////////////////////////////
+    /////   SofaSphereCollisionObject members   /////
+    /////////////////////////////////////////////////
 
     /// Pointer to the corresponding SOFA API object
     protected SofaCustomMeshAPI m_impl = null;
-
-
-    /// Parameter to activate logging of this Sofa GameObject
-    protected bool m_log = false;
 
     /// Booleen to activate/unactivate the collision
     [SerializeField] protected bool m_activated = true;
@@ -51,84 +44,45 @@ public class SofaSphereCollisionModel : MonoBehaviour
     [SerializeField]
     public bool m_startOnPlay = true;
 
-    ////////////////////////////////////////////
-    /////       Object creation API        /////
-    ////////////////////////////////////////////
 
-    /// Method called at GameObject creation. Will search for SofaContext @sa loadContext() which call @sa createObject() . Then call @see awakePostProcess()
-    void Awake()
+    /////////////////////////////////////////////////
+    /////  SofaSphereCollisionObject public API /////
+    /////////////////////////////////////////////////
+
+
+
+
+
+    //////////////////////////////////////////////////
+    ///// SofaSphereCollisionObject internal API /////
+    //////////////////////////////////////////////////
+
+    /// Method called by @sa CreateObject method to really create the MechanicalObject and the sphere collision model on SOFA side
+    protected override void Create_impl()
     {
-        if (m_log)
-            Debug.Log("UNITY_EDITOR - SofaSphereCollisionModel::Awake - " + this.name);
-
-        if (!m_startOnPlay)
-            return;
-
-        // First load the Sofa context and create the object.
-        loadContext();
-
-        // Call a post process method for additional codes.
-        awakePostProcess();
-    }
-
-
-    protected bool loadContext()
-    {
-        if (m_log)
-            Debug.Log("UNITY_EDITOR - SofaSphereCollisionModel::loadContext");
-
-        // Search for SofaContext
-        GameObject _contextObject = GameObject.Find("SofaContext");
-        if (_contextObject != null)
+        SofaLog("####### SofaSphereCollisionObject::Create_impl: " + UniqueNameId);
+        if (m_impl == null)
         {
-            // Get Sofa context
-            m_sofaContext = _contextObject.GetComponent<SofaContext>();
+            m_impl = new SofaCustomMeshAPI(m_sofaContext.GetSimuContext(), this.name, m_uniqueNameId);
 
-            if (m_sofaContext == null)
+            if (m_impl == null || !m_impl.m_isCreated)
             {
-                Debug.LogError("Error SofaSphereCollisionModel::loadContext: Context not found");
-                return false;
+                SofaLog("SofaSphereCollisionObject:: Object creation failed: " + m_uniqueNameId, 2);
+                this.enabled = false;
+                return;
             }
-
-            if (m_log)
-                Debug.Log("this.name : " + this.name);
-
-            // Really Create the gameObject linked to sofaObject
-            createObject();
-
-            // Increment counter if objectis created from loading scene process
-            //m_sofaContext.countCreated();
-
-            //// Increment the context object counter for names.
-            //m_sofaContext.objectcpt = m_sofaContext.objectcpt + 1;
-
-            return true;
+            else
+                m_isCreated = true;
         }
         else
-        {
-            Debug.LogError("SofaSphereCollisionModel::loadContext - No SofaContext found.");
-            return false;
-        }    
+            SofaLog("SofaSphereCollisionObject::Create_impl, SofaCustomMeshAPI already created: " + UniqueNameId, 1);
     }
 
-    
-    /// Method called by @sa loadContext() method. To create the object when Sofa context has been found.
-    protected virtual void createObject()
+    /// Method called by @sa Reconnect() method from SofaContext when scene is resctructed/reloaded.
+    protected override void Reconnect_impl()
     {
-        if (m_log)
-            Debug.Log("UNITY_EDITOR - SofaSphereCollisionModel::createObject");
-
-        // Get access to the sofaContext
-        IntPtr _simu = m_sofaContext.GetSimuContext();
-
-        if (_simu != IntPtr.Zero) // Create the API object for Sofa Regular Grid Mesh
-            m_impl = new SofaCustomMeshAPI(_simu, this.name, "root");            
-
-        if (m_impl == null || !m_impl.m_isCreated)
-        {
-            Debug.LogError("SofaCustomMesh:: Object creation failed: " + this.name);
-            this.enabled = false;
-        }
+        // nothing different.
+        Create_impl();
     }
 
     protected virtual void awakePostProcess()
@@ -156,39 +110,7 @@ public class SofaSphereCollisionModel : MonoBehaviour
         computeSphereCenters();
     }
 
-
-    public void setSofaContext(SofaUnity.SofaContext _context)
-    {
-        m_sofaContext = _context;
-        if (m_sofaContext == null)
-            return;
-
-        // Really Create the gameObject linked to sofaObject
-        createObject();
-
-        // Increment counter if objectis created from loading scene process
-        //m_sofaContext.countCreated();
-
-        //// Increment the context object counter for names.
-        //m_sofaContext.objectcpt = m_sofaContext.objectcpt + 1;
-
-        // Call a post process method for additional codes.
-        awakePostProcess();
-
-        if (m_impl != null)
-        {
-            m_impl.setFloatValue_deprecated("contactStiffness", m_stiffness);
-            m_impl.setFloatValue_deprecated("radius", m_radius * m_sofaContext.GetFactorUnityToSofa(1));
-        }
-    }
-
-
-    public void unloadSofaContext()
-    {
-        m_sofaContext = null;
-    }
-
-
+    
     ////////////////////////////////////////////
     /////       Object behavior API        /////
     ////////////////////////////////////////////
