@@ -158,7 +158,7 @@ namespace SofaUnity
         public void ReconnectNodeGraph()
         {
             int nbrNode = m_sofaContextAPI.getNbrDAGNode();
-            Debug.Log("ReconnectNodeGraph: " + nbrNode);
+            //Debug.Log("ReconnectNodeGraph: " + nbrNode);
             if (nbrNode <= 0)
                 return;
 
@@ -179,12 +179,12 @@ namespace SofaUnity
                 Debug.LogError("SofaDAGNodeManager Error while reconnecting the graph: " + m_dagNodes.Count + " DAGNode found instead of : " + nbrNode);
                 string NodeToFound = "";
                 for (int i = 0; i < nbrNode; i++)
-                    NodeToFound = m_sofaContextAPI.getDAGNodeName(i) + ",";
+                    NodeToFound = NodeToFound + m_sofaContextAPI.getDAGNodeName(i) + ",";
                 Debug.LogError("Node to be found: " + NodeToFound);
 
                 string NodeFound = "";
                 for (int i = 0; i < m_dagNodes.Count; i++)
-                    NodeFound = m_dagNodes[i].UniqueNameId + ",";
+                    NodeFound = NodeFound + m_dagNodes[i].UniqueNameId + ",";
                 Debug.LogError("Node found: " + NodeFound);
                 return;
             }

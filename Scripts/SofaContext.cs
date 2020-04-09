@@ -370,12 +370,6 @@ namespace SofaUnity
                 m_nodeGraphMgr.LoadNodeGraph();
             else
             {
-                // re-create objects first
-                foreach (SofaBaseObject obj in m_objects)
-                {
-                    obj.Reconnect(this);
-                }
-
                 // reconnect the full graph
                 ReconnectSofaScene();
             }
@@ -578,6 +572,12 @@ namespace SofaUnity
                 m_impl.loadScene(m_sceneFileMgr.AbsoluteFilename());
 
             // Do not retrieve timestep of gravity in case it has been changed in editor
+
+            // re-create objects after scene loading and before graph reconnection
+            foreach (SofaBaseObject obj in m_objects)
+            {
+                obj.Reconnect(this);
+            }
 
             // reconnect node hiearchy in unity
             m_nodeGraphMgr.ReconnectNodeGraph();
