@@ -44,12 +44,89 @@ public class SofaSphereCollisionObject : SofaBaseObject
     [SerializeField]
     public bool m_startOnPlay = true;
 
+    
+    public Mesh m_SofaMesh = null;
 
     /////////////////////////////////////////////////
     /////  SofaSphereCollisionObject public API /////
     /////////////////////////////////////////////////
 
+    /// Getter/Setter of the parameter @see m_activated  
+    public bool Activated
+    {
+        get { return m_activated; }
+        set { m_activated = value; }
+    }
 
+    /// Getter/Setter of the parameter @see m_usePositionOnly  
+    public bool UsePositionOnly
+    {
+        get { return m_usePositionOnly; }
+        set { m_usePositionOnly = value; }
+    }
+
+    /// Getter/Setter of the parameter @see m_factor       
+    public float Factor
+    {
+        get { return m_factor; }
+        set
+        {
+            if (value != m_factor)
+            {
+                m_factor = value;
+                computeSphereCenters();
+            }
+            else
+                m_factor = value;
+        }
+    }
+
+    /// Getter/Setter of the parameter @see m_radius     
+    public float Radius
+    {
+        get { return m_radius; }
+        set
+        {
+            if (value != m_radius)
+            {
+                m_radius = value;
+                if (m_impl != null)
+                    m_impl.setFloatValue_deprecated("radius", m_radius * m_sofaContext.GetFactorUnityToSofa(1));
+            }
+            else
+                m_radius = value;
+        }
+    }
+
+    /// Getter/Setter of the parameter @see m_stiffness     
+    public float Stiffness
+    {
+        get { return m_stiffness; }
+        set
+        {
+            if (value != m_stiffness)
+            {
+                m_stiffness = value;
+                if (m_impl != null)
+                    m_impl.setFloatValue_deprecated("contactStiffness", m_stiffness);
+            }
+            else
+                m_stiffness = value;
+        }
+    }
+
+
+    /// Get the number of spheres
+    public int NbrSpheres
+    {
+        get
+        {
+            if (m_centers != null)
+                return m_centers.Length;
+            else
+                return 0;
+        }
+    }
 
 
 
@@ -63,7 +140,7 @@ public class SofaSphereCollisionObject : SofaBaseObject
         SofaLog("####### SofaSphereCollisionObject::Create_impl: " + UniqueNameId);
         if (m_impl == null)
         {
-            m_impl = new SofaCustomMeshAPI(m_sofaContext.GetSimuContext(), this.name, m_uniqueNameId);
+            m_impl = new SofaCustomMeshAPI(m_sofaContext.GetSimuContext(), m_parentName, m_uniqueNameId);
 
             if (m_impl == null || !m_impl.m_isCreated)
             {
@@ -85,12 +162,20 @@ public class SofaSphereCollisionObject : SofaBaseObject
         Create_impl();
     }
 
+
     protected virtual void awakePostProcess()
     {
-        Mesh m_mesh = this.GetComponent<MeshFilter>().sharedMesh;
-        Vector3[] vertices = m_mesh.vertices;
         m_keyVertices = new List<Vector3>();
 
+        if (m_SofaMesh == null) // look for a mesh in the current gameObject
+        {
+            m_SofaMesh = this.gameObject.GetComponent<Mesh>();
+            if (m_SofaMesh == null)
+                return;
+        }
+            
+
+        Vector3[] vertices = m_SofaMesh.vertices;
         for (int i = 0; i < vertices.Length; i++)
         {
             bool found = false;
@@ -118,11 +203,11 @@ public class SofaSphereCollisionObject : SofaBaseObject
     // Use this for initialization
     void Start()
     {
-        if (m_impl != null)
-        {
-            m_impl.setFloatValue_deprecated("contactStiffness", m_stiffness);
-            m_impl.setFloatValue_deprecated("radius", m_radius * m_sofaContext.GetFactorUnityToSofa(1));
-        }
+        //if (m_impl != null)
+        //{
+        //    m_impl.setFloatValue_deprecated("contactStiffness", m_stiffness);
+        //    m_impl.setFloatValue_deprecated("radius", m_radius * m_sofaContext.GetFactorUnityToSofa(1));
+        //}
     }
 
     
@@ -228,88 +313,6 @@ public class SofaSphereCollisionObject : SofaBaseObject
     }
 
 
-
-
-    ////////////////////////////////////////////
-    /////        Object members API        /////
-    ////////////////////////////////////////////
-
-    /// Getter/Setter of the parameter @see m_activated  
-    public bool activated
-    {
-        get { return m_activated; }
-        set { m_activated = value; }
-    }
-
-    /// Getter/Setter of the parameter @see m_usePositionOnly  
-    public bool usePositionOnly
-    {
-        get { return m_usePositionOnly; }
-        set { m_usePositionOnly = value; }
-    }
-
-    /// Getter/Setter of the parameter @see m_factor       
-    public float factor
-    {
-        get { return m_factor; }
-        set
-        {
-            if (value != m_factor)
-            {
-                m_factor = value;
-                computeSphereCenters();
-            }
-            else
-                m_factor = value;
-        }
-    }
-
-    /// Getter/Setter of the parameter @see m_radius     
-    public float radius
-    {
-        get { return m_radius; }
-        set
-        {
-            if (value != m_radius)
-            {
-                m_radius = value;
-                if (m_impl != null)
-                    m_impl.setFloatValue_deprecated("radius", m_radius * m_sofaContext.GetFactorUnityToSofa(1));
-            }
-            else
-                m_radius = value;
-        }
-    }
-
-    /// Getter/Setter of the parameter @see m_stiffness     
-    public float stiffness
-    {
-        get { return m_stiffness; }
-        set
-        {
-            if (value != m_stiffness)
-            {
-                m_stiffness = value;
-                if (m_impl != null)
-                    m_impl.setFloatValue_deprecated("contactStiffness", m_stiffness);
-            }
-            else
-                m_stiffness = value;
-        }
-    }
-
-
-    /// Get the number of spheres
-    public int nbrSpheres
-    {
-        get
-        {
-            if (m_centers != null)
-                return m_centers.Length;
-            else
-                return 0;
-        }
-    }
 
     /// Method to draw debug information like the vertex being grabed
     void OnDrawGizmosSelected()
