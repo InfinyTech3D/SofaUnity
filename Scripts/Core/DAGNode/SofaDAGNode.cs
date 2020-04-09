@@ -217,7 +217,7 @@ namespace SofaUnity
             }
 
             string componentsS = m_impl.RecomputeDAGNodeComponents();
-            SofaLog("####### SofaDAGNode::CreateSofaAPI " + UniqueNameId + " -> " + componentsS, 0, true);
+            SofaLog("####### SofaDAGNode::CreateSofaAPI " + UniqueNameId + " -> " + componentsS, 0, false);
             if (componentsS.Length == 0)
                 return;
 
@@ -328,7 +328,7 @@ namespace SofaUnity
             m_impl = new SofaDAGNodeAPI(m_sofaContext.GetSimuContext(), UniqueNameId, m_parentNodeName, m_isCustom);
 
             string componentsS = m_impl.GetDAGNodeComponents();
-            SofaLog("####### SofaDAGNode::Reconnect_impl " + UniqueNameId + " -> " + componentsS, 0, true);
+            SofaLog("####### SofaDAGNode::Reconnect_impl " + UniqueNameId + " -> " + componentsS, 0, false);
             if (componentsS.Length == 0)
                 return;
             
@@ -370,15 +370,9 @@ namespace SofaUnity
                 return;
 
             if (m_isTranslationCustom)
-            {
-                Debug.Log("Translation Set CUSTOM!");
                 m_impl.SetTransformation("translation", m_translation);
-            }
             else
-            {
-                Debug.Log("Translation GEt normal!");
                 m_translation = m_impl.GetTransformation("translation");
-            }
 
             if (m_isRotationCustom)
                 m_impl.SetTransformation("rotation", m_rotation);
