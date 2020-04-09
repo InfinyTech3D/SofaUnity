@@ -8,7 +8,6 @@
     <BruteForceDetection name="N2" />
     <DefaultContactManager response="default" />
     <MinProximityIntersection name="Proximity" alarmDistance="0.5" contactDistance="0.2" />
-    <DefaultCollisionGroupManager />
     
     <Node name="SquareGravity_test">
         <EulerImplicitSolver name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.1" />

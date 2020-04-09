@@ -112,6 +112,302 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &362944668
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 362944670}
+  - component: {fileID: 362944669}
+  m_Layer: 0
+  m_Name: EulerSolver  -  eulerSolver1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &362944669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 362944668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5a9e3a7c55d1304a992047259afb664, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_uniqueNameId: eulerSolver1
+  m_sofaContext: {fileID: 1395358502}
+  m_log: 0
+  m_ownerNode: {fileID: 635266458}
+  m_baseComponentType: 21
+  m_componentType: EulerSolver
+  m_dataArchiver:
+    m_names:
+    - printLog
+    - listening
+    - symplectic
+    - threadSafeVisitor
+    m_types:
+    - bool
+    - bool
+    - bool
+    - bool
+    m_stringData: []
+    m_boolData:
+    - m_owner: {fileID: 362944669}
+      m_dataName: printLog
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 362944669}
+      m_dataName: listening
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 362944669}
+      m_dataName: symplectic
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 362944669}
+      m_dataName: threadSafeVisitor
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    m_intData: []
+    m_floatData: []
+    m_doubleData: []
+    m_vec2Data: []
+    m_vec3Data: []
+    m_vec4Data: []
+    m_otherNames: []
+    m_otherData: []
+  m_linkArchiver:
+    m_links: []
+    m_slaveLinks: []
+--- !u!4 &362944670
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 362944668}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 635266457}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &383060865
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 383060867}
+  - component: {fileID: 383060866}
+  m_Layer: 0
+  m_Name: UniformMass  -  M1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &383060866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383060865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0271f7ab21246e7409de53c72f809575, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_uniqueNameId: M1
+  m_sofaContext: {fileID: 1395358502}
+  m_log: 0
+  m_ownerNode: {fileID: 635266458}
+  m_baseComponentType: 17
+  m_componentType: UniformMass
+  m_dataArchiver:
+    m_names:
+    - printLog
+    - listening
+    - isCompliance
+    - rayleighStiffness
+    - separateGravity
+    - rayleighMass
+    - vertexMass
+    - totalMass
+    - filename
+    - compute_mapping_inertia
+    - handleTopoChange
+    - preserveTotalMass
+    m_types:
+    - bool
+    - bool
+    - bool
+    - double
+    - bool
+    - double
+    - double
+    - double
+    - string
+    - bool
+    - bool
+    - bool
+    m_stringData:
+    - m_owner: {fileID: 383060866}
+      m_dataName: filename
+      m_dataType: string
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: unused
+    m_boolData:
+    - m_owner: {fileID: 383060866}
+      m_dataName: printLog
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 383060866}
+      m_dataName: listening
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 383060866}
+      m_dataName: isCompliance
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 383060866}
+      m_dataName: separateGravity
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 383060866}
+      m_dataName: compute_mapping_inertia
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 383060866}
+      m_dataName: handleTopoChange
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 383060866}
+      m_dataName: preserveTotalMass
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    m_intData: []
+    m_floatData: []
+    m_doubleData:
+    - m_owner: {fileID: 383060866}
+      m_dataName: rayleighStiffness
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 383060866}
+      m_dataName: rayleighMass
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 383060866}
+      m_dataName: vertexMass
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 1
+    - m_owner: {fileID: 383060866}
+      m_dataName: totalMass
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 1
+    m_vec2Data: []
+    m_vec3Data: []
+    m_vec4Data: []
+    m_otherNames:
+    - localRange
+    - indices
+    m_otherData:
+    - m_owner: {fileID: 383060866}
+      m_dataName: localRange
+      m_dataType: Vec2i
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+    - m_owner: {fileID: 383060866}
+      m_dataName: indices
+      m_dataType: vector<int>
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+  m_linkArchiver:
+    m_links:
+    - m_owner: {fileID: 383060866}
+      m_linkName: mstate
+      m_linkPath: MModel
+    - m_owner: {fileID: 383060866}
+      m_linkName: topology
+      m_linkPath: 
+    m_slaveLinks: []
+  myTab: 01000000010000000000000000000000000000000000000000000000000000000000000000000000
+  m_MyVector: {x: 20, y: 1, z: 0}
+--- !u!4 &383060867
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383060865}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 635266457}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &473660582
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -215,6 +511,117 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
+--- !u!1 &635266456
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 635266457}
+  - component: {fileID: 635266458}
+  m_Layer: 0
+  m_Name: SofaNode - Particles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &635266457
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635266456}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 362944670}
+  - {fileID: 1303810290}
+  - {fileID: 383060867}
+  - {fileID: 1260261348}
+  - {fileID: 800175001}
+  m_Father: {fileID: 1395358503}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &635266458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635266456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd514e8b1708b348bb1987be968669c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_uniqueNameId: Particles
+  m_sofaContext: {fileID: 1395358502}
+  m_log: 0
+  m_sofaComponents:
+  - {fileID: 362944669}
+  - {fileID: 1303810289}
+  - {fileID: 383060866}
+  - {fileID: 1260261347}
+  m_hasTransformEngine: 1
+  m_translation: {x: 0, y: 0, z: 0}
+  m_isTranslationCustom: 0
+  m_rotation: {x: 0, y: 0, z: 0}
+  m_isRotationCustom: 0
+  m_scale: {x: 1, y: 1, z: 1}
+  m_isScaleCustom: 0
+--- !u!1 &800175000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 800175001}
+  - component: {fileID: 800175002}
+  m_Layer: 0
+  m_Name: SofaParticlesModel  -  Particles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &800175001
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800175000}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 635266457}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &800175002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800175000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61151713a651366468248a6a949bee3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sofaMesh: {fileID: 1303810289}
+  m_particleSize: 0.5
+  m_particleMaterial: {fileID: 2100000, guid: 96f824069a6a5b44cb050dd1b7a1ac2c, type: 2}
+  m_pSystem: {fileID: 0}
+  m_nbrMax: 4000
 --- !u!1 &956150256
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,7 +704,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 20, y: 0, z: 0}
---- !u!1 &965323883
+--- !u!1 &972093218
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -305,69 +712,51 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 965323885}
-  - component: {fileID: 965323884}
+  - component: {fileID: 972093220}
+  - component: {fileID: 972093219}
   m_Layer: 0
-  m_Name: EulerSolver  -  eulerSolver1
+  m_Name: DefaultAnimationLoop  -  defaultAnimationLoop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &965323884
+--- !u!114 &972093219
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 965323883}
+  m_GameObject: {fileID: 972093218}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5a9e3a7c55d1304a992047259afb664, type: 3}
+  m_Script: {fileID: 11500000, guid: f3c67d96b8d166a49818dc88d50c4486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_uniqueNameId: eulerSolver1
-  m_sofaContext: {fileID: 1985357419}
+  m_uniqueNameId: defaultAnimationLoop
+  m_sofaContext: {fileID: 1395358502}
   m_log: 0
-  m_ownerNode: {fileID: 1860256169}
+  m_ownerNode: {fileID: 1395358501}
   m_baseComponentType: 0
-  m_componentType: EulerSolver
+  m_componentType: DefaultAnimationLoop
   m_dataArchiver:
     m_names:
     - printLog
     - listening
-    - symplectic
-    - threadSafeVisitor
     m_types:
-    - bool
-    - bool
     - bool
     - bool
     m_stringData: []
     m_boolData:
-    - m_owner: {fileID: 965323884}
+    - m_owner: {fileID: 972093219}
       m_dataName: printLog
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 965323884}
+    - m_owner: {fileID: 972093219}
       m_dataName: listening
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 965323884}
-      m_dataName: symplectic
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 965323884}
-      m_dataName: threadSafeVisitor
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
@@ -384,21 +773,21 @@ MonoBehaviour:
   m_linkArchiver:
     m_links: []
     m_slaveLinks: []
---- !u!4 &965323885
+--- !u!4 &972093220
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 965323883}
+  m_GameObject: {fileID: 972093218}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1860256168}
+  m_Father: {fileID: 1395358503}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1109098846
+--- !u!1 &1260261346
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -406,193 +795,71 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1109098848}
-  - component: {fileID: 1109098847}
+  - component: {fileID: 1260261348}
+  - component: {fileID: 1260261347}
   m_Layer: 0
-  m_Name: SofaMesh  -  MModel
+  m_Name: SpatialGridContainer  -  spatialGridContainer1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1109098847
+--- !u!114 &1260261347
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1109098846}
+  m_GameObject: {fileID: 1260261346}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33eb14f5b03eef7498ad3ef1fc36ca3d, type: 3}
+  m_Script: {fileID: 11500000, guid: e88f85a8ada110442a5b5aad21997e9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_uniqueNameId: MModel
-  m_sofaContext: {fileID: 1985357419}
+  m_uniqueNameId: spatialGridContainer1
+  m_sofaContext: {fileID: 1395358502}
   m_log: 0
-  m_ownerNode: {fileID: 1860256169}
-  m_baseComponentType: 2
-  m_componentType: MechanicalObject
-  m_dataArchiver:
-    m_names: []
-    m_types: []
-    m_stringData: []
-    m_boolData: []
-    m_intData: []
-    m_floatData: []
-    m_doubleData: []
-    m_vec2Data: []
-    m_vec3Data: []
-    m_vec4Data: []
-    m_otherNames: []
-    m_otherData: []
-  m_linkArchiver:
-    m_links: []
-    m_slaveLinks: []
-  m_forceUpdate: 0
---- !u!4 &1109098848
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1109098846}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1860256168}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1360964400
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1360964401}
-  - component: {fileID: 1360964402}
-  m_Layer: 0
-  m_Name: UniformMass  -  M1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1360964401
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1360964400}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1860256168}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1360964402
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1360964400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0271f7ab21246e7409de53c72f809575, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_uniqueNameId: M1
-  m_sofaContext: {fileID: 1985357419}
-  m_log: 0
-  m_ownerNode: {fileID: 1860256169}
-  m_baseComponentType: 3
-  m_componentType: UniformMass
+  m_ownerNode: {fileID: 635266458}
+  m_baseComponentType: 23
+  m_componentType: SpatialGridContainer
   m_dataArchiver:
     m_names:
     - printLog
     - listening
-    - isCompliance
-    - rayleighStiffness
-    - separateGravity
-    - rayleighMass
-    - vertexMass
-    - totalMass
-    - filename
-    - compute_mapping_inertia
-    - handleTopoChange
-    - preserveTotalMass
+    - cellWidth
+    - autoUpdate
+    - sortPoints
     m_types:
     - bool
     - bool
-    - bool
     - double
     - bool
-    - double
-    - double
-    - double
-    - string
     - bool
-    - bool
-    - bool
-    m_stringData:
-    - m_owner: {fileID: 1360964402}
-      m_dataName: filename
-      m_dataType: string
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: unused
+    m_stringData: []
     m_boolData:
-    - m_owner: {fileID: 1360964402}
+    - m_owner: {fileID: 1260261347}
       m_dataName: printLog
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 1360964402}
+    - m_owner: {fileID: 1260261347}
       m_dataName: listening
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 1360964402}
-      m_dataName: isCompliance
+    - m_owner: {fileID: 1260261347}
+      m_dataName: autoUpdate
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 1360964402}
-      m_dataName: separateGravity
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 1360964402}
-      m_dataName: compute_mapping_inertia
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 1360964402}
-      m_dataName: handleTopoChange
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 1360964402}
-      m_dataName: preserveTotalMass
+    - m_owner: {fileID: 1260261347}
+      m_dataName: sortPoints
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
@@ -601,115 +868,37 @@ MonoBehaviour:
     m_intData: []
     m_floatData: []
     m_doubleData:
-    - m_owner: {fileID: 1360964402}
-      m_dataName: rayleighStiffness
+    - m_owner: {fileID: 1260261347}
+      m_dataName: cellWidth
       m_dataType: double
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 1360964402}
-      m_dataName: rayleighMass
-      m_dataType: double
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 1360964402}
-      m_dataName: vertexMass
-      m_dataType: double
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 1
-    - m_owner: {fileID: 1360964402}
-      m_dataName: totalMass
-      m_dataType: double
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 1
+      m_value: 0.75
     m_vec2Data: []
     m_vec3Data: []
     m_vec4Data: []
-    m_otherNames:
-    - localRange
-    - indices
-    m_otherData:
-    - m_owner: {fileID: 1360964402}
-      m_dataName: localRange
-      m_dataType: Vec2i
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-    - m_owner: {fileID: 1360964402}
-      m_dataName: indices
-      m_dataType: vector<int>
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
+    m_otherNames: []
+    m_otherData: []
   m_linkArchiver:
-    m_links:
-    - m_linkName: mstate
-      m_linkPath: MModel
+    m_links: []
     m_slaveLinks: []
-  myTab: 01000000010000000000000000000000000000000000000000000000000000000000000000000000
-  m_MyVector: {x: 20, y: 1, z: 0}
---- !u!1 &1860256167
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1860256168}
-  - component: {fileID: 1860256169}
-  m_Layer: 0
-  m_Name: SofaNode - Particles
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1860256168
+  m_showData: 1
+--- !u!4 &1260261348
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1860256167}
+  m_GameObject: {fileID: 1260261346}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 965323885}
-  - {fileID: 1109098848}
-  - {fileID: 1360964401}
-  - {fileID: 2082532265}
-  m_Father: {fileID: 1985357420}
-  m_RootOrder: 0
+  m_Children: []
+  m_Father: {fileID: 635266457}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1860256169
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1860256167}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbd514e8b1708b348bb1987be968669c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_uniqueNameId: Particles
-  m_sofaContext: {fileID: 1985357419}
-  m_log: 0
-  m_sofaComponents:
-  - {fileID: 965323884}
-  - {fileID: 1109098847}
-  - {fileID: 1360964402}
---- !u!1 &1985357418
+--- !u!1 &1303810288
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -717,22 +906,164 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1985357420}
-  - component: {fileID: 1985357419}
+  - component: {fileID: 1303810290}
+  - component: {fileID: 1303810289}
   m_Layer: 0
-  m_Name: SofaContext_0
-  m_TagString: Untagged
+  m_Name: SofaMesh  -  MModel
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1985357419
+--- !u!114 &1303810289
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1985357418}
+  m_GameObject: {fileID: 1303810288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33eb14f5b03eef7498ad3ef1fc36ca3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_uniqueNameId: MModel
+  m_sofaContext: {fileID: 1395358502}
+  m_log: 0
+  m_ownerNode: {fileID: 635266458}
+  m_baseComponentType: 19
+  m_componentType: MechanicalObject_PointSetTopologyContainer
+  m_dataArchiver:
+    m_names:
+    - printLog
+    - listening
+    - filename
+    - nbPoints
+    m_types:
+    - bool
+    - bool
+    - string
+    - uint
+    m_stringData:
+    - m_owner: {fileID: 1303810289}
+      m_dataName: filename
+      m_dataType: string
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 
+    m_boolData:
+    - m_owner: {fileID: 1303810289}
+      m_dataName: printLog
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1303810289}
+      m_dataName: listening
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    m_intData:
+    - m_owner: {fileID: 1303810289}
+      m_dataName: nbPoints
+      m_dataType: int
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+      m_isUnsigned: 1
+    m_floatData: []
+    m_doubleData: []
+    m_vec2Data: []
+    m_vec3Data: []
+    m_vec4Data: []
+    m_otherNames:
+    - position
+    - points
+    m_otherData:
+    - m_owner: {fileID: 1303810289}
+      m_dataName: position
+      m_dataType: vector<Vec3d>
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+    - m_owner: {fileID: 1303810289}
+      m_dataName: points
+      m_dataType: vector<unsigned int>
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+  m_linkArchiver:
+    m_links: []
+    m_slaveLinks: []
+  m_forceUpdate: 0
+--- !u!4 &1303810290
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1303810288}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 635266457}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1395358500
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1395358503}
+  - component: {fileID: 1395358502}
+  - component: {fileID: 1395358501}
+  m_Layer: 0
+  m_Name: SofaContext
+  m_TagString: GameController
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1395358501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1395358500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd514e8b1708b348bb1987be968669c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_uniqueNameId: root
+  m_sofaContext: {fileID: 1395358502}
+  m_log: 0
+  m_sofaComponents:
+  - {fileID: 972093219}
+  m_hasTransformEngine: 0
+  m_translation: {x: 0, y: 0, z: 0}
+  m_isTranslationCustom: 0
+  m_rotation: {x: 0, y: 0, z: 0}
+  m_isRotationCustom: 0
+  m_scale: {x: 1, y: 1, z: 1}
+  m_isScaleCustom: 0
+--- !u!114 &1395358502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1395358500}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 29fd615e119b7e54793f03d8e24065c9, type: 3}
@@ -752,66 +1083,20 @@ MonoBehaviour:
   testAsync: 0
   m_gravity: {x: 0, y: -10, z: 0}
   m_timeStep: 0.01
---- !u!4 &1985357420
+  m_objects: []
+--- !u!4 &1395358503
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1985357418}
+  m_GameObject: {fileID: 1395358500}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1860256168}
+  - {fileID: 972093220}
+  - {fileID: 635266457}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2082532264
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2082532265}
-  - component: {fileID: 2082532266}
-  m_Layer: 0
-  m_Name: SofaParticlesModel  -  Particles
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2082532265
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2082532264}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1860256168}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2082532266
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2082532264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61151713a651366468248a6a949bee3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_sofaMesh: {fileID: 1109098847}
-  m_particleSize: 0.5
-  m_particleMaterial: {fileID: 2100000, guid: 96f824069a6a5b44cb050dd1b7a1ac2c, type: 2}
-  m_pSystem: {fileID: 0}
-  m_nbrMax: 4000
