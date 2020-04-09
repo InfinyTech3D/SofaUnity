@@ -124,9 +124,8 @@ namespace SofaUnity
             }
             else
             {
-                compoGO = null;
                 Debug.LogWarning("Component type not handled: " + componentType);
-                return null;
+                sofaCompo = compoGO.AddComponent<SofaComponent>();
             }
 
             // set generic parameters
