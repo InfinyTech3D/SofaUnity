@@ -19,20 +19,38 @@ public class SofaSphereCollisionObjectEditor : SofaMeshObjectEditor
     [MenuItem("GameObject/Create Other/SofaObject/SofaSphereCollisionObject")]
     new public static GameObject CreateNew()
     {
-        SofaDAGNode parentDagN = GetDAGNodeSelected();
-        if (parentDagN == null)
+        if (Selection.activeTransform == null)
+        {
+            Debug.LogError("Error1 creating SofaSphereCollisionObject GameObject. No valid gameObject selected under SofaContext.");
             return null;
+        }
 
-        GameObject go = new GameObject("CollsionObject");
-        go.AddComponent<SofaSphereCollisionObject>();
+        GameObject selectObj = Selection.activeGameObject;
+
+        if (selectObj.GetComponent<MeshFilter>() == null)
+        {
+            Debug.LogError("Error2 creating SofaSphereCollisionObject GameObject. Object should have a valid MeshFilter.");
+            return null;
+        }
+
+        SofaDAGNode parentDagN = selectObj.GetComponentInParent<SofaDAGNode>();
+        if (parentDagN == null)
+        {
+            Debug.LogError("Error3 creating SofaSphereCollisionObject GameObject. No valid gameObject selected child of SofaContext or SofaDAGNode.");
+            return null;
+        }
+
+
+
+        selectObj.AddComponent<SofaSphereCollisionObject>();
 
         SofaDAGNodeManager nodeMgr = parentDagN.m_sofaContext.NodeGraphMgr;
         if (nodeMgr != null)
-            nodeMgr.RegisterCustomObject(go, parentDagN);
+            nodeMgr.RegisterCustomObject(selectObj, parentDagN);
         else
             Debug.LogError("Error creating SofaSphereCollisionObject. Can't access SofaDAGNodeManager.");
 
-        return go;
+        return selectObj;
     }
 
     public override void OnInspectorGUI()
@@ -41,10 +59,7 @@ public class SofaSphereCollisionObjectEditor : SofaMeshObjectEditor
 
         SofaSphereCollisionObject model = (SofaSphereCollisionObject)this.target;
 
-
-        model.m_SofaMesh = (Mesh)EditorGUILayout.ObjectField("Unity Mesh", model.m_SofaMesh, typeof(Mesh));
-
-        model.UsePositionOnly = EditorGUILayout.Toggle("Use Object Position Only", model.UsePositionOnly);
+        model.UsePositionOnly = EditorGUILayout.Toggle("Use Object Position Only (1 dof)", model.UsePositionOnly);
         model.Factor = EditorGUILayout.Slider("Interpolation factor", model.Factor, 1, 100);
         model.Radius = EditorGUILayout.Slider("Sphere radius", model.Radius, 0.001f, 10);
         model.Activated = EditorGUILayout.Toggle("Activate collision", model.Activated);

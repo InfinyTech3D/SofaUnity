@@ -44,9 +44,6 @@ public class SofaSphereCollisionObject : SofaBaseObject
     [SerializeField]
     public bool m_startOnPlay = true;
 
-    
-    public Mesh m_SofaMesh = null;
-
     /////////////////////////////////////////////////
     /////  SofaSphereCollisionObject public API /////
     /////////////////////////////////////////////////
@@ -74,7 +71,7 @@ public class SofaSphereCollisionObject : SofaBaseObject
             if (value != m_factor)
             {
                 m_factor = value;
-                computeSphereCenters();
+                ComputeSphereCenters();
             }
             else
                 m_factor = value;
@@ -163,19 +160,21 @@ public class SofaSphereCollisionObject : SofaBaseObject
     }
 
 
-    protected virtual void awakePostProcess()
+    /// Method called by @sa Awake() method. As post process method after creation.
+    protected override void Init_impl()
     {
         m_keyVertices = new List<Vector3>();
 
-        if (m_SofaMesh == null) // look for a mesh in the current gameObject
+        Mesh m_mesh = this.GetComponent<MeshFilter>().sharedMesh;
+
+        if (m_mesh == null) // look for a mesh in the current gameObject
         {
-            m_SofaMesh = this.gameObject.GetComponent<Mesh>();
-            if (m_SofaMesh == null)
-                return;
+            Debug.LogError("SofaSphereCollisionObject::AwakePostProcess Error No valid Meshfilter found in current gameObject.");
+            return;
         }
             
 
-        Vector3[] vertices = m_SofaMesh.vertices;
+        Vector3[] vertices = m_mesh.vertices;
         for (int i = 0; i < vertices.Length; i++)
         {
             bool found = false;
@@ -192,7 +191,7 @@ public class SofaSphereCollisionObject : SofaBaseObject
                 m_keyVertices.Add(vertices[i]);
         }
 
-        computeSphereCenters();
+        ComputeSphereCenters();
     }
 
     
@@ -221,7 +220,7 @@ public class SofaSphereCollisionObject : SofaBaseObject
     }
 
     /// Method to compute the centers according to the @see m_keyVertices and @sa m_factor
-    protected void computeSphereCenters()
+    protected void ComputeSphereCenters()
     {
         if (m_usePositionOnly)
         {
