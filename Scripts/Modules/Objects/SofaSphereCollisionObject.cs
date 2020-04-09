@@ -88,7 +88,7 @@ public class SofaSphereCollisionObject : SofaBaseObject
             {
                 m_radius = value;
                 if (m_impl != null)
-                    m_impl.setFloatValue_deprecated("radius", m_radius * m_sofaContext.GetFactorUnityToSofa(1));
+                    m_impl.SetFloatValue("radius", m_radius * m_sofaContext.GetFactorUnityToSofa(1));
             }
             else
                 m_radius = value;
@@ -105,7 +105,7 @@ public class SofaSphereCollisionObject : SofaBaseObject
             {
                 m_stiffness = value;
                 if (m_impl != null)
-                    m_impl.setFloatValue_deprecated("contactStiffness", m_stiffness);
+                    m_impl.SetFloatValue("contactStiffness", m_stiffness);
             }
             else
                 m_stiffness = value;
@@ -125,6 +125,48 @@ public class SofaSphereCollisionObject : SofaBaseObject
         }
     }
 
+
+    //////////////////////////////////////////////////
+    /////  SofaSphereCollisionObject public API  /////
+    //////////////////////////////////////////////////
+
+    // Use this for initialization
+    void Start()
+    {
+        if (m_impl != null)
+        {
+            Init_impl();
+
+            m_impl.SetFloatValue("contactStiffness", m_stiffness);
+            m_impl.SetFloatValue("radius", m_radius * m_sofaContext.GetFactorUnityToSofa(1));
+        }
+    }
+
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (m_activated && m_centers != null)
+        {
+            m_impl.UpdateMesh(this.transform, m_centers, m_sofaContext.transform);
+        }
+    }
+
+
+    /// Method to draw debug information like the vertex being grabed
+    void OnDrawGizmosSelected()
+    {
+        if (m_centers == null || m_sofaContext == null)
+            return;
+
+        Gizmos.color = Color.yellow;
+        //float factor = m_sofaContext.GetFactorSofaToUnity();
+
+        foreach (Vector3 vert in m_centers)
+        {
+            Gizmos.DrawSphere(this.transform.TransformPoint(vert), m_radius/**m_sofaContext.GetFactorSofaToUnity(1)*/);
+        }
+    }
 
 
     //////////////////////////////////////////////////
@@ -195,29 +237,7 @@ public class SofaSphereCollisionObject : SofaBaseObject
     }
 
     
-    ////////////////////////////////////////////
-    /////       Object behavior API        /////
-    ////////////////////////////////////////////
-
-    // Use this for initialization
-    void Start()
-    {
-        //if (m_impl != null)
-        //{
-        //    m_impl.setFloatValue_deprecated("contactStiffness", m_stiffness);
-        //    m_impl.setFloatValue_deprecated("radius", m_radius * m_sofaContext.GetFactorUnityToSofa(1));
-        //}
-    }
-
     
-    // Update is called once per frame
-    void Update()
-    {
-        if (m_activated && m_impl != null)
-        {
-            m_impl.updateMesh(this.transform, m_centers, m_sofaContext.transform);
-        }
-    }
 
     /// Method to compute the centers according to the @see m_keyVertices and @sa m_factor
     protected void ComputeSphereCenters()
@@ -229,7 +249,7 @@ public class SofaSphereCollisionObject : SofaBaseObject
                 m_centers[i] = this.transform.localPosition;
 
             if (m_impl != null)
-                m_impl.setNumberOfVertices(1);
+                m_impl.SetNumberOfVertices(1);
 
             return;
         }
@@ -237,7 +257,7 @@ public class SofaSphereCollisionObject : SofaBaseObject
 
         if (m_keyVertices == null)
         {
-            awakePostProcess();
+            AwakePostProcess();
             return;
         }
 
@@ -308,24 +328,8 @@ public class SofaSphereCollisionObject : SofaBaseObject
 
 
         if (m_impl != null)
-            m_impl.setNumberOfVertices(bufferTotal.Count);
+            m_impl.SetNumberOfVertices(bufferTotal.Count);
     }
 
-
-
-    /// Method to draw debug information like the vertex being grabed
-    void OnDrawGizmosSelected()
-    {
-        if (m_centers == null || m_sofaContext == null)
-            return;
-
-        Gizmos.color = Color.yellow;
-        //float factor = m_sofaContext.GetFactorSofaToUnity();
-        
-        foreach (Vector3 vert in m_centers)
-        {
-            Gizmos.DrawSphere(this.transform.TransformPoint(vert), m_radius/**m_sofaContext.GetFactorSofaToUnity(1)*/);
-        }
-    }
 }
 

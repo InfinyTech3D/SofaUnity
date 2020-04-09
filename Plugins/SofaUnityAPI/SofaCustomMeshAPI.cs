@@ -18,11 +18,18 @@ public class SofaCustomMeshAPI : SofaBaseObjectAPI
 
     }
 
+
+    protected string m_dofName = "";
+    protected string m_collisionName = "";
+
     /// Implicit method to really create object and link to Sofa object. Called by SofaBaseObject constructor
     protected override bool createObject()
     {
         if (m_hasObject == false) // first time create object only
         {
+            m_dofName = m_name + "_dof";
+            m_collisionName = m_name + "_col";
+
             // Create a Node in Sofa simulation tree and add a mechanicalObject into it
             int res = sofaPhysicsAPI_addSphereCollisionsObject(m_simu, m_name, m_parentName);
             m_name += "_node";
@@ -34,7 +41,11 @@ public class SofaCustomMeshAPI : SofaBaseObjectAPI
             }
 
             if (displayLog)
+            {
                 Debug.Log("SofaCustomMesh Added! " + m_name);
+                Debug.Log("SofaCustomMesh: m_parentName: " + m_parentName);
+                Debug.Log("SofaCustomMesh: m_dofName: " + m_dofName);
+            }
 
             // Set created object to native pointer
             int res1 = sofaPhysicsAPI_has3DObject(m_simu, m_name);
@@ -56,11 +67,16 @@ public class SofaCustomMeshAPI : SofaBaseObjectAPI
    
     /// <summary> Method to set the number of vertices to this 3D Object. </summary>
     /// <param name="nbr"> Number of vertices </param>
-    public void setNumberOfVertices(int nbr)
+    public void SetNumberOfVertices(int nbr)
     {
-        int res = sofaPhysicsAPI_setNbVertices(m_simu, m_name, nbr);
+        if (!m_isCreated)
+            return;
+
+        int res = sofaMeshAPI_setNbVertices(m_simu, m_dofName, nbr);
         if (res < 0)
-            Debug.LogError("mechanicalObject size: " + m_name + " " + res);
+            Debug.LogError("mechanicalObject size: " + m_dofName + " " + res);
+        else
+            sofaComponentAPI_reinitComponent(m_simu, m_dofName);
     }
 
 
@@ -69,9 +85,9 @@ public class SofaCustomMeshAPI : SofaBaseObjectAPI
     /// <param name="trans"> Local GameObject Transform to get Unity world position.</param>
     /// <param name="vertices"> List of vertices from Unity GameObject.</param>
     /// <param name="scaleUnityToSofa"> scale to transform Unity to Sofa positions.</param>
-    public void updateMesh(Transform trans, Vector3[] vertices, Transform sofaCTransform)
+    public void UpdateMesh(Transform trans, Vector3[] vertices, Transform sofaCTransform)
     {
-        if (!m_hasObject)
+        if (!m_isCreated)
             return;
         
         int nbrV = vertices.Length;
@@ -87,9 +103,24 @@ public class SofaCustomMeshAPI : SofaBaseObjectAPI
             val[i * 3 + 2] = vertS.z;
         }
 
-        int resUpdate = sofaPhysics3DObject_setVertices(m_simu, m_name, val);
+        int resUpdate = sofaMeshAPI_setVertices(m_simu, m_dofName, val);
         if (resUpdate < 0)
-            Debug.LogError("SofaCustomMesh updateMesh: " + m_name + " return error: " + resUpdate);
+            Debug.LogError("SofaCustomMesh updateMesh: " + m_dofName + " return error: " + resUpdate);
+    }
+
+
+    public void SetFloatValue(string dataName, float value)
+    {
+        if (!m_isCreated)
+            return;
+
+
+        int res = sofaComponentAPI_setDoubleValue(m_simu, m_collisionName, dataName, (double)value);
+
+        if (res != 0)
+            Debug.LogError("Method setFloatValue of Data: " + dataName + " of object: " + m_collisionName + " returns error: " + SofaDefines.msg_error[res]);
+        else
+            sofaComponentAPI_reinitComponent(m_simu, m_collisionName);
     }
 
 
@@ -102,9 +133,14 @@ public class SofaCustomMeshAPI : SofaBaseObjectAPI
     public static extern int sofaPhysicsAPI_addSphereCollisionsObject(IntPtr obj, string name, string parentNodeName);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysicsAPI_setNbVertices(IntPtr obj, string name, int nbrV);
+    public static extern int sofaMeshAPI_setNbVertices(IntPtr obj, string name, int nbrV);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysics3DObject_setVertices(IntPtr obj, string name, float[] arr);
+    public static extern int sofaMeshAPI_setVertices(IntPtr obj, string name, float[] arr);
 
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_setDoubleValue(IntPtr obj, string componentName, string dataName, double value);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_reinitComponent(IntPtr obj, string componentName);
 }
