@@ -91,13 +91,13 @@ public class SPlierTool : MonoBehaviour
         // Get access to the sofaContext // TODO remove this HACK: All components need to be created before the SofaPlier
         yield return new WaitForSeconds(1);
 
-        IntPtr _simu = m_sofaContext.getSimuContext();
-        if (_simu != IntPtr.Zero && Mord_UP != null && Mord_Down != null && Model != null && ModelVisu != null)
-        {
-            SBaseMesh mesh = Model.GetComponent<SBaseMesh>();
+        //IntPtr _simu = m_sofaContext.getSimuContext();
+        //if (_simu != IntPtr.Zero && Mord_UP != null && Mord_Down != null && Model != null && ModelVisu != null)
+        //{
+        //    SBaseMesh mesh = Model.GetComponent<SBaseMesh>();
 
-            m_sofaPlier = new SofaPliers(_simu, name, Mord_UP.name, Mord_Down.name, mesh.nameId, m_stiffness);
-        }
+        //    m_sofaPlier = new SofaPliers(_simu, name, Mord_UP.name, Mord_Down.name, mesh.nameId, m_stiffness);
+        //}
     }
 
 
@@ -154,16 +154,16 @@ public class SPlierTool : MonoBehaviour
 
         if (m_sofaContext != null)
         {
-            if(m_sofaContext.breakerActivated && !breakProcedure)
-            {
-                breakProcedure = true;
-                m_sofaPlier.unactivePliers();
-            }
-            else if(!m_sofaContext.breakerActivated && breakProcedure)
-            {
-                breakProcedure = false;
-                m_sofaPlier.reactivePliers();
-            }
+            //if(m_sofaContext.breakerActivated && !breakProcedure)
+            //{
+            //    breakProcedure = true;
+            //    m_sofaPlier.unactivePliers();
+            //}
+            //else if(!m_sofaContext.breakerActivated && breakProcedure)
+            //{
+            //    breakProcedure = false;
+            //    m_sofaPlier.reactivePliers();
+            //}
         }
     }
 
@@ -233,7 +233,7 @@ public class SPlierTool : MonoBehaviour
         cutStep++;
         Debug.Log("Start OneCut: " + cutStep + " / " + nbrMaxcut);
 
-        int res = m_sofaPlier.cutPliers(transform.position * m_sofaContext.getFactorUnityToSofa(), -transform.right, transform.up, transform.forward, m_cutLength * m_sofaContext.getFactorUnityToSofa() * (cutStep * 1/ nbrMaxcut));        
+        int res = m_sofaPlier.cutPliers(transform.position * m_sofaContext.GetFactorUnityToSofa(), -transform.right, transform.up, transform.forward, m_cutLength * m_sofaContext.GetFactorUnityToSofa() * (cutStep * 1/ nbrMaxcut));        
 
         if (res == 40000) {
             Debug.Log("CUT END!!!");
@@ -249,7 +249,7 @@ public class SPlierTool : MonoBehaviour
 
         Debug.Log("Start full cut");
 
-        int res = m_sofaPlier.cutPliers(transform.position * m_sofaContext.getFactorUnityToSofa(), -transform.right, transform.up, transform.forward, m_cutLength * m_sofaContext.getFactorUnityToSofa());
+        int res = m_sofaPlier.cutPliers(transform.position * m_sofaContext.GetFactorUnityToSofa(), -transform.right, transform.up, transform.forward, m_cutLength * m_sofaContext.GetFactorUnityToSofa());
 
         if (res == 40000)
         {
@@ -266,7 +266,7 @@ public class SPlierTool : MonoBehaviour
         if (animator)
             animator.SetBool("isClamped", false);
         releaseSofaPlier();
-        int res = m_sofaPlier.cutPliersPath(transform.position * m_sofaContext.getFactorUnityToSofa(), -transform.right, transform.up, transform.forward, m_cutLength * m_sofaContext.getFactorUnityToSofa());
+        int res = m_sofaPlier.cutPliersPath(transform.position * m_sofaContext.GetFactorUnityToSofa(), -transform.right, transform.up, transform.forward, m_cutLength * m_sofaContext.GetFactorUnityToSofa());
        
         if (res > 0 && res < 1000)
         {
@@ -288,7 +288,7 @@ public class SPlierTool : MonoBehaviour
 
         modelMesh = ModelVisu.GetComponent<MeshFilter>().sharedMesh;
         Vector3[] vertices = modelMesh.vertices;
-        float factor = m_sofaContext.getFactorSofaToUnity();
+        float factor = m_sofaContext.GetFactorSofaToUnity();
 
         for (int i = 0; i < m_nbrGrabed; i++)
         {

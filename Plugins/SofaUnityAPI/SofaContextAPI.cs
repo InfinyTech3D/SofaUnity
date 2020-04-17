@@ -21,6 +21,7 @@ namespace SofaUnityAPI
         /// Default constructor, will create the pointer to SofaPhysicsAPI
         public SofaContextAPI(bool async)
         {
+            //Debug.Log("## create ## SofaContextAPI ");
             // Create the application
             if (async)
                 m_native = sofaPhysicsAPI_create(2);
@@ -46,7 +47,10 @@ namespace SofaUnityAPI
                 //Debug.Log("sharePath: " + sharePath);
             }
             else
+            {
                 Debug.LogError("SofaContextAPI scene creation return: " + SofaDefines.msg_error[res]);
+                m_isReady = false;
+            }
         }
 
         /// Destructor
@@ -99,6 +103,13 @@ namespace SofaUnityAPI
                 sofaPhysicsAPI_stop(m_native);
         }
 
+        /// Method to reset the Sofa simulation
+        public void reset()
+        {
+            if (m_isReady)
+                sofaPhysicsAPI_reset(m_native);
+        }
+
         /// Method to perform one step of simulation in Sofa
         public void step()
         {
@@ -132,7 +143,7 @@ namespace SofaUnityAPI
             {
                 int res = sofaPhysicsAPI_loadScene(m_native, filename);
                 if (res != 0)
-                    Debug.LogError("SofaContextAPI::loadScene method returns: " + SofaDefines.msg_error[res]);
+                    Debug.LogError("SofaContextAPI::loadScene method returns: " + SofaDefines.msg_error[res] + " for scene: " + filename);
             }
             else
                 Debug.LogError("SofaContextAPI::loadScene can't load file: " + filename + "no sofaPhysicsAPI created!");
@@ -153,7 +164,7 @@ namespace SofaUnityAPI
             {
                 int res = sofaPhysicsAPI_loadPlugin(m_native, pluginName);
                 if (res != 0)
-                    Debug.LogError("SofaContextAPI::loadPlugin method returns: " + SofaDefines.msg_error[res]);
+                    Debug.LogError("SofaContextAPI::loadPlugin: " + pluginName + ", method returns: " + SofaDefines.msg_error[res]);
             }
             else
                 Debug.LogError("SofaContextAPI::loadPlugin can't load plugin: " + pluginName + " no sofaPhysicsAPI created!");
@@ -227,7 +238,7 @@ namespace SofaUnityAPI
             if (m_isReady)
             {
                 double[] grav = new double[3];
-                int res = sofaPhysicsAPI_gravity(m_native, grav);
+                int res = sofaPhysicsAPI_getGravity(m_native, grav);
 
                 if (res == 0)
                 {
@@ -278,6 +289,59 @@ namespace SofaUnityAPI
         }
 
 
+
+        public int logSceneGraph()
+        {
+            int res = -9999;
+            if (m_isReady)
+                res = sofaPhysicsAPI_logSceneGraph(m_native);
+
+            return res;
+        }
+
+        public int getNbrDAGNode()
+        {
+            int res = -9999;
+            if (m_isReady)
+                res = sofaPhysicsAPI_getNbrDAGNode(m_native);
+
+            return res;
+        }
+
+        public string getBaseComponentTypes()
+        {
+            if (m_isReady)
+            {
+                string type = sofaPhysicsAPI_getBaseComponentTypes(m_native);
+                return type;
+            }
+            else
+                return "Error";
+        }
+
+        public string getDAGNodeName(int DAGNodeID)
+        {
+            if (m_isReady)
+            {
+                string type = sofaPhysicsAPI_getDAGNodeName(m_native, DAGNodeID);
+                return type;
+            }
+            else
+                return "Error";
+        }
+
+
+        public string getDAGNodeComponents(string nodeName)
+        {
+            if (m_isReady)
+            {
+                string type = sofaPhysicsAPI_getComponentsAsString(m_native, nodeName);
+                return type;
+            }
+            else
+                return "Error";
+        }
+
         public void activateMessageHandler(bool status)
         {
             int res = 0;
@@ -304,6 +368,11 @@ namespace SofaUnityAPI
             for (int i=0; i<res; i++)
             {
                 string message = sofaPhysicsAPI_getMessage(m_native, i, type);
+
+                // check if message should be ignored given specific rules
+                if (skipExceptionMessage(message))
+                    continue;
+
                 if (type[0] == -1)
                     continue;
                 else if (type[0] == 3)
@@ -319,6 +388,16 @@ namespace SofaUnityAPI
             res = sofaPhysicsAPI_clearMessages(m_native);
             if (res != 0)
                 Debug.LogError("SofaContextAPI::clearMessages method returns: " + SofaDefines.msg_error[res]);
+        }
+
+        // check if message match given specific rules
+        public bool skipExceptionMessage(string message)
+        {
+            if (message.Contains("Plugin not found"))
+            {
+                return true;
+            }
+            return false;
         }
 
         public int clearMessages()
@@ -341,6 +420,9 @@ namespace SofaUnityAPI
 
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern int sofaPhysicsAPI_delete(IntPtr obj);
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern string sofaPhysicsAPI_APIName(IntPtr obj);
 
 
         /// Bindings to create or load an existing simulation scene
@@ -371,18 +453,7 @@ namespace SofaUnityAPI
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaPhysicsAPI_freeGlutGlew(IntPtr obj);
 
-
-        /// Bindings to communicate with the simulation tree
-        [DllImport("SofaAdvancePhysicsAPI")]
-        public static extern int sofaPhysicsAPI_getNumberObjects(IntPtr obj);
-
-        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public static extern string sofaPhysicsAPI_get3DObjectName(IntPtr obj, int id);
-
-        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public static extern string sofaPhysicsAPI_get3DObjectType(IntPtr obj, int id);
-
-
+        
         /// Bindings to communicate with the simulation loop
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern void sofaPhysicsAPI_start(IntPtr obj);
@@ -398,20 +469,22 @@ namespace SofaUnityAPI
         public static extern bool sofaPhysicsAPI_isAsyncStepCompleted(IntPtr obj);
         
 
+        /// Bindings for generic environement of the simulation scene.
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern void sofaPhysicsAPI_setTimeStep(IntPtr obj, double value);
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern double sofaPhysicsAPI_timeStep(IntPtr obj);
 
         [DllImport("SofaAdvancePhysicsAPI")]
-        public static extern void sofaPhysicsAPI_setGravity(IntPtr obj, double[] values);
+        public static extern int sofaPhysicsAPI_getGravity(IntPtr obj, double[] values);
         [DllImport("SofaAdvancePhysicsAPI")]
-        public static extern int sofaPhysicsAPI_gravity(IntPtr obj, double[] values);
-        
+        public static extern int sofaPhysicsAPI_setGravity(IntPtr obj, double[] values);
+
+
 
         /// Bindings tests
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public static extern string sofaPhysicsAPI_APIName(IntPtr obj);
+        public static extern int test_getAPI_ID(IntPtr obj);
 
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern void sofaPhysicsAPI_setTestName(IntPtr obj, string name);
@@ -432,6 +505,37 @@ namespace SofaUnityAPI
 
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaPhysicsAPI_clearMessages(IntPtr obj);
+
+        
+        /// Bindings to communicate with the simulation tree
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int sofaPhysicsAPI_getNbrDAGNode(IntPtr obj);
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int sofaPhysicsAPI_logSceneGraph(IntPtr obj);
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern string sofaPhysicsAPI_getDAGNodeName(IntPtr obj, int DAGNodeID);
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern string sofaPhysicsAPI_getBaseComponentTypes(IntPtr obj);
+
+
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern string sofaPhysicsAPI_getComponentsAsString(IntPtr obj, string nodeName);
+
+
+
+        /// old binding API
+        [DllImport("SofaAdvancePhysicsAPI")]
+        public static extern int sofaPhysicsAPI_getNumberObjects(IntPtr obj);
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern string sofaPhysicsAPI_get3DObjectName(IntPtr obj, int id);
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern string sofaPhysicsAPI_get3DObjectType(IntPtr obj, int id);
 
     }
 }

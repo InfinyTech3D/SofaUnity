@@ -15,19 +15,33 @@ namespace SofaUnity
     [ExecuteInEditMode]
     public class SofaContext : MonoBehaviour
     {
+        ////////////////////////////////////////////
+        //////       SofaContext members       /////
+        ////////////////////////////////////////////
+
         /// Pointer to the Sofa Context API.
-        SofaContextAPI m_impl;
+        private SofaContextAPI m_impl;
+
+        /// Pointer to the SofaDAGNodeManager which is used to recreate the SOFA node hierarchy
+        private SofaDAGNodeManager m_nodeGraphMgr = null;
+
+        /// Pointer to the PluginManager which hold the list of sofa plugin to be loaded
+        [SerializeField]
+        private PluginManager m_pluginMgr = null;
+
+        /// Pointer to the SceneFileManager which is used to check the file and hold the filename and paths.
+        [SerializeField]
+        private SceneFileManager m_sceneFileMgr = null;
+
+
+        List<SofaRayCaster> m_casters = null;
+
+        ////////////////////////////////////////////
+        ////////          parameters         ///////
+        ////////////////////////////////////////////
 
         /// Parameter to activate logging of this Sofa GameObject
         public bool m_log = false;
-
-        /// Parameter: Vector representing the gravity force.
-        public Vector3 m_gravity = new Vector3(0f, -9.8f, 0f);
-        /// Parameter: Float representing the simulation timestep to use.
-        public float m_timeStep = 0.02f; // ~ 1/60
-
-        /// Parameter: String representing the Path to the Sofa scene.
-        public string m_filename = "";
 
         /// Booleen to update sofa simulation
         public bool IsSofaUpdating = true;
@@ -35,18 +49,31 @@ namespace SofaUnity
         /// Booleen to activate sofa message handler
         public bool CatchSofaMessages = true;
 
-        List<SRayCaster> m_casters = null;
+        /// Booleen to start Sofa simulation on Play
+        //public bool StartOnPlay = true;
 
-        private SObjectHierarchy m_hierarchyPtr = null;
+        public bool StepbyStep = false;
 
         public bool testAsync = false;
 
+        /// Parameter: Vector representing the gravity force.
+        [SerializeField]
+        protected Vector3 m_gravity = new Vector3(0f, -9.8f, 0f);
+
+        /// Parameter: Float representing the simulation timestep to use.
+        [SerializeField]
+        protected float m_timeStep = 0.02f; // ~ 1/60
+
+
+        ////////////////////////////////////////////
+        //////      SofaContext accessors      /////
+        ////////////////////////////////////////////
 
         /// Getter of current Sofa Context API, @see m_impl
-        public IntPtr getSimuContext()
+        public IntPtr GetSimuContext()
         {
             if (m_impl == null)
-                init();
+                Init();
 
             if (m_impl == null) // still null
             {
@@ -56,8 +83,27 @@ namespace SofaUnity
             return m_impl.getSimuContext();
         }
 
+        /// getter to the \sa PluginManager m_pluginMgr
+        public PluginManager PluginManager
+        {
+            get { return m_pluginMgr; }
+        }
+
+        /// getter to the \sa SceneFileManager m_sceneFileMgr
+        public SceneFileManager SceneFileMgr
+        {
+            get { return m_sceneFileMgr; }
+        }
+
+        /// getter to the \sa SofaDAGNodeManager m_nodeGraphMgr
+        public SofaDAGNodeManager NodeGraphMgr
+        {
+            get { return m_nodeGraphMgr; }
+        }
+
+
         /// Getter/Setter of current gravity @see m_gravity
-        public Vector3 gravity
+        public Vector3 Gravity
         {
             get { return m_gravity; }
             set
@@ -71,8 +117,9 @@ namespace SofaUnity
             }
         }
 
+
         /// Getter/Setter of current timeStep @see m_timeStep
-        public float timeStep
+        public float TimeStep
         {
             get { return m_timeStep; }
             set
@@ -86,39 +133,30 @@ namespace SofaUnity
             }
         }
 
-        /// Getter/Setter of current filename @see m_filename
-        public string filename
+
+        public bool UnLoadScene
         {
-            get { return m_filename; }
             set
             {
-                if (value != m_filename)
+                if (value && m_impl != null)
                 {
-                    if (File.Exists(Application.dataPath+value))
-                    {
-                        bool reload = false;
-                        if (m_filename != "")
-                            reload = true;
-
-                        m_filename = value;
-
-                        if (reload)
-                            reloadFilename();
-                        else
-                            loadFilename();
-                    }
-                    else
-                        Debug.LogError("Error file doesn't exist: " + Application.dataPath + value);
+                    Debug.Log("UnLoadScene " + value);
+                    ClearSofaScene();
                 }
             }
         }
 
-        public Vector3 getScaleSofaToUnity()
+        
+        ////////////////////////////////////////////
+        ////////      scale conversions      ///////
+        ////////////////////////////////////////////
+
+        public Vector3 GetScaleSofaToUnity()
         {
             return new Vector3(this.transform.localScale.x, this.transform.localScale.y, this.transform.localScale.z);
         }
 
-        public Vector3 getScaleUnityToSofa()
+        public Vector3 GetScaleUnityToSofa()
         {
             Vector3 scale = new Vector3(this.transform.localScale.x, this.transform.localScale.y, this.transform.localScale.z);
             for (int i = 0; i < 3; i++)
@@ -128,21 +166,32 @@ namespace SofaUnity
             return scale;
         }
 
-        public float getFactorSofaToUnity()
+        public float GetFactorSofaToUnity(int dir = -1)
         {
             Vector3 scale = this.transform.localScale;
-            float factor = (Math.Abs(scale.x) + Math.Abs(scale.y) + Math.Abs(scale.z)) / 3;
+            float factor;
+            if (dir == -1)
+                factor = (Math.Abs(scale.x) + Math.Abs(scale.y) + Math.Abs(scale.z)) / 3;
+            else
+                factor = scale[dir];
+
             return factor;
         }
 
-        public float getFactorUnityToSofa()
+        public float GetFactorUnityToSofa(int dir = -1)
         {
-            float factor = getFactorSofaToUnity();
+            float factor = GetFactorSofaToUnity(dir);               
             if (factor != 0.0f) factor = 1 / factor;
 
             return factor;
         }
 
+
+        ////////////////////////////////////////////
+        ////////       Behavior methods      ///////
+        ////////////////////////////////////////////
+
+        /*
         public bool breakerActivated = false;
         private int cptBreaker = 0;
         private int countDownBreaker = 10;
@@ -152,65 +201,43 @@ namespace SofaUnity
             cptBreaker = 0;
         }
 
-        /// Getter/Setter of current objectcpt @see m_objectCpt
-        public int objectcpt
-        {
-            get {
-                if (m_hierarchyPtr == null)
-                    initHierarchy();
-
-                return m_hierarchyPtr.m_objectCpt;
-            }
-            set {
-                if (m_hierarchyPtr == null)
-                    initHierarchy();
-                m_hierarchyPtr.m_objectCpt = value;
-            }
-        }
-
-        /// Getter to the number of object loaded from Sofa Scene.
-        public int nbrObject
-        {
-            get {
-                if (m_hierarchyPtr == null)
-                    initHierarchy();
-                return m_hierarchyPtr.m_nbrObject;
-            }
-        }
-
-        public void registerObject(SBaseObject obj)
-        {
-            if (m_hierarchyPtr != null)
-                m_hierarchyPtr.registerSObject(obj);
-        }
-
-        public void registerCaster(SRayCaster obj)
+     */
+        public void RegisterRayCaster(SofaRayCaster obj)
         {
             if (m_casters == null)
-                m_casters = new List<SRayCaster>();
+                m_casters = new List<SofaRayCaster>();
             m_casters.Add(obj);
         }
+
+
+        /// List of SofaDAGNode in the graph
+        [SerializeField]
+        private List<SofaBaseObject> m_objects = null;
+
+        public void RegisterSofaObject(SofaBaseObject obj)
+        {
+            m_objects.Add(obj);
+        }
+       
 
         /// Method called at GameObject creation.
         void Awake()
         {
-            // Call the init method to create the Sofa Context
-            init();
+            if (Application.isPlaying)
+                Debug.Log("#### SofaContext is playing | StartOnPlay: " + IsSofaUpdating);
+            else
+                Debug.Log("#### SofaContext is editor | StartOnPlay: " + IsSofaUpdating);
 
-            if (m_impl == null)
-            {
-                this.enabled = false;
-                this.gameObject.SetActive(false);
-                return;
-            }
+            //if (Application.isPlaying && StartOnPlay == false)
+            //    return;
+
+            this.gameObject.tag = "GameController";
+            if (m_objects == null)
+                m_objects = new List<SofaBaseObject>();
+
+            StartSofa();
         }
 
-        // Use this for initialization
-        void Start()
-        {
-            breakerActivated = false;
-            cptBreaker = 0;            
-        }
 
         /// Method called at GameObject destruction.
         void OnDestroy()
@@ -249,149 +276,178 @@ namespace SofaUnity
         {
             if (m_casters != null)
             {
-                foreach (SRayCaster child in m_casters)
+                foreach (SofaRayCaster child in m_casters)
                 {
                     if (child != null)
-                        child.stopRay();
+                        child.StopRay();
                 }
             }
         }
 
-
-        void loadPlugins()
-        {           
-            string pluginPath = "";
-            if (Application.isEditor)
-                pluginPath = "/SofaUnity/Plugins/Native/x64/";
-            else
-                pluginPath = "/Plugins/";
-
-            // Default plugin to be loaded
-            m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaMiscCollision.dll");
-            m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaSparseSolver.dll");
-            m_impl.loadPlugin(Application.dataPath + pluginPath + "MultiCoreGPU.dll");
-            
-        }
-
-        public void initHierarchy()
+        void StartSofa()
         {
-            if (m_hierarchyPtr == null)
-                m_hierarchyPtr = new SObjectHierarchy(this);
-
-            if (m_hierarchyPtr.m_objects == null)
-                m_hierarchyPtr.m_objects = new List<SBaseObject>();
-        }
-
-        /// Internal Method to init the SofaContext object
-        void init()
-        {
-            if (m_log)
-                Debug.Log("## SofaContext ## init ");
+            // Call the init method to create the Sofa Context
+            Init();
 
             if (m_impl == null)
             {
-                m_impl = new SofaContextAPI(testAsync);
-
-                if (m_hierarchyPtr == null)
-                    initHierarchy();
-
-                catchSofaMessages();
-                loadPlugins();
-
-                if (m_log)
-                    Debug.Log("## SofaContext status before start: " + m_impl.contextStatus());
-                                   
-                m_impl.start();
-
-                if (m_log)
-                    Debug.Log("## SofaContext status after start: " + m_impl.contextStatus());
-
-
-                if (m_filename != "")
-                {
-                    if (m_log)
-                        Debug.Log("## SofaContext ## m_filename " + m_filename);
-
-                    if (!File.Exists(Application.dataPath + m_filename))
-                    {
-                        int pos = m_filename.IndexOf("Assets", 0);
-                        if (pos > 0)
-                        {
-                            m_filename = m_filename.Substring(pos + 6); // remove all path until Assets/ to make it relative
-                        }
-
-                        // Fix due to change of scene folder:
-                        int pos2 = m_filename.IndexOf("SofaUnity", 0);
-                        if (pos2 < 0)
-                            m_filename = "/SofaUnity/" + m_filename;
-                    }
-
-                    if (!File.Exists(Application.dataPath + m_filename)) // still not found
-                    {
-                        Debug.LogError("Error file can't be found: " + Application.dataPath + m_filename);
-                        return;
-                    }
-
-                    // load the file
-                    m_impl.loadScene(Application.dataPath + m_filename);
-
-                    // Set counter of object creation to 0
-                    m_hierarchyPtr.cptCreated = 0;
-                    m_hierarchyPtr.m_nbrObject = m_impl.getNumberObjects();
-
-                    if (m_log)
-                        Debug.Log("init - m_nbrObject: " + m_hierarchyPtr.m_nbrObject);
-
-                    //m_timeStep = m_impl.timeStep;
-                    //m_gravity = m_impl.getGravity();
-                }
-                //else
-                //{
-                m_impl.timeStep = m_timeStep;
-                m_impl.setGravity(m_gravity);
-                //}              
-
-                if (m_log)
-                    Debug.Log("## SofaContext status end init: " + m_impl.contextStatus());
+                this.enabled = false;
+                this.gameObject.SetActive(false);
+                return;
             }
 
-            
+            //breakerActivated = false;
+            //cptBreaker = 0;
         }
-        
+
+        public void ResetSofa()
+        {
+            if (m_impl != null)
+            {
+                m_impl.reset();
+            }
+        }
+
+
+        /// Internal Method to init the SofaContext object
+        void Init()
+        {
+            //if (this.transform.localScale.x > 0)
+            //{
+            //    Vector3 scale = this.transform.localScale;
+            //    //scale.x *= -1;
+            //    this.transform.localScale = scale;
+            //}
+
+            if (m_log)
+                Debug.Log("## SofaContext ## init ");
+
+            // Check and get the Sofa context
+            if (m_impl == null)
+                m_impl = new SofaContextAPI(testAsync);
+
+            if (m_impl == null)
+            {
+                Debug.LogError("Error while creating SofaContextAPI");
+                return;
+            }
+
+
+            // Create the NodeMgr
+            if (m_nodeGraphMgr == null)
+                m_nodeGraphMgr = new SofaDAGNodeManager(this, m_impl);
+            else // TODO make this serializable might help for custom simulation in futur.
+                Debug.LogWarning("## m_nodeGraphMgr already created...");
+
+
+            // Craete Plugin Mgr. // TODO: Need to connect that with the scene loading
+            if (m_pluginMgr == null)
+                m_pluginMgr = new PluginManager(m_impl);
+            else
+                m_pluginMgr.SetSofaContextAPI(m_impl);
+
+            // Load SOFA plugins
+            m_pluginMgr.LoadPlugins();
+
+            // start sofa instance
+            if (m_log)
+                Debug.Log("## SofaContext status before start: " + m_impl.contextStatus());
+
+            m_impl.start();
+
+            if (m_log)
+                Debug.Log("## SofaContext status after start: " + m_impl.contextStatus());
+
+            // Create SOFA scene file manager
+            if (m_sceneFileMgr == null)
+                m_sceneFileMgr = new SceneFileManager(this);
+            else
+                m_sceneFileMgr.SetSofaContext(this);
+
+            // If already has a scene, reconnect it in DAGNode mgr
+            SofaDAGNode rootNode = this.gameObject.GetComponent<SofaDAGNode>();
+            if (rootNode == null) // first creation
+                m_nodeGraphMgr.LoadNodeGraph();
+            else
+            {
+                // reconnect the full graph
+                ReconnectSofaScene();
+            }
+                
+
+            if (m_log)
+                Debug.Log("## SofaContext status end init: " + m_impl.contextStatus());
+            
+            // set gravity and timestep if changed in editor
+            m_impl.timeStep = m_timeStep;
+            m_impl.setGravity(m_gravity);
+
+            // Check message form SOFA side at end of Init
+            DoCatchSofaMessages();
+        }
+
         // Update is called once per fix frame
         void FixedUpdate()
         {
+            // only if scene is playing or if sofa is running
+            if (IsSofaUpdating == false || Application.isPlaying == false) return;
 
+            if (testAsync)
+                UpdateImplASync();
+            else
+                UpdateImplSync();
+
+            // log sofa messages
+            DoCatchSofaMessages();
+
+            // counter if need to freeze the simulation for several iterations
+            //cptBreaker++;
+            //if (cptBreaker == countDownBreaker)
+            //{
+            //    cptBreaker = 0;
+            //    breakerActivated = false;
+            //}
+
+            if (StepbyStep)
+            {
+                IsSofaUpdating = false;
+                StepbyStep = false;
+            }
         }
+        
+        //// Update is called once per frame
+        //void Update()
+        //{
+        //    // only if scene is playing or if sofa is running
+        //    if (IsSofaUpdating == false || Application.isPlaying == false) return; 
+
+        //    if (testAsync)
+        //        UpdateImplASync();
+        //    else
+        //        UpdateImplSync();
+
+        //    // log sofa messages
+        //    DoCatchSofaMessages();
+
+        //    // counter if need to freeze the simulation for several iterations
+        //    //cptBreaker++;
+        //    //if (cptBreaker == countDownBreaker)
+        //    //{
+        //    //    cptBreaker = 0;
+        //    //    breakerActivated = false;
+        //    //}
+
+        //    if (StepbyStep)
+        //    {
+        //        IsSofaUpdating = false;
+        //        StepbyStep = false;
+        //    }
+        //}
+        
 
         private float nextUpdate = 0.0f;
 
-        // Update is called once per frame
-        void Update()
-        {
-            // only if scene is playing or if sofa is running
-            if (IsSofaUpdating == false || Application.isPlaying == false) return; 
-
-            if (testAsync)
-                updateImplASync();
-            else
-                updateImplSync();
-
-            // log sofa messages
-            catchSofaMessages();
-
-            // counter if need to freeze the simulation for several iterations
-            cptBreaker++;
-            if (cptBreaker == countDownBreaker)
-            {
-                cptBreaker = 0;
-                breakerActivated = false;
-            }
-
-        }
-
-
-        protected void updateImplSync()
+        protected void UpdateImplSync()
         {
             if (Time.time >= nextUpdate)
             {
@@ -399,18 +455,12 @@ namespace SofaUnity
 
                 m_impl.step();
 
-                if (m_hierarchyPtr.m_objects != null)
-                {
-                    // Set all objects to dirty to force and update.
-                    foreach (SBaseObject child in m_hierarchyPtr.m_objects)
-                    {
-                        child.setDirty();
-                    }
-                }
+                if (m_nodeGraphMgr != null)
+                    m_nodeGraphMgr.PropagateSetDirty(true);
             }
         }
 
-        protected void updateImplASync()
+        protected void UpdateImplASync()
         {
             if (Time.time >= nextUpdate)
             {
@@ -425,25 +475,25 @@ namespace SofaUnity
                     
                     // physics simulation step completed and is not running
                     // perform data synchronization safely (no need of synchronization locks)                        
-                    if (m_hierarchyPtr.m_objects != null)
-                    {
-                        // Set all objects to dirty to force and update.
-                        foreach (SBaseObject child in m_hierarchyPtr.m_objects)
-                        {
-                            //child.setDirty();
-                            child.updateImpl();
-                            //Debug.Log(child.name);
-                        }
-                    }
+                    //if (m_hierarchyPtr.m_objects != null)
+                    //{
+                    //    // Set all objects to dirty to force and update.
+                    //    foreach (SofaBaseObject child in m_hierarchyPtr.m_objects)
+                    //    {
+                    //        //child.setDirty();
+                    //        child.updateImpl();
+                    //        //Debug.Log(child.name);
+                    //    }
+                    //}
 
                     // update the ray casters
                     if (m_casters != null)
                     {
                         // Set all objects to dirty to force and update.
-                        foreach (SRayCaster child in m_casters)
+                        foreach (SofaRayCaster child in m_casters)
                         {
                             //child.setDirty();
-                            child.updateImpl();
+                            child.CastRay();
                             //Debug.Log(child.name);
                         }
                     }
@@ -460,7 +510,7 @@ namespace SofaUnity
         }
 
         private bool isMsgHandlerActivated = false;
-        protected void catchSofaMessages()
+        protected void DoCatchSofaMessages()
         {
             // first time activated
             if (CatchSofaMessages && !isMsgHandlerActivated)
@@ -480,101 +530,68 @@ namespace SofaUnity
             }
         }
 
-        protected void reloadFilename()
-        {
-            // stop simulation first
-            m_impl.stop();
-            m_impl.freeGlutGlew();
-
-            // clear hierarchy
-            //m_hierarchyPtr.clearHierarchy();
-            List<GameObject> childToDestroy = new List<GameObject>();
-            foreach (Transform child in this.transform)
-            {
-                SBaseObject obj = child.GetComponent<SBaseObject>();
-                if (obj != null)
-                {
-                    childToDestroy.Add(child.gameObject);
-                }
-            }
-
-            foreach (GameObject child in childToDestroy)
-                DestroyImmediate(child);
-
-
-            // destroy sofaContext
-            m_impl.Dispose();
-
-            // recreate hierarchy
-            m_hierarchyPtr = new SObjectHierarchy(this);
-
-            // recreate sofaContext
-            m_impl = new SofaContextAPI(testAsync);
-            loadPlugins();
-            m_impl.start();
-            
-            // loadFilename
-            loadFilename();
-        }
-
+        
 
         /// Method to load a filename and create GameObject per Sofa object found.
-        protected void loadFilename()
+        public void LoadSofaScene()
         {
-            m_impl.loadScene(Application.dataPath + m_filename);
-            m_hierarchyPtr.m_nbrObject = m_impl.getNumberObjects();
+            if (m_sceneFileMgr == null)
+                return;
 
-            if (m_log)
-                Debug.Log("## SofaContext ## loadFilename - getNumberObjects: " + m_hierarchyPtr.m_nbrObject);
+            Debug.Log("## SofaContext ## loadFilename: " + m_sceneFileMgr.AbsoluteFilename());
+            // load scene file in SOFA
+            if (m_impl == null)
+                Debug.LogError("m_impl is null");
+            m_impl.loadScene(m_sceneFileMgr.AbsoluteFilename());
 
-            // Add 1 fictive object to be sure this method reach the end of the object creation loop
-            // before calling recreateHiearchy(); As the creation is asynchronous. call countCreated() at the end to compensate that +1.
-            m_hierarchyPtr.m_nbrObject += 1; 
-            for (int i = 0; i < m_hierarchyPtr.m_nbrObject; ++i)
+            // Retrieve current timestep and gravity
+            m_timeStep = m_impl.timeStep;
+            m_gravity = m_impl.getGravity();
+
+            // recreate node hiearchy in unity
+            Debug.Log("!!! m_nodeGraphMgr.LoadNodeGraph()");
+            m_nodeGraphMgr.LoadNodeGraph();
+
+            int nbrObj = m_impl.getNumberObjects();
+            Debug.Log("######### nbr Objects: " + nbrObj);
+            for (int i = 0; i < nbrObj; i++)
             {
-                string name = m_impl.getObjectName(i);
-                string type = m_impl.getObjectType(i);
-
-                GameObject go;
-                if (type.Contains("SofaVisual"))
-                {
-                    go = new GameObject("SVisualMesh - " + name);
-                    go.AddComponent<SVisualMesh>();
-                }
-                else if (type.Contains("SofaDeformable3DObject"))
-                {
-                    go = new GameObject("SMesh - " + name);
-                    go.AddComponent<SDeformableMesh>();
-                }
-                else if (type.Contains("SofaRigid3DObject"))
-                {
-                    go = new GameObject("SMesh - " + name);
-                    go.AddComponent<SRigidMesh>();
-                }
-                else if (type.Contains("SofaComponentObject"))
-                {
-                    go = new GameObject("SComponent - " + name);
-                    go.AddComponent<SComponentObject>();
-                }
-                else
-                    continue;
-
-                go.transform.parent = this.gameObject.transform;
+                Debug.Log(i + " -> " + m_impl.getObjectName(i));
             }
-            
-            countCreated();
+
+            DoCatchSofaMessages();
         }
 
-
-        /// Count the number of object created, when all created, will move them to recreate Sofa hierarchy.
-        public void countCreated()
+        protected void ReconnectSofaScene()
         {
-            m_hierarchyPtr.cptCreated++;
-            
-            if (m_hierarchyPtr.cptCreated == m_hierarchyPtr.m_nbrObject)
-                m_hierarchyPtr.recreateHiearchy();
+            if (m_sceneFileMgr == null)
+                return;
+
+            // load scene file in SOFA
+            if (m_sceneFileMgr.SceneFilename.Length != 0)
+                m_impl.loadScene(m_sceneFileMgr.AbsoluteFilename());
+
+            // Do not retrieve timestep of gravity in case it has been changed in editor
+
+            // re-create objects after scene loading and before graph reconnection
+            foreach (SofaBaseObject obj in m_objects)
+            {
+                obj.Reconnect(this);
+            }
+
+            // reconnect node hiearchy in unity
+            m_nodeGraphMgr.ReconnectNodeGraph();
+
+            DoCatchSofaMessages();
         }
 
-        
+        public void ClearSofaScene()
+        {
+            m_impl.stop();
+            m_impl.unload();
+            m_nodeGraphMgr.LoadNodeGraph();
+            m_impl.start();
+        }
+
     }
 }

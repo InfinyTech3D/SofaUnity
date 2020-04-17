@@ -17,7 +17,7 @@ public class CArmController : MonoBehaviour
 
     //[SerializeField]
     protected GameObject sofaContextObjet = null;
-    protected SComponentObject m_sofaObject = null;
+    protected SofaComponent m_sofaObject = null;
     protected float sofaScale = 1.0f;
 
     
@@ -68,8 +68,8 @@ public class CArmController : MonoBehaviour
                 m_refreshRatesec = value;
                 m_refreshRateMSec = (int)m_refreshRatesec * 1000;
 
-                if (this.m_sofaObject != null)
-                    this.m_sofaObject.impl.setIntValue("xrayFrameRate", m_refreshRateMSec);
+                //if (this.m_sofaObject != null)
+                //    this.m_sofaObject.impl.setIntValue("xrayFrameRate", m_refreshRateMSec);
             }
         }
     }
@@ -108,8 +108,8 @@ public class CArmController : MonoBehaviour
             if(changed)
             {
             //    Debug.Log("Time.time: " + Time.time + " nextUpdate " + nextUpdate);
-                m_sofaObject.impl.setVector3fValue("sourcePosition", CARMPosition);
-                m_sofaObject.impl.setVector3fValue("detectorPosition", sofaTargetPosition);
+                //m_sofaObject.impl.setVector3fValue("sourcePosition", CARMPosition);
+                //m_sofaObject.impl.setVector3fValue("detectorPosition", sofaTargetPosition);
                 changed = false;
             }
         }
@@ -124,7 +124,7 @@ public class CArmController : MonoBehaviour
         if (sofaContextObjet != null)
         {
             SofaContext context = sofaContextObjet.GetComponent<SofaContext>();
-            sofaScale = context.getFactorUnityToSofa();
+            sofaScale = context.GetFactorUnityToSofa();
         }
         else
             Debug.LogError("No sofa context found. Sofa scale won't be init.");
@@ -143,12 +143,12 @@ public class CArmController : MonoBehaviour
         // get the sofa object behind
         if (m_target != null)
         {
-            m_sofaObject = m_target.GetComponent<SComponentObject>();
+            //m_sofaObject = m_target.GetComponent<SComponentObject>();
             this.computePositions();
             if (this.m_sofaObject != null)
             {
-                int res = this.m_sofaObject.impl.getIntValue("xrayFrameRate");
-                this.refreshRate = (float)res * 0.001f;
+              //  int res = this.m_sofaObject.impl.getIntValue("xrayFrameRate");
+               // this.refreshRate = (float)res * 0.001f;
             }
         }
 

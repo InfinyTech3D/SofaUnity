@@ -8,7 +8,7 @@ namespace SofaUnity
 {
     /// <summary>
     /// Component that will update a text GameObject using information from its SofaBaseMesh
-    /// This class need to be added to a child class of @see SBaseMesh and linked to a text GameObject
+    /// This class need to be added to a child class of @see SofaBaseMesh and linked to a text GameObject
     /// </summary>
     public class ObjectInfo : MonoBehaviour
     {
@@ -35,7 +35,7 @@ namespace SofaUnity
         void Update()
         {
             Text txt = textUI.GetComponent<Text>();
-            SBaseMesh baseMesh = this.GetComponent<SBaseMesh>();
+            SofaMeshObject baseMesh = this.GetComponent<SofaMeshObject>();
 
             int nbV = baseMesh.nbVertices();
             int nbTri = baseMesh.nbTriangles();

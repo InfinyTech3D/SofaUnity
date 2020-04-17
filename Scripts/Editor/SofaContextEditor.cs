@@ -13,14 +13,17 @@ public class SofaContextEditor : Editor
     /// </summary>
     /// <returns>Pointer to the SofaContext GameObject</returns>
     [MenuItem("SofaUnity/SofaContext")]
-    [MenuItem("GameObject/Create Other/SofaUnity/SofaContext")]  //right click menu
+    [MenuItem("GameObject/Create Other/SofaContext")]  //right click menu
     public static GameObject CreateNew()
     {
+        int cpt = 0;
         if (GameObject.FindObjectOfType<SofaContext>() != null)
         {
-            Debug.LogError("The Scene already includes a SofaContext. Only one context is possible.");
+            Debug.LogWarning("The Scene already includes a SofaContext. Only one context is possible for the moment.");
             return null;
+            cpt++;
         }
+        //GameObject go = new GameObject("SofaContext_" + cpt.ToString());
         GameObject go = new GameObject("SofaContext");
         go.AddComponent<SofaContext>();
 
@@ -30,17 +33,17 @@ public class SofaContextEditor : Editor
     /// <summary>
     ///  Create Sofa logo for the Editor Menu
     /// </summary>
-    private static Texture2D m_sofaLogo;
+    private static Texture2D m_SofaLogo;
     public static Texture2D SofaLogo
     {
         get
         {
-            if (m_sofaLogo == null)
+            if (m_SofaLogo == null)
             {
                 Object logo = Resources.Load("sofa_logo");
-                m_sofaLogo = (Texture2D)logo;
+                m_SofaLogo = (Texture2D)logo;
             }
-            return m_sofaLogo;
+            return m_SofaLogo;
         }
     }
 
@@ -57,31 +60,92 @@ public class SofaContextEditor : Editor
         EditorGUILayout.LabelField(new GUIContent(SofaLogo), GUILayout.MinHeight(100.0f), GUILayout.ExpandWidth(true));
 
         // Add field for gravity
-        context.gravity = EditorGUILayout.Vector3Field("Gravity", context.gravity);
+        context.Gravity = EditorGUILayout.Vector3Field("Gravity", context.Gravity);
         EditorGUILayout.Separator();
 
         // Add field for timestep
-        context.timeStep = EditorGUILayout.FloatField("TimeStep", context.timeStep);
+        context.TimeStep = EditorGUILayout.FloatField("TimeStep", context.TimeStep);
         EditorGUILayout.Separator();
 
-        // Add field for simulation
-        context.IsSofaUpdating = EditorGUILayout.Toggle("Activate Simulation", context.IsSofaUpdating);
-        context.CatchSofaMessages = EditorGUILayout.Toggle("Activate Sofa Logs", context.CatchSofaMessages);
-
-        // Add Button to load a filename
-        if (GUILayout.Button("Load Scene"))
         {
-            string absolutePath = EditorUtility.OpenFilePanel("Load file scene (*.scn)", "", "scn");
-            context.filename = absolutePath.Substring(Application.dataPath.Length);
+            context.CatchSofaMessages = EditorGUILayout.Toggle("Activate Sofa Logs", context.CatchSofaMessages);
+            context.IsSofaUpdating = EditorGUILayout.Toggle("Animate SOFA simulation", context.IsSofaUpdating);
             EditorGUILayout.Separator();
+
+            if (GUILayout.Button("Step"))
+            {
+                context.StepbyStep = true;
+                context.IsSofaUpdating = true;
+            }
         }
-        // Label of the filename loaded
-        EditorGUILayout.LabelField("filename", context.filename);
 
         
+        // Add field for simulation
+        EditorGUI.BeginDisabledGroup(true);
+        
+        EditorGUI.EndDisabledGroup();
+
+        EditorGUILayout.Separator();        
+        EditorGUILayout.Separator();
+
+
+        // Add plugin section
+        PluginSection(context);
+        EditorGUILayout.Separator();
+
+        // Add scene file section
+        SceneFileSection(context);
+
         if (GUI.changed)
         {
             EditorUtility.SetDirty(context);
         }
     }
+
+
+    void PluginSection(SofaContext context)
+    {
+        EditorGUILayout.Separator();
+        if (context.PluginManager == null)
+        {
+            EditorGUILayout.IntField("Plugins Count", 0);
+            return;
+        }
+        
+        int nbrPlugin = EditorGUILayout.IntField("Plugins Count", context.PluginManager.NbrPlugin);
+        context.PluginManager.NbrPlugin = nbrPlugin;
+        EditorGUI.indentLevel += 1;
+        for (int i = 0; i < nbrPlugin; i++)
+        {
+            string pluginName = EditorGUILayout.TextField("Plugin Name: ", context.PluginManager.GetPluginName(i));
+            context.PluginManager.SetPluginName(i, pluginName);
+        }
+        EditorGUI.indentLevel -= 1;
+        EditorGUILayout.Separator();
+    }
+
+
+    void SceneFileSection(SofaContext context)
+    {
+        EditorGUILayout.Separator();
+        if (context.SceneFileMgr == null)
+        {
+            EditorGUILayout.LabelField("No scene file manager available");
+            return;
+        }
+
+        // Add Button to load a filename
+        if (GUILayout.Button("Load SOFA Scene (.scn) file"))
+        {
+            string absolutePath = EditorUtility.OpenFilePanel("Load file scene (*.scn)", "", "scn");
+            context.SceneFileMgr.SceneFilename = absolutePath.Substring(Application.dataPath.Length);
+            EditorGUILayout.Separator();
+        }
+        // Label of the filename loaded
+        EditorGUILayout.LabelField("Scene Filename: ", context.SceneFileMgr.SceneFilename);
+
+        context.UnLoadScene = GUILayout.Button("Unload Scene file");
+        EditorGUILayout.Separator();
+    }
+    
 }
