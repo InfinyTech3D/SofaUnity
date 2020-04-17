@@ -25,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1122340541088630}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.35, y: 4.55, z: -29.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -45,8 +45,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1, z: 6}
+  m_Center: {x: 0, y: 0, z: 1}
 --- !u!114 &1783358228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,7 +191,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_length: 1
   m_activateRay: 1
-  m_initialized: 0
   mask:
     serializedVersion: 2
     m_Bits: 0
@@ -200,7 +199,7 @@ MonoBehaviour:
   m_sofaContext: {fileID: 0}
   startOnPlay: 1
   m_isActivated: 0
-  m_rayType: 2
+  m_rayType: 1
   m_drawRay: 0
   m_rayColor: {r: 0, g: 1, b: 0, a: 1}
   m_rayWidth: 0.5
