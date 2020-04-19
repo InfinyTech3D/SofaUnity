@@ -1,0 +1,194 @@
+fileFormatVersion: 2
+guid: f71734e76d8ce054d9a6615d066eff5c
+timeCreated: 1534874314
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Background
+    100002: Background reflect
+    100004: //RootNode
+    100006: Camera001
+    100008: Camera001.Target
+    100010: Siemens Arcadis Varic
+    100012: Siemens Arcadis Varic 1
+    100014: Siemens Arcadis Varic 2
+    100016: Siemens Arcadis Varic Monitors
+    100018: VRayLight001
+    100020: VRayLight001.Target
+    100022: VRayLight002
+    100024: VRayLight002.Target
+    100026: VRayLight003
+    100028: VRayLight003.Target
+    100030: VRayLight004
+    400000: Background
+    400002: Background reflect
+    400004: //RootNode
+    400006: Camera001
+    400008: Camera001.Target
+    400010: Siemens Arcadis Varic
+    400012: Siemens Arcadis Varic 1
+    400014: Siemens Arcadis Varic 2
+    400016: Siemens Arcadis Varic Monitors
+    400018: VRayLight001
+    400020: VRayLight001.Target
+    400022: VRayLight002
+    400024: VRayLight002.Target
+    400026: VRayLight003
+    400028: VRayLight003.Target
+    400030: VRayLight004
+    2000000: Camera001
+    2300000: Background
+    2300002: Background reflect
+    2300004: Siemens Arcadis Varic 1
+    2300006: Siemens Arcadis Varic 2
+    2300008: Siemens Arcadis Varic Monitors
+    3300000: Background
+    3300002: Background reflect
+    3300004: Siemens Arcadis Varic 1
+    3300006: Siemens Arcadis Varic 2
+    3300008: Siemens Arcadis Varic Monitors
+    4300000: Background
+    4300002: Background reflect
+    4300004: Siemens Arcadis Varic Monitors
+    4300006: Siemens Arcadis Varic 2
+    4300008: Siemens Arcadis Varic 1
+    7400000: Take 001
+    7400002: Siemens Arcadis Varic|Background reflect|Take 001|BaseLayer
+    7400004: Siemens Arcadis Varic|Background|Take 001|BaseLayer
+    7400006: Siemens Arcadis Varic|Camera001.Target|Take 001|BaseLayer
+    7400008: Siemens Arcadis Varic|Siemens Arcadis Varic 1|Take 001|BaseLayer
+    7400010: Siemens Arcadis Varic|Siemens Arcadis Varic Monitors|Take 001|BaseLayer
+    7400012: Siemens Arcadis Varic|Siemens Arcadis Varic|Take 001|BaseLayer
+    7400014: Siemens Arcadis Varic|VRayLight001|Take 001|BaseLayer
+    7400016: Siemens Arcadis Varic|VRayLight002.Target|Take 001|BaseLayer
+    7400018: Siemens Arcadis Varic|VRayLight002|Take 001|BaseLayer
+    7400020: Siemens Arcadis Varic|VRayLight003.Target|Take 001|BaseLayer
+    7400022: Siemens Arcadis Varic|VRayLight004|Take 001|BaseLayer
+    7400024: Siemens Arcadis Varic 1|Background reflect|Take 001|BaseLayer
+    7400026: Siemens Arcadis Varic 1|Background|Take 001|BaseLayer
+    7400028: Siemens Arcadis Varic 1|Camera001.Target|Take 001|BaseLayer
+    7400030: Siemens Arcadis Varic 1|Siemens Arcadis Varic 1|Take 001|BaseLayer
+    7400032: Siemens Arcadis Varic 1|Siemens Arcadis Varic Monitors|Take 001|BaseLayer
+    7400034: Siemens Arcadis Varic 1|Siemens Arcadis Varic|Take 001|BaseLayer
+    7400036: Siemens Arcadis Varic 1|VRayLight001|Take 001|BaseLayer
+    7400038: Siemens Arcadis Varic 1|VRayLight002.Target|Take 001|BaseLayer
+    7400040: Siemens Arcadis Varic 1|VRayLight002|Take 001|BaseLayer
+    7400042: Siemens Arcadis Varic 1|VRayLight003.Target|Take 001|BaseLayer
+    7400044: Siemens Arcadis Varic 1|VRayLight004|Take 001|BaseLayer
+    9500000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Black
+    second: {fileID: 2100000, guid: b66105e6d2327fa4d86c9047baf55a38, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Dark Metal
+    second: {fileID: 2100000, guid: 3c865e0716ebb1545b0f0b30a341c502, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal Blue
+    second: {fileID: 2100000, guid: b9438f909f968af4b835d87cc24fd12d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Plastic Dark
+    second: {fileID: 2100000, guid: 78287fe36805d8e438fb4f6d4c797b43, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Plastic White
+    second: {fileID: 2100000, guid: 035872fa79636bd46aa5514696253a58, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rubber
+    second: {fileID: 2100000, guid: 79330da3eef27704da2262f53074dd76, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Steel_Stainlessl_Shiny
+    second: {fileID: 2100000, guid: c168f986978db9e4ab0f7a265e2b0c06, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

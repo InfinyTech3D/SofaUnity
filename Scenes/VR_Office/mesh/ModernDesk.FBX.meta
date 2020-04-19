@@ -1,0 +1,237 @@
+fileFormatVersion: 2
+guid: faa2a8121d137a04ebbe29ea097b6bdd
+timeCreated: 1548900230
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: BlackPiece
+    100002: Box001
+    100004: Box002
+    100006: Box003
+    100008: Box005
+    100010: Box007
+    100012: Box009
+    100014: Drawer1
+    100016: Drawer2
+    100018: Drawer3
+    100020: Drawer4
+    100022: Drawer5
+    100024: Edge1
+    100026: Edge2
+    100028: Edge3
+    100030: handle1
+    100032: handle2
+    100034: handle3
+    100036: handle4
+    100038: handle5
+    100040: //RootNode
+    100042: WhitePiece
+    100044: Camera
+    100046: Desk
+    100048: Lamp
+    400000: BlackPiece
+    400002: Box001
+    400004: Box002
+    400006: Box003
+    400008: Box005
+    400010: Box007
+    400012: Box009
+    400014: Drawer1
+    400016: Drawer2
+    400018: Drawer3
+    400020: Drawer4
+    400022: Drawer5
+    400024: Edge1
+    400026: Edge2
+    400028: Edge3
+    400030: handle1
+    400032: handle2
+    400034: handle3
+    400036: handle4
+    400038: handle5
+    400040: //RootNode
+    400042: WhitePiece
+    400044: Camera
+    400046: Desk
+    400048: Lamp
+    2000000: Camera
+    2100000: No Name
+    2100002: _Paris2010_0Curbs
+    2100004: _Paris2010_0Sol_4
+    2100006: _Paris2010_0ChimneyBase_16
+    2100008: _Paris2010_0tree17
+    2100010: Glass
+    2100012: Metal
+    2100014: desk_white
+    2100016: desk_wood
+    2300000: BlackPiece
+    2300002: Box001
+    2300004: Box002
+    2300006: Box003
+    2300008: Box005
+    2300010: Box007
+    2300012: Box009
+    2300014: Drawer1
+    2300016: Drawer2
+    2300018: Drawer3
+    2300020: Drawer4
+    2300022: Drawer5
+    2300024: Edge1
+    2300026: Edge2
+    2300028: Edge3
+    2300030: handle1
+    2300032: handle2
+    2300034: handle3
+    2300036: handle4
+    2300038: handle5
+    2300040: //RootNode
+    2300042: WhitePiece
+    2300044: Desk
+    3300000: BlackPiece
+    3300002: Box001
+    3300004: Box002
+    3300006: Box003
+    3300008: Box005
+    3300010: Box007
+    3300012: Box009
+    3300014: Drawer1
+    3300016: Drawer2
+    3300018: Drawer3
+    3300020: Drawer4
+    3300022: Drawer5
+    3300024: Edge1
+    3300026: Edge2
+    3300028: Edge3
+    3300030: handle1
+    3300032: handle2
+    3300034: handle3
+    3300036: handle4
+    3300038: handle5
+    3300040: //RootNode
+    3300042: WhitePiece
+    3300044: Desk
+    4300000: Desk
+    4300002: Box001
+    4300004: Drawer1
+    4300006: Drawer2
+    4300008: Box002
+    4300010: Edge1
+    4300012: Box003
+    4300014: Drawer5
+    4300016: Drawer4
+    4300018: Drawer3
+    4300020: Box005
+    4300022: Box007
+    4300024: Box009
+    4300026: WhitePiece
+    4300028: BlackPiece
+    4300030: Edge2
+    4300032: Edge3
+    4300034: handle1
+    4300036: handle2
+    4300038: handle3
+    4300040: handle4
+    4300042: handle5
+    9500000: //RootNode
+    10800000: Lamp
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Glass
+    second: {fileID: 2100000, guid: 3867d30896308b24893687e4556af40d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal
+    second: {fileID: 2100000, guid: df4c313e25a9c4646a6704f7b18ba811, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: desk_white
+    second: {fileID: 2100000, guid: a1b8e43f79e63a644809a4a7a1ef0e84, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: desk_wood
+    second: {fileID: 2100000, guid: d21d2a65e29d4ff4389c74a4ad0106fd, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
