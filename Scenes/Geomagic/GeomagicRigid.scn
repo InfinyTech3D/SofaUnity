@@ -1,0 +1,77 @@
+<?xml version="1.0" ?>
+<Node name="root" dt="0.05" showBoundingTree="0" gravity="0 0 0">
+
+<!--
+	<RequiredPlugin name="Carving" pluginName="SofaCarving" />
+    <RequiredPlugin name="Geomagic plugin" pluginName="Geomagic" />
+-->
+    <DefaultPipeline name="pipeline" depth="6" verbose="0"/>
+    <BruteForceDetection name="detection" />
+    <DefaultContactManager name="response" response="FrictionContact" />
+    <LocalMinDistance name="proximity" alarmDistance="0.5" contactDistance="0.1" angleCone="0.0" />
+    <FreeMotionAnimationLoop/>
+    <LCPConstraintSolver tolerance="0.001" maxIt="1000"/>
+    
+	<GeomagicDriver name="GeomagicDevice" deviceName="Default Device" scale="1" drawDeviceFrame="1" positionBase="0 0 0" orientationBase="0 0.707 0 -0.707" manualStart="true" />	
+	
+	<Node name="Cubestatic">
+		<MeshObjLoader name="loader" filename="mesh/cube0.obj" translation="-2 -4.5 -2" />
+        <MechanicalObject name="Cube"  position="@loader.position" />     
+		<Mesh name="grid" src="@loader" />
+		<Triangle simulated="0" moving="0" bothSide="false"/>
+		<Line simulated="0" moving="0" />
+		<Point simulated="0" moving="0" />
+		<Node name="CubeVisu">
+			<OglModel name="CubeVisualModel" fileMesh="mesh/cube0.obj"/>
+			<IdentityMapping input="@../Cube" output="@CubeVisualModel" />
+		</Node>
+    </Node>
+	
+	<Node name="Floor">
+        <MeshObjLoader name="loader" filename="mesh/plane.obj" />
+        <Mesh src="@loader" />
+        <MechanicalObject name="Floor" src="@loader" />
+        <Triangle name="Floor" simulated="0" moving="0" bothSide="false"/>
+        <Line name="Floor" simulated="0" moving="0" />
+        <Point name="Floor" simulated="0" moving="0" />
+		<Node name="VisuFloor" >
+            <OglModel name="FloorVisualModel" fileMesh="@loader.filename"/>
+            <IdentityMapping input="@../Floor" output="@FloorVisualModel" />
+        </Node>
+    </Node>
+
+	
+    <!-- ADDED: the Mechanical state Controller gathers events from the Omni driver and populates the Mechanical state -->
+    <Node name="Omni">
+        <MechanicalObject template="Rigid3" name="DOFs" position="@GeomagicDevice.positionDevice"/>
+        <MechanicalStateController template="Rigid3" listening="true" mainDirection="-1.0 0.0 0.0" handleEventTriggersUpdate="true"/>
+    </Node>
+	
+	<Node name="Instrument" >
+        <EulerImplicitSolver name="ODE solver" rayleighStiffness="0.05" rayleighMass="1.0" />
+        <CGLinearSolver name="linear solver" iterations="25" tolerance="1e-10" threshold="10e-10" /> 
+        
+		<MechanicalObject name="instrumentState" template="Rigid3" />
+		<UniformMass name="mass" totalMass="0.05" />
+		
+		<RestShapeSpringsForceField stiffness='1000000' angularStiffness='1000000' external_rest_shape='@../Omni/DOFs' points='0' external_points='0' />
+        <LCPForceFeedback activate="true" forceCoef="0.1"/> <!-- ADDED : Compute a force-feedback for the device -->
+        <UncoupledConstraintCorrection/>
+		
+		<Node name="VisuTool" >
+            <OglModel name="InstrumentVisualModel" fileMesh="./mesh/dental_instrument.obj" color="1.0 0.2 0.2 1.0" ry="-180" rz="-90" dz="3.5" dx="-0.3"/>
+            <RigidMapping name="MM->VM mapping" input="@instrumentState" output="@InstrumentVisualModel" />
+        </Node>
+		
+        <Node name="CollisionModel" >
+            <MeshObjLoader filename="./mesh/dental_instrument_centerline.obj"  name="loader"/>
+            <Mesh src="@loader" name="InstrumentCollisionModel" />
+            <MechanicalObject src="@loader" name="instrumentCollisionState"  ry="-180" rz="-90" dz="3.5" dx="-0.3" />
+            <Line name="instrument" contactStiffness="100"/>			
+            <Point name="instrument" contactStiffness="100"/>
+			<SphereModel radius="0.02" contactStiffness="100"/>
+            <RigidMapping name="MM->CM mapping" input="@instrumentState" output="@instrumentCollisionState" />		
+        </Node>       
+    </Node> 
+
+</Node>
