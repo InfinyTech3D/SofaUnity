@@ -206,7 +206,8 @@ namespace SofaUnity
             m_topology = new SofaMeshTopology();
 
             m_nbVertices = m_sofaMeshAPI.getNbVertices();
-            m_topology.CreateVertexBuffer(m_nbVertices);
+            int meshDimension = m_sofaMeshAPI.GetMeshDimension();
+            m_topology.CreateVertexBuffer(m_nbVertices, meshDimension);
 
             m_sofaMeshAPI.GetVertices(m_topology.m_vertexBuffer);
 
@@ -255,7 +256,7 @@ namespace SofaUnity
                 }
             }
 
-            if (HasTopo)
+            if (HasTopo && m_nbVertices > 0)
             {
                 m_topology.ComputeMesh();
                 UpdateTopology();
@@ -277,7 +278,7 @@ namespace SofaUnity
                 if (m_nbVertices != _nbV)
                 {
                     m_nbVertices = _nbV;
-                    m_topology.CreateVertexBuffer(m_nbVertices);
+                    m_topology.CreateVertexBuffer(m_nbVertices, m_sofaMeshAPI.GetMeshDimension());
                 }
             }
             else if (this.TopologyType() == TopologyObjectType.TETRAHEDRON)
@@ -295,6 +296,9 @@ namespace SofaUnity
         /// Method called by \sa update_impl() to update the topology
         protected void UpdateTopology()
         {
+            if (m_nbVertices == 0)
+                return;
+
             if (this.TopologyType() == TopologyObjectType.TRIANGLE)
             {
                 m_sofaMeshAPI.updateMesh(m_topology.m_mesh);
@@ -316,7 +320,7 @@ namespace SofaUnity
                 {
                     m_nbVertices = _nbV;
                    // Debug.Log("UpdateTopology: " + m_nbVertices);
-                    m_topology.CreateVertexBuffer(m_nbVertices);
+                    m_topology.CreateVertexBuffer(m_nbVertices, m_sofaMeshAPI.GetMeshDimension());
                 }
 
                 m_sofaMeshAPI.GetVertices(m_topology.m_vertexBuffer);

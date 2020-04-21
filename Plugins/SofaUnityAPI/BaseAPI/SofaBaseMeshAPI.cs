@@ -26,11 +26,17 @@ public class SofaBaseMeshAPI : SofaBaseAPI
     /// Booleen to warn mesh normals have to be inverted
     public bool m_invertNormals = false;
 
+    protected int m_meshDimension = 0;
+
+
     /// Internal method to check if API can be used
     override protected bool Init()
     {
         // first time create object only
         UpdateMeshId();
+
+        m_meshDimension = sofaMeshAPI_getMeshDimension(m_simu, m_name);
+        //Debug.Log("Mesh: " + m_name + " | m_meshDimension: " + m_meshDimension);
 
         if (m_uniqID < 0)
             return false;
@@ -51,6 +57,12 @@ public class SofaBaseMeshAPI : SofaBaseAPI
 
         if (m_uniqID < 0)
             m_isReady = false;
+    }
+
+
+    public int GetMeshDimension()
+    {
+        return m_meshDimension;
     }
 
     
@@ -905,5 +917,9 @@ public class SofaBaseMeshAPI : SofaBaseAPI
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_setVertices(IntPtr obj, string name, float[] arr);
+
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaMeshAPI_getMeshDimension(IntPtr obj, string name);
 
 }

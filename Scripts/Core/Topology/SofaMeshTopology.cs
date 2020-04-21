@@ -31,6 +31,9 @@ namespace SofaUnity
         
         /// number of points inside this mesh
         protected int m_nbVertices = 0;
+        /// number of points inside this mesh
+        public int m_meshDim = 3;
+
         /// real buffer sent to SOFA
         public float[] m_vertexBuffer = null;
 
@@ -164,29 +167,35 @@ namespace SofaUnity
 
 
         /// Method to create a vertex static float buffer given the number of vertices
-        public void CreateVertexBuffer(int nbVertices)
+        public void CreateVertexBuffer(int nbVertices, int meshDimension)
         {
             m_nbVertices = nbVertices;
-            m_vertexBuffer = new float[nbVertices * 3];
+            m_meshDim = meshDimension;
+            m_vertexBuffer = new float[nbVertices * m_meshDim];
         }
 
         
         /// Main method to compute the mesh given its topology type and static buffer. Will call internal method according to the type.
         public void ComputeMesh()
         {
-            m_mesh = new Mesh();
-            m_mesh.name = "SofaMesh";
-            Vector3[] unityVertices = new Vector3[m_nbVertices];
-            for (int i = 0; i < m_nbVertices; ++i)
+            // compute mesh in fonction of its dimension
+            if (m_meshDim == 3)
             {
-                unityVertices[i].x = m_vertexBuffer[i * 3];
-                unityVertices[i].y = m_vertexBuffer[i * 3 + 1];
-                unityVertices[i].z = m_vertexBuffer[i * 3 + 2];
+                Compute3DMesh();
             }
-            m_mesh.vertices = unityVertices;
-            m_mesh.normals = new Vector3[m_nbVertices];
-            m_mesh.uv = new Vector2[m_nbVertices];
+            else if (m_meshDim == 2)
+            {
+                Compute2DMesh();
+            }
+            else
+            {
+                // nothing to do for a 1D mesh. Just keep the list of Float values.
+                // Other size than 2 or 3D are not yet supported.
+                return;
+            }
 
+
+            // compute the mesh topology on top of the vertex buffer
             if (m_topologyType == TopologyObjectType.HEXAHEDRON)
             {
                 ComputeMeshFromHexahedron();
@@ -207,6 +216,40 @@ namespace SofaUnity
             {
                 ComputeMeshFromEdge();
             }
+        }
+
+
+        protected void Compute3DMesh()
+        {
+            m_mesh = new Mesh();
+            m_mesh.name = "SofaMesh";
+            Vector3[] unityVertices = new Vector3[m_nbVertices];
+            for (int i = 0; i < m_nbVertices; ++i)
+            {
+                unityVertices[i].x = m_vertexBuffer[i * 3];
+                unityVertices[i].y = m_vertexBuffer[i * 3 + 1];
+                unityVertices[i].z = m_vertexBuffer[i * 3 + 2];
+            }
+            m_mesh.vertices = unityVertices;
+            m_mesh.normals = new Vector3[m_nbVertices];
+            m_mesh.uv = new Vector2[m_nbVertices];
+        }
+
+
+        protected void Compute2DMesh()
+        {
+            m_mesh = new Mesh();
+            m_mesh.name = "SofaMesh";
+            Vector3[] unityVertices = new Vector3[m_nbVertices];
+            for (int i = 0; i < m_nbVertices; ++i)
+            {
+                unityVertices[i].x = m_vertexBuffer[i * 2];
+                unityVertices[i].y = m_vertexBuffer[i * 2 + 1];
+                unityVertices[i].z = 0.0f;
+            }
+            m_mesh.vertices = unityVertices;
+            m_mesh.normals = new Vector3[m_nbVertices];
+            m_mesh.uv = new Vector2[m_nbVertices];
         }
 
 
