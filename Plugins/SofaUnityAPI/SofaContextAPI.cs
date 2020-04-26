@@ -410,6 +410,28 @@ namespace SofaUnityAPI
         }
 
 
+        public void SofaKeyPressEvent(int keyId)
+        {
+            int res = 0;
+            if (m_isReady)
+                sofaPhysicsAPI_createKeyPressEvent(m_native, keyId);
+
+            if (res != 0)
+                Debug.LogError("SofaContextAPI::SofaKeyPressEvent method returns: " + SofaDefines.msg_error[res]);
+        }
+
+        public void SofaKeyReleaseEvent(int keyId)
+        {
+            int res = 0;
+            if (m_isReady)
+                sofaPhysicsAPI_createKeyReleaseEvent(m_native, keyId);
+
+            if (res != 0)
+                Debug.LogError("SofaContextAPI::SofaKeyReleaseEvent method returns: " + SofaDefines.msg_error[res]);
+        }
+
+
+
         /////////////////////////////////////////////////////////////////////////////////////////
         //////////          API to Communication with SofaAdvancePhysicsAPI         /////////////
         /////////////////////////////////////////////////////////////////////////////////////////
@@ -537,5 +559,11 @@ namespace SofaUnityAPI
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern string sofaPhysicsAPI_get3DObjectType(IntPtr obj, int id);
 
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int sofaPhysicsAPI_createKeyPressEvent(IntPtr obj, int keyId);
+
+        [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int sofaPhysicsAPI_createKeyReleaseEvent(IntPtr obj, int keyId);
     }
 }

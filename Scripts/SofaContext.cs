@@ -593,5 +593,16 @@ namespace SofaUnity
             m_impl.start();
         }
 
+
+        public void SofaKeyPressEvent(int keyId)
+        {
+            m_impl.SofaKeyPressEvent(keyId);
+        }
+
+        public void SofaKeyReleaseEvent(int keyId)
+        {
+            m_impl.SofaKeyReleaseEvent(keyId);
+        }
+
     }
 }
