@@ -1,0 +1,66 @@
+<?xml version='1.0'?>
+<Node name='root' dt='0.02'  gravity='0 0 0'> 
+    <RequiredPlugin pluginName='SofaMiscCollision'/>
+    <RequiredPlugin name="BA" pluginName="BeamAdapter" />
+    <RequiredPlugin pluginName='SofaOpenglVisual'/>
+
+    <VisualStyle displayFlags='showVisualModels showBehaviorModels showCollisionModels hideMappings hideForceFields' />
+    <FreeMotionAnimationLoop />
+    <LCPConstraintSolver mu='0.1' tolerance='1e-10' maxIt='1000' build_lcp='false' />
+    
+    <DefaultPipeline depth='6' verbose='1' draw='0'/>
+    <BruteForceDetection name='N2' />
+    <LocalMinDistance name='localmindistance' alarmDistance='3' contactDistance='1' angleCone='0.02'/>
+    <DefaultContactManager name='Response' response='FrictionContact' />
+    <DefaultCollisionGroupManager name='Group' />
+
+
+    <Node  name="NavigationSceneNode">
+
+
+        <!-- Shape of the catheter -->
+        <Node name="topoLines_cath">
+
+            <WireRestShape densityOfBeams="100" keyPoints="0.0 1400" length="1400.0" name="catheterRestShape" 
+            numEdges="200" numEdgesCollis="100" printLog="0" spireDiameter="400" spireHeight="0.0" straightLength="1270" 
+            template="Rigid3d" youngModulus="25e5" youngModulusExtremity="25e5" tags="catheter"/>
+            <EdgeSetTopologyContainer name="meshLinesCath"/>
+            <EdgeSetTopologyModifier name="Modifier"/>
+            <EdgeSetTopologyAlgorithms name="TopoAlgo" template="Rigid3d"/>
+            <EdgeSetGeometryAlgorithms name="GeomAlgo" template="Rigid3d" />
+            <MechanicalObject name="dofTopo1" template="Rigid3d"/>
+        </Node>
+
+
+        <!-- Interactive catheter and physics on it -->
+        <Node name="InstrumentCombined">
+
+            <EulerImplicitSolver printLog="false"/>
+            <BTDLinearSolver/>
+            <RegularGridTopology name="meshLinesCombined" nx="92" ny="1" nz="1" xmax="1.0" xmin="0.0" ymax="0" ymin="0" zmax="1" zmin="1"/>
+            <MechanicalObject name="DOFs" template="Rigid3d"/>
+            <WireBeamInterpolation WireRestShape="@../topoLines_cath/catheterRestShape" name="InterpolCatheter" printLog="0" radius="0.05" lengthY="2" lengthZ="2" sideLength="2"/>
+            <AdaptiveBeamForceFieldAndMass interpolation="@InterpolCatheter" massDensity="0.0155" name="CatheterForceField" />
+            <InterventionalRadiologyController listening="true" controlledInstrument="0" instruments="InterpolCatheter" name="m_ircontroller" printLog="0" 
+            speed="0.0" startingPos="0 0 0 0.354 -0.354 0 -0.854" step="0.5" template="Rigid3d" rotationInstrument="0" xtip="0.1"  />
+
+            <LinearSolverConstraintCorrection printLog="0" wire_optimization="true"/>
+            <FixedConstraint name="FixStart1" indices="91" />
+            <FixedConstraint name="FixStart2" indices="91" />
+
+            <!-- COLLISION -->
+
+            <Node name="Collision">
+                <EdgeSetTopologyContainer name="collisEdgeSet"  />
+                <EdgeSetTopologyModifier name="colliseEdgeModifier"/>
+                <MechanicalObject name="CollisionDOFs"  />
+                <MultiAdaptiveBeamMapping ircontroller="../m_ircontroller" name="collisMap" printLog="0" useCurvAbs="1"/> 
+                <PointCollisionModel group="1" name="PointBeamModel" proximity="0.0"/>
+            </Node>
+        </Node>
+    </Node>
+
+
+    
+
+</Node>
