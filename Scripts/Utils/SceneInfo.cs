@@ -21,7 +21,7 @@ namespace SofaUnity
         public bool displayFPS = false;
         public bool m_startOnPlay = true;
 
-        protected SofaContext SContext = null;
+        protected SofaContext m_sofaContext = null;
 
         /// Internal parameters for FPS
         /// {
@@ -32,25 +32,45 @@ namespace SofaUnity
                                   /// }
 
         bool computed = false;
-        int nbrModel = 0;
-        int nbrVertices = 0;
-        int nbrTriangles = 0;
+        int m_nbrVModel = 0;
+        int m_nbrVVertices = 0;
+        int m_nbrVTriangles = 0;
+
+        int m_nbrMesh = 0;
+        int m_nbrMVertices = 0;
+        int m_nbrMTriangles = 0;
+        int m_nbrMTetra = 0;
 
         // Use this for initialization
         void Start ()
         {
+            if (m_sofaContext == null)
+            {
+                GameObject _contextObject = GameObject.FindGameObjectWithTag("GameController");
+                if (_contextObject != null)
+                {
+                    // Get Sofa context
+                    m_sofaContext = _contextObject.GetComponent<SofaUnity.SofaContext>();
+                }
+                else
+                {
+                    Debug.LogError("RayCaster::loadContext - No SofaContext found.");
+                    return;
+                }
+            }
+
+
             if (!m_startOnPlay)
                 return;
 
-            nextUpdate = Time.time;
-            SContext = this.GetComponent<SofaContext>();           
+            nextUpdate = Time.time;   
         }
 
 
         public void setSofaContext(SofaUnity.SofaContext _context)
         {
-            SContext = _context;
-            if (SContext)
+            m_sofaContext = _context;
+            if (m_sofaContext)
                 computeInfo();
 
             updateInfo();
@@ -58,29 +78,42 @@ namespace SofaUnity
 
         public void unloadSofaContext()
         {
-            SContext = null;
-            nbrModel = 0;
-            nbrVertices = 0;
-            nbrTriangles = 0;
+            m_sofaContext = null;
+            m_nbrVModel = 0;
+            m_nbrVVertices = 0;
+            m_nbrVTriangles = 0;
+
+            m_nbrMesh = 0;
+            m_nbrMVertices = 0;
+            m_nbrMTriangles = 0;
+            m_nbrMTetra = 0;
+
             updateInfo();
         }
 
         protected void computeInfo()
         {
-            if (SContext == null)
+            if (m_sofaContext == null)
                 return;
 
-            Debug.Log("computeInfo");
-            foreach (Transform child in SContext.transform)
+            foreach (Transform child in m_sofaContext.transform)
             {
-                parseInfoChilds(child);                
-                SofaVisualMesh obj = child.GetComponent<SofaVisualMesh>();
-                if (obj != null)
+                parseInfoChilds(child);
+                SofaVisualModel objV = child.GetComponent<SofaVisualModel>();
+                if (objV != null)
                 {
-                    Debug.Log("obj " + obj.name);
-                    nbrModel++;
-                    nbrVertices += obj.nbVertices();
-                    nbrTriangles += obj.nbTriangles();
+                    m_nbrVModel++;
+                    m_nbrVVertices += objV.NbVertices();
+                    m_nbrVTriangles += objV.NbTriangles();
+                }
+
+                SofaMesh objM = child.GetComponent<SofaMesh>();
+                if (objM != null)
+                {
+                    m_nbrMesh++;
+                    m_nbrMVertices += objM.NbVertices();
+                    m_nbrMTriangles += objM.NbTriangles();
+                    m_nbrMTetra += objM.NbTetrahedra();
                 }
             }
            
@@ -93,13 +126,21 @@ namespace SofaUnity
             {
                 parseInfoChilds(child);
 
-                SofaVisualMesh obj = child.GetComponent<SofaVisualMesh>();
-                if (obj != null)
+                SofaVisualModel objV = child.GetComponent<SofaVisualModel>();
+                if (objV != null)
                 {
-                    Debug.Log("obj " + obj.name);
-                    nbrModel++;
-                    nbrVertices += obj.nbVertices();
-                    nbrTriangles += obj.nbTriangles();
+                    m_nbrVModel++;
+                    m_nbrVVertices += objV.NbVertices();
+                    m_nbrVTriangles += objV.NbTriangles();
+                }
+
+                SofaMesh objM = child.GetComponent<SofaMesh>();
+                if (objM != null)
+                {
+                    m_nbrMesh++;
+                    m_nbrMVertices += objM.NbVertices();
+                    m_nbrMTriangles += objM.NbTriangles();
+                    m_nbrMTetra += objM.NbTetrahedra();
                 }
             }
         }
@@ -108,17 +149,17 @@ namespace SofaUnity
         {
             if (t_nbrModels)
             {
-                t_nbrModels.text = "<b>Number Models: </b>" + nbrModel;
+                t_nbrModels.text = "<b>Visual Models: </b>" + m_nbrVModel;
             }
 
             if (t_nbrVertices)
             {
-                t_nbrVertices.text = "<b>Vertices: </b>" + nbrVertices;
+                t_nbrVertices.text = "<b>Vertices: </b>" + m_nbrVVertices;
             }
 
             if (t_nbrTriangles)
             {
-                t_nbrTriangles.text = "<b>Triangles: </b>" + nbrTriangles;
+                t_nbrTriangles.text = "<b>Triangles: </b>" + m_nbrVTriangles;
             }
         }
 
@@ -126,7 +167,7 @@ namespace SofaUnity
         // Update is called once per frame
         void LateUpdate ()
         {
-            if (SContext == null)
+            if (m_sofaContext == null)
                 return;
 
             if (!computed)
@@ -155,12 +196,21 @@ namespace SofaUnity
             if (textUI)
             {
                 Text txt = textUI.GetComponent<Text>();
-                txt.text = "<b>Number Models: </b>" + nbrModel + "\n" +
-                    "<b>Vertices: </b>" + nbrVertices + "\n" +
-                    "<b>Triangles: </b>" + nbrTriangles + "\n";
+                txt.text = "<b>Visual Models: </b>" + m_nbrVModel + "\n" +
+                    "<b> Vertices: </b>" + m_nbrVVertices + "\n" +
+                    "<b> Triangles: </b>" + m_nbrVTriangles + "\n";
+
+                txt.text = txt.text + "\n" + "<b>Mesh Models: </b>" + m_nbrMesh + "\n" +
+                    "<b> Vertices: </b>" + m_nbrMVertices + "\n" +
+                    "<b> Triangles: </b>" + m_nbrMTriangles + "\n" +
+                    "<b> Tetrahedra: </b>" + m_nbrMTetra + "\n";
+                
 
                 if (displayFPS)
-                    txt.text = txt.text + "\n<b>FPS: </b>" + fps;
+                {
+                    txt.text = txt.text + "\n<b>Unity FPS: </b>" + fps;
+                    txt.text = txt.text + "\n<b>SOFA FPS: </b>" + m_sofaContext.SimulationFPS;
+                }
             }
         }
     }

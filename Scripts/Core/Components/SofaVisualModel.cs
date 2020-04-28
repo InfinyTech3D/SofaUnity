@@ -26,6 +26,23 @@ namespace SofaUnity
         //////       SofaVisualModel API       /////
         ////////////////////////////////////////////
 
+        
+        public int NbVertices()
+        {
+            if (m_mesh != null)
+                return m_mesh.vertices.Length;
+            else
+                return 0;
+        }
+        
+        public int NbTriangles()
+        {
+            if (m_mesh != null)
+                return m_mesh.triangles.Length/3;
+            else
+                return 0;
+        }
+
         /// Method called by @sa CreateSofaAPI() method. To be implemented by child class if specific ComponentAPI has to be created.
         protected override void CreateSofaAPI_Impl()
         {
