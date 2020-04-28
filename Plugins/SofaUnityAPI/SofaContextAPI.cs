@@ -219,6 +219,14 @@ namespace SofaUnityAPI
                     sofaPhysicsAPI_setTimeStep(m_native, value);                
             }
         }
+
+        public float GetSimulationFPS()
+        {
+            if (m_isReady)
+                return sofaPhysicsAPI_getSimulationFPS(m_native);
+            else
+                return 666.0f;
+        }
         
 
         /// Setter of gravity vector
@@ -489,7 +497,11 @@ namespace SofaUnityAPI
         public static extern bool sofaPhysicsAPI_asyncStep(IntPtr obj);
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern bool sofaPhysicsAPI_isAsyncStepCompleted(IntPtr obj);
-        
+
+        [DllImport("SofaAdvancePhysicsAPI")]
+        public static extern float sofaPhysicsAPI_getSimulationFPS(IntPtr obj);
+
+
 
         /// Bindings for generic environement of the simulation scene.
         [DllImport("SofaAdvancePhysicsAPI")]

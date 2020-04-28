@@ -386,8 +386,13 @@ namespace SofaUnity
             DoCatchSofaMessages();
         }
 
+
+        float updateFPSRate = 4.0f;  // 4 updates per sec.
+        float nextFPSUpdate = 0.25f;
+        public float SimulationFPS = 0.0f;
+
         // Update is called once per fix frame
-        void FixedUpdate()
+        void Update()
         {
             // only if scene is playing or if sofa is running
             if (IsSofaUpdating == false || Application.isPlaying == false) return;
@@ -412,6 +417,12 @@ namespace SofaUnity
             {
                 IsSofaUpdating = false;
                 StepbyStep = false;
+            }
+
+            if (Time.time > nextFPSUpdate && m_impl != null)
+            {
+                nextFPSUpdate += 1.0f / updateFPSRate;
+                SimulationFPS = m_impl.GetSimulationFPS();
             }
         }
         
@@ -593,7 +604,7 @@ namespace SofaUnity
             m_impl.start();
         }
 
-
+        
         public void SofaKeyPressEvent(int keyId)
         {
             m_impl.SofaKeyPressEvent(keyId);
