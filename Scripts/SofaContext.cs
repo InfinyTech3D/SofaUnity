@@ -333,6 +333,9 @@ namespace SofaUnity
             }
 
 
+            SofaComponentFactory.InitBaseFactoryType();
+
+
             // Create the NodeMgr
             if (m_nodeGraphMgr == null)
                 m_nodeGraphMgr = new SofaDAGNodeManager(this, m_impl);

@@ -10,6 +10,8 @@ namespace SofaUnity
     /// TODO: how to create a real factory in C# ??
     static public class SofaComponentFactory
     {
+        static Dictionary<string, Func<GameObject, SofaBaseComponent>> s_componentFactory = null;        
+
         static public SofaBaseComponent CreateSofaCollisionPipeline(string nameId, string componentType, SofaDAGNode sofaNodeOwner, GameObject parent)
         {
             GameObject UnityNode = sofaNodeOwner.gameObject;
@@ -65,6 +67,48 @@ namespace SofaUnity
         }
 
 
+        public static void InitBaseFactoryType()
+        {
+            if (s_componentFactory != null)
+                s_componentFactory = null;
+
+            s_componentFactory = new Dictionary<string, Func<GameObject, SofaBaseComponent>>();
+
+            Func<GameObject, SofaBaseComponent> solverMethod = (gameO) => gameO.AddComponent<SofaSolver>();
+            s_componentFactory.Add("SofaSolver", solverMethod);
+
+            Func<GameObject, SofaBaseComponent> loaderMethod = (gameO) => gameO.AddComponent<SofaLoader>();
+            s_componentFactory.Add("SofaLoader", loaderMethod);
+
+            Func<GameObject, SofaBaseComponent> meshMethod = (gameO) => gameO.AddComponent<SofaMesh>();
+            s_componentFactory.Add("SofaMesh", meshMethod);
+
+            Func<GameObject, SofaBaseComponent> massMethod = (gameO) => gameO.AddComponent<SofaMass>();
+            s_componentFactory.Add("SofaMass", massMethod);
+
+            Func<GameObject, SofaBaseComponent> femMethod = (gameO) => gameO.AddComponent<SofaFEMForceField>();
+            s_componentFactory.Add("SofaFEMForceField", femMethod);
+
+            Func<GameObject, SofaBaseComponent> mechaMappingMethod = (gameO) => gameO.AddComponent<SofaMechanicalMapping>();
+            s_componentFactory.Add("SofaMechanicalMapping", mechaMappingMethod);
+
+            Func<GameObject, SofaBaseComponent> collisionMethod = (gameO) => gameO.AddComponent<SofaCollisionModel>();
+            s_componentFactory.Add("SofaCollisionModel", collisionMethod);
+
+            Func<GameObject, SofaBaseComponent> constraintMethod = (gameO) => gameO.AddComponent<SofaConstraint>();
+            s_componentFactory.Add("SofaConstraint", constraintMethod);
+
+            Func<GameObject, SofaBaseComponent> visualMethod = (gameO) => gameO.AddComponent<SofaVisualModel>();
+            s_componentFactory.Add("SofaVisualModel", visualMethod);
+
+            Func<GameObject, SofaBaseComponent> pluginMethod = (gameO) => null;
+            s_componentFactory.Add("SofaRequiredPlugin", pluginMethod);
+
+            Func<GameObject, SofaBaseComponent> animLoopMethod = (gameO) => gameO.AddComponent<SofaAnimationLoop>();
+            s_componentFactory.Add("SofaAnimationLoop", animLoopMethod);
+        }
+
+
         static public SofaBaseComponent CreateSofaComponent(string nameId, string componentType, SofaDAGNode sofaNodeOwner, GameObject parent)
         {
             
@@ -74,65 +118,25 @@ namespace SofaUnity
 
             GameObject compoGO = new GameObject("SofaComponent - " + nameId);
             SofaBaseComponent sofaCompo = null;
-            if (componentType == "SofaSolver")
+
+            try
             {
-                sofaCompo = compoGO.AddComponent<SofaSolver>();
+                Func<GameObject, SofaBaseComponent> method = s_componentFactory[componentType];
+                sofaCompo = method(compoGO);
             }
-            else if (componentType == "SofaLoader")
-            {
-                sofaCompo = compoGO.AddComponent<SofaLoader>();
-            }
-            else if (componentType == "SofaMesh")
-            {
-                sofaCompo = compoGO.AddComponent<SofaMesh>();
-            }
-            else if (componentType == "SofaMass")
-            {
-                sofaCompo = compoGO.AddComponent<SofaMass>();
-            }
-            else if (componentType == "SofaFEMForceField")
-            {
-                sofaCompo = compoGO.AddComponent<SofaFEMForceField>();
-            }
-            else if (componentType == "SofaMechanicalMapping")
-            {
-                sofaCompo = compoGO.AddComponent<SofaMechanicalMapping>();
-            }
-            else if (componentType == "SofaCollisionModel")
-            {
-                sofaCompo = compoGO.AddComponent<SofaCollisionModel>();
-            }
-            else if (componentType == "SofaConstraint")
-            {
-                sofaCompo = compoGO.AddComponent<SofaConstraint>();
-            }
-            else if (componentType == "SofaVisualModel")
-            {
-                sofaCompo = compoGO.AddComponent<SofaVisualModel>();
-            }
-            else if (componentType == "SofaRequiredPlugin")
-            {
-                // not handled here. TODO: do that better
-                //compoGO.destr
-                compoGO = null;
-                //Destroy(compoGO);
-                return null;
-            }
-            else if (componentType == "SofaAnimationLoop")
-            {
-                sofaCompo = compoGO.AddComponent<SofaAnimationLoop>();
-            }
-            else
+            catch (KeyNotFoundException)
             {
                 Debug.LogWarning("Component type not handled: " + componentType);
                 sofaCompo = compoGO.AddComponent<SofaComponent>();
             }
 
-            // set generic parameters
-            sofaCompo.SetDAGNode(sofaNodeOwner);
-            sofaCompo.Create(sofaNodeOwner.m_sofaContext, nameId);
-            sofaCompo.m_baseComponentType = sofaCompo.BaseTypeFromString(componentType);
-            compoGO.transform.parent = parent.gameObject.transform;
+            if (sofaCompo)
+            {
+                sofaCompo.SetDAGNode(sofaNodeOwner);
+                sofaCompo.Create(sofaNodeOwner.m_sofaContext, nameId);
+                sofaCompo.m_baseComponentType = sofaCompo.BaseTypeFromString(componentType);
+                compoGO.transform.parent = parent.gameObject.transform;
+            }
 
             return sofaCompo;
         }
