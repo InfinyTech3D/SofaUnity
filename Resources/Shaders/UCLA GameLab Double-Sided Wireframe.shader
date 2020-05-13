@@ -1,4 +1,5 @@
-Shader "UCLA Game Lab/Wireframe/Double-Sided" 
+//Shader from UCLA
+Shader "SofaUnity/Wireframe/Double-Sided" 
 {
 	Properties 
 	{
