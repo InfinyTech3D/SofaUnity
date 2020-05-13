@@ -17,6 +17,7 @@ public class SofaMouseInteractor : SofaRayCaster
     protected Camera m_camera = null;
 
     /// Bool parameter to draw or not the selected primitive
+    [SerializeField]
     protected bool m_drawSelection = false;
 
 
@@ -39,6 +40,13 @@ public class SofaMouseInteractor : SofaRayCaster
 
     /// Parameter to store the first intersection between object and mouse ray
     private bool firstTouch = true;
+
+
+    protected LineRenderer m_springRenderer = null;
+
+    public Color c1 = Color.yellow;
+    public Color c2 = Color.green;
+
 
     ////////////////////////////////////////////
     //////  SofaMouseInteractor accessors  /////
@@ -97,6 +105,7 @@ public class SofaMouseInteractor : SofaRayCaster
         }
         m_mesh.vertices = initVert;
         m_mesh.triangles = initTri;        
+
     }
 
 
@@ -132,6 +141,25 @@ public class SofaMouseInteractor : SofaRayCaster
             if (mesh)
                 m_meshes.Add(mesh);
         }
+
+
+        if (m_springRenderer == null)
+        {
+            m_springRenderer = gameObject.AddComponent<LineRenderer>();
+            m_springRenderer.material = new Material(Shader.Find("Sprites/Default"));
+            m_springRenderer.widthMultiplier = 0.2f;
+            m_springRenderer.positionCount = 2;
+
+            // A simple 2 color gradient with a fixed alpha of 1.0f.
+            float alpha = 1.0f;
+            Gradient gradient = new Gradient();
+            gradient.SetKeys(
+                new GradientColorKey[] { new GradientColorKey(c1, 0.0f), new GradientColorKey(c2, 1.0f) },
+                new GradientAlphaKey[] { new GradientAlphaKey(alpha, 0.0f), new GradientAlphaKey(alpha, 1.0f) }
+            );
+            m_springRenderer.colorGradient = gradient;
+        }
+
 
         /// Will create the real sofa Ray caster when simulation start.
         CreateSofaRayCaster_impl();
@@ -206,11 +234,15 @@ public class SofaMouseInteractor : SofaRayCaster
                     m_selectedTri[1] = m_sofaMesh.SofaMeshTopology.m_mesh.triangles[m_selectedTriID * 3 + 1];
                     m_selectedTri[2] = m_sofaMesh.SofaMeshTopology.m_mesh.triangles[m_selectedTriID * 3 + 2];
 
-                    Vector3[] testVert = new Vector3[3];
+                    Vector3[] testVert = new Vector3[3];                    
                     testVert[0] = this.transform.InverseTransformPoint(m_sofaMesh.SofaMeshTopology.m_mesh.vertices[m_selectedTri[0]]);
                     testVert[1] = this.transform.InverseTransformPoint(m_sofaMesh.SofaMeshTopology.m_mesh.vertices[m_selectedTri[1]]);
                     testVert[2] = this.transform.InverseTransformPoint(m_sofaMesh.SofaMeshTopology.m_mesh.vertices[m_selectedTri[2]]);
                     m_mesh.vertices = testVert;
+
+                    Vector3 bary = Vector3.zero;
+                    bary = (testVert[0] + testVert[1] + testVert[2]) / 3;
+                    UpdateSpringRenderer(m_origin, bary);
                 }
             }
         }
@@ -251,6 +283,17 @@ public class SofaMouseInteractor : SofaRayCaster
             m_sofaMesh.RemoveListener();
             m_sofaMesh = null;
         }
+    }
+
+
+    protected void UpdateSpringRenderer(Vector3 origin, Vector3 end)
+    {
+        Debug.Log("origin: " + origin + " | end: " + end);
+        LineRenderer lineRenderer = GetComponent<LineRenderer>();
+        var points = new Vector3[2];
+        points[0] = origin;
+        points[1] = end;
+        lineRenderer.SetPositions(points);
     }
 
 }
