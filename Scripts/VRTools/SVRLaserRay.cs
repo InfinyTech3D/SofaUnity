@@ -1,5 +1,5 @@
 ﻿// Uncomment this line to use the compatibility with VRTK. TODO: find a way to automatically detect if VRTK asset is present
-#define USING_VRTK
+//#define USING_VRTK
 using UnityEngine;
 
 #if USING_VRTK
@@ -10,7 +10,7 @@ using VRTK;
 /// Specialisation of SLaserRay class
 /// Allow the same interaction but using a VR interface thanks to VRTK
 /// </summary>
-class SVRLaserRay : SLaserRay
+class SVRLaserRay : SofaRayCaster
 {
     bool logController = true;
 
@@ -24,7 +24,7 @@ class SVRLaserRay : SLaserRay
 
     void Start()
     {
-        m_axisDirection.Normalize();
+        //m_axisDirection.Normalize();
 
 #if USING_VRTK
         if (GetComponent<VRTK_ControllerEvents>() == null)
@@ -46,15 +46,15 @@ class SVRLaserRay : SLaserRay
         GetComponent<VRTK_ControllerEvents>().GripClicked += new ControllerInteractionEventHandler(DoGripClicked);
         GetComponent<VRTK_ControllerEvents>().GripUnclicked += new ControllerInteractionEventHandler(DoGripUnclicked);
 #endif
-        if(laser != null)
-        {
-            laser.transform.localPosition = new Vector3(-0.035f, -0.005f, 0.005f);
-        }
-        activeTool(true);
-        if (m_sofaContext.testAsync == true)
-            m_sofaContext.registerCaster(this);
-        else
-            automaticCast = true;
+        //if(laser != null)
+        //{
+        //    laser.transform.localPosition = new Vector3(-0.035f, -0.005f, 0.005f);
+        //}
+        //activeTool(true);
+        //if (m_sofaContext.testAsync == true)
+        //    m_sofaContext.registerCaster(this);
+        //else
+        //    automaticCast = true;
     }
 
 #if USING_VRTK
