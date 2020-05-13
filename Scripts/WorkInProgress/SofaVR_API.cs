@@ -293,7 +293,7 @@ public class SofaVR_API : MonoBehaviour
 
         if (m_sceneInfo != null)
         {
-            m_sceneInfo.unloadSofaContext();
+            m_sceneInfo.UnloadSofaContext();
         }
 
         // stop current sofa application and remove pointer
@@ -395,7 +395,7 @@ public class SofaVR_API : MonoBehaviour
         // update scene info here
         if (m_sceneInfo != null)
         {
-            m_sceneInfo.setSofaContext(m_sofaContext);
+            m_sceneInfo.SetSofaContext(m_sofaContext);
         }
 
         // update tooltip
