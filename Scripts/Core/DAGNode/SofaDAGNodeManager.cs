@@ -172,27 +172,28 @@ namespace SofaUnity
             m_dagNodes.Add(dagNode);
 
             // Find all other DAGNode
-            FindDAGNodeGameObject(m_sofaContext.transform);
-
-            if (nbrNode != m_dagNodes.Count)
+            SofaDAGNode[] nodes = ScenesManager.FindObjectsOfType<SofaDAGNode>();
+            
+            if (nbrNode != nodes.Length)
             {
-                Debug.LogError("SofaDAGNodeManager Error while reconnecting the graph: " + m_dagNodes.Count + " DAGNode found instead of : " + nbrNode);
+                Debug.LogError("SofaDAGNodeManager Error while reconnecting the graph: " + nodes.Length + " DAGNode found instead of : " + nbrNode);
                 string NodeToFound = "";
                 for (int i = 0; i < nbrNode; i++)
                     NodeToFound = NodeToFound + m_sofaContextAPI.getDAGNodeName(i) + ",";
                 Debug.LogError("Node to be found: " + NodeToFound);
 
                 string NodeFound = "";
-                for (int i = 0; i < m_dagNodes.Count; i++)
-                    NodeFound = NodeFound + m_dagNodes[i].UniqueNameId + ",";
+                for (int i = 0; i < nodes.Length; i++)
+                    NodeFound = NodeFound + nodes[i].UniqueNameId + ",";
                 Debug.LogError("Node found: " + NodeFound);
                 return;
             }
 
             // Reconnect each Node
-            for (int i=0; i< m_dagNodes.Count; i++)
+            for (int i=0; i< nodes.Length; i++)
             {
-                m_dagNodes[i].Reconnect(m_sofaContext);
+                m_dagNodes.Add(nodes[i]);
+                nodes[i].Reconnect(m_sofaContext);
             }
         }
 
@@ -241,7 +242,7 @@ namespace SofaUnity
             }
 
             // move this new node below the parentNode
-            sofaGameObject.transform.parent = parentNode.gameObject.transform;
+            //sofaGameObject.transform.parent = parentNode.gameObject.transform;
 
             // create the sofa object
             int idNode = m_dagNodes.Count;
@@ -279,7 +280,7 @@ namespace SofaUnity
                 {
                     m_dagNodes.Add(dagNode);
                 }
-            }
+            }            
         }
 
 
