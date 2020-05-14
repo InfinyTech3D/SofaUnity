@@ -68,6 +68,18 @@ public class SofaContextEditor : Editor
         EditorGUILayout.Separator();
 
         {
+            if (Application.isPlaying)
+            {
+                EditorGUI.BeginDisabledGroup(true);
+                context.AsyncSimulation = EditorGUILayout.Toggle("Asynchronous Simulation", context.AsyncSimulation);
+                EditorGUI.EndDisabledGroup();
+            }
+            else
+            {
+                context.AsyncSimulation = EditorGUILayout.Toggle("Asynchronous Simulation", context.AsyncSimulation);
+            }
+                
+
             context.CatchSofaMessages = EditorGUILayout.Toggle("Activate Sofa Logs", context.CatchSofaMessages);
             context.IsSofaUpdating = EditorGUILayout.Toggle("Animate SOFA simulation", context.IsSofaUpdating);
             EditorGUILayout.Separator();
@@ -78,12 +90,6 @@ public class SofaContextEditor : Editor
                 context.IsSofaUpdating = true;
             }
         }
-
-        
-        // Add field for simulation
-        EditorGUI.BeginDisabledGroup(true);
-        
-        EditorGUI.EndDisabledGroup();
 
         EditorGUILayout.Separator();        
         EditorGUILayout.Separator();

@@ -54,7 +54,8 @@ namespace SofaUnity
 
         public bool StepbyStep = false;
 
-        public bool testAsync = false;
+        [SerializeField]
+        protected bool m_asyncSimulation = false;
 
         /// Parameter: Vector representing the gravity force.
         [SerializeField]
@@ -124,12 +125,22 @@ namespace SofaUnity
             get { return m_timeStep; }
             set
             {
-                if (m_timeStep != value)
+                if (m_timeStep != value && value > 0.0f)
                 {
                     m_timeStep = value;
                     if (m_impl != null)
                         m_impl.timeStep = m_timeStep;
                 }
+            }
+        }
+
+        /// Getter/Setter asynchronous simulation
+        public bool AsyncSimulation
+        {
+            get { return m_asyncSimulation; }
+            set {
+                if (!Application.isPlaying)
+                    m_asyncSimulation = value;
             }
         }
 
@@ -191,17 +202,17 @@ namespace SofaUnity
         ////////       Behavior methods      ///////
         ////////////////////////////////////////////
 
-        /*
+        
         public bool breakerActivated = false;
         private int cptBreaker = 0;
         private int countDownBreaker = 10;
-        public void breakerProcedure()
+        public void BreakerProcedure()
         {
             breakerActivated = true;
             cptBreaker = 0;
         }
 
-     */
+     
         public void RegisterRayCaster(SofaRayCaster obj)
         {
             if (m_casters == null)
@@ -296,8 +307,8 @@ namespace SofaUnity
                 return;
             }
 
-            //breakerActivated = false;
-            //cptBreaker = 0;
+            breakerActivated = false;
+            cptBreaker = 0;
         }
 
         public void ResetSofa()
@@ -324,7 +335,7 @@ namespace SofaUnity
 
             // Check and get the Sofa context
             if (m_impl == null)
-                m_impl = new SofaContextAPI(testAsync);
+                m_impl = new SofaContextAPI(m_asyncSimulation);
 
             if (m_impl == null)
             {
@@ -400,7 +411,7 @@ namespace SofaUnity
             // only if scene is playing or if sofa is running
             if (IsSofaUpdating == false || Application.isPlaying == false) return;
 
-            if (testAsync)
+            if (m_asyncSimulation)
                 UpdateImplASync();
             else
                 UpdateImplSync();
@@ -409,12 +420,12 @@ namespace SofaUnity
             DoCatchSofaMessages();
 
             // counter if need to freeze the simulation for several iterations
-            //cptBreaker++;
-            //if (cptBreaker == countDownBreaker)
-            //{
-            //    cptBreaker = 0;
-            //    breakerActivated = false;
-            //}
+            cptBreaker++;
+            if (cptBreaker == countDownBreaker)
+            {
+                cptBreaker = 0;
+                breakerActivated = false;
+            }
 
             if (StepbyStep)
             {
@@ -428,36 +439,7 @@ namespace SofaUnity
                 SimulationFPS = m_impl.GetSimulationFPS();
             }
         }
-        
-        //// Update is called once per frame
-        //void Update()
-        //{
-        //    // only if scene is playing or if sofa is running
-        //    if (IsSofaUpdating == false || Application.isPlaying == false) return; 
-
-        //    if (testAsync)
-        //        UpdateImplASync();
-        //    else
-        //        UpdateImplSync();
-
-        //    // log sofa messages
-        //    DoCatchSofaMessages();
-
-        //    // counter if need to freeze the simulation for several iterations
-        //    //cptBreaker++;
-        //    //if (cptBreaker == countDownBreaker)
-        //    //{
-        //    //    cptBreaker = 0;
-        //    //    breakerActivated = false;
-        //    //}
-
-        //    if (StepbyStep)
-        //    {
-        //        IsSofaUpdating = false;
-        //        StepbyStep = false;
-        //    }
-        //}
-        
+                
 
         private float nextUpdate = 0.0f;
 
@@ -485,20 +467,12 @@ namespace SofaUnity
                 // if physics simulation async step is still running do not wait and return the control to Unity
                 if (m_impl.isAsyncStepCompleted())
                 {
-                   // Debug.Log("isAsyncStepCompleted: YES ");
-                    
+//                    Debug.Log("isAsyncStepCompleted: YES ");
+
                     // physics simulation step completed and is not running
                     // perform data synchronization safely (no need of synchronization locks)                        
-                    //if (m_hierarchyPtr.m_objects != null)
-                    //{
-                    //    // Set all objects to dirty to force and update.
-                    //    foreach (SofaBaseObject child in m_hierarchyPtr.m_objects)
-                    //    {
-                    //        //child.setDirty();
-                    //        child.updateImpl();
-                    //        //Debug.Log(child.name);
-                    //    }
-                    //}
+                    if (m_nodeGraphMgr != null)
+                        m_nodeGraphMgr.PropagateSetDirty(true);
 
                     // update the ray casters
                     if (m_casters != null)
@@ -516,10 +490,10 @@ namespace SofaUnity
                     // run a new physics simulation async step
                     m_impl.asyncStep();
                 }
-                //else
-                //{
-                //    Debug.Log("isAsyncStepCompleted: NO ");
-                //}
+                else
+                {
+//                    Debug.Log("isAsyncStepCompleted: NO ");
+                }
             }
         }
 

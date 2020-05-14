@@ -294,7 +294,7 @@ public class SofaRayCaster : RayCaster
         else
         {
             m_initialized = true;
-            if (m_sofaContext.testAsync == true)
+            if (m_sofaContext.AsyncSimulation == true)
                 m_sofaContext.RegisterRayCaster(this);
             else
                 automaticCast = true;
