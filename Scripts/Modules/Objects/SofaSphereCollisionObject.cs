@@ -246,7 +246,7 @@ public class SofaSphereCollisionObject : SofaBaseObject
         {
             m_centers = new Vector3[10];
             for (int i=0; i<10; i++)
-                m_centers[i] = this.transform.localPosition;
+                m_centers[i] = this.transform.InverseTransformPoint(this.transform.localPosition);
 
             if (m_impl != null)
                 m_impl.SetNumberOfVertices(1);
