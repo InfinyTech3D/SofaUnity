@@ -5,6 +5,14 @@ using System;
 
 namespace SofaUnity
 {
+    public enum e_UVType
+    {
+        NONE,
+        EMBEDDED,
+        STEREOGRAPHICS,
+        BOXPROJECTION
+    }
+
     /// <summary>
     /// Specific class describing a Sofa OblModel, will use a SofaBaseMeshAPI to retrieve info
     /// </summary>
@@ -20,13 +28,14 @@ namespace SofaUnity
         /// Pointer to the corresponding SOFA API object
         protected SofaBaseMeshAPI m_sofaMeshAPI = null;
 
-
+        [SerializeField]
+        protected e_UVType m_uvType = e_UVType.EMBEDDED;
 
         ////////////////////////////////////////////
         //////       SofaVisualModel API       /////
         ////////////////////////////////////////////
 
-        
+
         public int NbVertices()
         {
             if (m_mesh != null)
@@ -41,6 +50,26 @@ namespace SofaUnity
                 return m_mesh.triangles.Length/3;
             else
                 return 0;
+        }
+
+        public e_UVType UVType
+        {
+            get { return m_uvType; }
+            set {
+                if (m_uvType == value)
+                    return;
+
+                m_uvType = value;
+                if (m_sofaMeshAPI != null)
+                {
+                    if (m_uvType == e_UVType.EMBEDDED)
+                        m_sofaMeshAPI.UpdateTexCoords(m_mesh);
+                    else if (m_uvType == e_UVType.STEREOGRAPHICS)
+                        m_sofaMeshAPI.ComputeStereographicsUV(m_mesh);
+                    else if (m_uvType == e_UVType.BOXPROJECTION)
+                        m_sofaMeshAPI.ComputeCubeProjectionUV(m_mesh);
+                }
+            }
         }
 
         /// Method called by @sa CreateSofaAPI() method. To be implemented by child class if specific ComponentAPI has to be created.
@@ -136,7 +165,12 @@ namespace SofaUnity
 
                 m_mesh.triangles = m_sofaMeshAPI.createTriangulation();
 
-                m_sofaMeshAPI.recomputeTexCoords(m_mesh);
+                if (m_uvType == e_UVType.EMBEDDED)
+                    m_sofaMeshAPI.UpdateTexCoords(m_mesh);
+                else if (m_uvType == e_UVType.STEREOGRAPHICS)
+                    m_sofaMeshAPI.ComputeStereographicsUV(m_mesh);
+                else if (m_uvType == e_UVType.BOXPROJECTION)
+                    m_sofaMeshAPI.ComputeCubeProjectionUV(m_mesh);
 
                 SofaLog("SofaVisualModel::initMesh ok: " + m_mesh.vertices.Length);
             }

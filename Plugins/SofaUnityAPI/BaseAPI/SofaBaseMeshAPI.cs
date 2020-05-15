@@ -680,18 +680,16 @@ public class SofaBaseMeshAPI : SofaBaseAPI
             normals = null;
         }
     }
-    
+
 
     /// test method to compute UV with sphere projection
-    private void computeStereographicsUV(Mesh mesh)
+    public void ComputeStereographicsUV(Mesh mesh)
     {
         this.computeBoundingBox(mesh);
 
         Vector3[] verts = mesh.vertices;
         int nbrV = verts.Length;
         Vector3[] vertsSphere = new Vector3[nbrV];
-
-        float[] texCoords = new float[nbrV * 2];
         Vector2[] uv = new Vector2[nbrV];
 
         // Compute max radius
@@ -709,8 +707,7 @@ public class SofaBaseMeshAPI : SofaBaseAPI
         for (int i = 0; i < nbrV; i++)
         {
             Vector3 direction = verts[i] - center;
-            direction.Normalize();
-            vertsSphere[i] = center + direction * radius;
+            vertsSphere[i] = center + direction;
         }
 
         float rangeX = 1 / (m_max.x - m_min.x);
@@ -723,14 +720,74 @@ public class SofaBaseMeshAPI : SofaBaseAPI
             uv[i] = new Vector2( (vertsSphere[i].x - m_min.x) * rangeX,
                 (vertsSphere[i].z - m_min.z) * rangeZ);
         }
-        
 
         mesh.uv = uv;
-    }    
+    }
+
+
+    public void ComputeCubeProjectionUV(Mesh mesh)
+    {
+        Vector3[] verts = mesh.vertices;
+        int nbrV = verts.Length;
+        this.computeBoundingBox(mesh);
+        Vector3[] normals = mesh.normals;
+        Vector2[] uv = new Vector2[nbrV];
+
+        // test the orientation of the mesh
+        int test = 40;
+        if (test > nbrV)
+            test = nbrV;
+
+        float dist = 0.0f;
+        Vector3 meanNorm = Vector3.zero;
+        for (int i = 0; i < test; i++)
+        {
+            int id = UnityEngine.Random.Range(1, nbrV);
+            dist = dist + (verts[id] - verts[id - 1]).magnitude;
+            meanNorm += normals[id];
+        }
+
+        meanNorm /= test;
+        dist /= test;
+        dist *= 0.25f; //arbitraty scale
+
+        int id0, id1, id3;
+        if (Mathf.Abs(meanNorm.x) > 0.8)
+        {
+            id0 = 1; id1 = 2; id3 = 0;
+        }
+        else if (Mathf.Abs(meanNorm.z) > 0.8)
+        {
+            id0 = 0; id1 = 1; id3 = 2;
+        }
+        else
+        {
+            id0 = 0; id1 = 2; id3 = 1;
+        }
+        id0 = 0;
+        id1 = 1;
+        id3 = 2;
+
+        float range0 = 1 / (m_max[id0] - m_min[id0]);
+        float range1 = 1 / (m_max[id1] - m_min[id1]);
+
+        for (int i = 0; i < nbrV; i++)
+        {
+            Vector3 norm = normals[i].normalized;
+            Vector3 vert = verts[i];
+
+            if (norm[id3] > 0.8)
+                vert = vert - dist * Vector3.one;
+
+            uv[i] = new Vector2((vert[id0] - m_min[id0]) * range0,
+                (vert[id1] - m_min[id1]) * range1);
+        }
+        mesh.uv = uv;
+    }
 
 
     /// Method to recompute the Tex coords according to mesh position and geometry.
-    public virtual void recomputeTexCoords(Mesh mesh)
+    public virtual void UpdateTexCoords(Mesh mesh)
     {
         Vector3[] verts = mesh.vertices;
         int nbrV = verts.Length;
@@ -744,61 +801,7 @@ public class SofaBaseMeshAPI : SofaBaseAPI
 
         if (res < 0)
         {
-           // computeStereographicsUV(mesh);
-           // return;
-
-            this.computeBoundingBox(mesh);
-            Vector3[] normals = mesh.normals;
-
-            // test the orientation of the mesh
-            int test = 40;
-            if (test > nbrV)
-                test = nbrV;
-
-            float dist = 0.0f;
-            Vector3 meanNorm = Vector3.zero;
-            for (int i = 0; i < test; i++)
-            {
-                int id = UnityEngine.Random.Range(1, nbrV);
-                dist = dist + (verts[id] - verts[id - 1]).magnitude;
-                meanNorm += normals[id];
-            }
-
-            meanNorm /= test;
-            dist /= test;
-            dist *= 0.25f; //arbitraty scale
-
-            int id0, id1, id3;
-            if (Mathf.Abs(meanNorm.x) > 0.8)
-            {
-                id0 = 1; id1 = 2; id3 = 0;
-            }
-            else if (Mathf.Abs(meanNorm.z) > 0.8)
-            {
-                id0 = 0; id1 = 1; id3 = 2;
-            }
-            else
-            {
-                id0 = 0; id1 = 2; id3 = 1;
-            }
-            id0 = 0;
-            id1 = 1;
-            id3 = 2;
-
-            float range0 = 1 / (m_max[id0] - m_min[id0]);
-            float range1 = 1 / (m_max[id1] - m_min[id1]);
-
-            for (int i = 0; i < nbrV; i++)
-            {
-                Vector3 norm = normals[i].normalized;
-                Vector3 vert = verts[i];
-                
-                if (norm[id3] > 0.8)
-                    vert = vert - dist * Vector3.one;
-
-                uv[i] = new Vector2((vert[id0] - m_min[id0]) * range0,
-                    (vert[id1] - m_min[id1]) * range1);
-            }            
+            return;
         }
         else
         {
@@ -808,9 +811,9 @@ public class SofaBaseMeshAPI : SofaBaseAPI
                 uv[i].y = texCoords[i * 2 + 1];
             }
         }
-            
         mesh.uv = uv;
     }
+
 
     public void setNewPosition(Vector3 value)
     {
