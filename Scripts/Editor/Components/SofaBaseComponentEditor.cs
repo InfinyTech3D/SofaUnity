@@ -12,6 +12,7 @@ using UnityEditor.AnimatedValues;
 public class SofaBaseComponentEditor : Editor
 {
     AnimBool m_ShowUnsupportedFields;
+    protected bool m_showData = true;
 
     /// Callback method to show or not unsupported Data
     void OnEnable()
@@ -41,7 +42,7 @@ public class SofaBaseComponentEditor : Editor
 
         EditorGUILayout.Separator();
         SofaDataArchiver dataArchiver = compo.m_dataArchiver;
-        if (dataArchiver == null)
+        if (dataArchiver == null || !m_showData)
             return;
 
         for (int i = 0; i < dataArchiver.m_names.Count; i++)
