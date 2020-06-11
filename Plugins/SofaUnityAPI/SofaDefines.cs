@@ -85,6 +85,11 @@ static public class SofaDefines
         {-9996, "licence limit reached."},
         {-9995, "License initialization failed at step 3."},
 
+        {-9994, "License file not found."},
+        {-9993, "License file content error."},
+        {-9992, "licence installation limit exceeded."},
+        {-9991, "licence MAC address error."},
+
         {-100, "SofaAdvancePhysicsAPI illegal access."},
         {-101, "SofaUnity init value."},
 
