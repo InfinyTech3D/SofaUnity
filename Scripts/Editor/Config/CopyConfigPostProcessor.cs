@@ -19,6 +19,7 @@ public class CopyConfigPostProcessor
             string SofaUnityDir = Application.dataPath + "/SofaUnity/scenes/SofaScenes";
             outputIniFile.WriteLine("SHARE_DIR=" + SofaUnityDir);
             outputIniFile.WriteLine("EXAMPLES_DIR=" + SofaUnityDir);
+            outputIniFile.WriteLine("LICENSE_DIR=" + Application.dataPath + "/SofaUnity/License/");
             Debug.Log("Generate " + sofaIniFile + " file.");
         }
     }

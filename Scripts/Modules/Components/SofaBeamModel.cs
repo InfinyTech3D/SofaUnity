@@ -119,8 +119,6 @@ namespace SofaUnity
 #else
             //do this in play mode
             m_mesh = GetComponent<MeshFilter>().mesh;
-            if (m_log)
-                Debug.Log("SofaBox::Start play mode.");
 #endif
 
             if (m_doComputeMesh)
