@@ -37,17 +37,7 @@ public class SofaCollisionPipelineAPI : SofaBaseObjectAPI
             if (displayLog)
                 Debug.Log("SofaCollisionPipeline Added! " + m_name);
 
-            //// Set created object to native pointer            
-            //int res1 = sofaPhysicsAPI_has3DObject(m_simu, m_name);
-            //if (res == 0)
-            //    m_hasObject = true;
-            //else
-            //{
-            //    Debug.LogError("SofaBoxAPI::createObject get3DObject method returns: " + SofaDefines.msg_error[res1]);
-            //    m_hasObject = false;
-            //    return false;
-            //}
-
+            m_hasObject = true;
             return true;
         }
 
