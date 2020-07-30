@@ -18,11 +18,12 @@
 		<TetrahedronSetTopologyAlgorithms name="TopoAlgo"  template="Vec3d" />
 		<TetrahedronSetGeometryAlgorithms name="GeomAlgo"  template="Vec3d" />
 
-        <DiagonalMass massDensity="1.0" topology="@TetraContainer"/>
+        <MeshMatrixMass massDensity="1.0" topology="@TetraContainer"/>
         <BoxROI template="Vec3d" box="4 -4 -3 10 2 3" drawBoxes="1" position="@Volume.rest_position" name="FixedROI"/>
         <FixedConstraint indices="@FixedROI.indices" />
-        <!--<TetrahedralCorotationalFEMForceField name="FEM" youngModulus="1300" poissonRatio="0.3" method="large" />		-->
-		<TetrahedronFEMForceField name="FEM" youngModulus="1300" poissonRatio="0.3" computeGlobalMatrix="false" method="large" topology="@TetraContainer"/>
+        <FastTetrahedralCorotationalForceField name="FEM" youngModulus="1300" poissonRatio="0.3" method="large" />		
+		<!--<TetrahedronFEMForceField name="FEM" youngModulus="1300" poissonRatio="0.3" computeGlobalMatrix="false" 
+        method="large" topology="@TetraContainer"/>-->
 		<PlaneForceField normal="0 1 0" d="-120" stiffness="100000" showPlane="1" showPlaneSize="20"/>
         
         <Node name="LiverSurface">
