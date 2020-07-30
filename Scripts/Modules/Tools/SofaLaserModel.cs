@@ -227,7 +227,7 @@ public class SofaLaserModel : SofaRayCaster
             em.rateOverTime = 1000;
             var psmain = m_ps.main;
             psmain.startSize = 1.0f;
-            psmain.startLifetime = m_length * 0.1f;
+            psmain.startLifetime = m_length;// * 0.1f;
             psmain.startSpeed = 100;
             psmain.maxParticles = 800;
             psmain.startColor = new Color(1, 1, 1, 0.25f);

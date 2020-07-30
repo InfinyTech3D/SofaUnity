@@ -62,7 +62,14 @@ public class RayCaster : MonoBehaviour
     public float Length
     {
         get { return m_length; }
-        set { m_length = value; }
+        set
+        {
+
+            if (value != m_length)
+            {
+                m_length = value;
+            }
+        }
     }
 
     /// Getter/Setter of the status \sa m_activateRay
