@@ -263,7 +263,7 @@ public class SofaLaserModel : SofaRayCaster
         {
             var psmain = m_ps.main;
             if (m_isActivated)
-                psmain.startColor = Color.red;
+                psmain.startColor = new Color(1.0f, 0.0f, 0.0f, 0.25f);
             else
                 psmain.startColor = new Color(m_laserEndColor.r, m_laserEndColor.g, m_laserEndColor.b, 0.25f); ;
         }
