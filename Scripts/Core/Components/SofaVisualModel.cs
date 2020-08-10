@@ -9,7 +9,9 @@ namespace SofaUnity
     {
         NONE,
         EMBEDDED,
-        STEREOGRAPHICS,
+        STEREOGRAPHICS_X,
+        STEREOGRAPHICS_Y,
+        STEREOGRAPHICS_Z,
         BOXPROJECTION
     }
 
@@ -64,8 +66,12 @@ namespace SofaUnity
                 {
                     if (m_uvType == e_UVType.EMBEDDED)
                         m_sofaMeshAPI.UpdateTexCoords(m_mesh);
-                    else if (m_uvType == e_UVType.STEREOGRAPHICS)
-                        m_sofaMeshAPI.ComputeStereographicsUV(m_mesh);
+                    else if (m_uvType == e_UVType.STEREOGRAPHICS_X)
+                        m_sofaMeshAPI.ComputeStereographicsUV(m_mesh, 0);
+                    else if (m_uvType == e_UVType.STEREOGRAPHICS_Y)
+                        m_sofaMeshAPI.ComputeStereographicsUV(m_mesh, 1);
+                    else if (m_uvType == e_UVType.STEREOGRAPHICS_Z)
+                        m_sofaMeshAPI.ComputeStereographicsUV(m_mesh, 2);
                     else if (m_uvType == e_UVType.BOXPROJECTION)
                         m_sofaMeshAPI.ComputeCubeProjectionUV(m_mesh);
                 }
@@ -167,8 +173,12 @@ namespace SofaUnity
 
                 if (m_uvType == e_UVType.EMBEDDED)
                     m_sofaMeshAPI.UpdateTexCoords(m_mesh);
-                else if (m_uvType == e_UVType.STEREOGRAPHICS)
-                    m_sofaMeshAPI.ComputeStereographicsUV(m_mesh);
+                else if (m_uvType == e_UVType.STEREOGRAPHICS_X)
+                    m_sofaMeshAPI.ComputeStereographicsUV(m_mesh, 0);
+                else if (m_uvType == e_UVType.STEREOGRAPHICS_Y)
+                    m_sofaMeshAPI.ComputeStereographicsUV(m_mesh, 1);
+                else if (m_uvType == e_UVType.STEREOGRAPHICS_Z)
+                    m_sofaMeshAPI.ComputeStereographicsUV(m_mesh, 2);
                 else if (m_uvType == e_UVType.BOXPROJECTION)
                     m_sofaMeshAPI.ComputeCubeProjectionUV(m_mesh);
 
