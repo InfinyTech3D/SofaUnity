@@ -28,7 +28,7 @@ public class SofaSphereEditor : SofaGridEditor
 
         SofaDAGNodeManager nodeMgr = parentDagN.m_sofaContext.NodeGraphMgr;
         if (nodeMgr != null)
-            nodeMgr.RegisterCustomObject(go, parentDagN);
+            nodeMgr.RegisterCustomObject(go, parentDagN, true);
         else
             Debug.LogError("Error creating SofaSphere object. Can't access SofaDAGNodeManager.");
 
@@ -74,7 +74,7 @@ public class SofaRigidSphereEditor : SofaGridEditor
 
         SofaDAGNodeManager nodeMgr = parentDagN.m_sofaContext.NodeGraphMgr;
         if (nodeMgr != null)
-            nodeMgr.RegisterCustomObject(go, parentDagN);
+            nodeMgr.RegisterCustomObject(go, parentDagN, true);
         else
             Debug.LogError("Error creating SofaRigidSphere object. Can't access SofaDAGNodeManager.");
 

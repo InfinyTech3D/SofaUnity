@@ -232,7 +232,7 @@ namespace SofaUnity
 
 
         /// Method to register a SofaObject. Will create the object, store it inside SofaContext for serialisation and refresh the DAGNode graph
-        public void RegisterCustomObject(GameObject sofaGameObject, SofaDAGNode parentNode)
+        public void RegisterCustomObject(GameObject sofaGameObject, SofaDAGNode parentNode, bool moveToParent = false)
         {
             SofaBaseObject obj = sofaGameObject.GetComponent<SofaBaseObject>();
             if (obj == null)
@@ -242,7 +242,8 @@ namespace SofaUnity
             }
 
             // move this new node below the parentNode
-            //sofaGameObject.transform.parent = parentNode.gameObject.transform;
+            if (moveToParent)
+                sofaGameObject.transform.parent = parentNode.gameObject.transform;
 
             // create the sofa object
             int idNode = m_dagNodes.Count;
