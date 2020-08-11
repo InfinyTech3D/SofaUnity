@@ -68,9 +68,9 @@ namespace SofaScripts
             plane.m_gridSize[1] = 2;
             plane.m_gridSize[2] = 2;
 
-            plane.m_scale[0] = 25;
-            plane.m_scale[1] = 1;
-            plane.m_scale[2] = 25;
+            //plane.m_scale[0] = 25;
+            //plane.m_scale[1] = 1;
+            //plane.m_scale[2] = 25;
 
             return floor;
         }
