@@ -75,15 +75,15 @@ public class SofaMeshObjectEditor : Editor
         normalBtn = EditorGUILayout.Toggle("Inverse Normals", mesh.m_invertNormals);
         mesh.invertNormals = normalBtn;
 
-        // Add Triansformation fields
-        mesh.translation = EditorGUILayout.Vector3Field("Translation", mesh.m_translation);
-        EditorGUILayout.Separator();
+        //// Add Triansformation fields
+        //mesh.translation = EditorGUILayout.Vector3Field("Translation", mesh.m_translation);
+        //EditorGUILayout.Separator();
 
-        mesh.rotation = EditorGUILayout.Vector3Field("Rotation", mesh.m_rotation);
-        EditorGUILayout.Separator();
+        //mesh.rotation = EditorGUILayout.Vector3Field("Rotation", mesh.m_rotation);
+        //EditorGUILayout.Separator();
 
-        mesh.scale = EditorGUILayout.Vector3Field("Scale", mesh.m_scale);
-        EditorGUILayout.Separator();
+        //mesh.scale = EditorGUILayout.Vector3Field("Scale", mesh.m_scale);
+        //EditorGUILayout.Separator();
 
 
         //// Add FEM fields

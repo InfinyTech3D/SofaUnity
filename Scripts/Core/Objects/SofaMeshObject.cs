@@ -35,15 +35,15 @@ namespace SofaUnity
 
         /// Current Translation of this object (same as in Unity Editor and Sofa object)
         [SerializeField]
-        public Vector3 m_translation;
+        protected Vector3 m_translation;
         
         /// Current Rotation of this object (same as in Unity Editor and Sofa object)
         [SerializeField]
-        public Vector3 m_rotation;
+        protected Vector3 m_rotation;
         
         /// Current Scale of this object (same as in Unity Editor and Sofa object)
         [SerializeField]
-        public Vector3 m_scale = new Vector3(1.0f, 1.0f, 1.0f);
+        protected Vector3 m_scale = new Vector3(1.0f, 1.0f, 1.0f);
 
 
         /// Booleen to warn mesh normals have to be inverted
