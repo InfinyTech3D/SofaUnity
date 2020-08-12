@@ -73,7 +73,7 @@ public class SofaSphereCollisionObjectEditor : SofaMeshObjectEditor
         
 
         SofaSphereCollisionObject model = (SofaSphereCollisionObject)this.target;
-
+        model.parentT = (GameObject)EditorGUILayout.ObjectField("Parent Gameobject to mirror position", model.parentT, typeof(GameObject), true);
         model.UsePositionOnly = EditorGUILayout.Toggle("Use Object Position Only (1 dof)", model.UsePositionOnly);
         model.Factor = EditorGUILayout.Slider("Interpolation factor", model.Factor, 1, 100);
         model.Radius = EditorGUILayout.Slider("Sphere radius", model.Radius, 0.001f, 10);

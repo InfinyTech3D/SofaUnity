@@ -682,8 +682,8 @@ public class SofaBaseMeshAPI : SofaBaseAPI
     }
 
 
-    /// test method to compute UV with sphere projection
-    public void ComputeStereographicsUV(Mesh mesh)
+    /// test method to compute UV with sphere projection, id = 0 for normal on X, id = 1 for Y and = 2 for normal on Z. Default is Y
+    public void ComputeStereographicsUV(Mesh mesh, int id)
     {
         this.computeBoundingBox(mesh);
 
@@ -711,14 +711,24 @@ public class SofaBaseMeshAPI : SofaBaseAPI
         }
 
         float rangeX = 1 / (m_max.x - m_min.x);
+        float rangeY = 1 / (m_max.y - m_min.y);
         float rangeZ = 1 / (m_max.z - m_min.z);
 
         // Project on UV map
-        
-        for (int i = 0; i < nbrV; i++)
+        if (id == 0) // normal on X
         {
-            uv[i] = new Vector2( (vertsSphere[i].x - m_min.x) * rangeX,
-                (vertsSphere[i].z - m_min.z) * rangeZ);
+            for (int i = 0; i < nbrV; i++)
+                uv[i] = new Vector2((vertsSphere[i].y - m_min.y) * rangeY, (vertsSphere[i].z - m_min.z) * rangeZ);
+        }
+        else if (id == 2) // normal on Z
+        {
+            for (int i = 0; i < nbrV; i++)
+                uv[i] = new Vector2((vertsSphere[i].x - m_min.x) * rangeX, (vertsSphere[i].y - m_min.y) * rangeY);
+        }
+        else //normal on Y
+        {
+            for (int i = 0; i < nbrV; i++)
+                uv[i] = new Vector2((vertsSphere[i].x - m_min.x) * rangeX, (vertsSphere[i].z - m_min.z) * rangeZ);
         }
 
         mesh.uv = uv;

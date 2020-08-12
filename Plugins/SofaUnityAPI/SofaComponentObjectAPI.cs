@@ -27,8 +27,8 @@ public class SofaComponentObjectAPI : SofaBaseObjectAPI
         //if (m_native != IntPtr.Zero)        
         if (m_hasObject == false) // first time create object only
         {
-            int res1 = sofaPhysicsAPI_has3DObject(m_simu, m_name);
-
+            //int res1 = sofaPhysicsAPI_has3DObject(m_simu, m_name);
+            int res1 = -1;
             if (res1 == 0)
                 m_hasObject = true;
             else
