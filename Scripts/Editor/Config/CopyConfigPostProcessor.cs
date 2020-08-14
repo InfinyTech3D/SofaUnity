@@ -121,6 +121,8 @@ public class CopyConfigPostProcessor
                     Debug.Log("Copying: " + currentSofaDir + " to " + SofaUnityDir);
                     DirectoryCopy(currentSofaDir, SofaUnityDir, true);
 
+                    DirectoryCopy(Application.dataPath + "/SofaUnity/License/", dataDir + "/License/", true);
+
                     string buildPathIniDir = dataDir + "/SofaUnity/Plugins/Native/x64/";
                     if (!Directory.Exists(buildPathIniDir))
                     {
@@ -133,6 +135,7 @@ public class CopyConfigPostProcessor
                     {
                         outputIniFile.WriteLine("SHARE_DIR=" + SofaUnityDir);
                         outputIniFile.WriteLine("EXAMPLES_DIR=" + SofaUnityDir);
+                        outputIniFile.WriteLine("LICENSE_DIR=" + dataDir + "/License/");
                         Debug.Log("Generate " + outputIniPath + " file.");
                     }
 
