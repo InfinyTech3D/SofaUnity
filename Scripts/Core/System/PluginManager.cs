@@ -108,7 +108,8 @@ namespace SofaUnity
             m_plugins = new List<string>
             {
                 "SofaOpenglVisual",
-                "SofaMiscCollision"
+                "SofaMiscCollision",
+                "PluginTexture"
             };
 
             //m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaSparseSolver.dll");
