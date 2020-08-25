@@ -540,13 +540,6 @@ namespace SofaUnity
             Debug.Log("!!! m_nodeGraphMgr.LoadNodeGraph()");
             m_nodeGraphMgr.LoadNodeGraph();
 
-            int nbrObj = m_impl.getNumberObjects();
-            Debug.Log("######### nbr Objects: " + nbrObj);
-            for (int i = 0; i < nbrObj; i++)
-            {
-                Debug.Log(i + " -> " + m_impl.getObjectName(i));
-            }
-
             DoCatchSofaMessages();
         }
 
