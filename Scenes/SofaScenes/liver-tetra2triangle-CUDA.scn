@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+<Node name="root" dt="0.05" showBoundingTree="0" gravity="0 -9.8 0">
+    <VisualStyle displayFlags="showBehaviorModels showVisual" />
+    <DefaultPipeline verbose="0" />
+    <BruteForceDetection name="N2" />
+    <DefaultContactManager response="default" />
+    <MinProximityIntersection name="Proximity" alarmDistance="0.8" contactDistance="0.5" />
+    <Node name="TT">
+        <EulerImplicitSolver name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.1" />
+        <CGLinearSolver iterations="25" name="linear solver" tolerance="1.0e-9" threshold="1.0e-9" />
+        <MeshGmshLoader name="loader" filename="./mesh/liver2.msh" />
+        <MechanicalObject template="CudaVec3f" src="@loader" name="Volume" scale3d="20 20 20" rotation="140 180 0"/>
+
+		<TetrahedronSetTopologyContainer  name="Container" position="@Volume.position" src="@loader" tags=" "/>
+		<TetrahedronSetTopologyModifier   name="Modifier" />
+		<TetrahedronSetTopologyAlgorithms name="TopoAlgo"  template="CudaVec3f" />
+		<TetrahedronSetGeometryAlgorithms name="GeomAlgo"  template="CudaVec3f" />
+
+        <DiagonalMass massDensity="1.0" template="CudaVec3f"/>
+        <BoxROI template="CudaVec3f" box="4 -4 -3 10 2 3" drawBoxes="1" position="@Volume.rest_position" name="FixedROI"/>
+        <FixedConstraint indices="@FixedROI.indices" />
+        <!--<TetrahedralCorotationalFEMForceField name="FEM" youngModulus="1300" poissonRatio="0.3" method="large" />		-->
+		<TetrahedronFEMForceField template="CudaVec3f" name="FEM" youngModulus="1300" poissonRatio="0.3" computeGlobalMatrix="false" method="large" />
+		<PlaneForceField normal="0 1 0" d="-50" stiffness="100000" showPlane="1" showPlaneSize="20"/>
+        <Node name="T">
+            <TriangleSetTopologyContainer  name="Container" fileTopology="" tags=" " />
+			<TriangleSetTopologyModifier   name="Modifier" />
+			<TriangleSetTopologyAlgorithms name="TopoAlgo"   template="CudaVec3f" />
+			<TriangleSetGeometryAlgorithms name="GeomAlgo"   template="CudaVec3f" />
+			
+            <Tetra2TriangleTopologicalMapping input="@../Container" output="@Container" />
+			
+			<TTriangleModel />
+            
+            <Node name="Visu">
+                <OglModel name="Visual" color="blue" template="ExtVec3d"/>
+                <IdentityMapping input="@../../Volume" output="@Visual" template="CudaVec3f,ExtVec3d"/>
+            </Node>
+        </Node>
+    </Node>
+</Node>
