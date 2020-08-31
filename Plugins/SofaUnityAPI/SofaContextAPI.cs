@@ -220,6 +220,15 @@ namespace SofaUnityAPI
             }
         }
 
+
+        public float GetTime()
+        {
+            if (m_isReady)
+                return sofaPhysicsAPI_time(m_native);
+            else
+                return 0.0f;
+        }
+
         public float GetSimulationFPS()
         {
             if (m_isReady)
@@ -510,7 +519,10 @@ namespace SofaUnityAPI
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern void sofaPhysicsAPI_setTimeStep(IntPtr obj, double value);
         [DllImport("SofaAdvancePhysicsAPI")]
-        public static extern double sofaPhysicsAPI_timeStep(IntPtr obj);
+        public static extern float sofaPhysicsAPI_timeStep(IntPtr obj);
+        [DllImport("SofaAdvancePhysicsAPI")]
+        public static extern float sofaPhysicsAPI_time(IntPtr obj);
+        
 
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern int sofaPhysicsAPI_getGravity(IntPtr obj, double[] values);

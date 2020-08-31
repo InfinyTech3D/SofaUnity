@@ -407,6 +407,7 @@ namespace SofaUnity
 
         protected int countStep = 0;
         protected List<float> m_times = new List<float>();
+        protected List<float> m_sofaTimes = new List<float>();
 
         // Update is called once per fix frame
         void Update()
@@ -447,13 +448,23 @@ namespace SofaUnity
             if (countStep % 100 == 0)
             {
                 m_times.Add(Time.time);
-                Debug.Log("Step," + countStep + ",time," + Time.time);
+                float sofaTime = m_impl.GetTime();
+                m_sofaTimes.Add(sofaTime);
+                
+                Debug.Log("Step: " + countStep + " | time: " + Time.time + " | SOFA: " + sofaTime);
 
                 if (countStep == 1000)
+                {
                     Debug.Log(m_times[0] + "," + m_times[1] + "," + m_times[2] + ","
                         + m_times[3] + "," + m_times[4] + "," + m_times[5] + ","
                         + m_times[6] + "," + m_times[7] + "," + m_times[8] + ","
                         + m_times[9] + "," + m_times[10]);
+
+                    Debug.Log(m_sofaTimes[0] + "," + m_sofaTimes[1] + "," + m_sofaTimes[2] + ","
+                     + m_sofaTimes[3] + "," + m_sofaTimes[4] + "," + m_sofaTimes[5] + ","
+                     + m_sofaTimes[6] + "," + m_sofaTimes[7] + "," + m_sofaTimes[8] + ","
+                     + m_sofaTimes[9] + "," + m_sofaTimes[10]);
+                }
             }
             countStep++;
         }
