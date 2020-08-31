@@ -41,6 +41,9 @@ public class SofaSphereCollisionObject : SofaBaseObject
     /// array of vertex corresponding to the sphere centers
     protected Vector3[] m_centers = null;
 
+    [SerializeField]    
+    public GameObject parentT = null;
+
     [SerializeField]
     public bool m_startOnPlay = true;
 
@@ -140,12 +143,18 @@ public class SofaSphereCollisionObject : SofaBaseObject
             m_impl.SetFloatValue("contactStiffness", m_stiffness);
             m_impl.SetFloatValue("radius", m_radius * m_sofaContext.GetFactorUnityToSofa(1));
         }
+        
     }
 
 
     // Update is called once per frame
     void Update()
     {
+        if (parentT != null)
+        {
+            this.transform.position = parentT.transform.position;
+        }
+
         if (m_activated && m_centers != null)
         {
             m_impl.UpdateMesh(this.transform, m_centers, m_sofaContext.transform);
@@ -246,7 +255,7 @@ public class SofaSphereCollisionObject : SofaBaseObject
         {
             m_centers = new Vector3[10];
             for (int i=0; i<10; i++)
-                m_centers[i] = this.transform.localPosition;
+                m_centers[i] = this.transform.InverseTransformPoint(this.transform.localPosition);
 
             if (m_impl != null)
                 m_impl.SetNumberOfVertices(1);

@@ -36,10 +36,25 @@ public class SofaSphereCollisionObjectEditor : SofaMeshObjectEditor
         SofaDAGNode parentDagN = selectObj.GetComponentInParent<SofaDAGNode>();
         if (parentDagN == null)
         {
-            Debug.LogError("Error3 creating SofaSphereCollisionObject GameObject. No valid gameObject selected child of SofaContext or SofaDAGNode.");
-            return null;
-        }
+            // not under DAGNode, will look for SofaContext
+            GameObject _contextObject = GameObject.FindGameObjectWithTag("GameController");
+            if (_contextObject != null)
+            {
+                // Get Sofa context
+                parentDagN = _contextObject.GetComponent<SofaDAGNode>();
+            }
 
+            // still null, no SofaContext found
+            if (parentDagN == null)
+            {
+                Debug.LogError("Error3 creating SofaSphereCollisionObject GameObject. No valid SofaDAGNode found as parent of this gameObject or in SofaContext.");
+                return null;
+            }
+            else
+            {
+                Debug.Log("parentDagN found: " + parentDagN.name);
+            }
+        }
 
 
         selectObj.AddComponent<SofaSphereCollisionObject>();
@@ -58,7 +73,7 @@ public class SofaSphereCollisionObjectEditor : SofaMeshObjectEditor
         
 
         SofaSphereCollisionObject model = (SofaSphereCollisionObject)this.target;
-
+        model.parentT = (GameObject)EditorGUILayout.ObjectField("Parent Gameobject to mirror position", model.parentT, typeof(GameObject), true);
         model.UsePositionOnly = EditorGUILayout.Toggle("Use Object Position Only (1 dof)", model.UsePositionOnly);
         model.Factor = EditorGUILayout.Slider("Interpolation factor", model.Factor, 1, 100);
         model.Radius = EditorGUILayout.Slider("Sphere radius", model.Radius, 0.001f, 10);

@@ -114,7 +114,7 @@ namespace SofaUnity
                 }
                 else
                 {
-                    Debug.LogError("RayCaster::loadContext - No SofaContext found.");
+                    //Debug.LogError("SceneInfo::Start - No SofaContext found.");
                     return;
                 }
             }

@@ -267,18 +267,18 @@ public class SofaRayCaster : RayCaster
             float raySofaLength = m_length * m_sofaContext.GetFactorUnityToSofa(1);
             if (m_rayType == SofaDefines.SRayInteraction.CuttingTool)
             {
-                m_sofaRC = new SofaRayCasterAPI(_simu, 0, base.name, raySofaLength * 2);
-                Debug.Log(this.name + " create SofaRayCaster CuttingTool with length: " + raySofaLength);
+                m_sofaRC = new SofaRayCasterAPI(_simu, 0, base.name, raySofaLength);
+                Debug.Log(this.name + " create SofaRayCaster CuttingTool with length: " + raySofaLength + " Under Name: " + base.name);
             }
             else if (m_rayType == SofaDefines.SRayInteraction.AttachTool)
             {
                 m_sofaRC = new SofaRayCasterAPI(_simu, 1, base.name, raySofaLength);                
-                Debug.Log(this.name + " create SofaRayCaster AttachTool with length: " + raySofaLength);
+                Debug.Log(this.name + " create SofaRayCaster AttachTool with length: " + raySofaLength + " Under Name: " + base.name);
             }
             else if (m_rayType == SofaDefines.SRayInteraction.FixTool)
             {
                 m_sofaRC = new SofaRayCasterAPI(_simu, 2, base.name, raySofaLength);
-                Debug.Log(this.name + " create SofaRayCaster FixTool with length: " + raySofaLength);
+                Debug.Log(this.name + " create SofaRayCaster FixTool with length: " + raySofaLength + " Under Name: " + base.name);
             }
             else
             {
@@ -294,7 +294,7 @@ public class SofaRayCaster : RayCaster
         else
         {
             m_initialized = true;
-            if (m_sofaContext.testAsync == true)
+            if (m_sofaContext.AsyncSimulation == true)
                 m_sofaContext.RegisterRayCaster(this);
             else
                 automaticCast = true;

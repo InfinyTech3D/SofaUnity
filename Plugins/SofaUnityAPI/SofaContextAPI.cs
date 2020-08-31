@@ -35,15 +35,15 @@ namespace SofaUnityAPI
                 return;
             }
 
+            // load the sofaIni file
+            string pathIni = Application.dataPath + "/SofaUnity/Plugins/Native/x64/sofa.ini";
+            string sharePath = sofaPhysicsAPI_loadSofaIni(m_native, pathIni);
+            
             // Create a simulation scene.
             int res = sofaPhysicsAPI_createScene(m_native);
             if (res == 0)
             {
                 m_isReady = true;
-
-                // load the sofaIni file
-                string pathIni = Application.dataPath + "/SofaUnity/Plugins/Native/x64/sofa.ini";
-                string sharePath = sofaPhysicsAPI_loadSofaIni(m_native, pathIni);
                 //Debug.Log("sharePath: " + sharePath);
             }
             else
@@ -263,6 +263,7 @@ namespace SofaUnityAPI
         }
 
         /// Get the number of object in the simulation scene
+        /// Warning: This method has been depreciate.
         public int getNumberObjects()
         {
             int res = 0;
@@ -273,6 +274,7 @@ namespace SofaUnityAPI
         }
 
         /// Get Sofa object name (used as Id) by its position id in the creation order
+        /// Warning: This method has been depreciate.
         public string getObjectName(int id)
         {
             if (m_isReady)
@@ -285,6 +287,7 @@ namespace SofaUnityAPI
         }
 
         /// Get Sofa object type by its position id in the creation order
+        /// Warning: This method has been depreciate.
         public string getObjectType(int id)
         {
             if (m_isReady)
@@ -562,12 +565,15 @@ namespace SofaUnityAPI
 
 
         /// old binding API
+        /// Warning: This method has been depreciate.
         [DllImport("SofaAdvancePhysicsAPI")]
         public static extern int sofaPhysicsAPI_getNumberObjects(IntPtr obj);
 
+        /// Warning: This method has been depreciate.
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern string sofaPhysicsAPI_get3DObjectName(IntPtr obj, int id);
 
+        /// Warning: This method has been depreciate.
         [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern string sofaPhysicsAPI_get3DObjectType(IntPtr obj, int id);
 

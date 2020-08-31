@@ -43,9 +43,11 @@ public class CurvedUICanvas : GraphicRaycaster
     {
         if (Event.current != null && (Event.current.commandName == "SoftDelete" || Event.current.commandName == "Delete"))
         {
+#if UNITY_EDITOR
             //destroy rendertexture,  camera
             AssetDatabase.DeleteAsset("Assets/SofaUnity/UI/RenderTexturesAndMaterials/" + eventCamera.targetTexture.name + ".renderTexture");
             DestroyImmediate(eventCamera);
+#endif
         }
         base.OnDestroy();
     }
