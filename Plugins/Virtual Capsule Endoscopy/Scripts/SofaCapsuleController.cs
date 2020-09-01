@@ -13,7 +13,7 @@ public class SofaCapsuleController : MonoBehaviour
     protected Vector3 unityToSofa;
     protected Vector3 sofaToUnity;
     protected Vector3 capsuleOri = Vector3.zero;
-    protected Vector3 capsuleTip = Vector3.zero;
+    //protected Vector3 capsuleTip = Vector3.zero;
 
     protected Vector3[] newPosition;
 
@@ -29,7 +29,7 @@ public class SofaCapsuleController : MonoBehaviour
 
         int nbrV = m_sofaCapsuleMesh.NbVertices();
 
-        if (nbrV != 2)
+        if (nbrV != 1)
         {
             Debug.LogError("Not the good number of vertices found in m_sofaCapsuleMesh.");
             m_ready = false;
@@ -41,7 +41,7 @@ public class SofaCapsuleController : MonoBehaviour
 
         sofaToUnity = m_sofaCapsuleMesh.m_sofaContext.GetScaleSofaToUnity();
         unityToSofa = m_sofaCapsuleMesh.m_sofaContext.GetScaleUnityToSofa();
-        newPosition = new Vector3[2];
+        newPosition = new Vector3[1];
         m_ready = true;
     }
 
@@ -65,13 +65,17 @@ public class SofaCapsuleController : MonoBehaviour
         }
 
         if (Input.GetKey(KeyCode.Keypad4))
-            RotateLeft();
+            TurnLeft();
         else if (Input.GetKey(KeyCode.Keypad6))
-            RotateRight();
+            TurnRight();
         else if (Input.GetKey(KeyCode.Keypad8))
             RotateUp();
         else if (Input.GetKey(KeyCode.Keypad2))
             RotateDown();
+        else if (Input.GetKey(KeyCode.Keypad7))
+            RotateLeft();
+        else if (Input.GetKey(KeyCode.Keypad9))
+            RotateRight();
     }
 
     void FixedUpdate()
@@ -91,72 +95,92 @@ public class SofaCapsuleController : MonoBehaviour
         for (int i=0; i<3; i++)
         {
             capsuleOri[i] = sofaVertices[i] * sofaToUnity[i];
-            capsuleTip[i] = sofaVertices[i+3] * sofaToUnity[i];
         }
 
-        Vector3 dir = capsuleTip - capsuleOri;
-        this.transform.position = (capsuleOri + capsuleTip) * 0.5f;
-        this.transform.up = dir;
-
-        //for (int i = 0; i < nbrV; i++)
-        //{
-        //    Debug.Log(i + " -> " + sofaVertices[i * 3] + " " + sofaVertices[i * 3 + 1] + " " + sofaVertices[i * 3 + 2]);
-        //}
-
+        this.transform.position = capsuleOri;
     }
 
     protected void MoveForward()
     {
-        Debug.Log("MoveForward");
         newPosition[0] = capsuleOri + this.transform.up * m_speed;
-        newPosition[1] = capsuleTip + this.transform.up * m_speed;
         m_sofaCapsuleMesh.SetVertices(newPosition);
     }
 
     protected void MoveBackward()
     {
-        Debug.Log("MoveBackward");
         newPosition[0] = capsuleOri - this.transform.up * m_speed;
-        newPosition[1] = capsuleTip - this.transform.up * m_speed;
         m_sofaCapsuleMesh.SetVertices(newPosition);
     }
 
     protected void RotateUp()
     {
-        Debug.Log("RotateUp");
         //Vector3 center = (capsuleOri + capsuleTip) * 0.5f;
+        transform.Rotate(this.transform.right, m_speed * 57.3f, Space.Self);
 
-        newPosition[0] = capsuleOri - this.transform.forward * m_speed;
-        newPosition[1] = capsuleTip + this.transform.forward * m_speed;
-        m_sofaCapsuleMesh.SetVertices(newPosition);
+        //newPosition[0] = capsuleOri - this.transform.forward * m_speed;
+        //m_sofaCapsuleMesh.SetVertices(newPosition);
     }
 
     protected void RotateDown()
     {
-        Debug.Log("RotateDown");
+        transform.Rotate(this.transform.right, -m_speed * 57.3f, Space.Self);
+        //newPosition[0] = capsuleOri + this.transform.forward * m_speed;
+        //m_sofaCapsuleMesh.SetVertices(newPosition);
+    }
 
-        newPosition[0] = capsuleOri + this.transform.forward * m_speed;
-        newPosition[1] = capsuleTip - this.transform.forward * m_speed;
-        m_sofaCapsuleMesh.SetVertices(newPosition);
+    protected void TurnLeft()
+    {
+        transform.Rotate(this.transform.forward, -m_speed * 57.3f, Space.Self);
+        //newPosition[0] = capsuleOri - this.transform.right * m_speed;
+        //m_sofaCapsuleMesh.SetVertices(newPosition);
+    }
+
+    protected void TurnRight()
+    {
+        transform.Rotate(this.transform.forward, m_speed * 57.3f, Space.Self);
+        //newPosition[0] = capsuleOri + this.transform.right * m_speed;
+        //m_sofaCapsuleMesh.SetVertices(newPosition);
     }
 
     protected void RotateLeft()
     {
-        Debug.Log("RotateLeft");
-        newPosition[0] = capsuleOri - this.transform.right * m_speed;
-        newPosition[1] = capsuleTip + this.transform.right * m_speed;
-        m_sofaCapsuleMesh.SetVertices(newPosition);
+        transform.Rotate(this.transform.up, -m_speed * 57.3f, Space.Self);
+        //newPosition[0] = capsuleOri - this.transform.right * m_speed;
+        //m_sofaCapsuleMesh.SetVertices(newPosition);
     }
 
     protected void RotateRight()
     {
-        Debug.Log("RotateRight");
-        //Vector3 center = (capsuleOri + capsuleTip) * 0.5f;
-
-        newPosition[0] = capsuleOri + this.transform.right * m_speed;
-        newPosition[1] = capsuleTip - this.transform.right * m_speed;
-        m_sofaCapsuleMesh.SetVertices(newPosition);
+        transform.Rotate(this.transform.up, m_speed * 57.3f, Space.Self);
+        //newPosition[0] = capsuleOri + this.transform.right * m_speed;
+        //m_sofaCapsuleMesh.SetVertices(newPosition);
     }
+
+
+
+    //protected void MoveUp()
+    //{
+    //    newPosition[0] = capsuleOri + this.transform.forward * m_speed;
+    //    m_sofaCapsuleMesh.SetVertices(newPosition);
+    //}
+
+    //protected void MoveDown()
+    //{
+    //    newPosition[0] = capsuleOri - this.transform.forward * m_speed;
+    //    m_sofaCapsuleMesh.SetVertices(newPosition);
+    //}
+
+    //protected void MoveLeft()
+    //{
+    //    newPosition[0] = capsuleOri + this.transform.right * m_speed;
+    //    m_sofaCapsuleMesh.SetVertices(newPosition);
+    //}
+
+    //protected void MoveRight()
+    //{
+    //    newPosition[0] = capsuleOri - this.transform.right * m_speed;
+    //    m_sofaCapsuleMesh.SetVertices(newPosition);
+    //}
 
 
     void OnDrawGizmosSelected()
@@ -164,7 +188,7 @@ public class SofaCapsuleController : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawSphere(capsuleOri, 0.1f);
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(capsuleTip, 0.1f);
+        //Gizmos.color = Color.red;
+       // Gizmos.DrawSphere(capsuleTip, 0.1f);
     }
 }
