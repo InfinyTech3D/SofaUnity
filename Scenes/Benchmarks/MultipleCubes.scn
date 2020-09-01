@@ -1,0 +1,83 @@
+<Node name="root" dt="0.01" gravity="0 -981 0">
+	<RequiredPlugin name='SofaOpenglVisual'/>
+    <DefaultPipeline depth="6" verbose="0" draw="0" />
+    <BruteForceDetection name="N2" />
+    <!--<RuleBasedContactManager name="Response" response="FrictionContact" responseParams="mu=0.08" />-->
+    <DefaultContactManager name="Response" response="FrictionContact" />
+    <LocalMinDistance name="proximity" alarmDistance="2" contactDistance="1" angleCone="0.01"/>
+    
+    <FreeMotionAnimationLoop  />
+	<GenericConstraintSolver unbuilt="false" tolerance="1e-6" maxIt="1000"   printLog="0"/>
+	
+    <Node name="Cube1">
+        <EulerImplicitSolver rayleighMass="0" rayleighStiffness="0" />
+        <CGLinearSolver iterations="25" tolerance="1e-5" threshold="1e-5" />        
+        <MechanicalObject template="Rigid3d" translation2="0 -230 0"/>
+        <UniformMass totalMass="0.03" />
+        <UncoupledConstraintCorrection />
+        <Node name="collision_Cube1">
+            <MeshObjLoader name="loader1" filename="mesh/cube.obj" scale3d="20 20 20"/>
+            <MeshTopology src="@loader1" />
+            <MechanicalObject src="@loader1" />
+            <TriangleCollisionModel bothSide="false"/>
+            <LineCollisionModel />
+            <PointCollisionModel />
+            <RigidMapping input="@../" output="@." />            
+        </Node>
+        
+        <Node name="VisualModel_Cube1">
+            <MeshObjLoader name="loader2" filename="mesh/cube.obj" scale3d="20 20 20"/>
+            <OglModel src="@loader2" />
+            <RigidMapping input="@../" output="@." />            
+        </Node>
+        
+    </Node>
+    
+    
+    <Node name="Cube2">
+        <EulerImplicitSolver rayleighMass="0" rayleighStiffness="0" />
+        <CGLinearSolver iterations="25" tolerance="1e-5" threshold="1e-5" />        
+        <MechanicalObject template="Rigid3d" translation2="0 -130 0"/>
+        <UniformMass totalMass="0.03" />
+        <UncoupledConstraintCorrection />
+        <Node name="collision_Cube2">
+            <MeshObjLoader name="loader3" filename="mesh/cube.obj" scale3d="20 20 20"/>
+            <MeshTopology src="@loader3" />
+            <MechanicalObject src="@loader3" />
+            <TriangleCollisionModel bothSide="false"/>
+            <LineCollisionModel />
+            <PointCollisionModel />
+            <RigidMapping input="@../" output="@." />            
+        </Node>
+        
+        <Node name="VisualModel_Cube2">
+            <MeshObjLoader name="loader4" filename="mesh/cube.obj" scale3d="20 20 20"/>
+            <OglModel src="@loader4" />
+            <RigidMapping input="@../" output="@." />            
+        </Node>
+        
+    </Node>
+    
+	
+    <Node name="Floor">
+        <MechanicalObject name="mastate" template="Rigid3d" translation2="0 -260 0"/>
+        <UniformMass totalMass="1.0" />    
+        <Node name="collision_Floor">
+            <MeshObjLoader name="loader5" filename="mesh/floor.obj" />
+            <MeshTopology src="@loader5" />
+            <MechanicalObject name="Floor_mecObj" src="@loader5" />
+            <TriangleCollisionModel name="FloorT" simulated="0" moving="0" bothSide="false"/>
+            <LineCollisionModel name="FloorL" simulated="0" moving="0" />
+            <PointCollisionModel name="FloorP" simulated="0" moving="0" />
+            <RigidMapping input="@../" output="@." />            
+        </Node>
+        
+        <Node name="VisualModel_Floor">
+            <MeshObjLoader name="loader6" filename="mesh/floor.obj" />
+            <OglModel name="Floor_VisModel" src="@loader6" />
+            <RigidMapping input="@../" output="@." />            
+        </Node>
+        
+    </Node>
+	
+</Node>
