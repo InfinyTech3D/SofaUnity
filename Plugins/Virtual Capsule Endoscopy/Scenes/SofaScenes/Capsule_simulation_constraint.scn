@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <Node name="root" dt="0.01" showBoundingTree="0" gravity="0 0 0">
-    <VisualStyle displayFlags="showBehaviorModels showCollisionModels hideForceFields" />
+    <VisualStyle displayFlags="showBehaviorModels showCollisionModels hideForceFields showWireframe" />
 
     <DefaultPipeline name="pipeline" depth="6" verbose="0"/>
     <BruteForceDetection name="detection" />
@@ -9,12 +9,12 @@
     <FreeMotionAnimationLoop/>
     <LCPConstraintSolver tolerance="0.001" maxIt="1000"/>
 
-    <EulerImplicitSolver name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.001" />
+    <EulerImplicitSolver name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="1" />
     <CGLinearSolver iterations="20" name="linear solver" tolerance="1.0e-4" threshold="1.0e-4" />
-    
+   
     <Node name="Colon">
         <MeshObjLoader name="loader" filename="./mesh/colon_collision.obj" scale3d="1 1 1"/>
-        <SparseGridTopology name="grid" n="16 10 22" position="@loader.position" />
+        <SparseGridTopology name="grid" n="24 15 30" position="@loader.position" />
         
         <MechanicalObject name="dofs"/>
         <UniformMass totalMass="1.0" />
@@ -42,7 +42,7 @@
 			<TriangleSetTopologyAlgorithms name="TopoAlgo" template="Vec3d" />
 			<TriangleSetGeometryAlgorithms name="GeomAlgo" template="Vec3d" />
             
-            <TriangleCollisionModel group="1" />
+            <TriangleCollisionModel group="1" contactStiffness="1"/>
             
             <BarycentricMapping input="@.." output="@dofs" />
         </Node>
@@ -59,11 +59,8 @@
     <Node name="Capsule">
         <!--<MechanicalObject name="capsulePos" position="-3.8 11.2 1.2  -3.8 11.2 1.1" velocity="0 -1 0  0 -1 0"/>-->
     
-        <MechanicalObject name="capsulePos" position="-4 8.5 3.2  -4 8.5 3.1"/>
-        <UniformMass totalMass="1.0" />
-        
-        <MeshTopology name="meshTopology34"  edges="0 1 "  drawEdges="0" />
-        <StiffSpringForceField name="internalForce" spring="0 1 100 5 0.1"/>
+        <MechanicalObject name="capsulePos" position="-4 8.5 3.2 "/>
+        <UniformMass totalMass="10.0" />
         
         <SphereCollisionModel radius="0.1"/>
         <UncoupledConstraintCorrection />
