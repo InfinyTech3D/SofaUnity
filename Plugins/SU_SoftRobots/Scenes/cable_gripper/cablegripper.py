@@ -6,13 +6,13 @@ from gripper import Gripper
 def createScene(rootNode):
     """This is my first scene"""
     MainHeader(rootNode, gravity=[0.0, -981.0, 0.0], plugins=["SoftRobots"])
-    ContactHeader(rootNode, alarmDistance=2, contactDistance=1, frictionCoef=0.08)
+    ContactHeader(rootNode, alarmDistance=4, contactDistance=3, frictionCoef=0.08)
 
     Gripper(rootNode)
 
     Floor(rootNode, name="Floor",
           color=[1.0,0.0,0.0],
-          translation=[0.0,-260.0,0.0],
+          translation=[0.0,-160.0,0.0],
           isAStaticObject=True)
           
     Cube(rootNode, name="Cube",

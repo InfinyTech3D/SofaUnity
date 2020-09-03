@@ -9,7 +9,7 @@ def Gripper(parentNode=None):
 
     f1 = Finger(selfNode, "Finger1",
            rotation=[0, 0, 105],
-           translation=[20.0,20.0, 0.0],
+           translation=[20.0, 0.0, 0.0],
            fixingBox=[-20, -10, 0, 20, 10, 15],
            pullPointLocation=[3, 10.5, 3])
 
@@ -24,7 +24,7 @@ def Gripper(parentNode=None):
            translation=[-10.0,0.0, 34.0],
            fixingBox=[-20, -10, 0, 20, 10, 50],
            pullPointLocation=[3, 10.5, 31.5])
-
+           
     #GripperController(selfNode, [f1,f2,f3])
 
     return selfNode
