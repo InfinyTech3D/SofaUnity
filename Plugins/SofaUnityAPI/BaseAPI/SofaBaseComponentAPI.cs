@@ -33,7 +33,19 @@ public class SofaBaseComponentAPI : SofaBaseAPI
         else
             return "Error";
     }
+
+    public string GetComponentDisplayName()
+    {
+        if (m_isReady)
+        {
+            string type = sofaComponentAPI_getComponentDisplayName(m_simu, m_name);
+            return type;
+        }
+        else
+            return "Error";
+    }
     
+
     /// Method to get all data listen by this component as a json unique string.
     public string LoadAllData()
     {
@@ -797,6 +809,10 @@ public class SofaBaseComponentAPI : SofaBaseAPI
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern string sofaComponentAPI_getComponentType(IntPtr obj, string componentName);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern string sofaComponentAPI_getComponentDisplayName(IntPtr obj, string componentName);
+
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_reinitComponent(IntPtr obj, string componentName);
