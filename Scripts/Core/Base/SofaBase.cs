@@ -23,6 +23,8 @@ namespace SofaUnity
         [SerializeField]
         protected string m_uniqueNameId = "Not set";
 
+        protected string m_displayName = "Not set";
+
         /// Pointer to the Sofa context this GameObject belongs to.
         public SofaContext m_sofaContext = null;
 
@@ -65,6 +67,13 @@ namespace SofaUnity
             set { m_uniqueNameId = value; }
         }
 
+        /// Getter/Setter for \sa m_uniqueNameId
+        public string DisplayName
+        {
+            get { return m_displayName; }
+            set { m_displayName = value; }
+        }
+
         /// Setter for \sa m_isDirty value   
         public void SetDirty(bool value) { m_isDirty = value; }
 
@@ -81,10 +90,11 @@ namespace SofaUnity
         }
 
         /// call by a thrid party, should do the same as awake but here we directly give the pointer to sofaContext. Will call \sa Create_impl()
-        public void Create(SofaContext sofacontext, string name, bool isCustom = false)
+        public void Create(SofaContext sofacontext, string name, string displayName, bool isCustom = false)
         {
             SofaLog("####### SofaBase::Create: " + UniqueNameId);
             UniqueNameId = name;
+            DisplayName = displayName;
             m_isCustom = isCustom;
             SetSofaContext(sofacontext);
             Create_impl();
