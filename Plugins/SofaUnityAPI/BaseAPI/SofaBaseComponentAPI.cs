@@ -576,7 +576,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     /// <summary> Generic method to get size of a Data< vector<float> > field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <returns> size of the Data vector. Return negative value if field not found or error encountered. </returns>
-    public int GetVecfSize(string dataName)
+    public int GetVectorfSize(string dataName)
     {
         if (checkNativePointer())
         {
@@ -600,7 +600,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     /// <summary> Generic method to get size of a Data< vector<double> > field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <returns> size of the Data vector. Return negative value if field not found or error encountered. </returns>
-    public int GetVecdSize(string dataName)
+    public int GetVectordSize(string dataName)
     {
         if (checkNativePointer())
         {
@@ -653,6 +653,43 @@ public class SofaBaseComponentAPI : SofaBaseAPI
             int res = sofaComponentAPI_setVectorfValue(m_simu, m_name, dataName, size, values);
             if (res != 0)
                 Debug.LogError("Method setVectorfValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
+            return res;
+        }
+
+        return -1;
+    }
+
+
+    /// <summary> Generic method to get values of a Data< vector<double> > field. </summary>
+    /// <param name="dataName"> Name of the Data field requested. </param>
+    /// <param name="size"> Size of the Data vector. </param>
+    /// <param name="values"> Values of the Data vector field returned. </param>
+    /// <returns> Int error code. Negative value if method failed, 0 otherwise. </returns>
+    public int GetVectordValue(string dataName, int size, float[] values)
+    {
+        if (checkNativePointer())
+        {
+            int res = sofaComponentAPI_getVectorValue(m_simu, m_name, dataName, "double", size, values);
+            if (res != 0)
+                Debug.LogError("Method getVectorValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
+            return res;
+        }
+
+        return -1;
+    }
+
+    /// <summary> Generic method to set values of a Data< vector<double> > field. </summary>
+    /// <param name="dataName"> Name of the Data field requested. </param>
+    /// <param name="size"> Size of the Data vector. </param>
+    /// <param name="values"> New values to set to the Data vector field. </param>
+    /// <returns> Int error code. Negative value if method failed, 0 otherwise. </returns>
+    public int SetVectordValue(string dataName, int size, float[] values)
+    {
+        if (checkNativePointer())
+        {
+            int res = sofaComponentAPI_setVectorValue(m_simu, m_name, dataName, "double", size, values);
+            if (res != 0)
+                Debug.LogError("Method setVectorValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
             return res;
         }
 
@@ -925,6 +962,12 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     /// Vector<float> and Vector<int> API, need to get the size before set/get
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_getVectorSize(IntPtr obj, string componentName, string dataName, string dataType, int[] value);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_getVectorValue(IntPtr obj, string componentName, string dataName, string dataType, int size, float[] values);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_setVectorValue(IntPtr obj, string componentName, string dataName, string dataType, int size, float[] values);
 
     [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_getVectorfValue(IntPtr obj, string componentName, string dataName, int size, float[] values);
