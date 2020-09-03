@@ -36,6 +36,7 @@ namespace SofaUnity
 
         /// real buffer sent to SOFA
         public float[] m_vertexBuffer = null;
+        public float[] m_restVertexBuffer = null;
 
         /// number of triangles inside this mesh
         protected int nbTriangles = 0;
@@ -171,7 +172,18 @@ namespace SofaUnity
         {
             m_nbVertices = nbVertices;
             m_meshDim = meshDimension;
-            m_vertexBuffer = new float[nbVertices * m_meshDim];
+            m_vertexBuffer = new float[nbVertices * m_meshDim];            
+        }
+
+        public void CreateRestVertexBuffer()
+        {
+            int nbrFloat = m_nbVertices * m_meshDim;
+            m_restVertexBuffer = new float[nbrFloat];
+
+            for (int i=0; i< nbrFloat; i++)
+            {
+                m_restVertexBuffer[i] = m_vertexBuffer[i];
+            }
         }
 
         

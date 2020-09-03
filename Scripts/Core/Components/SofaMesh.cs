@@ -132,7 +132,7 @@ namespace SofaUnity
         }
 
         /// Method to set new vertices position to this mesh
-        public void SetRestPositions(Vector3[] vertices)
+        public void SetRestPositions(float[] vertices)
         {
             if (m_sofaMeshAPI != null)
                 m_sofaMeshAPI.SetRestPositions(vertices);
