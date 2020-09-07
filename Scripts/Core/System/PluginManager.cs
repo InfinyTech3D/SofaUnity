@@ -109,7 +109,7 @@ namespace SofaUnity
             {
                 "SofaOpenglVisual",
                 "SofaMiscCollision",
-                "PluginTexture"
+                "VirtualXRay"
             };
 
             //m_impl.loadPlugin(Application.dataPath + pluginPath + "SofaSparseSolver.dll");
