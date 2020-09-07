@@ -18,6 +18,9 @@ namespace SofaUnityAPI
         public static extern int AddRenderEvent_SetPluginTexture(System.IntPtr simuContext, System.IntPtr texture, int w, int h, string objectName);
 
         [DllImport("SofaAdvancePhysicsAPI")]
+        public static extern int AddRenderEvent_SetVirtualXRayTexture(System.IntPtr simuContext, System.IntPtr texture, int w, int h, string objectName);
+
+        [DllImport("SofaAdvancePhysicsAPI")]
         public static extern void clearUp(System.IntPtr simuContext);
 
         [DllImport("SofaAdvancePhysicsAPI")]
