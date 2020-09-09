@@ -38,12 +38,15 @@ public class SofaGraphicOGL_Test : MonoBehaviour
         GameObject plane = GameObject.Find("Plane");
         plane.transform.GetComponent<Renderer>().material.mainTexture = m_tex2D;
         plane.transform.GetComponent<Renderer>().enabled = true;
+        plane.transform.GetComponent<Renderer>().material.SetTextureScale("_MainTex", new Vector2(1, -1));
 
         if (m_sofaContext != null)
         {
             //int renderID = SofaUnityAPI.SofaGraphicAPI.AddRenderEvent_SetTexture(m_sofaContext.GetSimuContext(), m_tex2D.GetNativeTexturePtr(), m_tex2D.width, m_tex2D.height);
             //m_registeredRenderIDList.Add(renderID);
-            int renderID = SofaUnityAPI.SofaGraphicAPI.AddRenderEvent_SetPluginTexture(m_sofaContext.GetSimuContext(), m_tex2D.GetNativeTexturePtr(), m_tex2D.width, m_tex2D.height, "/Liver/builder1");
+            //int renderID = SofaUnityAPI.SofaGraphicAPI.AddRenderEvent_SetPluginTexture(m_sofaContext.GetSimuContext(), m_tex2D.GetNativeTexturePtr(), m_tex2D.width, m_tex2D.height, "/Liver/builder1");
+            //m_registeredRenderIDList.Add(renderID);
+            int renderID = SofaUnityAPI.SofaGraphicAPI.AddRenderEvent_SetVirtualXRayTexture(m_sofaContext.GetSimuContext(), m_tex2D.GetNativeTexturePtr(), m_tex2D.width, m_tex2D.height, "/XRay/XRendererDeOuf");
             m_registeredRenderIDList.Add(renderID);
         }
 
@@ -74,7 +77,7 @@ public class SofaGraphicOGL_Test : MonoBehaviour
             {
                 foreach (int renderID in m_registeredRenderIDList)
                 {
-                    Debug.Log("Calling renderID " + renderID);
+                    //Debug.Log("Calling renderID " + renderID);
                     GL.IssuePluginEvent(SofaUnityAPI.SofaGraphicAPI.getRenderEventFunc(), renderID);
                 }
             }
