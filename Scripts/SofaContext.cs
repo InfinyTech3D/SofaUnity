@@ -342,7 +342,7 @@ namespace SofaUnity
                 Debug.LogError("Error while creating SofaContextAPI");
                 return;
             }
-
+            DoCatchSofaMessages();
 
             SofaComponentFactory.InitBaseFactoryType();
 
@@ -405,9 +405,16 @@ namespace SofaUnity
         float nextFPSUpdate = 0.25f;
         public float SimulationFPS = 0.0f;
 
+        protected int countStep = 0;
+        protected List<float> m_times = new List<float>();
+        protected List<float> m_sofaTimes = new List<float>();
+
         // Update is called once per fix frame
         void Update()
         {
+            // log sofa messages
+            DoCatchSofaMessages();
+
             // only if scene is playing or if sofa is running
             if (IsSofaUpdating == false || Application.isPlaying == false) return;
 
@@ -416,8 +423,7 @@ namespace SofaUnity
             else
                 UpdateImplSync();
 
-            // log sofa messages
-            DoCatchSofaMessages();
+            
 
             // counter if need to freeze the simulation for several iterations
             cptBreaker++;
@@ -438,6 +444,29 @@ namespace SofaUnity
                 nextFPSUpdate += 1.0f / updateFPSRate;
                 SimulationFPS = m_impl.GetSimulationFPS();
             }
+
+            //if (countStep % 100 == 0)
+            //{
+            //    m_times.Add(Time.time);
+            //    float sofaTime = m_impl.GetTime();
+            //    m_sofaTimes.Add(sofaTime);
+                
+            //    Debug.Log("Step: " + countStep + " | time: " + Time.time + " | SOFA: " + sofaTime);
+
+            //    if (countStep == 1000)
+            //    {
+            //        Debug.Log(m_times[0] + "," + m_times[1] + "," + m_times[2] + ","
+            //            + m_times[3] + "," + m_times[4] + "," + m_times[5] + ","
+            //            + m_times[6] + "," + m_times[7] + "," + m_times[8] + ","
+            //            + m_times[9] + "," + m_times[10]);
+
+            //        Debug.Log(m_sofaTimes[0] + "," + m_sofaTimes[1] + "," + m_sofaTimes[2] + ","
+            //         + m_sofaTimes[3] + "," + m_sofaTimes[4] + "," + m_sofaTimes[5] + ","
+            //         + m_sofaTimes[6] + "," + m_sofaTimes[7] + "," + m_sofaTimes[8] + ","
+            //         + m_sofaTimes[9] + "," + m_sofaTimes[10]);
+            //    }
+            //}
+            //countStep++;
         }
                 
 

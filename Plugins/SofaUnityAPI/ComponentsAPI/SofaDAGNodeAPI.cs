@@ -146,7 +146,7 @@ public class SofaDAGNodeAPI : SofaBaseAPI
 
         int res = sofaPhysicsAPI_setDAGNodeTransform(m_simu, m_name, transfoType, val);
         if (res != 0)
-            Debug.LogError("Method SetTransformation of type: " + transfoType + " of DAGNode: " + m_name + " returns error: " + res);
+            Debug.LogError("Method SetTransformation of type: " + transfoType + " of DAGNode: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
     }
 
 
