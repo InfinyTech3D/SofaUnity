@@ -587,7 +587,6 @@ namespace SofaUnity
                     {
                         m_owner.m_impl.ReinitComponent();
                         m_isEdited = true;
-                        Debug.Log("Set value: " + m_dataName + " = " + m_value);
                     }
                 }
             }
