@@ -65,7 +65,7 @@ public class SofaDAGNodeEditor : Editor
         EditorGUILayout.TextField("DAGNode UniqID", node.UniqueNameId);
         EditorGUI.EndDisabledGroup();
 
-        EditorGUILayout.TextField("DAGNode Name", node.DisplayName);
+        node.DisplayName = EditorGUILayout.TextField("DAGNode Name", node.DisplayName);
 
         if (node.HasTransform()) // no tranformation for root node
         {
