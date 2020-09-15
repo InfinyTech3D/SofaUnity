@@ -35,6 +35,7 @@ namespace SofaUnity
         private SofaDAGNodeAPI m_impl = null;
 
         /// Name of this parent DAGNode
+        [SerializeField]
         protected string m_parentNodeName = "None";
 
         /// List of SofaBaseComponent in this DAGNode
@@ -324,8 +325,11 @@ namespace SofaUnity
                 SofaLog("SofaDAGNode " + UniqueNameId + " already has a SofaDAGNodeAPI.", 2);
                 return;
             }
-
+            
             m_impl = new SofaDAGNodeAPI(m_sofaContext.GetSimuContext(), UniqueNameId, m_parentNodeName, m_isCustom);
+
+            if (m_parentNodeName == "None" || m_parentNodeName.Contains("Error"))
+                m_parentNodeName = m_impl.GetParentNodeName();
 
             string componentsS = m_impl.GetDAGNodeComponents();
             SofaLog("####### SofaDAGNode::Reconnect_impl " + UniqueNameId + " -> " + componentsS, 0, false);
