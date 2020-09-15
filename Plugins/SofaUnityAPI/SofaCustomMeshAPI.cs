@@ -27,9 +27,6 @@ public class SofaCustomMeshAPI : SofaBaseObjectAPI
     {
         if (m_hasObject == false) // first time create object only
         {
-            m_dofName = m_name + "_dof";
-            m_collisionName = m_name + "_col";
-
             // Create a Node in Sofa simulation tree and add a mechanicalObject into it
             int res = sofaPhysicsAPI_addSphereCollisionsObject(m_simu, m_name, m_parentName);
             m_name += "_node";
@@ -40,13 +37,6 @@ public class SofaCustomMeshAPI : SofaBaseObjectAPI
                 return false;
             }
 
-            if (displayLog)
-            {
-                Debug.Log("SofaCustomMesh Added! " + m_name);
-                Debug.Log("SofaCustomMesh: m_parentName: " + m_parentName);
-                Debug.Log("SofaCustomMesh: m_dofName: " + m_dofName);
-            }
-
             m_hasObject = true;
             return true;
         }
@@ -54,7 +44,18 @@ public class SofaCustomMeshAPI : SofaBaseObjectAPI
         return false;        
     }
 
-   
+
+    public void SetMeshNameID(string _name)
+    {
+        m_dofName = _name;
+    }
+
+    public void SetCollisionNameID(string _name)
+    {
+        m_collisionName = _name;
+    }
+
+
     /// <summary> Method to set the number of vertices to this 3D Object. </summary>
     /// <param name="nbr"> Number of vertices </param>
     public void SetNumberOfVertices(int nbr)
