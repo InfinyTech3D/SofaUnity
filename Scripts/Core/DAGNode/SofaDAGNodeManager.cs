@@ -271,6 +271,36 @@ namespace SofaUnity
         }
 
 
+        public void FixGraphNames()
+        {
+            int nbrNode = m_sofaContextAPI.getNbrDAGNode();
+            if (nbrNode <= 0)
+                return;
+
+            for (int i = 0; i < nbrNode; i++)
+            {
+                string nodeName = m_sofaContextAPI.getDAGNodeName(i);
+
+                int val = nodeName.LastIndexOf('_');
+                string racine = nodeName;
+                if (val > 0)
+                    racine = nodeName.Substring(0, val);
+
+                for (int j = 0; j < m_dagNodes.Count; j++)
+                {
+                    if (m_dagNodes[j].UniqueNameId.Contains(racine))
+                    {
+                        m_dagNodes[j].UniqueNameId = nodeName;
+                        m_dagNodes[j].DisplayName = m_sofaContextAPI.getDAGNodeDisplayName(i);
+                        break;
+                    }
+                }
+
+            }
+
+
+        }
+
         ////////////////////////////////////////////
         /////  SofaDAGNodeManager internalAPI  /////
         ////////////////////////////////////////////
