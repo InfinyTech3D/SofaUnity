@@ -32,6 +32,7 @@ public class SofaGraphicOGL_Test : MonoBehaviour
             }
         }
         
+        //m_tex2D = new Texture2D(512, 512, TextureFormat.RGBAHalf, false);
         m_tex2D = new Texture2D(512, 512, TextureFormat.RGBAFloat, false);
         m_tex2D.Apply();
 

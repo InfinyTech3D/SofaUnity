@@ -11,22 +11,22 @@ namespace SofaUnityAPI
         {
         }
 
-        [DllImport("SofaAdvancePhysicsAPI")]
+        [DllImport("SAPAPI")]
         public static extern int AddRenderEvent_SetTexture(System.IntPtr simuContext, System.IntPtr texture, int w, int h);
 
-        [DllImport("SofaAdvancePhysicsAPI")]
+        [DllImport("SAPAPI")]
         public static extern int AddRenderEvent_SetPluginTexture(System.IntPtr simuContext, System.IntPtr texture, int w, int h, string objectName);
 
-        [DllImport("SofaAdvancePhysicsAPI")]
+        [DllImport("VirtualXRay")]
         public static extern int AddRenderEvent_SetVirtualXRayTexture(System.IntPtr simuContext, System.IntPtr texture, int w, int h, string objectName);
 
-        [DllImport("SofaAdvancePhysicsAPI")]
+        [DllImport("ImagingUS")]
         public static extern int AddRenderEvent_SetImagingUSTexture(System.IntPtr simuContext, System.IntPtr texture, int w, int h, string objectName);
 
-        [DllImport("SofaAdvancePhysicsAPI")]
+        [DllImport("SAPAPI")]
         public static extern void clearUp(System.IntPtr simuContext);
 
-        [DllImport("SofaAdvancePhysicsAPI")]
+        [DllImport("SAPAPI")]
         public static extern IntPtr getRenderEventFunc();
     }
 }
