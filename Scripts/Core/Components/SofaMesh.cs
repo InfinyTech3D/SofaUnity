@@ -124,6 +124,20 @@ namespace SofaUnity
                 return m_sofaMeshAPI.GetTopologyRevision();
         }
 
+        /// Method to set new vertices position to this mesh
+        public void SetVertices(Vector3[] vertices)
+        {
+            if (m_sofaMeshAPI != null)
+                m_sofaMeshAPI.SetVertices(vertices);
+        }
+
+        /// Method to set new vertices position to this mesh
+        public void SetRestPositions(float[] vertices)
+        {
+            if (m_sofaMeshAPI != null)
+                m_sofaMeshAPI.SetRestPositions(vertices);
+        }
+
 
         ////////////////////////////////////////////
         //////          SofaMesh API           /////

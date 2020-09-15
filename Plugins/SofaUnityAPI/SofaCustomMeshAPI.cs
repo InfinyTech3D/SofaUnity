@@ -64,7 +64,7 @@ public class SofaCustomMeshAPI : SofaBaseObjectAPI
 
         int res = sofaMeshAPI_setNbVertices(m_simu, m_dofName, nbr);
         if (res < 0)
-            Debug.LogError("mechanicalObject size: " + m_dofName + " " + res);
+            Debug.LogError("mechanicalObject size: " + m_dofName + " " + SofaDefines.msg_error[res]);
         else
             sofaComponentAPI_reinitComponent(m_simu, m_dofName);
     }
@@ -95,7 +95,7 @@ public class SofaCustomMeshAPI : SofaBaseObjectAPI
 
         int resUpdate = sofaMeshAPI_setVertices(m_simu, m_dofName, val);
         if (resUpdate < 0)
-            Debug.LogError("SofaCustomMesh updateMesh: " + m_dofName + " return error: " + resUpdate);
+            Debug.LogError("SofaCustomMesh updateMesh: " + m_dofName + " return error: " + SofaDefines.msg_error[resUpdate]);
     }
 
 

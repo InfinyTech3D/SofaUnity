@@ -825,7 +825,53 @@ public class SofaBaseMeshAPI : SofaBaseAPI
     }
 
 
-    public void setNewPosition(Vector3 value)
+    /// Method to set new vertices position to this mesh
+    public void SetVertices(Vector3[] vertices)
+    {
+        if (!m_isReady)
+            return;
+
+        int nbrV = vertices.Length;
+        float[] val = new float[(nbrV) * 3];
+
+        for (int i = 0; i < nbrV; i++)
+        {
+            val[i * 3] = vertices[i].x;
+            val[i * 3 + 1] = vertices[i].y;
+            val[i * 3 + 2] = vertices[i].z;
+        }
+
+        int resUpdate = sofaMeshAPI_setVertices(m_simu, m_name, val);
+        if (resUpdate < 0)
+            Debug.LogError("SofaBaseMeshAPI updateMesh: " + m_name + " return error: " + SofaDefines.msg_error[resUpdate]);
+
+    }
+
+
+    /// Method to set new vertices position to this mesh
+    public void SetRestPositions(float[] vertices)
+    {
+        if (!m_isReady)
+            return;
+
+        //int nbrV = vertices.Length;
+        //float[] val = new float[(nbrV) * 3];
+
+        //for (int i = 0; i < nbrV; i++)
+        //{
+        //    val[i * 3] = vertices[i].x;
+        //    val[i * 3 + 1] = vertices[i].y;
+        //    val[i * 3 + 2] = vertices[i].z;
+        //}
+
+        int resUpdate = sofaMeshAPI_setRestPositions(m_simu, m_name, vertices);
+        if (resUpdate < 0)
+            Debug.LogError("SofaBaseMeshAPI updateMesh: " + m_name + " return error: " + SofaDefines.msg_error[resUpdate]);
+
+    }
+
+
+    public void SetNewPosition(Vector3 value)
     {
         if (!m_isReady)
             return;
@@ -836,7 +882,7 @@ public class SofaBaseMeshAPI : SofaBaseAPI
         val[2] = value[2];
         int resUpdate = sofaMeshAPI_setVertices(m_simu, m_name, val);
         if (resUpdate < 0)
-            Debug.LogError("SofaCustomMesh updateMesh: " + m_name + " return error: " + SofaDefines.msg_error[resUpdate]);
+            Debug.LogError("SofaBaseMeshAPI updateMesh: " + m_name + " return error: " + SofaDefines.msg_error[resUpdate]);
 
     }
 
@@ -930,6 +976,9 @@ public class SofaBaseMeshAPI : SofaBaseAPI
 
     [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_setVertices(IntPtr obj, string name, float[] arr);
+
+    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaMeshAPI_setRestPositions(IntPtr obj, string name, float[] arr);
 
 
     [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
