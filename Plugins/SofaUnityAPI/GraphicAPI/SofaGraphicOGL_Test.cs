@@ -8,7 +8,8 @@ public class SofaGraphicOGL_Test : MonoBehaviour
 {
     bool m_bNewStep = false;
     IntPtr m_glTexID;
-    Texture2D m_tex2D;
+    Texture2D m_tex2D_XRay;
+    Texture2D m_tex2D_US;
     bool m_GLRenderEnd = true;
     List<int> m_registeredRenderIDList = new List<int>();
 
@@ -31,30 +32,48 @@ public class SofaGraphicOGL_Test : MonoBehaviour
                 Debug.LogError("SofaGraphicOGL_Test - No SofaContext found.");
             }
         }
-        
-        //m_tex2D = new Texture2D(512, 512, TextureFormat.RGBAHalf, false);
-        m_tex2D = new Texture2D(512, 512, TextureFormat.RGBAFloat, false);
-        m_tex2D.Apply();
-
-        GameObject plane = GameObject.Find("Plane");
-        plane.transform.GetComponent<Renderer>().material.mainTexture = m_tex2D;
-        plane.transform.GetComponent<Renderer>().enabled = true;
-        plane.transform.GetComponent<Renderer>().material.SetTextureScale("_MainTex", new Vector2(1, -1));
 
         if (m_sofaContext != null)
         {
-            //int renderID = SofaUnityAPI.SofaGraphicAPI.AddRenderEvent_SetTexture(m_sofaContext.GetSimuContext(), m_tex2D.GetNativeTexturePtr(), m_tex2D.width, m_tex2D.height);
-            //m_registeredRenderIDList.Add(renderID);
-            //int renderID = SofaUnityAPI.SofaGraphicAPI.AddRenderEvent_SetPluginTexture(m_sofaContext.GetSimuContext(), m_tex2D.GetNativeTexturePtr(), m_tex2D.width, m_tex2D.height, "/Liver/builder1");
-            //m_registeredRenderIDList.Add(renderID);
-            //int renderID = SofaUnityAPI.SofaGraphicAPI.AddRenderEvent_SetVirtualXRayTexture(m_sofaContext.GetSimuContext(), m_tex2D.GetNativeTexturePtr(), m_tex2D.width, m_tex2D.height, "/XRay/XRendererDeOuf");
-            //m_registeredRenderIDList.Add(renderID);
-            int renderID = SofaUnityAPI.SofaGraphicAPI.AddRenderEvent_SetImagingUSTexture(m_sofaContext.GetSimuContext(), m_tex2D.GetNativeTexturePtr(), m_tex2D.width, m_tex2D.height, "/Renderer");
-            m_registeredRenderIDList.Add(renderID);
+            GameObject plane_XRay = GameObject.Find("Plane_XRay");
+            if (plane_XRay != null)
+            {
+                string sofaPath = "/XRay/XRendererDeOuf";
+
+                m_tex2D_XRay = new Texture2D(512, 512, TextureFormat.RGBAHalf, false);
+                m_tex2D_XRay.Apply();
+
+                plane_XRay.transform.GetComponent<Renderer>().material.mainTexture = m_tex2D_XRay;
+                plane_XRay.transform.GetComponent<Renderer>().enabled = true;
+                plane_XRay.transform.GetComponent<Renderer>().material.SetTextureScale("_MainTex", new Vector2(1, -1));
+
+                int renderID = SofaUnityAPI.SofaGraphicAPI.AddRenderEvent_SetVirtualXRayTexture(m_sofaContext.GetSimuContext(), 
+                    m_tex2D_XRay.GetNativeTexturePtr(), m_tex2D_XRay.width, m_tex2D_XRay.height, sofaPath);
+
+                m_registeredRenderIDList.Add(renderID);
+                Debug.Log("Created XRay Texture with ID " + m_tex2D_XRay.GetNativeTexturePtr());
+            }
+
+            GameObject plane_US = GameObject.Find("Plane_US");
+            if (plane_US != null)
+            {
+                string sofaPath = "/Renderer";
+
+                m_tex2D_US = new Texture2D(512, 512, TextureFormat.RGBAFloat, false); //US does not allow half float
+                m_tex2D_US.Apply();
+
+                plane_US.transform.GetComponent<Renderer>().material.mainTexture = m_tex2D_US;
+                plane_US.transform.GetComponent<Renderer>().enabled = true;
+                plane_US.transform.GetComponent<Renderer>().material.SetTextureScale("_MainTex", new Vector2(1, -1));
+
+                int renderID = SofaUnityAPI.SofaGraphicAPI.AddRenderEvent_SetImagingUSTexture(m_sofaContext.GetSimuContext(), 
+                    m_tex2D_US.GetNativeTexturePtr(), m_tex2D_US.width, m_tex2D_US.height, sofaPath);
+
+                m_registeredRenderIDList.Add(renderID);
+                Debug.Log("Created US Texture with ID " + m_tex2D_US.GetNativeTexturePtr());
+            }
         }
-
-        Debug.Log("Created Texture with ID " + m_tex2D.GetNativeTexturePtr());
-
+        
         yield return StartCoroutine("CallWaitForEndOfFrame");
     }
 
@@ -93,7 +112,10 @@ public class SofaGraphicOGL_Test : MonoBehaviour
     void OnDestroy()
     {
         SofaUnityAPI.SofaGraphicAPI.clearUp(m_sofaContext.GetSimuContext());
-        Destroy(m_tex2D);
+        if (m_tex2D_XRay)
+            Destroy(m_tex2D_XRay);
+        if (m_tex2D_US)
+            Destroy(m_tex2D_US);
     }
 
 }
