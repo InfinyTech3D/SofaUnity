@@ -33,6 +33,7 @@ namespace SofaUnity
         [SerializeField]
         private SceneFileManager m_sceneFileMgr = null;
 
+        private SofaGraphicAPI m_graphicAPI = null;
 
         List<SofaRayCaster> m_casters = null;
 
@@ -102,6 +103,11 @@ namespace SofaUnity
             get { return m_nodeGraphMgr; }
         }
 
+        /// getter to the \sa SofaGraphicAPI m_graphicAPI
+        public SofaGraphicAPI SofaGraphicAPI
+        {
+            get { return m_graphicAPI; }
+        }
 
         /// Getter/Setter of current gravity @see m_gravity
         public Vector3 Gravity
@@ -352,6 +358,12 @@ namespace SofaUnity
                 m_nodeGraphMgr = new SofaDAGNodeManager(this, m_impl);
             else // TODO make this serializable might help for custom simulation in futur.
                 Debug.LogWarning("## m_nodeGraphMgr already created...");
+
+            // Create the GraphicAPI
+            if (m_graphicAPI == null)
+                m_graphicAPI = new SofaGraphicAPI();
+            else 
+                Debug.LogWarning("## m_graphicAPI already created...");
 
 
             // Craete Plugin Mgr. // TODO: Need to connect that with the scene loading
