@@ -112,7 +112,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &99425294
+--- !u!1 &17853903
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,8 +120,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 99425295}
-  - component: {fileID: 99425296}
+  - component: {fileID: 17853904}
+  - component: {fileID: 17853905}
   m_Layer: 0
   m_Name: SofaNode - Liver
   m_TagString: Untagged
@@ -129,48 +129,50 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &99425295
+--- !u!4 &17853904
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 99425294}
+  m_GameObject: {fileID: 17853903}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 173515879}
-  - {fileID: 740211646}
-  - {fileID: 771820101}
-  - {fileID: 317906116}
-  - {fileID: 829025435}
-  - {fileID: 744678193}
-  - {fileID: 616889952}
-  m_Father: {fileID: 488438913}
-  m_RootOrder: 3
+  - {fileID: 45177437}
+  - {fileID: 1294480046}
+  - {fileID: 1503362989}
+  - {fileID: 1699023974}
+  - {fileID: 484915962}
+  - {fileID: 738546309}
+  - {fileID: 148338074}
+  m_Father: {fileID: 1864124671}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &99425296
+--- !u!114 &17853905
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 99425294}
+  m_GameObject: {fileID: 17853903}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbd514e8b1708b348bb1987be968669c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_uniqueNameId: Liver_0
-  m_sofaContext: {fileID: 488438912}
+  m_uniqueNameId: Liver_1
+  m_displayName: Liver
+  m_sofaContext: {fileID: 1864124670}
   m_log: 0
+  m_parentNodeName: root
   m_sofaComponents:
-  - {fileID: 173515878}
-  - {fileID: 740211645}
-  - {fileID: 771820100}
-  - {fileID: 317906113}
-  - {fileID: 829025436}
+  - {fileID: 45177436}
+  - {fileID: 1294480045}
+  - {fileID: 1503362988}
+  - {fileID: 1699023971}
+  - {fileID: 484915963}
   m_hasTransformEngine: 1
   m_translation: {x: 0, y: 0, z: 0}
   m_isTranslationCustom: 0
@@ -178,7 +180,7 @@ MonoBehaviour:
   m_isRotationCustom: 0
   m_scale: {x: 1, y: 1, z: 1}
   m_isScaleCustom: 0
---- !u!1 &173515877
+--- !u!1 &45177435
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,8 +188,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 173515879}
-  - component: {fileID: 173515878}
+  - component: {fileID: 45177437}
+  - component: {fileID: 45177436}
   m_Layer: 0
   m_Name: MeshGmshLoader  -  meshLoader
   m_TagString: Untagged
@@ -195,22 +197,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &173515878
+--- !u!114 &45177436
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 173515877}
+  m_GameObject: {fileID: 45177435}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8303bbfe06f7b7043a38754ae9a3cf70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_uniqueNameId: SofaLoader_7
-  m_sofaContext: {fileID: 488438912}
+  m_uniqueNameId: SofaLoader_9
+  m_displayName: Not set
+  m_sofaContext: {fileID: 1864124670}
   m_log: 0
-  m_ownerNode: {fileID: 99425296}
+  m_ownerNode: {fileID: 17853905}
   m_baseComponentType: 16
   m_componentType: MeshGmshLoader
   m_dataArchiver:
@@ -237,7 +240,7 @@ MonoBehaviour:
     - Vec3d
     - Vec3d
     m_stringData:
-    - m_owner: {fileID: 173515878}
+    - m_owner: {fileID: 45177436}
       m_dataName: filename
       m_dataType: string
       m_isReadOnly: 0
@@ -245,42 +248,42 @@ MonoBehaviour:
       m_isDirty: 0
       m_value: mesh/liver.msh
     m_boolData:
-    - m_owner: {fileID: 173515878}
+    - m_owner: {fileID: 45177436}
       m_dataName: printLog
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 173515878}
+    - m_owner: {fileID: 45177436}
       m_dataName: listening
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 173515878}
+    - m_owner: {fileID: 45177436}
       m_dataName: flipNormals
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 173515878}
+    - m_owner: {fileID: 45177436}
       m_dataName: triangulate
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 173515878}
+    - m_owner: {fileID: 45177436}
       m_dataName: createSubelements
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 173515878}
+    - m_owner: {fileID: 45177436}
       m_dataName: onlyAttachedPoints
       m_dataType: bool
       m_isReadOnly: 0
@@ -292,7 +295,7 @@ MonoBehaviour:
     m_doubleData: []
     m_vec2Data: []
     m_vec3Data:
-    - m_owner: {fileID: 173515878}
+    - m_owner: {fileID: 45177436}
       m_dataName: translation
       m_dataType: Vec3
       m_isReadOnly: 0
@@ -300,7 +303,7 @@ MonoBehaviour:
       m_isDirty: 0
       m_value: {x: 0, y: 0, z: 0}
       m_isDouble: 1
-    - m_owner: {fileID: 173515878}
+    - m_owner: {fileID: 45177436}
       m_dataName: rotation
       m_dataType: Vec3
       m_isReadOnly: 0
@@ -308,7 +311,7 @@ MonoBehaviour:
       m_isDirty: 0
       m_value: {x: 0, y: 0, z: 0}
       m_isDouble: 1
-    - m_owner: {fileID: 173515878}
+    - m_owner: {fileID: 45177436}
       m_dataName: scale3d
       m_dataType: Vec3
       m_isReadOnly: 0
@@ -331,73 +334,73 @@ MonoBehaviour:
     - normals
     - transformation
     m_otherData:
-    - m_owner: {fileID: 173515878}
+    - m_owner: {fileID: 45177436}
       m_dataName: position
       m_dataType: vector<Vec3d>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 173515878}
+    - m_owner: {fileID: 45177436}
       m_dataName: polylines
       m_dataType: vector<vector<unsigned int>>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 173515878}
+    - m_owner: {fileID: 45177436}
       m_dataName: edges
       m_dataType: vector<Edge>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 173515878}
+    - m_owner: {fileID: 45177436}
       m_dataName: triangles
       m_dataType: vector<Triangle>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 173515878}
+    - m_owner: {fileID: 45177436}
       m_dataName: quads
       m_dataType: vector<Quad>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 173515878}
+    - m_owner: {fileID: 45177436}
       m_dataName: polygons
       m_dataType: vector<vector<unsigned int>>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 173515878}
+    - m_owner: {fileID: 45177436}
       m_dataName: tetrahedra
       m_dataType: vector<Tetrahedron>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 173515878}
+    - m_owner: {fileID: 45177436}
       m_dataName: hexahedra
       m_dataType: vector<Hexahedron>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 173515878}
+    - m_owner: {fileID: 45177436}
       m_dataName: pentahedra
       m_dataType: vector<Pentahedron>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 173515878}
+    - m_owner: {fileID: 45177436}
       m_dataName: pyramids
       m_dataType: vector<Pyramid>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 173515878}
+    - m_owner: {fileID: 45177436}
       m_dataName: normals
       m_dataType: vector<Vec3d>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 173515878}
+    - m_owner: {fileID: 45177436}
       m_dataName: transformation
       m_dataType: Mat4x4d
       m_isReadOnly: 0
@@ -406,21 +409,21 @@ MonoBehaviour:
   m_linkArchiver:
     m_links: []
     m_slaveLinks: []
---- !u!4 &173515879
+--- !u!4 &45177437
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 173515877}
+  m_GameObject: {fileID: 45177435}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 99425295}
+  m_Father: {fileID: 17853904}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &180523134
+--- !u!1 &148338073
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -428,8 +431,361 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 180523135}
-  - component: {fileID: 180523136}
+  - component: {fileID: 148338074}
+  - component: {fileID: 148338075}
+  m_Layer: 0
+  m_Name: SofaNode - SurfLiver
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &148338074
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148338073}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 246741865}
+  - {fileID: 230733315}
+  - {fileID: 1705324458}
+  - {fileID: 456458223}
+  m_Father: {fileID: 17853904}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &148338075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148338073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd514e8b1708b348bb1987be968669c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_uniqueNameId: SurfLiver_3
+  m_displayName: SurfLiver
+  m_sofaContext: {fileID: 1864124670}
+  m_log: 0
+  m_parentNodeName: Liver_1
+  m_sofaComponents:
+  - {fileID: 246741864}
+  - {fileID: 230733314}
+  - {fileID: 1705324457}
+  - {fileID: 456458224}
+  m_hasTransformEngine: 1
+  m_translation: {x: 0, y: 0, z: 0}
+  m_isTranslationCustom: 0
+  m_rotation: {x: 0, y: 0, z: 0}
+  m_isRotationCustom: 0
+  m_scale: {x: 1, y: 1, z: 1}
+  m_isScaleCustom: 0
+--- !u!1 &230733313
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 230733315}
+  - component: {fileID: 230733314}
+  m_Layer: 0
+  m_Name: SofaMesh  -  SofaMesh_18
+  m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &230733314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230733313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33eb14f5b03eef7498ad3ef1fc36ca3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_uniqueNameId: SofaMesh_18
+  m_displayName: Not set
+  m_sofaContext: {fileID: 1864124670}
+  m_log: 0
+  m_ownerNode: {fileID: 148338075}
+  m_baseComponentType: 19
+  m_componentType: MechanicalObject
+  m_dataArchiver:
+    m_names: []
+    m_types: []
+    m_stringData: []
+    m_boolData: []
+    m_intData: []
+    m_floatData: []
+    m_doubleData: []
+    m_vec2Data: []
+    m_vec3Data: []
+    m_vec4Data: []
+    m_otherNames: []
+    m_otherData: []
+  m_linkArchiver:
+    m_links: []
+    m_slaveLinks: []
+  m_forceUpdate: 0
+--- !u!4 &230733315
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230733313}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 148338074}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &246741863
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 246741865}
+  - component: {fileID: 246741864}
+  m_Layer: 0
+  m_Name: SphereLoader  -  sphereLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &246741864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 246741863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8303bbfe06f7b7043a38754ae9a3cf70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_uniqueNameId: SofaLoader_17
+  m_displayName: Not set
+  m_sofaContext: {fileID: 1864124670}
+  m_log: 0
+  m_ownerNode: {fileID: 148338075}
+  m_baseComponentType: 16
+  m_componentType: SphereLoader
+  m_dataArchiver:
+    m_names:
+    - printLog
+    - listening
+    - filename
+    - scale
+    - rotation
+    - translation
+    m_types:
+    - bool
+    - bool
+    - string
+    - Vec3d
+    - Vec3d
+    - Vec3d
+    m_stringData:
+    - m_owner: {fileID: 246741864}
+      m_dataName: filename
+      m_dataType: string
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: mesh/liver.sph
+    m_boolData:
+    - m_owner: {fileID: 246741864}
+      m_dataName: printLog
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 246741864}
+      m_dataName: listening
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    m_intData: []
+    m_floatData: []
+    m_doubleData: []
+    m_vec2Data: []
+    m_vec3Data:
+    - m_owner: {fileID: 246741864}
+      m_dataName: scale
+      m_dataType: Vec3
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: {x: 1, y: 1, z: 1}
+      m_isDouble: 1
+    - m_owner: {fileID: 246741864}
+      m_dataName: rotation
+      m_dataType: Vec3
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: {x: 0, y: 0, z: 0}
+      m_isDouble: 1
+    - m_owner: {fileID: 246741864}
+      m_dataName: translation
+      m_dataType: Vec3
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: {x: 0, y: 0, z: 0}
+      m_isDouble: 1
+    m_vec4Data: []
+    m_otherNames:
+    - position
+    - listRadius
+    m_otherData:
+    - m_owner: {fileID: 246741864}
+      m_dataName: position
+      m_dataType: vector<Vec3d>
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+    - m_owner: {fileID: 246741864}
+      m_dataName: listRadius
+      m_dataType: vector<double>
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+  m_linkArchiver:
+    m_links: []
+    m_slaveLinks: []
+--- !u!4 &246741865
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 246741863}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 148338074}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &328637397
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 328637399}
+  - component: {fileID: 328637398}
+  m_Layer: 0
+  m_Name: DefaultVisualManagerLoop  -  defaultVisualManagerLoop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &328637398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328637397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e88f85a8ada110442a5b5aad21997e9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_uniqueNameId: SofaVisualComponent_8
+  m_displayName: Not set
+  m_sofaContext: {fileID: 1864124670}
+  m_log: 0
+  m_ownerNode: {fileID: 1864124669}
+  m_baseComponentType: 23
+  m_componentType: DefaultVisualManagerLoop
+  m_dataArchiver:
+    m_names:
+    - printLog
+    - listening
+    m_types:
+    - bool
+    - bool
+    m_stringData: []
+    m_boolData:
+    - m_owner: {fileID: 328637398}
+      m_dataName: printLog
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 328637398}
+      m_dataName: listening
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    m_intData: []
+    m_floatData: []
+    m_doubleData: []
+    m_vec2Data: []
+    m_vec3Data: []
+    m_vec4Data: []
+    m_otherNames: []
+    m_otherData: []
+  m_linkArchiver:
+    m_links: []
+    m_slaveLinks: []
+  m_showData: 1
+--- !u!4 &328637399
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328637397}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1864124671}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &456458222
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 456458223}
+  - component: {fileID: 456458224}
   m_Layer: 0
   m_Name: BarycentricMapping  -  sphere mapping
   m_TagString: Untagged
@@ -437,36 +793,37 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &180523135
+--- !u!4 &456458223
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 180523134}
+  m_GameObject: {fileID: 456458222}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 616889952}
-  m_RootOrder: 2
+  m_Father: {fileID: 148338074}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &180523136
+--- !u!114 &456458224
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 180523134}
+  m_GameObject: {fileID: 456458222}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc6872e208912c44ca3444751ac08ff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_uniqueNameId: SofaMechanicalMapping_17
-  m_sofaContext: {fileID: 488438912}
+  m_uniqueNameId: SofaMechanicalMapping_20
+  m_displayName: Not set
+  m_sofaContext: {fileID: 1864124670}
   m_log: 0
-  m_ownerNode: {fileID: 616889953}
+  m_ownerNode: {fileID: 148338075}
   m_baseComponentType: 18
   m_componentType: BarycentricMapping
   m_dataArchiver:
@@ -488,49 +845,49 @@ MonoBehaviour:
     - bool
     m_stringData: []
     m_boolData:
-    - m_owner: {fileID: 180523136}
+    - m_owner: {fileID: 456458224}
       m_dataName: printLog
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 180523136}
+    - m_owner: {fileID: 456458224}
       m_dataName: listening
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 180523136}
+    - m_owner: {fileID: 456458224}
       m_dataName: mapForces
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 180523136}
+    - m_owner: {fileID: 456458224}
       m_dataName: mapConstraints
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 180523136}
+    - m_owner: {fileID: 456458224}
       m_dataName: mapMasses
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 180523136}
+    - m_owner: {fileID: 456458224}
       m_dataName: mapMatrices
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 180523136}
+    - m_owner: {fileID: 456458224}
       m_dataName: applyRestPosition
       m_dataType: bool
       m_isReadOnly: 0
@@ -547,26 +904,26 @@ MonoBehaviour:
     m_otherData: []
   m_linkArchiver:
     m_links:
-    - m_owner: {fileID: 180523136}
+    - m_owner: {fileID: 456458224}
       m_linkName: input
       m_linkPath: ../dofs
-    - m_owner: {fileID: 180523136}
+    - m_owner: {fileID: 456458224}
       m_linkName: output
       m_linkPath: spheres
-    - m_owner: {fileID: 180523136}
+    - m_owner: {fileID: 456458224}
       m_linkName: mapper
       m_linkPath: sphere mapping/unnamed
-    - m_owner: {fileID: 180523136}
+    - m_owner: {fileID: 456458224}
       m_linkName: input_topology
       m_linkPath: /Liver/topo
-    - m_owner: {fileID: 180523136}
+    - m_owner: {fileID: 456458224}
       m_linkName: output_topology
       m_linkPath: /Liver/topo
     m_slaveLinks:
-    - m_owner: {fileID: 180523136}
+    - m_owner: {fileID: 456458224}
       m_linkName: slaves
       m_linkPath: sphere mapping/unnamed
---- !u!1 &317906112
+--- !u!1 &484915961
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -574,95 +931,189 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 317906116}
-  - component: {fileID: 317906113}
-  - component: {fileID: 317906115}
-  - component: {fileID: 317906114}
+  - component: {fileID: 484915962}
+  - component: {fileID: 484915963}
   m_Layer: 0
-  m_Name: TetrahedralCorotationalFEMForceField  -  FEM
+  m_Name: FixedConstraint  -  FixedConstraint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &317906113
+--- !u!4 &484915962
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484915961}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 17853904}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &484915963
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 317906112}
+  m_GameObject: {fileID: 484915961}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5515e3f9a76f9054ea2f6a42fc598fcd, type: 3}
+  m_Script: {fileID: 11500000, guid: 05b3958b6596e33498f60f6eb5464663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_uniqueNameId: SofaFEMForceField_10
-  m_sofaContext: {fileID: 488438912}
+  m_uniqueNameId: SofaConstraint_13
+  m_displayName: Not set
+  m_sofaContext: {fileID: 1864124670}
   m_log: 0
-  m_ownerNode: {fileID: 99425296}
-  m_baseComponentType: 13
-  m_componentType: TetrahedralCorotationalFEMForceField
+  m_ownerNode: {fileID: 17853905}
+  m_baseComponentType: 8
+  m_componentType: FixedConstraint
   m_dataArchiver:
     m_names:
     - printLog
     - listening
-    - isCompliance
-    - rayleighStiffness
-    - method
-    - poissonRatio
-    - youngModulus
-    - updateStiffnessMatrix
-    - computeGlobalMatrix
+    - group
+    - endTime
+    - fixAll
+    - activate_projectVelocity
     m_types:
     - bool
     - bool
-    - bool
-    - double
-    - string
-    - double
+    - int
     - double
     - bool
     - bool
-    m_stringData:
-    - m_owner: {fileID: 317906113}
-      m_dataName: method
-      m_dataType: string
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: large
+    m_stringData: []
     m_boolData:
-    - m_owner: {fileID: 317906113}
+    - m_owner: {fileID: 484915963}
       m_dataName: printLog
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 317906113}
+    - m_owner: {fileID: 484915963}
       m_dataName: listening
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 317906113}
-      m_dataName: isCompliance
+    - m_owner: {fileID: 484915963}
+      m_dataName: fixAll
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 317906113}
-      m_dataName: updateStiffnessMatrix
+    - m_owner: {fileID: 484915963}
+      m_dataName: activate_projectVelocity
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 317906113}
-      m_dataName: computeGlobalMatrix
+    m_intData:
+    - m_owner: {fileID: 484915963}
+      m_dataName: group
+      m_dataType: int
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+      m_isUnsigned: 0
+    m_floatData: []
+    m_doubleData:
+    - m_owner: {fileID: 484915963}
+      m_dataName: endTime
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: -1
+    m_vec2Data: []
+    m_vec3Data: []
+    m_vec4Data: []
+    m_otherNames:
+    - indices
+    m_otherData:
+    - m_owner: {fileID: 484915963}
+      m_dataName: indices
+      m_dataType: vector<unsigned int>
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+  m_linkArchiver:
+    m_links:
+    - m_owner: {fileID: 484915963}
+      m_linkName: mstate
+      m_linkPath: dofs
+    - m_owner: {fileID: 484915963}
+      m_linkName: topology
+      m_linkPath: topo
+    m_slaveLinks:
+    - m_owner: {fileID: 484915963}
+      m_linkName: slaves
+      m_linkPath: FixedConstraint/PointSubsetEngine_indices
+--- !u!1 &655444172
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 655444174}
+  - component: {fileID: 655444173}
+  m_Layer: 0
+  m_Name: DefaultAnimationLoop  -  defaultAnimationLoop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &655444173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655444172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3c67d96b8d166a49818dc88d50c4486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_uniqueNameId: SofaAnimationLoop_7
+  m_displayName: Not set
+  m_sofaContext: {fileID: 1864124670}
+  m_log: 0
+  m_ownerNode: {fileID: 1864124669}
+  m_baseComponentType: 0
+  m_componentType: DefaultAnimationLoop
+  m_dataArchiver:
+    m_names:
+    - printLog
+    - listening
+    m_types:
+    - bool
+    - bool
+    m_stringData: []
+    m_boolData:
+    - m_owner: {fileID: 655444173}
+      m_dataName: printLog
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 655444173}
+      m_dataName: listening
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
@@ -670,112 +1121,92 @@ MonoBehaviour:
       m_value: 0
     m_intData: []
     m_floatData: []
-    m_doubleData:
-    - m_owner: {fileID: 317906113}
-      m_dataName: rayleighStiffness
-      m_dataType: double
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 317906113}
-      m_dataName: poissonRatio
-      m_dataType: double
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0.3
-    - m_owner: {fileID: 317906113}
-      m_dataName: youngModulus
-      m_dataType: double
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 600
+    m_doubleData: []
     m_vec2Data: []
     m_vec3Data: []
     m_vec4Data: []
-    m_otherNames:
-    - localStiffnessFactor
-    m_otherData:
-    - m_owner: {fileID: 317906113}
-      m_dataName: localStiffnessFactor
-      m_dataType: vector<double>
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
+    m_otherNames: []
+    m_otherData: []
   m_linkArchiver:
-    m_links:
-    - m_owner: {fileID: 317906113}
-      m_linkName: mstate
-      m_linkPath: dofs
-    - m_owner: {fileID: 317906113}
-      m_linkName: topology
-      m_linkPath: topo
-    m_slaveLinks:
-    - m_owner: {fileID: 317906113}
-      m_linkName: slaves
-      m_linkPath: FEM/TetrahedronEngine_tetrahedronInfo
---- !u!23 &317906114
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 317906112}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 1912903556}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!33 &317906115
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 317906112}
-  m_Mesh: {fileID: 968812332}
---- !u!4 &317906116
+    m_links: []
+    m_slaveLinks: []
+--- !u!4 &655444174
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 317906112}
+  m_GameObject: {fileID: 655444172}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 99425295}
-  m_RootOrder: 3
+  m_Father: {fileID: 1864124671}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!43 &329272480
+--- !u!1 &738546308
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 738546309}
+  - component: {fileID: 738546310}
+  m_Layer: 0
+  m_Name: SofaNode - VisuLiver
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &738546309
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 738546308}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1190268917}
+  - {fileID: 798305956}
+  - {fileID: 1641427494}
+  m_Father: {fileID: 17853904}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &738546310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 738546308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd514e8b1708b348bb1987be968669c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_uniqueNameId: VisuLiver_2
+  m_displayName: VisuLiver
+  m_sofaContext: {fileID: 1864124670}
+  m_log: 0
+  m_parentNodeName: Liver_1
+  m_sofaComponents:
+  - {fileID: 1190268916}
+  - {fileID: 798305953}
+  - {fileID: 1641427495}
+  m_hasTransformEngine: 1
+  m_translation: {x: 0, y: 0, z: 0}
+  m_isTranslationCustom: 0
+  m_rotation: {x: 0, y: 0, z: 0}
+  m_isRotationCustom: 0
+  m_scale: {x: 1, y: 1, z: 1}
+  m_isScaleCustom: 0
+--- !u!43 &748749045
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -935,7 +1366,7 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1 &488438910
+--- !u!1 &798305952
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -943,562 +1374,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 488438913}
-  - component: {fileID: 488438912}
-  - component: {fileID: 488438911}
-  m_Layer: 0
-  m_Name: SofaContext
-  m_TagString: GameController
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &488438911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 488438910}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbd514e8b1708b348bb1987be968669c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_uniqueNameId: root
-  m_sofaContext: {fileID: 488438912}
-  m_log: 0
-  m_sofaComponents:
-  - {fileID: 1602733684}
-  - {fileID: 1602733683}
-  - {fileID: 1602733682}
-  - {fileID: 1602733679}
-  - {fileID: 1957713501}
-  - {fileID: 1542681010}
-  m_hasTransformEngine: 0
-  m_translation: {x: 0, y: 0, z: 0}
-  m_isTranslationCustom: 0
-  m_rotation: {x: 0, y: 0, z: 0}
-  m_isRotationCustom: 0
-  m_scale: {x: 1, y: 1, z: 1}
-  m_isScaleCustom: 0
---- !u!114 &488438912
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 488438910}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29fd615e119b7e54793f03d8e24065c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_pluginMgr:
-    m_plugins:
-    - SofaOpenglVisual
-    - SofaMiscCollision
-  m_sceneFileMgr:
-    m_hasScene: 1
-    m_filename: /SofaUnity/Scenes/SofaScenes/liver.scn
-  m_log: 0
-  IsSofaUpdating: 1
-  CatchSofaMessages: 1
-  StepbyStep: 0
-  m_asyncSimulation: 0
-  m_gravity: {x: 0, y: -9.8, z: 0}
-  m_timeStep: 0.02
-  breakerActivated: 0
-  m_objects: []
-  SimulationFPS: 0
---- !u!4 &488438913
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 488438910}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1602733681}
-  - {fileID: 1957713502}
-  - {fileID: 1542681011}
-  - {fileID: 99425295}
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!1 &616889951
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 616889952}
-  - component: {fileID: 616889953}
-  m_Layer: 0
-  m_Name: SofaNode - SurfLiver
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &616889952
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 616889951}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1829830675}
-  - {fileID: 1055747460}
-  - {fileID: 180523135}
-  m_Father: {fileID: 99425295}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &616889953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 616889951}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbd514e8b1708b348bb1987be968669c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_uniqueNameId: SurfLiver_2
-  m_sofaContext: {fileID: 488438912}
-  m_log: 0
-  m_sofaComponents:
-  - {fileID: 1829830674}
-  - {fileID: 1055747459}
-  - {fileID: 180523136}
-  m_hasTransformEngine: 1
-  m_translation: {x: 0, y: 0, z: 0}
-  m_isTranslationCustom: 0
-  m_rotation: {x: 0, y: 0, z: 0}
-  m_isRotationCustom: 0
-  m_scale: {x: 1, y: 1, z: 1}
-  m_isScaleCustom: 0
---- !u!1 &740211644
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 740211646}
-  - component: {fileID: 740211645}
-  m_Layer: 0
-  m_Name: SofaMesh  -  SofaMesh_8
-  m_TagString: Player
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &740211645
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 740211644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33eb14f5b03eef7498ad3ef1fc36ca3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_uniqueNameId: SofaMesh_8
-  m_sofaContext: {fileID: 488438912}
-  m_log: 0
-  m_ownerNode: {fileID: 99425296}
-  m_baseComponentType: 19
-  m_componentType: MechanicalObjectUnSetType_TetrahedronSetTopologyContainer
-  m_dataArchiver:
-    m_names:
-    - printLog
-    - listening
-    - filename
-    - checkTopology
-    - nbPoints
-    - checkConnexity
-    - createTriangleArray
-    m_types:
-    - bool
-    - bool
-    - string
-    - bool
-    - uint
-    - bool
-    - bool
-    m_stringData:
-    - m_owner: {fileID: 740211645}
-      m_dataName: filename
-      m_dataType: string
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 
-    m_boolData:
-    - m_owner: {fileID: 740211645}
-      m_dataName: printLog
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 740211645}
-      m_dataName: listening
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 740211645}
-      m_dataName: checkTopology
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 740211645}
-      m_dataName: checkConnexity
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 740211645}
-      m_dataName: createTriangleArray
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    m_intData:
-    - m_owner: {fileID: 740211645}
-      m_dataName: nbPoints
-      m_dataType: int
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 181
-      m_isUnsigned: 1
-    m_floatData: []
-    m_doubleData: []
-    m_vec2Data: []
-    m_vec3Data: []
-    m_vec4Data: []
-    m_otherNames:
-    - position
-    - points
-    - edges
-    - triangles
-    - tetrahedra
-    m_otherData:
-    - m_owner: {fileID: 740211645}
-      m_dataName: position
-      m_dataType: vector<Vec3d>
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-    - m_owner: {fileID: 740211645}
-      m_dataName: points
-      m_dataType: vector<unsigned int>
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-    - m_owner: {fileID: 740211645}
-      m_dataName: edges
-      m_dataType: vector<Edge>
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-    - m_owner: {fileID: 740211645}
-      m_dataName: triangles
-      m_dataType: vector<Triangle>
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-    - m_owner: {fileID: 740211645}
-      m_dataName: tetrahedra
-      m_dataType: vector<Tetrahedron>
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-  m_linkArchiver:
-    m_links: []
-    m_slaveLinks: []
-  m_forceUpdate: 0
---- !u!4 &740211646
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 740211644}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 99425295}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &744678192
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 744678193}
-  - component: {fileID: 744678194}
-  m_Layer: 0
-  m_Name: SofaNode - VisuLiver
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &744678193
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 744678192}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1514657917}
-  - {fileID: 825723682}
-  - {fileID: 1132973418}
-  m_Father: {fileID: 99425295}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &744678194
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 744678192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbd514e8b1708b348bb1987be968669c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_uniqueNameId: VisuLiver_1
-  m_sofaContext: {fileID: 488438912}
-  m_log: 0
-  m_sofaComponents:
-  - {fileID: 1514657916}
-  - {fileID: 825723679}
-  - {fileID: 1132973419}
-  m_hasTransformEngine: 1
-  m_translation: {x: 0, y: 0, z: 0}
-  m_isTranslationCustom: 0
-  m_rotation: {x: 0, y: 0, z: 0}
-  m_isRotationCustom: 0
-  m_scale: {x: 1, y: 1, z: 1}
-  m_isScaleCustom: 0
---- !u!1 &771820099
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 771820101}
-  - component: {fileID: 771820100}
-  m_Layer: 0
-  m_Name: DiagonalMass  -  computed using mass density
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &771820100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 771820099}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0271f7ab21246e7409de53c72f809575, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_uniqueNameId: SofaMass_9
-  m_sofaContext: {fileID: 488438912}
-  m_log: 0
-  m_ownerNode: {fileID: 99425296}
-  m_baseComponentType: 17
-  m_componentType: DiagonalMass
-  m_dataArchiver:
-    m_names:
-    - printLog
-    - listening
-    - isCompliance
-    - rayleighStiffness
-    - separateGravity
-    - rayleighMass
-    - massDensity
-    - totalMass
-    - computeMassOnRest
-    - filename
-    m_types:
-    - bool
-    - bool
-    - bool
-    - double
-    - bool
-    - double
-    - double
-    - double
-    - bool
-    - string
-    m_stringData:
-    - m_owner: {fileID: 771820100}
-      m_dataName: filename
-      m_dataType: string
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 
-    m_boolData:
-    - m_owner: {fileID: 771820100}
-      m_dataName: printLog
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 771820100}
-      m_dataName: listening
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 771820100}
-      m_dataName: isCompliance
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 771820100}
-      m_dataName: separateGravity
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 771820100}
-      m_dataName: computeMassOnRest
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    m_intData: []
-    m_floatData: []
-    m_doubleData:
-    - m_owner: {fileID: 771820100}
-      m_dataName: rayleighStiffness
-      m_dataType: double
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 771820100}
-      m_dataName: rayleighMass
-      m_dataType: double
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 771820100}
-      m_dataName: massDensity
-      m_dataType: double
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0.1
-    - m_owner: {fileID: 771820100}
-      m_dataName: totalMass
-      m_dataType: double
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 3.656085
-    m_vec2Data: []
-    m_vec3Data: []
-    m_vec4Data: []
-    m_otherNames:
-    - vertexMass
-    m_otherData:
-    - m_owner: {fileID: 771820100}
-      m_dataName: vertexMass
-      m_dataType: vector<double>
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-  m_linkArchiver:
-    m_links:
-    - m_owner: {fileID: 771820100}
-      m_linkName: mstate
-      m_linkPath: dofs
-    - m_owner: {fileID: 771820100}
-      m_linkName: topology
-      m_linkPath: topo
-    m_slaveLinks:
-    - m_owner: {fileID: 771820100}
-      m_linkName: slaves
-      m_linkPath: computed using mass density/PointEngine_vertexMass
-  myTab: 01000000010000000000000000000000000000000000000000000000000000000000000000000000
-  m_MyVector: {x: 20, y: 1, z: 0}
---- !u!4 &771820101
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 771820099}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 99425295}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &825723678
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 825723682}
-  - component: {fileID: 825723679}
-  - component: {fileID: 825723681}
-  - component: {fileID: 825723680}
+  - component: {fileID: 798305956}
+  - component: {fileID: 798305953}
+  - component: {fileID: 798305955}
+  - component: {fileID: 798305954}
   m_Layer: 0
   m_Name: OglModel  -  VisualModel
   m_TagString: Untagged
@@ -1506,22 +1385,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &825723679
+--- !u!114 &798305953
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 825723678}
+  m_GameObject: {fileID: 798305952}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9ada23308123864684a6f2bf864f07e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_uniqueNameId: SofaVisualModel_13
-  m_sofaContext: {fileID: 488438912}
+  m_uniqueNameId: SofaVisualModel_15
+  m_displayName: Not set
+  m_sofaContext: {fileID: 1864124670}
   m_log: 0
-  m_ownerNode: {fileID: 744678194}
+  m_ownerNode: {fileID: 738546310}
   m_baseComponentType: 22
   m_componentType: OglModel
   m_dataArchiver:
@@ -1588,14 +1468,14 @@ MonoBehaviour:
     - bool
     - bool
     m_stringData:
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: filename
       m_dataType: string
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: texturename
       m_dataType: string
       m_isReadOnly: 0
@@ -1603,140 +1483,140 @@ MonoBehaviour:
       m_isDirty: 0
       m_value: 
     m_boolData:
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: printLog
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: listening
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: initRestPositions
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: useNormals
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: updateNormals
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: computeTangents
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: updateTangents
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: handleDynamicTopology
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: fixMergedUVSeams
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: keepLines
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: putOnlyTexCoords
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: srgbTexturing
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: blendTranslucency
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: premultipliedAlpha
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: writeZTransparent
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: alphaBlend
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: depthTest
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: lineSmooth
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: pointSmooth
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: isEnabled
       m_dataType: bool
       m_isReadOnly: 0
@@ -1744,7 +1624,7 @@ MonoBehaviour:
       m_isDirty: 0
       m_value: 0
     m_intData:
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: cullFace
       m_dataType: int
       m_isReadOnly: 0
@@ -1753,14 +1633,14 @@ MonoBehaviour:
       m_value: 0
       m_isUnsigned: 0
     m_floatData:
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: lineWidth
       m_dataType: float
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 1
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: pointSize
       m_dataType: float
       m_isReadOnly: 0
@@ -1769,7 +1649,7 @@ MonoBehaviour:
       m_value: 1
     m_doubleData: []
     m_vec2Data:
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: scaleTex
       m_dataType: Vec2
       m_isReadOnly: 0
@@ -1777,7 +1657,7 @@ MonoBehaviour:
       m_isDirty: 0
       m_value: {x: 1, y: 1}
       m_isDouble: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: translationTex
       m_dataType: Vec2
       m_isReadOnly: 0
@@ -1786,7 +1666,7 @@ MonoBehaviour:
       m_value: {x: 0, y: 0}
       m_isDouble: 0
     m_vec3Data:
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: translation
       m_dataType: Vec3
       m_isReadOnly: 0
@@ -1794,7 +1674,7 @@ MonoBehaviour:
       m_isDirty: 0
       m_value: {x: 0, y: 0, z: 0}
       m_isDouble: 1
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: rotation
       m_dataType: Vec3
       m_isReadOnly: 0
@@ -1802,7 +1682,7 @@ MonoBehaviour:
       m_isDirty: 0
       m_value: {x: 0, y: 0, z: 0}
       m_isDouble: 1
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: scale3d
       m_dataType: Vec3
       m_isReadOnly: 0
@@ -1832,115 +1712,115 @@ MonoBehaviour:
     - sfactor
     - dfactor
     m_otherData:
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: position
       m_dataType: vector<Vec3d>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: restPosition
       m_dataType: vector<Vec3d>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: normal
       m_dataType: vector<Vec3d>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: vertices
       m_dataType: vector<Vec3d>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: texcoords
       m_dataType: vector<Vec2f>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: tangents
       m_dataType: vector<Vec3d>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: bitangents
       m_dataType: vector<Vec3d>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: edges
       m_dataType: vector<Edge>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: triangles
       m_dataType: vector<Triangle>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: quads
       m_dataType: vector<Quad>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: vertPosIdx
       m_dataType: vector<int>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: vertNormIdx
       m_dataType: vector<int>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: material
       m_dataType: Material
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: materials
       m_dataType: vectorMaterialCPUMemoryManagerMaterial>>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: groups
       m_dataType: vectorFaceGroupCPUMemoryManagerFaceGroup>>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: primitiveType
       m_dataType: OptionsGroup
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: blendEquation
       m_dataType: OptionsGroup
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: sfactor
       m_dataType: OptionsGroup
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_dataName: dfactor
       m_dataType: OptionsGroup
       m_isReadOnly: 0
@@ -1948,18 +1828,18 @@ MonoBehaviour:
       m_isDirty: 0
   m_linkArchiver:
     m_links:
-    - m_owner: {fileID: 825723679}
+    - m_owner: {fileID: 798305953}
       m_linkName: topology
       m_linkPath: /Liver/topo
     m_slaveLinks: []
   m_uvType: 1
---- !u!23 &825723680
+--- !u!23 &798305954
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 825723678}
+  m_GameObject: {fileID: 798305952}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -1990,234 +1870,29 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &825723681
+--- !u!33 &798305955
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 825723678}
-  m_Mesh: {fileID: 329272480}
---- !u!4 &825723682
+  m_GameObject: {fileID: 798305952}
+  m_Mesh: {fileID: 748749045}
+--- !u!4 &798305956
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 825723678}
+  m_GameObject: {fileID: 798305952}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 744678193}
+  m_Father: {fileID: 738546309}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &829025434
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 829025435}
-  - component: {fileID: 829025436}
-  m_Layer: 0
-  m_Name: FixedConstraint  -  FixedConstraint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &829025435
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 829025434}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 99425295}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &829025436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 829025434}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05b3958b6596e33498f60f6eb5464663, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_uniqueNameId: SofaConstraint_11
-  m_sofaContext: {fileID: 488438912}
-  m_log: 0
-  m_ownerNode: {fileID: 99425296}
-  m_baseComponentType: 8
-  m_componentType: FixedConstraint
-  m_dataArchiver:
-    m_names:
-    - printLog
-    - listening
-    - group
-    - endTime
-    - fixAll
-    - activate_projectVelocity
-    m_types:
-    - bool
-    - bool
-    - int
-    - double
-    - bool
-    - bool
-    m_stringData: []
-    m_boolData:
-    - m_owner: {fileID: 829025436}
-      m_dataName: printLog
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 829025436}
-      m_dataName: listening
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 829025436}
-      m_dataName: fixAll
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 829025436}
-      m_dataName: activate_projectVelocity
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    m_intData:
-    - m_owner: {fileID: 829025436}
-      m_dataName: group
-      m_dataType: int
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-      m_isUnsigned: 0
-    m_floatData: []
-    m_doubleData:
-    - m_owner: {fileID: 829025436}
-      m_dataName: endTime
-      m_dataType: double
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: -1
-    m_vec2Data: []
-    m_vec3Data: []
-    m_vec4Data: []
-    m_otherNames:
-    - indices
-    m_otherData:
-    - m_owner: {fileID: 829025436}
-      m_dataName: indices
-      m_dataType: vector<unsigned int>
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-  m_linkArchiver:
-    m_links:
-    - m_owner: {fileID: 829025436}
-      m_linkName: mstate
-      m_linkPath: dofs
-    - m_owner: {fileID: 829025436}
-      m_linkName: topology
-      m_linkPath: topo
-    m_slaveLinks:
-    - m_owner: {fileID: 829025436}
-      m_linkName: slaves
-      m_linkPath: FixedConstraint/PointSubsetEngine_indices
---- !u!1 &947733908
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 947733910}
-  - component: {fileID: 947733909}
-  m_Layer: 0
-  m_Name: Directional Light
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!108 &947733909
-Light:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 947733908}
-  m_Enabled: 1
-  serializedVersion: 8
-  m_Type: 1
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
-  m_Range: 10
-  m_SpotAngle: 30
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 2
-    m_Resolution: -1
-    m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_Lightmapping: 4
-  m_LightShadowCasterMode: 0
-  m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
---- !u!4 &947733910
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 947733908}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!43 &968812332
+--- !u!43 &894465853
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2377,7 +2052,7 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1 &1055747458
+--- !u!1 &947733908
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2385,198 +2060,68 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1055747460}
-  - component: {fileID: 1055747459}
+  - component: {fileID: 947733910}
+  - component: {fileID: 947733909}
   m_Layer: 0
-  m_Name: SphereCollisionModel  -  CollisionModel
+  m_Name: Directional Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1055747459
-MonoBehaviour:
+  m_IsActive: 0
+--- !u!108 &947733909
+Light:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1055747458}
+  m_GameObject: {fileID: 947733908}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdc1ff4aee4589a4f967e46a74099f13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_uniqueNameId: SofaCollisionModel_16
-  m_sofaContext: {fileID: 488438912}
-  m_log: 0
-  m_ownerNode: {fileID: 616889953}
-  m_baseComponentType: 5
-  m_componentType: SphereCollisionModel
-  m_dataArchiver:
-    m_names:
-    - printLog
-    - listening
-    - active
-    - moving
-    - simulated
-    - selfCollision
-    - proximity
-    - contactStiffness
-    - contactFriction
-    - contactRestitution
-    - contactResponse
-    - radius
-    m_types:
-    - bool
-    - bool
-    - bool
-    - bool
-    - bool
-    - bool
-    - double
-    - double
-    - double
-    - double
-    - string
-    - double
-    m_stringData:
-    - m_owner: {fileID: 1055747459}
-      m_dataName: contactResponse
-      m_dataType: string
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 
-    m_boolData:
-    - m_owner: {fileID: 1055747459}
-      m_dataName: printLog
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 1055747459}
-      m_dataName: listening
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 1055747459}
-      m_dataName: active
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 1055747459}
-      m_dataName: moving
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 1055747459}
-      m_dataName: simulated
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 1055747459}
-      m_dataName: selfCollision
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    m_intData: []
-    m_floatData: []
-    m_doubleData:
-    - m_owner: {fileID: 1055747459}
-      m_dataName: proximity
-      m_dataType: double
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 1055747459}
-      m_dataName: contactStiffness
-      m_dataType: double
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 10
-    - m_owner: {fileID: 1055747459}
-      m_dataName: contactFriction
-      m_dataType: double
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 1055747459}
-      m_dataName: contactRestitution
-      m_dataType: double
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 1055747459}
-      m_dataName: radius
-      m_dataType: double
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0.85
-    m_vec2Data: []
-    m_vec3Data: []
-    m_vec4Data: []
-    m_otherNames:
-    - color
-    - group
-    - listRadius
-    m_otherData:
-    - m_owner: {fileID: 1055747459}
-      m_dataName: color
-      m_dataType: RGBAColor
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-    - m_owner: {fileID: 1055747459}
-      m_dataName: group
-      m_dataType: std::set<int>
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-    - m_owner: {fileID: 1055747459}
-      m_dataName: listRadius
-      m_dataType: vector<double>
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-  m_linkArchiver:
-    m_links:
-    - m_owner: {fileID: 1055747459}
-      m_linkName: collisionElementActiver
-      m_linkPath: 
-    m_slaveLinks: []
-  m_drawCollision: 0
-  m_collisionElement: []
---- !u!4 &1055747460
+  serializedVersion: 8
+  m_Type: 1
+  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Intensity: 1
+  m_Range: 10
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 2
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!4 &947733910
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1055747458}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 947733908}
+  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 616889952}
+  m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1132973417
+  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1190268915
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2584,154 +2129,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1132973418}
-  - component: {fileID: 1132973419}
-  m_Layer: 0
-  m_Name: BarycentricMapping  -  visual mapping
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1132973418
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1132973417}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 744678193}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1132973419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1132973417}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc6872e208912c44ca3444751ac08ff3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_uniqueNameId: SofaMechanicalMapping_14
-  m_sofaContext: {fileID: 488438912}
-  m_log: 0
-  m_ownerNode: {fileID: 744678194}
-  m_baseComponentType: 18
-  m_componentType: BarycentricMapping
-  m_dataArchiver:
-    m_names:
-    - printLog
-    - listening
-    - mapForces
-    - mapConstraints
-    - mapMasses
-    - mapMatrices
-    - applyRestPosition
-    m_types:
-    - bool
-    - bool
-    - bool
-    - bool
-    - bool
-    - bool
-    - bool
-    m_stringData: []
-    m_boolData:
-    - m_owner: {fileID: 1132973419}
-      m_dataName: printLog
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 1132973419}
-      m_dataName: listening
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 1132973419}
-      m_dataName: mapForces
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 1132973419}
-      m_dataName: mapConstraints
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 1132973419}
-      m_dataName: mapMasses
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 1132973419}
-      m_dataName: mapMatrices
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 1132973419}
-      m_dataName: applyRestPosition
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    m_intData: []
-    m_floatData: []
-    m_doubleData: []
-    m_vec2Data: []
-    m_vec3Data: []
-    m_vec4Data: []
-    m_otherNames: []
-    m_otherData: []
-  m_linkArchiver:
-    m_links:
-    - m_owner: {fileID: 1132973419}
-      m_linkName: input
-      m_linkPath: ../dofs
-    - m_owner: {fileID: 1132973419}
-      m_linkName: output
-      m_linkPath: VisualModel
-    - m_owner: {fileID: 1132973419}
-      m_linkName: mapper
-      m_linkPath: visual mapping/unnamed
-    - m_owner: {fileID: 1132973419}
-      m_linkName: input_topology
-      m_linkPath: /Liver/topo
-    - m_owner: {fileID: 1132973419}
-      m_linkName: output_topology
-      m_linkPath: /Liver/topo
-    m_slaveLinks:
-    - m_owner: {fileID: 1132973419}
-      m_linkName: slaves
-      m_linkPath: visual mapping/unnamed
---- !u!1 &1514657915
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1514657917}
-  - component: {fileID: 1514657916}
+  - component: {fileID: 1190268917}
+  - component: {fileID: 1190268916}
   m_Layer: 0
   m_Name: MeshObjLoader  -  meshLoaderVisu
   m_TagString: Untagged
@@ -2739,22 +2138,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1514657916
+--- !u!114 &1190268916
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1514657915}
+  m_GameObject: {fileID: 1190268915}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8303bbfe06f7b7043a38754ae9a3cf70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_uniqueNameId: SofaLoader_12
-  m_sofaContext: {fileID: 488438912}
+  m_uniqueNameId: SofaLoader_14
+  m_displayName: Not set
+  m_sofaContext: {fileID: 1864124670}
   m_log: 0
-  m_ownerNode: {fileID: 744678194}
+  m_ownerNode: {fileID: 738546310}
   m_baseComponentType: 16
   m_componentType: MeshObjLoader
   m_dataArchiver:
@@ -2783,7 +2183,7 @@ MonoBehaviour:
     - Vec3d
     - bool
     m_stringData:
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: filename
       m_dataType: string
       m_isReadOnly: 0
@@ -2791,49 +2191,49 @@ MonoBehaviour:
       m_isDirty: 0
       m_value: mesh/liver-smooth.obj
     m_boolData:
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: printLog
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: listening
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: flipNormals
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: triangulate
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: createSubelements
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: onlyAttachedPoints
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: handleSeams
       m_dataType: bool
       m_isReadOnly: 0
@@ -2845,7 +2245,7 @@ MonoBehaviour:
     m_doubleData: []
     m_vec2Data: []
     m_vec3Data:
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: translation
       m_dataType: Vec3
       m_isReadOnly: 0
@@ -2853,7 +2253,7 @@ MonoBehaviour:
       m_isDirty: 0
       m_value: {x: 0, y: 0, z: 0}
       m_isDouble: 1
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: rotation
       m_dataType: Vec3
       m_isReadOnly: 0
@@ -2861,7 +2261,7 @@ MonoBehaviour:
       m_isDirty: 0
       m_value: {x: 0, y: 0, z: 0}
       m_isDouble: 1
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: scale3d
       m_dataType: Vec3
       m_isReadOnly: 0
@@ -2893,127 +2293,127 @@ MonoBehaviour:
     - vertPosIdx
     - vertNormIdx
     m_otherData:
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: position
       m_dataType: vector<Vec3d>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: polylines
       m_dataType: vector<vector<unsigned int>>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: edges
       m_dataType: vector<Edge>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: triangles
       m_dataType: vector<Triangle>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: quads
       m_dataType: vector<Quad>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: polygons
       m_dataType: vector<vector<unsigned int>>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: tetrahedra
       m_dataType: vector<Tetrahedron>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: hexahedra
       m_dataType: vector<Hexahedron>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: pentahedra
       m_dataType: vector<Pentahedron>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: pyramids
       m_dataType: vector<Pyramid>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: normals
       m_dataType: vector<Vec3d>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: transformation
       m_dataType: Mat4x4d
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: faceList
       m_dataType: SVectorSVector<int>>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: texcoordsIndex
       m_dataType: SVectorSVector<int>>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: positionsDefinition
       m_dataType: vector<Vec3d>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: texcoordsDefinition
       m_dataType: vector<Vec2d>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: normalsIndex
       m_dataType: SVectorSVector<int>>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: normalsDefinition
       m_dataType: vector<Vec3d>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: texcoords
       m_dataType: vector<Vec2d>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: vertPosIdx
       m_dataType: vector<int>
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
-    - m_owner: {fileID: 1514657916}
+    - m_owner: {fileID: 1190268916}
       m_dataName: vertNormIdx
       m_dataType: vector<int>
       m_isReadOnly: 0
@@ -3022,21 +2422,21 @@ MonoBehaviour:
   m_linkArchiver:
     m_links: []
     m_slaveLinks: []
---- !u!4 &1514657917
+--- !u!4 &1190268917
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1514657915}
+  m_GameObject: {fileID: 1190268915}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 744678193}
+  m_Father: {fileID: 738546309}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1542681009
+--- !u!1 &1199767327
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3044,95 +2444,12 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1542681011}
-  - component: {fileID: 1542681010}
-  m_Layer: 0
-  m_Name: DefaultAnimationLoop  -  defaultAnimationLoop
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1542681010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1542681009}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3c67d96b8d166a49818dc88d50c4486, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_uniqueNameId: SofaAnimationLoop_6
-  m_sofaContext: {fileID: 488438912}
-  m_log: 0
-  m_ownerNode: {fileID: 488438911}
-  m_baseComponentType: 0
-  m_componentType: DefaultAnimationLoop
-  m_dataArchiver:
-    m_names:
-    - printLog
-    - listening
-    m_types:
-    - bool
-    - bool
-    m_stringData: []
-    m_boolData:
-    - m_owner: {fileID: 1542681010}
-      m_dataName: printLog
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    - m_owner: {fileID: 1542681010}
-      m_dataName: listening
-      m_dataType: bool
-      m_isReadOnly: 0
-      m_isEdited: 0
-      m_isDirty: 0
-      m_value: 0
-    m_intData: []
-    m_floatData: []
-    m_doubleData: []
-    m_vec2Data: []
-    m_vec3Data: []
-    m_vec4Data: []
-    m_otherNames: []
-    m_otherData: []
-  m_linkArchiver:
-    m_links: []
-    m_slaveLinks: []
---- !u!4 &1542681011
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1542681009}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 488438913}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1602733678
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1602733681}
-  - component: {fileID: 1602733680}
-  - component: {fileID: 1602733684}
-  - component: {fileID: 1602733683}
-  - component: {fileID: 1602733682}
-  - component: {fileID: 1602733679}
+  - component: {fileID: 1199767330}
+  - component: {fileID: 1199767329}
+  - component: {fileID: 1199767333}
+  - component: {fileID: 1199767332}
+  - component: {fileID: 1199767331}
+  - component: {fileID: 1199767328}
   m_Layer: 0
   m_Name: SofaCollisionPipeline
   m_TagString: Untagged
@@ -3140,22 +2457,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1602733679
+--- !u!114 &1199767328
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1602733678}
+  m_GameObject: {fileID: 1199767327}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e88f85a8ada110442a5b5aad21997e9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_uniqueNameId: SofaCollisionIntersection_4
-  m_sofaContext: {fileID: 488438912}
+  m_uniqueNameId: SofaCollisionIntersection_5
+  m_displayName: Not set
+  m_sofaContext: {fileID: 1864124670}
   m_log: 0
-  m_ownerNode: {fileID: 488438911}
+  m_ownerNode: {fileID: 1864124669}
   m_baseComponentType: 4
   m_componentType: MinProximityIntersection
   m_dataArchiver:
@@ -3181,49 +2499,49 @@ MonoBehaviour:
     - bool
     m_stringData: []
     m_boolData:
-    - m_owner: {fileID: 1602733679}
+    - m_owner: {fileID: 1199767328}
       m_dataName: printLog
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 1602733679}
+    - m_owner: {fileID: 1199767328}
       m_dataName: listening
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 1602733679}
+    - m_owner: {fileID: 1199767328}
       m_dataName: useSphereTriangle
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 1602733679}
+    - m_owner: {fileID: 1199767328}
       m_dataName: usePointPoint
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 1602733679}
+    - m_owner: {fileID: 1199767328}
       m_dataName: useSurfaceNormals
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 1602733679}
+    - m_owner: {fileID: 1199767328}
       m_dataName: useLinePoint
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 1602733679}
+    - m_owner: {fileID: 1199767328}
       m_dataName: useLineLine
       m_dataType: bool
       m_isReadOnly: 0
@@ -3233,14 +2551,14 @@ MonoBehaviour:
     m_intData: []
     m_floatData: []
     m_doubleData:
-    - m_owner: {fileID: 1602733679}
+    - m_owner: {fileID: 1199767328}
       m_dataName: alarmDistance
       m_dataType: double
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0.8
-    - m_owner: {fileID: 1602733679}
+    - m_owner: {fileID: 1199767328}
       m_dataName: contactDistance
       m_dataType: double
       m_isReadOnly: 0
@@ -3256,13 +2574,13 @@ MonoBehaviour:
     m_links: []
     m_slaveLinks: []
   m_showData: 0
---- !u!114 &1602733680
+--- !u!114 &1199767329
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1602733678}
+  m_GameObject: {fileID: 1199767327}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6545565ae3ca7445bb32659194b41cc, type: 3}
@@ -3271,36 +2589,37 @@ MonoBehaviour:
   m_uniqueNameId: None
   m_parentName: None
   m_log: 0
---- !u!4 &1602733681
+--- !u!4 &1199767330
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1602733678}
+  m_GameObject: {fileID: 1199767327}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 488438913}
+  m_Father: {fileID: 1864124671}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1602733682
+--- !u!114 &1199767331
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1602733678}
+  m_GameObject: {fileID: 1199767327}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e88f85a8ada110442a5b5aad21997e9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_uniqueNameId: SofaCollisionAlgorithm_3
-  m_sofaContext: {fileID: 488438912}
+  m_uniqueNameId: SofaCollisionAlgorithm_4
+  m_displayName: Not set
+  m_sofaContext: {fileID: 1864124670}
   m_log: 0
-  m_ownerNode: {fileID: 488438911}
+  m_ownerNode: {fileID: 1864124669}
   m_baseComponentType: 2
   m_componentType: DefaultContactManager
   m_dataArchiver:
@@ -3313,7 +2632,7 @@ MonoBehaviour:
     - bool
     - string
     m_stringData:
-    - m_owner: {fileID: 1602733682}
+    - m_owner: {fileID: 1199767331}
       m_dataName: responseParams
       m_dataType: string
       m_isReadOnly: 0
@@ -3321,14 +2640,14 @@ MonoBehaviour:
       m_isDirty: 0
       m_value: 
     m_boolData:
-    - m_owner: {fileID: 1602733682}
+    - m_owner: {fileID: 1199767331}
       m_dataName: printLog
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 1602733682}
+    - m_owner: {fileID: 1199767331}
       m_dataName: listening
       m_dataType: bool
       m_isReadOnly: 0
@@ -3344,7 +2663,7 @@ MonoBehaviour:
     m_otherNames:
     - response
     m_otherData:
-    - m_owner: {fileID: 1602733682}
+    - m_owner: {fileID: 1199767331}
       m_dataName: response
       m_dataType: OptionsGroup
       m_isReadOnly: 0
@@ -3354,22 +2673,23 @@ MonoBehaviour:
     m_links: []
     m_slaveLinks: []
   m_showData: 0
---- !u!114 &1602733683
+--- !u!114 &1199767332
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1602733678}
+  m_GameObject: {fileID: 1199767327}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e88f85a8ada110442a5b5aad21997e9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_uniqueNameId: SofaCollisionDetection_2
-  m_sofaContext: {fileID: 488438912}
+  m_uniqueNameId: SofaCollisionDetection_3
+  m_displayName: Not set
+  m_sofaContext: {fileID: 1864124670}
   m_log: 0
-  m_ownerNode: {fileID: 488438911}
+  m_ownerNode: {fileID: 1864124669}
   m_baseComponentType: 3
   m_componentType: BruteForceDetection
   m_dataArchiver:
@@ -3381,14 +2701,14 @@ MonoBehaviour:
     - bool
     m_stringData: []
     m_boolData:
-    - m_owner: {fileID: 1602733683}
+    - m_owner: {fileID: 1199767332}
       m_dataName: printLog
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 1602733683}
+    - m_owner: {fileID: 1199767332}
       m_dataName: listening
       m_dataType: bool
       m_isReadOnly: 0
@@ -3407,22 +2727,23 @@ MonoBehaviour:
     m_links: []
     m_slaveLinks: []
   m_showData: 0
---- !u!114 &1602733684
+--- !u!114 &1199767333
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1602733678}
+  m_GameObject: {fileID: 1199767327}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e88f85a8ada110442a5b5aad21997e9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_uniqueNameId: SofaCollisionPipeline_1
-  m_sofaContext: {fileID: 488438912}
+  m_uniqueNameId: SofaCollisionPipeline_2
+  m_displayName: Not set
+  m_sofaContext: {fileID: 1864124670}
   m_log: 0
-  m_ownerNode: {fileID: 488438911}
+  m_ownerNode: {fileID: 1864124669}
   m_baseComponentType: 6
   m_componentType: DefaultPipeline
   m_dataArchiver:
@@ -3436,14 +2757,14 @@ MonoBehaviour:
     - int
     m_stringData: []
     m_boolData:
-    - m_owner: {fileID: 1602733684}
+    - m_owner: {fileID: 1199767333}
       m_dataName: printLog
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 1602733684}
+    - m_owner: {fileID: 1199767333}
       m_dataName: listening
       m_dataType: bool
       m_isReadOnly: 0
@@ -3451,7 +2772,7 @@ MonoBehaviour:
       m_isDirty: 0
       m_value: 0
     m_intData:
-    - m_owner: {fileID: 1602733684}
+    - m_owner: {fileID: 1199767333}
       m_dataName: depth
       m_dataType: int
       m_isReadOnly: 0
@@ -3470,6 +2791,903 @@ MonoBehaviour:
     m_links: []
     m_slaveLinks: []
   m_showData: 0
+--- !u!1 &1294480044
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1294480046}
+  - component: {fileID: 1294480045}
+  m_Layer: 0
+  m_Name: SofaMesh  -  SofaMesh_10
+  m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1294480045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294480044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33eb14f5b03eef7498ad3ef1fc36ca3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_uniqueNameId: SofaMesh_10
+  m_displayName: Not set
+  m_sofaContext: {fileID: 1864124670}
+  m_log: 0
+  m_ownerNode: {fileID: 17853905}
+  m_baseComponentType: 19
+  m_componentType: MechanicalObjectUnSetType_TetrahedronSetTopologyContainer
+  m_dataArchiver:
+    m_names:
+    - printLog
+    - listening
+    - filename
+    - checkTopology
+    - nbPoints
+    - checkConnexity
+    - createTriangleArray
+    m_types:
+    - bool
+    - bool
+    - string
+    - bool
+    - uint
+    - bool
+    - bool
+    m_stringData:
+    - m_owner: {fileID: 1294480045}
+      m_dataName: filename
+      m_dataType: string
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 
+    m_boolData:
+    - m_owner: {fileID: 1294480045}
+      m_dataName: printLog
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1294480045}
+      m_dataName: listening
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1294480045}
+      m_dataName: checkTopology
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1294480045}
+      m_dataName: checkConnexity
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1294480045}
+      m_dataName: createTriangleArray
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    m_intData:
+    - m_owner: {fileID: 1294480045}
+      m_dataName: nbPoints
+      m_dataType: int
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 181
+      m_isUnsigned: 1
+    m_floatData: []
+    m_doubleData: []
+    m_vec2Data: []
+    m_vec3Data: []
+    m_vec4Data: []
+    m_otherNames:
+    - position
+    - points
+    - edges
+    - triangles
+    - tetrahedra
+    m_otherData:
+    - m_owner: {fileID: 1294480045}
+      m_dataName: position
+      m_dataType: vector<Vec3d>
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+    - m_owner: {fileID: 1294480045}
+      m_dataName: points
+      m_dataType: vector<unsigned int>
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+    - m_owner: {fileID: 1294480045}
+      m_dataName: edges
+      m_dataType: vector<Edge>
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+    - m_owner: {fileID: 1294480045}
+      m_dataName: triangles
+      m_dataType: vector<Triangle>
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+    - m_owner: {fileID: 1294480045}
+      m_dataName: tetrahedra
+      m_dataType: vector<Tetrahedron>
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+  m_linkArchiver:
+    m_links: []
+    m_slaveLinks: []
+  m_forceUpdate: 0
+--- !u!4 &1294480046
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294480044}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 17853904}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1503362987
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1503362989}
+  - component: {fileID: 1503362988}
+  m_Layer: 0
+  m_Name: DiagonalMass  -  computed using mass density
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1503362988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503362987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0271f7ab21246e7409de53c72f809575, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_uniqueNameId: SofaMass_11
+  m_displayName: Not set
+  m_sofaContext: {fileID: 1864124670}
+  m_log: 0
+  m_ownerNode: {fileID: 17853905}
+  m_baseComponentType: 17
+  m_componentType: DiagonalMass
+  m_dataArchiver:
+    m_names:
+    - printLog
+    - listening
+    - isCompliance
+    - rayleighStiffness
+    - separateGravity
+    - rayleighMass
+    - massDensity
+    - totalMass
+    - computeMassOnRest
+    - filename
+    m_types:
+    - bool
+    - bool
+    - bool
+    - double
+    - bool
+    - double
+    - double
+    - double
+    - bool
+    - string
+    m_stringData:
+    - m_owner: {fileID: 1503362988}
+      m_dataName: filename
+      m_dataType: string
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 
+    m_boolData:
+    - m_owner: {fileID: 1503362988}
+      m_dataName: printLog
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1503362988}
+      m_dataName: listening
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1503362988}
+      m_dataName: isCompliance
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1503362988}
+      m_dataName: separateGravity
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1503362988}
+      m_dataName: computeMassOnRest
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    m_intData: []
+    m_floatData: []
+    m_doubleData:
+    - m_owner: {fileID: 1503362988}
+      m_dataName: rayleighStiffness
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1503362988}
+      m_dataName: rayleighMass
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1503362988}
+      m_dataName: massDensity
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0.1
+    - m_owner: {fileID: 1503362988}
+      m_dataName: totalMass
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 3.656085
+    m_vec2Data: []
+    m_vec3Data: []
+    m_vec4Data: []
+    m_otherNames:
+    - vertexMass
+    m_otherData:
+    - m_owner: {fileID: 1503362988}
+      m_dataName: vertexMass
+      m_dataType: vector<double>
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+  m_linkArchiver:
+    m_links:
+    - m_owner: {fileID: 1503362988}
+      m_linkName: mstate
+      m_linkPath: dofs
+    - m_owner: {fileID: 1503362988}
+      m_linkName: topology
+      m_linkPath: topo
+    m_slaveLinks:
+    - m_owner: {fileID: 1503362988}
+      m_linkName: slaves
+      m_linkPath: computed using mass density/PointEngine_vertexMass
+  myTab: 01000000010000000000000000000000000000000000000000000000000000000000000000000000
+  m_MyVector: {x: 20, y: 1, z: 0}
+--- !u!4 &1503362989
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503362987}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 17853904}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1641427493
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1641427494}
+  - component: {fileID: 1641427495}
+  m_Layer: 0
+  m_Name: BarycentricMapping  -  visual mapping
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1641427494
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641427493}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 738546309}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1641427495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641427493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc6872e208912c44ca3444751ac08ff3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_uniqueNameId: SofaMechanicalMapping_16
+  m_displayName: Not set
+  m_sofaContext: {fileID: 1864124670}
+  m_log: 0
+  m_ownerNode: {fileID: 738546310}
+  m_baseComponentType: 18
+  m_componentType: BarycentricMapping
+  m_dataArchiver:
+    m_names:
+    - printLog
+    - listening
+    - mapForces
+    - mapConstraints
+    - mapMasses
+    - mapMatrices
+    - applyRestPosition
+    m_types:
+    - bool
+    - bool
+    - bool
+    - bool
+    - bool
+    - bool
+    - bool
+    m_stringData: []
+    m_boolData:
+    - m_owner: {fileID: 1641427495}
+      m_dataName: printLog
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1641427495}
+      m_dataName: listening
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1641427495}
+      m_dataName: mapForces
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1641427495}
+      m_dataName: mapConstraints
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1641427495}
+      m_dataName: mapMasses
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1641427495}
+      m_dataName: mapMatrices
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1641427495}
+      m_dataName: applyRestPosition
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    m_intData: []
+    m_floatData: []
+    m_doubleData: []
+    m_vec2Data: []
+    m_vec3Data: []
+    m_vec4Data: []
+    m_otherNames: []
+    m_otherData: []
+  m_linkArchiver:
+    m_links:
+    - m_owner: {fileID: 1641427495}
+      m_linkName: input
+      m_linkPath: ../dofs
+    - m_owner: {fileID: 1641427495}
+      m_linkName: output
+      m_linkPath: VisualModel
+    - m_owner: {fileID: 1641427495}
+      m_linkName: mapper
+      m_linkPath: visual mapping/unnamed
+    - m_owner: {fileID: 1641427495}
+      m_linkName: input_topology
+      m_linkPath: /Liver/topo
+    - m_owner: {fileID: 1641427495}
+      m_linkName: output_topology
+      m_linkPath: /Liver/topo
+    m_slaveLinks:
+    - m_owner: {fileID: 1641427495}
+      m_linkName: slaves
+      m_linkPath: visual mapping/unnamed
+--- !u!1 &1699023970
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1699023974}
+  - component: {fileID: 1699023971}
+  - component: {fileID: 1699023973}
+  - component: {fileID: 1699023972}
+  m_Layer: 0
+  m_Name: TetrahedralCorotationalFEMForceField  -  FEM
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1699023971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699023970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5515e3f9a76f9054ea2f6a42fc598fcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_uniqueNameId: SofaFEMForceField_12
+  m_displayName: Not set
+  m_sofaContext: {fileID: 1864124670}
+  m_log: 0
+  m_ownerNode: {fileID: 17853905}
+  m_baseComponentType: 13
+  m_componentType: TetrahedralCorotationalFEMForceField
+  m_dataArchiver:
+    m_names:
+    - printLog
+    - listening
+    - isCompliance
+    - rayleighStiffness
+    - method
+    - poissonRatio
+    - youngModulus
+    - updateStiffnessMatrix
+    - computeGlobalMatrix
+    m_types:
+    - bool
+    - bool
+    - bool
+    - double
+    - string
+    - double
+    - double
+    - bool
+    - bool
+    m_stringData:
+    - m_owner: {fileID: 1699023971}
+      m_dataName: method
+      m_dataType: string
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: large
+    m_boolData:
+    - m_owner: {fileID: 1699023971}
+      m_dataName: printLog
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1699023971}
+      m_dataName: listening
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1699023971}
+      m_dataName: isCompliance
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1699023971}
+      m_dataName: updateStiffnessMatrix
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1699023971}
+      m_dataName: computeGlobalMatrix
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    m_intData: []
+    m_floatData: []
+    m_doubleData:
+    - m_owner: {fileID: 1699023971}
+      m_dataName: rayleighStiffness
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1699023971}
+      m_dataName: poissonRatio
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0.3
+    - m_owner: {fileID: 1699023971}
+      m_dataName: youngModulus
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 600
+    m_vec2Data: []
+    m_vec3Data: []
+    m_vec4Data: []
+    m_otherNames:
+    - localStiffnessFactor
+    m_otherData:
+    - m_owner: {fileID: 1699023971}
+      m_dataName: localStiffnessFactor
+      m_dataType: vector<double>
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+  m_linkArchiver:
+    m_links:
+    - m_owner: {fileID: 1699023971}
+      m_linkName: mstate
+      m_linkPath: dofs
+    - m_owner: {fileID: 1699023971}
+      m_linkName: topology
+      m_linkPath: topo
+    m_slaveLinks:
+    - m_owner: {fileID: 1699023971}
+      m_linkName: slaves
+      m_linkPath: FEM/TetrahedronEngine_tetrahedronInfo
+--- !u!23 &1699023972
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699023970}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 1795805217}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &1699023973
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699023970}
+  m_Mesh: {fileID: 894465853}
+--- !u!4 &1699023974
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699023970}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 17853904}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1705324456
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1705324458}
+  - component: {fileID: 1705324457}
+  m_Layer: 0
+  m_Name: SphereCollisionModel  -  CollisionModel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1705324457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1705324456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdc1ff4aee4589a4f967e46a74099f13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_uniqueNameId: SofaCollisionModel_19
+  m_displayName: Not set
+  m_sofaContext: {fileID: 1864124670}
+  m_log: 0
+  m_ownerNode: {fileID: 148338075}
+  m_baseComponentType: 5
+  m_componentType: SphereCollisionModel
+  m_dataArchiver:
+    m_names:
+    - printLog
+    - listening
+    - active
+    - moving
+    - simulated
+    - selfCollision
+    - proximity
+    - contactStiffness
+    - contactFriction
+    - contactRestitution
+    - contactResponse
+    - radius
+    m_types:
+    - bool
+    - bool
+    - bool
+    - bool
+    - bool
+    - bool
+    - double
+    - double
+    - double
+    - double
+    - string
+    - double
+    m_stringData:
+    - m_owner: {fileID: 1705324457}
+      m_dataName: contactResponse
+      m_dataType: string
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 
+    m_boolData:
+    - m_owner: {fileID: 1705324457}
+      m_dataName: printLog
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1705324457}
+      m_dataName: listening
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1705324457}
+      m_dataName: active
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1705324457}
+      m_dataName: moving
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1705324457}
+      m_dataName: simulated
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1705324457}
+      m_dataName: selfCollision
+      m_dataType: bool
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    m_intData: []
+    m_floatData: []
+    m_doubleData:
+    - m_owner: {fileID: 1705324457}
+      m_dataName: proximity
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1705324457}
+      m_dataName: contactStiffness
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 10
+    - m_owner: {fileID: 1705324457}
+      m_dataName: contactFriction
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1705324457}
+      m_dataName: contactRestitution
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0
+    - m_owner: {fileID: 1705324457}
+      m_dataName: radius
+      m_dataType: double
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+      m_value: 0.85
+    m_vec2Data: []
+    m_vec3Data: []
+    m_vec4Data: []
+    m_otherNames:
+    - color
+    - group
+    - listRadius
+    m_otherData:
+    - m_owner: {fileID: 1705324457}
+      m_dataName: color
+      m_dataType: RGBAColor
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+    - m_owner: {fileID: 1705324457}
+      m_dataName: group
+      m_dataType: std::set<int>
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+    - m_owner: {fileID: 1705324457}
+      m_dataName: listRadius
+      m_dataType: vector<double>
+      m_isReadOnly: 0
+      m_isEdited: 0
+      m_isDirty: 0
+  m_linkArchiver:
+    m_links:
+    - m_owner: {fileID: 1705324457}
+      m_linkName: collisionElementActiver
+      m_linkPath: 
+    m_slaveLinks: []
+  m_drawCollision: 0
+  m_collisionElement: []
+--- !u!4 &1705324458
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1705324456}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 148338074}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1793604921
 GameObject:
   m_ObjectHideFlags: 0
@@ -3552,73 +3770,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 20, y: 0, z: 0}
---- !u!1 &1829830673
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1829830675}
-  - component: {fileID: 1829830674}
-  m_Layer: 0
-  m_Name: SofaMesh  -  SofaMesh_15
-  m_TagString: Player
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1829830674
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1829830673}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33eb14f5b03eef7498ad3ef1fc36ca3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_uniqueNameId: SofaMesh_15
-  m_sofaContext: {fileID: 488438912}
-  m_log: 0
-  m_ownerNode: {fileID: 616889953}
-  m_baseComponentType: 19
-  m_componentType: MechanicalObject
-  m_dataArchiver:
-    m_names: []
-    m_types: []
-    m_stringData: []
-    m_boolData: []
-    m_intData: []
-    m_floatData: []
-    m_doubleData: []
-    m_vec2Data: []
-    m_vec3Data: []
-    m_vec4Data: []
-    m_otherNames: []
-    m_otherData: []
-  m_linkArchiver:
-    m_links: []
-    m_slaveLinks: []
-  m_forceUpdate: 0
---- !u!4 &1829830675
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1829830673}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 616889952}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!21 &1912903556
+--- !u!21 &1795805217
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
@@ -3644,7 +3796,7 @@ Material:
     m_Floats: []
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!1 &1957713500
+--- !u!1 &1864124668
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3652,8 +3804,106 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1957713502}
-  - component: {fileID: 1957713501}
+  - component: {fileID: 1864124671}
+  - component: {fileID: 1864124670}
+  - component: {fileID: 1864124669}
+  m_Layer: 0
+  m_Name: SofaContext
+  m_TagString: GameController
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1864124669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1864124668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd514e8b1708b348bb1987be968669c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_uniqueNameId: root
+  m_displayName: root
+  m_sofaContext: {fileID: 1864124670}
+  m_log: 0
+  m_parentNodeName: None
+  m_sofaComponents:
+  - {fileID: 1199767333}
+  - {fileID: 1199767332}
+  - {fileID: 1199767331}
+  - {fileID: 1199767328}
+  - {fileID: 2111704546}
+  - {fileID: 655444173}
+  - {fileID: 328637398}
+  m_hasTransformEngine: 0
+  m_translation: {x: 0, y: 0, z: 0}
+  m_isTranslationCustom: 0
+  m_rotation: {x: 0, y: 0, z: 0}
+  m_isRotationCustom: 0
+  m_scale: {x: 1, y: 1, z: 1}
+  m_isScaleCustom: 0
+--- !u!114 &1864124670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1864124668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fd615e119b7e54793f03d8e24065c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_pluginMgr:
+    m_plugins:
+    - SofaOpenglVisual
+    - SofaMiscCollision
+  m_sceneFileMgr:
+    m_hasScene: 1
+    m_filename: /SofaUnity/Scenes/SofaScenes/liver.scn
+  m_log: 0
+  IsSofaUpdating: 1
+  CatchSofaMessages: 1
+  StepbyStep: 0
+  m_asyncSimulation: 0
+  m_gravity: {x: 0, y: -9.8, z: 0}
+  m_timeStep: 0.02
+  breakerActivated: 0
+  m_objects: []
+  SimulationFPS: 0
+--- !u!4 &1864124671
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1864124668}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1199767330}
+  - {fileID: 2111704547}
+  - {fileID: 655444174}
+  - {fileID: 328637399}
+  - {fileID: 17853904}
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!1 &2111704545
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2111704547}
+  - component: {fileID: 2111704546}
   m_Layer: 0
   m_Name: EulerImplicitSolver_CGLinearSolver  -  cg_odesolver
   m_TagString: Untagged
@@ -3661,22 +3911,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1957713501
+--- !u!114 &2111704546
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1957713500}
+  m_GameObject: {fileID: 2111704545}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b5a9e3a7c55d1304a992047259afb664, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_uniqueNameId: SofaSolver_5
-  m_sofaContext: {fileID: 488438912}
+  m_uniqueNameId: SofaSolver_6
+  m_displayName: Not set
+  m_sofaContext: {fileID: 1864124670}
   m_log: 0
-  m_ownerNode: {fileID: 488438911}
+  m_ownerNode: {fileID: 1864124669}
   m_baseComponentType: 21
   m_componentType: EulerImplicitSolver_CGLinearSolver
   m_dataArchiver:
@@ -3702,42 +3953,42 @@ MonoBehaviour:
     - bool
     m_stringData: []
     m_boolData:
-    - m_owner: {fileID: 1957713501}
+    - m_owner: {fileID: 2111704546}
       m_dataName: printLog
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 1957713501}
+    - m_owner: {fileID: 2111704546}
       m_dataName: listening
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 1957713501}
+    - m_owner: {fileID: 2111704546}
       m_dataName: firstOrder
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 1957713501}
+    - m_owner: {fileID: 2111704546}
       m_dataName: trapezoidalScheme
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 1957713501}
+    - m_owner: {fileID: 2111704546}
       m_dataName: solveConstraint
       m_dataType: bool
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 1957713501}
+    - m_owner: {fileID: 2111704546}
       m_dataName: threadSafeVisitor
       m_dataType: bool
       m_isReadOnly: 0
@@ -3747,21 +3998,21 @@ MonoBehaviour:
     m_intData: []
     m_floatData: []
     m_doubleData:
-    - m_owner: {fileID: 1957713501}
+    - m_owner: {fileID: 2111704546}
       m_dataName: rayleighStiffness
       m_dataType: double
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 1957713501}
+    - m_owner: {fileID: 2111704546}
       m_dataName: rayleighMass
       m_dataType: double
       m_isReadOnly: 0
       m_isEdited: 0
       m_isDirty: 0
       m_value: 0
-    - m_owner: {fileID: 1957713501}
+    - m_owner: {fileID: 2111704546}
       m_dataName: vdamping
       m_dataType: double
       m_isReadOnly: 0
@@ -3776,18 +4027,18 @@ MonoBehaviour:
   m_linkArchiver:
     m_links: []
     m_slaveLinks: []
---- !u!4 &1957713502
+--- !u!4 &2111704547
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1957713500}
+  m_GameObject: {fileID: 2111704545}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 488438913}
+  m_Father: {fileID: 1864124671}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4487110913802627812
