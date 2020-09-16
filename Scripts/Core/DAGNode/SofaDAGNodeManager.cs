@@ -277,6 +277,17 @@ namespace SofaUnity
             if (nbrNode <= 0)
                 return;
 
+            // put racines
+            for (int j = 0; j < m_dagNodes.Count; j++)
+            {
+                string racine = m_dagNodes[j].UniqueNameId;
+                int val2 = racine.LastIndexOf('_');
+                if (val2 > 0)
+                    racine = racine.Substring(0, val2);
+
+                m_dagNodes[j].UniqueNameId = racine;
+            }
+
             for (int i = 0; i < nbrNode; i++)
             {
                 string nodeName = m_sofaContextAPI.getDAGNodeName(i);
@@ -288,10 +299,12 @@ namespace SofaUnity
 
                 for (int j = 0; j < m_dagNodes.Count; j++)
                 {
-                    if (m_dagNodes[j].UniqueNameId.Contains(racine))
+                    if (m_dagNodes[j].UniqueNameId == racine)
                     {
+                        Debug.Log(j + " -> Before: " + m_dagNodes[j].UniqueNameId);
                         m_dagNodes[j].UniqueNameId = nodeName;
                         m_dagNodes[j].DisplayName = m_sofaContextAPI.getDAGNodeDisplayName(i);
+                        Debug.Log(j + " -> After: " + m_dagNodes[j].UniqueNameId);
                         break;
                     }
                 }
