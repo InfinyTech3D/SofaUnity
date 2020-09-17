@@ -43,7 +43,7 @@ namespace SofaUnity
             sofaCompo.SetDAGNode(sofaNodeOwner);
             sofaCompo.SetPropagateName(false);
             sofaCompo.ShowData = false;
-            sofaCompo.Create(sofaNodeOwner.m_sofaContext, nameId);
+            sofaCompo.Create(sofaNodeOwner.m_sofaContext, nameId, "unset");
             sofaCompo.m_baseComponentType = sofaCompo.BaseTypeFromString(componentType);
 
             if (componentType == "SofaCollisionPipeline")
@@ -133,7 +133,7 @@ namespace SofaUnity
             if (sofaCompo)
             {
                 sofaCompo.SetDAGNode(sofaNodeOwner);
-                sofaCompo.Create(sofaNodeOwner.m_sofaContext, nameId);
+                sofaCompo.Create(sofaNodeOwner.m_sofaContext, nameId, "unset");
                 sofaCompo.m_baseComponentType = sofaCompo.BaseTypeFromString(componentType);
                 compoGO.transform.parent = parent.gameObject.transform;
             }
