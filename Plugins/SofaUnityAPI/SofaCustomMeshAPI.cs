@@ -120,18 +120,18 @@ public class SofaCustomMeshAPI : SofaBaseObjectAPI
     ////////////          Communication API to sofaPhysicsAdvanceAPI         ////////////////
     /////////////////////////////////////////////////////////////////////////////////////////
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_addSphereCollisionsObject(IntPtr obj, string name, string parentNodeName);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_setNbVertices(IntPtr obj, string name, int nbrV);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_setVertices(IntPtr obj, string name, float[] arr);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_setDoubleValue(IntPtr obj, string componentName, string dataName, double value);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_reinitComponent(IntPtr obj, string componentName);
 }
