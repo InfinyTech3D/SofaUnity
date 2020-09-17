@@ -52,7 +52,7 @@ public class SofaComponentObjectAPI : SofaBaseObjectAPI
     ////////////          Communication API to sofaPhysicsAdvanceAPI         ////////////////
     /////////////////////////////////////////////////////////////////////////////////////////
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern string sofaPhysics3DObject_getDataFields(IntPtr obj, string name);
 }
 
