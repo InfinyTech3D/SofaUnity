@@ -92,15 +92,16 @@ public class SofaContextEditor : Editor
         }
 
         EditorGUILayout.Separator();        
-        EditorGUILayout.Separator();
-
-
-        // Add plugin section
-        PluginSection(context);
-        EditorGUILayout.Separator();
+        EditorGUILayout.Separator();        
 
         // Add scene file section
         SceneFileSection(context);
+
+        EditorGUILayout.Separator();
+        EditorGUILayout.Separator();
+        
+        // Add plugin section
+        PluginSection(context);        
 
         if (GUI.changed)
         {
@@ -110,24 +111,31 @@ public class SofaContextEditor : Editor
 
 
     void PluginSection(SofaContext context)
-    {
-        EditorGUILayout.Separator();
-        if (context.PluginManager == null)
+    {        
+        if (context.PluginManagerInterface == null)
         {
             EditorGUILayout.IntField("Plugins Count", 0);
             return;
         }
-        
-        int nbrPlugin = EditorGUILayout.IntField("Plugins Count", context.PluginManager.NbrPlugin);
-        context.PluginManager.NbrPlugin = nbrPlugin;
-        EditorGUI.indentLevel += 1;
-        for (int i = 0; i < nbrPlugin; i++)
-        {
-            string pluginName = EditorGUILayout.TextField("Plugin Name: ", context.PluginManager.GetPluginName(i));
-            context.PluginManager.SetPluginName(i, pluginName);
-        }
-        EditorGUI.indentLevel -= 1;
-        EditorGUILayout.Separator();
+
+
+        //List<Plugin> plugins = context.PluginManagerInterface.GetPlu
+
+        ////context.PluginManagerInterface.
+
+
+
+
+        // int nbrPlugin = EditorGUILayout.IntField("Plugins Count", context.PluginManagerInterface.NbrPlugin);
+        //context.PluginManagerInterface.NbrPlugin = nbrPlugin;
+        //EditorGUI.indentLevel += 1;
+        //for (int i = 0; i < nbrPlugin; i++)
+        //{
+        //    string pluginName = EditorGUILayout.TextField("Plugin Name: ", context.PluginManagerInterface.GetPluginName(i));
+        //    context.PluginManagerInterface.SetPluginName(i, pluginName);
+        //}
+        //EditorGUI.indentLevel -= 1;
+        //EditorGUILayout.Separator();
     }
 
 
