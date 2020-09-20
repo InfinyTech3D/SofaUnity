@@ -39,12 +39,16 @@ namespace SofaUnityAPI
             string pathIni = Application.dataPath + "/SofaUnity/Plugins/Native/x64/sofa.ini";
             string sharePath = sofaPhysicsAPI_loadSofaIni(m_native, pathIni);
             
+            if (sharePath.Contains("Error"))
+            {
+                Debug.LogError("SofaContextAPI: loadSofaIni method returns error code: " + sharePath);
+            }
+
             // Create a simulation scene.
             int res = sofaPhysicsAPI_createScene(m_native);
             if (res == 0)
             {
                 m_isReady = true;
-                //Debug.Log("sharePath: " + sharePath);
             }
             else
             {
@@ -67,8 +71,6 @@ namespace SofaUnityAPI
             {
                 int resDel = sofaPhysicsAPI_delete(m_native);
                 m_native = IntPtr.Zero;
-                if (false)
-                    Debug.Log("SofaContextAPI::Dispose sofaPhysicsAPI_delete method returns: " + SofaDefines.msg_error[resDel]);
                 if (resDel < 0)
                     Debug.LogError("SofaContextAPI::Dispose sofaPhysicsAPI_delete method returns: " + SofaDefines.msg_error[resDel]);
                 m_isReady = false;

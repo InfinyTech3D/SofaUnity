@@ -29,6 +29,9 @@ public class SofaRayCasterAPI : IDisposable
                 res = sofaPhysicsAPI_createAttachTool(m_simu, m_name, length);
             else
                 res = sofaPhysicsAPI_createFixConstraintTool(m_simu, m_name, length);
+
+            if (res != 0)
+                Debug.LogError("SofaRayCasterAPI::Create Tool returns error: " + SofaDefines.msg_error[res]);
         }
     }
 
