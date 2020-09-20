@@ -1,6 +1,8 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using SofaUnity;
+using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// Editor Class to define the creation and UI of SofaContext GameObject
@@ -109,7 +111,7 @@ public class SofaContextEditor : Editor
         }
     }
 
-
+    bool showPlugins = true;
     void PluginSection(SofaContext context)
     {        
         if (context.PluginManagerInterface == null)
@@ -118,24 +120,30 @@ public class SofaContextEditor : Editor
             return;
         }
 
+        showPlugins = EditorGUILayout.Foldout(showPlugins, "Plugin List");
+        if (showPlugins)
+        {
+            EditorGUI.BeginChangeCheck();
 
-        //List<Plugin> plugins = context.PluginManagerInterface.GetPlu
+            List<Plugin> plugins = context.PluginManagerInterface.GetPluginList();
+            EditorGUI.indentLevel += 1;
+            foreach (Plugin plug in plugins)
+            {
+                EditorGUI.BeginDisabledGroup(!plug.IsAvailable);
+                plug.IsEnable = EditorGUILayout.Toggle(plug.Name, plug.IsEnable);
+                EditorGUI.EndDisabledGroup();
+            }
+            EditorGUI.indentLevel -= 1;
 
-        ////context.PluginManagerInterface.
-
-
-
-
-        // int nbrPlugin = EditorGUILayout.IntField("Plugins Count", context.PluginManagerInterface.NbrPlugin);
-        //context.PluginManagerInterface.NbrPlugin = nbrPlugin;
-        //EditorGUI.indentLevel += 1;
-        //for (int i = 0; i < nbrPlugin; i++)
-        //{
-        //    string pluginName = EditorGUILayout.TextField("Plugin Name: ", context.PluginManagerInterface.GetPluginName(i));
-        //    context.PluginManagerInterface.SetPluginName(i, pluginName);
-        //}
-        //EditorGUI.indentLevel -= 1;
-        //EditorGUILayout.Separator();
+            if (EditorGUI.EndChangeCheck())
+            {
+                context.PluginManagerInterface.UpdateEnabledPlugins();
+            }
+        }
+        else
+        {
+            int nbrPlugin = EditorGUILayout.IntField("Plugins Count", context.PluginManagerInterface.GetNbrPlugins());
+        }      
     }
 
 
