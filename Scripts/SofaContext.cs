@@ -27,7 +27,7 @@ namespace SofaUnity
 
         /// Pointer to the PluginManager which hold the list of sofa plugin to be loaded
         [SerializeField]
-        private PluginManager m_pluginMgr = null;
+        private PluginManagerInterface m_pluginMgr = null;
 
         /// Pointer to the SceneFileManager which is used to check the file and hold the filename and paths.
         [SerializeField]
@@ -86,7 +86,7 @@ namespace SofaUnity
         }
 
         /// getter to the \sa PluginManager m_pluginMgr
-        public PluginManager PluginManager
+        public PluginManagerInterface PluginManagerInterface
         {
             get { return m_pluginMgr; }
         }
@@ -368,7 +368,7 @@ namespace SofaUnity
 
             // Craete Plugin Mgr. // TODO: Need to connect that with the scene loading
             if (m_pluginMgr == null)
-                m_pluginMgr = new PluginManager(m_impl);
+                m_pluginMgr = new PluginManagerInterface(m_impl);
             else
                 m_pluginMgr.SetSofaContextAPI(m_impl);
 
