@@ -96,7 +96,7 @@ public class CopyConfigPostProcessor
     [PostProcessBuild]
     public static void OnPostprocessBuild(BuildTarget target, string pathToBuiltProject)
     {
-        System.IO.FileInfo info = new FileInfo(pathToBuiltProject);
+        //System.IO.FileInfo info = new FileInfo(pathToBuiltProject);
         //string depPath = System.IO.Path.Combine(Application.dataPath, "Dependencies");
         Debug.Log("Path to built project: " + pathToBuiltProject);
 

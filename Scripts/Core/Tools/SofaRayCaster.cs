@@ -209,13 +209,14 @@ public class SofaRayCaster : RayCaster
     {
         if (automaticCast && m_sofaRC != null)
         {
-            int triId = -1;
+            //int triId = -1;
             // get the id of the selected triangle. If < 0, no intersection
             if (m_isActivated)
             {
                 Vector3 originS = m_sofaContext.transform.InverseTransformPoint(m_origin);
                 Vector3 directionS = m_sofaContext.transform.InverseTransformDirection(m_direction);
-                triId = m_sofaRC.castRay(originS, directionS);
+                m_sofaRC.castRay(originS, directionS);
+                //triId = m_sofaRC.castRay(originS, directionS);
                 //if (triId >= 0)
                 //    Debug.Log("origin: " + m_origin + " => originS: " + originS + " |  directionS: " + directionS + " | triId: " + triId);
             }

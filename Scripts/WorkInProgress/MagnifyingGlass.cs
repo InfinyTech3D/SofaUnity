@@ -8,13 +8,13 @@ public class MagnifyingGlass : MonoBehaviour
     public Camera mainCam = null;
     protected Transform holderT = null;
 
-    Vector3 initDir;
+    //Vector3 initDir;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        initDir = this.transform.forward;
+        //initDir = this.transform.forward;
         holderT = this.transform.parent;
     }
 
