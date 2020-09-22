@@ -12,7 +12,11 @@ using VRTK;
 /// </summary>
 class SVRLaserRay : SofaRayCaster
 {
+#if USING_VRTK
     bool logController = true;
+
+    public ButtonType m_actionButton;
+#endif
 
     public enum ButtonType
     {
@@ -20,7 +24,7 @@ class SVRLaserRay : SofaRayCaster
         Grip
     };
 
-    public ButtonType m_actionButton;
+    
 
     void Start()
     {

@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [InitializeOnLoad]
@@ -104,7 +103,6 @@ public class CopyConfigPostProcessor
         switch (target)
         {
             case BuildTarget.StandaloneLinux:
-            case BuildTarget.StandaloneOSXIntel64:
             case BuildTarget.StandaloneWindows:
             case BuildTarget.StandaloneWindows64:
                 {

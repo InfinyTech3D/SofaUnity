@@ -14,7 +14,7 @@ namespace SofaUnityAPI
         internal IntPtr m_native;
 
         // TODO: check if needed
-        bool m_isDisposed;
+        bool m_isDisposed = false;
 
         private bool m_isReady = false;
 

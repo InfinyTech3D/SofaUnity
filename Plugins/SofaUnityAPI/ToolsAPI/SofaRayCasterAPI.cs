@@ -36,7 +36,7 @@ public class SofaRayCasterAPI : IDisposable
     }
 
     // TODO: check if needed
-    bool m_isDisposed;
+    //bool m_isDisposed = false;
 
     /// Name of the Sofa object mapped to this Object.
     protected string m_name;
@@ -52,7 +52,7 @@ public class SofaRayCasterAPI : IDisposable
     {
         activateTool(false);
 
-        m_isDisposed = true;
+        //m_isDisposed = true;
     }   
 
     /// Method to activate or not the tool attached to the ray caster
