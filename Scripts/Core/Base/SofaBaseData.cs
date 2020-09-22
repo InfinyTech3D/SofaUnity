@@ -115,6 +115,8 @@ namespace SofaUnity
             m_owner = owner;
         }
 
+        public SofaBaseObject getOwner() { return m_owner; }
+
         public string nameID
         {
             get { return m_nameID; }
