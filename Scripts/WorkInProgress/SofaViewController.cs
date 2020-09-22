@@ -14,7 +14,6 @@ public class SofaViewController : MonoBehaviour
     public bool startOnPlay = true;
     public float ratioScale = 1.0f;
 
-    private bool isActivated = false;
     private Vector3 restControllerA;
     private Vector3 restControllerB;
     private GameObject m_sofaIninit = null;
