@@ -9,6 +9,7 @@ public class XRayControllerEditor : Editor
     public override void OnInspectorGUI()
     {
         XRayController model = (XRayController)this.target;
+        model.m_XRayRendererObject = (GameObject)EditorGUILayout.ObjectField("XRayrenderer", model.m_XRayRendererObject, typeof(Object), true);
         model.SourcePosition = EditorGUILayout.Vector3Field("Source position", model.SourcePosition);
         model.TargetPosition = EditorGUILayout.Vector3Field("Target position", model.TargetPosition);
 
