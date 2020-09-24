@@ -569,7 +569,7 @@ public class SofaBaseMeshAPI : SofaBaseAPI
             int value = sofaMeshAPI_getTopologyRevision(m_simu, m_name);
             if (value < 0)
             {
-                if (value != -2) // no topology...
+                if (value < -2) // no topology...
                     Debug.LogError("getTopologyRevision: " + m_name + " method returns error: " + SofaDefines.msg_error[value]);
                 return false;
             }
