@@ -10,10 +10,10 @@ public class XRayController : MonoBehaviour
 
 
     // position in unity world of the target position
-    [SerializeField]
+    //[SerializeField]
     protected Vector3 m_targetPosition;
 
-    [SerializeField]
+    //[SerializeField]
     protected Vector3 m_sourcePosition;
 
     [SerializeField]
@@ -37,7 +37,9 @@ public class XRayController : MonoBehaviour
                 m_targetDistance = m_direction.magnitude;
                 m_direction.Normalize();
                 transform.forward = m_direction;
-                m_XRayRenderer.m_dataArchiver.GetSofaVec3Data("sourcePosition").Value = m_sourcePosition;
+                Vector3 po = this.transform.TransformPoint(m_sourcePosition);
+                po = m_XRayRenderer.m_sofaContext.transform.InverseTransformPoint(po);
+                m_XRayRenderer.m_dataArchiver.GetSofaVec3Data("sourcePosition").Value = po;
             }
         }
     }
@@ -54,7 +56,9 @@ public class XRayController : MonoBehaviour
                 m_targetDistance = m_direction.magnitude;
                 m_direction.Normalize();
                 transform.forward = m_direction;
-                m_XRayRenderer.m_dataArchiver.GetSofaVec3Data("detectorPosition").Value = m_targetPosition;
+                Vector3 po = this.transform.TransformPoint(m_targetPosition);
+                po = m_XRayRenderer.m_sofaContext.transform.InverseTransformPoint(po);
+                m_XRayRenderer.m_dataArchiver.GetSofaVec3Data("detectorPosition").Value = po;
             }
         }
     }
@@ -68,7 +72,9 @@ public class XRayController : MonoBehaviour
             {
                 m_targetDistance = value;
                 m_targetPosition = m_sourcePosition + m_direction * m_targetDistance;
-                m_XRayRenderer.m_dataArchiver.GetSofaVec3Data("detectorPosition").Value = m_targetPosition;
+                Vector3 po = this.transform.TransformPoint(m_targetPosition);
+                po = m_XRayRenderer.m_sofaContext.transform.InverseTransformPoint(po);
+                m_XRayRenderer.m_dataArchiver.GetSofaVec3Data("detectorPosition").Value = po;
             }
         }
     }
@@ -107,8 +113,20 @@ public class XRayController : MonoBehaviour
                 return;
             }
 
-            m_sourcePosition = m_XRayRenderer.m_dataArchiver.GetSofaVec3Data("sourcePosition").Value;
-            m_targetPosition = m_XRayRenderer.m_dataArchiver.GetSofaVec3Data("detectorPosition").Value;
+
+            Vector3 poInSofa = m_XRayRenderer.m_dataArchiver.GetSofaVec3Data("sourcePosition").Value;
+            Debug.Log("poInSofa: " + poInSofa);
+            Vector3 poInUnity = m_XRayRenderer.m_sofaContext.transform.TransformPoint(poInSofa);
+            Debug.Log("poInUnity: " + poInUnity);
+            m_sourcePosition = this.transform.InverseTransformPoint(poInUnity);
+            Debug.Log("m_sourcePosition: " + m_sourcePosition);
+
+            Vector3 poInSofa2 = m_XRayRenderer.m_dataArchiver.GetSofaVec3Data("detectorPosition").Value;
+            Vector3 poInUnity2 = m_XRayRenderer.m_sofaContext.transform.TransformPoint(poInSofa2);
+            m_targetPosition = this.transform.InverseTransformPoint(poInUnity2);
+
+            //m_sourcePosition = m_XRayRenderer.m_dataArchiver.GetSofaVec3Data("sourcePosition").Value;
+            //m_targetPosition = m_XRayRenderer.m_dataArchiver.GetSofaVec3Data("detectorPosition").Value;
             m_beamPower = m_XRayRenderer.m_dataArchiver.GetSofaFloatData("beamPower").Value;
 
             // Update this object data:
@@ -138,11 +156,32 @@ public class XRayController : MonoBehaviour
             {
                 m_direction = transform.forward;
                 m_targetPosition = m_sourcePosition + m_direction * m_targetDistance;
-                m_XRayRenderer.m_dataArchiver.GetSofaVec3Data("detectorPosition").Value = m_targetPosition;
+
+                Vector3 po = this.transform.TransformPoint(m_targetPosition);
+                po = m_XRayRenderer.m_sofaContext.transform.InverseTransformPoint(po);
+
+                m_XRayRenderer.m_dataArchiver.GetSofaVec3Data("detectorPosition").Value = po;
             }
             transform.hasChanged = false;
         }
+
+        if (Input.GetKey(KeyCode.PageUp))
+            zoomXRay();
+
+        if (Input.GetKey(KeyCode.PageDown))
+            unZoomXRay();
+
+        if (Input.GetKey(KeyCode.KeypadPlus))
+            BeamPower += 0.5f;
+
+        if (Input.GetKey(KeyCode.KeypadMinus))
+            BeamPower -= 0.5f;
     }
+
+    public void zoomXRay() { TargetDistance -= 0.1f;}
+
+    public void unZoomXRay() { TargetDistance += 0.1f;}
+
 
     void OnDrawGizmosSelected()
     {
