@@ -17,11 +17,11 @@ public class DrawLaser : MonoBehaviour {
     public float startWidth = 0.01f;
     [SerializeField]
     public float endWidth = 0.005f;
-    private int layerMask;
+    //private int layerMask;
 
     void OnValidate()
     {
-        layerMask = LayerMask.GetMask("Interactable");
+        //layerMask = LayerMask.GetMask("Interactable");
         startWidth = Mathf.Max(0, startWidth);
         endWidth = Mathf.Max(0, endWidth);
     }

@@ -40,10 +40,10 @@ public class CarvingController : MonoBehaviour {
             this.enabled = false;
             return;
         }
-        oldPosition = Vector3.zero;
+        //oldPosition = Vector3.zero;
     }
 
-    Vector3 oldPosition;
+   // Vector3 oldPosition;
     // Update is called once per frame
     void Update()
     {
@@ -62,7 +62,7 @@ public class CarvingController : MonoBehaviour {
             //TODO restore that
             //m_object.m_impl.setNewPosition(position);
             Debug.Log("position : " + position + " sofaContextPosition " + sofaContextPosition);
-            oldPosition = position;
+            //oldPosition = position;
         }
     }
 

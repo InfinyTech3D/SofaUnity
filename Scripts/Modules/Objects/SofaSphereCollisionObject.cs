@@ -197,7 +197,22 @@ public class SofaSphereCollisionObject : SofaBaseObject
                 return;
             }
             else
+            {
                 m_isCreated = true;
+                foreach (Transform child in this.transform)
+                {
+                    SofaMesh _mesh = child.gameObject.GetComponent<SofaMesh>();
+                    SofaCollisionModel _col = child.gameObject.GetComponent<SofaCollisionModel>();
+                    if (_mesh)
+                    {
+                        m_impl.SetMeshNameID(_mesh.UniqueNameId);                        
+                    }
+                    else if(_col)
+                    {
+                        m_impl.SetCollisionNameID(_col.UniqueNameId);
+                    }                    
+                }
+            }
         }
         else
             SofaLog("SofaSphereCollisionObject::Create_impl, SofaCustomMeshAPI already created: " + UniqueNameId, 1);

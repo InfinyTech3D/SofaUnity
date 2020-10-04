@@ -1,6 +1,8 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using SofaUnity;
+using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// Editor Class to define the creation and UI of SofaContext GameObject
@@ -19,9 +21,9 @@ public class SofaContextEditor : Editor
         int cpt = 0;
         if (GameObject.FindObjectOfType<SofaContext>() != null)
         {
-            Debug.LogWarning("The Scene already includes a SofaContext. Only one context is possible for the moment.");
-            return null;
+            Debug.LogWarning("The Scene already includes a SofaContext. Only one context is possible for the moment.");            
             cpt++;
+            return null;
         }
         //GameObject go = new GameObject("SofaContext_" + cpt.ToString());
         GameObject go = new GameObject("SofaContext");
@@ -92,15 +94,16 @@ public class SofaContextEditor : Editor
         }
 
         EditorGUILayout.Separator();        
-        EditorGUILayout.Separator();
-
-
-        // Add plugin section
-        PluginSection(context);
-        EditorGUILayout.Separator();
+        EditorGUILayout.Separator();        
 
         // Add scene file section
         SceneFileSection(context);
+
+        EditorGUILayout.Separator();
+        EditorGUILayout.Separator();
+        
+        // Add plugin section
+        PluginSection(context);        
 
         if (GUI.changed)
         {
@@ -108,26 +111,39 @@ public class SofaContextEditor : Editor
         }
     }
 
-
+    bool showPlugins = true;
     void PluginSection(SofaContext context)
-    {
-        EditorGUILayout.Separator();
-        if (context.PluginManager == null)
+    {        
+        if (context.PluginManagerInterface == null)
         {
             EditorGUILayout.IntField("Plugins Count", 0);
             return;
         }
-        
-        int nbrPlugin = EditorGUILayout.IntField("Plugins Count", context.PluginManager.NbrPlugin);
-        context.PluginManager.NbrPlugin = nbrPlugin;
-        EditorGUI.indentLevel += 1;
-        for (int i = 0; i < nbrPlugin; i++)
+
+        showPlugins = EditorGUILayout.Foldout(showPlugins, "Plugin List");
+        if (showPlugins)
         {
-            string pluginName = EditorGUILayout.TextField("Plugin Name: ", context.PluginManager.GetPluginName(i));
-            context.PluginManager.SetPluginName(i, pluginName);
+            EditorGUI.BeginChangeCheck();
+
+            List<Plugin> plugins = context.PluginManagerInterface.GetPluginList();
+            EditorGUI.indentLevel += 1;
+            foreach (Plugin plug in plugins)
+            {
+                EditorGUI.BeginDisabledGroup(!plug.IsAvailable);
+                plug.IsEnable = EditorGUILayout.Toggle(plug.Name, plug.IsEnable);
+                EditorGUI.EndDisabledGroup();
+            }
+            EditorGUI.indentLevel -= 1;
+
+            if (EditorGUI.EndChangeCheck())
+            {
+                context.PluginManagerInterface.UpdateEnabledPlugins();
+            }
         }
-        EditorGUI.indentLevel -= 1;
-        EditorGUILayout.Separator();
+        else
+        {
+            int nbrPlugin = EditorGUILayout.IntField("Plugins Count", context.PluginManagerInterface.GetNbrPlugins());
+        }      
     }
 
 

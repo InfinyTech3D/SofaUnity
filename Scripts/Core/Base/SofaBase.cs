@@ -23,6 +23,7 @@ namespace SofaUnity
         [SerializeField]
         protected string m_uniqueNameId = "Not set";
 
+        [SerializeField]
         protected string m_displayName = "Not set";
 
         /// Pointer to the Sofa context this GameObject belongs to.

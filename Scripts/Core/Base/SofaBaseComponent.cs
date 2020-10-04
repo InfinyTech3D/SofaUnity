@@ -193,7 +193,7 @@ namespace SofaUnity
                 return;
             }
 
-            if (m_sofaContext.GetSimuContext() == null)
+            if (m_sofaContext.GetSimuContext() == IntPtr.Zero)
             {
                 SofaLog("CreateSofaAPI: " + UniqueNameId + " m_sofaContext.GetSimuContext() is null", 1);
                 return;

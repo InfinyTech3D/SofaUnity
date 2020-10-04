@@ -57,8 +57,8 @@ public class SofaLaserModelEditor : SofaRayCasterEditor
             if (!model.DrawLight)
                 model.LaserStartColor = EditorGUILayout.ColorField("Laser start Color", model.LaserStartColor);
             model.LaserEndColor = EditorGUILayout.ColorField("Laser end Color", model.LaserEndColor);
-
-            model.m_particleMat = (Material)EditorGUILayout.ObjectField("Laser Material", model.m_particleMat, typeof(Material));
+            
+            model.m_particleMat = EditorGUILayout.ObjectField("Laser Material", model.m_particleMat, typeof(Material)) as Material;
         }
     }
 }

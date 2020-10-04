@@ -569,7 +569,7 @@ public class SofaBaseMeshAPI : SofaBaseAPI
             int value = sofaMeshAPI_getTopologyRevision(m_simu, m_name);
             if (value < 0)
             {
-                if (value != -2) // no topology...
+                if (value < -2) // no topology...
                     Debug.LogError("getTopologyRevision: " + m_name + " method returns error: " + SofaDefines.msg_error[value]);
                 return false;
             }
@@ -890,31 +890,31 @@ public class SofaBaseMeshAPI : SofaBaseAPI
     ///////////            API to Communication with mesh geometry           ////////////////
     /////////////////////////////////////////////////////////////////////////////////////////
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_getId(IntPtr obj, string name);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_setActive(IntPtr obj, string name, bool active);
 
 
     /// Get number of vertices in the object
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_getNbVertices(IntPtr obj, string name);
 
     /// Binding to access to the position buffer
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_getVertices(IntPtr obj, string name, float[] arr);
 
     /// Binding to access to the velocity buffer
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_getVelocities(IntPtr obj, string name, float[] arr);
 
     /// Binding to access to the normal buffer
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_getNormals(IntPtr obj, string name, float[] arr);
 
     /// Binding to access to the texcoord buffer
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_getTexCoords(IntPtr obj, string name, float[] arr);
 
 
@@ -924,64 +924,64 @@ public class SofaBaseMeshAPI : SofaBaseAPI
     /////////////////////////////////////////////////////////////////////////////////////////
 
     /// Binding to Edges API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_getNbEdges(IntPtr obj, string name);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_getEdges(IntPtr obj, string name, int[] arr);
     
 
     /// Binding to Triangles API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_getNbTriangles(IntPtr obj, string name);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_getTriangles(IntPtr obj, string name, int[] arr);
 
 
     /// Binding to Quads API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_getNbQuads(IntPtr obj, string name);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_getQuads(IntPtr obj, string name, int[] arr);
 
 
     /// Binding to Tetra API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_getNbTetrahedra(IntPtr obj, string name);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_getTetrahedra(IntPtr obj, string name, int[] arr);
 
 
     /// Binding to Hexa API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_getNbHexahedra(IntPtr obj, string name);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_getHexahedra(IntPtr obj, string name, int[] arr);
     
 
     /// Binding to Topology change API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_getTopologyRevision(IntPtr obj, string name);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_setTopologyChanged(IntPtr obj, string name, bool value);
 
     /// Binding to set a new mesh
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_setNbVertices(IntPtr obj, string name, int nbrV);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_setVertices(IntPtr obj, string name, float[] arr);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_setRestPositions(IntPtr obj, string name, float[] arr);
 
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_getMeshDimension(IntPtr obj, string name);
 
 }
