@@ -235,6 +235,7 @@ namespace SofaUnity
             PluginManager.Instance.AddPlugin("SofaMiscCollision");
             PluginManager.Instance.AddPlugin("SofaSparseSolver");
             PluginManager.Instance.AddPlugin("InteractionTools");
+            PluginManager.Instance.AddPlugin("SofaCarving");
             PluginManager.Instance.AddPlugin("SofaSphFluid");
             //PluginManager.Instance.AddPlugin("MultiCoreGPU");
         }
