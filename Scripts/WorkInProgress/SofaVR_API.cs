@@ -466,9 +466,10 @@ public class SofaVR_API : MonoBehaviour
         foreach (Transform child in m_sofaContext.transform)
         {
             showWireFrameChilds(child, value);
-            SofaVisualMesh obj = child.GetComponent<SofaVisualMesh>();
-
             // TODO: restore that
+            //SofaVisualMesh obj = child.GetComponent<SofaVisualMesh>();
+
+            
             //if (obj != null)
             //{
             //    if (obj.m_isSelected)

@@ -193,7 +193,7 @@ namespace SofaUnity
                 return;
             }
 
-            if (m_sofaContext.GetSimuContext() == null)
+            if (m_sofaContext.GetSimuContext() == IntPtr.Zero)
             {
                 SofaLog("CreateSofaAPI: " + UniqueNameId + " m_sofaContext.GetSimuContext() is null", 1);
                 return;
@@ -220,8 +220,9 @@ namespace SofaUnity
         {
             // overide name with current type
             m_componentType = m_impl.GetComponentType();
+            m_displayName = m_impl.GetComponentDisplayName();
             if (this.gameObject && m_propagateName)
-                this.gameObject.name = m_componentType + "  -  " + m_uniqueNameId;
+                this.gameObject.name = m_componentType + "  -  " + m_displayName;
         }
 
 

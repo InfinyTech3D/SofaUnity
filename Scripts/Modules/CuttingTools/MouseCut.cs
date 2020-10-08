@@ -13,8 +13,7 @@ public class MouseCut : MonoBehaviour
     private List<GameObject> hitObjects;
     //maximal distance the ray gets sent to -> normally rather close, here very far
     //only gets used if version that handles backfaces is used
-    private float maxRayDistance = 500f;
-    private int layerMask;
+    private int layerMask = 10;
 
     // Use this for initialization
     void Start()
@@ -35,10 +34,6 @@ public class MouseCut : MonoBehaviour
             //version without handling backfaces
             if (!Physics.Raycast(ray, out touch, layerMask))
                 return;
-
-            ////version using rayHelper to handle backfaces
-            //if (!rayHelper(ray.origin, ray.direction, ref touch, maxRayDistance))
-            //    return;
 
             if (touch.triangleIndex != -1)
             {

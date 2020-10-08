@@ -48,16 +48,16 @@ namespace SofaUnity
             m_possibleComponentTypes = ConvertStringToList(typesS);
             m_componentType = m_impl.GetComponentType();
 
-            myTab = new int[10];
-            myTab[0] = 1;
-            myTab[1] = 1;
-            if (m_impl != null)
-            {
-                string type = m_impl.GetComponentType();
-                //Debug.Log("##!!!## SofaMass: " + type);
-            }
-            else
-                Debug.LogError("SofaMass No Impl at Init: ");
+            //myTab = new int[10];
+            //myTab[0] = 1;
+            //myTab[1] = 1;
+            //if (m_impl != null)
+            //{
+            //    string type = m_impl.GetComponentType();
+            //    //Debug.Log("##!!!## SofaMass: " + type);
+            //}
+            //else
+            //    Debug.LogError("SofaMass No Impl at Init: ");
         }
 
         protected override void FillDataStructure()

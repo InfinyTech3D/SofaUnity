@@ -27,12 +27,13 @@ namespace SofaUnity
 
         /// Pointer to the PluginManager which hold the list of sofa plugin to be loaded
         [SerializeField]
-        private PluginManager m_pluginMgr = null;
+        private PluginManagerInterface m_pluginMgr = null;
 
         /// Pointer to the SceneFileManager which is used to check the file and hold the filename and paths.
         [SerializeField]
         private SceneFileManager m_sceneFileMgr = null;
 
+        private SofaGraphicAPI m_graphicAPI = null;
 
         List<SofaRayCaster> m_casters = null;
 
@@ -85,7 +86,7 @@ namespace SofaUnity
         }
 
         /// getter to the \sa PluginManager m_pluginMgr
-        public PluginManager PluginManager
+        public PluginManagerInterface PluginManagerInterface
         {
             get { return m_pluginMgr; }
         }
@@ -102,6 +103,11 @@ namespace SofaUnity
             get { return m_nodeGraphMgr; }
         }
 
+        /// getter to the \sa SofaGraphicAPI m_graphicAPI
+        public SofaGraphicAPI SofaGraphicAPI
+        {
+            get { return m_graphicAPI; }
+        }
 
         /// Getter/Setter of current gravity @see m_gravity
         public Vector3 Gravity
@@ -342,7 +348,7 @@ namespace SofaUnity
                 Debug.LogError("Error while creating SofaContextAPI");
                 return;
             }
-
+            DoCatchSofaMessages();
 
             SofaComponentFactory.InitBaseFactoryType();
 
@@ -353,10 +359,16 @@ namespace SofaUnity
             else // TODO make this serializable might help for custom simulation in futur.
                 Debug.LogWarning("## m_nodeGraphMgr already created...");
 
+            // Create the GraphicAPI
+            if (m_graphicAPI == null)
+                m_graphicAPI = new SofaGraphicAPI();
+            else 
+                Debug.LogWarning("## m_graphicAPI already created...");
+
 
             // Craete Plugin Mgr. // TODO: Need to connect that with the scene loading
             if (m_pluginMgr == null)
-                m_pluginMgr = new PluginManager(m_impl);
+                m_pluginMgr = new PluginManagerInterface(m_impl);
             else
                 m_pluginMgr.SetSofaContextAPI(m_impl);
 
@@ -405,9 +417,16 @@ namespace SofaUnity
         float nextFPSUpdate = 0.25f;
         public float SimulationFPS = 0.0f;
 
+        protected int countStep = 0;
+        protected List<float> m_times = new List<float>();
+        protected List<float> m_sofaTimes = new List<float>();
+
         // Update is called once per fix frame
         void Update()
         {
+            // log sofa messages
+            DoCatchSofaMessages();
+
             // only if scene is playing or if sofa is running
             if (IsSofaUpdating == false || Application.isPlaying == false) return;
 
@@ -416,8 +435,7 @@ namespace SofaUnity
             else
                 UpdateImplSync();
 
-            // log sofa messages
-            DoCatchSofaMessages();
+            
 
             // counter if need to freeze the simulation for several iterations
             cptBreaker++;
@@ -438,6 +456,29 @@ namespace SofaUnity
                 nextFPSUpdate += 1.0f / updateFPSRate;
                 SimulationFPS = m_impl.GetSimulationFPS();
             }
+
+            //if (countStep % 100 == 0)
+            //{
+            //    m_times.Add(Time.time);
+            //    float sofaTime = m_impl.GetTime();
+            //    m_sofaTimes.Add(sofaTime);
+                
+            //    Debug.Log("Step: " + countStep + " | time: " + Time.time + " | SOFA: " + sofaTime);
+
+            //    if (countStep == 1000)
+            //    {
+            //        Debug.Log(m_times[0] + "," + m_times[1] + "," + m_times[2] + ","
+            //            + m_times[3] + "," + m_times[4] + "," + m_times[5] + ","
+            //            + m_times[6] + "," + m_times[7] + "," + m_times[8] + ","
+            //            + m_times[9] + "," + m_times[10]);
+
+            //        Debug.Log(m_sofaTimes[0] + "," + m_sofaTimes[1] + "," + m_sofaTimes[2] + ","
+            //         + m_sofaTimes[3] + "," + m_sofaTimes[4] + "," + m_sofaTimes[5] + ","
+            //         + m_sofaTimes[6] + "," + m_sofaTimes[7] + "," + m_sofaTimes[8] + ","
+            //         + m_sofaTimes[9] + "," + m_sofaTimes[10]);
+            //    }
+            //}
+            //countStep++;
         }
                 
 

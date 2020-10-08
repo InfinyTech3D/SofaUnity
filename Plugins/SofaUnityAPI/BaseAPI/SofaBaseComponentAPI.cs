@@ -33,7 +33,19 @@ public class SofaBaseComponentAPI : SofaBaseAPI
         else
             return "Error";
     }
+
+    public string GetComponentDisplayName()
+    {
+        if (m_isReady)
+        {
+            string type = sofaComponentAPI_getComponentDisplayName(m_simu, m_name);
+            return type;
+        }
+        else
+            return "Error";
+    }
     
+
     /// Method to get all data listen by this component as a json unique string.
     public string LoadAllData()
     {
@@ -564,7 +576,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     /// <summary> Generic method to get size of a Data< vector<float> > field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <returns> size of the Data vector. Return negative value if field not found or error encountered. </returns>
-    public int GetVecfSize(string dataName)
+    public int GetVectorfSize(string dataName)
     {
         if (checkNativePointer())
         {
@@ -588,7 +600,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     /// <summary> Generic method to get size of a Data< vector<double> > field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <returns> size of the Data vector. Return negative value if field not found or error encountered. </returns>
-    public int GetVecdSize(string dataName)
+    public int GetVectordSize(string dataName)
     {
         if (checkNativePointer())
         {
@@ -641,6 +653,43 @@ public class SofaBaseComponentAPI : SofaBaseAPI
             int res = sofaComponentAPI_setVectorfValue(m_simu, m_name, dataName, size, values);
             if (res != 0)
                 Debug.LogError("Method setVectorfValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
+            return res;
+        }
+
+        return -1;
+    }
+
+
+    /// <summary> Generic method to get values of a Data< vector<double> > field. </summary>
+    /// <param name="dataName"> Name of the Data field requested. </param>
+    /// <param name="size"> Size of the Data vector. </param>
+    /// <param name="values"> Values of the Data vector field returned. </param>
+    /// <returns> Int error code. Negative value if method failed, 0 otherwise. </returns>
+    public int GetVectordValue(string dataName, int size, float[] values)
+    {
+        if (checkNativePointer())
+        {
+            int res = sofaComponentAPI_getVectorValue(m_simu, m_name, dataName, "double", size, values);
+            if (res != 0)
+                Debug.LogError("Method getVectorValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
+            return res;
+        }
+
+        return -1;
+    }
+
+    /// <summary> Generic method to set values of a Data< vector<double> > field. </summary>
+    /// <param name="dataName"> Name of the Data field requested. </param>
+    /// <param name="size"> Size of the Data vector. </param>
+    /// <param name="values"> New values to set to the Data vector field. </param>
+    /// <returns> Int error code. Negative value if method failed, 0 otherwise. </returns>
+    public int SetVectordValue(string dataName, int size, float[] values)
+    {
+        if (checkNativePointer())
+        {
+            int res = sofaComponentAPI_setVectorValue(m_simu, m_name, dataName, "double", size, values);
+            if (res != 0)
+                Debug.LogError("Method setVectorValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
             return res;
         }
 
@@ -755,20 +804,24 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     //////////            API to Communication with Sofa component            ///////////////
     /////////////////////////////////////////////////////////////////////////////////////////
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern string sofaComponentAPI_getPossibleTypes(IntPtr obj, string componentName);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern string sofaComponentAPI_getComponentType(IntPtr obj, string componentName);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern string sofaComponentAPI_getComponentDisplayName(IntPtr obj, string componentName);
+
+
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_reinitComponent(IntPtr obj, string componentName);
 
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern string sofaComponentAPI_getDataFields(IntPtr obj, string componentName);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern string sofaComponentAPI_getLinks(IntPtr obj, string componentName);
 
     /////////////////////////////////////////////////////////////////////////////////////////
@@ -776,161 +829,167 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     /////////////////////////////////////////////////////////////////////////////////////////
 
     /// Bool API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_getBoolValue(IntPtr obj, string componentName, string dataName, bool[] value);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_setBoolValue(IntPtr obj, string componentName, string dataName, bool value);
 
 
     /// Int API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_getIntValue(IntPtr obj, string componentName, string dataName, int[] value);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_setIntValue(IntPtr obj, string componentName, string dataName, int value);
 
 
     /// UInt API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_getUIntValue(IntPtr obj, string componentName, string dataName, uint[] value);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_setUIntValue(IntPtr obj, string componentName, string dataName, uint value);
 
 
     /// Float API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_getFloatValue(IntPtr obj, string componentName, string dataName, float[] value);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_setFloatValue(IntPtr obj, string componentName, string dataName, float value);
 
 
     /// Double API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_getDoubleValue(IntPtr obj, string componentName, string dataName, double[] value);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_setDoubleValue(IntPtr obj, string componentName, string dataName, double value);
 
 
     /// String API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern string sofaComponentAPI_getStringValue(IntPtr obj, string componentName, string dataName);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_setStringValue(IntPtr obj, string componentName, string dataName, string value);
 
 
 
     // Vec2i API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_getVec2iValue(IntPtr obj, string componentName, string dataName, int[] values);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_setVec2iValue(IntPtr obj, string componentName, string dataName, int[] values);
 
 
     // Vec2f API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_getVec2fValue(IntPtr obj, string componentName, string dataName, float[] values);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_setVec2fValue(IntPtr obj, string componentName, string dataName, float[] values);
 
 
     // Vec2 API 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_getVec2Value(IntPtr obj, string componentName, string dataName, bool doubleValue, float[] values);
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_setVec2Value(IntPtr obj, string componentName, string dataName, bool doubleValue, float[] values);
 
 
 
     /// Vec3i API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_getVec3iValue(IntPtr obj, string componentName, string dataName, int[] values);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_setVec3iValue(IntPtr obj, string componentName, string dataName, int[] values);
 
 
     /// Vec3f API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_getVec3fValue(IntPtr obj, string componentName, string dataName, float[] values);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_setVec3fValue(IntPtr obj, string componentName, string dataName, float[] values);
     
 
     /// Vec3 API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_getVec3Value(IntPtr obj, string componentName, string dataName, bool doubleValue, float[] values);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_setVec3Value(IntPtr obj, string componentName, string dataName, bool doubleValue, float[] values);
 
 
     /// Vec4f API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_getVec4fValue(IntPtr obj, string componentName, string dataName, float[] values);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_setVec4fValue(IntPtr obj, string componentName, string dataName, float[] values);
 
 
     /// Vec4 API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_getVec4Value(IntPtr obj, string componentName, string dataName, bool doubleValue, float[] values);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_setVec4Value(IntPtr obj, string componentName, string dataName, bool doubleValue, float[] values);
 
 
 
     /// Rigid3f API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_getRigid3fValue(IntPtr obj, string componentName, string dataName, float[] values);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_setRigid3fValue(IntPtr obj, string componentName, string dataName, float[] values);
 
 
     /// Rigid3 API
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_getRigid3Value(IntPtr obj, string componentName, string dataName, bool doubleValue, int[] values);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_setRigid3Value(IntPtr obj, string componentName, string dataName, bool doubleValue, int[] values);
 
 
 
     /// Vector<float> and Vector<int> API, need to get the size before set/get
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_getVectorSize(IntPtr obj, string componentName, string dataName, string dataType, int[] value);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_getVectorValue(IntPtr obj, string componentName, string dataName, string dataType, int size, float[] values);
+
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_setVectorValue(IntPtr obj, string componentName, string dataName, string dataType, int size, float[] values);
+
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_getVectorfValue(IntPtr obj, string componentName, string dataName, int size, float[] values);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_setVectorfValue(IntPtr obj, string componentName, string dataName, int size, float[] values);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_getVectoriValue(IntPtr obj, string componentName, string dataName, int size, int[] values);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_setVectoriValue(IntPtr obj, string componentName, string dataName, int size, int[] values);
 
 
 
     /// Vector <vec3f> API, need to get the size before set/get: size the number of vec3f
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_getVecofVec3fSize(IntPtr obj, string componentName, string dataName, int[] value);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_setVecofVec3fValue(IntPtr obj, string componentName, string dataName, int size, float[] values);
 
-    [DllImport("SofaAdvancePhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_getVecofVec3fValue(IntPtr obj, string componentName, string dataName, int size, float[] values);
 }

@@ -102,25 +102,26 @@ namespace SofaUnity
             for (int i = 0; i < nbrNode; i++)
             {
                 string NodeName = m_sofaContextAPI.getDAGNodeName(i);
+                string nodeDisplayName = m_sofaContextAPI.getDAGNodeDisplayName(i);
                 if (NodeName == "root") // skip root node
                 {
                     if (m_rootDAGNode == null)
                     {
                         m_rootDAGNode = m_sofaContext.gameObject.AddComponent<SofaDAGNode>();
-                        m_rootDAGNode.Create(m_sofaContext, NodeName);
-                        m_dagNodes.Add(m_rootDAGNode);
+                        m_rootDAGNode.Create(m_sofaContext, NodeName, nodeDisplayName);
+                        AddDAGNode(m_rootDAGNode);
                     }
                     else
                     {
-                        m_rootDAGNode.Create(m_sofaContext, NodeName);
+                        m_rootDAGNode.Create(m_sofaContext, NodeName, nodeDisplayName);
                     }
                 }
                 else if (NodeName != "Error")
                 {
-                    GameObject nodeGO = new GameObject("SofaNode - " + NodeName);
+                    GameObject nodeGO = new GameObject("SofaNode - " + nodeDisplayName);
                     SofaDAGNode dagNode = nodeGO.AddComponent<SofaDAGNode>();
-                    dagNode.Create(m_sofaContext, NodeName);
-                    m_dagNodes.Add(dagNode);
+                    dagNode.Create(m_sofaContext, NodeName, nodeDisplayName);
+                    AddDAGNode(dagNode);
 
                     // temporary child of sofaContext until reordering ndoes
                     nodeGO.transform.parent = m_sofaContext.gameObject.transform;
@@ -169,7 +170,7 @@ namespace SofaUnity
                 Debug.LogError("SofaDAGNodeManager Error accessing root node: ");
                 return;
             }
-            m_dagNodes.Add(dagNode);
+            AddDAGNode(dagNode);
 
             // Find all other DAGNode
             SofaDAGNode[] nodes = ScenesManager.FindObjectsOfType<SofaDAGNode>();
@@ -192,7 +193,7 @@ namespace SofaUnity
             // Reconnect each Node
             for (int i=0; i< nodes.Length; i++)
             {
-                m_dagNodes.Add(nodes[i]);
+                AddDAGNode(nodes[i]);
                 nodes[i].Reconnect(m_sofaContext);
             }
         }
@@ -224,9 +225,9 @@ namespace SofaUnity
             GameObject nodeGO = new GameObject("SofaNode - " + nodeName);
             SofaDAGNode dagNode = nodeGO.AddComponent<SofaDAGNode>();
             dagNode.ParentNodeName = parentNodeName;
-            dagNode.Create(m_sofaContext, nodeName, true);
+            dagNode.Create(m_sofaContext, nodeName, nodeName, true);
 
-            m_dagNodes.Add(dagNode);
+            AddDAGNode(dagNode);
             nodeGO.transform.parent = parentNode.gameObject.transform;
         }
 
@@ -247,23 +248,71 @@ namespace SofaUnity
 
             // create the sofa object
             int idNode = m_dagNodes.Count;
-            string objectName = sofaGameObject.name + "_" + idNode.ToString();
+            string objectName = sofaGameObject.name;
+
             obj.CreateObject(m_sofaContext, objectName, parentNode.UniqueNameId);
             m_sofaContext.RegisterSofaObject(obj);
 
             // parse node now
             if (obj.IsCreated())
             {
-                string nodeName = objectName + "_node";
+                string nodeDisplayName = m_sofaContextAPI.getDAGNodeDisplayName(idNode);
+                string nodeName = m_sofaContextAPI.getDAGNodeName(idNode);
+
                 SofaDAGNode dagNode = sofaGameObject.AddComponent<SofaDAGNode>();
-                dagNode.Create(m_sofaContext, nodeName);
-                m_dagNodes.Add(dagNode);
+                dagNode.Create(m_sofaContext, nodeName, nodeDisplayName);
+                AddDAGNode(dagNode);
 
                 // in case several nodes have been created below
                 RefreshDAGNodeGraph();
             }
+            else
+                Debug.Log("obj.IsCreated() not");
         }
 
+
+        public void FixGraphNames()
+        {
+            int nbrNode = m_sofaContextAPI.getNbrDAGNode();
+            if (nbrNode <= 0)
+                return;
+
+            // put racines
+            for (int j = 0; j < m_dagNodes.Count; j++)
+            {
+                string racine = m_dagNodes[j].UniqueNameId;
+                int val2 = racine.LastIndexOf('_');
+                if (val2 > 0)
+                    racine = racine.Substring(0, val2);
+
+                m_dagNodes[j].UniqueNameId = racine;
+            }
+
+            for (int i = 0; i < nbrNode; i++)
+            {
+                string nodeName = m_sofaContextAPI.getDAGNodeName(i);
+
+                int val = nodeName.LastIndexOf('_');
+                string racine = nodeName;
+                if (val > 0)
+                    racine = nodeName.Substring(0, val);
+
+                for (int j = 0; j < m_dagNodes.Count; j++)
+                {
+                    if (m_dagNodes[j].UniqueNameId == racine)
+                    {
+                        Debug.Log(j + " -> Before: " + m_dagNodes[j].UniqueNameId);
+                        m_dagNodes[j].UniqueNameId = nodeName;
+                        m_dagNodes[j].DisplayName = m_sofaContextAPI.getDAGNodeDisplayName(i);
+                        Debug.Log(j + " -> After: " + m_dagNodes[j].UniqueNameId);
+                        break;
+                    }
+                }
+
+            }
+
+
+        }
 
         ////////////////////////////////////////////
         /////  SofaDAGNodeManager internalAPI  /////
@@ -279,7 +328,7 @@ namespace SofaUnity
                 SofaDAGNode dagNode = child.GetComponent<SofaDAGNode>();
                 if (dagNode)
                 {
-                    m_dagNodes.Add(dagNode);
+                    AddDAGNode(dagNode);
                 }
             }            
         }
@@ -298,7 +347,7 @@ namespace SofaUnity
 
             // copy back the root node pointer
             if (m_rootDAGNode != null)
-                m_dagNodes.Add(m_rootDAGNode);
+                AddDAGNode(m_rootDAGNode);
         }
 
 
@@ -315,6 +364,7 @@ namespace SofaUnity
             for (int i = 0; i < nbrNode; i++)
             {
                 string nodeName = m_sofaContextAPI.getDAGNodeName(i);
+                string nodeDisplayName = m_sofaContextAPI.getDAGNodeDisplayName(i);
                 bool found = false;
                 foreach (SofaDAGNode node in m_dagNodes)
                 {
@@ -327,10 +377,10 @@ namespace SofaUnity
 
                 if (!found) // new node, need to be added
                 {
-                    GameObject nodeGO = new GameObject("SofaNode - " + nodeName);
+                    GameObject nodeGO = new GameObject("SofaNode - " + nodeDisplayName);
                     SofaDAGNode dagNode = nodeGO.AddComponent<SofaDAGNode>();
-                    dagNode.Create(m_sofaContext, nodeName);
-                    m_dagNodes.Add(dagNode);
+                    dagNode.Create(m_sofaContext, nodeName, nodeDisplayName);
+                    AddDAGNode(dagNode);
 
                     // add in tmp list before reordering
                     tmpNodes.Add(dagNode);
@@ -358,6 +408,24 @@ namespace SofaUnity
                     }
                 }
             }
+        }
+
+
+        // add node without redundencies
+        protected void AddDAGNode(SofaDAGNode dagNode)
+        {
+            bool found = false;
+            for (int i=0; i< m_dagNodes.Count; ++i)
+            {
+                if (m_dagNodes[i] == dagNode)
+                {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+                m_dagNodes.Add(dagNode);
         }
     }
 }

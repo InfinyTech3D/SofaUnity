@@ -194,7 +194,8 @@ public class ImmersiveController : MonoBehaviour {
             {
                 if (littleChild.name.Contains("collision"))
                 {
-                    MeshRenderer mr = littleChild.GetComponent<MeshRenderer>();
+                    littleChild.GetComponent<MeshRenderer>();
+                    //MeshRenderer mr = littleChild.GetComponent<MeshRenderer>();
                     //if (mr != null)
                     //    mr.enabled = true;
                 }

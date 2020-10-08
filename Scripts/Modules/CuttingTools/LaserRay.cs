@@ -10,7 +10,7 @@ public class LaserRay : RayCaster {
     private GameObject laser;
     private GameObject lightSource;
     private LineRenderer lr;
-    private Light light;
+    private Light m_light;
     private ParticleSystem ps;
 
     public bool useParticleSystem = true;
@@ -90,9 +90,9 @@ public class LaserRay : RayCaster {
         lightSource.transform.position = end - (distance/100) * transform.forward;
 
         ////change light intensity and range according to distance and laser width
-        //light.intensity = (endWidth * 30)/distance;
-        //light.bounceIntensity = light.intensity / 1.5f;
-        //light.range = endWidth * distance;
+        //m_light.intensity = (endWidth * 30)/distance;
+        //m_light.bounceIntensity = m_light.intensity / 1.5f;
+        //m_light.range = endWidth * distance;
 
 
         if (useParticleSystem && laser.GetComponent<ParticleSystem>() != null)
@@ -107,12 +107,12 @@ public class LaserRay : RayCaster {
     private void initializeLaser()
     {
         //create light
-        light = lightSource.AddComponent<Light>();
-        light = lightSource.GetComponent<Light>();
-        light.intensity = width * 10;
-        light.bounceIntensity = width * 10;
-        light.range = width / 4;
-        light.color = endColor;
+        m_light = lightSource.AddComponent<Light>();
+        m_light = lightSource.GetComponent<Light>();
+        m_light.intensity = width * 10;
+        m_light.bounceIntensity = width * 10;
+        m_light.range = width / 4;
+        m_light.color = endColor;
 
         //create linerenderer
         laser.AddComponent<LineRenderer>();
@@ -158,9 +158,9 @@ public class LaserRay : RayCaster {
         lr.endWidth = width;
         lr.startColor = startColor;
         lr.endColor = endColor;
-        light.color = endColor;
-        light.intensity = width * 10;
-        light.bounceIntensity = width * 3;
-        light.range = width / 2.5f;
+        m_light.color = endColor;
+        m_light.intensity = width * 10;
+        m_light.bounceIntensity = width * 3;
+        m_light.range = width / 2.5f;
     }
 }

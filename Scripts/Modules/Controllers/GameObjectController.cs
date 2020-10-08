@@ -6,21 +6,21 @@ using SofaUnity;
 public class GameObjectController : ObjectController
 {
     /// Pointer to the current Mesh of the GameObject
-    public GameObject light = null;
-    public GameObject otherTool = null;
-    public SofaLaserModel toolImpl = null;
+    public GameObject m_light = null;
+    public GameObject m_otherTool = null;
+    public SofaLaserModel m_toolImpl = null;
     
     public bool m_isactive = false;
-    protected GameObjectController otherObjectCtrl = null;
+    protected GameObjectController m_otherObjectCtrl = null;
 
     public float factor = 0.1f;
     void Start()
     {
-        if (light)
-            light.SetActive(m_isactive);
+        if (m_light)
+            m_light.SetActive(m_isactive);
 
-        if (otherTool)
-            otherObjectCtrl = otherTool.GetComponent<GameObjectController>();
+        if (m_otherTool)
+            m_otherObjectCtrl = m_otherTool.GetComponent<GameObjectController>();
     }
 
     /// Method calle at each update, will move the object regardings keys pushed.
@@ -67,33 +67,33 @@ public class GameObjectController : ObjectController
 
         if (Input.GetKey(KeyCode.C))
         {
-            if (light)
+            if (m_light)
             {
-                Light lt = light.GetComponent<Light>();
+                Light lt = m_light.GetComponent<Light>();
                 lt.color = Color.red;
             }
 
-            if (toolImpl)
-                toolImpl.ActivateTool = true;
+            if (m_toolImpl)
+                m_toolImpl.ActivateTool = true;
         }
         else if (Input.GetKey(KeyCode.V))
         {
-            if (light)
+            if (m_light)
             {
-                Light lt = light.GetComponent<Light>();
+                Light lt = m_light.GetComponent<Light>();
                 lt.color = Color.green;
             }
 
-            if (toolImpl)
-                toolImpl.ActivateTool = false;
+            if (m_toolImpl)
+                m_toolImpl.ActivateTool = false;
         }
     }
 
     void activateTool(bool value)
     {
         m_isactive = value;
-        if (light)
-            light.SetActive(m_isactive);
+        if (m_light)
+            m_light.SetActive(m_isactive);
     }
 
     public bool isToolActive()
@@ -105,7 +105,7 @@ public class GameObjectController : ObjectController
     {
         activateTool(m_isactive = !m_isactive);
 
-        if (m_isactive && otherObjectCtrl && otherObjectCtrl.isToolActive())
-            otherObjectCtrl.activateTool(false);
+        if (m_isactive && m_otherObjectCtrl && m_otherObjectCtrl.isToolActive())
+            m_otherObjectCtrl.activateTool(false);
     }
 }

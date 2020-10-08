@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [InitializeOnLoad]
@@ -18,8 +17,11 @@ public class CopyConfigPostProcessor
         {
             string SofaUnityDir = Application.dataPath + "/SofaUnity/scenes/SofaScenes";
             outputIniFile.WriteLine("SHARE_DIR=" + SofaUnityDir);
+            outputIniFile.WriteLine("SHARE_DIR=C:/projects/sofa-src/share/");
             outputIniFile.WriteLine("EXAMPLES_DIR=" + SofaUnityDir);
             outputIniFile.WriteLine("LICENSE_DIR=" + Application.dataPath + "/SofaUnity/License/");
+            outputIniFile.WriteLine("PYTHON_DIR=" + Application.dataPath + "/SofaUnity/Plugins/Native/x64/");
+
             Debug.Log("Generate " + sofaIniFile + " file.");
         }
     }
@@ -94,14 +96,13 @@ public class CopyConfigPostProcessor
     [PostProcessBuild]
     public static void OnPostprocessBuild(BuildTarget target, string pathToBuiltProject)
     {
-        System.IO.FileInfo info = new FileInfo(pathToBuiltProject);
+        //System.IO.FileInfo info = new FileInfo(pathToBuiltProject);
         //string depPath = System.IO.Path.Combine(Application.dataPath, "Dependencies");
         Debug.Log("Path to built project: " + pathToBuiltProject);
 
         switch (target)
         {
             case BuildTarget.StandaloneLinux:
-            case BuildTarget.StandaloneOSXIntel64:
             case BuildTarget.StandaloneWindows:
             case BuildTarget.StandaloneWindows64:
                 {
