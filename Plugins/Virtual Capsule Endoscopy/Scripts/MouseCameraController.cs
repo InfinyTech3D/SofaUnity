@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace SofaUnity
+{
+
+
 public class MouseCameraController : MonoBehaviour
 {
 
@@ -29,4 +33,5 @@ public class MouseCameraController : MonoBehaviour
         transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
 
     }
+}
 }
