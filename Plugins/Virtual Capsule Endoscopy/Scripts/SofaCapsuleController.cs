@@ -23,6 +23,7 @@ public class SofaCapsuleController : MonoBehaviour
     //protected Vector3 capsuleTip = Vector3.zero;
 
     protected Vector3[] newPosition;
+    protected Vector3[] stopVelocity;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +50,8 @@ public class SofaCapsuleController : MonoBehaviour
         sofaToUnity = m_sofaCapsuleMesh.m_sofaContext.GetScaleSofaToUnity();
         unityToSofa = m_sofaCapsuleMesh.m_sofaContext.GetScaleUnityToSofa();
         newPosition = new Vector3[1];
+        stopVelocity = new Vector3[1];
+        stopVelocity[0] = Vector3.zero;
         m_ready = true;
     }
 
@@ -114,59 +117,18 @@ public class SofaCapsuleController : MonoBehaviour
     protected void MoveForward()
     {
         newPosition[0] = capsuleOri + this.transform.up * m_speed;
-        m_sofaCapsuleMesh.SetVertices(newPosition);
+        m_sofaCapsuleMesh.SetVelocities(stopVelocity);
+        m_sofaCapsuleMesh.SetVertices(newPosition);        
     }
 
     protected void MoveBackward()
     {
         newPosition[0] = capsuleOri - this.transform.up * m_speed;
+        m_sofaCapsuleMesh.SetVelocities(stopVelocity);
         m_sofaCapsuleMesh.SetVertices(newPosition);
     }
 
-    protected void RotateUp()
-    {
-        //Vector3 center = (capsuleOri + capsuleTip) * 0.5f;
-        transform.Rotate(this.transform.right, m_speed * 57.3f, Space.Self);
-
-        //newPosition[0] = capsuleOri - this.transform.forward * m_speed;
-        //m_sofaCapsuleMesh.SetVertices(newPosition);
-    }
-
-    protected void RotateDown()
-    {
-        transform.Rotate(this.transform.right, -m_speed * 57.3f, Space.Self);
-        //newPosition[0] = capsuleOri + this.transform.forward * m_speed;
-        //m_sofaCapsuleMesh.SetVertices(newPosition);
-    }
-
-    protected void TurnLeft()
-    {
-        transform.Rotate(this.transform.forward, -m_speed * 57.3f, Space.Self);
-        //newPosition[0] = capsuleOri - this.transform.right * m_speed;
-        //m_sofaCapsuleMesh.SetVertices(newPosition);
-    }
-
-    protected void TurnRight()
-    {
-        transform.Rotate(this.transform.forward, m_speed * 57.3f, Space.Self);
-        //newPosition[0] = capsuleOri + this.transform.right * m_speed;
-        //m_sofaCapsuleMesh.SetVertices(newPosition);
-    }
-
-    protected void RotateLeft()
-    {
-        transform.Rotate(this.transform.up, -m_speed * 57.3f, Space.Self);
-        //newPosition[0] = capsuleOri - this.transform.right * m_speed;
-        //m_sofaCapsuleMesh.SetVertices(newPosition);
-    }
-
-    protected void RotateRight()
-    {
-        transform.Rotate(this.transform.up, m_speed * 57.3f, Space.Self);
-        //newPosition[0] = capsuleOri + this.transform.right * m_speed;
-        //m_sofaCapsuleMesh.SetVertices(newPosition);
-    }
-
+    
 
 
     protected void MoveUp()
