@@ -131,6 +131,14 @@ namespace SofaUnity
                 m_sofaMeshAPI.SetVertices(vertices);
         }
 
+        /// Method to set new vertices velocity to this mesh
+        public void SetVelocities(Vector3[] vels)
+        {
+            if (m_sofaMeshAPI != null)
+                m_sofaMeshAPI.SetVelocities(vels);
+        }
+
+
         /// Method to set new vertices position to this mesh
         public void SetRestPositions(float[] vertices)
         {
