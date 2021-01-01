@@ -6,9 +6,11 @@ using UnityEditor;
 /// </summary>
 class InitSoftRobotsPlugin
 {
+#if UNITY_EDITOR
     [InitializeOnLoadMethod]
     static void RegisterPluginDll()
     {
         SofaUnity.PluginManager.Instance.AddPlugin("SoftRobots");
     }
+#endif
 }

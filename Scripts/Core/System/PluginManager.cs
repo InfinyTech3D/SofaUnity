@@ -29,7 +29,9 @@ namespace SofaUnity
     /// <summary>
     /// 
     /// </summary>
+#if UNITY_EDITOR
     [InitializeOnLoad]
+#endif
     class PluginManager
     {
         // Static singleton instance
@@ -192,6 +194,7 @@ namespace SofaUnity
 
             foreach (string pluginName in m_savedPlugins)
             {
+#if UNITY_EDITOR
                 Plugin plug = PluginManager.Instance.GetPluginByName(pluginName);
                 if (plug.IsAvailable == false)
                 {
@@ -202,6 +205,9 @@ namespace SofaUnity
                     plug.IsEnable = true;
                     m_sofaAPI.loadPlugin(Application.dataPath + pluginPath + pluginName + ".dll");
                 }
+#else
+                m_sofaAPI.loadPlugin(Application.dataPath + pluginPath + pluginName + ".dll");
+#endif
             }
         }
 
@@ -227,7 +233,8 @@ namespace SofaUnity
         //////    PluginManager private API    /////
         ////////////////////////////////////////////
 
-        /// Default onlload method to register default SOFA plugin
+/// Default onlload method to register default SOFA plugin
+#if UNITY_EDITOR
         [InitializeOnLoadMethod]
         static void RegisterDefaultPlugin()
         {
@@ -239,6 +246,7 @@ namespace SofaUnity
             PluginManager.Instance.AddPlugin("SofaSphFluid");
             //PluginManager.Instance.AddPlugin("MultiCoreGPU");
         }
+#endif
 
         /// Init method of the pluginManager Interface to enable default plugin.
         private void InitDefaultPlugins()
