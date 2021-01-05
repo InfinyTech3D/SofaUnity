@@ -167,6 +167,7 @@ namespace SofaUnity
         public void SetSofaContextAPI(SofaContextAPI sofaAPI)
         {
             m_sofaAPI = sofaAPI;
+            InitDefaultPlugins();
         }
 
         /// Method to update the list of save plugin to load from plugins enable status
@@ -239,7 +240,17 @@ namespace SofaUnity
         static void RegisterDefaultPlugin()
         {
             PluginManager.Instance.AddPlugin("SofaOpenglVisual");
+            PluginManager.Instance.AddPlugin("SofaImplicitOdeSolver");
+            PluginManager.Instance.AddPlugin("SofaMiscForceField");
+            PluginManager.Instance.AddPlugin("SofaEngine");
+            PluginManager.Instance.AddPlugin("SofaTopologyMapping");
             PluginManager.Instance.AddPlugin("SofaMiscCollision");
+            PluginManager.Instance.AddPlugin("SofaGeneralLoader");
+            PluginManager.Instance.AddPlugin("SofaConstraint");
+            PluginManager.Instance.AddPlugin("SofaNonUniformFem");
+            PluginManager.Instance.AddPlugin("SofaLoader");
+            PluginManager.Instance.AddPlugin("SofaGeneralLoader");
+
             PluginManager.Instance.AddPlugin("SofaSparseSolver");
             PluginManager.Instance.AddPlugin("InteractionTools");
             PluginManager.Instance.AddPlugin("SofaCarving");
@@ -252,7 +263,16 @@ namespace SofaUnity
         private void InitDefaultPlugins()
         {
             PluginManager.Instance.GetPluginByName("SofaOpenglVisual").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("SofaImplicitOdeSolver").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("SofaMiscForceField").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("SofaEngine").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("SofaTopologyMapping").IsEnable = true;
             PluginManager.Instance.GetPluginByName("SofaMiscCollision").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("SofaGeneralLoader").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("SofaConstraint").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("SofaNonUniformFem").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("SofaLoader").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("SofaGeneralLoader").IsEnable = true;
 
             UpdateEnabledPlugins();
         }
