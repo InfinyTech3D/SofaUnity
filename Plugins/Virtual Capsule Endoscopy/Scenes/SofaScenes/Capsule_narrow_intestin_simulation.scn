@@ -1,0 +1,75 @@
+<?xml version="1.0" ?>
+<Node name="root" dt="0.05" showBoundingTree="0" gravity="0 0 0">
+    <VisualStyle displayFlags="showBehaviorModels showCollisionModels hideForceFields" />
+    <RequiredPlugin pluginName='InteractionTools'/>
+    <RequiredPlugin pluginName='SofaOpenglVisual'/>
+    <RequiredPlugin pluginName='SofaMiscCollision'/>
+    
+    <DefaultPipeline name="default21" verbose="0" depth="1"/>
+    <BruteForceDetection name="N2" />
+    <DefaultContactManager name="default22" response="default" />
+    <DefaultCollisionGroupManager name="default23" />
+    <MinProximityIntersection name="Proximity" alarmDistance="0.5" contactDistance="0.04" />     
+
+    <EulerImplicitSolver name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.1" />
+    <CGLinearSolver iterations="20" name="linear solver" tolerance="1.0e-4" threshold="1.0e-4" />
+    
+    <MeshObjLoader name="loader" filename="./mesh/intestin_narrow_visu.obj" scale3d="1 1 1"/>
+    <BoxROI name="ROI" box="-4 9.5 2  -2 11.5 4" drawBoxes="0" src="@loader"/>
+    <!--<OglModel name="Visual" src="@loader" color="red"/>-->
+    <SparseGridTopology name="grid" n="10 10 10" position="@ROI.pointsInROI"  />
+
+    <Node name="Colon">
+        <MechanicalObject src="@../grid" name="dofs" />
+        <TetrahedronSetTopologyContainer name="Container" />
+        <TetrahedronSetTopologyModifier name="Modifier" />
+        <TetrahedronSetTopologyAlgorithms name="TopoAlgo" template="Vec3d" />
+        <TetrahedronSetGeometryAlgorithms name="GeomAlgo" template="Vec3d" />
+        <Hexa2TetraTopologicalMapping name="default28" input="@../grid" output="@Container" />
+        
+        
+        <BoxROI name="FixedROI_1" box="-4.1 9.4 1.9  -3.7 11.6 4.1" drawBoxes="0" position="@dofs.rest_position"/>
+        <FixedConstraint name="ROI1" indices="@FixedROI_1.indices" />
+        
+        <BoxROI name="FixedROI_2" box="-4.1 9.4 1.9  -1.9 11.6 2.3" drawBoxes="0" position="@dofs.rest_position"/>
+        <FixedConstraint name="ROI2" indices="@FixedROI_2.indices" />
+        
+        <BoxROI name="FixedROI_3" box="-4.1 11.2 1.9  -1.9 11.6 4.1" drawBoxes="0" position="@dofs.rest_position"/>
+        <FixedConstraint name="ROI3" indices="@FixedROI_3.indices" />
+        
+        <BoxROI name="FixedROI_4" box="-4.1 9.6 1.9  -1.9 10 4.1" drawBoxes="0" position="@dofs.rest_position"/>
+        <FixedConstraint name="ROI4" indices="@FixedROI_4.indices" />
+
+
+        <DiagonalMass totalMass="0.1" />        
+        <TetrahedralCorotationalFEMForceField name="FEM" youngModulus="60" poissonRatio="0.3" method="large" />
+        
+        <Node name="Colon_Collision">
+            <MechanicalObject name="collision" src="@../../ROI" />
+            <TriangleSetTopologyContainer  name="TriContainer" position="@../../ROI.pointsInROI" triangles="@../../ROI.trianglesInROI" edges="@../../ROI.edgesInROI"/>
+			<TriangleSetTopologyModifier   name="TriModifier" />
+			<TriangleSetTopologyAlgorithms name="TopoAlgo" template="Vec3d" />
+			<TriangleSetGeometryAlgorithms name="GeomAlgo" template="Vec3d" />
+            
+            <TriangleCollisionModel group="1" contactStiffness="10"/>
+            
+            <BarycentricMapping input="@.." output="@collision" />
+        </Node>
+       
+        <Node name="Colon_Visu">
+            <MeshObjLoader name="meshVisu" filename="mesh/intestin_narrow_visu.obj" handleSeams="1" scale3d="1 1 1"/>
+            <OglModel name="Visual" src="@meshVisu" />
+            <BarycentricMapping input="@.." output="@Visual" />
+        </Node>
+        
+	</Node>
+        
+
+    <Node name="Capsule">
+        <MechanicalObject name="capsulePos" position="-2.7 10.7 2.4 " />
+        <UniformMass totalMass="10.0" />
+        
+        <SphereCollisionModel radius="0.1" contactStiffness="1"/>
+    </Node>
+
+</Node>

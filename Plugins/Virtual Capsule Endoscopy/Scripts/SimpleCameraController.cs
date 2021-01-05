@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace UnityTemplateProjects
+namespace SofaUnity
 {
     public class SimpleCameraController : MonoBehaviour
     {
