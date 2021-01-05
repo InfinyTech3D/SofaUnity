@@ -16,7 +16,6 @@
 
 		<TetrahedronSetTopologyContainer  name="TetraContainer" position="@Volume.position" src="@loader" tags=" "/>
 		<TetrahedronSetTopologyModifier   name="Modifier" />
-		<TetrahedronSetTopologyAlgorithms name="TopoAlgo"  template="CudaVec3f" />
 		<TetrahedronSetGeometryAlgorithms name="GeomAlgo"  template="CudaVec3f" />
 
         <!--<MeshMatrixMass massDensity="1.0" topology="@TetraContainer"/>-->
@@ -31,7 +30,6 @@
         <Node name="LiverSurface">
             <TriangleSetTopologyContainer  name="TriContainer" fileTopology="" tags=" " />
 			<TriangleSetTopologyModifier   name="Modifier" />
-			<TriangleSetTopologyAlgorithms name="TopoAlgo"   template="CudaVec3f" />
 			<TriangleSetGeometryAlgorithms name="GeomAlgo"   template="CudaVec3f" />
 			
             <Tetra2TriangleTopologicalMapping input="@../TetraContainer" output="@TriContainer" />
