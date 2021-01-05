@@ -167,6 +167,7 @@ namespace SofaUnity
         public void SetSofaContextAPI(SofaContextAPI sofaAPI)
         {
             m_sofaAPI = sofaAPI;
+            RegisterDefaultPlugin();
             InitDefaultPlugins();
         }
 
@@ -250,6 +251,7 @@ namespace SofaUnity
             PluginManager.Instance.AddPlugin("SofaNonUniformFem");
             PluginManager.Instance.AddPlugin("SofaLoader");
             PluginManager.Instance.AddPlugin("SofaGeneralLoader");
+            PluginManager.Instance.AddPlugin("SofaGeneralTopology");
 
             PluginManager.Instance.AddPlugin("SofaSparseSolver");
             PluginManager.Instance.AddPlugin("InteractionTools");
@@ -273,6 +275,7 @@ namespace SofaUnity
             PluginManager.Instance.GetPluginByName("SofaNonUniformFem").IsEnable = true;
             PluginManager.Instance.GetPluginByName("SofaLoader").IsEnable = true;
             PluginManager.Instance.GetPluginByName("SofaGeneralLoader").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("SofaGeneralTopology").IsEnable = true;
 
             UpdateEnabledPlugins();
         }
