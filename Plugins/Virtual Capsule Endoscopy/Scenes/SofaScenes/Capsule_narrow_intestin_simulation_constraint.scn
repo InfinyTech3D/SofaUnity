@@ -21,7 +21,6 @@
         <MechanicalObject src="@../grid" name="dofs" />
         <TetrahedronSetTopologyContainer name="Container" />
         <TetrahedronSetTopologyModifier name="Modifier" />
-        <TetrahedronSetTopologyAlgorithms name="TopoAlgo" template="Vec3d" />
         <TetrahedronSetGeometryAlgorithms name="GeomAlgo" template="Vec3d" />
         <Hexa2TetraTopologicalMapping name="default28" input="@../grid" output="@Container" />
         
@@ -46,7 +45,6 @@
             <MechanicalObject name="collision" src="@../../ROI" />
             <TriangleSetTopologyContainer  name="TriContainer" position="@../../ROI.pointsInROI" triangles="@../../ROI.trianglesInROI" edges="@../../ROI.edgesInROI"/>
 			<TriangleSetTopologyModifier   name="TriModifier" />
-			<TriangleSetTopologyAlgorithms name="TopoAlgo" template="Vec3d" />
 			<TriangleSetGeometryAlgorithms name="GeomAlgo" template="Vec3d" />
             
             <TriangleCollisionModel group="1" contactStiffness="10"/>
