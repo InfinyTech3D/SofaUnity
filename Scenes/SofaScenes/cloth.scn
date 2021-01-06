@@ -14,7 +14,6 @@
 		
         <TriangleSetTopologyContainer name="Container"  position="@meshLoader.position"  edges="@meshLoader.edges"  triangles="@meshLoader.triangles" />
 		<TriangleSetTopologyModifier name="Modifier" />
-		<TriangleSetTopologyAlgorithms template="Vec3d" name="TopoAlgo" />
 		<TriangleSetGeometryAlgorithms template="Vec3d" name="GeomAlgo" />
 		<MechanicalObject template="Vec3d" name="mObject1"  position="0 0 0"  velocity="0 0 0"  force="0 0 0"  externalForce="0 0 0"  derivX="0 0 0"  restScale="1" />
 		<UniformMass template="Vec3d" name="uniformMass2" totalMass="100" />

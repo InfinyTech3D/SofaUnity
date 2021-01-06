@@ -13,7 +13,6 @@
 
 		<TetrahedronSetTopologyContainer  name="Container" position="@Volume.position" src="@loader" tags=" "/>
 		<TetrahedronSetTopologyModifier   name="Modifier" />
-		<TetrahedronSetTopologyAlgorithms name="TopoAlgo"  template="CudaVec3f" />
 		<TetrahedronSetGeometryAlgorithms name="GeomAlgo"  template="CudaVec3f" />
 
         <DiagonalMass massDensity="0.5" template="CudaVec3f"/>
@@ -37,7 +36,6 @@
         <Node name="Surface">
             <TriangleSetTopologyContainer  name="Container" fileTopology="" tags=" " />
 			<TriangleSetTopologyModifier   name="Modifier" />
-			<TriangleSetTopologyAlgorithms name="TopoAlgo"   template="CudaVec3f" />
 			<TriangleSetGeometryAlgorithms name="GeomAlgo"   template="CudaVec3f" />
 			
             <Tetra2TriangleTopologicalMapping input="@../Container" output="@Container" />

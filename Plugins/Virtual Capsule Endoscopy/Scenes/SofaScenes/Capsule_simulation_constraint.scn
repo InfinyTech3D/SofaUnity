@@ -39,7 +39,6 @@
             <MechanicalObject name="dofs" src="@../loader" />
             <TriangleSetTopologyContainer  name="TriContainer" src="@../loader" />
 			<TriangleSetTopologyModifier   name="TriModifier" />
-			<TriangleSetTopologyAlgorithms name="TopoAlgo" template="Vec3d" />
 			<TriangleSetGeometryAlgorithms name="GeomAlgo" template="Vec3d" />
             
             <TriangleCollisionModel group="1" contactStiffness="1"/>
