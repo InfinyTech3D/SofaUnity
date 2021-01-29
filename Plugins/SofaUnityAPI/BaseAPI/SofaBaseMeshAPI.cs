@@ -632,7 +632,7 @@ public class SofaBaseMeshAPI : SofaBaseAPI
             int resN = sofaMeshAPI_getNormals(m_simu, m_name, normals);
             
             if (resV < 0) {
-                Debug.LogError("SofaBaseMesh::updateMeshTetra: No vertices found, Error return: " + SofaDefines.msg_error[resV]);
+                Debug.LogError("SofaBaseMesh::updateMeshTetra: No vertices found in '" + m_name + "'. Error return: " + SofaDefines.msg_error[resV]);
                 return;
             }
             else if (displayLog)
