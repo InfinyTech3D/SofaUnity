@@ -168,8 +168,10 @@ namespace SofaUnity
         public void SetSofaContextAPI(SofaContextAPI sofaAPI)
         {
             m_sofaAPI = sofaAPI;
+#if UNITY_EDITOR
             RegisterDefaultPlugin();
             InitDefaultPlugins();
+#endif
         }
 
         /// Method to update the list of save plugin to load from plugins enable status
@@ -193,7 +195,7 @@ namespace SofaUnity
             if (Application.isEditor)
                 pluginPath = "/SofaUnity/Plugins/Native/x64/";
             else
-                pluginPath = "/Plugins/";
+                pluginPath = "/Plugins/x86_64/";
 
             foreach (string pluginName in m_savedPlugins)
             {

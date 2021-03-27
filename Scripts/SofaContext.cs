@@ -541,6 +541,9 @@ namespace SofaUnity
         private bool isMsgHandlerActivated = false;
         protected void DoCatchSofaMessages()
         {
+            if (m_impl == null)
+                return;
+
             // first time activated
             if (CatchSofaMessages && !isMsgHandlerActivated)
             {
