@@ -36,18 +36,18 @@
         <UncoupledConstraintCorrection />
         
         <Node name="Colon_Collision">
-            <MechanicalObject name="dofs" src="@../loader" />
+            <MechanicalObject name="dofs2" src="@../loader" />
             <TriangleSetTopologyContainer  name="TriContainer" src="@../loader" />
 			<TriangleSetTopologyModifier   name="TriModifier" />
 			<TriangleSetGeometryAlgorithms name="GeomAlgo" template="Vec3d" />
             
             <TriangleCollisionModel group="1" contactStiffness="1"/>
             
-            <BarycentricMapping input="@.." output="@dofs" />
+            <BarycentricMapping input="@.." output="@dofs2" />
         </Node>
         
         <Node name="Colon_Visu">
-            <MeshObjLoader name="meshVisu" filename="mesh/colon_visu.obj" scale3d="1 1 1"/>
+            <MeshObjLoader name="meshVisu" filename="./mesh/colon_visu.obj" scale3d="1 1 1"/>
             <OglModel name="Visual" src="@meshVisu" />
             <BarycentricMapping input="@.." output="@Visual" />
         </Node>
