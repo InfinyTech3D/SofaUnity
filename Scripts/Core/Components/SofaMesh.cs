@@ -347,6 +347,58 @@ namespace SofaUnity
 
                 m_sofaMeshAPI.GetVertices(m_topology.m_vertexBuffer);
             }
+
+            if (drawForces)
+            {
+                m_sofaMeshAPI.GetForces(rawForces);
+                for (int i = 0; i < m_nbVertices; i++)
+                {
+                    forces[i] = new Vector3(rawForces[i * 3], rawForces[i * 3 + 1], rawForces[i * 3 + 2]);
+                }
+            }
+                
+        }
+
+
+        private bool drawForces = false;
+        float[] rawForces = null;
+        Vector3[] forces = null;
+        public bool DrawForces
+        {
+            get { return drawForces; }
+            set
+            {
+                drawForces = value;
+                if (drawForces)
+                {
+                    if (rawForces == null)
+                    {
+                        int _nbV = m_sofaMeshAPI.getNbVertices();
+                        int meshDimension = m_sofaMeshAPI.GetMeshDimension();
+                        rawForces = new float[_nbV * meshDimension];
+                        forces = new Vector3[_nbV];
+                    }
+
+                    m_listenerCounter++;
+                }
+                else
+                    m_listenerCounter--;
+            }
+        }
+
+        void OnDrawGizmosSelected()
+        {
+            if (!drawForces)
+                return;
+
+            Gizmos.color = Color.red;
+            for (int i=0; i< m_nbVertices; i++)
+            {
+                Vector3 startPos = m_topology.m_mesh.vertices[i];
+                Vector3 endPos = startPos + forces[i];
+                Gizmos.DrawLine(startPos, endPos);
+            }
+            
         }
 
     }
