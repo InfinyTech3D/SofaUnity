@@ -324,6 +324,20 @@ public class SofaBaseMeshAPI : SofaBaseAPI
         }
     }
 
+    public int GetForces(float[] forces)
+    {
+        if (m_isReady)
+        {
+            int resV = sofaMeshAPI_getForces(m_simu, m_name, forces);
+            return resV;
+        }
+        else
+        {
+            Debug.LogError("GetVelocities: Native Pointer to Sofa3DObject is null");
+            return -1;
+        }
+    }
+
 
     public virtual void updateVertices(Vector3[] unityVertices)
     {
@@ -931,6 +945,10 @@ public class SofaBaseMeshAPI : SofaBaseAPI
     /// Binding to access to the velocity buffer
     [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaMeshAPI_getVelocities(IntPtr obj, string name, float[] arr);
+
+    /// Binding to access to the velocity buffer
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaMeshAPI_getForces(IntPtr obj, string name, float[] arr);
 
     /// Binding to access to the normal buffer
     [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
