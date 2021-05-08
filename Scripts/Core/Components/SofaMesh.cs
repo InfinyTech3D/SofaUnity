@@ -368,6 +368,9 @@ namespace SofaUnity
             get { return drawForces; }
             set
             {
+                if (drawForces == value)
+                    return;
+
                 drawForces = value;
                 if (drawForces)
                 {
@@ -391,11 +394,14 @@ namespace SofaUnity
             if (!drawForces)
                 return;
 
+            if (m_topology == null|| m_topology.m_mesh == null)
+                return;
+
             Gizmos.color = Color.red;
-            for (int i=0; i< m_nbVertices; i++)
+            for (int i=0; i< m_topology.m_mesh.vertexCount; i++)
             {
                 Vector3 startPos = m_topology.m_mesh.vertices[i];
-                Vector3 endPos = startPos + forces[i];
+                Vector3 endPos = startPos + forces[i].normalized;
                 Gizmos.DrawLine(startPos, endPos);
             }
             
