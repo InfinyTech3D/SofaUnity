@@ -17,7 +17,8 @@ public class SofaMeshEditor : SofaBaseComponentEditor
         base.OnInspectorGUI();
 
         SofaMesh compo = (SofaMesh)this.target;
-
+        compo.DrawForces = EditorGUILayout.Toggle("DrawGizmoForces", compo.DrawForces);
+        
         if (!compo.HasTopology())
             return;
 
@@ -48,6 +49,8 @@ public class SofaMeshEditor : SofaBaseComponentEditor
         {
             EditorGUILayout.IntField("Nb Points", compo.NbVertices());
         }
+
+        
         EditorGUI.EndDisabledGroup();
     }   
 }

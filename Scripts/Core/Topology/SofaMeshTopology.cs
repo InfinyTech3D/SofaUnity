@@ -172,7 +172,7 @@ namespace SofaUnity
         {
             m_nbVertices = nbVertices;
             m_meshDim = meshDimension;
-            m_vertexBuffer = new float[nbVertices * m_meshDim];            
+            m_vertexBuffer = new float[nbVertices * m_meshDim];
         }
 
         public void CreateRestVertexBuffer()
