@@ -1,9 +1,16 @@
 <?xml version="1.0" ?>
 <Node name="root" dt="0.05" showBoundingTree="0" gravity="0 0 0">
-    <VisualStyle displayFlags="showBehaviorModels showCollisionModels showForceFields" />
-    <RequiredPlugin pluginName='InteractionTools'/>
+    <VisualStyle displayFlags="showBehaviorModels hideCollisionModels hideForceFields" />
     <RequiredPlugin pluginName='SofaOpenglVisual'/>
     <RequiredPlugin pluginName='SofaMiscCollision'/>
+	<RequiredPlugin pluginName='SofaBoundaryCondition'/> <!-- Needed to use components [FixedConstraint, ]-->
+	<RequiredPlugin pluginName='SofaEngine'/> <!-- Needed to use components [BoxROI, ]-->
+	<RequiredPlugin pluginName='SofaGeneralSimpleFem'/> <!-- Needed to use components [TetrahedralCorotationalFEMForceField, ]-->
+	<RequiredPlugin pluginName='SofaImplicitOdeSolver'/> <!-- Needed to use components [EulerImplicitSolver, ]-->
+	<RequiredPlugin pluginName='SofaLoader'/> <!-- Needed to use components [MeshObjLoader, ]-->
+	<RequiredPlugin pluginName='SofaMeshCollision'/> <!-- Needed to use components [TriangleCollisionModel, ]-->
+	<RequiredPlugin pluginName='SofaTopologyMapping'/> <!-- Needed to use components [Hexa2TetraTopologicalMapping, ]-->
+
     
     <DefaultPipeline name="default21" verbose="0" depth="1"/>
     <BruteForceDetection name="N2" />
@@ -39,7 +46,7 @@
 
         <DiagonalMass totalMass="0.1" />        
         <TetrahedralCorotationalFEMForceField name="FEM" youngModulus="100" poissonRatio="0.3" method="large" />
-        <MiddleForceField name="center" force="0.015" pace="20.0" />
+        <!--<MiddleForceField name="center" force="0.015" pace="20.0" />-->
         
         <Node name="Colon_Collision">
             <MechanicalObject name="collision" src="@../../loader" />

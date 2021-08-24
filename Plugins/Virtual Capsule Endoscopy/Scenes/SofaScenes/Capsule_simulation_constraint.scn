@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <Node name="root" dt="0.01" showBoundingTree="0" gravity="0 0 0">
-    <VisualStyle displayFlags="showBehaviorModels showCollisionModels hideForceFields showWireframe" />
+    <VisualStyle displayFlags="showBehaviorModels hideCollisionModels hideForceFields" />
 
     <DefaultPipeline name="pipeline" depth="6" verbose="0"/>
     <BruteForceDetection name="detection" />
@@ -47,7 +47,7 @@
         </Node>
         
         <Node name="Colon_Visu">
-            <MeshObjLoader name="meshVisu" filename="./mesh/colon_visu.obj" scale3d="1 1 1"/>
+            <MeshObjLoader name="meshVisu" filename="./mesh/colon_visu.obj" scale3d="1 1 1" handleSeams="1"/>
             <OglModel name="Visual" src="@meshVisu" />
             <BarycentricMapping input="@.." output="@Visual" />
         </Node>
