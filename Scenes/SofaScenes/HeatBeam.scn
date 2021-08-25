@@ -1,0 +1,57 @@
+<Node name="Root" dt="0.0033" gravity="0 0 0">
+    <RequiredPlugin pluginName='SofaOpenglVisual'/>
+	<RequiredPlugin pluginName='SofaImplicitOdeSolver'/> <!-- Needed to use components [EulerImplicitSolver, ]-->
+	<RequiredPlugin pluginName='SofaMiscForceField'/> <!-- Needed to use components [MeshMatrixMass, ]-->
+	<RequiredPlugin pluginName='SofaTopologyMapping'/> <!-- Needed to use components [Hexa2TetraTopologicalMapping, Tetra2TriangleTopologicalMapping, ]-->
+	<RequiredPlugin pluginName='SofaBoundaryCondition'/> <!-- Needed to use components [LinearMovementConstraint, ]-->
+	<RequiredPlugin pluginName='SofaEngine'/> <!-- Needed to use components [BoxROI, ]-->
+	<RequiredPlugin pluginName='SofaMiscCollision'/> <!-- Needed to use components [DefaultCollisionGroupManager, ]-->
+	<RequiredPlugin pluginName='SofaSimpleFem'/> <!-- Needed to use components [TetrahedronDiffusionFEMForceField, ]-->
+
+    <VisualStyle displayFlags="showBehaviorModels"/>
+    <DefaultPipeline verbose="0" depth="10" draw="0" />
+    <BruteForceDetection name="N2" />
+    <MinProximityIntersection name="Proximity" alarmDistance="0.75" contactDistance="0.5" />
+    <DefaultContactManager name="Response" response="default" />
+    <DefaultCollisionGroupManager name="Group" />
+	
+    <RegularGridTopology name="grid" n="31 9 9" min="0 0 0" max="10 2 2" p0="0.0 0.0 0.0" tags="meca"/>
+    <Node name="MecaNode" >
+        <MechanicalObject template="Vec3d" src="@../grid" name="mecaObj" tags="meca"/>
+        <TetrahedronSetTopologyContainer name="TetraContainer" tags="meca"/>
+        <TetrahedronSetTopologyModifier tags="meca"/>
+        <TetrahedronSetGeometryAlgorithms template="Vec3d" tags="meca"/>
+        <Hexa2TetraTopologicalMapping input="@../grid" output="@TetraContainer" swapping="1" tags="meca"/>
+		<BoxROI name="box_hot" box="-1 -1 -1 0.1 2.1 2.1" drawBoxes="1" position="@mecaObj.position"/>
+		
+		<!--
+		<DiagonalMass massDensity="0.2" />
+        <TetrahedralCorotationalFEMForceField name="CFEM" youngModulus="1000" poissonRatio="0.3" method="large" />
+        <FixedConstraint template="Vec3d" indices="@box_hot.indices" />
+		-->
+        <Node name="ElecNode"  >
+            <EulerImplicitSolver name="Euler" firstOrder="1" tags="diffu"/>
+            <CGLinearSolver name="CG"  iterations="1000" tolerance="1.0e-10" threshold="1.0e-30" tags="diffu" />
+
+			<MechanicalObject template="Vec1d" name="ElecObj" size="2511" tags="diffu"/>
+
+			<TetrahedronDiffusionFEMForceField template="Vec1d" name="DiffusionForceField" constantDiffusionCoefficient="1500" printLog="0" drawConduc="0" tagMechanics="meca" tags="diffu"/>
+			<MeshMatrixMass template="Vec1d,double" name="Mass" lumping="1" massDensity="1" tags="mass"/>
+			<LinearMovementConstraint template="Vec1d" keyTimes="0.1 0.2 0.3 1.0 1.5" movements="1 10 10 0 10" indices="@../box_hot.indices" />
+
+            <Node 	name="Surface" >
+                <TriangleSetTopologyContainer name="TriContainer" tags="surf"/>
+                <TriangleSetTopologyModifier tags="surf"/>
+                <Tetra2TriangleTopologicalMapping input="@../../../MecaNode/TetraContainer" output="@TriContainer" tags="Surface"/>
+
+                <Node 	name="visu"  >
+                    <OglModel template="Vec3d" name="oglPotentiel" />
+                    <IdentityMapping template="Vec3d,Vec3d" input="@../../../mecaObj"  output="@oglPotentiel" />
+                </Node>
+            </Node>
+
+        </Node>
+               
+    </Node>
+    
+</Node>
