@@ -8,7 +8,7 @@ public class SofaGraphicOGL_ApplyXRay : AbtractSofaGraphicCall
 {
     Texture2D m_tex2D_XRay;
 
-    public string SofaPath = "/XRay/XRendererDeOuf";
+    public string SofaPath = "/XRenderer/XRendererDeOuf";
 
     protected override int InitCall()
     {
@@ -20,7 +20,7 @@ public class SofaGraphicOGL_ApplyXRay : AbtractSofaGraphicCall
 
             plane_XRay.transform.GetComponent<Renderer>().material.mainTexture = m_tex2D_XRay;
             plane_XRay.transform.GetComponent<Renderer>().enabled = true;
-            plane_XRay.transform.GetComponent<Renderer>().material.SetTextureScale("_MainTex", new Vector2(1, -1));
+            //plane_XRay.transform.GetComponent<Renderer>().material.SetTextureScale("_MainTex", new Vector2(1, -1));
 
             int renderID = SofaUnityAPI.SofaGraphicAPI.AddRenderEvent_SetVirtualXRayTexture(m_sofaContext.GetSimuContext(),
                 m_tex2D_XRay.GetNativeTexturePtr(), m_tex2D_XRay.width, m_tex2D_XRay.height, SofaPath);
