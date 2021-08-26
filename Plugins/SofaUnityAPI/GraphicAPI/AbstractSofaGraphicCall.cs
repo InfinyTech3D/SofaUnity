@@ -21,6 +21,7 @@ public abstract class AbtractSofaGraphicCall : MonoBehaviour
     //// MonoBehavior API
     IEnumerator Start()
     {
+        bool successInit = false;
         //Get SofaContext
         if (m_sofaContext == null)
         {
@@ -29,24 +30,30 @@ public abstract class AbtractSofaGraphicCall : MonoBehaviour
             {
                 // Get Sofa context
                 m_sofaContext = _contextObject.GetComponent<SofaUnity.SofaContext>();
-                if(m_sofaContext)
-                {
-                    int res = InitCall();
-                    if (res != -1)
-                        RegisterID(res);
-                }
-                else
-                {
-                    Debug.LogError("SofaGraphicCall - No SofaContext found.");
-                }
             }
             else
             {
                 Debug.LogError("SofaGraphicCall - Could not find GameObject with tag GameController.");
             }
+
+            if (m_sofaContext)
+            {
+                int res = InitCall();
+                if (res >= 0)
+                    RegisterID(res);
+
+                successInit = true;
+            }
+            else
+            {
+                Debug.LogError("SofaGraphicCall - No SofaContext found.");
+            }
         }
 
-        yield return StartCoroutine("CallWaitForEndOfFrame");
+        if (successInit)
+            yield return StartCoroutine("CallWaitForEndOfFrame");
+        else
+            yield return null;
     }
 
     void Update()
