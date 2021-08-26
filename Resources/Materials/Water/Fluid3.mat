@@ -85,11 +85,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BaseisasEmission: 0
-    - _BlendBlendAlpha: 0.5400593
-    - _BlendBlendDistance: 0
+    - _BlendBlendAlpha: 0.529
+    - _BlendBlendDistance: 1.12
     - _BlendEnableThis: 0
     - _BumpScale: 1
-    - _CubemapFresnel: 0.8148444
+    - _CubemapFresnel: 1.4
     - _CubemapGlossiness: 1
     - _CubemapStrength: 0
     - _CubemapUseCustomCubemap: 0
@@ -102,28 +102,28 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _OverallGloss: 0.796635
-    - _OverallMetallic: 0.9128559
-    - _OverallNormalStrength: 0.7343698
+    - _OverallGloss: 0.559
+    - _OverallMetallic: 0.909
+    - _OverallNormalStrength: 0.833
     - _OverallWaveHeight: 0
     - _Parallax: 0.02
-    - _PrimaryHeightStrength: 0.5
-    - _SSRefractionDecaydistance: 50
+    - _PrimaryHeightStrength: 0.543
+    - _SSRefractionDecaydistance: 49.5
     - _SSRefractionRefractionFresnel: 5
     - _SSRefractionStrength: 0
     - _SecondaryEnableThis: 1
-    - _SecondaryHeightStrength: 0.5
+    - _SecondaryHeightStrength: 0.376
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _TessellationFarCap: 20
+    - _TessellationFarCap: 21.6
     - _TessellationNearCap: 0
-    - _TessellationStrength: 5
+    - _TessellationStrength: 26
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.32068962, g: 0.9, b: 0.29999998, a: 0.5}
-    - _BlendColor: {r: 0, g: 0.6442697, b: 0.7720588, a: 1}
+    - _BaseColor: {r: 0.9019608, g: 0.29803923, b: 0.29803923, a: 0.5}
+    - _BlendColor: {r: 0.6981132, g: 0, b: 0.05877807, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _CubemapBaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
