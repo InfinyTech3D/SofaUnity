@@ -18,6 +18,11 @@ public abstract class AbtractSofaGraphicCall : MonoBehaviour
         m_registeredRenderIDList.Add(renderID);
     }
 
+    public bool GLRenderEnded()
+    {
+        return m_GLRenderEnd;
+    }
+
     //// MonoBehavior API
     IEnumerator Start()
     {
