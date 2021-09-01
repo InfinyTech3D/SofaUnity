@@ -21,6 +21,13 @@ public abstract class AbtractSofaGraphicCall : MonoBehaviour
     //// MonoBehavior API
     IEnumerator Start()
     {
+        string graphicVersion = SystemInfo.graphicsDeviceVersion;
+        if (!graphicVersion.Contains("OpenGL")) // only openGL version is supported
+        {
+            Debug.LogError("SofaGraphicCall - XRay rendering is only available with Unity in OpenGL mode.");
+            yield break;
+        }
+
         bool successInit = false;
         //Get SofaContext
         if (m_sofaContext == null)
@@ -51,9 +58,11 @@ public abstract class AbtractSofaGraphicCall : MonoBehaviour
         }
 
         if (successInit)
+        {
             yield return StartCoroutine("CallWaitForEndOfFrame");
+        }
         else
-            yield return null;
+            yield break;
     }
 
     void Update()
@@ -91,6 +100,10 @@ public abstract class AbtractSofaGraphicCall : MonoBehaviour
     void OnDestroy()
     {
         BeforeDestroy();
-        SofaUnityAPI.SofaGraphicAPI.clearUp(m_sofaContext.GetSimuContext());
+
+        if (m_sofaContext)
+        {
+            SofaUnityAPI.SofaGraphicAPI.clearUp(m_sofaContext.GetSimuContext());
+        }
     }
 }
