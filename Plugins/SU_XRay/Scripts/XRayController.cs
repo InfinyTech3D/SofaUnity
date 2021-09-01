@@ -115,11 +115,8 @@ public class XRayController : MonoBehaviour
 
 
             Vector3 poInSofa = m_XRayRenderer.m_dataArchiver.GetSofaVec3Data("sourcePosition").Value;
-            Debug.Log("poInSofa: " + poInSofa);
             Vector3 poInUnity = m_XRayRenderer.m_sofaContext.transform.TransformPoint(poInSofa);
-            Debug.Log("poInUnity: " + poInUnity);
             m_sourcePosition = this.transform.InverseTransformPoint(poInUnity);
-            Debug.Log("m_sourcePosition: " + m_sourcePosition);
 
             Vector3 poInSofa2 = m_XRayRenderer.m_dataArchiver.GetSofaVec3Data("detectorPosition").Value;
             Vector3 poInUnity2 = m_XRayRenderer.m_sofaContext.transform.TransformPoint(poInSofa2);
