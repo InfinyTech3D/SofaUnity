@@ -2,8 +2,17 @@
 <Node name="root" dt="0.02">
     <RequiredPlugin pluginName='SofaOpenglVisual'/>
     <RequiredPlugin pluginName='SofaMiscCollision'/>
+    <RequiredPlugin name="SofaBoundaryCondition"/> <!-- Needed to use components [PlaneForceField] -->
+    <RequiredPlugin name="SofaGeneralDeformable"/> <!-- Needed to use components [TriangularBendingSprings] -->
+    <RequiredPlugin name="SofaGeneralSimpleFem"/> <!-- Needed to use components [TetrahedralCorotationalFEMForceField] -->
+    <RequiredPlugin name="SofaImplicitOdeSolver"/> <!-- Needed to use components [EulerImplicitSolver] -->
+    <RequiredPlugin name="SofaLoader"/> <!-- Needed to use components [MeshObjLoader] -->
+    <RequiredPlugin name="SofaMeshCollision"/> <!-- Needed to use components [LineCollisionModel, PointCollisionModel, TriangleCollisionModel] -->
+    <RequiredPlugin name="SofaTopologyMapping"/> <!-- Needed to use components [Tetra2TriangleTopologicalMapping] -->
+
     <DefaultPipeline verbose="0" depth="10" draw="0" />
-    <BruteForceDetection name="N2" />
+    <BruteForceBroadPhase/>
+    <BVHNarrowPhase/>
     <MinProximityIntersection name="Proximity" alarmDistance="0.5" contactDistance="0.1" />
     <DefaultContactManager name="Response" response="default" />
     <DefaultCollisionGroupManager name="Group" />

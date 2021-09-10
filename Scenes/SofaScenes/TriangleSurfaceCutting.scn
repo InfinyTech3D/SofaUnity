@@ -5,7 +5,8 @@
     <VisualStyle displayFlags="showVisual showBehaviorModels" />
     
     <DefaultPipeline verbose="0" />
-    <BruteForceDetection name="N2" />
+    <BruteForceBroadPhase/>
+    <BVHNarrowPhase/>
     <DefaultContactManager response="default" />
     <MinProximityIntersection name="Proximity" alarmDistance="0.5" contactDistance="0.2" />
     
