@@ -58,25 +58,28 @@ public class SofaDataArchiver
             bool value = owner.m_impl.GetBoolValue(dataName);
             AddBoolData(owner, dataName, value);
         }
-        else if (dataType == "int")
+        else if (dataType == "int" || dataType == "i")
         {
             int value = owner.m_impl.GetIntValue(dataName);
+            dataType = "i";
             AddIntData(owner, dataName, value, false);
         }
-        else if (dataType == "unsigned int")
+        else if (dataType == "unsigned int" || dataType == "I")
         {
             int value = owner.m_impl.GetUIntValue(dataName);
             AddIntData(owner, dataName, value, true);
             dataType = "uint";
         }
-        else if (dataType == "float")
+        else if (dataType == "float" || dataType == "f")
         {
             float value = owner.m_impl.GetFloatValue(dataName);
+            dataType = "f";
             AddFloatData(owner, dataName, value);
         }
-        else if (dataType == "double")
+        else if (dataType == "double" || dataType == "d")
         {
             float value = owner.m_impl.GetDoubleValue(dataName);
+            dataType = "d";
             AddDoubleData(owner, dataName, value);
         }
         else if (dataType == "Vec2i")
@@ -355,6 +358,9 @@ public class SofaDataArchiver
     /// Getter of generic SofaData given the Data name
     public SofaData GetGenericData(string dataName)
     {
+        if (m_otherData == null)
+            return null;
+        
         foreach (SofaData data in m_otherData)
         {
             if (data.DataName == dataName)
