@@ -168,7 +168,7 @@ namespace SofaUnity
         {
             // overide name with current type
             m_componentType = m_impl.GetComponentType();
-            this.gameObject.name = "SofaMesh" + "  -  " + m_uniqueNameId;
+            this.gameObject.name = "SofaMesh" + "  -  " + m_componentType;
         }
 
 
