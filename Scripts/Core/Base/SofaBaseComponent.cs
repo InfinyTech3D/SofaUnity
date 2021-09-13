@@ -200,6 +200,8 @@ namespace SofaUnity
             }
 
             CreateSofaAPI_Impl();
+
+            m_isReady = true;
         }
 
 
