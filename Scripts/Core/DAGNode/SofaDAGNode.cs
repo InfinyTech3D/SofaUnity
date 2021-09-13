@@ -314,6 +314,8 @@ namespace SofaUnity
                 SofaLog("Node Parent Name return error: " + m_parentNodeName + ", will use None.");
                 m_parentNodeName = "None";
             }
+
+            m_isReady = true;
         }
 
 
@@ -357,9 +359,48 @@ namespace SofaUnity
                     }
                 }
 
+
                 if (!found)
-                    Debug.LogError("Component: " + compoName + " not found under DAGNode: " + UniqueNameId);
+                {
+                    Debug.LogWarning("Component: " + compoName + " not found under DAGNode. Will try to add it under node: " + UniqueNameId);
+                    string baseType = m_impl.GetBaseComponentType(compoName);
+                    if (baseType.Contains("Error"))
+                    {
+                        SofaLog("Component " + compoName + " returns baseType: " + baseType, 2);
+                    }
+                    else
+                    {
+                        SofaLog("############## CREATE SofaBaseComponent - " + compoName + " " + baseType);
+                        SofaBaseComponent compo = SofaComponentFactory.CreateSofaComponent(compoName, baseType, this, this.gameObject);
+                        if (compo != null)
+                        {
+                            if (baseType == "SofaMesh")
+                            {
+                                m_nodeMesh = compo as SofaMesh;
+                            }
+                            m_sofaComponents.Add(compo);
+                        }
+                    }
+                }
+                    
             }
+
+            // check not reconnected components under this nodeGameObject
+            foreach (Transform child in this.gameObject.transform)
+            {
+                SofaBaseComponent[] components = child.GetComponents<SofaBaseComponent>();
+                foreach (SofaBaseComponent component in components)
+                {
+                    if (!component.IsReady()) // not reconnected, need to remove old component
+                    {
+                        Debug.LogWarning("Component: '" + component.DisplayName + "' under node: '" + child.name + "' not reconnected to a SOFA component. GameObject will be removed.");
+                        DestroyImmediate(component.gameObject);
+                    }
+                }
+                
+            }
+
+            m_isReady = true;
         }
 
 
