@@ -301,10 +301,10 @@ namespace SofaUnity
                 {
                     if (m_dagNodes[j].UniqueNameId == racine)
                     {
-                        Debug.Log(j + " -> Before: " + m_dagNodes[j].UniqueNameId);
+                        //Debug.Log(j + " -> Before: " + m_dagNodes[j].UniqueNameId);
                         m_dagNodes[j].UniqueNameId = nodeName;
                         m_dagNodes[j].DisplayName = m_sofaContextAPI.getDAGNodeDisplayName(i);
-                        Debug.Log(j + " -> After: " + m_dagNodes[j].UniqueNameId);
+                        //Debug.Log(j + " -> After: " + m_dagNodes[j].UniqueNameId);
                         break;
                     }
                 }

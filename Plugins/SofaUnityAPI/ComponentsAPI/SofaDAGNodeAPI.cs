@@ -26,7 +26,6 @@ public class SofaDAGNodeAPI : SofaBaseAPI
     {
         if (m_isCustom)
         {
-            Debug.Log("SofaDAGNodeAPI::Init() Need to create: " + m_name);
             int res = sofaPhysicsAPI_addDAGNode(m_simu, m_parentName, m_name);
             if (res != 1)
             {
