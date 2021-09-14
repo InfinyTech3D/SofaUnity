@@ -155,7 +155,6 @@ namespace SofaUnity
         /// Default constructor taking a SofaContext as argument
         public PluginManagerInterface(SofaContextAPI sofaAPI)
         {
-            Debug.Log("construct PluginManagerInterface");
             m_sofaAPI = sofaAPI;
             if (m_savedPlugins == null)
                 m_savedPlugins = new List<string>();
@@ -177,7 +176,6 @@ namespace SofaUnity
         /// Method to update the list of save plugin to load from plugins enable status
         public void SaveEnabledPlugins()
         {
-            Debug.Log("SaveEnabledPlugins");
             m_savedPlugins.Clear();
             List<Plugin> plugins = PluginManager.Instance.GetPluginList();
             foreach (Plugin plugin in plugins)

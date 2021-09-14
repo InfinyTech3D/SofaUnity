@@ -44,7 +44,6 @@ public class SofaCapsuleController : MonoBehaviour
             return;
         }
 
-        Debug.Log("nbrV: " + nbrV);
         m_sofaCapsuleMesh.AddListener();
 
         sofaToUnity = m_sofaCapsuleMesh.m_sofaContext.GetScaleSofaToUnity();

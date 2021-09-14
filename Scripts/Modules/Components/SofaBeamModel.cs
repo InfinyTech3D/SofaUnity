@@ -58,7 +58,6 @@ namespace SofaUnity
                 if (tmp != m_beamDiscretisation)
                 {
                     m_beamDiscretisation = tmp;
-                    Debug.Log("BeamDiscretisation: m_doComputeMesh true");
                     m_doComputeMesh = true;
                 }
             }

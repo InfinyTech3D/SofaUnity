@@ -96,7 +96,6 @@ namespace SofaUnity
             
             if (m_sofaMeshAPI.HasTopologyChanged())
             {
-                Debug.Log("SofaVisualModel::updateImpl TopologyChanged");
                 m_mesh.triangles = m_sofaMeshAPI.createTriangulation();
                 //if (m_invertNormals)
                 //{

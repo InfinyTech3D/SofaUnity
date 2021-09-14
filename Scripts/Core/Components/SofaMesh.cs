@@ -186,7 +186,7 @@ namespace SofaUnity
 
             if (this.TopologyType() != TopologyObjectType.NO_TOPOLOGY && m_sofaMeshAPI.HasTopologyChanged())
             {
-                Debug.Log("SofaMesh::updateImpl TopologyChanged");
+                //Debug.Log("SofaMesh::updateImpl TopologyChanged");
                 HandleTopologyChange();
             }
 
