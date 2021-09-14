@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Liquid
-  m_Shader: {fileID: 208, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 209, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _ALPHABLEND_ON _COLOROVERLAY_ON
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
@@ -81,6 +81,7 @@ Material:
     - _Mode: 2
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _Shininess: 0.7
     - _SmoothnessTextureChannel: 0
     - _SoftParticlesEnabled: 0
     - _SoftParticlesFarFadeDistance: 1
@@ -94,6 +95,8 @@ Material:
     - _Color: {r: 0.09972411, g: 0.4413715, b: 0.7830189, a: 0.6}
     - _ColorAddSubDiff: {r: -1, g: 1, b: 0, a: 0}
     - _EmisColor: {r: 0, g: 0.10923533, b: 0.8301887, a: 1}
+    - _Emission: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
+    - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
     - _TintColor: {r: 0.10840159, g: 0.18169284, b: 0.7924528, a: 1}
