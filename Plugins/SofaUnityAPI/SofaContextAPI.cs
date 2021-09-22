@@ -21,7 +21,6 @@ namespace SofaUnityAPI
         /// Default constructor, will create the pointer to SofaPhysicsAPI
         public SofaContextAPI(bool async)
         {
-            //Debug.Log("## create ## SofaContextAPI ");
             // Create the application
             if (async)
                 m_native = sofaPhysicsAPI_create(2);
@@ -345,7 +344,7 @@ namespace SofaUnityAPI
         {
             if (m_isReady)
             {
-                string str = sofaPhysicsAPI_getDAGNodeName(m_native, DAGNodeID);
+                string str = sofaPhysicsAPI_getDAGNodeAPIName(m_native, DAGNodeID);
                 return str;
             }
             else
@@ -578,7 +577,7 @@ namespace SofaUnityAPI
         public static extern int sofaPhysicsAPI_logSceneGraph(IntPtr obj);
 
         [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public static extern string sofaPhysicsAPI_getDAGNodeName(IntPtr obj, int DAGNodeID);
+        public static extern string sofaPhysicsAPI_getDAGNodeAPIName(IntPtr obj, int DAGNodeID);
 
         [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern string sofaPhysicsAPI_getDAGNodeDisplayName(IntPtr obj, int DAGNodeID);

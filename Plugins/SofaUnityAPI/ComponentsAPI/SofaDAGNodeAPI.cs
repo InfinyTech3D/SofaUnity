@@ -80,7 +80,7 @@ public class SofaDAGNodeAPI : SofaBaseAPI
     {
         if (m_isReady)
         {
-            string type = sofaPhysicsAPI_getDAGNodeParentName(m_simu, m_name);
+            string type = sofaPhysicsAPI_getDAGNodeParentAPIName(m_simu, m_name);
             return type;
         }
         else
@@ -160,7 +160,7 @@ public class SofaDAGNodeAPI : SofaBaseAPI
     public static extern string sofaPhysicsAPI_getDAGNodeComponentsName(IntPtr obj, string nodeName);
 
     [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern string sofaPhysicsAPI_getDAGNodeParentName(IntPtr obj, string nodeName);
+    public static extern string sofaPhysicsAPI_getDAGNodeParentAPIName(IntPtr obj, string nodeName);
 
 
     [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
@@ -170,7 +170,7 @@ public class SofaDAGNodeAPI : SofaBaseAPI
     public static extern int sofaPhysicsAPI_addDAGNode(IntPtr obj, string parentNodeName, string nodeName);
 
     [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaPhysicsAPI_changeDAGNodeName(IntPtr obj, string oldNodeName, string newNodeName);
+    public static extern int sofaPhysicsAPI_changeDAGNodeAPIName(IntPtr obj, string oldNodeName, string newNodeName);
 
     [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_getDAGNodeTransform(IntPtr obj, string nodeName, string transformType, float[] values);

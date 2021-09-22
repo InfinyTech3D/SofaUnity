@@ -75,10 +75,20 @@ public class SofaBaseComponentEditor : Editor
                 SofaDoubleData data = dataArchiver.GetSofaDoubleData(dataName);
                 data.Value = EditorGUILayout.FloatField(data.DataName, data.Value);
             }
+            else if (dataType == "Vec2i")
+            {
+                SofaVec2IntData data = dataArchiver.GetSofaVec2IntData(dataName);
+                data.Value = EditorGUILayout.Vector2IntField(data.DataName, data.Value);
+            }
             else if (dataType == "Vec2f" || dataType == "Vec2d")
             {
                 SofaVec2Data data = dataArchiver.GetSofaVec2Data(dataName);
                 data.Value = EditorGUILayout.Vector2Field(data.DataName, data.Value);
+            }
+            else if (dataType == "Vec3i")
+            {
+                SofaVec3IntData data = dataArchiver.GetSofaVec3IntData(dataName);
+                data.Value = EditorGUILayout.Vector3IntField(data.DataName, data.Value);
             }
             else if (dataType == "Vec3f" || dataType == "Vec3d")
             {
