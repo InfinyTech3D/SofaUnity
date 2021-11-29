@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using SofaUnity;
 
 /// <summary>
 /// Script to Add to a GameOject in order to move it using the keybord.
