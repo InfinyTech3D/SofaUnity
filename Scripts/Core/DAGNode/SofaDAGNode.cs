@@ -218,7 +218,7 @@ namespace SofaUnity
             }
 
             string componentsS = m_impl.RecomputeDAGNodeComponents();
-            SofaLog("####### SofaDAGNode::CreateSofaAPI " + UniqueNameId + " -> " + componentsS, 0, false);
+            SofaLog("####### SofaDAGNode::RefreshNodeChildren: CreateSofaAPI " + UniqueNameId + " -> " + componentsS, 0, false);
             if (componentsS.Length == 0)
                 return;
 
@@ -282,7 +282,7 @@ namespace SofaUnity
             if (componentsS.Length == 0)
                 return;
 
-            SofaLog("####### SofaDAGNode::CreateSofaAPI " + UniqueNameId + " -> " + componentsS);
+            SofaLog("####### SofaDAGNode::Create_impl: CreateSofaAPI " + UniqueNameId + " -> " + componentsS);
 
             List<string> compoNames = ConvertStringToList(componentsS);
             foreach (string compoName in compoNames)
@@ -304,6 +304,10 @@ namespace SofaUnity
                             m_nodeMesh = compo as SofaMesh;
                         }
                         m_sofaComponents.Add(compo);
+                    }
+                    else
+                    {
+                        SofaLog("############## CREATE SofaBaseComponent Failed ");
                     }
                 }
             }

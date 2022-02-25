@@ -75,7 +75,10 @@ namespace SofaUnity
             s_componentFactory = new Dictionary<string, Func<GameObject, SofaBaseComponent>>();
 
             Func<GameObject, SofaBaseComponent> solverMethod = (gameO) => gameO.AddComponent<SofaSolver>();
-            s_componentFactory.Add("SofaSolver", solverMethod);
+            s_componentFactory.Add("SofaOdeSolver", solverMethod);
+
+            Func<GameObject, SofaBaseComponent> linearSolver = (gameO) => gameO.AddComponent<SofaSolver>();
+            s_componentFactory.Add("SofaLinearSolver", linearSolver);
 
             Func<GameObject, SofaBaseComponent> loaderMethod = (gameO) => gameO.AddComponent<SofaLoader>();
             s_componentFactory.Add("SofaLoader", loaderMethod);
@@ -104,6 +107,9 @@ namespace SofaUnity
             Func<GameObject, SofaBaseComponent> pluginMethod = (gameO) => null;
             s_componentFactory.Add("SofaRequiredPlugin", pluginMethod);
 
+            Func<GameObject, SofaBaseComponent> visualCompoMethod = (gameO) => null;
+            s_componentFactory.Add("SofaVisualComponent", visualCompoMethod);
+
             Func<GameObject, SofaBaseComponent> animLoopMethod = (gameO) => gameO.AddComponent<SofaAnimationLoop>();
             s_componentFactory.Add("SofaAnimationLoop", animLoopMethod);
         }
@@ -126,7 +132,7 @@ namespace SofaUnity
             }
             catch (KeyNotFoundException)
             {
-                Debug.LogWarning("Component type not handled: " + componentType);
+                Debug.LogWarning("Component type not handled: " + componentType + " component name: " + nameId);
                 sofaCompo = compoGO.AddComponent<SofaComponent>();
             }
 
@@ -137,7 +143,11 @@ namespace SofaUnity
                 sofaCompo.m_baseComponentType = sofaCompo.BaseTypeFromString(componentType);
                 compoGO.transform.parent = parent.gameObject.transform;
             }
-
+            else
+            {
+                GameObject.DestroyImmediate(compoGO);
+            }
+            
             return sofaCompo;
         }
     }
