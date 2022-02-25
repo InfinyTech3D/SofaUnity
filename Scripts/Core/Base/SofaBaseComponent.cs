@@ -33,7 +33,8 @@ namespace SofaUnity
         SofaMechanicalMapping,
         SofaMesh,
         SofaRequiredPlugin,
-        SofaSolver,
+        SofaOdeSolver,
+        SofaLinearSolver,
         SofaVisualModel,
         SofaUnknown
     };
