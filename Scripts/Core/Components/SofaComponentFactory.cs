@@ -75,7 +75,10 @@ namespace SofaUnity
             s_componentFactory = new Dictionary<string, Func<GameObject, SofaBaseComponent>>();
 
             Func<GameObject, SofaBaseComponent> solverMethod = (gameO) => gameO.AddComponent<SofaSolver>();
-            s_componentFactory.Add("SofaSolver", solverMethod);
+            s_componentFactory.Add("SofaOdeSolver", solverMethod);
+
+            Func<GameObject, SofaBaseComponent> linearSolver = (gameO) => gameO.AddComponent<SofaSolver>();
+            s_componentFactory.Add("SofaLinearSolver", linearSolver);
 
             Func<GameObject, SofaBaseComponent> loaderMethod = (gameO) => gameO.AddComponent<SofaLoader>();
             s_componentFactory.Add("SofaLoader", loaderMethod);
@@ -126,7 +129,7 @@ namespace SofaUnity
             }
             catch (KeyNotFoundException)
             {
-                Debug.LogWarning("Component type not handled: " + componentType);
+                Debug.LogWarning("Component type not handled: " + componentType + " component name: " + nameId);
                 sofaCompo = compoGO.AddComponent<SofaComponent>();
             }
 
