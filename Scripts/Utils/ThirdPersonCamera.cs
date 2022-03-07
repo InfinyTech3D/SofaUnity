@@ -15,7 +15,7 @@ public class ThirdPersonCamera : MonoBehaviour
 	public float m_spanSpeed = 0.001f;
 	public Vector3 m_lookAtStatic;
     public float m_cameraDistance = 100.0f;
-	public float heartBeat = 1.5f;
+	//public float heartBeat = 1.5f;
 
 	private float m_currentX = -15.0f;
 	private float m_currentY = -10.0f;
@@ -81,11 +81,11 @@ public class ThirdPersonCamera : MonoBehaviour
 
 		Vector3 newPos = m_lookAtStatic + rotation * dir;
 		Vector3 newlook = m_lookAtStatic;
-		if (heartBeat != 0.0f)
-        {
-			newPos.y += heartBeat * Mathf.Sin(Time.time);
-			newlook.y += heartBeat * Mathf.Sin(Time.time);
-		}
+		//if (heartBeat != 0.0f)
+  //      {
+		//	newPos.y += heartBeat * Mathf.Sin(Time.time);
+		//	newlook.y += heartBeat * Mathf.Sin(Time.time);
+		//}
 
 		transform.position = newPos;
 		transform.LookAt (newlook);
