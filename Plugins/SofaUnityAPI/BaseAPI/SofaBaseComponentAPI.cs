@@ -72,6 +72,41 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     }
 
 
+    public int GetDataCounter(string dataName)
+    {
+        if (checkNativePointer())
+        {
+            int[] val = new int[1];
+            val[0] = -1;
+            int res = sofaComponentAPI_getDataCounter(m_simu, m_name, dataName, val);
+
+            if (res == 0)
+                return val[0];
+            else
+                Debug.LogError("Method GetDataCounter of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
+        }
+
+        return 0;
+    }
+
+
+    public int GetDataFlags(string dataName)
+    {
+        if (checkNativePointer())
+        {
+            int[] val = new int[1];
+            int res = sofaComponentAPI_getDataFlags(m_simu, m_name, dataName, val);
+
+            if (res == 0)
+                return val[0];
+            else
+                Debug.LogError("Method GetDataCounter of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
+        }
+
+        return 0;
+    }
+
+
     /// <summary> Generic method to get value of a Data<bool> field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <returns> Bool value of the Data field, return false if field is not found. </returns>
@@ -827,6 +862,14 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     /////////////////////////////////////////////////////////////////////////////////////////
     ///////////      Communication API to set/get basic values into Sofa     ////////////////
     /////////////////////////////////////////////////////////////////////////////////////////
+
+    /// Data API
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_getDataCounter(IntPtr obj, string componentName, string dataName, int[] value);
+
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_getDataFlags(IntPtr obj, string componentName, string dataName, int[] value);
+
 
     /// Bool API
     [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
