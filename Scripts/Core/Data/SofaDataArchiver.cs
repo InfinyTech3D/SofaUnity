@@ -41,7 +41,7 @@ public class SofaDataArchiver
     public void AddData(SofaBaseComponent owner, string dataName, string dataType)
     {
         // filter unwanted data
-        if (dataName.Contains("show") || dataName.Contains("draw"))
+        if (dataName.Contains("show") || dataName.Contains("draw")) // no gui Data
             return;
 
         if (dataName == "name" || dataName == "componentState")
