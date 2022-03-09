@@ -20,12 +20,6 @@ public class SofaDataArchiver
     public List<SofaBaseData> m_dataArray = null;
 
 
-    /// List of unssuported type names stored in this Archiver
-    public List<string> m_otherNames = new List<string>();
-    /// List of unssuported Data stored in this Archiver
-    public List<SofaData> m_otherData = null;
-
-
     /// Method to add a Sofa Data to be stored with all the info to create it will call the right specialised Add method
     public void AddData(SofaBaseComponent owner, string dataName, string dataType)
     {
@@ -40,7 +34,9 @@ public class SofaDataArchiver
             m_dataArray = new List<SofaBaseData>();
 
 
-        bool supported = true;
+        m_names.Add(dataName);
+        m_types.Add(dataType);
+
         if (dataType == "string")
         {
             AddStringData(owner, dataName);
@@ -131,15 +127,6 @@ public class SofaDataArchiver
         else
         {
             AddUnssuportedData(owner, dataName, dataType);
-            m_otherNames.Add(dataName);
-            supported = false;
-        }
-
-
-        if (supported)
-        {
-            m_names.Add(dataName);
-            m_types.Add(dataType);
         }
     }
 
@@ -157,112 +144,26 @@ public class SofaDataArchiver
         return false;
     }
 
-
-
-    /// Method to create a String Data and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
-    public void AddStringData(SofaBaseComponent owner, string dataName)
+    public string GetDataType(string dataName)
     {
-        string value = owner.m_impl.getStringValue(dataName);
-        m_dataArray.Add(new SofaStringData(owner, dataName, value));
+        if (m_dataArray != null)
+        {
+            foreach (SofaBaseData data in m_dataArray)
+                if (data.DataName == dataName)
+                    return data.DataType;
+        }
+
+        return "None";
     }
-
-
-    /// Method to create a Bool Data and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
-    public void AddBoolData(SofaBaseComponent owner, string dataName)
-    {
-        bool value = owner.m_impl.GetBoolValue(dataName);
-        m_dataArray.Add(new SofaBoolData(owner, dataName, value));
-    }
-
-
-    /// Method to create a Int Data and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
-    public void AddIntData(SofaBaseComponent owner, string dataName, bool isUnsigned = false)
-    {
-        int value = 0;
-        if (isUnsigned)
-            value = owner.m_impl.GetUIntValue(dataName);
-        else
-            value = owner.m_impl.GetIntValue(dataName);
-        m_dataArray.Add(new SofaIntData(owner, dataName, value, isUnsigned));
-    }
-
-
-    /// Method to create a Float Data and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
-    public void AddFloatData(SofaBaseComponent owner, string dataName)
-    {
-        float value = owner.m_impl.GetFloatValue(dataName);
-        m_dataArray.Add(new SofaFloatData(owner, dataName, value));
-    }
-
-
-    /// Method to create a Double Data and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
-    public void AddDoubleData(SofaBaseComponent owner, string dataName)
-    {
-        float value = owner.m_impl.GetDoubleValue(dataName);
-        m_dataArray.Add(new SofaDoubleData(owner, dataName, value));
-    }
-
-
-    /// Method to create a Vec2 int Data and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
-    public void AddVec2IntData(SofaBaseComponent owner, string dataName, bool isUnsigned = false)
-    {
-        Vector2Int value = owner.m_impl.GetVector2iValue(dataName);
-        m_dataArray.Add(new SofaVec2IntData(owner, dataName, value, isUnsigned));
-    }
-
-    /// Method to create a Vec2 Data and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
-    public void AddVec2Data(SofaBaseComponent owner, string dataName, bool isDouble = false)
-    {
-        Vector2 value = owner.m_impl.GetVector2Value(dataName, isDouble);
-        m_dataArray.Add(new SofaVec2Data(owner, dataName, value, isDouble));
-    }
-
-
-    /// Method to create a Vec3 int Data and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
-    public void AddVec3IntData(SofaBaseComponent owner, string dataName, bool isUnsigned = false)
-    {
-        Vector3Int value = owner.m_impl.GetVector3iValue(dataName);
-        m_dataArray.Add(new SofaVec3IntData(owner, dataName, value, isUnsigned));
-    }
-
-    /// Method to create a Vec3 Data and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
-    public void AddVec3Data(SofaBaseComponent owner, string dataName, bool isDouble = false)
-    {
-        Vector3 value = owner.m_impl.GetVector3Value(dataName, isDouble);
-        m_dataArray.Add(new SofaVec3Data(owner, dataName, value, isDouble));
-    }
-
-
-    /// Method to create a Vec4 Data and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
-    public void AddVec4Data(SofaBaseComponent owner, string dataName, bool isDouble = false)
-    {
-        Vector4 value = owner.m_impl.GetVector4Value(dataName, isDouble);
-        m_dataArray.Add(new SofaVec4Data(owner, dataName, value, isDouble));
-    }
-
-
-    /// Method to create a SofaData for unsupported type and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
-    public void AddUnssuportedData(SofaBaseComponent owner, string nameID, string type)
-    {
-        if (m_otherData == null) // first time
-            m_otherData = new List<SofaData>();
-
-        m_otherData.Add(new SofaData(owner, nameID, type));
-    }
-
-
 
 
     /// Getter of generic SofaData given the Data name
     public SofaData GetGenericData(string dataName)
     {
-        if (m_otherData == null)
-            return null;
-        
-        foreach (SofaData data in m_otherData)
+        foreach (SofaBaseData data in m_dataArray)
         {
             if (data.DataName == dataName)
-                return data;
+                return (SofaData)(data);
         }
         return null;
     }
@@ -384,4 +285,96 @@ public class SofaDataArchiver
         }
         return null;
     }
+
+
+
+    /// Internal Method to create a String Data and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
+    private void AddStringData(SofaBaseComponent owner, string dataName)
+    {
+        string value = owner.m_impl.getStringValue(dataName);
+        m_dataArray.Add(new SofaStringData(owner, dataName, value));
+    }
+
+
+    /// Internal Method to create a Bool Data and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
+    private void AddBoolData(SofaBaseComponent owner, string dataName)
+    {
+        bool value = owner.m_impl.GetBoolValue(dataName);
+        m_dataArray.Add(new SofaBoolData(owner, dataName, value));
+    }
+
+
+    /// Internal Method to create a Int Data and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
+    private void AddIntData(SofaBaseComponent owner, string dataName, bool isUnsigned = false)
+    {
+        int value = 0;
+        if (isUnsigned)
+            value = owner.m_impl.GetUIntValue(dataName);
+        else
+            value = owner.m_impl.GetIntValue(dataName);
+        m_dataArray.Add(new SofaIntData(owner, dataName, value, isUnsigned));
+    }
+
+
+    /// Internal Method to create a Float Data and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
+    private void AddFloatData(SofaBaseComponent owner, string dataName)
+    {
+        float value = owner.m_impl.GetFloatValue(dataName);
+        m_dataArray.Add(new SofaFloatData(owner, dataName, value));
+    }
+
+
+    /// Internal Method to create a Double Data and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
+    private void AddDoubleData(SofaBaseComponent owner, string dataName)
+    {
+        float value = owner.m_impl.GetDoubleValue(dataName);
+        m_dataArray.Add(new SofaDoubleData(owner, dataName, value));
+    }
+
+
+    /// Internal Method to create a Vec2 int Data and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
+    private void AddVec2IntData(SofaBaseComponent owner, string dataName, bool isUnsigned = false)
+    {
+        Vector2Int value = owner.m_impl.GetVector2iValue(dataName);
+        m_dataArray.Add(new SofaVec2IntData(owner, dataName, value, isUnsigned));
+    }
+
+    /// Internal Method to create a Vec2 Data and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
+    private void AddVec2Data(SofaBaseComponent owner, string dataName, bool isDouble = false)
+    {
+        Vector2 value = owner.m_impl.GetVector2Value(dataName, isDouble);
+        m_dataArray.Add(new SofaVec2Data(owner, dataName, value, isDouble));
+    }
+
+
+    /// Internal Method to create a Vec3 int Data and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
+    private void AddVec3IntData(SofaBaseComponent owner, string dataName, bool isUnsigned = false)
+    {
+        Vector3Int value = owner.m_impl.GetVector3iValue(dataName);
+        m_dataArray.Add(new SofaVec3IntData(owner, dataName, value, isUnsigned));
+    }
+
+    /// Internal Method to create a Vec3 Data and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
+    private void AddVec3Data(SofaBaseComponent owner, string dataName, bool isDouble = false)
+    {
+        Vector3 value = owner.m_impl.GetVector3Value(dataName, isDouble);
+        m_dataArray.Add(new SofaVec3Data(owner, dataName, value, isDouble));
+    }
+
+
+    /// Internal Method to create a Vec4 Data and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
+    private void AddVec4Data(SofaBaseComponent owner, string dataName, bool isDouble = false)
+    {
+        Vector4 value = owner.m_impl.GetVector4Value(dataName, isDouble);
+        m_dataArray.Add(new SofaVec4Data(owner, dataName, value, isDouble));
+    }
+
+
+    /// Internal Method to create a SofaData for unsupported type and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
+    private void AddUnssuportedData(SofaBaseComponent owner, string nameID, string type)
+    {
+        m_dataArray.Add(new SofaData(owner, nameID, type));
+    }
+
+
 }
