@@ -2,6 +2,7 @@
 using UnityEditor;
 using SofaUnity;
 using UnityEditor.AnimatedValues;
+using System.Collections.Generic;
 
 /// <summary>
 /// Editor class corresponding to @sa SofaBaseComponent
@@ -45,6 +46,8 @@ public class SofaBaseComponentEditor : Editor
         if (dataArchiver == null || !m_showData)
             return;
 
+        List<SofaData> m_unssuportedData = new List<SofaData>();
+
         for (int i = 0; i < dataArchiver.m_names.Count; i++)
         {
             string dataType = dataArchiver.m_types[i];
@@ -60,7 +63,7 @@ public class SofaBaseComponentEditor : Editor
             if (bData.IsReadOnly())
                 EditorGUI.BeginDisabledGroup(true);
 
-
+            //Debug.Log("dataName: " + dataName + " | dataType: " + dataType + " | bData: " + bData.DataName + " type: " + bData.GetType().Name);
             if (dataType == "string")
             {
                 SofaStringData data = (SofaStringData)(bData);
@@ -113,14 +116,7 @@ public class SofaBaseComponentEditor : Editor
             }
             else
             {
-                SofaData data = dataArchiver.GetGenericData(dataName);
-
-                if (data != null)
-                {
-                    EditorGUI.BeginDisabledGroup(true);
-                    EditorGUILayout.TextField(data.DataName, "Unsupported type: " + data.DataType);
-                    EditorGUI.EndDisabledGroup();
-                }
+                m_unssuportedData.Add((SofaData)(bData));
             }
 
             if (bData.IsReadOnly())
@@ -141,16 +137,14 @@ public class SofaBaseComponentEditor : Editor
         }
 
 
-        if (dataArchiver.m_otherNames.Count > 0)
+        if (m_unssuportedData.Count > 0)
         {
             EditorGUILayout.Separator();
             m_ShowUnsupportedFields.target = EditorGUILayout.ToggleLeft("Show unsupported Data", m_ShowUnsupportedFields.target);
             if (EditorGUILayout.BeginFadeGroup(m_ShowUnsupportedFields.faded))
             {
-                for (int i = 0; i < dataArchiver.m_otherNames.Count; i++)
+                foreach (SofaData data in m_unssuportedData)
                 {
-                    string dataName = dataArchiver.m_otherNames[i];
-                    SofaData data = dataArchiver.GetGenericData(dataName);
                     EditorGUILayout.TextField(data.DataName, "Unsupported type: " + data.DataType);
                 }
             }
