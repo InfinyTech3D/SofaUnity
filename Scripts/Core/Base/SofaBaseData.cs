@@ -117,6 +117,11 @@ namespace SofaUnity
             return m_flag.HasFlag(DataFlagsEnum.FLAG_DISPLAYED);
         }
 
+        public bool IsRequired()
+        {
+            return m_flag.HasFlag(DataFlagsEnum.FLAG_REQUIRED);
+        }
+
 
         ////////////////////////////////////////////
         //////        SofaBaseData API         /////
