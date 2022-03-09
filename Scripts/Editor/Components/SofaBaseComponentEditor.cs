@@ -49,166 +49,67 @@ public class SofaBaseComponentEditor : Editor
         {
             string dataType = dataArchiver.m_types[i];
             string dataName = dataArchiver.m_names[i];
+            SofaBaseData bData = dataArchiver.m_dataArray[i];
+
+            if (!bData.IsDisplayed())
+            {
+                Debug.Log("Do not display: " + dataName + " of type: " + dataType);
+                continue;
+            }
+
+            if (bData.IsReadOnly())
+                EditorGUI.BeginDisabledGroup(true);
+
 
             if (dataType == "string")
             {
-                SofaStringData data = dataArchiver.GetSofaStringData(dataName);
-                if (!data.IsDisplayed())
-                    continue;
-
-                if (data.IsReadOnly())
-                {
-                    EditorGUI.BeginDisabledGroup(true);
-                    data.Value = EditorGUILayout.TextField(data.DataName, data.Value);
-                    EditorGUI.EndDisabledGroup();
-                }
-                else
-                    data.Value = EditorGUILayout.TextField(data.DataName, data.Value);
+                SofaStringData data = (SofaStringData)(bData);
+                data.Value = EditorGUILayout.TextField(data.DataName, data.Value);
             }
             else if (dataType == "bool")
             {
-                SofaBoolData data = dataArchiver.GetSofaBoolData(dataName);
-
-                if (!data.IsDisplayed())
-                    continue;
-
-                if (data.IsReadOnly())
-                {
-                    EditorGUI.BeginDisabledGroup(true);
-                    data.Value = EditorGUILayout.Toggle(data.DataName, data.Value);
-                    EditorGUI.EndDisabledGroup();
-                }
-                else
-                    data.Value = EditorGUILayout.Toggle(data.DataName, data.Value);
+                SofaBoolData data = (SofaBoolData)(bData);
+                data.Value = EditorGUILayout.Toggle(data.DataName, data.Value);
             }
             else if (dataType == "i" || dataType == "uint")
             {
-                SofaIntData data = dataArchiver.GetSofaIntData(dataName);
-
-                if (!data.IsDisplayed())
-                    continue;
-
-                if (data.IsReadOnly())
-                {
-                    EditorGUI.BeginDisabledGroup(true);
-                    data.Value = EditorGUILayout.IntField(data.DataName, data.Value);
-                    EditorGUI.EndDisabledGroup();
-                }
-                else
-                    data.Value = EditorGUILayout.IntField(data.DataName, data.Value);
-
+                SofaIntData data = (SofaIntData)(dataArchiver.m_dataArray[i]);
+                data.Value = EditorGUILayout.IntField(data.DataName, data.Value);
             }
             else if (dataType == "f")
             {
-                SofaFloatData data = dataArchiver.GetSofaFloatData(dataName);
-
-                if (!data.IsDisplayed())
-                    continue;
-
-                if (data.IsReadOnly())
-                {
-                    EditorGUI.BeginDisabledGroup(true);
-                    data.Value = EditorGUILayout.FloatField(data.DataName, data.Value);
-                    EditorGUI.EndDisabledGroup();
-                }
-                else
-                    data.Value = EditorGUILayout.FloatField(data.DataName, data.Value);
+                SofaFloatData data = (SofaFloatData)(bData);
+                data.Value = EditorGUILayout.FloatField(data.DataName, data.Value);
             }
             else if (dataType == "d")
             {
-                SofaDoubleData data = dataArchiver.GetSofaDoubleData(dataName);
-
-                if (!data.IsDisplayed())
-                    continue;
-
-                if (data.IsReadOnly())
-                {
-                    EditorGUI.BeginDisabledGroup(true);
-                    data.Value = EditorGUILayout.FloatField(data.DataName, data.Value);
-                    EditorGUI.EndDisabledGroup();
-                }
-                else
-                    data.Value = EditorGUILayout.FloatField(data.DataName, data.Value);
+                SofaDoubleData data = (SofaDoubleData)(bData);
+                data.Value = EditorGUILayout.FloatField(data.DataName, data.Value);
             }
             else if (dataType == "Vec2i")
             {
-                SofaVec2IntData data = dataArchiver.GetSofaVec2IntData(dataName);
-
-                if (!data.IsDisplayed())
-                    continue;
-
-                if (data.IsReadOnly())
-                {
-                    EditorGUI.BeginDisabledGroup(true);
-                    data.Value = EditorGUILayout.Vector2IntField(data.DataName, data.Value);
-                    EditorGUI.EndDisabledGroup();
-                }
-                else
-                    data.Value = EditorGUILayout.Vector2IntField(data.DataName, data.Value);
+                SofaVec2IntData data = (SofaVec2IntData)(bData);
+                data.Value = EditorGUILayout.Vector2IntField(data.DataName, data.Value);
             }
             else if (dataType == "Vec2f" || dataType == "Vec2d")
             {
-                SofaVec2Data data = dataArchiver.GetSofaVec2Data(dataName);
-
-                if (!data.IsDisplayed())
-                    continue;
-
-                if (data.IsReadOnly())
-                {
-                    EditorGUI.BeginDisabledGroup(true);
-                    data.Value = EditorGUILayout.Vector2Field(data.DataName, data.Value);
-                    EditorGUI.EndDisabledGroup();
-                }
-                else
-                    data.Value = EditorGUILayout.Vector2Field(data.DataName, data.Value);
+                SofaVec2Data data = (SofaVec2Data)(bData);
+                data.Value = EditorGUILayout.Vector2Field(data.DataName, data.Value);
             }
             else if (dataType == "Vec3i")
             {
-                SofaVec3IntData data = dataArchiver.GetSofaVec3IntData(dataName);
-
-                if (!data.IsDisplayed())
-                    continue;
-
-                if (data.IsReadOnly())
-                {
-                    EditorGUI.BeginDisabledGroup(true);
-                    data.Value = EditorGUILayout.Vector3IntField(data.DataName, data.Value);
-                    EditorGUI.EndDisabledGroup();
-                }
-                else
-                    data.Value = EditorGUILayout.Vector3IntField(data.DataName, data.Value);
+                SofaVec3IntData data = (SofaVec3IntData)(bData);
+                data.Value = EditorGUILayout.Vector3IntField(data.DataName, data.Value);
             }
             else if (dataType == "Vec3f" || dataType == "Vec3d")
             {
-                SofaVec3Data data = dataArchiver.GetSofaVec3Data(dataName);
-
-                if (!data.IsDisplayed())
-                    continue;
-
-                if (data.IsReadOnly())
-                {
-                    EditorGUI.BeginDisabledGroup(true);
-                    data.Value = EditorGUILayout.Vector3Field(data.DataName, data.Value);
-                    EditorGUI.EndDisabledGroup();
-                }
-                else
-                    data.Value = EditorGUILayout.Vector3Field(data.DataName, data.Value);
+                SofaVec3Data data = (SofaVec3Data)(bData);
+                data.Value = EditorGUILayout.Vector3Field(data.DataName, data.Value);
             }
             else if (dataType == "Vec4f" || dataType == "Vec4d")
             {
-                SofaVec4Data data = dataArchiver.GetSofaVec4Data(dataName);
-
-                if (!data.IsDisplayed())
-                    continue;
-
-                if (data.IsReadOnly())
-                {
-                    EditorGUI.BeginDisabledGroup(true);
-                    data.Value = EditorGUILayout.Vector4Field(data.DataName, data.Value);
-                    EditorGUI.EndDisabledGroup();
-                }
-                else
-                    data.Value = EditorGUILayout.Vector4Field(data.DataName, data.Value);
+                SofaVec4Data data = (SofaVec4Data)(bData);
+                data.Value = EditorGUILayout.Vector4Field(data.DataName, data.Value);
             }
             else
             {
@@ -216,15 +117,14 @@ public class SofaBaseComponentEditor : Editor
 
                 if (data != null)
                 {
-                    if (!data.IsDisplayed())
-                        continue;
-
                     EditorGUI.BeginDisabledGroup(true);
                     EditorGUILayout.TextField(data.DataName, "Unsupported type: " + data.DataType);
                     EditorGUI.EndDisabledGroup();
                 }
             }
-    
+
+            if (bData.IsReadOnly())
+                EditorGUI.EndDisabledGroup();
         }
 
         // Add the links
