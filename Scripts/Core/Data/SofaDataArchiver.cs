@@ -16,6 +16,7 @@ public class SofaDataArchiver
     public List<string> m_types = new List<string>();
 
     /// List of Sofa supported Data
+    [SerializeReference]
     public List<SofaBaseData> m_dataArray = null;
 
 

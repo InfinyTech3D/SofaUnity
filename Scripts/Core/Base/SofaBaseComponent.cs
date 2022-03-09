@@ -170,6 +170,13 @@ namespace SofaUnity
                 return;
             }
 
+            // Add backward compatibility if project was not using m_dataArray
+            if (m_dataArchiver.m_dataArray == null)
+            {
+                m_dataArchiver = null;
+                GetAllData();
+            }
+
             bool modified = m_dataArchiver.UpdateEditedData();
             if (modified)
             {
