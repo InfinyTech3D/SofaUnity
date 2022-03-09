@@ -123,6 +123,8 @@ public class SofaBaseComponentEditor : Editor
                 }
             }
 
+            if (bData.IsReadOnly())
+                EditorGUI.EndDisabledGroup();
         }
 
         // Add the links
