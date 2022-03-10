@@ -60,6 +60,24 @@ public class SofaBaseComponentEditor : Editor
                 continue;
             }
 
+            if (!bData.IsSupported()) // not supported
+            {
+                m_unssuportedData.Add((SofaData)(bData));
+                continue;
+            }
+
+
+            if(bData.IsVector())
+            {
+                EditorGUI.BeginDisabledGroup(true);
+
+                SofaDataVector data = (SofaDataVector)(bData);
+                EditorGUILayout.TextField(data.DataName, "Type: " + data.DataType + " | Size: " + data.GetSize());
+                EditorGUI.EndDisabledGroup();
+                continue;
+            }
+
+
             if (bData.IsReadOnly())
                 EditorGUI.BeginDisabledGroup(true);
 
@@ -113,10 +131,10 @@ public class SofaBaseComponentEditor : Editor
             {
                 SofaVec4Data data = (SofaVec4Data)(bData);
                 data.Value = EditorGUILayout.Vector4Field(data.DataName, data.Value);
-            }
+            }            
             else
             {
-                m_unssuportedData.Add((SofaData)(bData));
+                Debug.LogError("Data not handled: " + dataName + " " + dataType);
             }
 
             if (bData.IsReadOnly())
