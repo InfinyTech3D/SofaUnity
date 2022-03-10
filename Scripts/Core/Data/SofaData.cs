@@ -870,34 +870,4 @@ namespace SofaUnity
         }
     }
 
-
-    /// <summary>
-    /// Specialization of the class SofaBaseData for Vector<float> data
-    /// Not yet handled.
-    /// </summary>
-    [System.Serializable]
-    public class SofaVectorData : SofaBaseData
-    {
-        /// Internal string type stored in this Data
-        [SerializeField]
-        protected string m_vecType = "";
-
-        /// Size of the stored vector
-        [SerializeField]
-        protected int m_vecSize = 0;
-
-        ////////////////////////////////////////////
-        //////       SofaVectorData API        /////
-        ////////////////////////////////////////////
-
-        /// Default constructor taking the value, the component owner and its name. Will set the type internally
-        public SofaVectorData(SofaBaseComponent owner, string nameID, string dataType, string vecType, int size)
-            : base(owner, nameID, dataType)
-        {
-            m_vecType = vecType;
-            m_vecSize = size;
-        }
-    }
-
-    
 }

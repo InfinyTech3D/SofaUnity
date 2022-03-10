@@ -97,13 +97,36 @@ public class SofaDataArchiver
         {
             AddVec4Data(owner, dataName, true);
         }
-        //else if (dataType == "vector < int >" || dataType == "vector<int>")
-        //{
-        //    Debug.Log(owner.UniqueNameId + " VEC: " + dataType);
-        //    int res = owner.m_impl.GetVeciSize(dataName);
-        //    Debug.Log(dataName + " size: " + res);
-        //}
+        else if (dataType == "vector<I>" || dataType == "vector < int >" || dataType == "vector<int>")
+        {
+            m_dataArray.Add(new SofaDataVectorInt(owner, dataName, dataType));
+        }
+        else if (dataType == "vector<d>" || dataType == "vector < double >" || dataType == "vector<double>")
+        {
+            m_dataArray.Add(new SofaDataVectorDouble(owner, dataName, dataType));
+        }
+        else if (dataType == "vector<f>" || dataType == "vector < float >" || dataType == "vector<float>")
+        {
+            m_dataArray.Add(new SofaDataVectorFloat(owner, dataName, dataType));
+        }
+        else if (dataType == "vector<Vec2f>" || dataType == "vector < Vec2f >")
+        {
+            m_dataArray.Add(new SofaDataVectorVec2(owner, dataName, dataType, false));
+        }
+        else if (dataType == "vector<Vec2d>" || dataType == "vector < Vec2d >" || dataType == "vector<Vec3>")
+        {
+            m_dataArray.Add(new SofaDataVectorVec2(owner, dataName, dataType, true));
+        }
+        else if (dataType == "vector<Vec3f>" || dataType == "vector < Vec3f >")
+        {
+            m_dataArray.Add(new SofaDataVectorVec3(owner, dataName, dataType, false));
+        }
+        else if (dataType == "vector<Vec3d>" || dataType == "vector < Vec3d >" || dataType == "vector<Vec3>")
+        {
+            m_dataArray.Add(new SofaDataVectorVec3(owner, dataName, dataType, true));
+        }
         //else if (dataType == "vector < unsigned int >" || dataType == "vector<unsigned int>")
+
         //{
         //    Debug.Log(owner.UniqueNameId + " VEC: " + dataType);
         //    int res = owner.m_impl.GetVeciSize(dataName);
@@ -113,12 +136,7 @@ public class SofaDataArchiver
         //{
         //    //owner.m_impl.getV
         //}
-        //else if (dataType == "vector < float >" || dataType == "vector<float>")
-        //{
-
-        //}
-
-
+        
 
         //else if (dataType == "Rigid3dTypes::Coord")
         //{
@@ -143,6 +161,7 @@ public class SofaDataArchiver
 
         return false;
     }
+
 
     public string GetDataType(string dataName)
     {
