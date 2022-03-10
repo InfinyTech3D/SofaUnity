@@ -175,6 +175,17 @@ public class SofaDataArchiver
         return "None";
     }
 
+    /// Getter of generic SofaData given the Data name
+    public SofaBaseData GetBaseData(string dataName)
+    {
+        foreach (SofaBaseData data in m_dataArray)
+        {
+            if (data.DataName == dataName)
+                return data;
+        }
+        return null;
+    }
+
 
     /// Getter of generic SofaData given the Data name
     public SofaData GetGenericData(string dataName)
@@ -183,6 +194,18 @@ public class SofaDataArchiver
         {
             if (data.DataName == dataName)
                 return (SofaData)(data);
+        }
+        return null;
+    }
+
+
+    /// Getter of generic SofaData given the Data name
+    public SofaDataVector GetVectorData(string dataName)
+    {
+        foreach (SofaBaseData data in m_dataArray)
+        {
+            if (data.DataName == dataName)
+                return (SofaDataVector)(data);
         }
         return null;
     }
