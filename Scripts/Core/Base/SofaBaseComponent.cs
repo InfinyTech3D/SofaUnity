@@ -65,7 +65,7 @@ namespace SofaUnity
         public SofaBaseComponentAPI m_impl = null;
 
         /// Pointer to this component Data archiver \sa SofaDataArchiver
-        [SerializeField] // todo check if needed?
+        [SerializeField]
         public SofaDataArchiver m_dataArchiver = null;
 
         /// Pointer to this component Link archiver \sa SofaLinkArchiver
