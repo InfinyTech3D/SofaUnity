@@ -25,8 +25,6 @@ namespace SofaUnity
     [System.Serializable]
     public class SofaBaseData
     {
-        
-
 
         ////////////////////////////////////////////
         //////      SofaBaseData members       /////
@@ -62,7 +60,11 @@ namespace SofaUnity
         [SerializeField]
         protected DataFlagsEnum m_flag = DataFlagsEnum.FLAG_NONE;
 
+        [SerializeField]
+        protected bool m_isSupported = true;
 
+        [SerializeField]
+        protected bool m_isVector = false;
 
         ////////////////////////////////////////////
         //////     SofaBaseData Accessors      /////
@@ -106,6 +108,15 @@ namespace SofaUnity
                 return false;
         }
 
+        public bool IsSupported()
+        {
+            return m_isSupported;
+        }
+
+        public bool IsVector()
+        {
+            return m_isVector;
+        }
 
         public bool IsReadOnly()
         {
