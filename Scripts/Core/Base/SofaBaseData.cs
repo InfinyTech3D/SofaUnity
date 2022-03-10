@@ -108,6 +108,22 @@ namespace SofaUnity
                 return false;
         }
 
+        public bool CheckIfDirty()
+        {
+            // check SOFA Data counter
+            int counter = m_owner.m_impl.GetDataCounter(m_dataName);
+            if (m_counter != counter)
+            {
+                Debug.Log("Data is dirty! Old counter: " + m_counter + " new counter: " + counter);
+                m_counter = counter;
+                m_isDirty = true;
+            }
+            else
+                m_isDirty = false;
+
+            return m_isDirty;
+        }
+
         public bool IsSupported()
         {
             return m_isSupported;
@@ -133,6 +149,11 @@ namespace SofaUnity
             return m_flag.HasFlag(DataFlagsEnum.FLAG_REQUIRED);
         }
 
+        public virtual int GetDataCounter()
+        {
+            m_counter = m_owner.m_impl.GetDataCounter(m_dataName);
+            return m_counter;
+        }
 
         ////////////////////////////////////////////
         //////        SofaBaseData API         /////
@@ -148,13 +169,7 @@ namespace SofaUnity
         protected virtual bool GetValueImpl()
         {
             return false;
-        }
-
-        protected virtual int GetDataCounter()
-        {
-            m_counter = m_owner.m_impl.GetDataCounter(m_dataName);
-            return m_counter;
-        }
+        }        
 
         protected virtual void GetDataFlagImpl()
         {
