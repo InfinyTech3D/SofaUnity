@@ -133,6 +133,11 @@ namespace SofaUnity
             return m_flag.HasFlag(DataFlagsEnum.FLAG_REQUIRED);
         }
 
+        public virtual int GetDataCounter()
+        {
+            m_counter = m_owner.m_impl.GetDataCounter(m_dataName);
+            return m_counter;
+        }
 
         ////////////////////////////////////////////
         //////        SofaBaseData API         /////
@@ -148,13 +153,7 @@ namespace SofaUnity
         protected virtual bool GetValueImpl()
         {
             return false;
-        }
-
-        protected virtual int GetDataCounter()
-        {
-            m_counter = m_owner.m_impl.GetDataCounter(m_dataName);
-            return m_counter;
-        }
+        }        
 
         protected virtual void GetDataFlagImpl()
         {

@@ -34,9 +34,6 @@ public class SofaDataArchiver
             m_dataArray = new List<SofaBaseData>();
 
 
-        m_names.Add(dataName);
-        m_types.Add(dataType);
-
         if (dataType == "string")
         {
             AddStringData(owner, dataName);
@@ -146,6 +143,9 @@ public class SofaDataArchiver
         {
             AddUnssuportedData(owner, dataName, dataType);
         }
+
+        m_names.Add(dataName);
+        m_types.Add(dataType);
     }
 
 
