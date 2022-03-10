@@ -134,7 +134,7 @@ public class SofaBaseComponentEditor : Editor
             }            
             else
             {
-                Debug.LogError("Data not handled: " + dataName + " " + dataType);
+                Debug.LogError("Data not handled: " + dataName + " [" + dataType + "]");
             }
 
             if (bData.IsReadOnly())
