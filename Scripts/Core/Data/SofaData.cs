@@ -15,7 +15,7 @@ namespace SofaUnity
         public SofaData(SofaBaseComponent owner, string nameID, string type)
             : base(owner, nameID, type)
         {
-            
+            m_isSupported = false;
         }
     }
 
