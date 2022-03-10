@@ -24,8 +24,8 @@ namespace SofaUnity
         ////////////////////////////////////////////
 
         /// Default constructor taking the value, the component owner and its name. Will set the type internally
-        public SofaDataVector(SofaBaseComponent owner, string nameID, string dataType, string vecType)
-            : base(owner, nameID, dataType)
+        public SofaDataVector(SofaBaseComponent owner, string dataName, string dataType, string vecType)
+            : base(owner, dataName, dataType)
         {
             m_vecType = vecType;
             m_isVector = true;
@@ -44,11 +44,15 @@ namespace SofaUnity
         ///////////////////////////////////////////////
 
         /// Default constructor taking the value, the component owner and its name. Will set the type internally
-        public SofaDataVectorInt(SofaBaseComponent owner, string nameID, string dataType)
-            : base(owner, nameID, dataType, "int")
+        public SofaDataVectorInt(SofaBaseComponent owner, string dataName, string dataType)
+            : base(owner, dataName, dataType, "int")
         {
             m_vecSize = m_owner.m_impl.GetVectoriSize(m_dataName);
-            Debug.Log(m_dataName + " -> " + m_vecSize);
+        }
+
+        public int GetValues(int[] values)
+        {
+            return m_owner.m_impl.GetVectoriValue(m_dataName, m_vecSize, values);
         }
     }
 
@@ -61,11 +65,15 @@ namespace SofaUnity
         /////////////////////////////////////////////////
 
         /// Default constructor taking the value, the component owner and its name. Will set the type internally
-        public SofaDataVectorFloat(SofaBaseComponent owner, string nameID, string dataType)
-            : base(owner, nameID, dataType, "float")
+        public SofaDataVectorFloat(SofaBaseComponent owner, string dataName, string dataType)
+            : base(owner, dataName, dataType, "float")
         {
             m_vecSize = m_owner.m_impl.GetVectorfSize(m_dataName);
-            Debug.Log(m_dataName + " -> " + m_vecSize);
+        }
+
+        public int GetValues(float[] values)
+        {
+            return m_owner.m_impl.GetVectorfValue(m_dataName, m_vecSize, values);
         }
     }
 
@@ -78,10 +86,15 @@ namespace SofaUnity
         //////////////////////////////////////////////////
 
         /// Default constructor taking the value, the component owner and its name. Will set the type internally
-        public SofaDataVectorDouble(SofaBaseComponent owner, string nameID, string dataType)
-            : base(owner, nameID, dataType, "double")
+        public SofaDataVectorDouble(SofaBaseComponent owner, string dataName, string dataType)
+            : base(owner, dataName, dataType, "double")
         {
             m_vecSize = m_owner.m_impl.GetVectordSize(m_dataName);
+        }
+
+        public int GetValues(float[] values)
+        {
+            return m_owner.m_impl.GetVectordValue(m_dataName, m_vecSize, values);
         }
     }
 
@@ -97,12 +110,25 @@ namespace SofaUnity
         protected bool m_isDouble = false;
 
         /// Default constructor taking the value, the component owner and its name. Will set the type internally
-        public SofaDataVectorVec2(SofaBaseComponent owner, string nameID, string dataType, bool isDouble)
-            : base(owner, nameID, dataType, "Vec2")
+        public SofaDataVectorVec2(SofaBaseComponent owner, string dataName, string dataType, bool isDouble)
+            : base(owner, dataName, dataType, "Vec2")
         {
             m_isDouble = isDouble;
             m_vecSize = m_owner.m_impl.GetVecofVec2Size(m_dataName, m_isDouble);            
-            Debug.Log(m_dataName + " -> " + m_vecSize);
+        }
+
+        public int GetValues(Vector2[] values)
+        {
+            float[] rawValues = new float[m_vecSize * 2];
+
+            int res = m_owner.m_impl.GetVecofVec2Value(m_dataName, m_vecSize, rawValues, m_isDouble);
+            for (int i = 0; i < m_vecSize; ++i)
+            {
+                values[i].x = rawValues[i * 2];
+                values[i].y = rawValues[i * 2 + 1];
+            }
+
+            return res;
         }
     }
 
@@ -118,12 +144,26 @@ namespace SofaUnity
         protected bool m_isDouble = false;
 
         /// Default constructor taking the value, the component owner and its name. Will set the type internally
-        public SofaDataVectorVec3(SofaBaseComponent owner, string nameID, string dataType, bool isDouble)
-            : base(owner, nameID, dataType, "Vec3")
+        public SofaDataVectorVec3(SofaBaseComponent owner, string dataName, string dataType, bool isDouble)
+            : base(owner, dataName, dataType, "Vec3")
         {
             m_isDouble = isDouble;
             m_vecSize = m_owner.m_impl.GetVecofVec3Size(m_dataName, m_isDouble);            
-            Debug.Log(m_dataName + " -> " + m_vecSize);
+        }
+
+        public int GetValues(Vector3[] values)
+        {
+            float[] rawValues = new float[m_vecSize * 3];
+
+            int res = m_owner.m_impl.GetVecofVec3Value(m_dataName, m_vecSize, rawValues, m_isDouble);
+            for (int i = 0; i < m_vecSize; ++i)
+            {
+                values[i].x = rawValues[i * 3];
+                values[i].y = rawValues[i * 3 + 1];
+                values[i].z = rawValues[i * 3 + 2];
+            }
+
+            return res;
         }
     }
 }
