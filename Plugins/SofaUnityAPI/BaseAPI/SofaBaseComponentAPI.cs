@@ -773,17 +773,17 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     /// <summary> Generic method to get size of a Data< vector<float> > field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <returns> size of the Data vector. Return negative value if field not found or error encountered. </returns>
-    public int GetVecofVec3fSize(string dataName)
+    public int GetVecofVec3Size(string dataName, bool doubleValue = false)
     {
         if (checkNativePointer())
         {
             int[] val = new int[1];
             val[0] = -2;
-            int res = sofaComponentAPI_getVecofVec3fSize(m_simu, m_name, dataName, val);
+            int res = sofaComponentAPI_getVecofVec3Size(m_simu, m_name, dataName, doubleValue, val);
 
             if (res != 0)
             {
-                Debug.LogError("Method setVeciValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
+                Debug.LogError("Method getVecofVec3Size of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
                 return res;
             }
             else
@@ -799,13 +799,13 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     /// <param name="size"> Size of the Data vector. </param>
     /// <param name="values"> Values of the Data vector field returned. </param>
     /// <returns> Int error code. Negative value if method failed, 0 otherwise. </returns>
-    public int GetVecofVec3fValue(string dataName, int size, float[] values)
+    public int GetVecofVec3Value(string dataName, int size, float[] values, bool doubleValue = false)
     {
         if (checkNativePointer())
         {
-            int res = sofaComponentAPI_getVecofVec3fValue(m_simu, m_name, dataName, size, values);
+            int res = sofaComponentAPI_getVecofVec3Value(m_simu, m_name, dataName, size, doubleValue, values);
             if (res != 0)
-                Debug.LogError("Method getVecofVec3fValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
+                Debug.LogError("Method getVecofVec3Value of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
             return res;
         }
 
@@ -818,13 +818,13 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     /// <param name="size"> Size of the Data vector. </param>
     /// <param name="values"> New values to set to the Data vector field. </param>
     /// <returns> Int error code. Negative value if method failed, 0 otherwise. </returns>
-    public int SetVecofVec3fValue(string dataName, int size, float[] values)
+    public int SetVecofVec3Value(string dataName, int size, float[] values, bool doubleValue = false)
     {
         if (checkNativePointer())
         {
-            int res = sofaComponentAPI_setVecofVec3fValue(m_simu, m_name, dataName, size, values);
+            int res = sofaComponentAPI_setVecofVec3Value(m_simu, m_name, dataName, size, doubleValue, values);
             if (res != 0)
-                Debug.LogError("Method setVecofVec3fValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
+                Debug.LogError("Method setVecofVec3Value of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
             return res;
         }
 
@@ -1026,13 +1026,13 @@ public class SofaBaseComponentAPI : SofaBaseAPI
 
 
 
-    /// Vector <vec3f> API, need to get the size before set/get: size the number of vec3f
+    /// Vector <vec3> API, need to get the size before set/get: size the number of vec3
     [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaComponentAPI_getVecofVec3fSize(IntPtr obj, string componentName, string dataName, int[] value);
+    public static extern int sofaComponentAPI_getVecofVec3Size(IntPtr obj, string componentName, string dataName, bool doubleValue, int[] value);
 
     [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaComponentAPI_setVecofVec3fValue(IntPtr obj, string componentName, string dataName, int size, float[] values);
+    public static extern int sofaComponentAPI_setVecofVec3Value(IntPtr obj, string componentName, string dataName, int size, bool doubleValue, float[] values);
 
     [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-    public static extern int sofaComponentAPI_getVecofVec3fValue(IntPtr obj, string componentName, string dataName, int size, float[] values);
+    public static extern int sofaComponentAPI_getVecofVec3Value(IntPtr obj, string componentName, string dataName, int size, bool doubleValue, float[] values);
 }
