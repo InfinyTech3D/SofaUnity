@@ -107,6 +107,9 @@ namespace SofaUnity
             Func<GameObject, SofaBaseComponent> pluginMethod = (gameO) => null;
             s_componentFactory.Add("SofaRequiredPlugin", pluginMethod);
 
+            Func<GameObject, SofaBaseComponent> visualCompoMethod = (gameO) => null;
+            s_componentFactory.Add("SofaVisualComponent", visualCompoMethod);
+
             Func<GameObject, SofaBaseComponent> animLoopMethod = (gameO) => gameO.AddComponent<SofaAnimationLoop>();
             s_componentFactory.Add("SofaAnimationLoop", animLoopMethod);
         }
@@ -140,7 +143,11 @@ namespace SofaUnity
                 sofaCompo.m_baseComponentType = sofaCompo.BaseTypeFromString(componentType);
                 compoGO.transform.parent = parent.gameObject.transform;
             }
-
+            else
+            {
+                GameObject.DestroyImmediate(compoGO);
+            }
+            
             return sofaCompo;
         }
     }
