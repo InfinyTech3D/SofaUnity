@@ -109,6 +109,9 @@ namespace SofaUnity
 
             Func<GameObject, SofaBaseComponent> animLoopMethod = (gameO) => gameO.AddComponent<SofaAnimationLoop>();
             s_componentFactory.Add("SofaAnimationLoop", animLoopMethod);
+
+            Func<GameObject, SofaBaseComponent> engineMethod = (gameO) => gameO.AddComponent<SofaComponent>();
+            s_componentFactory.Add("SofaEngine", engineMethod);
         }
 
 

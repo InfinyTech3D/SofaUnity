@@ -64,18 +64,23 @@ namespace SofaUnity
                 m_uvType = value;
                 if (m_sofaMeshAPI != null)
                 {
-                    if (m_uvType == e_UVType.EMBEDDED)
-                        m_sofaMeshAPI.UpdateTexCoords(m_mesh);
-                    else if (m_uvType == e_UVType.STEREOGRAPHICS_X)
-                        m_sofaMeshAPI.ComputeStereographicsUV(m_mesh, 0);
-                    else if (m_uvType == e_UVType.STEREOGRAPHICS_Y)
-                        m_sofaMeshAPI.ComputeStereographicsUV(m_mesh, 1);
-                    else if (m_uvType == e_UVType.STEREOGRAPHICS_Z)
-                        m_sofaMeshAPI.ComputeStereographicsUV(m_mesh, 2);
-                    else if (m_uvType == e_UVType.BOXPROJECTION)
-                        m_sofaMeshAPI.ComputeCubeProjectionUV(m_mesh);
+                    UpdateTexCoords();
                 }
             }
+        }
+
+        public void UpdateTexCoords()
+        {
+            if (m_uvType == e_UVType.EMBEDDED)
+                m_sofaMeshAPI.UpdateTexCoords(m_mesh);
+            else if (m_uvType == e_UVType.STEREOGRAPHICS_X)
+                m_sofaMeshAPI.ComputeStereographicsUV(m_mesh, 0);
+            else if (m_uvType == e_UVType.STEREOGRAPHICS_Y)
+                m_sofaMeshAPI.ComputeStereographicsUV(m_mesh, 1);
+            else if (m_uvType == e_UVType.STEREOGRAPHICS_Z)
+                m_sofaMeshAPI.ComputeStereographicsUV(m_mesh, 2);
+            else if (m_uvType == e_UVType.BOXPROJECTION)
+                m_sofaMeshAPI.ComputeCubeProjectionUV(m_mesh);
         }
 
         /// Method called by @sa CreateSofaAPI() method. To be implemented by child class if specific ComponentAPI has to be created.
@@ -148,7 +153,8 @@ namespace SofaUnity
 
                 if (mr.sharedMaterial == null)
                 {
-                    mr.sharedMaterial = new Material(Shader.Find("Diffuse"));
+
+                    mr.sharedMaterial = UnityEngine.Rendering.GraphicsSettings.renderPipelineAsset.defaultMaterial;
                 }
 
                 //MeshCollider collid = gameObject.GetComponent<MeshCollider>();
@@ -170,16 +176,7 @@ namespace SofaUnity
 
                 m_mesh.triangles = m_sofaMeshAPI.createTriangulation();
 
-                if (m_uvType == e_UVType.EMBEDDED)
-                    m_sofaMeshAPI.UpdateTexCoords(m_mesh);
-                else if (m_uvType == e_UVType.STEREOGRAPHICS_X)
-                    m_sofaMeshAPI.ComputeStereographicsUV(m_mesh, 0);
-                else if (m_uvType == e_UVType.STEREOGRAPHICS_Y)
-                    m_sofaMeshAPI.ComputeStereographicsUV(m_mesh, 1);
-                else if (m_uvType == e_UVType.STEREOGRAPHICS_Z)
-                    m_sofaMeshAPI.ComputeStereographicsUV(m_mesh, 2);
-                else if (m_uvType == e_UVType.BOXPROJECTION)
-                    m_sofaMeshAPI.ComputeCubeProjectionUV(m_mesh);
+                UpdateTexCoords();
 
                 SofaLog("SofaVisualModel::initMesh ok: " + m_mesh.vertices.Length);
             }
