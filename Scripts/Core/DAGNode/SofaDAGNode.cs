@@ -190,20 +190,12 @@ namespace SofaUnity
             }
             m_sofaComponents.Clear();
 
-            if (UniqueNameId == "root")
-            {
-                // Do not delete object nor component for root node
-                return;
-            }
-
-            if (killGameObject)
+            if (killGameObject && UniqueNameId != "root")
             {
                 DestroyImmediate(this.gameObject);
             }
 
             DestroyImmediate(this);
-            //if (UniqueNameId== "root")
-            //    GUIUtility.ExitGUI();
         }
 
 
