@@ -108,6 +108,22 @@ namespace SofaUnity
                 return false;
         }
 
+        public bool CheckIfDirty()
+        {
+            // check SOFA Data counter
+            int counter = m_owner.m_impl.GetDataCounter(m_dataName);
+            if (m_counter != counter)
+            {
+                Debug.Log("Data is dirty! Old counter: " + m_counter + " new counter: " + counter);
+                m_counter = counter;
+                m_isDirty = true;
+            }
+            else
+                m_isDirty = false;
+
+            return m_isDirty;
+        }
+
         public bool IsSupported()
         {
             return m_isSupported;
