@@ -101,14 +101,26 @@ namespace SofaUnity
             
             if (m_sofaMeshAPI.HasTopologyChanged())
             {
-                m_mesh.triangles = m_sofaMeshAPI.createTriangulation();
+                int oldNbV = NbVertices();
+                int newNbV = m_sofaMeshAPI.getNbVertices();
+
+                if (newNbV < oldNbV)
+                {
+                    m_mesh.triangles = m_sofaMeshAPI.createTriangulation();
+                    m_sofaMeshAPI.updateMesh(m_mesh);
+                }
+                else if (newNbV > oldNbV)
+                {
+                    m_sofaMeshAPI.updateMesh(m_mesh);
+                    m_mesh.triangles = m_sofaMeshAPI.createTriangulation();
+                }
                 //if (m_invertNormals)
                 //{
                 //    m_sofaMeshAPI.m_invertNormals = m_invertNormals;
                 //    invertMeshNormals();
                 //}
                 m_sofaMeshAPI.setTopologyChange(false);
-                m_sofaMeshAPI.updateMesh(m_mesh);
+                //UpdateTexCoords();
                 m_mesh.RecalculateNormals();
             }
             else
