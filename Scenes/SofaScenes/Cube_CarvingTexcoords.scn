@@ -1,0 +1,71 @@
+<?xml version="1.0" ?>
+<Node name="root" dt="0.03" showBoundingTree="0" gravity="0 -0.9 0">
+    <RequiredPlugin name="InteractionTools" />
+    <RequiredPlugin name="MeshRefinement" />
+    <RequiredPlugin name="Sofa.Component.ODESolver.Backward"/> <!-- Needed to use components [EulerImplicitSolver] -->
+    <RequiredPlugin name="Sofa.Component.SceneUtility"/> <!-- Needed to use components [InfoComponent] -->
+    <RequiredPlugin name="SofaBoundaryCondition"/> <!-- Needed to use components [FixedConstraint] -->
+    <RequiredPlugin name="SofaEngine"/> <!-- Needed to use components [BoxROI] -->
+    <RequiredPlugin name="SofaGeneralSimpleFem"/> <!-- Needed to use components [TetrahedralCorotationalFEMForceField] -->
+    <RequiredPlugin name="SofaMeshCollision"/> <!-- Needed to use components [PointCollisionModel, TriangleCollisionModel] -->
+    <RequiredPlugin name="SofaOpenglVisual"/> <!-- Needed to use components [OglModel] -->
+    <RequiredPlugin name="SofaTopologyMapping"/> <!-- Needed to use components [Hexa2TetraTopologicalMapping, Tetra2TriangleTopologicalMapping] -->
+    <VisualStyle displayFlags="hideCollisionModels showVisual" />
+  
+    <DefaultAnimationLoop />
+    <DefaultVisualManagerLoop />
+    <DefaultPipeline verbose="0" />
+    <BruteForceBroadPhase/>
+    <BVHNarrowPhase/>
+    <DefaultContactManager response="PenalityContactForceField" />
+    <MinProximityIntersection name="Proximity" alarmDistance="1.0" contactDistance="0.1" />
+
+    <EulerImplicitSolver name="EulerImplicit"  rayleighStiffness="0.1" rayleighMass="0.1" />
+    <CGLinearSolver name="CG Solver" iterations="25" tolerance="1e-9" threshold="1e-9"/>
+
+    <AdvancedCarvingManager name="ACarving" active="0" refineDistance="2.5" carvingDistance="0.5" drawContacts="0"/>
+
+    <Node name="carvingElement">
+        <MechanicalObject name="Particles" template="Vec3d" position="5 15 5" velocity="0 0 0"/>
+        <UniformMass name="Mass" totalMass="10.0" />
+        <SphereCollisionModel name="tool" radius="0.1" tags="CarvingTool"/>
+    </Node>
+
+    <Node name="Hexa2Tetra" >
+        <RegularGridTopology name="HexaTop" n="11 11 11" min="0 0 0" max="10 10 10" />
+        <MechanicalObject name="cube" position="@HexaTop.position" />
+        <TetrahedronSetTopologyContainer name="Container" position="@HexaTop.position" />
+        <TetrahedronSetTopologyModifier name="Modifier"/>
+        <Hexa2TetraTopologicalMapping input="@HexaTop" output="@Container" swapping="false" />
+    </Node>
+
+    <Node name="Cube">
+        <MechanicalObject position="@../Hexa2Tetra/Container.position" name="Volume" />
+
+        <TetrahedronSetTopologyContainer name="Tetra_topo" src="@../Hexa2Tetra/Container" />
+        <TetrahedronSetTopologyModifier name="Modifier" />
+        <TetrahedronSetGeometryAlgorithms name="GeomAlgo" template="Vec3d" drawTetrahedra="0" drawScaleTetrahedra="0.8"/>
+
+        <DiagonalMass massDensity="1.0" />
+
+        <BoxROI name="box" box="-1 -1 -1 11 0 11" drawBoxes="true" />
+        <FixedConstraint  name="FixedConstraint" indices="@box.indices" activate_projectVelocity="1"/>
+
+        <TetrahedralCorotationalFEMForceField name="CFEM" youngModulus="100" poissonRatio="0.3" method="large" />
+
+        <Node name="Surface">
+            <TriangleSetTopologyContainer  name="Container"/>
+            <TriangleSetTopologyModifier   name="Modifier" />
+            <TriangleSetGeometryAlgorithms name="GeomAlgo" template="Vec3d" drawTriangles="0"/>
+            <Tetra2TriangleTopologicalMapping input="@../Tetra_topo" output="@Container" />
+
+            <TriangleCollisionModel name="triangleCol" />
+            <PointCollisionModel name="pointCol" tags="CarvingSurface"/>
+
+            <Node name="liver-Visual">
+                <OglModel name="Visual" />
+                <IdentityMapping input="@../../Volume" output="@Visual" />
+            </Node>
+        </Node>
+    </Node>
+</Node>
