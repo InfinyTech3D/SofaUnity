@@ -171,7 +171,7 @@ namespace SofaUnity
             }
 
             // Add backward compatibility if project was not using m_dataArray
-            if (m_dataArchiver.m_dataArray == null)
+            //if (m_dataArchiver.m_dataArray == null)
             {
                 m_dataArchiver = null;
                 GetAllData();
