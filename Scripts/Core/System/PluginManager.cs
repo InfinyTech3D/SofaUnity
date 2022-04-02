@@ -244,10 +244,15 @@ namespace SofaUnity
             PluginManager.Instance.AddPlugin("SofaOpenglVisual");
             PluginManager.Instance.AddPlugin("SofaImplicitOdeSolver");
             PluginManager.Instance.AddPlugin("SofaExplicitOdeSolver");
+            PluginManager.Instance.AddPlugin("Sofa.Component.ODESolver");
+            PluginManager.Instance.AddPlugin("Sofa.Component.ODESolver.Backward");            
+            PluginManager.Instance.AddPlugin("Sofa.Component.ODESolver.Forward");
+            
             PluginManager.Instance.AddPlugin("SofaSparseSolver");
 
             PluginManager.Instance.AddPlugin("SofaGeneralLoader");
             PluginManager.Instance.AddPlugin("SofaLoader");
+            PluginManager.Instance.AddPlugin("Sofa.Component.IO.Mesh");
             PluginManager.Instance.AddPlugin("SofaEngine");
             PluginManager.Instance.AddPlugin("SofaConstraint");
 
@@ -279,10 +284,14 @@ namespace SofaUnity
             PluginManager.Instance.GetPluginByName("SofaOpenglVisual").IsEnable = true;
             PluginManager.Instance.GetPluginByName("SofaImplicitOdeSolver").IsEnable = true;
             PluginManager.Instance.GetPluginByName("SofaExplicitOdeSolver").IsEnable = true;
+
+            PluginManager.Instance.GetPluginByName("Sofa.Component.ODESolver").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("Sofa.Component.ODESolver.Backward").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("Sofa.Component.ODESolver.Forward").IsEnable = true;
             PluginManager.Instance.GetPluginByName("SofaSparseSolver").IsEnable = true;
 
             PluginManager.Instance.GetPluginByName("SofaGeneralLoader").IsEnable = true;
-            PluginManager.Instance.GetPluginByName("SofaLoader").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("Sofa.Component.IO.Mesh").IsEnable = true;
             PluginManager.Instance.GetPluginByName("SofaEngine").IsEnable = true;
             PluginManager.Instance.GetPluginByName("SofaConstraint").IsEnable = true;
 

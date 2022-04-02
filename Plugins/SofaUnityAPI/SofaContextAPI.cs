@@ -60,6 +60,7 @@ namespace SofaUnityAPI
         ~SofaContextAPI()
         {
            // Dispose(false);
+            Dispose();
         }
 
 
@@ -68,6 +69,10 @@ namespace SofaUnityAPI
         {
             if (m_native != IntPtr.Zero)
             {
+                stop();
+
+                unload();                
+
                 int resDel = sofaPhysicsAPI_delete(m_native);
                 m_native = IntPtr.Zero;
                 if (resDel < 0)
@@ -154,7 +159,9 @@ namespace SofaUnityAPI
         public void unload()
         {
             if (m_isReady)
+            {
                 sofaPhysicsAPI_unloadScene(m_native);
+            }
         }        
 
         /// <summary> Method to load a specific sofa plugin. </summary>

@@ -20,7 +20,7 @@ namespace SofaUnity
         ////////////////////////////////////////////
 
         /// Pointer to the Sofa Context API.
-        private SofaContextAPI m_impl;
+        private SofaContextAPI m_impl = null;
 
         /// Pointer to the SofaDAGNodeManager which is used to recreate the SOFA node hierarchy
         private SofaDAGNodeManager m_nodeGraphMgr = null;
@@ -264,6 +264,7 @@ namespace SofaUnity
         {
             if(m_log)
                 Debug.Log("SofaContext::OnDestroy stop called.");
+
             if (m_impl != null)
             {
                 if (m_log)
