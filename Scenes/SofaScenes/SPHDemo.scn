@@ -13,14 +13,14 @@
 
 
     <VisualStyle displayFlags="hideBehaviorModels hideForceFields" />
-
+    <DefaultVisualManagerLoop />
     <FreeMotionAnimationLoop displayTime="true"/>
 	<GenericConstraintSolver unbuilt="false" tolerance="1e-4" maxIt="200"   printLog="0"/>
 	<DefaultPipeline verbose="0" depth="10" draw="0" />
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
 	<MinProximityIntersection name="Proximity" alarmDistance="0.8" contactDistance="0.4" />
-    <DefaultContactManager name="Response" response="default" />
+    <DefaultContactManager name="Response" response="PenalityContactForceField" />
     
     <EulerImplicitSolver name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.1" />
     <CGLinearSolver iterations="25" name="linear solver" tolerance="1.0e-9" threshold="1.0e-9" />
