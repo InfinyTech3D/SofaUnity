@@ -5,6 +5,9 @@
     <RequiredPlugin name="SofaExplicitOdeSolver"/> <!-- Needed to use components [EulerExplicitSolver] -->
     <VisualStyle displayFlags="showBehaviorModels showForceFields showWireframe" />
 
+    <DefaultAnimationLoop />
+    <DefaultVisualManagerLoop />
+
     <Node name="Particles">
         <EulerExplicitSolver symplectic="1" />
         <MechanicalObject name="MModel" />

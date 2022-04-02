@@ -7,11 +7,14 @@
     <RequiredPlugin name="SofaLoader"/> <!-- Needed to use components [MeshObjLoader] -->
     <RequiredPlugin name="SofaMeshCollision"/> <!-- Needed to use components [LineCollisionModel, PointCollisionModel, TriangleCollisionModel] -->
 
+    <DefaultAnimationLoop />
+    <DefaultVisualManagerLoop />
+    
     <DefaultPipeline verbose="0" depth="10" draw="0" />
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
     <MinProximityIntersection name="Proximity" alarmDistance="0.75" contactDistance="0.5" />
-    <DefaultContactManager name="Response" response="default" />
+    <DefaultContactManager name="Response" response="PenalityContactForceField" />
     <DefaultCollisionGroupManager name="Group" />
     
     <Node name="Torus">
