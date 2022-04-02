@@ -177,7 +177,7 @@ namespace SofaUnity
             
             if (nbrNode != nodes.Length)
             {
-                Debug.LogError("SofaDAGNodeManager Error while reconnecting the graph: " + nodes.Length + " DAGNode found instead of : " + nbrNode);
+                Debug.LogError("SofaDAGNodeManager Error while reconnecting the graph: " + nodes.Length + " DAGNode found in Unity instead of : " + nbrNode + " from SOFA side.");
                 string NodeToFound = "";
                 for (int i = 0; i < nbrNode; i++)
                     NodeToFound = NodeToFound + m_sofaContextAPI.getDAGNodeName(i) + ",";
@@ -346,8 +346,6 @@ namespace SofaUnity
             m_dagNodes.Clear();
 
             // copy back the root node pointer
-            if (m_rootDAGNode != null)
-                AddDAGNode(m_rootDAGNode);
         }
 
 
