@@ -631,7 +631,7 @@ public class SofaBaseMeshAPI : SofaBaseAPI
 
 
     /// Method to update the Unity mesh buffers (vertices and normals) from a tetrahedron topology object. Assume no topology change here.
-    public virtual void updateMeshTetra(Mesh mesh, Dictionary<int, int> mapping)
+    public virtual void updateVolumeMesh(Mesh mesh, Dictionary<int, int> mapping)
     {
         if (m_isReady)
         {
