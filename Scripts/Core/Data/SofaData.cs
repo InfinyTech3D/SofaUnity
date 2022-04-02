@@ -7,22 +7,23 @@ using UnityEditor;
 namespace SofaUnity
 {
     /// <summary>
-    /// Generic Data class inheriting from SofaBaseData
+    /// Generic Data class inheriting from SofaBaseData. This generic Data do not handle get/set values.
+    /// @sa m_isSupported will be false.
     /// </summary>
     [System.Serializable]
     public class SofaData : SofaBaseData
     {
-        public SofaData(SofaBaseComponent owner, string nameID, string type)
-            : base(owner, nameID, type)
+        public SofaData(SofaBaseComponent owner, string dataName, string type)
+            : base(owner, dataName, type)
         {
-            
+            m_isSupported = false;
         }
     }
 
 
 
     /// <summary>
-    /// Specialization of the class SofaBaseData for Bool data
+    /// Specialization of class SofaBaseData to handle SOFA Data<bool>
     /// </summary>
     [System.Serializable]
     public class SofaBoolData : SofaBaseData
@@ -37,8 +38,8 @@ namespace SofaUnity
         ////////////////////////////////////////////
 
         /// Default constructor taking the value, the component owner and its name. Will set the type internally
-        public SofaBoolData(SofaBaseComponent owner, string nameID, bool value)
-            : base(owner, nameID, "bool")
+        public SofaBoolData(SofaBaseComponent owner, string dataName, bool value)
+            : base(owner, dataName, "bool")
         {
             m_value = value;
         }
@@ -89,7 +90,7 @@ namespace SofaUnity
             return true;
         }
 
-        /// Internal Method to get value from Sofa simulation
+        /// Internal Method to get value from Sofa simulation. Will update @sa m_value
         protected override bool GetValueImpl()
         {
             if (m_owner.m_impl == null)
@@ -104,7 +105,7 @@ namespace SofaUnity
 
 
     /// <summary>
-    /// Specialization of the class SofaBaseData for Int data
+    /// Specialization of the class SofaBaseData to handle SOFA Data<int>
     /// </summary>
     [System.Serializable]
     public class SofaIntData : SofaBaseData
@@ -123,8 +124,8 @@ namespace SofaUnity
         ////////////////////////////////////////////
 
         /// Default constructor taking the value, the component owner and its name. Will set the type internally
-        public SofaIntData(SofaBaseComponent owner, string nameID, int value, bool isUnsigned = false)
-            : base(owner, nameID, "int")
+        public SofaIntData(SofaBaseComponent owner, string dataName, int value, bool isUnsigned = false)
+            : base(owner, dataName, "int")
         {
             m_value = value;
             m_isUnsigned = isUnsigned;
@@ -202,7 +203,7 @@ namespace SofaUnity
 
 
     /// <summary>
-    /// Specialization of the class SofaBaseData for Float data
+    /// Specialization of the class SofaBaseData to handle SOFA Data<float>
     /// </summary>
     [System.Serializable]
     public class SofaFloatData : SofaBaseData
@@ -217,11 +218,12 @@ namespace SofaUnity
         ////////////////////////////////////////////
 
         /// Default constructor taking the value, the component owner and its name. Will set the type internally
-        public SofaFloatData(SofaBaseComponent owner, string nameID, float value)
-            : base(owner, nameID, "float")
+        public SofaFloatData(SofaBaseComponent owner, string dataName, float value)
+            : base(owner, dataName, "float")
         {
             m_value = value;
         }
+
         /// Getter/Setter of the @sa m_value. Will call @sa SetValueImpl and @sa GetValueImpl internally for Sofa communication
         public float Value
         {
@@ -283,7 +285,7 @@ namespace SofaUnity
 
 
     /// <summary>
-    /// Specialization of the class SofaBaseData for Double data
+    /// Specialization of the class SofaBaseData to handle SOFA Data<double>
     /// </summary>
     [System.Serializable]
     public class SofaDoubleData : SofaBaseData
@@ -298,11 +300,12 @@ namespace SofaUnity
         ////////////////////////////////////////////
 
         /// Default constructor taking the value, the component owner and its name. Will set the type internally
-        public SofaDoubleData(SofaBaseComponent owner, string nameID, float value)
-            : base(owner, nameID, "double")
+        public SofaDoubleData(SofaBaseComponent owner, string dataName, float value)
+            : base(owner, dataName, "double")
         {
             m_value = value;
         }
+
         /// Getter/Setter of the @sa m_value. Will call @sa SetValueImpl and @sa GetValueImpl internally for Sofa communication
         public float Value
         {
@@ -364,7 +367,7 @@ namespace SofaUnity
 
 
     /// <summary>
-    /// Specialization of the class SofaBaseData for String data
+    /// Specialization of the class SofaBaseData to handle SOFA Data<string>
     /// </summary>
     [System.Serializable]
     public class SofaStringData : SofaBaseData
@@ -379,11 +382,12 @@ namespace SofaUnity
         ////////////////////////////////////////////
 
         /// Default constructor taking the value, the component owner and its name. Will set the type internally
-        public SofaStringData(SofaBaseComponent owner, string nameID, string value)
-            : base(owner, nameID, "string")
+        public SofaStringData(SofaBaseComponent owner, string dataName, string value)
+            : base(owner, dataName, "string")
         {
             m_value = value;
         }
+
         /// Getter/Setter of the @sa m_value. Will call @sa SetValueImpl and @sa GetValueImpl internally for Sofa communication
         public string Value
         {
@@ -445,7 +449,8 @@ namespace SofaUnity
 
 
     /// <summary>
-    /// Specialization of the class SofaBaseData for Vec2<float> data
+    /// Specialization of the class SofaBaseData to handle SOFA Data<Vec2f> and Data<Vec2d>
+    /// float or double info will be stored @sa m_isDouble
     /// </summary>
     [System.Serializable]
     public class SofaVec2Data : SofaBaseData
@@ -464,8 +469,8 @@ namespace SofaUnity
         ////////////////////////////////////////////
 
         /// Default constructor taking the value, the component owner and its name. Will set the type internally
-        public SofaVec2Data(SofaBaseComponent owner, string nameID, Vector2 value, bool isDouble)
-            : base(owner, nameID, "Vec2")
+        public SofaVec2Data(SofaBaseComponent owner, string dataName, Vector2 value, bool isDouble)
+            : base(owner, dataName, "Vec2")
         {
             m_value = new Vector2(value.x, value.y);
             m_isDouble = isDouble;
@@ -530,7 +535,8 @@ namespace SofaUnity
 
 
     /// <summary>
-    /// Specialization of the class SofaBaseData for Vec2<int> data
+    /// Specialization of the class SofaBaseData to handle SOFA Data< Vec2<int> > and Data<Vec2 <unsigned int> >
+    /// int or unsigned int info will be stored @sa m_isUnsigned
     /// </summary>
     [System.Serializable]
     public class SofaVec2IntData : SofaBaseData
@@ -549,8 +555,8 @@ namespace SofaUnity
         ////////////////////////////////////////////
 
         /// Default constructor taking the value, the component owner and its name. Will set the type internally
-        public SofaVec2IntData(SofaBaseComponent owner, string nameID, Vector2Int value, bool isUnsigned)
-            : base(owner, nameID, "Vec2i")
+        public SofaVec2IntData(SofaBaseComponent owner, string dataName, Vector2Int value, bool isUnsigned)
+            : base(owner, dataName, "Vec2i")
         {
             m_value = new Vector2Int(value.x, value.y);
             m_isUnsigned = isUnsigned;
@@ -615,7 +621,8 @@ namespace SofaUnity
 
 
     /// <summary>
-    /// Specialization of the class SofaBaseData for Vec3<float> data
+    /// Specialization of the class SofaBaseData to handle SOFA Data<Vec3f> and Data<Vec3d>
+    /// float or double info will be stored @sa m_isDouble
     /// </summary>
     [System.Serializable]
     public class SofaVec3Data : SofaBaseData
@@ -634,8 +641,8 @@ namespace SofaUnity
         ////////////////////////////////////////////
 
         /// Default constructor taking the value, the component owner and its name. Will set the type internally
-        public SofaVec3Data(SofaBaseComponent owner, string nameID, Vector3 value, bool isDouble)
-            : base(owner, nameID, "Vec3")
+        public SofaVec3Data(SofaBaseComponent owner, string dataName, Vector3 value, bool isDouble)
+            : base(owner, dataName, "Vec3")
         {
             m_value = new Vector3(value.x, value.y, value.z);
             m_isDouble = isDouble;
@@ -701,7 +708,8 @@ namespace SofaUnity
 
 
     /// <summary>
-    /// Specialization of the class SofaBaseData for Vec3<int> data
+    /// Specialization of the class SofaBaseData to handle SOFA Data< Vec3<int> > and Data<Vec3 <unsigned int> >
+    /// int or unsigned int info will be stored @sa m_isUnsigned
     /// </summary>
     [System.Serializable]
     public class SofaVec3IntData : SofaBaseData
@@ -720,8 +728,8 @@ namespace SofaUnity
         ////////////////////////////////////////////
 
         /// Default constructor taking the value, the component owner and its name. Will set the type internally
-        public SofaVec3IntData(SofaBaseComponent owner, string nameID, Vector3Int value, bool isUnsigned)
-            : base(owner, nameID, "Vec3i")
+        public SofaVec3IntData(SofaBaseComponent owner, string dataName, Vector3Int value, bool isUnsigned)
+            : base(owner, dataName, "Vec3i")
         {
             m_value = new Vector3Int(value.x, value.y, value.z);
             m_isUnsigned = isUnsigned;
@@ -787,7 +795,8 @@ namespace SofaUnity
 
 
     /// <summary>
-    /// Specialization of the class SofaBaseData for Vec4<float> data
+    /// Specialization of the class SofaBaseData to handle SOFA Data<Vec4f> and Data<Vec4d>
+    /// float or double info will be stored @sa m_isDouble
     /// </summary>
     [System.Serializable]
     public class SofaVec4Data : SofaBaseData
@@ -805,8 +814,8 @@ namespace SofaUnity
         ////////////////////////////////////////////
 
         /// Default constructor taking the value, the component owner and its name. Will set the type internally
-        public SofaVec4Data(SofaBaseComponent owner, string nameID, Vector3 value, bool isDouble)
-            : base(owner, nameID, "Vec4")
+        public SofaVec4Data(SofaBaseComponent owner, string dataName, Vector3 value, bool isDouble)
+            : base(owner, dataName, "Vec4")
         {
             m_value = new Vector3(value.x, value.y, value.z);
             m_isDouble = isDouble;
@@ -870,34 +879,4 @@ namespace SofaUnity
         }
     }
 
-
-    /// <summary>
-    /// Specialization of the class SofaBaseData for Vector<float> data
-    /// Not yet handled.
-    /// </summary>
-    [System.Serializable]
-    public class SofaVectorData : SofaBaseData
-    {
-        /// Internal string type stored in this Data
-        [SerializeField]
-        protected string m_vecType = "";
-
-        /// Size of the stored vector
-        [SerializeField]
-        protected int m_vecSize = 0;
-
-        ////////////////////////////////////////////
-        //////       SofaVectorData API        /////
-        ////////////////////////////////////////////
-
-        /// Default constructor taking the value, the component owner and its name. Will set the type internally
-        public SofaVectorData(SofaBaseComponent owner, string nameID, string dataType, string vecType, int size)
-            : base(owner, nameID, dataType)
-        {
-            m_vecType = vecType;
-            m_vecSize = size;
-        }
-    }
-
-    
 }
