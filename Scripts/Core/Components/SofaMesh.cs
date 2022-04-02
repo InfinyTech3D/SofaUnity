@@ -330,10 +330,14 @@ namespace SofaUnity
             {
                 m_sofaMeshAPI.GetVertices(m_topology.m_vertexBuffer);
             }
+            else if (this.TopologyType() == TopologyObjectType.HEXAHEDRON)
+            {
+                m_sofaMeshAPI.updateVolumeMesh(m_topology.m_mesh, m_topology.mappingVertices);
+            }
             else if (this.TopologyType() == TopologyObjectType.TETRAHEDRON)
             {
-                m_sofaMeshAPI.updateMeshTetra(m_topology.m_mesh, m_topology.mappingVertices);
-                m_topology.UpdateTetraMesh();
+                m_sofaMeshAPI.updateVolumeMesh(m_topology.m_mesh, m_topology.mappingVertices);
+                m_topology.ScaleVolumeMesh();
             }
             else if (this.TopologyType() == TopologyObjectType.NO_TOPOLOGY)
             {
