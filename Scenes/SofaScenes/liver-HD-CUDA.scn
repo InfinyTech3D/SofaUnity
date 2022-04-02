@@ -3,10 +3,14 @@
     <RequiredPlugin pluginName='SofaOpenglVisual'/>
     <RequiredPlugin name="SofaCUDA"/>
     <VisualStyle displayFlags="showVisual" />
+    
+    <DefaultAnimationLoop />
+    <DefaultVisualManagerLoop />
+    
     <DefaultPipeline verbose="0" />
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
-    <DefaultContactManager response="default" />
+    <DefaultContactManager response="PenalityContactForceField" />
     <MinProximityIntersection name="Proximity" alarmDistance="0.8" contactDistance="0.5" />
 
     <Node name="LiverVolume">

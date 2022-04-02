@@ -1,3 +1,4 @@
+<?xml version="1.0" ?>
 <Node name="Root" dt="0.0033" gravity="0 0 0">
     <RequiredPlugin pluginName='SofaOpenglVisual'/>
 	<RequiredPlugin pluginName='SofaImplicitOdeSolver'/> <!-- Needed to use components [EulerImplicitSolver, ]-->
@@ -9,11 +10,15 @@
 	<RequiredPlugin pluginName='SofaSimpleFem'/> <!-- Needed to use components [TetrahedronDiffusionFEMForceField, ]-->
 
     <VisualStyle displayFlags="showBehaviorModels"/>
+    
+    <DefaultAnimationLoop />
+    <DefaultVisualManagerLoop />
+    
     <DefaultPipeline verbose="0" depth="10" draw="0" />
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
     <MinProximityIntersection name="Proximity" alarmDistance="0.75" contactDistance="0.5" />
-    <DefaultContactManager name="Response" response="default" />
+    <DefaultContactManager name="Response" response="PenalityContactForceField" />
     <DefaultCollisionGroupManager name="Group" />
 	
     <RegularGridTopology name="grid" n="31 9 9" min="0 0 0" max="10 2 2" p0="0.0 0.0 0.0" tags="meca"/>
