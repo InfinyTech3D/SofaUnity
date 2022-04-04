@@ -81,6 +81,8 @@ public class CuttingManager : MonoBehaviour
 
     }
 
+    protected bool cutDone = false;
+    int cptDone = 0;
     void Update()
     {
         updateVertices();
@@ -100,10 +102,17 @@ public class CuttingManager : MonoBehaviour
             Debug.Log("!!!!!!!processCut!!!!!!!!");
             m_sofaCuttingMgr.m_dataArchiver.GetSofaBoolData("performCut").Value = true;
             processCut = false;
+            cutDone = true;
         }
-        else
+        else if (cutDone)
         {
-            m_sofaCuttingMgr.m_dataArchiver.GetSofaBoolData("performCut").Value = false;
+            cptDone++;
+            if (cptDone == 50)
+            {
+                m_sofaCuttingMgr.m_dataArchiver.GetSofaBoolData("performCut").Value = false;
+                cutDone = false;
+                cptDone = 0;
+            }
         }
     }
 
