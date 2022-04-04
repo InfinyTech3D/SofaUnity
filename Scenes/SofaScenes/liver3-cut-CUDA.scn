@@ -1,0 +1,68 @@
+<?xml version="1.0" ?>
+<Node name="root" dt="0.03" showBoundingTree="0" gravity="0 -9.8 0">
+    <RequiredPlugin pluginName='SofaOpenglVisual'/>
+    <RequiredPlugin name="Sofa.Component.LinearSolver.Iterative"/> <!-- Needed to use components [CGLinearSolver] -->
+    <RequiredPlugin name="Sofa.Component.ODESolver.Backward"/> <!-- Needed to use components [EulerImplicitSolver] -->
+    <RequiredPlugin name="Sofa.Component.SceneUtility"/> <!-- Needed to use components [InfoComponent] -->
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Dynamic"/> <!-- Needed to use components [TetrahedronSetGeometryAlgorithms, TetrahedronSetTopologyContainer, TetrahedronSetTopologyModifier, TriangleSetGeometryAlgorithms, TriangleSetTopologyContainer, TriangleSetTopologyModifier] -->
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Grid"/> <!-- Needed to use components [RegularGridTopology] -->
+    <RequiredPlugin name="Sofa.Component.Topology.Mapping"/> <!-- Needed to use components [Hexa2TetraTopologicalMapping, Tetra2TriangleTopologicalMapping] -->
+    <RequiredPlugin name="Sofa.Component.Visual"/> <!-- Needed to use components [VisualStyle] -->
+    <RequiredPlugin name="Sofa.Component.IO.Mesh"/> <!-- Needed to use components [MeshGmshLoader, MeshOBJLoader] -->
+    <RequiredPlugin name="SofaSimpleFem"/> <!-- Needed to use components [TetrahedronFEMForceField] -->
+    <RequiredPlugin name="SofaBoundaryCondition"/> <!-- Needed to use components [FixedConstraint] -->
+    <RequiredPlugin name="SofaEngine"/> <!-- Needed to use components [BoxROI] -->
+    <RequiredPlugin name="SofaGeneralSimpleFem"/> <!-- Needed to use components [TetrahedralCorotationalFEMForceField] -->
+    <RequiredPlugin name="SofaMiscFem"/> <!-- Needed to use components [FastTetrahedralCorotationalForceField] -->
+    <RequiredPlugin name="SofaMeshCollision"/> <!-- Needed to use components [TriangleCollisionModel] -->
+    <RequiredPlugin name="SofaOpenglVisual"/> <!-- Needed to use components [OglModel] -->
+    <RequiredPlugin name="MeshRefinement"/>
+    <RequiredPlugin name="InteractionTools"/>
+    <RequiredPlugin pluginName='SofaCUDA'/>
+
+    <DefaultPipeline />
+    <DefaultVisualManagerLoop />
+    <DefaultAnimationLoop />
+    <BruteForceBroadPhase/>
+    <BVHNarrowPhase/>
+    <DefaultContactManager response="PenalityContactForceField" />
+    <MinProximityIntersection name="Proximity" alarmDistance="0.8" contactDistance="0.5" />
+     
+
+    <Node name="LiverVolume">
+        <EulerImplicitSolver name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.1" />
+        <CGLinearSolver iterations="25" name="linear solver" tolerance="1.0e-9" threshold="1.0e-9" />
+        <!--<MeshGmshLoader name="loader" filename="./mesh/liver3-HD2rm200k.msh" scale3d="0.5 0.5 0.5" rotation="0 0 -10" translation="2 5 0"/>-->
+        <MeshGmshLoader name="loader" filename="./mesh/liver3-HD.msh" scale3d="0.5 0.5 0.5" rotation="0 0 -10" translation="2 5 0"/>
+        <MechanicalObject src="@loader" name="Volume" template="CudaVec3f" />
+
+		<TetrahedronSetTopologyContainer  name="TetraContainer" position="@Volume.position" src="@loader" tags=" "/>
+		<TetrahedronSetTopologyModifier   name="Modifier" />
+		<TetrahedronSetGeometryAlgorithms name="GeomAlgo"  template="CudaVec3f" drawTetrahedra="0" drawScaleTetrahedra="0.7"/>
+
+        <DiagonalMass massDensity="4.0" />
+        <BoxROI template="CudaVec3f" box="-0.5 6.5 2   1 7.5 3" drawBoxes="1" position="@Volume.rest_position" name="FixedROI"/>
+        <FixedConstraint indices="@FixedROI.indices" />
+
+        <TetrahedronFEMForceField name="FEM" template="CudaVec3f" youngModulus="3000" poissonRatio="0.3" method="large" />    
+
+        <TetrahedronCuttingController name="ACutting" template="CudaVec3f" listening="1" printLog="0" methodToTest="1" 
+        cutPointA="3.1 4 -2" cutPointB="3.1 4 2" cutDir="0 1 0" cutDepth="1" drawDebugCut="0" />
+
+		<PlaneForceField normal="0 1 0" d="-5  " stiffness="100000" showPlane="1" showPlaneSize="20"/>
+        
+        <Node name="LiverSurface">
+            <TriangleSetTopologyContainer  name="TriContainer" fileTopology="" tags=" " />
+			<TriangleSetTopologyModifier   name="Modifier" />
+			<TriangleSetGeometryAlgorithms name="GeomAlgo"   template="CudaVec3f" />
+			
+            <Tetra2TriangleTopologicalMapping input="@../TetraContainer" output="@TriContainer" />
+			<TriangleCollisionModel />
+            
+            <Node name="LiverVisu">
+                <OglModel name="Visual" color="red" />
+                <IdentityMapping input="@../../Volume" output="@Visual" />
+            </Node>
+        </Node>        
+    </Node>
+</Node>
