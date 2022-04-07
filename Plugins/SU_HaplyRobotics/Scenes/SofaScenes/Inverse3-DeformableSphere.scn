@@ -1,0 +1,108 @@
+<?xml version="1.0" ?>
+<Node name="root" dt="0.05" showBoundingTree="0" gravity="0 0 0">
+    <RequiredPlugin name="SofaHaplyRobotics"/>
+    <RequiredPlugin name="Sofa.Component.IO.Mesh"/> <!-- Needed to use components [MeshOBJLoader] -->
+    <RequiredPlugin name="Sofa.Component.SceneUtility"/> <!-- Needed to use components [RequiredPlugin] -->
+    <RequiredPlugin name="SofaRigid"/> <!-- Needed to use components [RigidMapping] -->
+    <RequiredPlugin name='SofaOpenglVisual'/>
+    <RequiredPlugin name='SofaHaptics'/>
+    <RequiredPlugin name='SofaSparseSolver'/>
+    <RequiredPlugin name="Sofa.Component.LinearSolver.Direct"/> <!-- Needed to use components [SparseLDLSolver] -->
+    <RequiredPlugin name="Sofa.Component.ODESolver.Backward"/> <!-- Needed to use components [EulerImplicitSolver] -->
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Constant"/> <!-- Needed to use components [MeshTopology] -->
+    <RequiredPlugin name="SofaConstraint"/> <!-- Needed to use components [FreeMotionAnimationLoop, LCPConstraintSolver, LinearSolverConstraintCorrection, LocalMinDistance] -->
+    <RequiredPlugin name="SofaDeformable"/> <!-- Needed to use components [RestShapeSpringsForceField] -->
+    <RequiredPlugin name="SofaMeshCollision"/> <!-- Needed to use components [LineCollisionModel, PointCollisionModel, TriangleCollisionModel] -->
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Dynamic"/> <!-- Needed to use components [TriangleSetGeometryAlgorithms, TriangleSetTopologyContainer, TriangleSetTopologyModifier] -->
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Grid"/> <!-- Needed to use components [SparseGridRamificationTopology] -->
+    <RequiredPlugin name="SofaSimpleFem"/> <!-- Needed to use components [HexahedronFEMForceField] -->
+
+    
+    <DefaultPipeline name="pipeline" depth="6" verbose="0"/>
+    <BruteForceBroadPhase/>
+    <BVHNarrowPhase/>
+    <DefaultContactManager name="response" response="FrictionContactConstraint" />
+    <LocalMinDistance name="proximity" alarmDistance="0.1" contactDistance="0.01" angleCone="0.1" />
+    <FreeMotionAnimationLoop/>
+    <LCPConstraintSolver tolerance="0.001" maxIt="1000"/>
+
+    <Haply_Inverse3Controller name="Device" portName="COM8" scale="30.0" drawDebug="1" />
+    <MechanicalObject template="Rigid3d" name="HaplyMO" position="@Device.positionDevice" />
+	
+    <Node name="Instrument" >
+        <EulerImplicitSolver name="ODE solver" rayleighStiffness="0.01" rayleighMass="0.1" />
+        <SparseLDLSolver template="CompressedRowSparseMatrixMat3x3d"/>
+        
+		<MechanicalObject name="instrumentState" template="Rigid3" />
+		<UniformMass name="mass" totalMass="1" />
+		
+		<RestShapeSpringsForceField stiffness='1000000' angularStiffness='1000000' external_rest_shape='@../HaplyMO' points='0' external_points='0'/>
+        <LCPForceFeedback name="LCPFF1" activate="true" forceCoef="0.0001"/>
+        <LinearSolverConstraintCorrection />
+		
+		<Node name="VisuTool" >
+            <MeshOBJLoader name="meshLoader_1" filename="./mesh/sphere.obj"/>
+            <OglModel name="InstrumentVisualModel" src="@meshLoader_1" color="0.0 1.0 0.0 1.0" />
+            <RigidMapping name="MM->VM mapping" input="@instrumentState" output="@InstrumentVisualModel" />
+        </Node>
+		
+
+        <Node name="CollisionModel" >
+            <MechanicalObject name="instrumentCollisionState" template="Vec3d" />
+            <SphereCollisionModel />
+            <RigidMapping name="MM->CM mapping" input="@instrumentState" output="@instrumentCollisionState" />		
+        </Node>
+    </Node> 
+    
+    
+    <Node name="DeformableSphere">		
+        <EulerImplicitSolver rayleighMass="0.01" rayleighStiffness="0.1" /> 
+        <SparseLDLSolver template="CompressedRowSparseMatrixMat3x3d"/>
+        
+        <MeshOBJLoader name="loaderS" filename="./mesh/sphere_05.obj" scale3d="0.05 0.05 0.05" translation="-3 -3 2" />
+        <SparseGridRamificationTopology name="grid" n="6 6 6" src="@./loaderS" nbVirtualFinerLevels="3" finestConnectivity="0"/>
+        
+        <MechanicalObject name="gridDof" position="@grid.position"/>
+		
+        <TetrahedronFEMForceField name="FEM" youngModulus="80000" poissonRatio="0.45" method="large" />
+        <DiagonalMass totalMass="10.0" topology="@grid" geometryState="@gridDof"/>
+        
+        <BoxROI name="boxRoi1" box="-3.6 -3.6 1.4   -2.4 -2.4 2.6" drawBoxes="1"/>
+        <FixedConstraint indices="@boxRoi1.indices" />
+            
+        <LinearSolverConstraintCorrection />
+        <Node name="MappingSphere">
+            <MechanicalObject name="dofs" position="@../loaderS.position"/>
+            
+            <TriangleSetTopologyContainer name="Container1" src="@../loaderS"/>
+            <TriangleSetTopologyModifier />
+            <TriangleSetGeometryAlgorithms template="Vec3d" />
+
+            <TriangleCollisionModel bothSide="false" group="1" contactStiffness="100000"/>
+            <LineCollisionModel group="1" contactStiffness="100000"/>
+            <PointCollisionModel group="1" contactStiffness="100000"/>
+
+            <BarycentricMapping input="@../gridDof" output="@dofs" />            
+
+            <Node name="VisuSurface">
+                <OglModel name="Visual" color="red" />
+                <IdentityMapping input="@.." output="@Visual" />
+            </Node>
+		</Node>
+    </Node>
+	
+    
+    <Node name="Floor">
+        <MeshOBJLoader name="loaderF" filename="./mesh/cube.obj" scale3d="20 0.5 20" translation="0 0 -4" rotation="90 0 0"/>
+        <MeshTopology src="@loaderF" />
+        <MechanicalObject src="@loaderF" />
+        <TriangleCollisionModel simulated="0" moving="0" bothSide="false" group="1"/>
+        <LineCollisionModel simulated="0" moving="0" group="1" />
+        <PointCollisionModel simulated="0" moving="0" group="1"/>
+		<Node name="VisuFloor" >
+            <OglModel name="FloorVisualModel"/>
+            <IdentityMapping input="@../" output="@FloorVisualModel" />
+        </Node>
+    </Node>
+    
+</Node>
