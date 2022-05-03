@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using System;
 
 namespace SofaUnity
@@ -165,8 +166,14 @@ namespace SofaUnity
 
                 if (mr.sharedMaterial == null)
                 {
-
-                    mr.sharedMaterial = UnityEngine.Rendering.GraphicsSettings.renderPipelineAsset.defaultMaterial;
+                    if (GraphicsSettings.defaultRenderPipeline)
+                    {
+                        mr.sharedMaterial = GraphicsSettings.defaultRenderPipeline.defaultMaterial;
+                    }
+                    else
+                    {
+                        mr.sharedMaterial = new Material(Shader.Find("Diffuse"));
+                    }
                 }
 
                 //MeshCollider collid = gameObject.GetComponent<MeshCollider>();
