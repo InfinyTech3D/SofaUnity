@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace SofaUnity
 {
@@ -56,7 +57,14 @@ namespace SofaUnity
 
             if (m_renderer.sharedMaterial == null)
             {
-                m_renderer.sharedMaterial = UnityEngine.Rendering.GraphicsSettings.renderPipelineAsset.defaultMaterial;
+                if (GraphicsSettings.defaultRenderPipeline)
+                {
+                    m_renderer.sharedMaterial = GraphicsSettings.defaultRenderPipeline.defaultMaterial;
+                }
+                else
+                {
+                    m_renderer.sharedMaterial = new Material(Shader.Find("Diffuse"));
+                }
             }
 
             m_meshInit = false;
