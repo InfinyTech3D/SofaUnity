@@ -72,8 +72,9 @@ namespace SofaUnity
         /// </summary>
         /// <param name="values">Raw array of int values to set into SOFA</param>
         /// <returns>int code from SOFA communication</returns>
-        public int SetValue(int[] values)
+        public int SetValue(int[] values, int vecSize)
         {
+            m_vecSize = vecSize;
             return m_owner.m_impl.SetVectoriValue(m_dataName, m_vecSize, values);
         }
     }
@@ -111,8 +112,9 @@ namespace SofaUnity
         /// </summary>
         /// <param name="values">Raw array of float values to set into SOFA</param>
         /// <returns>int code from SOFA communication</returns>
-        public int SetValue(float[] values)
+        public int SetValue(float[] values, int vecSize)
         {
+            m_vecSize = vecSize;
             return m_owner.m_impl.SetVectorfValue(m_dataName, m_vecSize, values);
         }
     }
@@ -150,8 +152,9 @@ namespace SofaUnity
         /// </summary>
         /// <param name="values">Raw array of float values to set into SOFA</param>
         /// <returns>int code from SOFA communication</returns>
-        public int SetValue(float[] values)
+        public int SetValue(float[] values, int vecSize)
         {
+            m_vecSize = vecSize;
             return m_owner.m_impl.SetVectordValue(m_dataName, m_vecSize, values);
         }
     }
@@ -203,8 +206,9 @@ namespace SofaUnity
         /// </summary>
         /// <param name="values">Array of Vector2 values to set into SOFA</param>
         /// <returns>int code from SOFA communication</returns>
-        public int SetValues(Vector2[] values)
+        public int SetValues(Vector2[] values, int vecSize)
         {
+            m_vecSize = vecSize;
             float[] rawValues = new float[m_vecSize * 2];
             for (int i = 0; i < m_vecSize; ++i)
             {
@@ -266,8 +270,9 @@ namespace SofaUnity
         /// </summary>
         /// <param name="values">Array of Vector3 values to set into SOFA</param>
         /// <returns>int code from SOFA communication</returns>
-        public int SetValues(Vector3[] values)
+        public int SetValues(Vector3[] values, int vecSize)
         {
+            m_vecSize = vecSize;
             float[] rawValues = new float[m_vecSize * 3];
             for (int i = 0; i < m_vecSize; ++i)
             {
