@@ -1,0 +1,86 @@
+<?xml version="1.0" ?>
+<Node name="root" dt="0.05" showBoundingTree="0" gravity="0 0 0">
+    <RequiredPlugin name="SofaHaplyRobotics"/>
+    <RequiredPlugin name="Sofa.Component.IO.Mesh"/> <!-- Needed to use components [MeshOBJLoader] -->
+    <RequiredPlugin name="Sofa.Component.LinearSolver.Direct"/> <!-- Needed to use components [SparseLDLSolver] -->
+    <RequiredPlugin name="Sofa.Component.Mass"/> <!-- Needed to use components [UniformMass] -->
+    <RequiredPlugin name="Sofa.Component.ODESolver.Backward"/> <!-- Needed to use components [EulerImplicitSolver] -->
+    <RequiredPlugin name="Sofa.Component.SceneUtility"/> <!-- Needed to use components [RequiredPlugin] -->
+    <RequiredPlugin name="Sofa.Component.SolidMechanics.Spring"/> <!-- Needed to use components [RestShapeSpringsForceField] -->
+    <RequiredPlugin name="Sofa.Component.StateContainer"/> <!-- Needed to use components [MechanicalObject] -->
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Constant"/> <!-- Needed to use components [MeshTopology] -->
+    <RequiredPlugin name="Sofa.Component.Visual"/> <!-- Needed to use components [VisualStyle] -->
+    <RequiredPlugin name="Sofa.GL.Component.Rendering3D"/> <!-- Needed to use components [OglModel] -->
+    <RequiredPlugin name="SofaConstraint"/> <!-- Needed to use components [FreeMotionAnimationLoop, LCPConstraintSolver, LinearSolverConstraintCorrection, LocalMinDistance] -->
+    <RequiredPlugin name="SofaHaptics"/> <!-- Needed to use components [LCPForceFeedback] -->
+    <RequiredPlugin name="SofaMeshCollision"/> <!-- Needed to use components [LineCollisionModel, PointCollisionModel, TriangleCollisionModel] -->
+
+    <VisualStyle displayFlags="showVisualModels showBehaviorModels hideCollisionModels" />
+    
+    <DefaultVisualManagerLoop />
+    <DefaultPipeline name="pipeline" depth="6" verbose="0"/>
+    <BruteForceBroadPhase/>
+    <BVHNarrowPhase/>
+    <DefaultContactManager name="response" response="FrictionContactConstraint" />
+    <LocalMinDistance name="proximity" alarmDistance="0.15" contactDistance="0.05" angleCone="0.1" />
+  
+    <FreeMotionAnimationLoop/>
+    <LCPConstraintSolver tolerance="0.001" maxIt="1000"/>
+ 
+    <Haply_Inverse3Controller name="Device" portName="COM8" scale="30.0" drawDebug="1" />
+    <MechanicalObject template="Rigid3d" name="HaplyMO" position="@Device.positionDevice" />
+	
+    	<Node name="Instrument" >
+        <EulerImplicitSolver name="ODE solver" rayleighStiffness="0.01" rayleighMass="0.1" />
+        <SparseLDLSolver template="CompressedRowSparseMatrixMat3x3d"/>
+        
+		<MechanicalObject name="instrumentState" template="Rigid3" />
+		<UniformMass name="mass" totalMass="1" />
+		
+		<RestShapeSpringsForceField stiffness='1000000' angularStiffness='1000000' external_rest_shape='@../HaplyMO' points='0' external_points='0'/>
+        <LCPForceFeedback name="LCPFF1" activate="true" forceCoef="0.0001"/>
+        <LinearSolverConstraintCorrection />
+		
+		<Node name="VisuTool" >
+            <MeshOBJLoader name="meshLoader_1" filename="./mesh/sphere.obj"/>
+            <OglModel name="InstrumentVisualModel" src="@meshLoader_1" color="0.0 1.0 0.0 1.0" />
+            <RigidMapping name="MM->VM mapping" input="@instrumentState" output="@InstrumentVisualModel" />
+        </Node>
+		
+
+        <Node name="CollisionModel" >
+            <MechanicalObject name="instrumentCollisionState" template="Vec3d" />
+            <SphereCollisionModel />
+            <RigidMapping name="MM->CM mapping" input="@instrumentState" output="@instrumentCollisionState" />		
+        </Node>
+    </Node> 
+    
+    
+    <Node name="RigidSphere">
+		<MeshOBJLoader name="loaderS" filename="./mesh/sphere.obj" scale3d="2 2 2" translation="-3 -3 2" />
+        <MechanicalObject position="@loaderS.position"/>
+        <MeshTopology name="grid" src="@loaderS" />
+		
+        <TriangleCollisionModel name="SphereTC" simulated="0" moving="0" bothSide="0" />
+        <LineCollisionModel name="SphereLC" simulated="0" moving="0" />
+        <PointCollisionModel name="SpherePC" simulated="0" moving="0" />
+        <Node name="SphereVisu">
+			<OglModel name="SphereVisuModel"/>
+			<IdentityMapping input="@../" output="@SphereVisuModel" />
+		</Node>
+    </Node>
+	
+    <Node name="Floor">
+        <MeshOBJLoader name="loaderF" filename="./mesh/cube.obj" scale3d="20 0.5 20" translation="0 0 -4" rotation="90 0 0"/>
+        <MeshTopology src="@loaderF" />
+        <MechanicalObject src="@loaderF" />
+        <TriangleCollisionModel simulated="0" moving="0" bothSide="false" group="1"/>
+        <LineCollisionModel simulated="0" moving="0" group="1" />
+        <PointCollisionModel simulated="0" moving="0" group="1"/>
+		<Node name="VisuFloor" >
+            <OglModel name="FloorVisualModel"/>
+            <IdentityMapping input="@../" output="@FloorVisualModel" />
+        </Node>
+    </Node>
+	
+</Node>
