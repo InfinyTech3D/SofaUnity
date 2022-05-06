@@ -35,7 +35,7 @@
 
         <Node name="CollisionModel" >
             <MechanicalObject name="instrumentCollisionState" template="Vec3d" />
-            <SphereCollisionModel stiffness="10"/>
+            <SphereCollisionModel name="ToolCollisionModel" stiffness="10" active="0"/>
             <RigidMapping name="MM->CM mapping" input="@instrumentState" output="@instrumentCollisionState" />		
         </Node>
     </Node> 
