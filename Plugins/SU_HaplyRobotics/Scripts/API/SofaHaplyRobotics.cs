@@ -153,6 +153,9 @@ public class SofaHaplyRobotics : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
+        if (!m_sofaInverse3_controller)
+            return;
+
         // Draw BB
         Gizmos.color = Color.red;
         Vector3 scale = m_sofaInverse3_controller.m_sofaContext.GetScaleSofaToUnity();
