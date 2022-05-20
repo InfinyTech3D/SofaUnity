@@ -6,13 +6,14 @@
     <DefaultAnimationLoop />
     <DefaultVisualManagerLoop />
     
+    <DefaultPipeline name="CollisionPipeline" verbose="0" />
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
-    <DefaultContactManager response="PenalityContactForceField" />
-    <MinProximityIntersection name="Proximity" alarmDistance="0.8" contactDistance="0.5" />
+    <DefaultContactManager name="collision response" response="PenalityContactForceField" />
+	<MinProximityIntersection name="Proximity" alarmDistance="0.8" contactDistance="0.5" />
 
     <Node name="Volume">
-        <EulerImplicitSolver name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.1" />
+        <EulerImplicitSolver name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.01" />
         <CGLinearSolver iterations="25" name="linear solver" tolerance="1.0e-9" threshold="1.0e-9" />
 		<MeshVTKLoader name="loader" filename="mesh/raptorTetra_19409.vtu" onlyAttachedPoints="false" />
         <MechanicalObject src="@loader" name="Volume" />
@@ -27,17 +28,13 @@
 		<BoxROI name="box1" box="-2.2 -1  -1 2.2 2.5 1.5" drawBoxes="1" />
 		<IndexValueMapper name="ind_box0"                                      indices="@box0.tetrahedronIndices" value="100000" />
 		<IndexValueMapper name="ind_box1" inputValues="@ind_box0.outputValues" indices="@box1.tetrahedronIndices" value="1000000" />
-        <!--<TetrahedralCorotationalFEMForceField name="FEM" youngModulus="1300" poissonRatio="0.3" method="large" />		-->
 		<TetrahedronFEMForceField name="FEM" youngModulus="3300" poissonRatio="0.3" computeGlobalMatrix="false" method="large" />
 		
 		
 		<BoxROI name="box3" box="-2.2 -0.3 -9.2    2.2 0.110668 2.88584" drawBoxes="1" drawSize="2" />
 		<FixedConstraint indices="@box3.indices" />	  
 
-		<BoxROI name="boxF" box="-2.2 -1 6.88 2.2  10  10" drawBoxes="true" />
-		<!--<ConstantForceField indices="@boxF.indices" force="7.5 6.63 -15" arrowSizeCoef="0.1" />-->
 		<PlaneForceField normal="0 1 0" d="-0.2" stiffness="100"  showPlane="1" showPlaneSize="20" />
-		
 		
         <Node name="Surface">
             <TriangleSetTopologyContainer  name="Container" fileTopology="" tags=" " />
