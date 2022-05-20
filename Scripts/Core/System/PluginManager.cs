@@ -216,6 +216,18 @@ namespace SofaUnity
         }
 
 
+        public void LoadPlugin(string pluginName)
+        {
+            string pluginPath = "";
+            if (Application.isEditor)
+                pluginPath = "/SofaUnity/Plugins/Native/x64/";
+            else
+                pluginPath = "/Plugins/x86_64/";
+
+            m_sofaAPI.loadPlugin(Application.dataPath + pluginPath + pluginName + ".dll");
+        }
+
+
         ////////////////////////////////////////////
         //////    PluginManager public API     /////
         ////////////////////////////////////////////
