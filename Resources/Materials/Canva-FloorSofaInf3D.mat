@@ -54,7 +54,7 @@ Material:
         m_Scale: {x: 5, y: 5}
         m_Offset: {x: 0, y: 0}
     - _DetailMap:
-        m_Texture: {fileID: 2800000, guid: 1a2e1e934b45f7e4fadb82f16d43775f, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5d37b38a608eb1843a726eb7a59cae1a, type: 3}
         m_Scale: {x: 5, y: 5}
         m_Offset: {x: 0, y: 0}
     - _DetailMask:
@@ -162,10 +162,10 @@ Material:
     - _CullModeForward: 2
     - _Cutoff: 0.5
     - _DepthOffsetEnable: 0
-    - _DetailAlbedoScale: 1
+    - _DetailAlbedoScale: 0.47
     - _DetailNormalMapScale: 0
     - _DetailNormalScale: 0
-    - _DetailSmoothnessScale: 1
+    - _DetailSmoothnessScale: 0
     - _DiffusionProfile: 0
     - _DiffusionProfileHash: 0
     - _DisplacementLockObjectScale: 1
@@ -199,13 +199,13 @@ Material:
     - _GlossMapScale: 0.147
     - _Glossiness: 0.935
     - _GlossyReflections: 1
-    - _HeightAmplitude: 0.02
-    - _HeightCenter: 0.5
+    - _HeightAmplitude: 0.002
+    - _HeightCenter: 1
     - _HeightMapParametrization: 0
     - _HeightMax: 1
     - _HeightMin: -1
     - _HeightOffset: 0
-    - _HeightPoMAmplitude: 0.0362
+    - _HeightPoMAmplitude: 0.2
     - _HeightTessAmplitude: 2
     - _HeightTessCenter: 0.5
     - _InvTilingScale: 1
@@ -214,10 +214,10 @@ Material:
     - _IridescenceThickness: 1
     - _LinkDetailsWithBase: 0
     - _MaterialID: 1
-    - _Metallic: 0.51866686
+    - _Metallic: 0.122
     - _Mode: 0
     - _NormalMapSpace: 0
-    - _NormalScale: 0.7
+    - _NormalScale: 1
     - _OcclusionStrength: 0.363
     - _PPDLodThreshold: 5
     - _PPDMaxSamples: 15
@@ -228,7 +228,7 @@ Material:
     - _ReceivesSSR: 1
     - _RefractionModel: 0
     - _SSRefractionProjectionModel: 0
-    - _Smoothness: 0.935
+    - _Smoothness: 0.933
     - _SmoothnessRemapMax: 0.935
     - _SmoothnessRemapMin: 0
     - _SmoothnessTextureChannel: 0
@@ -273,9 +273,9 @@ Material:
     - _ZTestTransparent: 4
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.7075471, g: 0.7075471, b: 0.7075471, a: 1}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
