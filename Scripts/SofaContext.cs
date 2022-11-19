@@ -17,13 +17,21 @@ namespace SofaUnity
         //////       SofaContext members       /////
         ////////////////////////////////////////////
 
- 
+        /// Pointer to the Sofa Context API.
+        //private SofaContextAPI m_impl = null;
+        //[SerializeField]
+        private SofaUnityRenderer m_renderer = null;
+
+        /// Pointer to the SceneFileManager which is used to check the file and hold the filename and paths.
+        [SerializeField]
+        private SceneFileManager m_sceneFileMgr = null;
+
         ////////////////////////////////////////////
         ////////          parameters         ///////
         ////////////////////////////////////////////
 
         /// Parameter to activate logging of this Sofa GameObject
-        public bool m_log = false;
+        public bool m_log = true;
 
         /// Booleen to activate sofa message handler
         public bool CatchSofaMessages = true;
@@ -40,6 +48,13 @@ namespace SofaUnity
         ////////////////////////////////////////////
         //////      SofaContext accessors      /////
         ////////////////////////////////////////////
+
+
+        /// getter to the \sa SceneFileManager m_sceneFileMgr
+        public SceneFileManager SceneFileMgr
+        {
+            get { return m_sceneFileMgr; }
+        }
 
         /// Getter/Setter of current gravity @see m_gravity
         public Vector3 Gravity
@@ -168,7 +183,11 @@ namespace SofaUnity
                 Debug.Log("## SofaContext ## init ");
 
             // Todo create context
+            // Check and get the Sofa context
+            if (m_renderer == null)
+                m_renderer = new SofaUnityRenderer();
 
+           
             // start sofa instance
 
             //m_impl.start();

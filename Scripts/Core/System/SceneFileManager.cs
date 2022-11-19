@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SofaUnityAPI;
 using System.IO;
 
 namespace SofaUnity
