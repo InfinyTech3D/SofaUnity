@@ -65,8 +65,8 @@ namespace SofaUnity
                 if (m_gravity != value)
                 {
                     m_gravity = value;
-                    //if (m_impl != null)
-                    //    m_impl.setGravity(m_gravity);
+                    if (m_renderer != null)
+                        m_renderer.setGravity(m_gravity);
                 }
             }
         }
@@ -81,8 +81,8 @@ namespace SofaUnity
                 if (m_timeStep != value && value > 0.0f)
                 {
                     m_timeStep = value;
-                    //if (m_impl != null)
-                    //    m_impl.timeStep = m_timeStep;
+                    if (m_renderer != null)
+                        m_renderer.timeStep = m_timeStep;
                 }
             }
         }
@@ -148,6 +148,16 @@ namespace SofaUnity
         /// Method called at GameObject creation.
         void Awake()
         {
+            if (m_log)
+            {
+                if (Application.isPlaying)
+                    Debug.Log("#### SofaContext is playing ");
+                else
+                    Debug.Log("#### SofaContext is editor ");
+            }
+
+            this.gameObject.tag = "GameController";
+
             StartSofa();
         }
 
@@ -171,8 +181,12 @@ namespace SofaUnity
             // Call the init method to create the Sofa Context
             Init();
 
-            // Todo
-
+            if (m_renderer == null)
+            {
+                this.enabled = false;
+                this.gameObject.SetActive(false);
+                return;
+            }
         }
 
 
@@ -187,23 +201,28 @@ namespace SofaUnity
             if (m_renderer == null)
                 m_renderer = new SofaUnityRenderer();
 
-           
-            // start sofa instance
+            if (m_renderer == null)
+            {
+                Debug.LogError("Error while creating SofaUnityRenderer");
+                return;
+            }
 
-            //m_impl.start();
+
+            // start sofa instance
+            m_renderer.start();
 
             // Create SOFA scene file manager
-            //if (m_sceneFileMgr == null)
-            //    m_sceneFileMgr = new SceneFileManager(this);
-            //else
-            //    m_sceneFileMgr.SetSofaContext(this);
+            if (m_sceneFileMgr == null)
+                m_sceneFileMgr = new SceneFileManager(this);
+            else
+                m_sceneFileMgr.SetSofaContext(this);
 
             // Todo create SOFAVisualModel
-
+            //Or reconnect scene
 
             // set gravity and timestep if changed in editor
-            //m_impl.timeStep = m_timeStep;
-            //m_impl.setGravity(m_gravity);
+            m_renderer.timeStep = m_timeStep;
+            m_renderer.setGravity(m_gravity);
 
         }
 
@@ -236,13 +255,12 @@ namespace SofaUnity
 
         protected void UpdateImplSync()
         {
-            //if (Time.time >= nextUpdate)
-            //{
-            //    nextUpdate += m_timeStep;
+            if (Time.time >= nextUpdate)
+            {
+                nextUpdate += m_timeStep;
 
-            //    m_impl.step();
-
-            //}
+                m_renderer.step();
+            }
         }
 
         
@@ -250,31 +268,31 @@ namespace SofaUnity
         /// Method to load a filename and create GameObject per Sofa object found.
         public void LoadSofaScene()
         {
-            //if (m_sceneFileMgr == null)
-            //    return;
+            if (m_sceneFileMgr == null)
+                return;
 
-            //if (m_log)
-            //    Debug.Log("## SofaContext ## loadFilename: " + m_sceneFileMgr.AbsoluteFilename());
+            if (m_log)
+                Debug.Log("## SofaContext ## loadFilename: " + m_sceneFileMgr.AbsoluteFilename());
 
-            //// load scene file in SOFA
-            //if (m_impl == null)
-            //{
-            //    Debug.LogError("m_impl is null");
-            //    return;
-            //}
-            
-            //m_impl.loadScene(m_sceneFileMgr.AbsoluteFilename());
+            // load scene file in SOFA
+            if (m_renderer == null)
+            {
+                Debug.LogError("m_impl is null");
+                return;
+            }
+
+            m_renderer.loadScene(m_sceneFileMgr.AbsoluteFilename());
 
             // Retrieve current timestep and gravity
-            //m_timeStep = m_impl.timeStep;
-            //m_gravity = m_impl.getGravity();
+            m_timeStep = m_renderer.timeStep;
+            m_gravity = m_renderer.getGravity();
         }
 
         public void ClearSofaScene()
         {
-            //m_impl.stop();
-            //m_impl.unload();
-            //m_impl.start();
+            m_renderer.stop();
+            m_renderer.unload();
+            m_renderer.start();
         }
 
 
