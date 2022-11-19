@@ -18,7 +18,7 @@ namespace SofaUnity
         public SofaUnityRenderer()
         {
             int test = test_getAPI_ID();
-            Debug.Log("test_getAPI_ID" + test);
+            Debug.Log("test_getAPI_ID: " + test);
             m_native = sofaPhysicsAPI_create();
 
             if (m_native == IntPtr.Zero)

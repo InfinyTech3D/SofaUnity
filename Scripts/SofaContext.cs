@@ -92,11 +92,11 @@ namespace SofaUnity
         {
             set
             {
-                //if (value && m_impl != null)
-                //{
-                //    Debug.Log("UnLoadScene " + value);
-                //    ClearSofaScene();
-                //}
+                if (value && m_renderer != null)
+                {
+                    Debug.Log("UnLoadScene " + value);
+                    ClearSofaScene();
+                }
             }
         }
 
@@ -165,10 +165,15 @@ namespace SofaUnity
         /// Method called at GameObject destruction.
         void OnDestroy()
         {
-            if(m_log)
+            if (m_log)
                 Debug.Log("SofaContext::OnDestroy stop called.");
 
-            // Todo
+            if (m_renderer == null)
+            {
+                m_renderer.stop();
+                m_renderer.unload();
+                m_renderer.Dispose();
+            }
         }
 
         private void OnApplicationQuit()
