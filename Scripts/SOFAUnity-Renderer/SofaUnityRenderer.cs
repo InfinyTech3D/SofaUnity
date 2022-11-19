@@ -28,7 +28,14 @@ namespace SofaUnity
                 return;
             }
 
+            // load the sofaIni file
+            string pathIni = Application.dataPath + "/SofaUnity/Plugins/Native/x64/sofa.ini";
+            string sharePath = sofaPhysicsAPI_loadSofaIni(m_native, pathIni);
 
+            if (sharePath.Contains("Error"))
+            {
+                Debug.LogError("SofaContextAPI: loadSofaIni method returns error code: " + sharePath);
+            }
 
             // Create a simulation scene.
             int res = sofaPhysicsAPI_createScene(m_native);
