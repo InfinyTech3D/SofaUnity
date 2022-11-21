@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 namespace SofaUnity
 {
 
-    public class SofaUnityRenderer
+    public class SofaUnityRenderer : IDisposable
     {
         /// Internal pointer to the SofaPhysicsAPI 
         internal IntPtr m_native;
@@ -38,16 +38,16 @@ namespace SofaUnity
             }
 
             // Create a simulation scene.
-            //int res = sofaPhysicsAPI_createScene(m_native);
-            //if (res == 0)
+            int res = sofaPhysicsAPI_createScene(m_native);
+            if (res == 0)
             {
                 m_isReady = true;
             }
-            //else
-            //{
-            //    Debug.LogError("SofaContextAPI scene creation return: " + res);
-            //    m_isReady = false;
-            //}
+            else
+            {
+                Debug.LogError("SofaContextAPI scene creation return: " + res);
+                m_isReady = false;
+            }
         }
 
         /// Destructor
@@ -282,16 +282,16 @@ namespace SofaUnity
 
 
         /// logging api
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaPhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaPhysicsAPI_activateMessageHandler(IntPtr obj, bool value);
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaPhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaPhysicsAPI_getNbMessages(IntPtr obj);
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaPhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern string sofaPhysicsAPI_getMessage(IntPtr obj, int messageId, int[] messageType);
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaPhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaPhysicsAPI_clearMessages(IntPtr obj);
 
 

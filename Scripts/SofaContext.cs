@@ -212,11 +212,10 @@ namespace SofaUnity
                 return;
             }
 
-            
+            DoCatchSofaMessages();
+
             // start sofa instance
             m_renderer.start();
-
-            DoCatchSofaMessages();
 
             // Create SOFA scene file manager
             if (m_sceneFileMgr == null)
@@ -225,15 +224,15 @@ namespace SofaUnity
                 m_sceneFileMgr.SetSofaContext(this);
 
             // Todo create SOFAVisualModel
-            //m_renderer.createScene();
+            m_renderer.createScene();
             //Or reconnect scene
 
             // set gravity and timestep if changed in editor
-            //m_renderer.timeStep = m_timeStep;
-            //m_renderer.setGravity(m_gravity);
+            m_renderer.timeStep = m_timeStep;
+            m_renderer.setGravity(m_gravity);
 
             // Check message form SOFA side at end of Init
-            //DoCatchSofaMessages();
+            DoCatchSofaMessages();
         }
 
 
@@ -254,7 +253,7 @@ namespace SofaUnity
             // only if scene is playing or if sofa is running
             if (Application.isPlaying == false) return;
 
-            UpdateImplSync();
+            //UpdateImplSync();
 
             //if (Time.time > nextFPSUpdate && m_impl != null)
             //{
@@ -325,16 +324,16 @@ namespace SofaUnity
                 m_renderer.activateMessageHandler(true);
                 isMsgHandlerActivated = true;
             }
-            //else if (!CatchSofaMessages && isMsgHandlerActivated)
-            //{
-            //    m_renderer.activateMessageHandler(false);
-            //    isMsgHandlerActivated = false;
-            //}
+            else if (!CatchSofaMessages && isMsgHandlerActivated)
+            {
+                m_renderer.activateMessageHandler(false);
+                isMsgHandlerActivated = false;
+            }
 
-            //if (isMsgHandlerActivated)
-            //{
-            //    m_renderer.DisplayMessages();
-            //}
+            if (isMsgHandlerActivated)
+            {
+                m_renderer.DisplayMessages();
+            }
         }
 
     }
