@@ -212,9 +212,11 @@ namespace SofaUnity
                 return;
             }
 
-
+            
             // start sofa instance
             m_renderer.start();
+
+            DoCatchSofaMessages();
 
             // Create SOFA scene file manager
             if (m_sceneFileMgr == null)
@@ -223,12 +225,15 @@ namespace SofaUnity
                 m_sceneFileMgr.SetSofaContext(this);
 
             // Todo create SOFAVisualModel
+            //m_renderer.createScene();
             //Or reconnect scene
 
             // set gravity and timestep if changed in editor
-            m_renderer.timeStep = m_timeStep;
-            m_renderer.setGravity(m_gravity);
+            //m_renderer.timeStep = m_timeStep;
+            //m_renderer.setGravity(m_gravity);
 
+            // Check message form SOFA side at end of Init
+            //DoCatchSofaMessages();
         }
 
 
@@ -243,6 +248,9 @@ namespace SofaUnity
         // Update is called once per fix frame
         void Update()
         {
+            // log sofa messages
+            //DoCatchSofaMessages();
+
             // only if scene is playing or if sofa is running
             if (Application.isPlaying == false) return;
 
@@ -291,6 +299,11 @@ namespace SofaUnity
             // Retrieve current timestep and gravity
             m_timeStep = m_renderer.timeStep;
             m_gravity = m_renderer.getGravity();
+
+            // load all visual models
+            m_renderer.createScene();
+
+            DoCatchSofaMessages();
         }
 
         public void ClearSofaScene()
@@ -300,6 +313,29 @@ namespace SofaUnity
             m_renderer.start();
         }
 
+        private bool isMsgHandlerActivated = false;
+        protected void DoCatchSofaMessages()
+        {
+            if (m_renderer == null)
+                return;
+
+            // first time activated
+            if (CatchSofaMessages && !isMsgHandlerActivated)
+            {
+                m_renderer.activateMessageHandler(true);
+                isMsgHandlerActivated = true;
+            }
+            //else if (!CatchSofaMessages && isMsgHandlerActivated)
+            //{
+            //    m_renderer.activateMessageHandler(false);
+            //    isMsgHandlerActivated = false;
+            //}
+
+            //if (isMsgHandlerActivated)
+            //{
+            //    m_renderer.DisplayMessages();
+            //}
+        }
 
     }
 }

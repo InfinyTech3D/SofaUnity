@@ -38,16 +38,16 @@ namespace SofaUnity
             }
 
             // Create a simulation scene.
-            int res = sofaPhysicsAPI_createScene(m_native);
-            if (res == 0)
+            //int res = sofaPhysicsAPI_createScene(m_native);
+            //if (res == 0)
             {
                 m_isReady = true;
             }
-            else
-            {
-                Debug.LogError("SofaContextAPI scene creation return: " + res);
-                m_isReady = false;
-            }
+            //else
+            //{
+            //    Debug.LogError("SofaContextAPI scene creation return: " + res);
+            //    m_isReady = false;
+            //}
         }
 
         /// Destructor
@@ -105,6 +105,61 @@ namespace SofaUnity
         }
 
 
+        public void activateMessageHandler(bool status)
+        {
+            int res = 0;
+            if (m_isReady)
+                res = sofaPhysicsAPI_activateMessageHandler(m_native, status);
+
+            if (res != 0)
+                Debug.LogError("SofaContextAPI::activateMessageHandler method returns: " + res);
+        }
+
+        public void DisplayMessages()
+        {
+            if (!m_isReady)
+                return;
+
+            int res = 0;
+            res = sofaPhysicsAPI_getNbMessages(m_native);
+
+            if (res <= 0)
+                return;
+
+            int[] type = new int[1];
+            type[0] = -1;
+            for (int i = 0; i < res; i++)
+            {
+                string message = sofaPhysicsAPI_getMessage(m_native, i, type);
+
+                if (type[0] == -1)
+                    continue;
+                else if (type[0] == 3)
+                    Debug.LogWarning("# Sofa Warning: " + message);
+                else if (type[0] == 4)
+                    Debug.LogError("# Sofa Error: " + message);
+                else if (type[0] == 5)
+                    Debug.LogError("<color=red># Sofa Fatal error:</color> " + message);
+                else
+                    Debug.Log("# Sofa Log: " + message);
+            }
+
+            res = sofaPhysicsAPI_clearMessages(m_native);
+            if (res != 0)
+                Debug.LogError("SofaContextAPI::clearMessages method returns: " + res);
+        }
+
+
+        public int clearMessages()
+        {
+            int res = 0;
+            if (m_isReady)
+                res = sofaPhysicsAPI_clearMessages(m_native);
+
+            return res;
+        }
+
+
         /// <summary> Load the Sofa scene given by name @param filename. </summary>
         /// <param name="filename"> Path to the filename. </param>
         public void loadScene(string filename)
@@ -112,7 +167,7 @@ namespace SofaUnity
             if (m_isReady)
             {
                 int res = sofaPhysicsAPI_loadScene(m_native, filename);
-                if (res != 0)
+                //if (res != 0)
                     Debug.LogError("SofaContextAPI::loadScene method returns: " + res + " for scene: " + filename);
             }
             else
@@ -197,6 +252,19 @@ namespace SofaUnity
         }
 
 
+
+        public void createScene()
+        {
+            int nbrVM = sofaPhysicsAPI_getNbrVisualModel(m_native);
+            Debug.Log("Nbr VisualM: " + nbrVM);
+
+            for (int i=0; i< nbrVM; i++)
+            {
+                string nameVM = sofaVisualModel_getName(m_native, i);
+                Debug.Log("- VM: " + i + " -> " + nameVM);
+            }
+        }
+
         ///////////////////////////////////////////////////////////
         //////////          API Communication         /////////////
         ///////////////////////////////////////////////////////////
@@ -211,6 +279,21 @@ namespace SofaUnity
 
         [DllImport("SofaPhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern string sofaPhysicsAPI_APIName(IntPtr obj);
+
+
+        /// logging api
+        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int sofaPhysicsAPI_activateMessageHandler(IntPtr obj, bool value);
+
+        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int sofaPhysicsAPI_getNbMessages(IntPtr obj);
+
+        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern string sofaPhysicsAPI_getMessage(IntPtr obj, int messageId, int[] messageType);
+
+        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int sofaPhysicsAPI_clearMessages(IntPtr obj);
+
 
 
         // API for scene creation/loading
@@ -259,5 +342,12 @@ namespace SofaUnity
         [DllImport("SofaPhysicsAPI")]
         public static extern int sofaPhysicsAPI_setGravity(IntPtr ptr, double[] values);
 
+
+
+        [DllImport("SofaPhysicsAPI")]
+        public static extern int sofaPhysicsAPI_getNbrVisualModel(IntPtr ptr);
+
+        [DllImport("SofaPhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern string sofaVisualModel_getName(IntPtr ptr, int VModelID);
     }
 }
