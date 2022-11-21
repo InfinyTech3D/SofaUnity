@@ -204,7 +204,10 @@ namespace SofaUnity
             // Todo create context
             // Check and get the Sofa context
             if (m_renderer == null)
+            {
                 m_renderer = new SofaUnityRenderer();
+                m_renderer.m_sofaContext = this;
+            }
 
             if (m_renderer == null)
             {

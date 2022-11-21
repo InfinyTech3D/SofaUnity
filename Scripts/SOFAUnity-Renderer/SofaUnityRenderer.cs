@@ -14,6 +14,10 @@ namespace SofaUnity
 
         private bool m_isReady = false;
 
+        public SofaContext m_sofaContext = null;
+
+        public IntPtr getImpl() { return m_native; }
+
         /// Default constructor, will create the pointer to SofaPhysicsAPI
         public SofaUnityRenderer()
         {
@@ -285,7 +289,11 @@ namespace SofaUnity
             for (int i=0; i< nbrVM; i++)
             {
                 string nameVM = sofaVisualModel_getName(m_native, i);
-                Debug.Log("- VM: " + i + " -> " + nameVM);
+                GameObject obj = new GameObject("SofaVisualModel - " + nameVM);
+                SofaVisualModel visuM = obj.AddComponent<SofaVisualModel>();
+                visuM.m_uniqName = nameVM;
+                visuM.m_renderer = this;
+                obj.transform.parent = m_sofaContext.gameObject.transform;
             }
         }
 
