@@ -168,7 +168,7 @@ namespace SofaUnity
             if (m_log)
                 Debug.Log("SofaContext::OnDestroy stop called.");
 
-            if (m_renderer == null)
+            if (m_renderer != null)
             {
                 m_renderer.stop();
                 m_renderer.unload();

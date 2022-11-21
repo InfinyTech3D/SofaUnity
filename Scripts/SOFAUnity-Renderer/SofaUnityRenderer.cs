@@ -42,6 +42,16 @@ namespace SofaUnity
             if (res == 0)
             {
                 m_isReady = true;
+
+                string pluginPath = "";
+                if (Application.isEditor)
+                    pluginPath = "/SofaUnity/Plugins/Native/x64/";
+                else
+                    pluginPath = "/Plugins/x86_64/";
+
+                loadPlugin(Application.dataPath + pluginPath + "Sofa.Component.dll");
+                loadPlugin(Application.dataPath + pluginPath + "Sofa.GL.Component.dll");
+                loadPlugin(Application.dataPath + pluginPath + "Sofa.GUI.Component.dll");
             }
             else
             {
@@ -167,7 +177,7 @@ namespace SofaUnity
             if (m_isReady)
             {
                 int res = sofaPhysicsAPI_loadScene(m_native, filename);
-                //if (res != 0)
+                if (res != 0)
                     Debug.LogError("SofaContextAPI::loadScene method returns: " + res + " for scene: " + filename);
             }
             else
@@ -188,6 +198,20 @@ namespace SofaUnity
                 Debug.LogError("SofaContextAPI::unload scene file not possible without a valid sofaPhysicsAPI created!");
             }
         }
+
+
+        public void loadPlugin(string pluginPath)
+        {
+            if (m_isReady)
+            {
+                int res = sofaPhysicsAPI_loadPlugin(m_native, pluginPath);
+                if (res != 0)
+                    Debug.LogError("SofaContextAPI::loadPlugin method returns: " + res + " for scene: " + pluginPath);
+            }
+            else
+                Debug.LogError("SofaContextAPI::loadPlugin can't load file: " + pluginPath + " no sofaPhysicsAPI created!");
+        }
+
 
 
 
@@ -309,6 +333,10 @@ namespace SofaUnity
 
         [DllImport("SofaPhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern string sofaPhysicsAPI_loadSofaIni(IntPtr obj, string pathIni);
+
+        [DllImport("SofaPhysicsAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int sofaPhysicsAPI_loadPlugin(IntPtr obj, string pluginName);
+
 
 
 
