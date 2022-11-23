@@ -6,7 +6,6 @@ using System.Runtime.InteropServices;
 
 namespace SofaUnity
 {
-
     public class SofaUnityRenderer : IDisposable
     {
         /// Internal pointer to the SofaPhysicsAPI 
@@ -15,6 +14,8 @@ namespace SofaUnity
         private bool m_isReady = false;
 
         public SofaContext m_sofaContext = null;
+
+        public List<SofaVisualModel> m_visualModels = null;
 
         public IntPtr getImpl() { return m_native; }
 
@@ -101,7 +102,14 @@ namespace SofaUnity
         public void step()
         {
             if (m_isReady)
+            {
                 sofaPhysicsAPI_step(m_native);
+
+                foreach(SofaVisualModel visuM in m_visualModels)
+                {
+                    visuM.SetDirty(true);
+                }
+            }
         }
 
         /// Method to stop the Sofa simulation
@@ -283,8 +291,12 @@ namespace SofaUnity
 
         public void createScene()
         {
+            Debug.Log("### SofaVisualModel:createScene");
             int nbrVM = sofaPhysicsAPI_getNbrVisualModel(m_native);
-            Debug.Log("Nbr VisualM: " + nbrVM);
+            Debug.Log("createScene: Nbr VisualM: " + nbrVM);
+
+            if (m_visualModels == null)
+                m_visualModels = new List<SofaVisualModel>();
 
             for (int i=0; i< nbrVM; i++)
             {
@@ -294,6 +306,26 @@ namespace SofaUnity
                 visuM.m_uniqName = nameVM;
                 visuM.m_renderer = this;
                 obj.transform.parent = m_sofaContext.gameObject.transform;
+
+                m_visualModels.Add(visuM);
+            }
+        }
+
+
+        public void Reconnect()
+        {
+            Debug.Log("## SofaVisualModel:Reconnect ");
+
+            if (m_visualModels == null)
+                m_visualModels = new List<SofaVisualModel>();
+
+            SofaVisualModel[] Vms = m_sofaContext.GetComponentsInChildren<SofaVisualModel>();
+
+            foreach (SofaVisualModel visuM in Vms)
+            {
+                Debug.Log("Reconnect SofaVisualModel: " + visuM.m_uniqName);
+                visuM.m_renderer = this;
+                m_visualModels.Add(visuM);
             }
         }
 

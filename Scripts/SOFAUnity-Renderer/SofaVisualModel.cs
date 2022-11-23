@@ -15,7 +15,12 @@ public class SofaVisualModel : MonoBehaviour
     public SofaUnityRenderer m_renderer = null;
 
     public bool m_invertNormals = false;
-    protected bool displayLog = true;
+
+    /// Parameter to activate logging of this SOFA GameObject
+    public bool displayLog = false;
+
+    /// bool to store the status of this GameObject. Used to update the mesh if is dirty.
+    protected bool m_isDirty = true;
 
     /// Setter for \sa m_isDirty value   
     public void SetDirty(bool value) { m_isDirty = value; }
@@ -65,9 +70,24 @@ public class SofaVisualModel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateMesh();
+        if (!Application.isPlaying)
+        {
+            UpdateInEditor();
+            return;
+        }
+
+        // Call internal method that can be overwritten. Only if dirty
+        if (m_isDirty)
+        {
+            UpdateMesh();
+            m_isDirty = false;
+        }
     }
 
+    protected void UpdateInEditor()
+    {
+
+    }
 
 
     protected void UpdateMesh()

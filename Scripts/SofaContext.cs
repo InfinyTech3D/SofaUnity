@@ -19,7 +19,7 @@ namespace SofaUnity
 
         /// Pointer to the Sofa Context API.
         //private SofaContextAPI m_impl = null;
-        //[SerializeField]
+        [SerializeField]
         private SofaUnityRenderer m_renderer = null;
 
         /// Pointer to the SceneFileManager which is used to check the file and hold the filename and paths.
@@ -205,6 +205,7 @@ namespace SofaUnity
             // Check and get the Sofa context
             if (m_renderer == null)
             {
+                Debug.Log("## create m_renderer");
                 m_renderer = new SofaUnityRenderer();
                 m_renderer.m_sofaContext = this;
             }
@@ -227,9 +228,11 @@ namespace SofaUnity
                 m_sceneFileMgr.SetSofaContext(this);
 
             // Todo create SOFAVisualModel
-            m_renderer.createScene();
-            //Or reconnect scene
-
+            if (!Application.isPlaying)
+                m_renderer.createScene();
+            else
+                ReconnectSofaScene();
+            
             // set gravity and timestep if changed in editor
             m_renderer.timeStep = m_timeStep;
             m_renderer.setGravity(m_gravity);
@@ -256,13 +259,15 @@ namespace SofaUnity
             // only if scene is playing or if sofa is running
             if (Application.isPlaying == false) return;
 
-            //UpdateImplSync();
+            UpdateImplSync();
 
             //if (Time.time > nextFPSUpdate && m_impl != null)
             //{
             //    nextFPSUpdate += 1.0f / updateFPSRate;
             //    SimulationFPS = m_impl.GetSimulationFPS();
             //}
+
+            DoCatchSofaMessages();
         }
                 
 
@@ -304,6 +309,24 @@ namespace SofaUnity
 
             // load all visual models
             m_renderer.createScene();
+
+            DoCatchSofaMessages();
+        }
+
+        protected void ReconnectSofaScene()
+        {
+            Debug.Log("ReconnectSofaScene");
+            if (m_sceneFileMgr == null)
+                return;
+
+            // load scene file in SOFA
+            if (m_sceneFileMgr.SceneFilename.Length != 0)
+                m_renderer.loadScene(m_sceneFileMgr.AbsoluteFilename());
+
+            // Do not retrieve timestep of gravity in case it has been changed in editor
+
+            // re-create objects after scene loading and before graph reconnection
+            m_renderer.Reconnect();
 
             DoCatchSofaMessages();
         }
