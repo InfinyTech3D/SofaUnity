@@ -396,7 +396,7 @@ namespace SofaUnity
             {
                 nextUpdate += m_timeStep;
 
-                m_renderer.step();
+                m_impl.step();
 
 #if SofaUnityEngine
                 if (m_nodeGraphMgr != null)

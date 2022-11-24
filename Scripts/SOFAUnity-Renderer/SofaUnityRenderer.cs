@@ -6,11 +6,14 @@ using System.Runtime.InteropServices;
 
 namespace SofaUnity
 {
+    [System.Serializable]
     public class SofaUnityRenderer
     {
         /// pointer to the SofaContext root object
+        [SerializeField]
         private SofaContext m_sofaContext = null;
 
+        [SerializeField]
         public List<SofaVisualModel> m_visualModels = null;
 
         /// Default constructor, will create the pointer to SofaPhysicsAPI
