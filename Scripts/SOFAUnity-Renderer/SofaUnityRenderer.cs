@@ -21,6 +21,11 @@ namespace SofaUnity
         {
             m_sofaContext = context;
 
+            Init();
+        }
+
+        public void Init()
+        {
             SofaUnityAPI.SofaContextAPI sofaAPI = m_sofaContext.GetSofaAPI();
             if (sofaAPI == null)
             {
@@ -34,8 +39,7 @@ namespace SofaUnity
                 pluginPath = "/SofaUnity/Plugins/Native/x64/";
             else
                 pluginPath = "/Plugins/x86_64/";
-
-
+            
             sofaAPI.loadPlugin(Application.dataPath + pluginPath + "Sofa.Component.dll");
             sofaAPI.loadPlugin(Application.dataPath + pluginPath + "Sofa.GL.Component.dll");
             sofaAPI.loadPlugin(Application.dataPath + pluginPath + "Sofa.GUI.Component.dll");

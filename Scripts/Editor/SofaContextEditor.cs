@@ -71,6 +71,16 @@ public class SofaContextEditor : Editor
         // Add field for timestep
         context.TimeStep = EditorGUILayout.FloatField("TimeStep", context.TimeStep);
         EditorGUILayout.Separator();
+
+#if SofaUnityEngine
+        EditorGUI.BeginDisabledGroup(true);
+        context.AsyncSimulation = EditorGUILayout.Toggle("Asynchronous Simulation", context.AsyncSimulation);
+        EditorGUI.EndDisabledGroup();
+#endif
+        
+        context.CatchSofaMessages = EditorGUILayout.Toggle("Activate Sofa Logs", context.CatchSofaMessages);
+        EditorGUILayout.Separator();
+
         EditorGUILayout.Separator();        
 
         // Add scene file section

@@ -49,7 +49,7 @@ namespace SofaUnity
         ////////////////////////////////////////////
 
         /// Parameter to activate logging of this Sofa GameObject
-        public bool m_log = true;
+        public bool m_log = false;
 
         /// Booleen to activate sofa message handler
         public bool CatchSofaMessages = true;
@@ -320,6 +320,10 @@ namespace SofaUnity
             {
                 Debug.Log("## create m_renderer");
                 m_renderer = new SofaUnityRenderer(this);
+            }
+            else
+            {
+                m_renderer.Init();
             }
 #endif
             // start sofa instance
