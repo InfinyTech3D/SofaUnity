@@ -12,7 +12,9 @@ public class SofaVisualModel : MonoBehaviour
     /// Member: Unity Mesh object of this GameObject
     protected Mesh m_mesh;
     public string m_uniqName = "None";
-    public SofaUnityRenderer m_renderer = null;
+
+    /// pointer to the SofaContext root object
+    private SofaContext m_sofaContext = null;
 
     public bool m_invertNormals = false;
 
@@ -21,6 +23,14 @@ public class SofaVisualModel : MonoBehaviour
 
     /// bool to store the status of this GameObject. Used to update the mesh if is dirty.
     protected bool m_isDirty = true;
+
+
+
+    public void setSofaContext(SofaContext context)
+    {
+        m_sofaContext = context;
+    } 
+
 
     /// Setter for \sa m_isDirty value   
     public void SetDirty(bool value) { m_isDirty = value; }
@@ -92,15 +102,17 @@ public class SofaVisualModel : MonoBehaviour
 
     protected void UpdateMesh()
     {
-        int nbrV = sofaVisualModel_getNbVertices(m_renderer.getImpl(), m_uniqName);
+        SofaUnityAPI.SofaContextAPI sofaAPI = m_sofaContext.GetSofaAPI();
+
+        int nbrV = sofaVisualModel_getNbVertices(sofaAPI.getSimuContext(), m_uniqName);
         if (nbrV < 0)
             return;
 
         // get access to sofa buffers
         float[] vertices = new float[nbrV * 3];
-        int resV = sofaVisualModel_getVertices(m_renderer.getImpl(), m_uniqName, vertices);
+        int resV = sofaVisualModel_getVertices(sofaAPI.getSimuContext(), m_uniqName, vertices);
         float[] normals = new float[nbrV * 3];
-        int resN = sofaVisualModel_getNormals(m_renderer.getImpl(), m_uniqName, normals);
+        int resN = sofaVisualModel_getNormals(sofaAPI.getSimuContext(), m_uniqName, normals);
 
         if (displayLog)
             Debug.Log(m_uniqName + " | Number of vertices: " + nbrV + " with resV: " + resV + " | resN: " + resN);
@@ -159,13 +171,15 @@ public class SofaVisualModel : MonoBehaviour
 
     protected void UpdateTexCoords()
     {
+        SofaUnityAPI.SofaContextAPI sofaAPI = m_sofaContext.GetSofaAPI();
+
         Vector3[] verts = m_mesh.vertices;
         int nbrV = verts.Length;
 
         float[] texCoords = new float[nbrV * 2];
         Vector2[] uv = new Vector2[nbrV];
 
-        int res = sofaVisualModel_getTexCoords(m_renderer.getImpl(), m_uniqName, texCoords);
+        int res = sofaVisualModel_getTexCoords(sofaAPI.getSimuContext(), m_uniqName, texCoords);
         if (displayLog)
             Debug.Log("res get Texcoords: " + res);
 
@@ -187,8 +201,10 @@ public class SofaVisualModel : MonoBehaviour
 
     protected void CreateTriangulation()
     {
-        int nbrTris = sofaVisualModel_getNbTriangles(m_renderer.getImpl(), m_uniqName);
-        int nbrQuads = sofaVisualModel_getNbQuads(m_renderer.getImpl(), m_uniqName);
+        SofaUnityAPI.SofaContextAPI sofaAPI = m_sofaContext.GetSofaAPI();
+
+        int nbrTris = sofaVisualModel_getNbTriangles(sofaAPI.getSimuContext(), m_uniqName);
+        int nbrQuads = sofaVisualModel_getNbQuads(sofaAPI.getSimuContext(), m_uniqName);
 
         if (displayLog)
             Debug.Log("createTriangulation: " + m_uniqName + " | nbrTris: " + nbrTris + " | nbQuads: " + nbrQuads);
@@ -201,10 +217,10 @@ public class SofaVisualModel : MonoBehaviour
 
         // get buffers
         int[] quads = new int[nbrQuads * 4];
-        sofaVisualModel_getQuads(m_renderer.getImpl(), m_uniqName, quads);
+        sofaVisualModel_getQuads(sofaAPI.getSimuContext(), m_uniqName, quads);
 
         int[] tris = new int[nbrTris * 3];
-        sofaVisualModel_getTriangles(m_renderer.getImpl(), m_uniqName, tris);
+        sofaVisualModel_getTriangles(sofaAPI.getSimuContext(), m_uniqName, tris);
 
         // Create and fill unity triangles buffer
         int[] trisOut = new int[nbrTris * 3 + nbrQuads * 6];

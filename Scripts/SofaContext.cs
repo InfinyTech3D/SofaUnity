@@ -1,8 +1,11 @@
-﻿using System.Collections;
+﻿#define SofaUnityRenderer
+
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System;
 using UnityEngine;
+using SofaUnityAPI;
 
 namespace SofaUnity
 {
@@ -18,9 +21,24 @@ namespace SofaUnity
         ////////////////////////////////////////////
 
         /// Pointer to the Sofa Context API.
+        private SofaContextAPI m_impl = null;
+
+#if SofaUnityEngine
+        /// Pointer to the SofaDAGNodeManager which is used to recreate the SOFA node hierarchy
+        private SofaDAGNodeManager m_nodeGraphMgr = null;
+
+        /// Pointer to the PluginManager which hold the list of sofa plugin to be loaded
+        [SerializeField]
+        private PluginManagerInterface m_pluginMgr = null;
+
+        private SofaGraphicAPI m_graphicAPI = null;
+
+#elif SofaUnityRenderer
+        /// Pointer to the Sofa Context API.
         //private SofaContextAPI m_impl = null;
         [SerializeField]
         private SofaUnityRenderer m_renderer = null;
+#endif
 
         /// Pointer to the SceneFileManager which is used to check the file and hold the filename and paths.
         [SerializeField]
@@ -36,6 +54,12 @@ namespace SofaUnity
         /// Booleen to activate sofa message handler
         public bool CatchSofaMessages = true;
 
+        /// Booleen to start Sofa simulation on Play
+        //public bool StartOnPlay = true;
+
+        [SerializeField]
+        protected bool m_asyncSimulation = false;
+
         /// Parameter: Vector representing the gravity force.
         [SerializeField]
         protected Vector3 m_gravity = new Vector3(0f, -9.8f, 0f);
@@ -49,6 +73,39 @@ namespace SofaUnity
         //////      SofaContext accessors      /////
         ////////////////////////////////////////////
 
+        /// Getter of current Sofa Context API, @see m_impl
+        public SofaContextAPI GetSofaAPI()
+        {
+            if (m_impl == null)
+                Init();
+
+            if (m_impl == null) // still null
+            {
+                Debug.LogError("Error: SofaContext has not be created. method getSimuContext return IntPtr.Zero");
+                return null;
+            }
+            return m_impl;
+        }
+
+#if SofaUnityEngine
+        /// getter to the \sa PluginManager m_pluginMgr
+        public PluginManagerInterface PluginManagerInterface
+        {
+            get { return m_pluginMgr; }
+        }
+
+        /// getter to the \sa SofaDAGNodeManager m_nodeGraphMgr
+        public SofaDAGNodeManager NodeGraphMgr
+        {
+            get { return m_nodeGraphMgr; }
+        }
+
+        /// getter to the \sa SofaGraphicAPI m_graphicAPI
+        public SofaGraphicAPI SofaGraphicAPI
+        {
+            get { return m_graphicAPI; }
+        }
+#endif
 
         /// getter to the \sa SceneFileManager m_sceneFileMgr
         public SceneFileManager SceneFileMgr
@@ -65,8 +122,8 @@ namespace SofaUnity
                 if (m_gravity != value)
                 {
                     m_gravity = value;
-                    if (m_renderer != null)
-                        m_renderer.setGravity(m_gravity);
+                    if (m_impl != null)
+                        m_impl.setGravity(m_gravity);
                 }
             }
         }
@@ -81,8 +138,8 @@ namespace SofaUnity
                 if (m_timeStep != value && value > 0.0f)
                 {
                     m_timeStep = value;
-                    if (m_renderer != null)
-                        m_renderer.timeStep = m_timeStep;
+                    if (m_impl != null)
+                        m_impl.timeStep = m_timeStep;
                 }
             }
         }
@@ -151,9 +208,9 @@ namespace SofaUnity
             if (m_log)
             {
                 if (Application.isPlaying)
-                    Debug.Log("#### SofaContext is playing ");
+                    Debug.Log("#### SofaContext is in Playing Mode.");
                 else
-                    Debug.Log("#### SofaContext is editor ");
+                    Debug.Log("#### SofaContext is in Editor Mode.");
             }
 
             this.gameObject.tag = "GameController";
@@ -168,11 +225,22 @@ namespace SofaUnity
             if (m_log)
                 Debug.Log("SofaContext::OnDestroy stop called.");
 
-            if (m_renderer != null)
+            if (m_impl != null)
             {
-                m_renderer.stop();
-                m_renderer.unload();
-                m_renderer.Dispose();
+                if (m_log)
+                    Debug.Log("SofaContext::OnDestroy stop now.");
+
+                if (isMsgHandlerActivated)
+                {
+                    m_impl.activateMessageHandler(false);
+                    isMsgHandlerActivated = false;
+                }
+
+                m_impl.stop();
+
+                m_impl.unload();
+
+                m_impl.Dispose();
             }
         }
 
@@ -186,11 +254,19 @@ namespace SofaUnity
             // Call the init method to create the Sofa Context
             Init();
 
-            if (m_renderer == null)
+            if (m_impl == null)
             {
                 this.enabled = false;
                 this.gameObject.SetActive(false);
                 return;
+            }
+        }
+
+        public void ResetSofa()
+        {
+            if (m_impl != null)
+            {
+                m_impl.reset();
             }
         }
 
@@ -201,25 +277,53 @@ namespace SofaUnity
             if (m_log)
                 Debug.Log("## SofaContext ## init ");
 
-            // Todo create context
             // Check and get the Sofa context
-            if (m_renderer == null)
-            {
-                Debug.Log("## create m_renderer");
-                m_renderer = new SofaUnityRenderer();
-                m_renderer.m_sofaContext = this;
+            if (m_impl == null) {
+                if (m_log)
+                    Debug.Log("## create SofaContextAPI");
+                m_impl = new SofaContextAPI();
             }
 
-            if (m_renderer == null)
+            if (m_impl == null)
             {
-                Debug.LogError("Error while creating SofaUnityRenderer");
+                Debug.LogError("Error while creating SofaContextAPI");
                 return;
             }
 
             DoCatchSofaMessages();
 
+#if SofaUnityEngine
+            SofaComponentFactory.InitBaseFactoryType();
+
+            // Create the NodeMgr
+            if (m_nodeGraphMgr == null)
+                m_nodeGraphMgr = new SofaDAGNodeManager(this, m_impl);
+            else // TODO make this serializable might help for custom simulation in futur.
+                Debug.LogWarning("## m_nodeGraphMgr already created...");
+
+            // Create the GraphicAPI
+            if (m_graphicAPI == null)
+                m_graphicAPI = new SofaGraphicAPI();
+            else 
+                Debug.LogWarning("## m_graphicAPI already created...");
+
+            // Craete Plugin Mgr. // TODO: Need to connect that with the scene loading
+            if (m_pluginMgr == null)
+                m_pluginMgr = new PluginManagerInterface(m_impl);
+            else
+                m_pluginMgr.SetSofaContextAPI(m_impl);
+
+            // Load SOFA plugins
+            m_pluginMgr.LoadPlugins();
+#elif SofaUnityRenderer
+            if (m_renderer == null)
+            {
+                Debug.Log("## create m_renderer");
+                m_renderer = new SofaUnityRenderer(this);
+            }
+#endif
             // start sofa instance
-            m_renderer.start();
+            m_impl.start();
 
             // Create SOFA scene file manager
             if (m_sceneFileMgr == null)
@@ -227,15 +331,27 @@ namespace SofaUnity
             else
                 m_sceneFileMgr.SetSofaContext(this);
 
-            // Todo create SOFAVisualModel
-            if (!Application.isPlaying)
+
+#if SofaUnityEngine
+            // If already has a scene, reconnect it in DAGNode mgr
+            SofaDAGNode rootNode = this.gameObject.GetComponent<SofaDAGNode>();
+            if (rootNode == null) // first creation
+                m_nodeGraphMgr.LoadNodeGraph();
+            else
+            {
+                // reconnect the full graph
+                ReconnectSofaScene();
+            }
+#elif SofaUnityRenderer
+            if (m_renderer.m_visualModels == null)
                 m_renderer.createScene();
             else
                 ReconnectSofaScene();
-            
+#endif
+
             // set gravity and timestep if changed in editor
-            m_renderer.timeStep = m_timeStep;
-            m_renderer.setGravity(m_gravity);
+            m_impl.timeStep = m_timeStep;
+            m_impl.setGravity(m_gravity);
 
             // Check message form SOFA side at end of Init
             DoCatchSofaMessages();
@@ -253,13 +369,13 @@ namespace SofaUnity
         // Update is called once per fix frame
         void Update()
         {
-            // log sofa messages
-            //DoCatchSofaMessages();
-
             // only if scene is playing or if sofa is running
             if (Application.isPlaying == false) return;
 
-            UpdateImplSync();
+            if (m_asyncSimulation)
+                UpdateImplASync();
+            else
+                UpdateImplSync();
 
             //if (Time.time > nextFPSUpdate && m_impl != null)
             //{
@@ -267,6 +383,7 @@ namespace SofaUnity
             //    SimulationFPS = m_impl.GetSimulationFPS();
             //}
 
+            // log sofa messages
             DoCatchSofaMessages();
         }
                 
@@ -280,10 +397,21 @@ namespace SofaUnity
                 nextUpdate += m_timeStep;
 
                 m_renderer.step();
+
+#if SofaUnityEngine
+                if (m_nodeGraphMgr != null)
+                    m_nodeGraphMgr.PropagateSetDirty(true);
+#elif SofaUnityRenderer
+                m_renderer.step();
+#endif
             }
         }
 
-        
+        protected void UpdateImplASync()
+        {
+
+        }
+
 
         /// Method to load a filename and create GameObject per Sofa object found.
         public void LoadSofaScene()
@@ -295,20 +423,25 @@ namespace SofaUnity
                 Debug.Log("## SofaContext ## loadFilename: " + m_sceneFileMgr.AbsoluteFilename());
 
             // load scene file in SOFA
-            if (m_renderer == null)
+            if (m_impl == null)
             {
                 Debug.LogError("m_impl is null");
                 return;
             }
 
-            m_renderer.loadScene(m_sceneFileMgr.AbsoluteFilename());
+            m_impl.loadScene(m_sceneFileMgr.AbsoluteFilename());
 
-            // Retrieve current timestep and gravity
-            m_timeStep = m_renderer.timeStep;
-            m_gravity = m_renderer.getGravity();
-
+#if SofaUnityEngine
+            // recreate node hiearchy in unity
+            m_nodeGraphMgr.LoadNodeGraph();
+#elif SofaUnityRenderer
             // load all visual models
             m_renderer.createScene();
+#endif
+
+            // Retrieve current timestep and gravity
+            m_timeStep = m_impl.timeStep;
+            m_gravity = m_impl.getGravity();
 
             DoCatchSofaMessages();
         }
@@ -321,21 +454,31 @@ namespace SofaUnity
 
             // load scene file in SOFA
             if (m_sceneFileMgr.SceneFilename.Length != 0)
-                m_renderer.loadScene(m_sceneFileMgr.AbsoluteFilename());
+                m_impl.loadScene(m_sceneFileMgr.AbsoluteFilename());
 
             // Do not retrieve timestep of gravity in case it has been changed in editor
 
             // re-create objects after scene loading and before graph reconnection
+#if SofaUnityEngine
+            // reconnect node hiearchy in unity
+            m_nodeGraphMgr.ReconnectNodeGraph();
+#elif SofaUnityRenderer
             m_renderer.Reconnect();
+#endif
 
             DoCatchSofaMessages();
         }
 
         public void ClearSofaScene()
         {
-            m_renderer.stop();
-            m_renderer.unload();
-            m_renderer.start();
+            m_impl.stop();
+            m_impl.unload();
+#if SofaUnityEngine
+            m_nodeGraphMgr.LoadNodeGraph();
+#elif SofaUnityRenderer
+
+#endif
+            m_impl.start();
         }
 
         private bool isMsgHandlerActivated = false;
@@ -347,18 +490,18 @@ namespace SofaUnity
             // first time activated
             if (CatchSofaMessages && !isMsgHandlerActivated)
             {
-                m_renderer.activateMessageHandler(true);
+                m_impl.activateMessageHandler(true);
                 isMsgHandlerActivated = true;
             }
             else if (!CatchSofaMessages && isMsgHandlerActivated)
             {
-                m_renderer.activateMessageHandler(false);
+                m_impl.activateMessageHandler(false);
                 isMsgHandlerActivated = false;
             }
 
             if (isMsgHandlerActivated)
             {
-                m_renderer.DisplayMessages();
+                m_impl.DisplayMessages();
             }
         }
 
