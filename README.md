@@ -20,7 +20,7 @@ SOFA-Renderer asset for Unity
 As soon as the **SofaUnity-Renderer.unitypackage** is loaded inside your Unity project, you will have access to a top menu pannel called `SofaUnity`. 
 
 <p align="center">
-	<img src="https://github.com/InfinyTech3D/SofaUnity-Renderer/blob/main/Doc/img/menu_01.jpg" style="width:100px;"/>
+	<img src="https://github.com/InfinyTech3D/SofaUnity-Renderer/blob/main/Doc/img/menu_01.jpg" style="width:250px;"/>
 </p>
 
 
@@ -29,7 +29,7 @@ This pannel allows to **load a SOFA scene** in only 2 steps:
 This component correspond to the SOFA world 3D frame and provides a simple API to load a SOFA scene, change the Time Stepping and the Gravity. 
 
 <p align="center">
-	<img src="https://github.com/InfinyTech3D/SofaUnity-Renderer/blob/main/Doc/img/menu_02.jpg" style="width:250px;"/>
+	<img src="https://github.com/InfinyTech3D/SofaUnity-Renderer/blob/main/Doc/img/menu_02.jpg" style="width:400px;"/>
 </p>
 
 2. **Click on the button** ```Load SOFA Scene (.scn) file```  to load a SOFA scene. This will create a `GameObject` with a `Unity MeshFilter` for each SOFA ```VisualModel```
@@ -48,10 +48,10 @@ They are available in the folder [/Scenes/Demos/](https://github.com/InfinyTech3
 
 Here are a some results of the integration:
 <p align="center">
-	<img src="https://github.com/InfinyTech3D/SofaUnity-Renderer/blob/main/Doc/img/interface_01.jpg" style="width:500px;"/>
+	<img src="https://github.com/InfinyTech3D/SofaUnity-Renderer/blob/main/Doc/img/interface_01.jpg" style="width:1000px;"/>
 </p>
 <p align="center">
-	<img src="https://github.com/InfinyTech3D/SofaUnity-Renderer/blob/main/Doc/img/interface_02.jpg" style="width:500px;"/>
+	<img src="https://github.com/InfinyTech3D/SofaUnity-Renderer/blob/main/Doc/img/interface_02.jpg" style="width:1000px;"/>
 </p>
 
 ## License
