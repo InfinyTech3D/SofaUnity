@@ -2,11 +2,11 @@
 
 ## Description
 This repository is a **Unity3D package allowing to load and visualize a SOFA simulation scene inside Unity3D**. 
-Every SOFA `VisualModel` components from the loaded simulation will be rendered inside the Unity 3D scene, allowing therefor to use all Unity material and other assets on top of it.
-SOFA simulation will be performed as soon as Unity is playing.
+Every SOFA `VisualModel` components from the loaded simulation will be rendered inside Unity3D engine, allowing therefor to use all it's Material and other assets on top of it.
 
-**<u>Important Note:</u>  This version allows only to change the Gravity and the TimeStep of the SOFA simulation and only the `VisualModel` are mapped into Unity3D. 
-A full integration of SOFA components with a two-way communication can be requested here: https://infinytech3d.com/sapapi-unity3d/**
+**<u>Important Note:</u> This version allows only to change the Gravity and the TimeStep of the SOFA simulation and only the `VisualModel` are mapped into Unity3D.**
+
+**A full integration of SOFA components with a two-way communication can be requested here: https://infinytech3d.com/sapapi-unity3d/**
 
 ### Compatibility:
 - Unity version > 2020.3.x
@@ -48,6 +48,7 @@ This component correspond to the SOFA world 3D frame and provides a simple API t
 	<img src="https://github.com/InfinyTech3D/SofaUnity-Renderer/blob/main/Doc/img/menu_03.jpg"/>
 </p>
 
+SOFA simulation will be performed as soon as Unity is playing.
 
 ## Examples
 Three examples corresponding to SOFA Demo folder are provided inside the package:
