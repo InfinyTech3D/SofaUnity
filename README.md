@@ -1,14 +1,17 @@
 # SOFAUnity-Renderer
 
 ## Description
-This repository is a **Unity3D package allowing to load and visualize a SOFA simulation scene inside Unity3D**. 
+This repository is a Unity3D package allowing to load and visualize a SOFA simulation scene inside Unity3D. 
 Every SOFA `VisualModel` components from the loaded simulation will be rendered inside Unity3D engine, allowing therefor to use all it's Material and other assets on top of it.
 
-**<u>Important Note:</u> This version allows only to change the Gravity and the TimeStep of the SOFA simulation and only the `VisualModel` are mapped into Unity3D.**
+<table>
+<tr>
+    <td><strong>Important:</strong> This version allows only to change the Gravity and the TimeStep of the SOFA simulation and only the `VisualModel` are mapped into Unity3D. <br>A <strong>full integration of SOFA</strong> components with a two-way communication can be requested here:<br> https://infinytech3d.com/sapapi-unity3d/</td>
+</tr>
+</table>
 
-**A full integration of SOFA components with a two-way communication can be requested here: https://infinytech3d.com/sapapi-unity3d/**
 
-### Compatibility:
+#### Compatibility:
 - Unity version > 2020.3.x
 - SOFA > 22.06
 - Only tested on Windows
@@ -17,17 +20,17 @@ Every SOFA `VisualModel` components from the loaded simulation will be rendered 
 1. Install Unity engine version > 2020.3.x
 2. (optionnal) Create a new project
 
-### Installation from source:
+#### Installation from source:
 3. clone the repo inside your unity project: 
 ```git clone git@github.com:InfinyTech3D/SofaUnity-Renderer.git /myUnityProject/Assets/SofaUnity```
-5. Copy the **SOFA dll libraries** inside: ```/myUnityProject/Assets/SofaUnity/Plugins/Native/x64```  (for windows)
+5. Copy the SOFA dll libraries inside: ```/myUnityProject/Assets/SofaUnity/Plugins/Native/x64```  (for windows)
 
-### Installation from asset:
-3. install the unity asset: In Unity3D Editor, use ```Assets -> Import Package -> Custom Package``` and load the package **SofaUnity-Renderer.unitypackage**
+#### Installation from asset:
+3. install the unity asset: In Unity3D Editor, use ```Assets -> Import Package -> Custom Package``` and load the package `SofaUnity-Renderer.unitypackage`
 
 
 ## Usage
-As soon as the **SofaUnity-Renderer.unitypackage** is loaded inside your Unity project, you will have access to a top menu panel called `SofaUnity`. 
+As soon as the `SofaUnity-Renderer.unitypackage` is loaded inside your Unity project, you will have access to a top menu panel called `SofaUnity`. 
 
 <p align="center">
 	<img src="https://github.com/InfinyTech3D/SofaUnity-Renderer/blob/main/Doc/img/menu_01.jpg" style="width:400px;"/>
