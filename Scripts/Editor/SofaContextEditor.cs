@@ -42,7 +42,7 @@ public class SofaContextEditor : Editor
         {
             if (m_SofaLogo == null)
             {
-                Object logo = Resources.Load("icons/sofa_sprite");
+                Object logo = Resources.Load("icons/sofa_sprite_small");
                 if (logo == null)
                     Debug.LogError("logo not found");
 
@@ -62,7 +62,7 @@ public class SofaContextEditor : Editor
         // Add Sofa Logo
         GUIStyle logoGUIStyle = new GUIStyle();
         logoGUIStyle.border = new RectOffset(0, 0, 0, 0);
-        EditorGUILayout.LabelField(new GUIContent(SofaLogo), GUILayout.MinHeight(100.0f), GUILayout.ExpandWidth(true));
+        EditorGUILayout.LabelField(new GUIContent(SofaLogo), GUILayout.MinHeight(200.0f), GUILayout.ExpandWidth(true));
 
         // Add field for gravity
         context.Gravity = EditorGUILayout.Vector3Field("Gravity", context.Gravity);
