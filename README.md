@@ -6,7 +6,7 @@ Every SOFA `VisualModel` components from the loaded simulation will be rendered 
 
 <table>
 <tr>
-    <td><strong>Important:</strong> This version allows only to change the Gravity and the TimeStep of the SOFA simulation and only the `VisualModel` are mapped into Unity3D. <br>A <strong>full integration of SOFA</strong> components with a two-way communication can be requested here:<br> https://infinytech3d.com/sapapi-unity3d/</td>
+    <td style="text-align: center; vertical-align: middle;"><strong>Important:</strong> This version allows only to change the Gravity and the TimeStep of the SOFA simulation and only the <i>VisualModel</i> are mapped into Unity3D. <br>A <strong>full integration of SOFA</strong> components with a two-way communication can be requested here:<br> https://infinytech3d.com/sapapi-unity3d/</td>
 </tr>
 </table>
 
