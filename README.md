@@ -1,8 +1,9 @@
 # SOFAUnity-Renderer
 
 ## Description
-This repository is a Unity3D package allowing to load and visualize a SOFA simulation scene inside Unity3D. 
-Every SOFA `VisualModel` components from the loaded simulation will be rendered inside Unity3D engine, allowing therefor to use all it's Material and other assets on top of it.
+This repository is a **Unity3D package allowing to render a SOFA simulation scene inside Unity3D**. 
+All SOFA `VisualModel` components present in the loaded simulation will be rendered inside Unity3D engine as `GameObject` with a `MeshFilter`.  Thus, it is possible to apply Unity3D Materials to each visual model and also to combine Unity3D assets with the SOFA simulation.
+<br>
 
 <table>
 <tr>
@@ -13,7 +14,7 @@ Every SOFA `VisualModel` components from the loaded simulation will be rendered 
 
 #### Compatibility:
 - Unity version > 2020.3.x
-- SOFA > 22.06
+- SOFA version >= 22.12 with SofaPhysicsAPI 
 - Only tested on Windows
 
 ## Installation guide
@@ -69,6 +70,8 @@ Here are a some results of the integration:
 </p>
 
 ## License
-In discussion
+This Unity asset is under GPL license. 
+<br>
+Other license formats can be provided for commercial use. For more information check [InfinyTech3D license page](https://infinytech3d.com/licenses/).
 
 
