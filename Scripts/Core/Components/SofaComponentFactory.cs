@@ -138,7 +138,6 @@ namespace SofaUnity
             }
             catch (KeyNotFoundException)
             {
-                Debug.LogWarning("Component type not handled: " + componentType + " component name: " + nameId);
                 sofaCompo = compoGO.AddComponent<SofaComponent>();
             }
 
