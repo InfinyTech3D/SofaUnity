@@ -110,6 +110,9 @@ namespace SofaUnity
             Func<GameObject, SofaBaseComponent> visualCompoMethod = (gameO) => null;
             s_componentFactory.Add("SofaVisualComponent", visualCompoMethod);
 
+            Func<GameObject, SofaBaseComponent> DefaultVisualManagerLoop = (gameO) => null;
+            s_componentFactory.Add("DefaultVisualManagerLoop", DefaultVisualManagerLoop);
+
             Func<GameObject, SofaBaseComponent> animLoopMethod = (gameO) => gameO.AddComponent<SofaAnimationLoop>();
             s_componentFactory.Add("SofaAnimationLoop", animLoopMethod);
 
