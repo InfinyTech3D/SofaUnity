@@ -358,7 +358,7 @@ namespace SofaUnity
 
                 if (!found)
                 {
-                    Debug.LogWarning("Component: " + compoName + " not found under DAGNode. Will try to add it under node: " + UniqueNameId);
+                    // Component has not be found in the current unity scene. Will try to add it if it was added after scene loading
                     string baseType = m_impl.GetBaseComponentType(compoName);
                     if (baseType.Contains("Error"))
                     {
@@ -367,6 +367,7 @@ namespace SofaUnity
                     else
                     {
                         SofaLog("############## CREATE SofaBaseComponent - " + compoName + " " + baseType);
+                        // Use the Sofa component factory to create it. Warning will be fired only if factory failed to create object. Note that Some component are ignored.
                         SofaBaseComponent compo = SofaComponentFactory.CreateSofaComponent(compoName, baseType, this, this.gameObject);
                         if (compo != null)
                         {
