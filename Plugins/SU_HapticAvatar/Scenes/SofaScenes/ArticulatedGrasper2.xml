@@ -1,0 +1,159 @@
+<Node name="Group"> 
+    <HapticAvatar_GrasperDeviceController name="HA_Device2" portName="//./COM5" 
+    iboxController="@HAIBox" portalManager="@portalMgr" forceFeedBack="@Tool2/Articulation/LCPFF2"/>
+
+    <Node name="Tool2">
+        <MechanicalObject name="bati" template="Rigid3d" position="60 0 250  0 0 0 1" rotation="-20 0 0"/>
+        
+        <Node name="Articulation">
+            <EulerImplicitSolver name="cg_odesolver"  />
+            <SparseLUSolver name="linear solver" tolerance="1e-09" />  
+            
+            <MechanicalObject name="Articulations" template="Vec1d" position="0 0 0 0 0 0" rest_position="@../../HA_Device2.toolPosition"/>
+            <RestShapeSpringsForceField points="0 1 2 3 4 5" stiffness="600000000 600000000 600000000 600000 600000000 600000000" printLog="false"/>
+            <UniformMass totalMass="1"/>
+            <LinearSolverConstraintCorrection />
+            <LCPForceFeedback name="LCPFF2" template="Vec1d" activate="true" forceCoef="0.0005"/>
+            
+            <Node name="Models">
+                <MechanicalObject template="Rigid3d" name="DOFs" 
+                position="0 0 0  0 0 0 1  
+                0 0 0  0 0 0 1  
+                0 0 0  0 0 0 1  
+                0 0 0  0 0 0 1  
+                0 0 0  0 0 0 1
+                0 0 0  0 0 0 1" />
+                <ArticulatedSystemMapping input1="@../Articulations" input2="@../../bati" output="@DOFs" />
+                
+                <Node name="Device_base">
+                    <MeshObjLoader filename="./mesh/Haptic_device_base.obj"  name="loader"/>
+                    <MechanicalObject template="Vec3d" position="@loader.position" />
+                    <MeshTopology src="@loader"/>
+
+                    <RigidMapping input="@.." output="@." index="0"/>
+                    <Node name="Visu">
+                        <OglModel name="Visual" src="@../loader" />
+                        <IdentityMapping />
+                    </Node>
+                </Node>
+                
+                
+                <Node name="Device_head">
+                    <MeshObjLoader filename="./mesh/Haptic_device_head.obj"  name="loader"/>
+                    <MechanicalObject template="Vec3d" position="@loader.position" />
+                    <MeshTopology src="@loader"/>
+                    <RigidMapping input="@.." output="@." index="1"/>
+                    <Node name="Visu">
+                        <OglModel name="Visual" src="@../loader" />
+                        <IdentityMapping />
+                    </Node>
+                </Node>
+                
+                <Node name="Device_portal">
+                    <MeshObjLoader filename="./mesh/Haptic_device_portal.obj"  name="loader"/>
+                    <MechanicalObject template="Vec3d" position="@loader.position" />
+                    <MeshTopology src="@loader"/>
+                    <RigidMapping input="@.." output="@." index="2"/>
+                    <Node name="Visu">
+                        <OglModel name="Visual" src="@../loader" />
+                        <IdentityMapping />
+                    </Node>
+                </Node>
+                
+                <Node name="Grasper_shaft_visu">
+                    <MeshObjLoader filename="./mesh/Haptic_grasper_shaft.obj"  name="loader"/>
+                    <OglModel name="Visual" src="@loader" />
+                    <RigidMapping input="@.." output="@." index="3"/>
+                </Node>
+                
+                <Node name="Grasper_shaft_collision">
+                    <MeshObjLoader filename="./mesh/Haptic_grasper_shaft_collision.obj"  name="loader"/>
+                    <MechanicalObject template="Vec3d" position="@loader.position" />
+                    <MeshTopology src="@loader"/>
+                    
+                    <TriangleCollisionModel group="0"/>
+                    <LineCollisionModel group="0"/>
+                    <PointCollisionModel group="0"/>
+                    <RigidMapping input="@.." output="@." index="3"/>
+                </Node>
+                
+                
+                <Node name="Grasper_jaws_up_visu">
+                    <MeshObjLoader filename="./mesh/Haptic_grasper_jaws_up.obj"  name="loader"/>
+                    <OglModel name="Visual" src="@loader" />
+                    <RigidMapping input="@.." output="@." index="5"/>
+                </Node>
+                
+                <Node name="Grasper_jaws_up_collision">
+                    <MeshObjLoader filename="./mesh/Haptic_grasper_jaws_up_collision.obj"  name="loader"/>
+                    <MechanicalObject template="Vec3d" position="@loader.position" />
+                    <MeshTopology src="@loader"/>
+                    
+                    <TriangleCollisionModel group="0"/>
+                    <LineCollisionModel group="0"/>
+                    <PointCollisionModel group="0"/>
+                    <RigidMapping input="@.." output="@." index="5"/>
+                </Node>
+
+                
+                <Node name="Grasper_jaws_down_visu">
+                    <MeshObjLoader filename="./mesh/Haptic_grasper_jaws_down.obj"  name="loader"/>
+                    <OglModel name="Visual" src="@loader" />
+                    <RigidMapping input="@.." output="@." index="4"/>
+                </Node>
+                
+                <Node name="Grasper_jaws_down_collision">
+                    <MeshObjLoader filename="./mesh/Haptic_grasper_jaws_down_collision.obj"  name="loader"/>
+                    <MechanicalObject template="Vec3d" position="@loader.position" />
+                    <MeshTopology src="@loader"/>
+                    
+                    <TriangleCollisionModel group="0"/>
+                    <LineCollisionModel group="0"/>
+                    <PointCollisionModel group="0"/>
+                    <RigidMapping input="@.." output="@." index="4"/>
+                </Node>
+
+            </Node>
+            
+            <ArticulatedHierarchyContainer />
+            <Node name="articulationCenters">
+                <Node name="articulationCenter1">
+                    <ArticulationCenter parentIndex="0" childIndex="1" posOnParent="0 0 0" posOnChild="0 0 0" articulationProcess="0" />
+                    <Node name="articulations1">
+                        <Articulation translation="0" rotation="1" rotationAxis="0 1 0" articulationIndex="0" />
+                    </Node>
+                </Node>
+                <Node name="articulationCenter2">
+                    <ArticulationCenter parentIndex="1" childIndex="2" posOnParent="0 0 0" posOnChild="0 0 0" articulationProcess="0" />
+                    <Node name="articulations2">
+                        <Articulation translation="0" rotation="1" rotationAxis="1 0 0" articulationIndex="1" />
+                    </Node>
+                </Node>
+                
+                <Node name="articulationCenter3">
+                    <ArticulationCenter parentIndex="2" childIndex="3" posOnParent="0 9 0" posOnChild="0 9 0" articulationProcess="0" />
+                    <Node name="articulations3">
+                        <Articulation translation="0" rotation="1" rotationAxis="0 0 1" articulationIndex="2" />
+                        <Articulation translation="1" rotation="0" rotationAxis="0 0 1" articulationIndex="3" />
+                    </Node>
+                </Node>
+                
+                <Node name="articulationCenter4">
+                    <ArticulationCenter parentIndex="3" childIndex="4" posOnParent="0 0 -20" posOnChild="0 0 -20" articulationProcess="0" />
+                    <Node name="articulations4">
+                        <Articulation translation="0" rotation="1" rotationAxis="0 1 0" articulationIndex="4" />                        
+                    </Node>
+                </Node>
+                
+                <Node name="articulationCenter5">
+                    <ArticulationCenter parentIndex="3" childIndex="5" posOnParent="0 0 -20" posOnChild="0 0 -20" articulationProcess="0" />
+                    <Node name="articulations5">
+                        <Articulation translation="0" rotation="1" rotationAxis="0 1 0" articulationIndex="5" />                        
+                    </Node>
+                </Node>
+
+            </Node>
+        </Node>
+
+    </Node>
+</Node>    
