@@ -148,7 +148,16 @@ public class SofaContextEditor : Editor
         else
         {
             int nbrPlugin = EditorGUILayout.IntField("Plugins Count", context.PluginManagerInterface.GetNbrPlugins());
-        }      
+            if (GUILayout.Button("Save Plugin Config"))
+            {
+                context.PluginManagerInterface.SaveEnabledPlugins();
+            }
+        }
+
+        if (GUILayout.Button("Clear saved plugins"))
+        {
+            context.PluginManagerInterface.ClearSavedPlugin();
+        }        
     }
 
 
