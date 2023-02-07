@@ -10,7 +10,6 @@ class InitHaplyRoboticsPlugin
     [InitializeOnLoadMethod]
     static void RegisterPluginDll()
     {
-        SofaUnity.PluginManager.Instance.AddPlugin("SofaHaptics");
         SofaUnity.PluginManager.Instance.AddPlugin("SofaHaplyRobotics");
     }
 #endif

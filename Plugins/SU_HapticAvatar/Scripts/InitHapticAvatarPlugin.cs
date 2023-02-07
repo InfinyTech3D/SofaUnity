@@ -10,8 +10,6 @@ class InitHapticAvatarPlugin
     [InitializeOnLoadMethod]
     static void RegisterPluginDll()
     {
-        SofaUnity.PluginManager.Instance.AddPlugin("SofaGeneralRigid");
-        SofaUnity.PluginManager.Instance.AddPlugin("SofaHaptics");
         SofaUnity.PluginManager.Instance.AddPlugin("SofaHapticAvatar");
     }
 #endif
