@@ -98,8 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: 7450b8288a534c34886154a5483ae92b,
-    type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 7450b8288a534c34886154a5483ae92b, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -124,7 +123,34 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &209678913
+--- !u!21 &17552781
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Legacy Shaders/Diffuse
+  m_Shader: {fileID: 7, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
+--- !u!1 &95964724
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -132,115 +158,62 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 209678914}
-  - component: {fileID: 209678915}
+  - component: {fileID: 95964726}
+  - component: {fileID: 95964725}
   m_Layer: 0
-  m_Name: SofaNode - Particles
+  m_Name: UniformMass  -  M1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &209678914
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 209678913}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2120699196}
-  - {fileID: 1180854175}
-  - {fileID: 1371429831}
-  - {fileID: 416894463}
-  - {fileID: 1307360879}
-  - {fileID: 1027572727}
-  - {fileID: 453266532}
-  m_Father: {fileID: 827444748}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &209678915
+--- !u!114 &95964725
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 209678913}
+  m_GameObject: {fileID: 95964724}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbd514e8b1708b348bb1987be968669c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0271f7ab21246e7409de53c72f809575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_uniqueNameId: 1@Particles
-  m_displayName: Particles
-  m_sofaContext: {fileID: 827444747}
+  m_uniqueNameId: Particles@UniformMass@M1
+  m_displayName: M1
+  m_sofaContext: {fileID: 184558545}
   m_log: 0
-  m_parentNodeName: root
-  m_sofaComponents:
-  - {fileID: 2120699195}
-  - {fileID: 1180854174}
-  - {fileID: 1371429830}
-  - {fileID: 416894462}
-  - {fileID: 1307360876}
-  - {fileID: 1027572726}
-  m_hasTransformEngine: 1
-  m_translation: {x: 0, y: 0, z: 0}
-  m_isTranslationCustom: 0
-  m_rotation: {x: 0, y: 0, z: 0}
-  m_isRotationCustom: 0
-  m_scale: {x: 1, y: 1, z: 1}
-  m_isScaleCustom: 0
---- !u!1 &416894461
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 416894463}
-  - component: {fileID: 416894462}
-  m_Layer: 0
-  m_Name: SpatialGridContainer  -  spatialGridContainer1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &416894462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 416894461}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e88f85a8ada110442a5b5aad21997e9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_uniqueNameId: Particles@SpatialGridContainer@spatialGridContainer1
-  m_displayName: spatialGridContainer1
-  m_sofaContext: {fileID: 827444747}
-  m_log: 0
-  m_ownerNode: {fileID: 209678915}
-  m_baseComponentType: 23
-  m_componentType: SpatialGridContainer
+  m_ownerNode: {fileID: 1476066374}
+  m_baseComponentType: 17
+  m_componentType: UniformMass
   m_dataArchiver:
     m_names:
     - printLog
     - listening
-    - cellWidth
-    - autoUpdate
-    - sortPoints
+    - isCompliance
+    - rayleighStiffness
+    - separateGravity
+    - rayleighMass
+    - vertexMass
+    - totalMass
+    - filename
+    - compute_mapping_inertia
+    - localRange
+    - indices
+    - preserveTotalMass
     m_types:
+    - bool
     - bool
     - bool
     - d
     - bool
+    - d
+    - d
+    - d
+    - string
+    - bool
+    - Vec2i
+    - vector<I>
     - bool
     m_dataArray:
     - id: 0
@@ -248,16 +221,34 @@ MonoBehaviour:
     - id: 2
     - id: 3
     - id: 4
+    - id: 5
+    - id: 6
+    - id: 7
+    - id: 8
+    - id: 9
+    - id: 10
+    - id: 11
+    - id: 12
   m_linkArchiver:
-    m_links: []
+    m_links:
+    - m_owner: {fileID: 95964725}
+      m_linkName: mechanicalStates
+      m_linkPath: MModel
+    - m_owner: {fileID: 95964725}
+      m_linkName: mstate
+      m_linkPath: MModel
+    - m_owner: {fileID: 95964725}
+      m_linkName: topology
+      m_linkPath: con
     m_slaveLinks: []
-  m_showData: 1
+  myTab: 
+  m_MyVector: {x: 20, y: 1, z: 0}
   references:
     version: 1
     00000000:
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 416894462}
+        m_owner: {fileID: 95964725}
         m_dataName: printLog
         m_dataType: bool
         m_isReadOnly: 0
@@ -271,7 +262,7 @@ MonoBehaviour:
     00000001:
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 416894462}
+        m_owner: {fileID: 95964725}
         m_dataName: listening
         m_dataType: bool
         m_isReadOnly: 0
@@ -283,11 +274,11 @@ MonoBehaviour:
         m_isVector: 0
         m_value: 0
     00000002:
-      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
+      type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 416894462}
-        m_dataName: cellWidth
-        m_dataType: double
+        m_owner: {fileID: 95964725}
+        m_dataName: isCompliance
+        m_dataType: bool
         m_isReadOnly: 0
         m_isEdited: 0
         m_isDirty: 0
@@ -295,13 +286,13 @@ MonoBehaviour:
         m_flag: 10
         m_isSupported: 1
         m_isVector: 0
-        m_value: 0.75
+        m_value: 0
     00000003:
-      type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
+      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 416894462}
-        m_dataName: autoUpdate
-        m_dataType: bool
+        m_owner: {fileID: 95964725}
+        m_dataName: rayleighStiffness
+        m_dataType: double
         m_isReadOnly: 0
         m_isEdited: 0
         m_isDirty: 0
@@ -313,8 +304,8 @@ MonoBehaviour:
     00000004:
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 416894462}
-        m_dataName: sortPoints
+        m_owner: {fileID: 95964725}
+        m_dataName: separateGravity
         m_dataType: bool
         m_isReadOnly: 0
         m_isEdited: 0
@@ -324,21 +315,135 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
---- !u!4 &416894463
+    00000005:
+      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 95964725}
+        m_dataName: rayleighMass
+        m_dataType: double
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: 0
+    00000006:
+      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 95964725}
+        m_dataName: vertexMass
+        m_dataType: double
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: 1
+    00000007:
+      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 95964725}
+        m_dataName: totalMass
+        m_dataType: double
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: 1
+    00000008:
+      type: {class: SofaStringData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 95964725}
+        m_dataName: filename
+        m_dataType: string
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 11
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: unused
+    00000009:
+      type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 95964725}
+        m_dataName: compute_mapping_inertia
+        m_dataType: bool
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: 0
+    0000000A:
+      type: {class: SofaVec2IntData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 95964725}
+        m_dataName: localRange
+        m_dataType: Vec2i
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: {x: -1, y: -1}
+        m_isUnsigned: 0
+    0000000B:
+      type: {class: SofaDataVectorInt, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 95964725}
+        m_dataName: indices
+        m_dataType: vector<I>
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 1
+        m_vecType: int
+        m_vecSize: 1
+    0000000C:
+      type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 95964725}
+        m_dataName: preserveTotalMass
+        m_dataType: bool
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: 0
+--- !u!4 &95964726
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 416894461}
+  m_GameObject: {fileID: 95964724}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 209678914}
-  m_RootOrder: 3
+  m_Father: {fileID: 1476066373}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &453266531
+--- !u!1 &184558543
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -346,46 +451,86 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 453266532}
-  - component: {fileID: 453266533}
+  - component: {fileID: 184558546}
+  - component: {fileID: 184558545}
+  - component: {fileID: 184558544}
   m_Layer: 0
-  m_Name: SofaParticlesModel  -  1@Particles
-  m_TagString: Untagged
+  m_Name: SofaContext
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &453266532
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 453266531}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 209678914}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &453266533
+--- !u!114 &184558544
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 453266531}
+  m_GameObject: {fileID: 184558543}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61151713a651366468248a6a949bee3d, type: 3}
+  m_Script: {fileID: 11500000, guid: bbd514e8b1708b348bb1987be968669c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_sofaMesh: {fileID: 2120699195}
-  m_particleSize: 0.5
-  m_particleMaterial: {fileID: 2100000, guid: 817fe68a77b87d84ea4f29ebde610551, type: 2}
-  m_pSystem: {fileID: 0}
-  m_nbrMax: 10000
+  m_uniqueNameId: root
+  m_displayName: root
+  m_sofaContext: {fileID: 184558545}
+  m_log: 0
+  m_parentNodeName: None
+  m_sofaComponents:
+  - {fileID: 1552045993}
+  m_hasTransformEngine: 0
+  m_translation: {x: 0, y: 0, z: 0}
+  m_isTranslationCustom: 0
+  m_rotation: {x: 0, y: 0, z: 0}
+  m_isRotationCustom: 0
+  m_scale: {x: 1, y: 1, z: 1}
+  m_isScaleCustom: 0
+--- !u!114 &184558545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184558543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fd615e119b7e54793f03d8e24065c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_pluginMgr:
+    m_savedPlugins:
+    - SofaSphFluid
+  m_sceneFileMgr:
+    m_hasScene: 1
+    m_filename: /SofaUnity/Scenes/SofaScenes/SPHParticleSink.scn
+  m_log: 0
+  IsSofaUpdating: 1
+  CatchSofaMessages: 1
+  StepbyStep: 0
+  m_asyncSimulation: 0
+  m_gravity: {x: 0, y: -10, z: 0}
+  m_timeStep: 0.01
+  breakerActivated: 0
+  m_objects: []
+  SimulationFPS: 0
+--- !u!4 &184558546
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184558543}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1552045994}
+  - {fileID: 1476066373}
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &473660582
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -417,79 +562,65 @@ PrefabInstance:
       propertyPath: m_SpotAngle
       value: 100
       objectReference: {fileID: 0}
-    - target: {fileID: 4559319322888466561, guid: f84f0ef099e69684fa3c4a431e397927,
-        type: 3}
+    - target: {fileID: 4559319322888466561, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 4559319322888466563, guid: f84f0ef099e69684fa3c4a431e397927,
-        type: 3}
+    - target: {fileID: 4559319322888466563, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 12cdf7504fc6ee1488532f67a0ebde3c, type: 2}
-    - target: {fileID: 4559319324350027217, guid: f84f0ef099e69684fa3c4a431e397927,
-        type: 3}
+    - target: {fileID: 4559319324350027217, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4559319324350027217, guid: f84f0ef099e69684fa3c4a431e397927,
-        type: 3}
+    - target: {fileID: 4559319324350027217, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4559319324350027217, guid: f84f0ef099e69684fa3c4a431e397927,
-        type: 3}
+    - target: {fileID: 4559319324350027217, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4559319324350027217, guid: f84f0ef099e69684fa3c4a431e397927,
-        type: 3}
+    - target: {fileID: 4559319324350027217, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4559319324350027217, guid: f84f0ef099e69684fa3c4a431e397927,
-        type: 3}
+    - target: {fileID: 4559319324350027217, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4559319324350027217, guid: f84f0ef099e69684fa3c4a431e397927,
-        type: 3}
+    - target: {fileID: 4559319324350027217, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4559319324350027217, guid: f84f0ef099e69684fa3c4a431e397927,
-        type: 3}
+    - target: {fileID: 4559319324350027217, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4559319324350027217, guid: f84f0ef099e69684fa3c4a431e397927,
-        type: 3}
+    - target: {fileID: 4559319324350027217, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4559319324350027217, guid: f84f0ef099e69684fa3c4a431e397927,
-        type: 3}
+    - target: {fileID: 4559319324350027217, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4559319324350027217, guid: f84f0ef099e69684fa3c4a431e397927,
-        type: 3}
+    - target: {fileID: 4559319324350027217, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4559319324350027217, guid: f84f0ef099e69684fa3c4a431e397927,
-        type: 3}
+    - target: {fileID: 4559319324350027217, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4559319324350027222, guid: f84f0ef099e69684fa3c4a431e397927,
-        type: 3}
+    - target: {fileID: 4559319324350027222, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
       propertyPath: m_Name
       value: demo_canvas
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
---- !u!1 &744113208
+--- !u!1 &703536118
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -497,53 +628,100 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 744113210}
-  - component: {fileID: 744113209}
+  - component: {fileID: 703536122}
+  - component: {fileID: 703536119}
+  - component: {fileID: 703536121}
+  - component: {fileID: 703536120}
   m_Layer: 0
-  m_Name: DefaultAnimationLoop  -  defaultAnimationLoop1
+  m_Name: SPHFluidForceField  -  SPHFluidForceField1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &744113209
+--- !u!114 &703536119
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 744113208}
+  m_GameObject: {fileID: 703536118}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3c67d96b8d166a49818dc88d50c4486, type: 3}
+  m_Script: {fileID: 11500000, guid: 5515e3f9a76f9054ea2f6a42fc598fcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_uniqueNameId: root@DefaultAnimationLoop@defaultAnimationLoop1
-  m_displayName: defaultAnimationLoop1
-  m_sofaContext: {fileID: 827444747}
+  m_uniqueNameId: Particles@SPHFluidForceField@SPHFluidForceField1
+  m_displayName: SPHFluidForceField1
+  m_sofaContext: {fileID: 184558545}
   m_log: 0
-  m_ownerNode: {fileID: 827444746}
-  m_baseComponentType: 0
-  m_componentType: DefaultAnimationLoop
+  m_ownerNode: {fileID: 1476066374}
+  m_baseComponentType: 13
+  m_componentType: SPHFluidForceField
   m_dataArchiver:
     m_names:
     - printLog
     - listening
+    - isCompliance
+    - rayleighStiffness
+    - radius
+    - mass
+    - pressure
+    - density
+    - viscosity
+    - surfaceTension
+    - kernelType
+    - pressureType
+    - viscosityType
+    - surfaceTensionType
+    - debugGrid
     m_types:
     - bool
+    - bool
+    - bool
+    - d
+    - d
+    - d
+    - d
+    - d
+    - d
+    - d
+    - i
+    - i
+    - i
+    - i
     - bool
     m_dataArray:
     - id: 0
     - id: 1
+    - id: 2
+    - id: 3
+    - id: 4
+    - id: 5
+    - id: 6
+    - id: 7
+    - id: 8
+    - id: 9
+    - id: 10
+    - id: 11
+    - id: 12
+    - id: 13
+    - id: 14
   m_linkArchiver:
-    m_links: []
+    m_links:
+    - m_owner: {fileID: 703536119}
+      m_linkName: mechanicalStates
+      m_linkPath: MModel
+    - m_owner: {fileID: 703536119}
+      m_linkName: mstate
+      m_linkPath: MModel
     m_slaveLinks: []
   references:
     version: 1
     00000000:
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 744113209}
+        m_owner: {fileID: 703536119}
         m_dataName: printLog
         m_dataType: bool
         m_isReadOnly: 0
@@ -557,7 +735,7 @@ MonoBehaviour:
     00000001:
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 744113209}
+        m_owner: {fileID: 703536119}
         m_dataName: listening
         m_dataType: bool
         m_isReadOnly: 0
@@ -568,128 +746,254 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
---- !u!4 &744113210
+    00000002:
+      type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 703536119}
+        m_dataName: isCompliance
+        m_dataType: bool
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: 0
+    00000003:
+      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 703536119}
+        m_dataName: rayleighStiffness
+        m_dataType: double
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: 0
+    00000004:
+      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 703536119}
+        m_dataName: radius
+        m_dataType: double
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: 0.7
+    00000005:
+      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 703536119}
+        m_dataName: mass
+        m_dataType: double
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: 1
+    00000006:
+      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 703536119}
+        m_dataName: pressure
+        m_dataType: double
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: 1000
+    00000007:
+      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 703536119}
+        m_dataName: density
+        m_dataType: double
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: 25
+    00000008:
+      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 703536119}
+        m_dataName: viscosity
+        m_dataType: double
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: 10
+    00000009:
+      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 703536119}
+        m_dataName: surfaceTension
+        m_dataType: double
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: -1000
+    0000000A:
+      type: {class: SofaIntData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 703536119}
+        m_dataName: kernelType
+        m_dataType: int
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: 1
+        m_isUnsigned: 0
+    0000000B:
+      type: {class: SofaIntData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 703536119}
+        m_dataName: pressureType
+        m_dataType: int
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: 1
+        m_isUnsigned: 0
+    0000000C:
+      type: {class: SofaIntData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 703536119}
+        m_dataName: viscosityType
+        m_dataType: int
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: 2
+        m_isUnsigned: 0
+    0000000D:
+      type: {class: SofaIntData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 703536119}
+        m_dataName: surfaceTensionType
+        m_dataType: int
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: 1
+        m_isUnsigned: 0
+    0000000E:
+      type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 703536119}
+        m_dataName: debugGrid
+        m_dataType: bool
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: 0
+--- !u!23 &703536120
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 703536118}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 17552781}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &703536121
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 703536118}
+  m_Mesh: {fileID: 0}
+--- !u!4 &703536122
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 744113208}
+  m_GameObject: {fileID: 703536118}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 827444748}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &827444745
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 827444748}
-  - component: {fileID: 827444747}
-  - component: {fileID: 827444746}
-  m_Layer: 0
-  m_Name: SofaContext
-  m_TagString: GameController
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &827444746
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 827444745}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbd514e8b1708b348bb1987be968669c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_uniqueNameId: root
-  m_displayName: root
-  m_sofaContext: {fileID: 827444747}
-  m_log: 0
-  m_parentNodeName: None
-  m_sofaComponents:
-  - {fileID: 1359437390}
-  - {fileID: 744113209}
-  m_hasTransformEngine: 0
-  m_translation: {x: 0, y: 0, z: 0}
-  m_isTranslationCustom: 0
-  m_rotation: {x: 0, y: 0, z: 0}
-  m_isRotationCustom: 0
-  m_scale: {x: 1, y: 1, z: 1}
-  m_isScaleCustom: 0
---- !u!114 &827444747
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 827444745}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29fd615e119b7e54793f03d8e24065c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_pluginMgr:
-    m_savedPlugins:
-    - SofaOpenglVisual
-    - SofaImplicitOdeSolver
-    - SofaExplicitOdeSolver
-    - SofaSparseSolver
-    - SofaGeneralLoader
-    - SofaLoader
-    - SofaEngine
-    - SofaConstraint
-    - SofaGeneralTopology
-    - SofaTopologyMapping
-    - SofaMiscMapping
-    - SofaDeformable
-    - SofaNonUniformFem
-    - SofaMiscForceField
-    - SofaGeneralSimpleFem
-    - SofaSimpleFem
-    - SofaMiscCollision
-    - SofaMeshCollision
-    - SofaSphFluid
-  m_sceneFileMgr:
-    m_hasScene: 1
-    m_filename: /SofaUnity/Scenes/SofaScenes/SPHParticleSink.scn
-  m_log: 0
-  IsSofaUpdating: 1
-  CatchSofaMessages: 1
-  StepbyStep: 0
-  m_asyncSimulation: 0
-  m_gravity: {x: 0, y: -10, z: 0}
-  m_timeStep: 0.01
-  breakerActivated: 0
-  m_objects: []
-  SimulationFPS: 0
---- !u!4 &827444748
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 827444745}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1359437391}
-  - {fileID: 1380489988}
-  - {fileID: 209678914}
-  - {fileID: 744113210}
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_Father: {fileID: 1476066373}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &956150256
 GameObject:
@@ -774,7 +1078,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 20, y: 0, z: 0}
---- !u!1 &1027572725
+--- !u!1 &1176457419
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -782,77 +1086,63 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1027572727}
-  - component: {fileID: 1027572726}
+  - component: {fileID: 1176457421}
+  - component: {fileID: 1176457420}
   m_Layer: 0
-  m_Name: ParticleSink  -  sink
+  m_Name: SpatialGridContainer  -  SpatialGridContainer1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1027572726
+--- !u!114 &1176457420
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1027572725}
+  m_GameObject: {fileID: 1176457419}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05b3958b6596e33498f60f6eb5464663, type: 3}
+  m_Script: {fileID: 11500000, guid: e88f85a8ada110442a5b5aad21997e9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_uniqueNameId: Particles@ParticleSink@sink
-  m_displayName: sink
-  m_sofaContext: {fileID: 827444747}
+  m_uniqueNameId: Particles@SpatialGridContainer@SpatialGridContainer1
+  m_displayName: SpatialGridContainer1
+  m_sofaContext: {fileID: 184558545}
   m_log: 0
-  m_ownerNode: {fileID: 209678915}
-  m_baseComponentType: 8
-  m_componentType: ParticleSink
+  m_ownerNode: {fileID: 1476066374}
+  m_baseComponentType: 24
+  m_componentType: SpatialGridContainer
   m_dataArchiver:
     m_names:
     - printLog
     - listening
-    - group
-    - endTime
-    - normal
-    - d0
-    - d1
-    - fixed
+    - cellWidth
+    - autoUpdate
+    - sortPoints
     m_types:
     - bool
     - bool
-    - i
     - d
-    - Vec3d
-    - d
-    - d
-    - vector<I>
+    - bool
+    - bool
     m_dataArray:
     - id: 0
     - id: 1
     - id: 2
     - id: 3
     - id: 4
-    - id: 5
-    - id: 6
-    - id: 7
   m_linkArchiver:
-    m_links:
-    - m_owner: {fileID: 1027572726}
-      m_linkName: mstate
-      m_linkPath: MModel
-    m_slaveLinks:
-    - m_owner: {fileID: 1027572726}
-      m_linkName: slaves
-      m_linkPath: sink/PointSubsetEngine_fixed
+    m_links: []
+    m_slaveLinks: []
+  m_showData: 1
   references:
     version: 1
     00000000:
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 1027572726}
+        m_owner: {fileID: 1176457420}
         m_dataName: printLog
         m_dataType: bool
         m_isReadOnly: 0
@@ -866,7 +1156,7 @@ MonoBehaviour:
     00000001:
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 1027572726}
+        m_owner: {fileID: 1176457420}
         m_dataName: listening
         m_dataType: bool
         m_isReadOnly: 0
@@ -878,10 +1168,202 @@ MonoBehaviour:
         m_isVector: 0
         m_value: 0
     00000002:
+      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 1176457420}
+        m_dataName: cellWidth
+        m_dataType: double
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: 0.75
+    00000003:
+      type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 1176457420}
+        m_dataName: autoUpdate
+        m_dataType: bool
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: 0
+    00000004:
+      type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 1176457420}
+        m_dataName: sortPoints
+        m_dataType: bool
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: 0
+--- !u!4 &1176457421
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1176457419}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1476066373}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1202019968
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1202019970}
+  - component: {fileID: 1202019969}
+  m_Layer: 0
+  m_Name: SofaMesh  -  PointSetTopologyContainer
+  m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1202019969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1202019968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33eb14f5b03eef7498ad3ef1fc36ca3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_uniqueNameId: Particles@MechanicalObject@MModel
+  m_displayName: unset
+  m_sofaContext: {fileID: 184558545}
+  m_log: 0
+  m_ownerNode: {fileID: 1476066374}
+  m_baseComponentType: 19
+  m_componentType: PointSetTopologyContainer
+  m_dataArchiver:
+    m_names:
+    - printLog
+    - listening
+    - filename
+    - position
+    - checkTopology
+    - nbPoints
+    m_types:
+    - bool
+    - bool
+    - string
+    - vector<Vec3d>
+    - bool
+    - uint
+    m_dataArray:
+    - id: 0
+    - id: 1
+    - id: 2
+    - id: 3
+    - id: 4
+    - id: 5
+  m_linkArchiver:
+    m_links: []
+    m_slaveLinks: []
+  m_forceUpdate: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 1202019969}
+        m_dataName: printLog
+        m_dataType: bool
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 2
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: 0
+    00000001:
+      type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 1202019969}
+        m_dataName: listening
+        m_dataType: bool
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 2
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: 0
+    00000002:
+      type: {class: SofaStringData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 1202019969}
+        m_dataName: filename
+        m_dataType: string
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: 
+    00000003:
+      type: {class: SofaDataVectorVec3, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 1202019969}
+        m_dataName: position
+        m_dataType: vector<Vec3d>
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 11
+        m_isSupported: 1
+        m_isVector: 1
+        m_vecType: Vec3
+        m_vecSize: 0
+        m_isDouble: 1
+    00000004:
+      type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 1202019969}
+        m_dataName: checkTopology
+        m_dataType: bool
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: 0
+    00000005:
       type: {class: SofaIntData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 1027572726}
-        m_dataName: group
+        m_owner: {fileID: 1202019969}
+        m_dataName: nbPoints
         m_dataType: int
         m_isReadOnly: 0
         m_isEdited: 0
@@ -891,94 +1373,22 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
-        m_isUnsigned: 0
-    00000003:
-      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1027572726}
-        m_dataName: endTime
-        m_dataType: double
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: -1
-    00000004:
-      type: {class: SofaVec3Data, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1027572726}
-        m_dataName: normal
-        m_dataType: Vec3
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: {x: 0, y: 1, z: 0}
-        m_isDouble: 1
-    00000005:
-      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1027572726}
-        m_dataName: d0
-        m_dataType: double
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 0
-    00000006:
-      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1027572726}
-        m_dataName: d1
-        m_dataType: double
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: -1
-    00000007:
-      type: {class: SofaDataVectorInt, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1027572726}
-        m_dataName: fixed
-        m_dataType: vector<I>
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 1
-        m_vecType: int
-        m_vecSize: 0
---- !u!4 &1027572727
+        m_isUnsigned: 1
+--- !u!4 &1202019970
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1027572725}
+  m_GameObject: {fileID: 1202019968}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 209678914}
-  m_RootOrder: 5
+  m_Father: {fileID: 1476066373}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1180854173
+--- !u!1 &1265074970
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -986,8 +1396,125 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1180854175}
-  - component: {fileID: 1180854174}
+  - component: {fileID: 1265074971}
+  - component: {fileID: 1265074972}
+  m_Layer: 0
+  m_Name: SofaParticlesModel  -  @Particles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1265074971
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265074970}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1476066373}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1265074972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265074970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61151713a651366468248a6a949bee3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sofaMesh: {fileID: 1202019969}
+  m_particleSize: 0.5
+  m_particleMaterial: {fileID: 2100000, guid: 817fe68a77b87d84ea4f29ebde610551, type: 2}
+  m_pSystem: {fileID: 0}
+  m_nbrMax: 10000
+--- !u!1 &1476066372
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1476066373}
+  - component: {fileID: 1476066374}
+  m_Layer: 0
+  m_Name: SofaNode - Particles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1476066373
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476066372}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1202019970}
+  - {fileID: 1489598375}
+  - {fileID: 95964726}
+  - {fileID: 1176457421}
+  - {fileID: 703536122}
+  - {fileID: 2121999904}
+  - {fileID: 1265074971}
+  m_Father: {fileID: 184558546}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1476066374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476066372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd514e8b1708b348bb1987be968669c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_uniqueNameId: '@Particles'
+  m_displayName: Particles
+  m_sofaContext: {fileID: 184558545}
+  m_log: 0
+  m_parentNodeName: root
+  m_sofaComponents:
+  - {fileID: 1202019969}
+  - {fileID: 1489598374}
+  - {fileID: 95964725}
+  - {fileID: 1176457420}
+  - {fileID: 703536119}
+  - {fileID: 2121999905}
+  m_hasTransformEngine: 1
+  m_translation: {x: 0, y: 0, z: 0}
+  m_isTranslationCustom: 0
+  m_rotation: {x: 0, y: 0, z: 0}
+  m_isRotationCustom: 0
+  m_scale: {x: 1, y: 1, z: 1}
+  m_isScaleCustom: 0
+--- !u!1 &1489598373
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1489598375}
+  - component: {fileID: 1489598374}
   m_Layer: 0
   m_Name: ParticleSource  -  Source
   m_TagString: Untagged
@@ -995,13 +1522,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1180854174
+--- !u!114 &1489598374
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1180854173}
+  m_GameObject: {fileID: 1489598373}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 05b3958b6596e33498f60f6eb5464663, type: 3}
@@ -1009,9 +1536,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_uniqueNameId: Particles@ParticleSource@Source
   m_displayName: Source
-  m_sofaContext: {fileID: 827444747}
+  m_sofaContext: {fileID: 184558545}
   m_log: 0
-  m_ownerNode: {fileID: 209678915}
+  m_ownerNode: {fileID: 1476066374}
   m_baseComponentType: 8
   m_componentType: ParticleSource
   m_dataArchiver:
@@ -1059,19 +1586,19 @@ MonoBehaviour:
     - id: 12
   m_linkArchiver:
     m_links:
-    - m_owner: {fileID: 1180854174}
+    - m_owner: {fileID: 1489598374}
+      m_linkName: mechanicalStates
+      m_linkPath: MModel
+    - m_owner: {fileID: 1489598374}
       m_linkName: mstate
       m_linkPath: MModel
-    m_slaveLinks:
-    - m_owner: {fileID: 1180854174}
-      m_linkName: slaves
-      m_linkPath: Source/PointSubsetEngine_lastparticles
+    m_slaveLinks: []
   references:
     version: 1
     00000000:
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 1180854174}
+        m_owner: {fileID: 1489598374}
         m_dataName: printLog
         m_dataType: bool
         m_isReadOnly: 0
@@ -1085,7 +1612,7 @@ MonoBehaviour:
     00000001:
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 1180854174}
+        m_owner: {fileID: 1489598374}
         m_dataName: listening
         m_dataType: bool
         m_isReadOnly: 0
@@ -1099,7 +1626,7 @@ MonoBehaviour:
     00000002:
       type: {class: SofaIntData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 1180854174}
+        m_owner: {fileID: 1489598374}
         m_dataName: group
         m_dataType: int
         m_isReadOnly: 0
@@ -1114,7 +1641,7 @@ MonoBehaviour:
     00000003:
       type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 1180854174}
+        m_owner: {fileID: 1489598374}
         m_dataName: endTime
         m_dataType: double
         m_isReadOnly: 0
@@ -1128,7 +1655,7 @@ MonoBehaviour:
     00000004:
       type: {class: SofaVec3Data, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 1180854174}
+        m_owner: {fileID: 1489598374}
         m_dataName: translation
         m_dataType: Vec3
         m_isReadOnly: 0
@@ -1143,7 +1670,7 @@ MonoBehaviour:
     00000005:
       type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 1180854174}
+        m_owner: {fileID: 1489598374}
         m_dataName: scale
         m_dataType: double
         m_isReadOnly: 0
@@ -1157,7 +1684,7 @@ MonoBehaviour:
     00000006:
       type: {class: SofaDataVectorVec3, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 1180854174}
+        m_owner: {fileID: 1489598374}
         m_dataName: center
         m_dataType: vector<Vec3d>
         m_isReadOnly: 0
@@ -1173,7 +1700,7 @@ MonoBehaviour:
     00000007:
       type: {class: SofaVec3Data, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 1180854174}
+        m_owner: {fileID: 1489598374}
         m_dataName: radius
         m_dataType: Vec3
         m_isReadOnly: 0
@@ -1188,7 +1715,7 @@ MonoBehaviour:
     00000008:
       type: {class: SofaVec3Data, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 1180854174}
+        m_owner: {fileID: 1489598374}
         m_dataName: velocity
         m_dataType: Vec3
         m_isReadOnly: 0
@@ -1203,7 +1730,7 @@ MonoBehaviour:
     00000009:
       type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 1180854174}
+        m_owner: {fileID: 1489598374}
         m_dataName: delay
         m_dataType: double
         m_isReadOnly: 0
@@ -1217,7 +1744,7 @@ MonoBehaviour:
     0000000A:
       type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 1180854174}
+        m_owner: {fileID: 1489598374}
         m_dataName: start
         m_dataType: double
         m_isReadOnly: 0
@@ -1231,7 +1758,7 @@ MonoBehaviour:
     0000000B:
       type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 1180854174}
+        m_owner: {fileID: 1489598374}
         m_dataName: stop
         m_dataType: double
         m_isReadOnly: 0
@@ -1245,7 +1772,7 @@ MonoBehaviour:
     0000000C:
       type: {class: SofaDataVectorInt, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 1180854174}
+        m_owner: {fileID: 1489598374}
         m_dataName: lastparticles
         m_dataType: vector<I>
         m_isReadOnly: 0
@@ -1257,21 +1784,21 @@ MonoBehaviour:
         m_isVector: 1
         m_vecType: int
         m_vecSize: 0
---- !u!4 &1180854175
+--- !u!4 &1489598375
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1180854173}
+  m_GameObject: {fileID: 1489598373}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 209678914}
+  m_Father: {fileID: 1476066373}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1307360875
+--- !u!1 &1552045992
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1279,442 +1806,43 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1307360879}
-  - component: {fileID: 1307360876}
-  - component: {fileID: 1307360878}
-  - component: {fileID: 1307360877}
+  - component: {fileID: 1552045994}
+  - component: {fileID: 1552045993}
   m_Layer: 0
-  m_Name: SPHFluidForceField  -  sPHFluidFF1
+  m_Name: DefaultAnimationLoop  -  DefaultAnimationLoop1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1307360876
+--- !u!114 &1552045993
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1307360875}
+  m_GameObject: {fileID: 1552045992}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5515e3f9a76f9054ea2f6a42fc598fcd, type: 3}
+  m_Script: {fileID: 11500000, guid: f3c67d96b8d166a49818dc88d50c4486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_uniqueNameId: Particles@SPHFluidForceField@sPHFluidFF1
-  m_displayName: sPHFluidFF1
-  m_sofaContext: {fileID: 827444747}
+  m_uniqueNameId: root@DefaultAnimationLoop@DefaultAnimationLoop1
+  m_displayName: DefaultAnimationLoop1
+  m_sofaContext: {fileID: 184558545}
   m_log: 0
-  m_ownerNode: {fileID: 209678915}
-  m_baseComponentType: 13
-  m_componentType: SPHFluidForceField
+  m_ownerNode: {fileID: 184558544}
+  m_baseComponentType: 0
+  m_componentType: DefaultAnimationLoop
   m_dataArchiver:
     m_names:
     - printLog
     - listening
-    - isCompliance
-    - rayleighStiffness
-    - radius
-    - mass
-    - pressure
-    - density
-    - viscosity
-    - surfaceTension
-    - kernelType
-    - pressureType
-    - viscosityType
-    - surfaceTensionType
-    - debugGrid
+    - computeBoundingBox
     m_types:
     - bool
     - bool
     - bool
-    - d
-    - d
-    - d
-    - d
-    - d
-    - d
-    - d
-    - i
-    - i
-    - i
-    - i
-    - bool
-    m_dataArray:
-    - id: 0
-    - id: 1
-    - id: 2
-    - id: 3
-    - id: 4
-    - id: 5
-    - id: 6
-    - id: 7
-    - id: 8
-    - id: 9
-    - id: 10
-    - id: 11
-    - id: 12
-    - id: 13
-    - id: 14
-  m_linkArchiver:
-    m_links:
-    - m_owner: {fileID: 1307360876}
-      m_linkName: mstate
-      m_linkPath: MModel
-    m_slaveLinks: []
-  references:
-    version: 1
-    00000000:
-      type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1307360876}
-        m_dataName: printLog
-        m_dataType: bool
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 2
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 0
-    00000001:
-      type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1307360876}
-        m_dataName: listening
-        m_dataType: bool
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 2
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 0
-    00000002:
-      type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1307360876}
-        m_dataName: isCompliance
-        m_dataType: bool
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 0
-    00000003:
-      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1307360876}
-        m_dataName: rayleighStiffness
-        m_dataType: double
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 0
-    00000004:
-      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1307360876}
-        m_dataName: radius
-        m_dataType: double
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 0.7
-    00000005:
-      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1307360876}
-        m_dataName: mass
-        m_dataType: double
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 1
-    00000006:
-      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1307360876}
-        m_dataName: pressure
-        m_dataType: double
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 1000
-    00000007:
-      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1307360876}
-        m_dataName: density
-        m_dataType: double
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 25
-    00000008:
-      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1307360876}
-        m_dataName: viscosity
-        m_dataType: double
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 10
-    00000009:
-      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1307360876}
-        m_dataName: surfaceTension
-        m_dataType: double
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: -1000
-    0000000A:
-      type: {class: SofaIntData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1307360876}
-        m_dataName: kernelType
-        m_dataType: int
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 1
-        m_isUnsigned: 0
-    0000000B:
-      type: {class: SofaIntData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1307360876}
-        m_dataName: pressureType
-        m_dataType: int
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 1
-        m_isUnsigned: 0
-    0000000C:
-      type: {class: SofaIntData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1307360876}
-        m_dataName: viscosityType
-        m_dataType: int
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 2
-        m_isUnsigned: 0
-    0000000D:
-      type: {class: SofaIntData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1307360876}
-        m_dataName: surfaceTensionType
-        m_dataType: int
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 1
-        m_isUnsigned: 0
-    0000000E:
-      type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1307360876}
-        m_dataName: debugGrid
-        m_dataType: bool
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 0
---- !u!23 &1307360877
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1307360875}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 1352849248}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1307360878
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1307360875}
-  m_Mesh: {fileID: 0}
---- !u!4 &1307360879
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1307360875}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 209678914}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!21 &1352849248
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Legacy Shaders/Diffuse
-  m_Shader: {fileID: 7, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats: []
-    m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-  m_BuildTextureStacks: []
---- !u!1 &1359437389
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1359437391}
-  - component: {fileID: 1359437390}
-  m_Layer: 0
-  m_Name: VisualStyle  -  visualStyle1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1359437390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1359437389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e88f85a8ada110442a5b5aad21997e9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_uniqueNameId: root@VisualStyle@visualStyle1
-  m_displayName: visualStyle1
-  m_sofaContext: {fileID: 827444747}
-  m_log: 0
-  m_ownerNode: {fileID: 827444746}
-  m_baseComponentType: 23
-  m_componentType: VisualStyle
-  m_dataArchiver:
-    m_names:
-    - printLog
-    - listening
-    - displayFlags
-    m_types:
-    - bool
-    - bool
-    - DisplayFlags
     m_dataArray:
     - id: 0
     - id: 1
@@ -1722,13 +1850,12 @@ MonoBehaviour:
   m_linkArchiver:
     m_links: []
     m_slaveLinks: []
-  m_showData: 1
   references:
     version: 1
     00000000:
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 1359437390}
+        m_owner: {fileID: 1552045993}
         m_dataName: printLog
         m_dataType: bool
         m_isReadOnly: 0
@@ -1742,7 +1869,7 @@ MonoBehaviour:
     00000001:
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 1359437390}
+        m_owner: {fileID: 1552045993}
         m_dataName: listening
         m_dataType: bool
         m_isReadOnly: 0
@@ -1754,33 +1881,34 @@ MonoBehaviour:
         m_isVector: 0
         m_value: 0
     00000002:
-      type: {class: SofaData, ns: SofaUnity, asm: Assembly-CSharp}
+      type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 1359437390}
-        m_dataName: displayFlags
-        m_dataType: DisplayFlags
+        m_owner: {fileID: 1552045993}
+        m_dataName: computeBoundingBox
+        m_dataType: bool
         m_isReadOnly: 0
         m_isEdited: 0
         m_isDirty: 0
         m_counter: 0
         m_flag: 10
-        m_isSupported: 0
+        m_isSupported: 1
         m_isVector: 0
---- !u!4 &1359437391
+        m_value: 0
+--- !u!4 &1552045994
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1359437389}
+  m_GameObject: {fileID: 1552045992}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 827444748}
+  m_Father: {fileID: 184558546}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1371429829
+--- !u!1 &2121999903
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1788,63 +1916,67 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1371429831}
-  - component: {fileID: 1371429830}
+  - component: {fileID: 2121999904}
+  - component: {fileID: 2121999905}
   m_Layer: 0
-  m_Name: UniformMass  -  M1
+  m_Name: ParticleSink  -  sink
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1371429830
+--- !u!4 &2121999904
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121999903}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1476066373}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2121999905
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1371429829}
+  m_GameObject: {fileID: 2121999903}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0271f7ab21246e7409de53c72f809575, type: 3}
+  m_Script: {fileID: 11500000, guid: 05b3958b6596e33498f60f6eb5464663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_uniqueNameId: Particles@UniformMass@M1
-  m_displayName: M1
-  m_sofaContext: {fileID: 827444747}
+  m_uniqueNameId: Particles@ParticleSink@sink
+  m_displayName: sink
+  m_sofaContext: {fileID: 184558545}
   m_log: 0
-  m_ownerNode: {fileID: 209678915}
-  m_baseComponentType: 17
-  m_componentType: UniformMass
+  m_ownerNode: {fileID: 1476066374}
+  m_baseComponentType: 8
+  m_componentType: ParticleSink
   m_dataArchiver:
     m_names:
     - printLog
     - listening
-    - isCompliance
-    - rayleighStiffness
-    - separateGravity
-    - rayleighMass
-    - vertexMass
-    - totalMass
-    - filename
-    - compute_mapping_inertia
-    - localRange
-    - indices
-    - preserveTotalMass
+    - group
+    - endTime
+    - normal
+    - d0
+    - d1
+    - fixed
     m_types:
     - bool
     - bool
-    - bool
+    - i
     - d
-    - bool
+    - Vec3d
     - d
     - d
-    - d
-    - string
-    - bool
-    - Vec2i
     - vector<I>
-    - bool
     m_dataArray:
     - id: 0
     - id: 1
@@ -1854,28 +1986,24 @@ MonoBehaviour:
     - id: 5
     - id: 6
     - id: 7
-    - id: 8
-    - id: 9
-    - id: 10
-    - id: 11
-    - id: 12
   m_linkArchiver:
     m_links:
-    - m_owner: {fileID: 1371429830}
+    - m_owner: {fileID: 2121999905}
+      m_linkName: mechanicalStates
+      m_linkPath: MModel
+    - m_owner: {fileID: 2121999905}
       m_linkName: mstate
       m_linkPath: MModel
-    - m_owner: {fileID: 1371429830}
+    - m_owner: {fileID: 2121999905}
       m_linkName: topology
-      m_linkPath: 
+      m_linkPath: con
     m_slaveLinks: []
-  myTab: 
-  m_MyVector: {x: 20, y: 1, z: 0}
   references:
     version: 1
     00000000:
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 1371429830}
+        m_owner: {fileID: 2121999905}
         m_dataName: printLog
         m_dataType: bool
         m_isReadOnly: 0
@@ -1889,7 +2017,7 @@ MonoBehaviour:
     00000001:
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 1371429830}
+        m_owner: {fileID: 2121999905}
         m_dataName: listening
         m_dataType: bool
         m_isReadOnly: 0
@@ -1901,383 +2029,10 @@ MonoBehaviour:
         m_isVector: 0
         m_value: 0
     00000002:
-      type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1371429830}
-        m_dataName: isCompliance
-        m_dataType: bool
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 0
-    00000003:
-      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1371429830}
-        m_dataName: rayleighStiffness
-        m_dataType: double
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 0
-    00000004:
-      type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1371429830}
-        m_dataName: separateGravity
-        m_dataType: bool
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 0
-    00000005:
-      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1371429830}
-        m_dataName: rayleighMass
-        m_dataType: double
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 0
-    00000006:
-      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1371429830}
-        m_dataName: vertexMass
-        m_dataType: double
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 1
-    00000007:
-      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1371429830}
-        m_dataName: totalMass
-        m_dataType: double
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 1
-    00000008:
-      type: {class: SofaStringData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1371429830}
-        m_dataName: filename
-        m_dataType: string
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 11
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: unused
-    00000009:
-      type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1371429830}
-        m_dataName: compute_mapping_inertia
-        m_dataType: bool
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 0
-    0000000A:
-      type: {class: SofaVec2IntData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1371429830}
-        m_dataName: localRange
-        m_dataType: Vec2i
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: {x: -1, y: -1}
-        m_isUnsigned: 0
-    0000000B:
-      type: {class: SofaDataVectorInt, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1371429830}
-        m_dataName: indices
-        m_dataType: vector<I>
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 1
-        m_vecType: int
-        m_vecSize: 1
-    0000000C:
-      type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 1371429830}
-        m_dataName: preserveTotalMass
-        m_dataType: bool
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 0
---- !u!4 &1371429831
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1371429829}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 209678914}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1380489986
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1380489988}
-  - component: {fileID: 1380489987}
-  m_Layer: 0
-  m_Name: DefaultVisualManagerLoop  -  defaultVisualManagerLoop
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1380489987
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1380489986}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e88f85a8ada110442a5b5aad21997e9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_uniqueNameId: root@DefaultVisualManagerLoop@defaultVisualManagerLoop
-  m_displayName: defaultVisualManagerLoop
-  m_sofaContext: {fileID: 827444747}
-  m_log: 0
-  m_ownerNode: {fileID: 827444746}
-  m_baseComponentType: 23
-  m_componentType: DefaultVisualManagerLoop
-  m_dataArchiver:
-    m_names:
-    - printLog
-    - listening
-    m_types:
-    - bool
-    - bool
-    m_dataArray: []
-  m_linkArchiver:
-    m_links: []
-    m_slaveLinks: []
-  m_showData: 1
-  references:
-    version: 1
---- !u!4 &1380489988
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1380489986}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 827444748}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2120699194
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2120699196}
-  - component: {fileID: 2120699195}
-  m_Layer: 0
-  m_Name: SofaMesh  -  PointSetTopologyContainer
-  m_TagString: Player
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2120699195
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2120699194}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33eb14f5b03eef7498ad3ef1fc36ca3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_uniqueNameId: Particles@MechanicalObject@MModel
-  m_displayName: unset
-  m_sofaContext: {fileID: 827444747}
-  m_log: 0
-  m_ownerNode: {fileID: 209678915}
-  m_baseComponentType: 19
-  m_componentType: PointSetTopologyContainer
-  m_dataArchiver:
-    m_names:
-    - printLog
-    - listening
-    - filename
-    - position
-    - checkTopology
-    - nbPoints
-    - points
-    m_types:
-    - bool
-    - bool
-    - string
-    - vector<Vec3d>
-    - bool
-    - uint
-    - vector<I>
-    m_dataArray:
-    - id: 0
-    - id: 1
-    - id: 2
-    - id: 3
-    - id: 4
-    - id: 5
-    - id: 6
-  m_linkArchiver:
-    m_links: []
-    m_slaveLinks: []
-  m_forceUpdate: 0
-  references:
-    version: 1
-    00000000:
-      type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 2120699195}
-        m_dataName: printLog
-        m_dataType: bool
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 2
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 0
-    00000001:
-      type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 2120699195}
-        m_dataName: listening
-        m_dataType: bool
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 2
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 0
-    00000002:
-      type: {class: SofaStringData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 2120699195}
-        m_dataName: filename
-        m_dataType: string
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 
-    00000003:
-      type: {class: SofaDataVectorVec3, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 2120699195}
-        m_dataName: position
-        m_dataType: vector<Vec3d>
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 11
-        m_isSupported: 1
-        m_isVector: 1
-        m_vecType: Vec3
-        m_vecSize: 0
-        m_isDouble: 1
-    00000004:
-      type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
-      data:
-        m_owner: {fileID: 2120699195}
-        m_dataName: checkTopology
-        m_dataType: bool
-        m_isReadOnly: 0
-        m_isEdited: 0
-        m_isDirty: 0
-        m_counter: 0
-        m_flag: 10
-        m_isSupported: 1
-        m_isVector: 0
-        m_value: 0
-    00000005:
       type: {class: SofaIntData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 2120699195}
-        m_dataName: nbPoints
+        m_owner: {fileID: 2121999905}
+        m_dataName: group
         m_dataType: int
         m_isReadOnly: 0
         m_isEdited: 0
@@ -2287,12 +2042,69 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
-        m_isUnsigned: 1
+        m_isUnsigned: 0
+    00000003:
+      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 2121999905}
+        m_dataName: endTime
+        m_dataType: double
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: -1
+    00000004:
+      type: {class: SofaVec3Data, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 2121999905}
+        m_dataName: normal
+        m_dataType: Vec3
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: {x: 0, y: 1, z: 0}
+        m_isDouble: 1
+    00000005:
+      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 2121999905}
+        m_dataName: d0
+        m_dataType: double
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: 0
     00000006:
+      type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
+      data:
+        m_owner: {fileID: 2121999905}
+        m_dataName: d1
+        m_dataType: double
+        m_isReadOnly: 0
+        m_isEdited: 0
+        m_isDirty: 0
+        m_counter: 0
+        m_flag: 10
+        m_isSupported: 1
+        m_isVector: 0
+        m_value: -1
+    00000007:
       type: {class: SofaDataVectorInt, ns: SofaUnity, asm: Assembly-CSharp}
       data:
-        m_owner: {fileID: 2120699195}
-        m_dataName: points
+        m_owner: {fileID: 2121999905}
+        m_dataName: fixed
         m_dataType: vector<I>
         m_isReadOnly: 0
         m_isEdited: 0
@@ -2303,17 +2115,3 @@ MonoBehaviour:
         m_isVector: 1
         m_vecType: int
         m_vecSize: 0
---- !u!4 &2120699196
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2120699194}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 209678914}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
