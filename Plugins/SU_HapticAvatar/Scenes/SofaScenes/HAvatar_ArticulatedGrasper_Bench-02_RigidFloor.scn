@@ -1,0 +1,58 @@
+<?xml version="1.0" ?>
+<Node dt="0.01" gravity="0 0 0" name="root">
+    <VisualStyle displayFlags="showVisualModels hideBehaviorModels hideCollisionModels" />
+    <DefaultVisualManagerLoop/>
+    
+    <RequiredPlugin name="SofaConstraint"/> <!-- Needed to use components [FreeMotionAnimationLoop, LCPConstraintSolver, LinearSolverConstraintCorrection, LocalMinDistance] -->
+    <RequiredPlugin name="SofaDeformable"/> <!-- Needed to use components [RestShapeSpringsForceField] -->
+    <RequiredPlugin name="SofaGeneralRigid"/> <!-- Needed to use components [ArticulatedHierarchyContainer, ArticulatedSystemMapping, Articulation, ArticulationCenter] -->
+    <RequiredPlugin name="SofaImplicitOdeSolver"/> <!-- Needed to use components [EulerImplicitSolver] -->
+    <RequiredPlugin name="SofaLoader"/> <!-- Needed to use components [MeshObjLoader] -->
+    <RequiredPlugin name="SofaMeshCollision"/> <!-- Needed to use components [LineCollisionModel, PointCollisionModel, TriangleCollisionModel] -->
+    <RequiredPlugin name="SofaOpenglVisual"/> <!-- Needed to use components [OglModel] -->
+    <RequiredPlugin name="SofaRigid"/> <!-- Needed to use components [RigidMapping] -->
+    <RequiredPlugin name="SofaTopologyMapping"/> <!-- Needed to use components [Hexa2TetraTopologicalMapping, Tetra2TriangleTopologicalMapping] -->
+    <RequiredPlugin name="SofaHapticAvatar"/>
+    <RequiredPlugin name='SofaHaptics'/>
+    
+    <DefaultPipeline name="pipeline" depth="6" verbose="0"/>
+    <BruteForceBroadPhase />
+    <BVHNarrowPhase />
+    <DefaultContactManager name="response" response="FrictionContactConstraint" />
+    <LocalMinDistance name="proximity" alarmDistance="2" contactDistance="0.5" />
+    <FreeMotionAnimationLoop/>
+    <LCPConstraintSolver tolerance="0.001" maxIt="10000"/>
+
+    <!-- Include Device driver and 3D model -->
+    <include href="ArticulatedGrasper.xml" />
+    
+    
+    <!-- Add obstacles -->
+    <RegularGridTopology name="grid_1" n="6 6 2" min="-100 -50 20" max="100 150 40" />
+    <Node name="Cube">
+        <MechanicalObject src="@../grid_1" name="Volume" />
+        
+        <TetrahedronSetTopologyContainer name="Tetra_topo" />
+        <TetrahedronSetTopologyModifier name="Modifier" />
+        <TetrahedronSetGeometryAlgorithms name="GeomAlgo" template="Vec3d" drawEdges="0" drawScaleTetrahedra="0.8"/>
+        
+        <Hexa2TetraTopologicalMapping name="default28" input="@../grid_1" output="@Tetra_topo" />
+        
+        <Node name="Surface">
+            <TriangleSetTopologyContainer  name="Container"  fileTopology="" tags=" " />
+            <TriangleSetTopologyModifier   name="Modifier" />
+            <TriangleSetGeometryAlgorithms name="GeomAlgo"   template="Vec3d" drawTriangles="0"/>
+            <Tetra2TriangleTopologicalMapping input="@../Tetra_topo" output="@Container" />
+
+            <TriangleCollisionModel simulated="0" moving="0" bothSide="false" group="1"/>
+            <LineCollisionModel simulated="0" moving="0" group="1" />
+            <PointCollisionModel simulated="0" moving="0" group="1"/>
+            
+            <Node name="VisuSurface">
+                <OglModel name="Visual" color="1.000 1.000 1.000 1.0" />
+                <IdentityMapping input="@.." output="@Visual" />
+            </Node>
+        </Node>
+    </Node>
+
+</Node>

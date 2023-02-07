@@ -1,0 +1,68 @@
+<?xml version="1.0" ?>
+<Node dt="0.01" gravity="0 0 0" name="root">
+    <VisualStyle displayFlags="showVisualModels hideBehaviorModels hideCollisionModels" />
+    <DefaultVisualManagerLoop/>
+    
+    <RequiredPlugin name="SofaBoundaryCondition"/> <!-- Needed to use components [FixedConstraint] -->
+    <RequiredPlugin name="SofaConstraint"/> <!-- Needed to use components [FreeMotionAnimationLoop, LCPConstraintSolver, LinearSolverConstraintCorrection, LocalMinDistance] -->
+    <RequiredPlugin name="SofaDeformable"/> <!-- Needed to use components [RestShapeSpringsForceField] -->
+    <RequiredPlugin name="SofaEngine"/> <!-- Needed to use components [BoxROI] -->
+    <RequiredPlugin name="SofaGeneralRigid"/> <!-- Needed to use components [ArticulatedHierarchyContainer, ArticulatedSystemMapping, Articulation, ArticulationCenter] -->
+    <RequiredPlugin name="SofaImplicitOdeSolver"/> <!-- Needed to use components [EulerImplicitSolver] -->
+    <RequiredPlugin name="SofaLoader"/> <!-- Needed to use components [MeshObjLoader] -->
+    <RequiredPlugin name="SofaMeshCollision"/> <!-- Needed to use components [LineCollisionModel, PointCollisionModel, TriangleCollisionModel] -->
+    <RequiredPlugin name="SofaMiscFem"/> <!-- Needed to use components [FastTetrahedralCorotationalForceField] -->
+    <RequiredPlugin name="SofaOpenglVisual"/> <!-- Needed to use components [OglModel] -->
+    <RequiredPlugin name="SofaRigid"/> <!-- Needed to use components [RigidMapping] -->
+    <RequiredPlugin name="SofaSparseSolver"/> <!-- Needed to use components [SparseLDLSolver] -->
+    <RequiredPlugin name="SofaTopologyMapping"/> <!-- Needed to use components [Hexa2TetraTopologicalMapping] -->
+    <RequiredPlugin name="SofaHapticAvatar"/>
+    <RequiredPlugin name='SofaHaptics'/>
+    
+    <DefaultPipeline name="pipeline" depth="6" verbose="0"/>
+    <BruteForceBroadPhase />
+    <BVHNarrowPhase />
+    <DefaultContactManager name="response" response="FrictionContactConstraint" />
+    <LocalMinDistance name="proximity" alarmDistance="2" contactDistance="0.5" />
+    <FreeMotionAnimationLoop/>
+    <LCPConstraintSolver tolerance="0.001" maxIt="10000"/>
+
+    
+    <!-- Include Device driver and 3D model -->
+    <include href="ArticulatedGrasper.xml" />
+    
+    <!-- Add obstacles -->  
+    <Node name="Liver">
+        <EulerImplicitSolver rayleighStiffness="0.01" rayleighMass="0.0" /> 
+		<SparseLDLSolver template="CompressedRowSparseMatrixMat3x3d"/>
+
+        <MeshGmshLoader filename="./mesh/liver2.msh" name="meshLoader" scale3d="100 100 100" rotation="-80 30 180" translation="-30 0 50"/>
+        <MechanicalObject name="dofs" src="@meshLoader" />
+		<TetrahedronSetTopologyContainer name="TetraContainer" src="@meshLoader" />
+        <TetrahedronSetTopologyModifier name="Modifier" />
+        <TetrahedronSetGeometryAlgorithms template="Vec3d" name="GeomAlgo" />
+        
+        <BoxROI name="boxRoi1" box="0 -25 0  50 25 60" drawBoxes="1"/>
+        <FixedConstraint indices="@boxRoi1.indices" />
+        
+        <FastTetrahedralCorotationalForceField name="FEM" youngModulus="2000" poissonRatio="0.3" method="large"/>
+        <DiagonalMass massDensity="0.1" />
+        <LinearSolverConstraintCorrection />
+        
+        <Node name="Surface">
+            <TriangleSetTopologyContainer  name="Container" />
+            <TriangleSetTopologyModifier   name="Modifier" />
+            <TriangleSetGeometryAlgorithms name="GeomAlgo"   template="Vec3d" />
+            <Tetra2TriangleTopologicalMapping input="@../TetraContainer" output="@Container" />
+
+            <TriangleCollisionModel bothSide="false" group="1"/>
+            <LineCollisionModel group="1" />
+            <PointCollisionModel group="1"/>
+            
+            <Node name="VisuSurface">
+                <OglModel name="Visual" color="red" />
+                <IdentityMapping input="@.." output="@Visual" />
+            </Node>
+        </Node>
+    </Node>
+</Node>
