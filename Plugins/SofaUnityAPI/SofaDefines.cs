@@ -27,9 +27,12 @@ static public class SofaDefines
 
         {-10, "-10: Sofa simulation scene creation failed."},
         {-11, "-11: Sofa plugin loading failed."},
-        {-12, "-12: Invalid SofaDAGNodeManager pointer (Object not found or null)."},
-        {-13, "-13: Invalid SofaComponentManager pointer (Object not found or null)."},
-        {-14, "-14: Invalid SofaSimulationManager pointer (Object not found or null)."},
+        {-12, "-12: Sofa plugin loading failed. Cause: invalid loading."},
+        {-13, "-13: Sofa plugin loading failed. Cause: missing symbol."},
+        {-14, "-14: Sofa plugin loading failed. Cause: file not found."},
+        {-15, "-15: Invalid SofaDAGNodeManager pointer (Object not found or null)."},
+        {-16, "-16: Invalid SofaComponentManager pointer (Object not found or null)."},
+        {-17, "-17: Invalid SofaSimulationManager pointer (Object not found or null)."},
 
         {-18, "-18: Simulation scene file (.scn) not found."},
         {-19, "-19: Simulation scene file (.scn) is empty."},
