@@ -1,8 +1,11 @@
 <?xml version="1.0" ?>
 <Node dt="0.01" gravity="0 -10 0" bbox="-4 -4 -4 4 4 4">
-    <RequiredPlugin name="SofaOpenglVisual"/> 
-    <RequiredPlugin name='SofaSphFluid' />
-    <RequiredPlugin name="SofaExplicitOdeSolver"/> <!-- Needed to use components [EulerExplicitSolver] -->
+    <RequiredPlugin name="Sofa.Component.Mass"/> <!-- Needed to use components [UniformMass] -->  
+    <RequiredPlugin name="Sofa.Component.ODESolver.Forward"/> <!-- Needed to use components [EulerExplicitSolver] -->  
+    <RequiredPlugin name="Sofa.Component.SceneUtility"/> <!-- Needed to use components [InfoComponent] -->  
+    <RequiredPlugin name="Sofa.Component.StateContainer"/> <!-- Needed to use components [MechanicalObject] -->  
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Dynamic"/> <!-- Needed to use components [PointSetTopologyContainer, PointSetTopologyModifier] -->  
+    <RequiredPlugin name="Sofa.Component.Visual"/> <!-- Needed to use components [VisualStyle] -->  
     <VisualStyle displayFlags="showBehaviorModels showForceFields showWireframe" />
 
     <DefaultAnimationLoop />
@@ -37,7 +40,7 @@
         
         <PointSetTopologyContainer name="con" />
         <PointSetTopologyModifier name="mod" />
-        <UniformMass name="M1" totalMass="1.0" handleTopologicalChanges="1" />
+        <UniformMass name="M1" totalMass="1.0" />
         <SpatialGridContainer cellWidth="0.75" />
         <SPHFluidForceField radius="0.7" density="25" kernelType="1" viscosityType="2" viscosity="10" pressure="1000" surfaceTension="-1000" printLog="0" />
 

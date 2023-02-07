@@ -1,13 +1,21 @@
 <?xml version="1.0" ?>
 <Node name="Root" dt="0.0033" gravity="0 0 0">
-    <RequiredPlugin pluginName='SofaOpenglVisual'/>
-	<RequiredPlugin pluginName='SofaImplicitOdeSolver'/> <!-- Needed to use components [EulerImplicitSolver, ]-->
-	<RequiredPlugin pluginName='SofaMiscForceField'/> <!-- Needed to use components [MeshMatrixMass, ]-->
-	<RequiredPlugin pluginName='SofaTopologyMapping'/> <!-- Needed to use components [Hexa2TetraTopologicalMapping, Tetra2TriangleTopologicalMapping, ]-->
-	<RequiredPlugin pluginName='SofaBoundaryCondition'/> <!-- Needed to use components [LinearMovementConstraint, ]-->
-	<RequiredPlugin pluginName='SofaEngine'/> <!-- Needed to use components [BoxROI, ]-->
-	<RequiredPlugin pluginName='SofaMiscCollision'/> <!-- Needed to use components [DefaultCollisionGroupManager, ]-->
-	<RequiredPlugin pluginName='SofaSimpleFem'/> <!-- Needed to use components [TetrahedronDiffusionFEMForceField, ]-->
+    <RequiredPlugin name="Sofa.Component.Collision.Detection.Algorithm"/> <!-- Needed to use components [BVHNarrowPhase, BruteForceBroadPhase, DefaultPipeline] -->  
+    <RequiredPlugin name="Sofa.Component.Collision.Detection.Intersection"/> <!-- Needed to use components [MinProximityIntersection] -->  
+    <RequiredPlugin name="Sofa.Component.Collision.Response.Contact"/> <!-- Needed to use components [DefaultContactManager] -->  
+    <RequiredPlugin name="Sofa.Component.Constraint.Projective"/> <!-- Needed to use components [LinearMovementConstraint] -->  
+    <RequiredPlugin name="Sofa.Component.Diffusion"/> <!-- Needed to use components [TetrahedronDiffusionFEMForceField] -->  
+    <RequiredPlugin name="Sofa.Component.Engine.Select"/> <!-- Needed to use components [BoxROI] -->  
+    <RequiredPlugin name="Sofa.Component.LinearSolver.Iterative"/> <!-- Needed to use components [CGLinearSolver] -->  
+    <RequiredPlugin name="Sofa.Component.Mapping.Linear"/> <!-- Needed to use components [IdentityMapping] -->  
+    <RequiredPlugin name="Sofa.Component.Mass"/> <!-- Needed to use components [MeshMatrixMass] -->  
+    <RequiredPlugin name="Sofa.Component.ODESolver.Backward"/> <!-- Needed to use components [EulerImplicitSolver] -->  
+    <RequiredPlugin name="Sofa.Component.StateContainer"/> <!-- Needed to use components [MechanicalObject] -->  
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Dynamic"/> <!-- Needed to use components [TetrahedronSetGeometryAlgorithms, TetrahedronSetTopologyContainer, TetrahedronSetTopologyModifier, TriangleSetTopologyContainer, TriangleSetTopologyModifier] -->  
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Grid"/> <!-- Needed to use components [RegularGridTopology] -->  
+    <RequiredPlugin name="Sofa.Component.Topology.Mapping"/> <!-- Needed to use components [Hexa2TetraTopologicalMapping, Tetra2TriangleTopologicalMapping] -->  
+    <RequiredPlugin name="Sofa.Component.Visual"/> <!-- Needed to use components [VisualStyle] -->  
+    <RequiredPlugin name="Sofa.GL.Component.Rendering3D"/> <!-- Needed to use components [OglModel] -->  
 
     <VisualStyle displayFlags="showBehaviorModels"/>
     
@@ -19,15 +27,19 @@
     <BVHNarrowPhase/>
     <MinProximityIntersection name="Proximity" alarmDistance="0.75" contactDistance="0.5" />
     <DefaultContactManager name="Response" response="PenalityContactForceField" />
-    <DefaultCollisionGroupManager name="Group" />
 	
-    <RegularGridTopology name="grid" n="31 9 9" min="0 0 0" max="10 2 2" p0="0.0 0.0 0.0" tags="meca"/>
+    <Node name="BeamModel" >
+        <RegularGridTopology name="grid" n="31 9 9" min="0 0 0" max="10 2 2" p0="0.0 0.0 0.0" tags="meca"/>
+        <MechanicalObject template="Vec3d" name="beamGrid" position="grid.position"/>
+    </Node>
+    
+    
     <Node name="MecaNode" >
-        <MechanicalObject template="Vec3d" src="@../grid" name="mecaObj" tags="meca"/>
+        <MechanicalObject template="Vec3d" src="@../BeamModel/beamGrid" name="mecaObj" tags="meca"/>
         <TetrahedronSetTopologyContainer name="TetraContainer" tags="meca"/>
         <TetrahedronSetTopologyModifier tags="meca"/>
         <TetrahedronSetGeometryAlgorithms template="Vec3d" tags="meca"/>
-        <Hexa2TetraTopologicalMapping input="@../grid" output="@TetraContainer" swapping="1" tags="meca"/>
+        <Hexa2TetraTopologicalMapping input="@../BeamModel/grid" output="@TetraContainer" swapping="1" tags="meca"/>
 		<BoxROI name="box_hot" box="-1 -1 -1 0.1 2.1 2.1" drawBoxes="1" position="@mecaObj.position"/>
 		
 		<!--
@@ -42,7 +54,7 @@
 			<MechanicalObject template="Vec1d" name="ElecObj" size="2511" tags="diffu"/>
 
 			<TetrahedronDiffusionFEMForceField template="Vec1d" name="DiffusionForceField" constantDiffusionCoefficient="1500" printLog="0" drawConduc="0" tagMechanics="meca" tags="diffu"/>
-			<MeshMatrixMass template="Vec1d,double" name="Mass" lumping="1" massDensity="1" tags="mass"/>
+			<MeshMatrixMass name="Mass" template="Vec1d,Vec3d" lumping="1" massDensity="1" tags="mass"/>
 			<LinearMovementConstraint template="Vec1d" keyTimes="0.1 0.2 0.3 1.0 1.5" movements="1 10 10 0 10" indices="@../box_hot.indices" />
 
             <Node 	name="Surface" >
