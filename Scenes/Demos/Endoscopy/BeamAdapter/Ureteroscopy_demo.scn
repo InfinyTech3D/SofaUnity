@@ -1,0 +1,109 @@
+<?xml version='1.0'?>
+<Node name='root' dt='0.02'  gravity='0 0 0'> 
+    <RequiredPlugin pluginName='SofaMiscCollision'/>
+    <RequiredPlugin name="BA" pluginName="BeamAdapter" />
+    <RequiredPlugin pluginName='SofaOpenglVisual'/>
+
+    <VisualStyle displayFlags='showVisualModels showBehaviorModels showCollisionModels hideMappings hideForceFields' />
+    <FreeMotionAnimationLoop />
+    <LCPConstraintSolver mu='0.1' tolerance='1e-10' maxIt='1000' build_lcp='false' />
+    
+    <DefaultPipeline depth='6' verbose='1' draw='0'/>
+    <BruteForceDetection name='N2' />
+    <LocalMinDistance name='localmindistance' alarmDistance='1.0' contactDistance='0.1' angleCone='0.02'/>
+    <DefaultContactManager name='Response' response='FrictionContact' />
+    <DefaultCollisionGroupManager name='Group' />
+
+
+    <Node  name="NavigationSceneNode">
+
+
+        <!-- Shape of the catheter -->
+        <Node name="topoLines_cath">
+
+            <WireRestShape densityOfBeams="200" keyPoints="0.0 240" length="240.0" name="catheterRestShape" 
+            numEdges="200" numEdgesCollis="100" printLog="0" spireDiameter="40" spireHeight="0.0" straightLength="127" 
+            template="Rigid3d" youngModulus="25e5" youngModulusExtremity="25e5" tags="catheter"/>
+            <EdgeSetTopologyContainer name="meshLinesCath"/>
+            <EdgeSetTopologyModifier name="Modifier"/>
+            <EdgeSetTopologyAlgorithms name="TopoAlgo" template="Rigid3d"/>
+            <EdgeSetGeometryAlgorithms name="GeomAlgo" template="Rigid3d" />
+            <MechanicalObject name="dofTopo1" template="Rigid3d" />
+        </Node>
+
+
+        <!-- Interactive catheter and physics on it -->
+        <Node name="InstrumentCombined">
+
+            <EulerImplicitSolver printLog="false"/>
+            <BTDLinearSolver/>
+            <RegularGridTopology name="meshLinesCombined" nx="92" ny="1" nz="1" xmax="1.0" xmin="0.0" ymax="0" ymin="0" zmax="1" zmin="1"/>
+            <MechanicalObject name="DOFs" template="Rigid3d"/>
+            <WireBeamInterpolation WireRestShape="@../topoLines_cath/catheterRestShape" name="InterpolCatheter" printLog="0" radius="0.01" lengthY="1" lengthZ="1" sideLength="1"/>
+            <AdaptiveBeamForceFieldAndMass interpolation="@InterpolCatheter" massDensity="0.0155" name="CatheterForceField" />
+            <InterventionalRadiologyController listening="true" controlledInstrument="0" instruments="InterpolCatheter" name="m_ircontroller" printLog="0" 
+            speed="0.0" startingPos="2 0 -4  0.1981933 -0.7501303 -0.2582906 0.5755952" step="0.1" template="Rigid3d" rotationInstrument="0" xtip="0.1"  />
+
+            <LinearSolverConstraintCorrection printLog="0" wire_optimization="true"/>
+            <FixedConstraint name="FixStart1" indices="91" />
+            <FixedConstraint name="FixStart2" indices="91" />
+
+            <!-- COLLISION -->
+
+            <Node name="Collision">
+                <EdgeSetTopologyContainer name="collisEdgeSet"  />
+                <EdgeSetTopologyModifier name="colliseEdgeModifier"/>
+                <MechanicalObject name="CollisionDOFs"  />
+                <MultiAdaptiveBeamMapping ircontroller="../m_ircontroller" name="collisMap" printLog="0" useCurvAbs="1"/> 
+                <PointCollisionModel group="1" name="PointBeamModel" proximity="0.0"/>
+            </Node>
+
+            <!-- VISUALIZATION -->
+            
+
+                      
+<!--
+            <Node name="VisuCatheter">  
+
+                <MechanicalObject name="QuadsCatheter"/>
+                <QuadSetTopologyContainer name="ContainerCath" />
+                <QuadSetTopologyModifier name="Modifier"/>
+                <QuadSetTopologyAlgorithms name="TopoAlgo" template="Vec3d"/>
+                <QuadSetGeometryAlgorithms name="GeomAlgo" template="Vec3d"/>
+                <Edge2QuadTopologicalMapping flipNormals="true" input="@../../topoLines_cath/meshLinesCath" nbPointsOnEachCircle="10" output="@ContainerCath" radius="0.1" tags="catheter" />
+                <AdaptiveBeamMapping input="@../DOFs" interpolation="@../InterpolCatheter" isMechanical="false" name="VisuMapCath" output="@QuadsCatheter" printLog="1" useCurvAbs="1"/>
+
+                <Node name="VisuOgl">
+
+                    <OglModel quads="@../ContainerCath.quads" color="0 0.85 0.9" material="texture Ambient 1 0.2 0.2 0.2 0.0 Diffuse 1 1.0 1.0 1.0 1.0 Specular 1 1.0 1.0 1.0 1.0 Emissive 0 0.15 0.05 0.05 0.0 Shininess 1 20" name="VisualCatheter" />
+                    <IdentityMapping input="@../QuadsCatheter" output="@VisualCatheter" name="VisuCathIM"/>
+                </Node>
+
+            </Node>
+            -->
+        </Node>
+    </Node>
+
+
+
+
+    <!-- Collision model of the vessels -->
+    <Node name='Ureter'> 
+        <MeshObjLoader name='meshLoader' filename='mesh/Urinary_system/Urinary_left.obj' triangulate='true' flipNormals='1'/>
+        <MeshTopology position='@meshLoader.position'  triangles='@meshLoader.triangles'/>
+        <MechanicalObject name='mecaUreter' position='0 0 0' showObject="1"/>   
+        <TriangleCollisionModel simulated='0' moving='0'/>    
+        <LineCollisionModel simulated='0' moving='0'/>
+        <PointCollisionModel simulated='0' moving='0'/>
+        
+        <!--<Node name='UreterVisu'> 
+            <OglModel name='OglUreter'  color='1 0 0 0.3'  />
+            <IdentityMapping input="@../mecaUreter" output="@OglUreter"/>
+        </Node>
+-->
+    </Node>
+    
+
+    
+
+</Node>
