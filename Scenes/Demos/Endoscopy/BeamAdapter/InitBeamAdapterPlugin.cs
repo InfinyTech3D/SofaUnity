@@ -6,9 +6,11 @@ using UnityEditor;
 /// </summary>
 class InitBeamAdapterPlugin
 {
+#if UNITY_EDITOR
     [InitializeOnLoadMethod]
     static void RegisterPluginDll()
     {
         SofaUnity.PluginManager.Instance.AddPlugin("BeamAdapter");
     }
+#endif
 }
