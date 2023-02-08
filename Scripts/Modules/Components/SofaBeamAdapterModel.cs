@@ -162,56 +162,33 @@ namespace SofaUnity
             if (m_vertCenter == null)
                 return;
 
-            return;
-            Gizmos.color = Color.yellow;
-            ////float factor = m_sofaContext.GetFactorSofaToUnity();
+            //Gizmos.color = Color.yellow;
+            //////float factor = m_sofaContext.GetFactorSofaToUnity();
             
             
-            foreach (Vector3 vert in m_vertCenter)
-            {
-                Gizmos.DrawWireSphere(this.transform.TransformPoint(vert), 0.2f);
-            }
+            //foreach (Vector3 vert in m_vertCenter)
+            //{
+            //    Gizmos.DrawWireSphere(this.transform.TransformPoint(vert), 0.2f);
+            //}
 
-            Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(this.transform.TransformPoint(m_vertCenter[0]), 0.5f);
-
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(this.transform.TransformPoint(m_vertCenter[1]), 0.6f);
-
-
-            Gizmos.color = Color.grey;
-            Gizmos.DrawWireSphere(this.transform.TransformPoint(m_vertCenter[m_vertCenter.Length-2]), 0.7f);
-
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(this.transform.TransformPoint(m_vertCenter[m_vertCenter.Length - 1]), 0.8f);
-
-            Gizmos.color = Color.black;
-            foreach (Vector3 vert in m_vertices)
-            {
-                Gizmos.DrawWireSphere(this.transform.TransformPoint(vert), 0.1f);
-            }
-
-            //Gizmos.DrawWireSphere(this.transform.TransformPoint(m_vertices[0]), 0.1f);
-            //Gizmos.DrawWireSphere(this.transform.TransformPoint(m_vertices[1]), 0.1f);
-            //Gizmos.DrawWireSphere(this.transform.TransformPoint(m_vertices[2]), 0.1f);
-            //Gizmos.DrawWireSphere(this.transform.TransformPoint(m_vertices[3]), 0.1f);
-            //Gizmos.DrawWireSphere(this.transform.TransformPoint(m_vertices[4]), 0.1f);
+            //Gizmos.color = Color.blue;
             //Gizmos.DrawWireSphere(this.transform.TransformPoint(m_vertCenter[0]), 0.5f);
 
-            //Gizmos.color = Color.red;
-            //Gizmos.DrawWireSphere(this.transform.TransformPoint(m_vertices[5]), 0.2f);
-            //Gizmos.DrawWireSphere(this.transform.TransformPoint(m_vertices[6]), 0.2f);
-            //Gizmos.DrawWireSphere(this.transform.TransformPoint(m_vertices[7]), 0.2f);
-            //Gizmos.DrawWireSphere(this.transform.TransformPoint(m_vertices[8]), 0.2f);
+            //Gizmos.color = Color.green;
             //Gizmos.DrawWireSphere(this.transform.TransformPoint(m_vertCenter[1]), 0.6f);
 
-            //Gizmos.color = Color.green;
-            //Gizmos.DrawWireSphere(this.transform.TransformPoint(m_vertices[9]), 0.05f);
-            //Gizmos.DrawWireSphere(this.transform.TransformPoint(m_vertices[10]), 0.05f);
-            //Gizmos.DrawWireSphere(this.transform.TransformPoint(m_vertices[11]), 0.05f);
-            //Gizmos.DrawWireSphere(this.transform.TransformPoint(m_vertices[12]), 0.05f);
-            //Gizmos.DrawWireSphere(this.transform.TransformPoint(m_vertices[13]), 0.05f);
 
+            //Gizmos.color = Color.grey;
+            //Gizmos.DrawWireSphere(this.transform.TransformPoint(m_vertCenter[m_vertCenter.Length-2]), 0.7f);
+
+            //Gizmos.color = Color.red;
+            //Gizmos.DrawWireSphere(this.transform.TransformPoint(m_vertCenter[m_vertCenter.Length - 1]), 0.8f);
+
+            //Gizmos.color = Color.black;
+            //foreach (Vector3 vert in m_vertices)
+            //{
+            //    Gizmos.DrawWireSphere(this.transform.TransformPoint(vert), 0.1f);
+            //}
         }
     }
 
