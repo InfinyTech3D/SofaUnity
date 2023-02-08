@@ -1,0 +1,1 @@
+Sofa-Unity3D specific asset for Geomagic tool
