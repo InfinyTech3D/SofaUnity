@@ -63,5 +63,6 @@ public class SofaBeamAdapterModelEditor : Editor
         model.m_sofaMesh = (SofaMesh)EditorGUILayout.ObjectField("Beam SofaMesh", model.m_sofaMesh, typeof(SofaMesh), true);
         model.BeamDiscretisation = EditorGUILayout.IntField("Beam Discretisation", model.BeamDiscretisation);
         model.BeamRadius = EditorGUILayout.Slider("Beam Radius", model.BeamRadius, 0.001f, 30);
+        model.m_childCameraScript = (GameObject)EditorGUILayout.ObjectField("Child Tip Camera", model.m_childCameraScript, typeof(GameObject), true);
     }
 }

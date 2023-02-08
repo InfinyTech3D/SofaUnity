@@ -13,6 +13,12 @@ namespace SofaUnity
     [ExecuteInEditMode]
     public class SofaBeamAdapterModel : SofaBeamModel
     {
+        public GameObject m_childCameraScript;
+
+        protected Transform tipTransform = null;
+        protected Vector3 m_tipPosition = Vector3.zero;
+        protected Vector3 m_tipDirection = Vector3.forward;
+
         protected override void CreateBeamMesh()
         {
             if (m_sofaMesh == null || m_sofaMesh.SofaMeshTopology == null)
@@ -62,6 +68,12 @@ namespace SofaUnity
 
             // 7. Add SofaMesh listener to ensure update of the mesh positions
             m_sofaMesh.AddListener();
+
+
+            if (m_childCameraScript)
+            {
+                m_childCameraScript.transform.parent = this.gameObject.transform;
+            }
         }
 
 
@@ -85,6 +97,29 @@ namespace SofaUnity
                 m_vertCenter[nbrV - i - 1] = new Vector3(sofaVertices[i * 3], sofaVertices[i * 3 + 1], sofaVertices[i * 3 + 2]);
             }
 
+            // update position vectors for camera
+            Vector3 sofaScale = m_sofaMesh.m_sofaContext.GetScaleSofaToUnity();
+            
+            m_tipPosition[0] = m_vertCenter[nbrV - 1][0]* sofaScale[0];
+            m_tipPosition[1] = m_vertCenter[nbrV - 1][1] * sofaScale[1];
+            m_tipPosition[2] = m_vertCenter[nbrV - 1][2] * sofaScale[2];
+
+            // TODO: to be removed by rigid handling
+            m_tipDirection = Vector3.forward;
+            for (int i = 1; i < nbrV; i++)
+            {
+                Vector3 tmpDirection = m_vertCenter[i] - m_vertCenter[i - 1];
+                if (tmpDirection.magnitude < 0.001f)
+                    break;
+
+                m_tipDirection = tmpDirection;
+            }
+
+            m_tipDirection[0] *= sofaScale[0];
+            m_tipDirection[1] *= sofaScale[1];
+            m_tipDirection[2] *= sofaScale[2];
+
+
             // update borders first
             int idLast = m_vertices.Length - 1;
             m_vertices[0] = m_vertCenter[0];
@@ -104,8 +139,22 @@ namespace SofaUnity
             m_mesh.vertices = m_vertices;
             m_mesh.normals = m_normals;
             m_mesh.RecalculateBounds();
+
+            UpdateCamera();
         }
-        
+
+
+
+        void UpdateCamera()
+        {
+            if (m_childCameraScript == null)
+                return;
+
+            
+            m_childCameraScript.transform.position = m_tipPosition;
+            m_childCameraScript.transform.forward = m_tipDirection;
+        }
+
 
         /// Method to draw debug information like the vertex being grabed
         void OnDrawGizmosSelected()
