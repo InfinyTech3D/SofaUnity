@@ -26,7 +26,6 @@
             template="Rigid3d" youngModulus="25e5" youngModulusExtremity="25e5" tags="catheter"/>
             <EdgeSetTopologyContainer name="meshLinesCath"/>
             <EdgeSetTopologyModifier name="Modifier"/>
-            <EdgeSetTopologyAlgorithms name="TopoAlgo" template="Rigid3d"/>
             <EdgeSetGeometryAlgorithms name="GeomAlgo" template="Rigid3d" />
             <MechanicalObject name="dofTopo1" template="Rigid3d"/>
         </Node>
@@ -65,8 +64,7 @@
 
                 <MechanicalObject name="QuadsCatheter"/>
                 <QuadSetTopologyContainer name="ContainerCath" />
-                <QuadSetTopologyModifier name="Modifier"/>
-                <QuadSetTopologyAlgorithms name="TopoAlgo" template="Vec3d"/>
+                <QuadSetTopologyModifier name="Modifier"/>*
                 <QuadSetGeometryAlgorithms name="GeomAlgo" template="Vec3d"/>
                 <Edge2QuadTopologicalMapping flipNormals="true" input="@../../topoLines_cath/meshLinesCath" nbPointsOnEachCircle="10" output="@ContainerCath" radius="0.5" tags="catheter" />
                 <AdaptiveBeamMapping input="@../DOFs" interpolation="@../InterpolCatheter" isMechanical="false" name="VisuMapCath" output="@QuadsCatheter" printLog="1" useCurvAbs="1"/>
