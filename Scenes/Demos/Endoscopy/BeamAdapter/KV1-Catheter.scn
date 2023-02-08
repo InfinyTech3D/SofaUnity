@@ -3,13 +3,21 @@
     <RequiredPlugin pluginName='SofaMiscCollision'/>
     <RequiredPlugin name="BA" pluginName="BeamAdapter" />
     <RequiredPlugin pluginName='SofaOpenglVisual'/>
+    <RequiredPlugin name="SofaBoundaryCondition"/> <!-- Needed to use components [FixedConstraint] -->
+    <RequiredPlugin name="SofaConstraint"/> <!-- Needed to use components [FreeMotionAnimationLoop, LCPConstraintSolver, LinearSolverConstraintCorrection, LocalMinDistance] -->
+    <RequiredPlugin name="SofaGeneralLinearSolver"/> <!-- Needed to use components [BTDLinearSolver] -->
+    <RequiredPlugin name="SofaImplicitOdeSolver"/> <!-- Needed to use components [EulerImplicitSolver] -->
+    <RequiredPlugin name="SofaLoader"/> <!-- Needed to use components [MeshObjLoader] -->
+    <RequiredPlugin name="SofaMeshCollision"/> <!-- Needed to use components [LineCollisionModel, PointCollisionModel, TriangleCollisionModel] -->
+
 
     <VisualStyle displayFlags='showVisualModels showBehaviorModels showCollisionModels hideMappings hideForceFields' />
     <FreeMotionAnimationLoop />
-    <LCPConstraintSolver mu='0.1' tolerance='1e-10' maxIt='1000' build_lcp='false' />
+    <LCPConstraintSolver mu='0.1' tolerance='1e-6' maxIt='1000' build_lcp='false' />
     
     <DefaultPipeline depth='6' verbose='1' draw='0'/>
-    <BruteForceDetection name='N2' />
+    <BruteForceBroadPhase/>
+    <BVHNarrowPhase/>
     <LocalMinDistance name='localmindistance' alarmDistance='3' contactDistance='1' angleCone='0.02'/>
     <DefaultContactManager name='Response' response='FrictionContact' />
     <DefaultCollisionGroupManager name='Group' />
@@ -26,7 +34,6 @@
             template="Rigid3d" youngModulus="25e5" youngModulusExtremity="25e5" tags="catheter"/>
             <EdgeSetTopologyContainer name="meshLinesCath"/>
             <EdgeSetTopologyModifier name="Modifier"/>
-            <EdgeSetTopologyAlgorithms name="TopoAlgo" template="Rigid3d"/>
             <EdgeSetGeometryAlgorithms name="GeomAlgo" template="Rigid3d" />
             <MechanicalObject name="dofTopo1" template="Rigid3d"/>
         </Node>
@@ -65,8 +72,7 @@
 
                 <MechanicalObject name="QuadsCatheter"/>
                 <QuadSetTopologyContainer name="ContainerCath" />
-                <QuadSetTopologyModifier name="Modifier"/>
-                <QuadSetTopologyAlgorithms name="TopoAlgo" template="Vec3d"/>
+                <QuadSetTopologyModifier name="Modifier"/>*
                 <QuadSetGeometryAlgorithms name="GeomAlgo" template="Vec3d"/>
                 <Edge2QuadTopologicalMapping flipNormals="true" input="@../../topoLines_cath/meshLinesCath" nbPointsOnEachCircle="10" output="@ContainerCath" radius="0.5" tags="catheter" />
                 <AdaptiveBeamMapping input="@../DOFs" interpolation="@../InterpolCatheter" isMechanical="false" name="VisuMapCath" output="@QuadsCatheter" printLog="1" useCurvAbs="1"/>
