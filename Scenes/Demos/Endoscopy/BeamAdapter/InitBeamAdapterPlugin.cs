@@ -11,6 +11,7 @@ class InitBeamAdapterPlugin
     static void RegisterPluginDll()
     {
         SofaUnity.PluginManager.Instance.AddPlugin("BeamAdapter");
+        SofaUnity.PluginManager.Instance.AddPlugin("SofaGeneralLinearSolver");
     }
 #endif
 }
