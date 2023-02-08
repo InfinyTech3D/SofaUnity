@@ -1,0 +1,44 @@
+# Blender MTL File: 'None'
+# Material Count: 3
+
+newmtl Bladder
+Ns 78.431373
+Ka 1.000000 1.000000 1.000000
+Kd 0.470400 0.470400 0.470400
+Ks 0.360000 0.360000 0.360000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.000000
+illum 9
+map_Bump -bm 0.350042 Materials\\Textures\\Bladder_Normal.png
+map_Kd Materials\\Textures\\Bladder_Diffuse.png
+map_Ks Materials\\Textures\\Bladder_Specular.png
+map_d Materials\\Textures\\Bladder_Diffuse.png
+
+newmtl Kidney_Left
+Ns 78.431373
+Ka 1.000000 1.000000 1.000000
+Kd 0.470400 0.470400 0.470400
+Ks 0.900000 0.900000 0.900000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.000000
+illum 9
+map_Bump -bm 0.350042 Materials\\Textures\\Kidney_Left_Normal.png
+map_Kd Materials\\Textures\\Kidney_Left_Diffuse.png
+map_Ks Materials\\Textures\\Kidney_Left_Specular.png
+map_d Materials\\Textures\\Kidney_Left_Diffuse.png
+
+newmtl Urinary_Ureter_Left
+Ns 78.431373
+Ka 1.000000 1.000000 1.000000
+Kd 0.470400 0.470400 0.470400
+Ks 0.900000 0.900000 0.900000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.000000
+illum 9
+map_Bump -bm 0.350042 Materials\\Textures\\Urinary_Ureter_Left_Normal.png
+map_Kd Materials\\Textures\\Urinary_Ureter_Left_Diffuse.png
+map_Ks Materials\\Textures\\Urinary_Ureter_Left_Specular.png
+map_d Materials\\Textures\\Urinary_Ureter_Left_Diffuse.png
