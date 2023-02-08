@@ -3,13 +3,21 @@
     <RequiredPlugin pluginName='SofaMiscCollision'/>
     <RequiredPlugin name="BA" pluginName="BeamAdapter" />
     <RequiredPlugin pluginName='SofaOpenglVisual'/>
+    <RequiredPlugin name="SofaBoundaryCondition"/> <!-- Needed to use components [FixedConstraint] -->
+    <RequiredPlugin name="SofaConstraint"/> <!-- Needed to use components [FreeMotionAnimationLoop, LCPConstraintSolver, LinearSolverConstraintCorrection, LocalMinDistance] -->
+    <RequiredPlugin name="SofaGeneralLinearSolver"/> <!-- Needed to use components [BTDLinearSolver] -->
+    <RequiredPlugin name="SofaImplicitOdeSolver"/> <!-- Needed to use components [EulerImplicitSolver] -->
+    <RequiredPlugin name="SofaLoader"/> <!-- Needed to use components [MeshObjLoader] -->
+    <RequiredPlugin name="SofaMeshCollision"/> <!-- Needed to use components [LineCollisionModel, PointCollisionModel, TriangleCollisionModel] -->
+
 
     <VisualStyle displayFlags='showVisualModels showBehaviorModels showCollisionModels hideMappings hideForceFields' />
     <FreeMotionAnimationLoop />
-    <LCPConstraintSolver mu='0.1' tolerance='1e-10' maxIt='1000' build_lcp='false' />
+    <LCPConstraintSolver mu='0.1' tolerance='1e-6' maxIt='1000' build_lcp='false' />
     
     <DefaultPipeline depth='6' verbose='1' draw='0'/>
-    <BruteForceDetection name='N2' />
+    <BruteForceBroadPhase/>
+    <BVHNarrowPhase/>
     <LocalMinDistance name='localmindistance' alarmDistance='3' contactDistance='1' angleCone='0.02'/>
     <DefaultContactManager name='Response' response='FrictionContact' />
     <DefaultCollisionGroupManager name='Group' />
