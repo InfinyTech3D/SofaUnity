@@ -32,5 +32,9 @@ public class GeomagicControllerEditor : Editor
         EditorGUILayout.Toggle("Button2 Mode", model.Button2Status());
         EditorGUILayout.Toggle("Tool in Contact", model.IsToolInContact());
         EditorGUI.EndDisabledGroup();
+
+        model.m_audioSource = (AudioSource)EditorGUILayout.ObjectField("GeomagicDriver", model.m_audioSource, typeof(AudioSource), true);
+
+        model.smoke = (GameObject)EditorGUILayout.ObjectField("smoke", model.smoke, typeof(GameObject), true);
     }
 }

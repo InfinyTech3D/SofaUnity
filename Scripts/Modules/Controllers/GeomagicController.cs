@@ -26,6 +26,9 @@ public class GeomagicController : MonoBehaviour
     /// Pointer to the corresponding SOFA API object
     protected SofaGeomagic m_sofaGeomagic = null;
 
+    /// Audio source to be controlled by this Geomagic actionner
+    public AudioSource m_audioSource = null;
+
     /// Bool to know if 1st button of the tool is pressed.
     protected bool m_deviceButton1 = false;
     /// Bool to know if 2nd button of the tool is pressed.
@@ -38,6 +41,8 @@ public class GeomagicController : MonoBehaviour
 
     /// Bool to know if tool is currently in contact, sending some forcefeedback.
     protected bool m_toolInContact = false;
+
+    public GameObject smoke = null;
 
 
 
@@ -156,10 +161,28 @@ public class GeomagicController : MonoBehaviour
                     if (!m_deviceButton1) // switch status
                         m_statusButton1 = !m_statusButton1;
 
-                    m_deviceButton1 = true;
+                    if (m_audioSource)
+                    {
+                        if (m_statusButton1)
+                            m_audioSource.Play();
+                        else
+                            m_audioSource.Stop();
+                    }
+
+                    if (smoke)
+                    {
+                        if (m_statusButton1)
+                            smoke.SetActive(true);
+                        else
+                            smoke.SetActive(false);
+                    }
+
+                        m_deviceButton1 = true;
                 }
                 else
+                {
                     m_deviceButton1 = false;
+                }
 
             }
             else
