@@ -31,7 +31,7 @@
     </Node>
     
     <!-- ADDED: the Mechanical state Controller gathers events from the Tool driver and populates the Mechanical state -->
-    <Node name="Tool">
+    <Node name="Omni">
         <MechanicalObject template="Rigid3d" name="DOFs" position="@GeomagicDevice.positionDevice"/>
         <MechanicalStateController template="Rigid3d" listening="true" mainDirection="-1.0 0.0 0.0" handleEventTriggersUpdate="true"/>
     </Node>
@@ -40,12 +40,12 @@
         <EulerImplicitSolver name="ODE solver" rayleighStiffness="0.05" rayleighMass="1.0" />
         <CGLinearSolver name="linear solver" iterations="25" tolerance="1e-10" threshold="10e-10" /> 
         
-		<MechanicalObject name="instrumentState" template="Rigid3d" tags="GeomagicDevice"/>
+		<MechanicalObject name="instrumentState" template="Rigid3d" tags="GeomagicDevice" position="@../GeomagicDevice.positionBase"/>
 		<UniformMass name="mass" totalMass="0.05" />
 		
-		<RestShapeSpringsForceField stiffness='100000000' angularStiffness='100000000' external_rest_shape='@../Tool/DOFs' points='0' external_points='0' />
+		<RestShapeSpringsForceField stiffness='100000000' angularStiffness='100000000' external_rest_shape='@../Omni/DOFs' points='0' external_points='0' />
         <LCPForceFeedback activate="true" forceCoef="0.001"/>
-        <UncoupledConstraintCorrection/>
+        <UncoupledConstraintCorrection useOdeSolverIntegrationFactors="0"/>
         
         <!--
 		<Node name="VisualModel" >

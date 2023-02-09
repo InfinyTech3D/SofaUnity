@@ -62,7 +62,7 @@
 		
 		<RestShapeSpringsForceField stiffness='1000000' angularStiffness='1000000' external_rest_shape='@../Omni/DOFs' points='0' external_points='0' />
         <LCPForceFeedback activate="true" forceCoef="0.05"/> <!-- ADDED : Compute a force-feedback for the device -->
-        <UncoupledConstraintCorrection/>
+        <UncoupledConstraintCorrection useOdeSolverIntegrationFactors="0"/>
         
         <Node name="CollisionModel" >
             <MeshObjLoader filename="./mesh/drill_collision.obj"  name="loader"/>

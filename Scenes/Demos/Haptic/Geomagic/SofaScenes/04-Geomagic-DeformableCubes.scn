@@ -35,7 +35,7 @@
         
         <TetrahedralCorotationalFEMForceField name="FEM" youngModulus="80" poissonRatio="0.3" method="large" topology="@Tetra_topo1"/>
         <UniformMass totalMass="0.1" />
-        <UncoupledConstraintCorrection/>
+        <UncoupledConstraintCorrection useOdeSolverIntegrationFactors="0"/>
         <Node name="Surface1">
             <TriangleSetTopologyContainer  name="Container1" />
             <TriangleSetTopologyModifier   />
@@ -71,7 +71,7 @@
         
         <TetrahedralCorotationalFEMForceField name="FEM" youngModulus="10" poissonRatio="0.1" method="large" topology="@Tetra_topo2"/>
         <UniformMass totalMass="0.1" />
-        <UncoupledConstraintCorrection/>
+        <UncoupledConstraintCorrection useOdeSolverIntegrationFactors="0"/>
         <Node name="Surface2">
             <TriangleSetTopologyContainer  name="Container2" />
             <TriangleSetTopologyModifier   />
@@ -105,7 +105,7 @@
     </Node>
 
 	
-    <Node name="Tool">
+    <Node name="Omni">
         <MechanicalObject template="Rigid3" name="DOFs" position="@GeomagicDevice.positionDevice"/>
         <MechanicalStateController template="Rigid3" listening="true" mainDirection="-1.0 0.0 0.0" handleEventTriggersUpdate="true"/>
     </Node>
@@ -113,12 +113,12 @@
 	<Node name="Instrument" >
         <EulerImplicitSolver name="ODE solver" rayleighStiffness="0.05" rayleighMass="1.0" />
         <CGLinearSolver name="linear solver" iterations="25" tolerance="1e-10" threshold="10e-10" /> 
-		<MechanicalObject name="instrumentState" template="Rigid3" tags="GeomagicDevice"/>
+		<MechanicalObject name="instrumentState" template="Rigid3" tags="GeomagicDevice" position="@../GeomagicDevice.positionBase"/>
 		<UniformMass name="mass" totalMass="200" />
 		
-		<RestShapeSpringsForceField stiffness='100000000' angularStiffness='100000000' external_rest_shape='@../Tool/DOFs' points='0' external_points='0'/>
+		<RestShapeSpringsForceField stiffness='100000000' angularStiffness='100000000' external_rest_shape='@../Omni/DOFs' points='0' external_points='0'/>
         <LCPForceFeedback name="LCPFF1" activate="true" forceCoef="0.0001"/> 
-        <UncoupledConstraintCorrection/>
+        <UncoupledConstraintCorrection useOdeSolverIntegrationFactors="0"/>
 		
 		<!--
         <Node name="VisuTool" >

@@ -33,7 +33,7 @@
         computeGlobalMatrix="false" method="large" topology="@TetraContainer"/>-->
         
         <PlaneForceField normal="0 1 0" d="-9.5" stiffness="100000" showPlane="1" showPlaneSize="20"/>
-        <UncoupledConstraintCorrection/>
+        <UncoupledConstraintCorrection useOdeSolverIntegrationFactors="0"/>
         <!--<PrecomputedConstraintCorrection recompute="true"/>-->
 
         <Node name="Surface">
@@ -79,12 +79,12 @@
 	<Node name="Instrument" >
         <EulerImplicitSolver name="ODE solver" rayleighStiffness="0.05" rayleighMass="1.0" />
         <CGLinearSolver name="linear solver" iterations="25" tolerance="1e-10" threshold="10e-10" /> 
-		<MechanicalObject name="instrumentState" template="Rigid3d" tags="GeomagicDevice"/>
+		<MechanicalObject name="instrumentState" template="Rigid3d" tags="GeomagicDevice" position="@../GeomagicDevice.positionBase"/>
 		<UniformMass name="mass" totalMass="150" />
 		
 		<RestShapeSpringsForceField stiffness='100000000' angularStiffness='100000000' external_rest_shape='@../Tool/DOFs' points='0' external_points='0'/>
         <LCPForceFeedback name="LCPFF1" activate="true" forceCoef="0.0001"/> 
-        <UncoupledConstraintCorrection/>
+        <UncoupledConstraintCorrection useOdeSolverIntegrationFactors="0"/>
 		
 		<!--
         <Node name="VisuTool" >
