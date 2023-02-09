@@ -15,7 +15,7 @@
     drawDeviceFrame="0" positionBase="0 0 0" orientationBase="0 0.707 0 -0.707" manualStart="true" />	
 	
 	<Node name="Cubestatic">
-		<MeshObjLoader name="loaderC2" filename="mesh/cube0.obj" translation="-2 -4.5 -2" />
+		<MeshObjLoader name="loaderC2" filename="./mesh/cube0.obj" translation="-2 -6.5 -2" scale="4 4 4" />
         <MechanicalObject name="Cube"  position="@loaderC2.position" />     
 		<MeshTopology name="grid" src="@loaderC2" />
 		<TriangleCollisionModel simulated="0" moving="0" bothSide="false"/>
@@ -28,7 +28,7 @@
     </Node>
 	
 	<Node name="Floor">
-        <MeshObjLoader name="loaderF" filename="mesh/plane.obj" />
+        <MeshObjLoader name="loaderF" filename="./mesh/plane.obj" translation="0 -2 0" scale="2 2 2"/>
         <MeshTopology src="@loaderF" />
         <MechanicalObject src="@loaderF" />
         <TriangleCollisionModel simulated="0" moving="0" bothSide="false" group="1"/>
@@ -57,17 +57,17 @@
 		<RestShapeSpringsForceField stiffness='1000000' angularStiffness='1000000' external_rest_shape='@../Tool/DOFs' points='0' external_points='0'/>
         <LCPForceFeedback activate="true" forceCoef="0.1"/> <!-- ADDED : Compute a force-feedback for the device -->
         <UncoupledConstraintCorrection/>
-		
+<!--		
 		<Node name="VisuTool" >
             <MeshObjLoader name="meshLoader_1" filename="./mesh/dental_instrument.obj" handleSeams="1" />
-            <OglModel name="InstrumentVisualModel" src="@meshLoader_1" color="1.0 0.2 0.2 1.0" ry="-180" rz="-90" dz="3.5"/>
+            <OglModel name="InstrumentVisualModel" src="@meshLoader_1" color="1.0 0.2 0.2 1.0" />
             <RigidMapping name="MM->VM mapping" input="@instrumentState" output="@InstrumentVisualModel" />
         </Node>
-		
+	-->	
         <Node name="CollisionModel" >
             <MeshObjLoader filename="./mesh/dental_instrument_centerline.obj"  name="loader"/>
             <MeshTopology src="@loader" name="InstrumentCollisionModel" />
-            <MechanicalObject src="@loader" name="instrumentCollisionState"  ry="-180" rz="-90" dz="3.5" />
+            <MechanicalObject src="@loader" name="instrumentCollisionState" />
             <LineCollisionModel contactStiffness="100"/>			
             <PointCollisionModel contactStiffness="100"/>
 			<SphereCollisionModel radius="0.02" contactStiffness="100"/>
