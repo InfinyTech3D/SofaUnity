@@ -39,13 +39,21 @@ public class SofaGeomagic : IDisposable
         m_simu = simu;
         m_name = deviceNameID;
 
+        SofaDefines.msg_error[-700] = "SOFA Geomagic Plugin has not been activated.";
+        SofaDefines.msg_error[-701] = "SOFA Geomagic manager creation failed.";
+        SofaDefines.msg_error[-702] = "No SOFA Geomagic Drivers found in the scene.";
+        SofaDefines.msg_error[-703] = "SOFA Geomagic Driver object is invalid.";
+        SofaDefines.msg_error[-704] = "No SOFA Geomagic Driver found with this name in the scene.";
+        SofaDefines.msg_error[-705] = "SOFA Geomagic Driver not registered in Geomagic manager.";
+        SofaDefines.msg_error[-708] = "SOFA Geomagic manager can't access to simulation thread.";
+
         int res = -1;
         if (m_simu != IntPtr.Zero)
         {
             res = sofaPhysicsAPI_createGeomagicManager(m_simu, m_name);
             if (res != 0)
             {
-                Debug.LogError("SofaGeomagic creation: " + m_name + " returns error: " + res);
+                Debug.LogError("SofaGeomagic creation: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
                 m_isReady = false;
                 return;
             }
@@ -53,7 +61,8 @@ public class SofaGeomagic : IDisposable
         }
         else
             Debug.LogError("SofaGeomagic creation: " + deviceNameID + " failed. Can't access Object Pointer simulation.");
-        Debug.Log("Creation returns: " + res);
+
+        Debug.Log("SofaGeomagic Creation returns: " + SofaDefines.msg_error[res]);
     }
 
     public void GeomagicDevice_init()
@@ -61,12 +70,12 @@ public class SofaGeomagic : IDisposable
         int res = sofaPhysicsAPI_initGeomagicDevice(m_simu, m_name);
         if (res == 0)
         {
-            Debug.Log("Init returns: " + res);
+            Debug.Log("Init returns: " + SofaDefines.msg_error[res]);
             m_isReady = true;
         }
         else
         {
-            Debug.LogError("SofaGeomagic init device: " + m_name + " returns error: " + res);
+            Debug.LogError("SofaGeomagic init device: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
             m_isReady = false;
         }
     }

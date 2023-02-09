@@ -5,7 +5,7 @@ using UnityEditor;
 using SofaUnity;
 using System;
 
-[InitializeOnLoad]
+//[InitializeOnLoad]
 public class GeomagicInitPlugin
 {
     protected SofaContext m_sofaContext = null;

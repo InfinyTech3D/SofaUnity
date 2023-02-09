@@ -4,11 +4,16 @@ using SofaUnity;
 using System.Collections.Generic;
 
 
-
+/// <summary>
+/// Editor class corresponding to the @sa GeomagicController
+/// Provide interface to be able to set the GeomagicDriver component.
+/// </summary>
 [CustomEditor(typeof(GeomagicController), true)]
 public class GeomagicControllerEditor : Editor
 {
-    /// Method to create parameters GUI
+    /// <summary>
+    /// Method to create GeomagicController UI
+    /// </summary>
     public override void OnInspectorGUI()
     {
         GeomagicController model = this.target as GeomagicController;
@@ -27,10 +32,5 @@ public class GeomagicControllerEditor : Editor
         EditorGUILayout.Toggle("Button2 Mode", model.Button2Status());
         EditorGUILayout.Toggle("Tool in Contact", model.IsToolInContact());
         EditorGUI.EndDisabledGroup();
-
-        //model.m_sofaMesh = (SofaMesh)EditorGUILayout.ObjectField("Beam SofaMesh", model.m_sofaMesh, typeof(SofaMesh), true);
-        //model.BeamDiscretisation = EditorGUILayout.IntField("Beam Discretisation", model.BeamDiscretisation);
-        //model.BeamRadius = EditorGUILayout.Slider("Beam Radius", model.BeamRadius, 0.001f, 30);
-        //model.m_childCameraScript = (GameObject)EditorGUILayout.ObjectField("Child Tip Camera", model.m_childCameraScript, typeof(GameObject), true);
     }
 }

@@ -4,6 +4,11 @@ using UnityEngine;
 using SofaUnity;
 using System;
 
+/// <summary>
+/// GameObject to control a GeomagicDevice on the SOFA simulation side. This component need to be linked with a geomagicDriver
+/// SOFA component. @sa m_geomagicDriver
+/// This component will update the GameObject transform it is assign to with the geomagic device information.
+/// </summary>
 [ExecuteInEditMode]
 public class GeomagicController : MonoBehaviour
 {
@@ -14,47 +19,48 @@ public class GeomagicController : MonoBehaviour
     /// Pointer to the Sofa context this GameObject belongs to.
     protected SofaUnity.SofaContext m_sofaContext = null;
 
+    /// Pointer to the GeomagicDriver SofaComponent it will control.
     [SerializeField]
     protected SofaComponent m_geomagicDriver = null;
 
     /// Pointer to the corresponding SOFA API object
     protected SofaGeomagic m_sofaGeomagic = null;
 
-    public GameObject particles = null;
-    private AudioSource source = null;
-
-
-
+    /// Bool to know if 1st button of the tool is pressed.
     protected bool m_deviceButton1 = false;
+    /// Bool to know if 2nd button of the tool is pressed.
     protected bool m_deviceButton2 = false;
-    
+
+    /// Bool to store a toogle status value when pressing 1st button.
     protected bool m_statusButton1 = false;
+    /// Bool to store a toogle status value when pressing 2nd button.
     protected bool m_statusButton2 = false;
+
+    /// Bool to know if tool is currently in contact, sending some forcefeedback.
     protected bool m_toolInContact = false;
 
-    public bool IsButton1Pressed()
-    {
-        return m_deviceButton1;
-    }
-    public bool IsButton2Pressed()
-    {
-        return m_deviceButton2;
-    }
 
-    public bool Button1Status()
-    {
-        return m_statusButton1;
-    }
-    public bool Button2Status()
-    {
-        return m_statusButton2;
-    }
 
-    public bool IsToolInContact()
-    {
-        return m_toolInContact;
-    }
+    ////////////////////////////////////////////
+    /////   GeomagicController accessors   /////
+    ////////////////////////////////////////////
 
+    /// Accessor to know if 1st button is pressed. @sa m_deviceButton1
+    public bool IsButton1Pressed() { return m_deviceButton1; }
+
+    /// Accessor to know if 2nd button is pressed. @sa m_deviceButton2
+    public bool IsButton2Pressed() { return m_deviceButton2; }
+
+    /// Accessor to know 1st button toogle status. @sa m_statusButton1
+    public bool Button1Status() { return m_statusButton1; }
+    /// Accessor to know 2nd button toogle status. @sa m_statusButton2
+    public bool Button2Status() { return m_statusButton2; }
+
+    /// Accessor to know if tool is currently in contact. @sa m_toolInContact
+    public bool IsToolInContact() { return m_toolInContact; }
+
+
+    /// Getter/setter to the GeomagicDriver SofaComponent object.
     public SofaComponent GeomagicDriver
     {
         get { return m_geomagicDriver; }
@@ -68,24 +74,12 @@ public class GeomagicController : MonoBehaviour
         }
     }
 
-    ////////////////////////////////////////////
-    /////       Object creation API        /////
-    ////////////////////////////////////////////
-
-    /// Method called at GameObject creation. Will search for SofaContext @sa loadContext() which call @sa createObject() . Then call @see awakePostProcess()
-    void Awake()
-    {
-        
-        // get acces to the audio source object
-        //source = GetComponent<AudioSource>();
-    }
-    
 
     ////////////////////////////////////////////
-    /////       Object behavior API        /////
+    /////   GeomagicController public API  /////
     ////////////////////////////////////////////
 
-    // Use this for initialization
+    /// Method call by Unity loop when simulation start. Will call @sa CreateDeviceController and @sa GeomagicDevice_init if possible
     void Start()
     {
         if (GeomagicDriver != null)
@@ -99,6 +93,7 @@ public class GeomagicController : MonoBehaviour
     }
 
 
+    /// Main method to create the controller on the SOFA side.
     protected void CreateDeviceController()
     {
         if (m_geomagicDriver == null)
@@ -119,7 +114,7 @@ public class GeomagicController : MonoBehaviour
     }
 
 
-    // Update is called once per frame
+    /// Method called at each unity step. Will get information from the simulation and update the GAmeobject transform
     void Update()
     {
         if (m_sofaGeomagic != null && m_sofaGeomagic.IsReady())
@@ -166,8 +161,6 @@ public class GeomagicController : MonoBehaviour
                 else
                     m_deviceButton1 = false;
 
-                if (particles)
-                    particles.SetActive(m_deviceButton1);
             }
             else
                 Debug.LogError("EntactManager::Update - No Geomagic found.");
@@ -193,14 +186,6 @@ public class GeomagicController : MonoBehaviour
         else
         {
 
-        }
-
-        if (source)
-        {
-            if (m_deviceButton1 && !source.isPlaying)
-                source.Play();
-            else if (!m_deviceButton1 && source.isPlaying)
-                source.Stop();
         }
 
         //if (Input.GetKeyDown(KeyCode.End))
