@@ -22,7 +22,6 @@
         <MechanicalObject name="dofs" src="@meshLoader" />
 		<TetrahedronSetTopologyContainer name="TetraContainer" src="@meshLoader" />
         <TetrahedronSetTopologyModifier name="Modifier" />
-        <TetrahedronSetTopologyAlgorithms template="Vec3d" name="TopoAlgo" />
         <TetrahedronSetGeometryAlgorithms template="Vec3d" name="GeomAlgo" drawTetrahedra="0" />
 
         <DiagonalMass massDensity="0.01" />
@@ -35,7 +34,6 @@
         <Node name="T1">
 			<TriangleSetTopologyContainer  name="TriContainer1" fileTopology="" tags=" " />
 			<TriangleSetTopologyModifier   name="TriModifier1" />
-			<TriangleSetTopologyAlgorithms name="TriTopoAlgo1" template="Vec3d" />
 			<TriangleSetGeometryAlgorithms name="TriGeomAlgo1" template="Vec3d" />
             <Tetra2TriangleTopologicalMapping input="@../TetraContainer" output="@TriContainer1"/>
             <TriangleSet tags="CarvingSurface" />

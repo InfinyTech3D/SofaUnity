@@ -12,7 +12,7 @@
     <FreeMotionAnimationLoop/>
     <LCPConstraintSolver tolerance="0.001" maxIt="1000"/>
 
-    <EulerImplicitSolver name="ODE solver" rayleighStiffness="0.05" rayleighMass="1.0" />
+    <EulerImplicitSolver name="ODE solver" rayleighStiffness="0.01" rayleighMass="1.0" />
     <CGLinearSolver name="linear solver" iterations="25" tolerance="1e-10" threshold="10e-10" /> 
 
     <Node name="Floor">
@@ -62,7 +62,7 @@
 		
 		<RestShapeSpringsForceField stiffness='1000000' angularStiffness='1000000' external_rest_shape='@../Tool_1/DOFs' points='0' external_points='0' />
         <LCPForceFeedback name="LCPFF1" activate="true" forceCoef="0.001"/>
-        <UncoupledConstraintCorrection useOdeSolverIntegrationFactors="0"/>
+        <GenericConstraintCorrection />
 <!--        
 		<Node name="VisualModel_1" >
             <OglModel name="InstrumentVisualModel1" src="@../../loader_instrument_visu" color="0.2 0.2 1.0 1.0" />
@@ -95,7 +95,7 @@
 		
 		<RestShapeSpringsForceField stiffness='1000000' angularStiffness='1000000' external_rest_shape='@../Tool_2/DOFs2' points='0' external_points='0' />
         <LCPForceFeedback name="LCPFF2" activate="true" forceCoef="0.001"/>
-        <UncoupledConstraintCorrection useOdeSolverIntegrationFactors="0"/>
+        <LinearConstraintCorrection />
 <!--        
 		<Node name="VisualModel_2" >
             <OglModel name="InstrumentVisualModel2" src="@../../loader_instrument_visu" color="0.2 0.2 1.0 1.0" />
