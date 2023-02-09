@@ -105,8 +105,7 @@
     </Node>
 
 	
-    <!-- ADDED: the Mechanical state Controller gathers events from the Omni driver and populates the Mechanical state -->
-    <Node name="Omni">
+    <Node name="Tool">
         <MechanicalObject template="Rigid3" name="DOFs" position="@GeomagicDevice.positionDevice"/>
         <MechanicalStateController template="Rigid3" listening="true" mainDirection="-1.0 0.0 0.0" handleEventTriggersUpdate="true"/>
     </Node>
@@ -117,7 +116,7 @@
 		<MechanicalObject name="instrumentState" template="Rigid3" tags="GeomagicDevice"/>
 		<UniformMass name="mass" totalMass="200" />
 		
-		<RestShapeSpringsForceField stiffness='100000000' angularStiffness='100000000' external_rest_shape='@../Omni/DOFs' points='0' external_points='0'/>
+		<RestShapeSpringsForceField stiffness='100000000' angularStiffness='100000000' external_rest_shape='@../Tool/DOFs' points='0' external_points='0'/>
         <LCPForceFeedback name="LCPFF1" activate="true" forceCoef="0.0001"/> 
         <UncoupledConstraintCorrection/>
 		
