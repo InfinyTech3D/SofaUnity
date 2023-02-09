@@ -109,7 +109,7 @@ public class GeomagicController : MonoBehaviour
 
         if (contextOk)
         {
-            m_sofaGeomagic = new SofaGeomagic(m_sofaContext.GetSimuContext(), m_geomagicDriver.UniqueNameId);
+            m_sofaGeomagic = new SofaGeomagic(m_sofaContext.GetSimuContext(), m_geomagicDriver.DisplayName);
         }
     }
 
