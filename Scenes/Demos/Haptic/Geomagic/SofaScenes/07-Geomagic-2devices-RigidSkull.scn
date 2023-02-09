@@ -6,7 +6,8 @@
     <RequiredPlugin pluginName='SofaHaptics'/>
     
     <DefaultPipeline name="pipeline" depth="6" verbose="0"/>
-    <BruteForceDetection name="detection" />
+    <BruteForceBroadPhase/>
+    <BVHNarrowPhase/>
     <DefaultContactManager name="response" response="FrictionContact" />
     <LocalMinDistance name="proximity" alarmDistance="0.15" contactDistance="0.05" angleCone="0.0" />
     <FreeMotionAnimationLoop/>
@@ -62,7 +63,7 @@
 		
 		<RestShapeSpringsForceField stiffness='1000000' angularStiffness='1000000' external_rest_shape='@../Tool_1/DOFs' points='0' external_points='0' />
         <LCPForceFeedback name="LCPFF1" activate="true" forceCoef="0.001"/>
-        <GenericConstraintCorrection />
+        <LinearSolverConstraintCorrection />
 <!--        
 		<Node name="VisualModel_1" >
             <OglModel name="InstrumentVisualModel1" src="@../../loader_instrument_visu" color="0.2 0.2 1.0 1.0" />
@@ -95,7 +96,7 @@
 		
 		<RestShapeSpringsForceField stiffness='1000000' angularStiffness='1000000' external_rest_shape='@../Tool_2/DOFs2' points='0' external_points='0' />
         <LCPForceFeedback name="LCPFF2" activate="true" forceCoef="0.001"/>
-        <LinearConstraintCorrection />
+        <LinearSolverConstraintCorrection />
 <!--        
 		<Node name="VisualModel_2" >
             <OglModel name="InstrumentVisualModel2" src="@../../loader_instrument_visu" color="0.2 0.2 1.0 1.0" />
