@@ -1,0 +1,138 @@
+<?xml version="1.0" ?>
+<Node name="root" dt="0.01" gravity="0 -9 0" >
+    <RequiredPlugin name="SofaOpenglVisual"/>
+    <VisualStyle displayFlags="hideBehaviorModels hideCollisionModels hideMappings hideForceFields" />
+    <RequiredPlugin name="Geomagic plugin" pluginName="Geomagic" />
+    <RequiredPlugin pluginName='SofaHaptics'/>
+    
+    <DefaultPipeline name="pipeline" depth="6" verbose="0"/>
+    <BruteForceDetection name="detection" />
+    <DefaultContactManager name="response" response="FrictionContact" />
+    <LocalMinDistance name="proximity" alarmDistance="1.5" contactDistance="0.05" angleCone="0.0" />
+    <FreeMotionAnimationLoop/>
+    <LCPConstraintSolver tolerance="0.001" maxIt="1000"/>
+
+    <EulerImplicitSolver name="ODE solver" rayleighStiffness="0.05" rayleighMass="1.0" />
+    <CGLinearSolver name="linear solver" iterations="25" tolerance="1e-10" threshold="10e-10" /> 
+    
+
+    <Node name="Liver">
+        <MeshGmshLoader filename="./mesh/liver2.msh" name="meshLoader" scale="10" rotation="-120 -90 0" translation="0 -2 4"/>
+        <MechanicalObject name="dofs" src="@meshLoader" />
+		<TetrahedronSetTopologyContainer name="TetraContainer" src="@meshLoader" />
+        <TetrahedronSetTopologyModifier name="Modifier" />
+        <TetrahedronSetTopologyAlgorithms template="Vec3d" name="TopoAlgo" />
+        <TetrahedronSetGeometryAlgorithms template="Vec3d" name="GeomAlgo" drawTetrahedra="0" />
+
+        <DiagonalMass massDensity="0.1" />
+        <TetrahedralCorotationalFEMForceField name="FEM" youngModulus="80" poissonRatio="0.3" method="large" />
+        
+        <!--<TetrahedronFEMForceField name="FEM" youngModulus="100" poissonRatio="0.3" 
+        computeGlobalMatrix="false" method="large" topology="@TetraContainer"/>-->
+        
+        <PlaneForceField normal="0 1 0" d="-9.5" stiffness="100000" showPlane="1" showPlaneSize="20"/>
+        <UncoupledConstraintCorrection useOdeSolverIntegrationFactors="0"/>
+        <!--<PrecomputedConstraintCorrection recompute="true"/>-->
+
+        <Node name="Surface">
+			<TriangleSetTopologyContainer  name="TriContainer1" fileTopology="" tags=" " />
+			<TriangleSetTopologyModifier   name="TriModifier1" />
+			<TriangleSetTopologyAlgorithms name="TriTopoAlgo1" template="Vec3d" />
+			<TriangleSetGeometryAlgorithms name="TriGeomAlgo1" template="Vec3d" />
+            <Tetra2TriangleTopologicalMapping input="@../TetraContainer" output="@TriContainer1"/>
+            <TriangleCollisionModel tags="CarvingSurface" group="1"/>
+            <LineCollisionModel  group="1"/>
+            <PointCollisionModel  group="1"/> 
+            <Node name="Visu1">
+                <OglModel name="Visual" color="blue" />
+                <IdentityMapping input="@../" output="@Visual" />
+            </Node>
+        </Node>
+    </Node>
+    
+
+
+
+    <Node name="Floor">
+        <MeshObjLoader name="loaderF" filename="./mesh/cube.obj" scale3d="20 0.5 40" translation="0 -10 0"/>
+        <MeshTopology src="@loaderF" />
+        <MechanicalObject src="@loaderF" />
+        <TriangleCollisionModel simulated="0" moving="0" bothSide="false" group="1"/>
+        <LineCollisionModel simulated="0" moving="0" group="1" />
+        <PointCollisionModel simulated="0" moving="0" group="1"/>
+		<Node name="VisuFloor" >
+            <OglModel name="FloorVisualModel"/>
+            <IdentityMapping input="@../" output="@FloorVisualModel" />
+        </Node>
+    </Node>
+    
+    
+
+    
+    <MeshObjLoader filename="./mesh/dental_instrument_centerline.obj"  name="loader_instrument_col"/>
+    <MeshObjLoader filename="./mesh/dental_instrument.obj"  name="loader_instrument_visu"/>
+    
+    <GeomagicDriver name="GeomagicDevice" deviceName="Left Device" scale="1" drawDeviceFrame="1" drawDevice="0" 
+    positionBase="0 0 -14" orientationBase="0 0.707 0 -0.707" forceFeedBack="@Instrument_1/LCPFF1" forceScale="0.2" manualStart="true"/>
+    
+    <Node name="Tool_1">
+        <MechanicalObject template="Rigid3d" name="DOFs" position="@GeomagicDevice.positionDevice"/>
+        <MechanicalStateController template="Rigid3d" listening="true" mainDirection="-1.0 0.0 0.0" handleEventTriggersUpdate="true"/>
+    </Node>
+    
+    <Node name="Instrument_1" >       
+		<MechanicalObject name="instrumentState1" template="Rigid3d" position="@../GeomagicDevice.positionBase"/>
+		<UniformMass name="mass1" totalMass="200" />
+		
+		<RestShapeSpringsForceField stiffness='100000000' angularStiffness='100000000' external_rest_shape='@../Tool_1/DOFs' points='0' external_points='0' />
+        <LCPForceFeedback name="LCPFF1" activate="true" forceCoef="0.0001"/>
+        <UncoupledConstraintCorrection useOdeSolverIntegrationFactors="0"/>
+<!--        
+		<Node name="VisualModel_1" >
+            <OglModel name="InstrumentVisualModel1" src="@../../loader_instrument_visu" color="0.2 0.2 1.0 1.0"/>
+            <RigidMapping input="@../instrumentState1" output="@InstrumentVisualModel1" />
+        </Node>
+        -->
+        <Node name="CollisionModel_1" >            
+            <MeshTopology src="@../../loader_instrument_col"/>
+            <MechanicalObject src="@../../loader_instrument_col" name="instrumentCollisionState1" />
+            <LineCollisionModel  contactStiffness="100" group="2"/>
+            <PointCollisionModel  contactStiffness="100" group="2" /> 
+            <RigidMapping input="@../instrumentState1" output="@instrumentCollisionState1" />
+        </Node>        
+    </Node>  
+    
+
+    
+    <GeomagicDriver name="GeomagicDevice2" deviceName="Right Device" scale="1" drawDeviceFrame="1" drawDevice="0" 
+    positionBase="0 0 14" orientationBase="0 0.707 0 -0.707" forceFeedBack="@Instrument_2/LCPFF2" forceScale="0.2" manualStart="true"/>
+    
+    <Node name="Tool_2">
+        <MechanicalObject template="Rigid3d" name="DOFs2" position="@GeomagicDevice2.positionDevice"/>
+        <MechanicalStateController template="Rigid3d" listening="true" mainDirection="-1.0 0.0 0.0" handleEventTriggersUpdate="true"/>
+    </Node>
+   
+   
+    <Node name="Instrument_2" >       
+		<MechanicalObject name="instrumentState2" template="Rigid3d" position="@../GeomagicDevice2.positionBase"/>
+		<UniformMass name="mass2" totalMass="200" />
+		
+		<RestShapeSpringsForceField stiffness='100000000' angularStiffness='100000000' external_rest_shape='@../Tool_2/DOFs2' points='0' external_points='0' />
+        <LCPForceFeedback name="LCPFF2" activate="true" forceCoef="0.0001"/>
+        <UncoupledConstraintCorrection useOdeSolverIntegrationFactors="0"/>
+        <!--       
+		<Node name="VisualModel_2" >
+            <OglModel name="InstrumentVisualModel2" src="@../../loader_instrument_visu" color="0.2 0.2 1.0 1.0" />
+            <RigidMapping input="@../instrumentState2" output="@InstrumentVisualModel2" />
+        </Node>
+        -->
+        <Node name="CollisionModel_2" >            
+            <MeshTopology src="@../../loader_instrument_col"/>
+            <MechanicalObject src="@../../loader_instrument_col" name="instrumentCollisionState2" />
+            <LineCollisionModel  contactStiffness="100" group="3"/>
+            <PointCollisionModel  contactStiffness="100" group="3"/> 
+            <RigidMapping input="@../instrumentState2" output="@instrumentCollisionState2" />
+        </Node>      
+    </Node>  
+    
+</Node>
