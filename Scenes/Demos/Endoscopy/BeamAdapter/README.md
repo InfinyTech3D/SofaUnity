@@ -1,1 +1,0 @@
-Beam Adapter SOFA plugin integration
