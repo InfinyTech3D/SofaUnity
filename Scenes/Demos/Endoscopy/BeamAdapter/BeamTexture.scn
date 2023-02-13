@@ -1,13 +1,20 @@
 <?xml version='1.0'?>
 <Node name='root' dt='0.02'  gravity='0 0 0'> 
-    <RequiredPlugin pluginName='SofaMiscCollision'/>
+    <RequiredPlugin name="Sofa.Component.AnimationLoop"/> <!-- Needed to use components [FreeMotionAnimationLoop] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Detection.Algorithm"/> <!-- Needed to use components [BVHNarrowPhase, BruteForceBroadPhase, DefaultPipeline] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Detection.Intersection"/> <!-- Needed to use components [LocalMinDistance] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Geometry"/> <!-- Needed to use components [PointCollisionModel] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Response.Contact"/> <!-- Needed to use components [DefaultContactManager] -->
+    <RequiredPlugin name="Sofa.Component.Constraint.Lagrangian.Correction"/> <!-- Needed to use components [LinearSolverConstraintCorrection] -->
+    <RequiredPlugin name="Sofa.Component.Constraint.Lagrangian.Solver"/> <!-- Needed to use components [LCPConstraintSolver] -->
+    <RequiredPlugin name="Sofa.Component.Constraint.Projective"/> <!-- Needed to use components [FixedConstraint] -->
+    <RequiredPlugin name="Sofa.Component.LinearSolver.Direct"/> <!-- Needed to use components [BTDLinearSolver] -->
+    <RequiredPlugin name="Sofa.Component.ODESolver.Backward"/> <!-- Needed to use components [EulerImplicitSolver] -->
+    <RequiredPlugin name="Sofa.Component.StateContainer"/> <!-- Needed to use components [MechanicalObject] -->
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Dynamic"/> <!-- Needed to use components [EdgeSetGeometryAlgorithms, EdgeSetTopologyContainer, EdgeSetTopologyModifier] -->
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Grid"/> <!-- Needed to use components [RegularGridTopology] -->
+    <RequiredPlugin name="Sofa.Component.Visual"/> <!-- Needed to use components [VisualStyle] -->
     <RequiredPlugin name="BeamAdapter" />
-    <RequiredPlugin name="SofaOpenglVisual"/>
-    <RequiredPlugin name="SofaBoundaryCondition"/> <!-- Needed to use components [FixedConstraint] -->
-    <RequiredPlugin name="SofaConstraint"/> <!-- Needed to use components [FreeMotionAnimationLoop, LCPConstraintSolver, LinearSolverConstraintCorrection, LocalMinDistance] -->
-    <RequiredPlugin name="SofaGeneralLinearSolver"/> <!-- Needed to use components [BTDLinearSolver] -->
-    <RequiredPlugin name="SofaImplicitOdeSolver"/> <!-- Needed to use components [EulerImplicitSolver] -->
-    <RequiredPlugin name="SofaMeshCollision"/> <!-- Needed to use components [PointCollisionModel] -->
 
     <VisualStyle displayFlags='showVisualModels showBehaviorModels showCollisionModels hideMappings hideForceFields' />
     <FreeMotionAnimationLoop />
@@ -17,17 +24,14 @@
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
     <LocalMinDistance name='localmindistance' alarmDistance='3' contactDistance='1' angleCone='0.02'/>
-    <DefaultContactManager name='Response' response='FrictionContact' />
-    <DefaultCollisionGroupManager name='Group' />
-
+    <DefaultContactManager name='Response' response='FrictionContactConstraint' />
 
     <Node  name="NavigationSceneNode">
         <!-- Shape of the catheter -->
         <Node name="topoLines_cath">
-
-            <WireRestShape densityOfBeams="100" keyPoints="0.0 1400" length="1400.0" name="catheterRestShape" 
-            numEdges="200" numEdgesCollis="100" printLog="0" spireDiameter="400" spireHeight="0.0" straightLength="1270" 
-            template="Rigid3d" youngModulus="25e5" youngModulusExtremity="25e5" tags="catheter"/>
+            <WireRestShape densityOfBeams="91" keyPoints="0.0 1400" length="1400.0" name="catheterRestShape" 
+                numEdges="200" numEdgesCollis="100" printLog="0" spireDiameter="400" spireHeight="0.0" straightLength="1270" 
+                template="Rigid3d" youngModulus="25e5" youngModulusExtremity="25e5" tags="catheter"/>
             <EdgeSetTopologyContainer name="meshLinesCath"/>
             <EdgeSetTopologyModifier name="Modifier"/>
             <EdgeSetGeometryAlgorithms name="GeomAlgo" template="Rigid3d" />
@@ -36,7 +40,6 @@
 
         <!-- Interactive catheter and physics on it -->
         <Node name="InstrumentCombined">
-
             <EulerImplicitSolver printLog="false"/>
             <BTDLinearSolver/>
             <RegularGridTopology name="meshLinesCombined" nx="92" ny="1" nz="1" xmax="1.0" xmin="0.0" ymax="0" ymin="0" zmax="1" zmin="1"/>
@@ -44,7 +47,7 @@
             <WireBeamInterpolation WireRestShape="@../topoLines_cath/catheterRestShape" name="InterpolCatheter" printLog="0" radius="0.05" lengthY="2" lengthZ="2" sideLength="2"/>
             <AdaptiveBeamForceFieldAndMass interpolation="@InterpolCatheter" massDensity="0.0155" name="CatheterForceField" />
             <InterventionalRadiologyController listening="true" controlledInstrument="0" instruments="InterpolCatheter" name="m_ircontroller" printLog="0" 
-            speed="0.0" startingPos="0 0 0 0.354 -0.354 0 -0.854" step="0.5" template="Rigid3d" rotationInstrument="0" xtip="0.1"  />
+            speed="0.0" startingPos="0 0 0 0.354 -0.354 0 -0.854" step="0.05" template="Rigid3d" rotationInstrument="0" xtip="0.1"  />
 
             <LinearSolverConstraintCorrection printLog="0" wire_optimization="true"/>
             <FixedConstraint name="FixStart1" indices="91" />
