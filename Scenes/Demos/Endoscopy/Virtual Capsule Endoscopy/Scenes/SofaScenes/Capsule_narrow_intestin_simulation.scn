@@ -1,31 +1,49 @@
 <?xml version="1.0" ?>
 <Node name="root" dt="0.05" showBoundingTree="0" gravity="0 0 0">
-    <VisualStyle displayFlags="showBehaviorModels hideCollisionModels hideForceFields" />
-    <RequiredPlugin pluginName='InteractionTools'/>
-    <RequiredPlugin pluginName='SofaOpenglVisual'/>
-    <RequiredPlugin pluginName='SofaMiscCollision'/>
+    <RequiredPlugin name="Sofa.Component.Collision.Detection.Algorithm"/> <!-- Needed to use components [BVHNarrowPhase, BruteForceBroadPhase, DefaultPipeline] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Detection.Intersection"/> <!-- Needed to use components [MinProximityIntersection] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Geometry"/> <!-- Needed to use components [SphereCollisionModel, TriangleCollisionModel] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Response.Contact"/> <!-- Needed to use components [DefaultContactManager] -->
+    <RequiredPlugin name="Sofa.Component.Constraint.Projective"/> <!-- Needed to use components [FixedConstraint] -->
+    <RequiredPlugin name="Sofa.Component.Engine.Select"/> <!-- Needed to use components [BoxROI] -->
+    <RequiredPlugin name="Sofa.Component.IO.Mesh"/> <!-- Needed to use components [MeshOBJLoader] -->
+    <RequiredPlugin name="Sofa.Component.LinearSolver.Iterative"/> <!-- Needed to use components [CGLinearSolver] -->
+    <RequiredPlugin name="Sofa.Component.Mapping.Linear"/> <!-- Needed to use components [BarycentricMapping] -->
+    <RequiredPlugin name="Sofa.Component.Mass"/> <!-- Needed to use components [DiagonalMass, UniformMass] -->
+    <RequiredPlugin name="Sofa.Component.ODESolver.Backward"/> <!-- Needed to use components [EulerImplicitSolver] -->
+    <RequiredPlugin name="Sofa.Component.SolidMechanics.FEM.Elastic"/> <!-- Needed to use components [TetrahedralCorotationalFEMForceField] -->
+    <RequiredPlugin name="Sofa.Component.StateContainer"/> <!-- Needed to use components [MechanicalObject] -->
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Dynamic"/> <!-- Needed to use components [TetrahedronSetGeometryAlgorithms, TetrahedronSetTopologyContainer, TetrahedronSetTopologyModifier, TriangleSetGeometryAlgorithms, TriangleSetTopologyContainer, TriangleSetTopologyModifier] -->
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Grid"/> <!-- Needed to use components [SparseGridTopology] -->
+    <RequiredPlugin name="Sofa.Component.Topology.Mapping"/> <!-- Needed to use components [Hexa2TetraTopologicalMapping] -->
+    <RequiredPlugin name="Sofa.Component.Visual"/> <!-- Needed to use components [VisualStyle] -->
+    <RequiredPlugin name="Sofa.GL.Component.Rendering3D"/> <!-- Needed to use components [OglModel] -->
+
     
+    <VisualStyle displayFlags="showBehaviorModels hideCollisionModels hideForceFields" />
+    
+    <DefaultAnimationLoop />
     <DefaultPipeline name="default21" verbose="0" depth="1"/>
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
-    <DefaultContactManager name="default22" response="default" />
-    <DefaultCollisionGroupManager name="default23" />
+    <DefaultContactManager name="default22" response="PenalityContactForceField" />
     <MinProximityIntersection name="Proximity" alarmDistance="0.5" contactDistance="0.04" />     
 
     <EulerImplicitSolver name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.1" />
     <CGLinearSolver iterations="20" name="linear solver" tolerance="1.0e-4" threshold="1.0e-4" />
     
-    <MeshObjLoader name="loader" filename="./mesh/intestin_narrow_visu.obj" scale3d="1 1 1"/>
-    <BoxROI name="ROI" box="-4 9.5 2  -2 11.5 4" drawBoxes="0" src="@loader"/>
-    <!--<OglModel name="Visual" src="@loader" color="red"/>-->
-    <SparseGridTopology name="grid" n="10 10 10" position="@ROI.pointsInROI"  />
+    <Node name="colonROI" >
+        <MeshOBJLoader name="loader" filename="./mesh/intestin_narrow_visu.obj" scale3d="1 1 1"/>
+        <BoxROI name="ROI" box="-4 9.5 2  -2 11.5 4" drawBoxes="0" src="@loader"/>
+        <SparseGridTopology name="grid" n="10 10 10" position="@ROI.pointsInROI"  />
+    </Node>
 
     <Node name="Colon">
-        <MechanicalObject src="@../grid" name="dofs" />
+        <MechanicalObject src="@../colonROI/grid" name="dofs" />
         <TetrahedronSetTopologyContainer name="Container" />
         <TetrahedronSetTopologyModifier name="Modifier" />
         <TetrahedronSetGeometryAlgorithms name="GeomAlgo" template="Vec3d" />
-        <Hexa2TetraTopologicalMapping name="default28" input="@../grid" output="@Container" />
+        <Hexa2TetraTopologicalMapping name="default28" input="@../colonROI/grid" output="@Container" />
         
         
         <BoxROI name="FixedROI_1" box="-4.1 9.4 1.9  -3.7 11.6 4.1" drawBoxes="0" position="@dofs.rest_position"/>
@@ -43,10 +61,10 @@
 
         <DiagonalMass totalMass="0.1" />        
         <TetrahedralCorotationalFEMForceField name="FEM" youngModulus="60" poissonRatio="0.3" method="large" />
-        
+
         <Node name="Colon_Collision">
-            <MechanicalObject name="collision" src="@../../ROI" />
-            <TriangleSetTopologyContainer  name="TriContainer" position="@../../ROI.pointsInROI" triangles="@../../ROI.trianglesInROI" edges="@../../ROI.edgesInROI"/>
+            <MechanicalObject name="collision" src="@../../colonROI/ROI" />
+            <TriangleSetTopologyContainer  name="TriContainer" triangles="@../../colonROI/ROI.trianglesInROI" />
 			<TriangleSetTopologyModifier   name="TriModifier" />
 			<TriangleSetGeometryAlgorithms name="GeomAlgo" template="Vec3d" />
             
@@ -54,15 +72,15 @@
             
             <BarycentricMapping input="@.." output="@collision" />
         </Node>
-       
+
         <Node name="Colon_Visu">
-            <MeshObjLoader name="meshVisu" filename="mesh/intestin_narrow_visu.obj" handleSeams="1" scale3d="1 1 1"/>
+            <MeshOBJLoader name="meshVisu" filename="mesh/intestin_narrow_visu.obj" handleSeams="1" scale3d="1 1 1"/>
             <OglModel name="Visual" src="@meshVisu" />
             <BarycentricMapping input="@.." output="@Visual" />
         </Node>
         
 	</Node>
-        
+    
 
     <Node name="Capsule">
         <MechanicalObject name="capsulePos" position="-2.7 10.7 2.4 " />
@@ -70,5 +88,4 @@
         
         <SphereCollisionModel radius="0.1" contactStiffness="1"/>
     </Node>
-
 </Node>
