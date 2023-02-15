@@ -1,19 +1,29 @@
 <?xml version="1.0" ?>
 <Node name="root" dt="0.03333">
-    <RequiredPlugin pluginName='SofaOpenglVisual'/>
-    <RequiredPlugin pluginName='SofaMiscCollision'/>
-	<RequiredPlugin pluginName='VirtualXRay'/>
-	<RequiredPlugin pluginName='SofaGeneralDeformable'/> <!-- Needed to use components [RegularGridSpringForceField, ]-->
-	<RequiredPlugin pluginName='SofaImplicitOdeSolver'/> <!-- Needed to use components [EulerImplicitSolver, ]-->
-	<RequiredPlugin pluginName='SofaLoader'/> <!-- Needed to use components [MeshObjLoader, ]-->
-	<RequiredPlugin pluginName='SofaMeshCollision'/> <!-- Needed to use components [TriangleCollisionModel, LineCollisionModel, PointCollisionModel, ]-->
+    <RequiredPlugin name="Sofa.Component.Collision.Detection.Algorithm"/> <!-- Needed to use components [BVHNarrowPhase, BruteForceBroadPhase, DefaultPipeline] -->  
+    <RequiredPlugin name="Sofa.Component.Collision.Detection.Intersection"/> <!-- Needed to use components [MinProximityIntersection] -->  
+    <RequiredPlugin name="Sofa.Component.Collision.Geometry"/> <!-- Needed to use components [LineCollisionModel, PointCollisionModel, TriangleCollisionModel] -->  
+    <RequiredPlugin name="Sofa.Component.Collision.Response.Contact"/> <!-- Needed to use components [DefaultContactManager] -->  
+    <RequiredPlugin name="Sofa.Component.IO.Mesh"/> <!-- Needed to use components [MeshOBJLoader] -->  
+    <RequiredPlugin name="Sofa.Component.LinearSolver.Iterative"/> <!-- Needed to use components [CGLinearSolver] -->  
+    <RequiredPlugin name="Sofa.Component.Mapping.Linear"/> <!-- Needed to use components [BarycentricMapping, IdentityMapping] -->  
+    <RequiredPlugin name="Sofa.Component.Mass"/> <!-- Needed to use components [UniformMass] -->  
+    <RequiredPlugin name="Sofa.Component.ODESolver.Backward"/> <!-- Needed to use components [EulerImplicitSolver] -->  
+    <RequiredPlugin name="Sofa.Component.SolidMechanics.Spring"/> <!-- Needed to use components [RegularGridSpringForceField] -->  
+    <RequiredPlugin name="Sofa.Component.StateContainer"/> <!-- Needed to use components [MechanicalObject] -->  
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Constant"/> <!-- Needed to use components [MeshTopology] -->  
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Grid"/> <!-- Needed to use components [RegularGridTopology] -->  
+    <RequiredPlugin name="Sofa.GL.Component.Rendering3D"/> <!-- Needed to use components [OglModel] --> 
+	<RequiredPlugin name='VirtualXRay'/>
+	
+	<DefaultAnimationLoop />
+    <DefaultVisualManagerLoop />
     
-	<DefaultPipeline verbose="0" depth="10" draw="0" />
+    <DefaultPipeline verbose="0" depth="10" draw="0" />
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
     <MinProximityIntersection name="Proximity" alarmDistance="0.75" contactDistance="0.5" />
-    <DefaultContactManager name="Response" response="default" />
-    <DefaultCollisionGroupManager name="Group" />
+    <DefaultContactManager name="Response" response="PenalityContactForceField" />
     
     <Node name="Torus">
         <EulerImplicitSolver name="cg_odesolver" printLog="false" />
@@ -23,19 +33,19 @@
         <RegularGridTopology nx="6" ny="5" nz="2" xmin="-7.5" xmax="7.5" ymin="-6" ymax="6" zmin="-1.75" zmax="1.75" />
         <RegularGridSpringForceField name="Springs" stiffness="350" damping="1" />
         <Node name="VisuTorus" tags="Visual">
-            <MeshObjLoader name="meshLoader_0" filename="mesh/torus2_scale3.obj" handleSeams="1" />
+            <MeshOBJLoader name="meshLoader_0" filename="mesh/torus2_scale3.obj" handleSeams="1" />
             <OglModel name="VisualTorus" src="@meshLoader_0" color="blue" />
             <BarycentricMapping input="@.." output="@VisualTorus" />
         </Node>
 		
 		<Node name="XrayTorus" >
-            <MeshObjLoader name="loaderX0" filename="mesh/torus2_scale3.obj" handleSeams="1"/>
+            <MeshOBJLoader name="loaderX0" filename="mesh/torus2_scale3.obj" handleSeams="1"/>
             <XRayModel src="@loaderX0" density="600.0" isInner="true"/>
             <BarycentricMapping input="@.." />
         </Node>
 		
         <Node name="Surf">
-            <MeshObjLoader name="loader" filename="mesh/torus2_scale3.obj" />
+            <MeshOBJLoader name="loader" filename="mesh/torus2_scale3.obj" />
             <MeshTopology src="@loader" />
             <MechanicalObject src="@loader" />
             <TriangleCollisionModel />
@@ -53,19 +63,19 @@
         <RegularGridTopology nx="6" ny="5" nz="3" xmin="-11" xmax="11" ymin="-7" ymax="7" zmin="-4" zmax="4" />
         <RegularGridSpringForceField name="Springs" stiffness="350" damping="1" />
         <Node name="VisuDragon" tags="Visual">
-            <MeshObjLoader name="meshLoader_1" filename="mesh/dragon.obj" handleSeams="1" />
+            <MeshOBJLoader name="meshLoader_1" filename="mesh/dragon.obj" handleSeams="1" />
             <OglModel name="VisualDragon" src="@meshLoader_1" color="red" />
             <BarycentricMapping input="@.." output="@VisualDragon" />
         </Node>
 		
 		<Node name="XrayDragon" >
-            <MeshObjLoader name="loaderX1" filename="mesh/dragon.obj" handleSeams="1"/>
+            <MeshOBJLoader name="loaderX1" filename="mesh/dragon.obj" handleSeams="1"/>
             <XRayModel src="@loaderX1" density="400.0" isInner="true"/>
             <BarycentricMapping input="@.." />
         </Node>
 		
         <Node name="Surf">
-            <MeshObjLoader name="loader" filename="mesh/dragon.obj" />
+            <MeshOBJLoader name="loader" filename="mesh/dragon.obj" />
             <MeshTopology src="@loader" />
             <MechanicalObject src="@loader" />
             <TriangleCollisionModel />
@@ -83,51 +93,51 @@
         <RegularGridTopology nx="6" ny="3" nz="5" xmin="-10" xmax="8" ymin="-3" ymax="2.5" zmin="-7" zmax="7" />
         <RegularGridSpringForceField name="Springs" stiffness="350" damping="1" />
 		<Node name="VisuBody" tags="Visual">
-            <MeshObjLoader name="loader_VisuBody" filename="mesh/frog_body.obj" />
+            <MeshOBJLoader name="loader_VisuBody" filename="mesh/frog_body.obj" />
 			<OglModel name="VisualBody" src="@loader_VisuBody" normals="0" color="0.17 0.70 0.05" />
 			<BarycentricMapping input="@.." output="@VisualBody" />
 		</Node>
 		<Node name="XrayBody" >
-            <MeshObjLoader name="loaderX2" filename="mesh/frog_body.obj" handleSeams="1"/>
+            <MeshOBJLoader name="loaderX2" filename="mesh/frog_body.obj" handleSeams="1"/>
             <XRayModel src="@loaderX2" density="600.0" isInner="true"/>
             <BarycentricMapping input="@.." />
         </Node>
 		
 		<Node name="VisuEyes" tags="Visual">
-            <MeshObjLoader name="loader_VisuEyes" filename="mesh/frog_eyes.obj" />
+            <MeshOBJLoader name="loader_VisuEyes" filename="mesh/frog_eyes.obj" />
 			<OglModel name="VisualEyes" src="@loader_VisuEyes" normals="0" color="0.04 0.19 0.52" />
 			<BarycentricMapping input="@.." output="@VisualEyes" />
 		</Node>
 		<Node name="XrayEyes" >
-            <MeshObjLoader name="loaderX3" filename="mesh/frog_eyes.obj" handleSeams="1"/>
+            <MeshOBJLoader name="loaderX3" filename="mesh/frog_eyes.obj" handleSeams="1"/>
             <XRayModel src="@loaderX3" density="1000.0" isInner="true"/>
             <BarycentricMapping input="@.." />
         </Node>
 		
 		<Node name="VisuEyebrows" tags="Visual">
-            <MeshObjLoader name="loader_VisuEyebrows" filename="mesh/frog_eyebrows.obj" />
+            <MeshOBJLoader name="loader_VisuEyebrows" filename="mesh/frog_eyebrows.obj" />
 			<OglModel name="VisualEyebrows" src="@loader_VisuEyebrows" normals="0" color="0.44 0.43 0.00" />
 			<BarycentricMapping input="@.." output="@VisualEyebrows" />
 		</Node>
 		<Node name="XrayEyebrows" >
-            <MeshObjLoader name="loaderX4" filename="mesh/frog_eyebrows.obj" handleSeams="1"/>
+            <MeshOBJLoader name="loaderX4" filename="mesh/frog_eyebrows.obj" handleSeams="1"/>
             <XRayModel src="@loaderX4" density="1000.0" isInner="true"/>
             <BarycentricMapping input="@.." />
         </Node>
 		
 		<Node name="VisuLips" tags="Visual">
-            <MeshObjLoader name="loader_VisuLips" filename="mesh/frog_lips.obj" />
+            <MeshOBJLoader name="loader_VisuLips" filename="mesh/frog_lips.obj" />
 			<OglModel name="VisualLips" src="@loader_VisuLips" normals="0" color="0.47 0.25 0.03" />
 			<BarycentricMapping input="@.." output="@VisualLips" />
 		</Node>
 		<Node name="XrayLips" >
-            <MeshObjLoader name="loaderX5" filename="mesh/frog_lips.obj" handleSeams="1"/>
+            <MeshOBJLoader name="loaderX5" filename="mesh/frog_lips.obj" handleSeams="1"/>
             <XRayModel src="@loaderX5" density="1000.0" isInner="true"/>
             <BarycentricMapping input="@.." />
         </Node>
 		
         <Node name="Surf">
-            <MeshObjLoader name="loader" filename="mesh/frog-push25.obj" />
+            <MeshOBJLoader name="loader" filename="mesh/frog-push25.obj" />
             <MeshTopology src="@loader" />
             <MechanicalObject src="@loader" />
             <TriangleCollisionModel />
@@ -138,19 +148,19 @@
     </Node>
     
     <Node name="Floor">
-        <MeshObjLoader name="loader" filename="mesh/floor2b_collision.obj" scale="0.5" translation="0 -10 0"/>
+        <MeshOBJLoader name="loader" filename="mesh/floor2b_collision.obj" scale="0.5" translation="0 -10 0"/>
         <MeshTopology src="@loader" />
         <MechanicalObject src="@loader" />
         <TriangleCollisionModel simulated="0" moving="0" />
         <LineCollisionModel simulated="0" moving="0" />
         <PointCollisionModel simulated="0" moving="0" />
 		<Node name="VisuFloor" tags="Visual">
-			<MeshObjLoader name="loader" filename="mesh/floor2b.obj" scale="0.5" translation="0 -10 0"/>
+			<MeshOBJLoader name="loader" filename="mesh/floor2b.obj" scale="0.5" translation="0 -10 0"/>
 			<OglModel name="VisuFloor" src="@loader" />
 		</Node>
 		
 		<Node name="XrayFloor" >
-			<MeshObjLoader name="loaderX5" filename="mesh/floor2b.obj" handleSeams="1" scale="0.5" translation="0 -10 0"/>
+			<MeshOBJLoader name="loaderX5" filename="mesh/floor2b.obj" handleSeams="1" scale="0.5" translation="0 -10 0"/>
             <XRayModel name="XrayVisuFloor" src="@loaderX5" density="60.0"/>
         </Node>
     </Node>

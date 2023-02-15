@@ -9,7 +9,7 @@
     <BVHNarrowPhase/>
     <MinProximityIntersection name="Proximity" alarmDistance="1.5" contactDistance="1" />
 
-    <DefaultContactManager name="Response" response="FrictionContact" />
+    <DefaultContactManager name="Response" response="FrictionContactConstraint" />
     <Node name="Snake" >
         <SparseGridRamificationTopology name="grid" n="4 12 3" fileTopology="mesh/snake_body.obj" nbVirtualFinerLevels="3" finestConnectivity="0"/>
 

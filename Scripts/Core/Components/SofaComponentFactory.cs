@@ -107,7 +107,7 @@ namespace SofaUnity
             Func<GameObject, SofaBaseComponent> pluginMethod = (gameO) => null;
             s_componentFactory.Add("SofaRequiredPlugin", pluginMethod);
 
-            Func<GameObject, SofaBaseComponent> visualCompoMethod = (gameO) => null;
+            Func<GameObject, SofaBaseComponent> visualCompoMethod = (gameO) => gameO.AddComponent<SofaComponent>();
             s_componentFactory.Add("SofaVisualComponent", visualCompoMethod);
 
             Func<GameObject, SofaBaseComponent> DefaultVisualManagerLoop = (gameO) => null;
@@ -150,6 +150,7 @@ namespace SofaUnity
             }
             else
             {
+                //Debug.LogWarning("DestroyImmediate: " + compoGO.name + " Of type: " + componentType);
                 GameObject.DestroyImmediate(compoGO);
             }
             
