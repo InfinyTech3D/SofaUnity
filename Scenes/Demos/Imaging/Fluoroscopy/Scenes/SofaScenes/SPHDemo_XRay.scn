@@ -1,28 +1,36 @@
 <?xml version="1.0" ?>
 <Node dt="0.01" gravity="0 -10 0" bbox="-5 -5 -5 5 5 5">
-    <RequiredPlugin name="SofaOpenglVisual"/>
+    <RequiredPlugin name="Sofa.Component.Mass"/> <!-- Needed to use components [UniformMass] -->  
+    <RequiredPlugin name="Sofa.Component.ODESolver.Forward"/> <!-- Needed to use components [EulerExplicitSolver] -->  
+    <RequiredPlugin name="Sofa.Component.SceneUtility"/> <!-- Needed to use components [InfoComponent] -->  
+    <RequiredPlugin name="Sofa.Component.StateContainer"/> <!-- Needed to use components [MechanicalObject] -->  
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Dynamic"/> <!-- Needed to use components [PointSetTopologyContainer, PointSetTopologyModifier] -->  
+    <RequiredPlugin name="Sofa.Component.Visual"/> <!-- Needed to use components [VisualStyle] -->  
+    <RequiredPlugin name='VirtualXRay'/>
     <RequiredPlugin name="SofaSphFluid"/>
-	<RequiredPlugin name='VirtualXRay'/>
-	<RequiredPlugin name='SofaBoundaryCondition'/> <!-- Needed to use components [PlaneForceField, ]-->
-	<RequiredPlugin name='SofaImplicitOdeSolver'/> <!-- Needed to use components [EulerImplicitSolver, ]-->
-	<RequiredPlugin name='SofaLoader'/> <!-- Needed to use components [MeshObjLoader, ]-->
-	<RequiredPlugin name='SofaMiscCollision'/> <!-- Needed to use components [DefaultCollisionGroupManager, ]-->
 
     <VisualStyle displayFlags="hideBehaviorModels hideForceFields" />
 
-	<DefaultPipeline verbose="0" depth="10" draw="0" />
+    <DefaultAnimationLoop />
+    <DefaultPipeline verbose="0" depth="10" draw="0" />
+    <GenericConstraintSolver tolerance="1e-4" maxIt="200"   printLog="0"/>
+    <DefaultPipeline verbose="0" depth="10" draw="0" />
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
-    <MinProximityIntersection name="Proximity" alarmDistance="0.75" contactDistance="0.5" />
-    <DefaultContactManager name="Response" response="default" />
-    <DefaultCollisionGroupManager name="Group" />
+    <MinProximityIntersection name="Proximity" alarmDistance="0.8" contactDistance="0.4" />
+    <DefaultContactManager name="Response" response="PenalityContactForceField" />
+
+    <Node name="FGrid">
+        <RegularGridTopology nx="5" ny="40" nz="5" xmin="-1.5" xmax="0" ymin="2" ymax="20" zmin="-1.5" zmax="0" />
+        <MechanicalObject name="gridDofs" />
+    </Node>
+   
    
     <Node name="Fluid">
 	    <EulerImplicitSolver name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.1" />
 		<CGLinearSolver iterations="25" name="linear solver" tolerance="1.0e-9" threshold="1.0e-9" />
-        <MechanicalObject name="MModel" showObject="1"/>
-        
-        <RegularGridTopology nx="5" ny="40" nz="5" xmin="-1.5" xmax="0" ymin="2" ymax="20" zmin="-1.5" zmax="0" drawEdges="0"/>
+        <MechanicalObject name="MModel" position="@../FGrid/gridDofs.position"/>
+                
         <UniformMass name="M1" vertexMass="1" />
         <SpatialGridContainer cellWidth="0.75" />
         <SPHFluidForceField radius="1.0" density="15" kernelType="1" viscosityType="2" viscosity="10" pressure="1000" surfaceTension="-1000" printLog="0" />       
