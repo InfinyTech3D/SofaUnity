@@ -9,13 +9,18 @@ public class SofaGraphicOGL_ApplyUS : AbtractSofaGraphicCall
     Texture2D m_tex2D_US;
 
     public string SofaPath = "/Renderer";
+    [SerializeField]
+    private int widthResolution = 512;
+
+    [SerializeField]
+    private int heightResolution = 512;
 
     protected override int InitCall() 
     {
         GameObject plane_US = GameObject.Find("Plane_US");
         if (plane_US != null)
         {
-            m_tex2D_US = new Texture2D(512, 512, TextureFormat.RGBAFloat, false); //US does not allow half float
+            m_tex2D_US = new Texture2D(widthResolution, heightResolution, TextureFormat.RGBAFloat, false); //US does not allow half float
             m_tex2D_US.Apply();
 
             plane_US.transform.GetComponent<Renderer>().material.mainTexture = m_tex2D_US;

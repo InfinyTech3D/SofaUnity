@@ -55,7 +55,7 @@
             <MechanicalObject name="mechanicalDofs" />
             <UniformMass  totalMass="1" />
             <HexahedronFEMForceField template="Vec3d" name="FEM" method="large" poissonRatio="0.3" youngModulus="3000" />
-            <BoxROI name="bbox" drawBoxes="true" box="0.0 0.05 -0.1   0.05 0.35 0.25
+            <BoxROI name="bbox" drawBoxes="0" box="0.0 0.05 -0.1   0.05 0.35 0.25
                                                       0.32 0.05 -0.1  0.38 0.35 0.25
                                                       0.0 0.28 -0.1   0.38 0.35 0.25" />
             <FixedConstraint  name="FixedConstraint" indices="@bbox.indices" />
@@ -243,6 +243,8 @@
         optixLoggingLevel="0" rayMaxDepth="12" debugStage="3" debugUnmapTexture="false"
         gainIntensity="3.0" 
         transducer="@USTransducer" 
+        width="1024"
+        height="1024"
     />
 
 </Node>
