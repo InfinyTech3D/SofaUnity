@@ -31,6 +31,7 @@ public class SofaGraphicOGL_ApplyUS : AbtractSofaGraphicCall
                 m_tex2D_US.GetNativeTexturePtr(), m_tex2D_US.width, m_tex2D_US.height, SofaPath);
 
             Debug.Log("Created US Texture with ID " + m_tex2D_US.GetNativeTexturePtr());
+            //int test = (int)(m_tex2D_US.GetNativeTexturePtr());
             return renderID;
         }
         return -1;
@@ -39,7 +40,9 @@ public class SofaGraphicOGL_ApplyUS : AbtractSofaGraphicCall
     protected override void BeforeDestroy()
     {
         if (m_tex2D_US)
+        {
             Destroy(m_tex2D_US);
+        }
     }
 
 }

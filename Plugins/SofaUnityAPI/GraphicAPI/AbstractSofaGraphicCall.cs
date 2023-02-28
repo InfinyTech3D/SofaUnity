@@ -29,7 +29,7 @@ public abstract class AbtractSofaGraphicCall : MonoBehaviour
         string graphicVersion = SystemInfo.graphicsDeviceVersion;
         if (!graphicVersion.Contains("OpenGL")) // only openGL version is supported
         {
-            Debug.LogError("SofaGraphicCall - XRay rendering is only available with Unity in OpenGL mode.");
+            Debug.LogError("SofaGraphicCall - XRay and Ultrasound rendering are only available with Unity in OpenGL mode.");
             yield break;
         }
 
