@@ -861,6 +861,17 @@ public class SofaBaseMeshAPI : SofaBaseAPI
 
     }
 
+    public void SetPositions(float[] vertices)
+    {
+        if (!m_isReady)
+            return;
+
+        int resUpdate = sofaMeshAPI_setVertices(m_simu, m_name, vertices);
+        if (resUpdate < 0)
+            Debug.LogError("SofaBaseMeshAPI updateMesh: " + m_name + " return error: " + SofaDefines.msg_error[resUpdate]);
+
+    }
+
 
     /// Method to set new vertices position to this mesh
     public void SetRestPositions(float[] vertices)
