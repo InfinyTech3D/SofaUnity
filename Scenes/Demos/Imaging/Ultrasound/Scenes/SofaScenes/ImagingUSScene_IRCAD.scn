@@ -18,14 +18,13 @@
         <Node name="USTransducerControl" >
             <Node name="FreeObject" >
                 <MechanicalObject name="controllerDOF" template="Rigid3d" position="0.15 0.04 0.142812  0.0 0.0 0.0 1.0" showObject="false" showObjectScale="0.02" />
-            <LinearMovementConstraint indices="0" keyTimes="0 4 10 20 30" 
-                movements="0.0 0.0 0.0     0.0 0.0 0.0
-                           0.0 0.03 -0.05   0.0 0.0 0.0    
-                           0.0 0.0 0.05    0.0 0.0 0.0
-                           0.0 0.0 -0.05   0.0 0.0 0.0    
-                           0.0 0.0 0.05    0.0 0.0 0.0"
-           />
-
+                <LinearMovementConstraint indices="0" keyTimes="0 4 10 20 30" 
+                    movements="0.0 0.0 0.0     0.0 0.0 0.0
+                               0.0 0.03 -0.05   0.0 0.0 0.0    
+                               0.0 0.0 0.05    0.0 0.0 0.0
+                               0.0 0.0 -0.05   0.0 0.0 0.0    
+                               0.0 0.0 0.05    0.0 0.0 0.0"
+               />
             </Node>
 
             <MechanicalObject name="USTransducerDOF" template="Rigid3d" position="0.15 0.04 0.142812  0.0 0.0 0.0 1.0" showObject="false" showObjectScale="0.02" />
@@ -63,12 +62,12 @@
 
             <Node name="SKIN">
                 <MeshOBJLoader name="loader" filename="ircad11/skin.obj" triangulate="true" scale3d="0.001 0.001 0.001" flipNormals="true"/>
-                <Node name="Visual" >
+                <Node name="Visual_SKIN" >
                     <OglModel src="@../loader" color="1.0 0.8 0.8"/>
                     <BarycentricMapping />
                 </Node>
 
-                <Node name="US" >
+                <Node name="US_SKIN" >
                     <USModel name="optixmodel" src="@../loader" 
                         impedance="1.38" attenuation="0.63" scatteringDensity="0.5" scatteringMu="0.5" scatteringSigma="0.0" specularity="1.0"
                         outsideImpedance="1.38" outsideAttenuation="1e-8" outsideScatteringDensity="0.0" outsideScatteringMu="0.0" outsideScatteringSigma="0.0" outsideSpecularity="1.0"
@@ -76,7 +75,7 @@
                     <!-- GEL |  FAT |  FAT -->
                     <BarycentricMapping />
                 </Node>
-                <Node name="Collision" >
+                <Node name="Collision_SKIN" >
                     <MechanicalObject src="@../loader" />
                     <TriangleSetTopologyContainer src="@../loader" />
                     <TriangleCollisionModel />
@@ -86,12 +85,11 @@
             </Node>
             <Node name="AORTA" >
                 <MeshOBJLoader name="loader" filename="ircad11/aorta.obj" triangulate="true" scale3d="0.001 0.001 0.001" flipNormals="true"/>
-                <Node name="Visual" >
-
+                <Node name="Visual_AORTA" >
                     <OglModel src="@../loader" />
                     <BarycentricMapping input="@../../mechanicalDofs"/>                
                 </Node>
-                <Node name="US" >
+                <Node name="US_AORTA" >
                     <USModel name="optixmodel" src="@../loader" 
                             impedance="1.61" attenuation="0.18" scatteringDensity="0.0"  scatteringMu="0.001" scatteringSigma="0.01" specularity="0.001"
                             outsideImpedance="1.38" outsideAttenuation="0.63" outsideScatteringDensity="0.5" outsideScatteringMu="0.5" outsideScatteringSigma="0.0" outsideSpecularity="1.0"
@@ -102,13 +100,12 @@
             </Node>
             <Node name="CAVA" >
                 <MeshOBJLoader name="loader" filename="ircad11/cava.obj" triangulate="true" scale3d="0.001 0.001 0.001" flipNormals="true"/>
-                <Node name="Visual" >
-
+                <Node name="Visual_CAVA" >
                     <OglModel src="@../loader" />
                     <BarycentricMapping input="@../../mechanicalDofs"/>
                 </Node>
 
-                <Node name="US" >
+                <Node name="US_CAVA" >
                     <USModel name="optixmodel" src="@../loader" 
                             impedance="1.61" attenuation="0.18" scatteringDensity="0.0"  scatteringMu="0.001" scatteringSigma="0.01" specularity="0.001"
                             outsideImpedance="1.38" outsideAttenuation="0.63" outsideScatteringDensity="0.5" outsideScatteringMu="0.5" outsideScatteringSigma="0.0" outsideSpecularity="1.0"
@@ -119,12 +116,12 @@
             </Node>
             <Node name="PORTA" >
                 <MeshOBJLoader name="loader" filename="ircad11/porta.obj" triangulate="true" scale3d="0.001 0.001 0.001" flipNormals="true"/>
-                <Node name="Visual" >
+                <Node name="Visual_PORTA" >
                     <OglModel src="@../loader" />
                     <BarycentricMapping input="@../../mechanicalDofs"/>                
                 </Node>
 
-                <Node name="US" >
+                <Node name="US_PORTA" >
                     <USModel name="optixmodel" src="@../loader" 
                             impedance="1.61" attenuation="0.18" scatteringDensity="0.0"  scatteringMu="0.001" scatteringSigma="0.01" specularity="0.001"
                             outsideImpedance="1.38" outsideAttenuation="0.63" outsideScatteringDensity="0.5" outsideScatteringMu="0.5" outsideScatteringSigma="0.0" outsideSpecularity="1.0"
@@ -135,12 +132,12 @@
             </Node>
             <Node name="LIVER" >
                 <MeshOBJLoader name="loader" filename="ircad11/liver.obj" triangulate="true" scale3d="0.001 0.001 0.001" flipNormals="true"/>
-                <Node name="Visual" >
+                <Node name="Visual_LIVER" >
                     <OglModel src="@../loader" />
                     <BarycentricMapping input="@../../mechanicalDofs"/>                
                 </Node>
 
-                <Node name="US" >
+                <Node name="US_LIVER" >
                     <USModel name="optixmodel" src="@../loader" 
                             outsideImpedance="1.38" outsideAttenuation="0.63" outsideScatteringDensity="0.5" outsideScatteringMu="0.5" outsideScatteringSigma="0.0" outsideSpecularity="1.0"
                             impedance="1.65" attenuation="0.7" scatteringDensity="0.6"  scatteringMu="0.4" scatteringSigma="0.3" specularity="1.0"
@@ -151,12 +148,12 @@
             </Node>
             <Node name="GALLBLADDER" >
                 <MeshOBJLoader name="loader" filename="ircad11/gallbladder.obj" triangulate="true" scale3d="0.001 0.001 0.001" flipNormals="true"/>
-                <Node name="Visual" >
+                <Node name="Visual_GALLBLADDER" >
                     <OglModel src="@../loader" />
                     <BarycentricMapping input="@../../mechanicalDofs"/>
                 </Node>
                 
-                <Node name="US" >
+                <Node name="US_GALLBLADDER" >
                     <USModel name="optixmodel" src="@../loader" 
                         outsideImpedance="1.38" outsideAttenuation="0.63" outsideScatteringDensity="0.5" outsideScatteringMu="0.5" outsideScatteringSigma="0.0" outsideSpecularity="1.0"
                         impedance="1.62" attenuation="1.0" scatteringDensity="0.6"  scatteringMu="0.4" scatteringSigma="0.3" specularity="1.0"
@@ -167,12 +164,12 @@
             </Node>
             <Node name="RIGHT_KIDNEY" >
                 <MeshOBJLoader name="loader" filename="ircad11/right_kidney.obj" triangulate="true" scale3d="0.001 0.001 0.001" flipNormals="true"/>
-                <Node name="Visual" >
+                <Node name="Visual_RIGHT_KIDNEY" >
                     <OglModel src="@../loader" />
                     <BarycentricMapping input="@../../mechanicalDofs"/>                
                 </Node>
 
-                <Node name="US" >
+                <Node name="US_RIGHT_KIDNEY" >
                     <USModel name="optixmodel" src="@../loader" 
                         impedance="1.62" attenuation="1.0" scatteringDensity="0.6"  scatteringMu="0.4" scatteringSigma="0.3" specularity="0.2"
                         outsideImpedance="1.99" outsideAttenuation="1.0" outsideScatteringDensity="0.6" outsideScatteringMu="0.4" outsideScatteringSigma="0.3" outsideSpecularity="1.0"
@@ -184,12 +181,12 @@
             </Node>
             <Node name="LEFT_KIDNEY" >
                 <MeshOBJLoader name="loader" filename="ircad11/left_kidney.obj" triangulate="true" scale3d="0.001 0.001 0.001" flipNormals="true"/>
-                <Node name="Visual" >
+                <Node name="Visual_LEFT_KIDNEY" >
                     <OglModel src="@../loader" />
                     <BarycentricMapping input="@../../mechanicalDofs"/>                
                 </Node>
 
-                <Node name="US" >
+                <Node name="US_LEFT_KIDNEY" >
                     <USModel name="optixmodel" src="@../loader" 
                         impedance="1.62" attenuation="1.0" scatteringDensity="0.6"  scatteringMu="0.4" scatteringSigma="0.3" specularity="0.2"
                         outsideImpedance="1.99" outsideAttenuation="1.0" outsideScatteringDensity="0.6" outsideScatteringMu="0.4" outsideScatteringSigma="0.3" outsideSpecularity="1.0"
@@ -200,13 +197,13 @@
             </Node>
             <Node name="RIGHT_SUPRARRENAL" >
                 <MeshOBJLoader name="loader" filename="ircad11/right_suprarrenal.obj" triangulate="true" scale3d="0.001 0.001 0.001" flipNormals="true"/>
-                <Node name="Visual" >
+                <Node name="Visual_RIGHT_SUPRARRENAL" >
 
                     <OglModel src="@../loader" />
                     <BarycentricMapping input="@../../mechanicalDofs"/>                
                 </Node>
 
-                <Node name="US" >
+                <Node name="US_RIGHT_SUPRARRENAL" >
                     <USModel name="optixmodel" src="@../loader" 
                         impedance="1.62" attenuation="1.0" scatteringDensity="0.6"  scatteringMu="0.4" scatteringSigma="0.3" specularity="1.0"
                         outsideImpedance="1.38" outsideAttenuation="0.63" outsideScatteringDensity="0.5" outsideScatteringMu="0.5" outsideScatteringSigma="0.0" outsideSpecularity="1.0"
@@ -218,12 +215,12 @@
             </Node>
             <Node name="LEFT_SUPRARRENAL" >
                 <MeshOBJLoader name="loader" filename="ircad11/left_suprarrenal.obj" triangulate="true" scale3d="0.001 0.001 0.001" flipNormals="true"/>
-                <Node name="Visual" >
+                <Node name="Visual_LEFT_SUPRARRENAL" >
                     <OglModel src="@../loader" />
                     <BarycentricMapping input="@../../mechanicalDofs"/>                
                 </Node>
 
-                <Node name="US" >
+                <Node name="US_LEFT_SUPRARRENAL" >
                     <USModel name="optixmodel" src="@../loader" 
                         impedance="1.62" attenuation="1.0" scatteringDensity="0.6"  scatteringMu="0.4" scatteringSigma="0.3" specularity="1.0"
                         outsideImpedance="1.38" outsideAttenuation="0.63" outsideScatteringDensity="0.5" outsideScatteringMu="0.5" outsideScatteringSigma="0.0" outsideSpecularity="1.0"
