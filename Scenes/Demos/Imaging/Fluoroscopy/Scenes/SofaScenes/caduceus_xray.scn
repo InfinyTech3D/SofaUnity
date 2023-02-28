@@ -1,0 +1,118 @@
+<?xml version="1.0" ?>
+<Node name="lroot" gravity="0 -1000 0" dt="0.02">
+    <RequiredPlugin pluginName='VirtualXRay'/>
+
+    <LCPConstraintSolver tolerance="1e-3" maxIt="1000" initial_guess="false" build_lcp="false"  printLog="0" mu="0.2"/>
+    <FreeMotionAnimationLoop />
+    <DefaultPipeline depth="15" verbose="0" draw="0" />
+    <BruteForceBroadPhase/>
+    <BVHNarrowPhase/>
+    <MinProximityIntersection name="Proximity" alarmDistance="1.5" contactDistance="1" />
+
+    <DefaultContactManager name="Response" response="FrictionContactConstraint" />
+    <Node name="Snake" >
+        <SparseGridRamificationTopology name="grid" n="4 12 3" fileTopology="mesh/snake_body.obj" nbVirtualFinerLevels="3" finestConnectivity="0"/>
+
+        <EulerImplicitSolver name="cg_odesolver" rayleighMass="1" rayleighStiffness="0.03" />
+        <CGLinearSolver name="linear solver" iterations="20" tolerance="1e-12" threshold="1e-18" />
+        <MechanicalObject name="dofs"  dy="2" position="@grid.position"/>
+        <UniformMass totalMass="1.0" />
+        <HexahedronFEMForceField name="FEM" youngModulus="30000.0" poissonRatio="0.3" method="large" 
+        updateStiffnessMatrix="false" printLog="0" topology="@grid"/>
+
+        <UncoupledConstraintCorrection useOdeSolverIntegrationFactors="0"/>
+
+        <Node name="Collis">
+            <MeshObjLoader name="loader" filename="mesh/meca_snake_900tri.obj" />
+            <MeshTopology src="@loader" name="colliTopo"/>
+            <MechanicalObject src="@loader" name="CollisModel" />
+            <TriangleCollisionModel  name="colTri" selfCollision="0" />
+            <LineCollisionModel name="colLine" selfCollision="0" />
+            <PointCollisionModel name="colPoint" selfCollision="0" />
+            <BarycentricMapping input="@.." output="@." />
+        </Node>
+
+        <Node name="VisuBody" tags="Visual" >
+            <MeshObjLoader name="loader" filename="mesh/snake_body.obj" handleSeams="1"/>
+            <OglModel  name="VisualBody" src="@loader"   />
+            <BarycentricMapping input="@.." output="@VisualBody" />
+        </Node>
+
+        <Node name="VisuCornea" tags="Visual" >
+            <MeshObjLoader name="loader" filename="mesh/snake_cornea.obj" handleSeams="1"/>
+            <OglModel  name="VisualCornea" src="@loader"   />
+            <BarycentricMapping input="@.." output="@VisualCornea" />
+        </Node>
+
+        <Node name="VisuEye" tags="Visual" >
+            <MeshObjLoader name="loader" filename="mesh/snake_yellowEye.obj" handleSeams="1"/>
+            <OglModel  name="VisualEye" src="@loader"/>
+            <BarycentricMapping input="@.." output="@VisualEye" />
+        </Node>
+
+        <Node name="XrayBody" >
+            <MeshObjLoader name="loader" filename="mesh/snake_body.obj" handleSeams="1"/>
+            <XRayModel src="@loader" density="200.0" isInner="true"/>
+            <BarycentricMapping input="@.." />
+        </Node>
+
+        <Node name="XRayCornea"  >
+            <MeshObjLoader name="loader" filename="mesh/snake_cornea.obj" handleSeams="1"/>
+            <XRayModel src="@loader" density="20000.0" isInner="true"/>
+            <BarycentricMapping input="@.." />
+        </Node>
+
+        <Node name="XRayEye" >
+            <MeshObjLoader name="loader" filename="mesh/snake_yellowEye.obj" handleSeams="1"/>
+            <XRayModel src="@loader" density="1000.0" isInner="true"/>
+            <BarycentricMapping input="@.." />
+        </Node>
+    </Node>
+
+    <Node name="Base" >
+        <Node name="Stick">
+            <MeshObjLoader name="loader" filename="mesh/collision_batons.obj" />
+            <MeshTopology src="@loader" />
+            <MechanicalObject src="@loader" name="CollisModel" />
+            <LineCollisionModel simulated="false" moving="false" />
+            <PointCollisionModel simulated="false"  moving="false"/>
+        </Node>
+        <Node name="Blobs">
+            <MeshObjLoader name="loader" filename="mesh/collision_boules_V3.obj" />
+            <MeshTopology src="@loader" />
+            <MechanicalObject src="@loader" name="CollisModel" />
+            <TriangleCollisionModel simulated="false" moving="false"/>
+            <LineCollisionModel simulated="false" moving="false"/>
+            <PointCollisionModel simulated="false" moving="false"/>
+        </Node>
+            <Node name="Foot">
+            <MeshObjLoader name="loader" filename="mesh/collision_pied.obj" />
+            <MeshTopology src="@loader" />
+            <MechanicalObject src="@loader" name="CollisModel" />
+            <TriangleCollisionModel simulated="false" moving="false"/>
+            <LineCollisionModel simulated="false" moving="false"/>
+            <PointCollisionModel simulated="false" moving="false"/>
+        </Node>
+
+        <Node name="Visu" tags="Visual" >
+            <MeshObjLoader name="loader" filename="mesh/SOFA_pod.obj" handleSeams="1"/>
+            <OglModel  name="OglModel" src="@loader" />
+        </Node>
+        <Node name="XRay" >
+            <MeshObjLoader name="loader" filename="mesh/SOFA_pod.obj" handleSeams="1"/>
+            <XRayModel src="@loader" density="1000.0" isInner="false"/>
+        </Node>
+    </Node>
+
+
+    <Node name="XRay">
+        <SurfaceXRayRenderer name="XRendererDeOuf"
+            sourcePosition="0 30 -100"
+            detectorPosition="0 30 100" detectorSize="150 150" detectorUpVector="0 1 0" detectorResolution="512 512"
+            drawSource="false" draw="true" normalizeColors="true"  drawBeam="true"
+            xrayFrameRate="1"
+        />  
+       
+    </Node>
+
+</Node>
