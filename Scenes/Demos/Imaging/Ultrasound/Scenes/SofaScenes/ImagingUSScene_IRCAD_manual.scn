@@ -13,7 +13,7 @@
     <FreeMotionAnimationLoop />
 
     <Node name="USTransducerControl" >
-        <MechanicalObject name="USTransducerDOF" template="Rigid3d" position="0.0 13 10  1.0 0.0 0.0 0.0" showObject="false" showObjectScale="0.02" />-->      
+        <MechanicalObject name="USTransducerDOF" template="Rigid3d" position="-0.05 0.15 0  1.0 0.0 0.0 0.0" showObject="false" showObjectScale="0.02" />-->      
     </Node>
 
     <Node name="DynamicStuff" >
@@ -21,18 +21,18 @@
         <CGLinearSolver name="linear solver" iterations="25" tolerance="1e-15" threshold="1e-15" />
                       
         <Node name="BODY" >
-            <RegularGridTopology name="grid" n="6 6 6" min="-20 -16.0 -5.0" max="20 16 25" />
+            <RegularGridTopology name="grid" n="6 6 6" min="0.019 0.072 0.0" max="0.358 0.326 0.211" />
             <MechanicalObject name="mechanicalDofs" />
             <UniformMass  totalMass="1" />
-            <HexahedronFEMForceField template="Vec3d" name="FEM" method="large" poissonRatio="0.3" youngModulus="1000" />
-            <BoxROI name="bbox" drawBoxes="1" box="-21 -17 -6   -19 17 26
-                                                      19 -17 -6  21 17 26
-                                                      " />
+            <HexahedronFEMForceField template="Vec3d" name="FEM" method="large" poissonRatio="0.3" youngModulus="3000" />
+            <BoxROI name="bbox" drawBoxes="0" box="0.0 0.05 -0.1   0.05 0.35 0.25
+                                                      0.32 0.05 -0.1  0.38 0.35 0.25
+                                                      0.0 0.28 -0.1   0.38 0.35 0.25" />
             <FixedConstraint  name="FixedConstraint" indices="@bbox.indices" />
             <PrecomputedConstraintCorrection />
 
             <Node name="SKIN">
-                <MeshOBJLoader name="loader" filename="ircad11/skin.obj" triangulate="true" flipNormals="true" scale3d="0.1 0.1 0.1" rotation="0 0 180" translation="20 20 0"/>
+                <MeshOBJLoader name="loader" filename="ircad11/skin.obj" triangulate="true" scale3d="0.001 0.001 0.001" flipNormals="true" rotation="0 0 180" translation="0.2 0.2 -0.1"/>
                 <Node name="Visual_SKIN" >
                     <OglModel src="@../loader" color="1.0 0.8 0.8"/>
                     <BarycentricMapping />
@@ -55,7 +55,7 @@
                 </Node>
             </Node>
             <Node name="AORTA" >
-                <MeshOBJLoader name="loader" filename="ircad11/aorta.obj" triangulate="true" flipNormals="true" scale3d="0.1 0.1 0.1" rotation="0 0 180" translation="20 20 0"/>
+                <MeshOBJLoader name="loader" filename="ircad11/aorta.obj" triangulate="true" scale3d="0.001 0.001 0.001" flipNormals="true" rotation="0 0 180" translation="0.2 0.2 -0.1"/>
                 <Node name="Visual_AORTA" >
                     <OglModel src="@../loader" />
                     <BarycentricMapping input="@../../mechanicalDofs"/>                
@@ -70,7 +70,7 @@
                 </Node>
             </Node>
             <Node name="CAVA" >
-                <MeshOBJLoader name="loader" filename="ircad11/cava.obj" triangulate="true" flipNormals="true" scale3d="0.1 0.1 0.1" rotation="0 0 180" translation="20 20 0"/>
+                <MeshOBJLoader name="loader" filename="ircad11/cava.obj" triangulate="true" scale3d="0.001 0.001 0.001" flipNormals="true" rotation="0 0 180" translation="0.2 0.2 -0.1"/>
                 <Node name="Visual_CAVA" >
                     <OglModel src="@../loader" />
                     <BarycentricMapping input="@../../mechanicalDofs"/>
@@ -86,7 +86,7 @@
                 </Node>
             </Node>
             <Node name="PORTA" >
-                <MeshOBJLoader name="loader" filename="ircad11/porta.obj" triangulate="true" flipNormals="true" scale3d="0.1 0.1 0.1" rotation="0 0 180" translation="20 20 0"/>
+                <MeshOBJLoader name="loader" filename="ircad11/porta.obj" triangulate="true" scale3d="0.001 0.001 0.001" flipNormals="true" rotation="0 0 180" translation="0.2 0.2 -0.1"/>
                 <Node name="Visual_PORTA" >
                     <OglModel src="@../loader" />
                     <BarycentricMapping input="@../../mechanicalDofs"/>                
@@ -102,7 +102,7 @@
                 </Node>
             </Node>
             <Node name="LIVER" >
-                <MeshOBJLoader name="loader" filename="ircad11/liver.obj" triangulate="true" flipNormals="true" scale3d="0.1 0.1 0.1" rotation="0 0 180" translation="20 20 0"/>
+                <MeshOBJLoader name="loader" filename="ircad11/liver.obj" triangulate="true" scale3d="0.001 0.001 0.001" flipNormals="true" rotation="0 0 180" translation="0.2 0.2 -0.1"/>
                 <Node name="Visual_LIVER" >
                     <OglModel src="@../loader" />
                     <BarycentricMapping input="@../../mechanicalDofs"/>                
@@ -118,7 +118,7 @@
                 </Node>
             </Node>
             <Node name="GALLBLADDER" >
-                <MeshOBJLoader name="loader" filename="ircad11/gallbladder.obj" triangulate="true" flipNormals="true" scale3d="0.1 0.1 0.1" rotation="0 0 180" translation="20 20 0"/>
+                <MeshOBJLoader name="loader" filename="ircad11/gallbladder.obj" triangulate="true" scale3d="0.001 0.001 0.001" flipNormals="true" rotation="0 0 180" translation="0.2 0.2 -0.1"/>
                 <Node name="Visual_GALLBLADDER" >
                     <OglModel src="@../loader" />
                     <BarycentricMapping input="@../../mechanicalDofs"/>
@@ -134,7 +134,7 @@
                 </Node>
             </Node>
             <Node name="RIGHT_KIDNEY" >
-                <MeshOBJLoader name="loader" filename="ircad11/right_kidney.obj" triangulate="true" flipNormals="true" scale3d="0.1 0.1 0.1" rotation="0 0 180" translation="20 20 0"/>
+                <MeshOBJLoader name="loader" filename="ircad11/right_kidney.obj" triangulate="true" scale3d="0.001 0.001 0.001" flipNormals="true" rotation="0 0 180" translation="0.2 0.2 -0.1"/>
                 <Node name="Visual_RIGHT_KIDNEY" >
                     <OglModel src="@../loader" />
                     <BarycentricMapping input="@../../mechanicalDofs"/>                
@@ -151,7 +151,7 @@
                 </Node>
             </Node>
             <Node name="LEFT_KIDNEY" >
-                <MeshOBJLoader name="loader" filename="ircad11/left_kidney.obj" triangulate="true" flipNormals="true" scale3d="0.1 0.1 0.1" rotation="0 0 180" translation="20 20 0"/>
+                <MeshOBJLoader name="loader" filename="ircad11/left_kidney.obj" triangulate="true" scale3d="0.001 0.001 0.001" flipNormals="true" rotation="0 0 180" translation="0.2 0.2 -0.1"/>
                 <Node name="Visual_LEFT_KIDNEY" >
                     <OglModel src="@../loader" />
                     <BarycentricMapping input="@../../mechanicalDofs"/>                
@@ -167,7 +167,7 @@
                 </Node>
             </Node>
             <Node name="RIGHT_SUPRARRENAL" >
-                <MeshOBJLoader name="loader" filename="ircad11/right_suprarrenal.obj" triangulate="true" flipNormals="true" scale3d="0.1 0.1 0.1" rotation="0 0 180" translation="20 20 0"/>
+                <MeshOBJLoader name="loader" filename="ircad11/right_suprarrenal.obj" triangulate="true" scale3d="0.001 0.001 0.001" flipNormals="true" rotation="0 0 180" translation="0.2 0.2 -0.1"/>
                 <Node name="Visual_RIGHT_SUPRARRENAL" >
 
                     <OglModel src="@../loader" />
@@ -185,7 +185,7 @@
                 </Node>
             </Node>
             <Node name="LEFT_SUPRARRENAL" >
-                <MeshOBJLoader name="loader" filename="ircad11/left_suprarrenal.obj" triangulate="true" flipNormals="true" scale3d="0.1 0.1 0.1" rotation="0 0 180" translation="20 20 0"/>
+                <MeshOBJLoader name="loader" filename="ircad11/left_suprarrenal.obj" triangulate="true" scale3d="0.001 0.001 0.001" flipNormals="true" rotation="0 0 180" translation="0.2 0.2 -0.1"/>
                 <Node name="Visual_LEFT_SUPRARRENAL" >
                     <OglModel src="@../loader" />
                     <BarycentricMapping input="@../../mechanicalDofs"/>                
@@ -203,8 +203,8 @@
         </Node>
     </Node>
 
-    <RigidToQuatEngine name="conv" rigids="@DynamicStuff/USTransducerControl/USTransducerDOF.position" />
-    <USTransducer name="USTransducer" position="@conv.position" orientation="@conv.orientation" radius="0.3" amplitude="60.0" ultrasoundDepth="20.0"
+    <RigidToQuatEngine name="conv" rigids="@USTransducerControl/USTransducerDOF.position" />
+    <USTransducer name="USTransducer" position="@conv.position" orientation="@conv.orientation" radius="0.03" amplitude="60.0" ultrasoundDepth="0.20"
         numberOfElements="1024" showBeam="true"
     />
     <OptixUSRenderer textureOnScreen="1" texturePosition="0.0 0.0 0.0" textureScale="0.5"
