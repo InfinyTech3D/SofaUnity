@@ -1,19 +1,43 @@
 <?xml version="1.0" ?>
 <Node name="root" dt="0.05" showBoundingTree="0" gravity="0 0 0">
+    <RequiredPlugin name="Sofa.Component.AnimationLoop"/> <!-- Needed to use components [FreeMotionAnimationLoop] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Detection.Algorithm"/> <!-- Needed to use components [BVHNarrowPhase, BruteForceBroadPhase, DefaultPipeline] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Detection.Intersection"/> <!-- Needed to use components [LocalMinDistance] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Geometry"/> <!-- Needed to use components [LineCollisionModel, PointCollisionModel, SphereCollisionModel, TriangleCollisionModel] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Response.Contact"/> <!-- Needed to use components [DefaultContactManager] -->
+    <RequiredPlugin name="Sofa.Component.Constraint.Lagrangian.Correction"/> <!-- Needed to use components [PrecomputedConstraintCorrection, UncoupledConstraintCorrection] -->
+    <RequiredPlugin name="Sofa.Component.Constraint.Lagrangian.Solver"/> <!-- Needed to use components [LCPConstraintSolver] -->
+    <RequiredPlugin name="Sofa.Component.Constraint.Projective"/> <!-- Needed to use components [FixedConstraint] -->
+    <RequiredPlugin name="Sofa.Component.Controller"/> <!-- Needed to use components [MechanicalStateController] -->
+    <RequiredPlugin name="Sofa.Component.Engine.Select"/> <!-- Needed to use components [BoxROI] -->
+    <RequiredPlugin name="Sofa.Component.Haptics"/> <!-- Needed to use components [LCPForceFeedback] -->
+    <RequiredPlugin name="Sofa.Component.IO.Mesh"/> <!-- Needed to use components [MeshGmshLoader, MeshOBJLoader] -->
+    <RequiredPlugin name="Sofa.Component.LinearSolver.Iterative"/> <!-- Needed to use components [CGLinearSolver] -->
+    <RequiredPlugin name="Sofa.Component.Mapping.Linear"/> <!-- Needed to use components [IdentityMapping] -->
+    <RequiredPlugin name="Sofa.Component.Mapping.NonLinear"/> <!-- Needed to use components [RigidMapping] -->
+    <RequiredPlugin name="Sofa.Component.Mass"/> <!-- Needed to use components [DiagonalMass, UniformMass] -->
+    <RequiredPlugin name="Sofa.Component.ODESolver.Backward"/> <!-- Needed to use components [EulerImplicitSolver] -->
+    <RequiredPlugin name="Sofa.Component.SceneUtility"/> <!-- Needed to use components [InfoComponent] -->
+    <RequiredPlugin name="Sofa.Component.SolidMechanics.FEM.Elastic"/> <!-- Needed to use components [TetrahedralCorotationalFEMForceField] -->
+    <RequiredPlugin name="Sofa.Component.SolidMechanics.Spring"/> <!-- Needed to use components [RestShapeSpringsForceField] -->
+    <RequiredPlugin name="Sofa.Component.StateContainer"/> <!-- Needed to use components [MechanicalObject] -->
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Constant"/> <!-- Needed to use components [MeshTopology] -->
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Dynamic"/> <!-- Needed to use components [TetrahedronSetGeometryAlgorithms, TetrahedronSetTopologyContainer, TetrahedronSetTopologyModifier, TriangleSetGeometryAlgorithms, TriangleSetTopologyContainer, TriangleSetTopologyModifier] -->
+    <RequiredPlugin name="Sofa.Component.Topology.Mapping"/> <!-- Needed to use components [Tetra2TriangleTopologicalMapping] -->
+    <RequiredPlugin name="Sofa.GL.Component.Rendering3D"/> <!-- Needed to use components [OglModel] -->
+    <RequiredPlugin name="SofaCarving"/> <!-- Needed to use components [CarvingManager] -->
+    
+    <RequiredPlugin name="Geomagic"/>
 
-<!--
-	<RequiredPlugin name="Carving" pluginName="SofaCarving" />
-    <RequiredPlugin name="Geomagic plugin" pluginName="Geomagic" />
--->
     <DefaultPipeline name="pipeline" depth="6" verbose="0"/>
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
-    <DefaultContactManager name="response" response="FrictionContact" />
+    <DefaultContactManager name="response" response="FrictionContactConstraint" />
     <LocalMinDistance name="proximity" alarmDistance="0.5" contactDistance="0.1" angleCone="0.0" />
     <FreeMotionAnimationLoop/>
     <LCPConstraintSolver tolerance="0.001" maxIt="1000"/>
     
-	<GeomagicDriver name="GeomagicDevice" deviceName="Default Device" scale="1" drawDeviceFrame="1" positionBase="0 0 0" orientationBase="0 0.707 0 -0.707" manualStart="true" />	
+	<GeomagicDriver name="GeomagicDevice" deviceName="Default Device" scale="1" drawDeviceFrame="1" positionBase="0 0 0" orientationBase="0 0.707 0 -0.707" manualStart="1" />	
     <CarvingManager active="@GeomagicDevice.button1" carvingDistance="0.2" key="k" />
 	
 	<Node name="Cylinder">
@@ -30,14 +54,14 @@
 		<FixedConstraint  name="FixedConstraint" indices="@box.indices" />
         <TetrahedralCorotationalFEMForceField name="FEM" youngModulus="3000" poissonRatio="0.3" method="large" />
 
-        <PrecomputedConstraintCorrection recompute="0"/>
+        <PrecomputedConstraintCorrection recompute="0" fileCompliance="./mesh/Cylinder-1530-0.05.comp"/>
 
         <Node name="T1">
 			<TriangleSetTopologyContainer  name="TriContainer1" fileTopology="" tags=" " />
 			<TriangleSetTopologyModifier   name="TriModifier1" />
 			<TriangleSetGeometryAlgorithms name="TriGeomAlgo1" template="Vec3d" />
             <Tetra2TriangleTopologicalMapping input="@../TetraContainer" output="@TriContainer1"/>
-            <TriangleSet tags="CarvingSurface" />
+            <TriangleCollisionModel tags="CarvingSurface" />
             <Node name="Visu1">
                 <OglModel name="Visual" color="blue" />
                 <IdentityMapping input="@../" output="@Visual" />
@@ -48,15 +72,15 @@
 	
     <!-- ADDED: the Mechanical state Controller gathers events from the Omni driver and populates the Mechanical state -->
     <Node name="Omni">
-        <MechanicalObject template="Rigid" name="DOFs" position="@GeomagicDevice.positionDevice"/>
-        <MechanicalStateController template="Rigid" listening="true" mainDirection="-1.0 0.0 0.0" handleEventTriggersUpdate="true"/>
+        <MechanicalObject template="Rigid3d" name="DOFs" position="@GeomagicDevice.positionDevice"/>
+        <MechanicalStateController template="Rigid3d" listening="true" mainDirection="-1.0 0.0 0.0" handleEventTriggersUpdate="true"/>
     </Node>
 	
 	<Node name="Instrument" >
         <EulerImplicitSolver name="ODE solver" rayleighStiffness="0.05" rayleighMass="1.0" />
         <CGLinearSolver name="linear solver" iterations="25" tolerance="1e-10" threshold="10e-10" /> 
         
-		<MechanicalObject name="instrumentState" template="Rigid" />
+		<MechanicalObject name="instrumentState" template="Rigid3d" />
 		<UniformMass name="mass" totalMass="0.05" />
 		
 		<RestShapeSpringsForceField stiffness='1000000' angularStiffness='1000000' external_rest_shape='@../Omni/DOFs' points='0' external_points='0' />
@@ -64,12 +88,12 @@
         <UncoupledConstraintCorrection useOdeSolverIntegrationFactors="0"/>
         
         <Node name="CollisionModel" >
-            <MeshObjLoader filename="./mesh/drill_collision.obj"  name="loader"/>
-            <Mesh src="@loader" name="InstrumentCollisionModel" />
+            <MeshOBJLoader filename="./mesh/drill_collision.obj"  name="loader"/>
+            <MeshTopology src="@loader" name="InstrumentCollisionModel" />
             <MechanicalObject src="@loader" name="instrumentCollisionState"  ry="-180" rz="-90" dz="3.5" dx="-0.3" />
-            <Line name="instrument" contactStiffness="10"/>			
-            <Point name="instrument" contactStiffness="10"/>
-			<SphereModel radius="0.02" contactStiffness="10" tags="CarvingTool"/>
+            <LineCollisionModel contactStiffness="10"/>			
+            <PointCollisionModel contactStiffness="10"/>
+			<SphereCollisionModel radius="0.02" contactStiffness="10" tags="CarvingTool"/>
             <RigidMapping name="MM->CM mapping" input="@instrumentState" output="@instrumentCollisionState" />		
         </Node>       
     </Node> 

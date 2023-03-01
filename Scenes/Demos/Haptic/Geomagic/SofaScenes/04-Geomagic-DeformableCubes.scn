@@ -1,21 +1,46 @@
 <?xml version="1.0" ?>
 <Node name="root" dt="0.05" showBoundingTree="0" gravity="0 0 0">
-    <RequiredPlugin name="Geomagic plugin" pluginName="Geomagic" />
-    <RequiredPlugin name="SofaOpenglVisual"/>
-    <RequiredPlugin name='SofaHaptics'/>
+    <RequiredPlugin name="Sofa.Component.AnimationLoop"/> <!-- Needed to use components [FreeMotionAnimationLoop] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Detection.Algorithm"/> <!-- Needed to use components [BVHNarrowPhase, BruteForceBroadPhase, DefaultPipeline] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Detection.Intersection"/> <!-- Needed to use components [LocalMinDistance] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Geometry"/> <!-- Needed to use components [LineCollisionModel, PointCollisionModel, TriangleCollisionModel] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Response.Contact"/> <!-- Needed to use components [DefaultContactManager] -->
+    <RequiredPlugin name="Sofa.Component.Constraint.Lagrangian.Correction"/> <!-- Needed to use components [UncoupledConstraintCorrection] -->
+    <RequiredPlugin name="Sofa.Component.Constraint.Lagrangian.Solver"/> <!-- Needed to use components [LCPConstraintSolver] -->
+    <RequiredPlugin name="Sofa.Component.Constraint.Projective"/> <!-- Needed to use components [FixedConstraint] -->
+    <RequiredPlugin name="Sofa.Component.Controller"/> <!-- Needed to use components [MechanicalStateController] -->
+    <RequiredPlugin name="Sofa.Component.Engine.Select"/> <!-- Needed to use components [BoxROI] -->
+    <RequiredPlugin name="Sofa.Component.Haptics"/> <!-- Needed to use components [LCPForceFeedback] -->
+    <RequiredPlugin name="Sofa.Component.IO.Mesh"/> <!-- Needed to use components [MeshOBJLoader] -->
+    <RequiredPlugin name="Sofa.Component.LinearSolver.Iterative"/> <!-- Needed to use components [CGLinearSolver] -->
+    <RequiredPlugin name="Sofa.Component.Mapping.Linear"/> <!-- Needed to use components [BarycentricMapping, IdentityMapping] -->
+    <RequiredPlugin name="Sofa.Component.Mapping.NonLinear"/> <!-- Needed to use components [RigidMapping] -->
+    <RequiredPlugin name="Sofa.Component.Mass"/> <!-- Needed to use components [UniformMass] -->
+    <RequiredPlugin name="Sofa.Component.ODESolver.Backward"/> <!-- Needed to use components [EulerImplicitSolver] -->
+    <RequiredPlugin name="Sofa.Component.SolidMechanics.FEM.Elastic"/> <!-- Needed to use components [TetrahedralCorotationalFEMForceField] -->
+    <RequiredPlugin name="Sofa.Component.SolidMechanics.Spring"/> <!-- Needed to use components [RestShapeSpringsForceField] -->
+    <RequiredPlugin name="Sofa.Component.StateContainer"/> <!-- Needed to use components [MechanicalObject] -->
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Constant"/> <!-- Needed to use components [MeshTopology] -->
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Dynamic"/> <!-- Needed to use components [TetrahedronSetGeometryAlgorithms, TetrahedronSetTopologyContainer, TetrahedronSetTopologyModifier, TriangleSetGeometryAlgorithms, TriangleSetTopologyContainer, TriangleSetTopologyModifier] -->
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Grid"/> <!-- Needed to use components [RegularGridTopology] -->
+    <RequiredPlugin name="Sofa.Component.Topology.Mapping"/> <!-- Needed to use components [Hexa2TetraTopologicalMapping, Tetra2TriangleTopologicalMapping] -->
+    <RequiredPlugin name="Sofa.Component.Visual"/> <!-- Needed to use components [VisualStyle] -->
+    <RequiredPlugin name="Sofa.GL.Component.Rendering3D"/> <!-- Needed to use components [OglModel] -->
+    <RequiredPlugin name="Geomagic"/>
+
     <VisualStyle displayFlags="showVisualModels showBehaviorModels hideCollisionModels" />
     
     <DefaultPipeline name="pipeline" depth="6" verbose="0"/>
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
-    <DefaultContactManager name="response" response="FrictionContact" />
+    <DefaultContactManager name="response" response="FrictionContactConstraint" />
     <LocalMinDistance name="proximity" alarmDistance="0.15" contactDistance="0.05" angleCone="0.0" />
     <FreeMotionAnimationLoop/>
     
     <LCPConstraintSolver tolerance="0.001" maxIt="1000"/>
     
 	<GeomagicDriver name="GeomagicDevice" deviceName="Default Device" scale="1" positionBase="0 0 0" orientationBase="0 0.707 0 -0.707"
-    drawDevice="0" drawDeviceFrame="1" forceFeedBack="@Instrument/LCPFF1" manualStart="true"/>	
+    drawDevice="0" drawDeviceFrame="1" forceFeedBack="@Instrument/LCPFF1" manualStart="1"/>	
     
         
     <RegularGridTopology name="grid_1" n="7 10 3" min="-6 -9.5 -9" max="2 2.5 -7" />
@@ -89,7 +114,7 @@
             
 	
 	<Node name="Floor">
-        <MeshObjLoader name="loaderF" filename="./mesh/cube.obj" scale3d="20 0.5 20" translation="0 -10 0"/>
+        <MeshOBJLoader name="loaderF" filename="./mesh/cube.obj" scale3d="20 0.5 20" translation="0 -10 0"/>
         <MeshTopology src="@loaderF" />
         <MechanicalObject src="@loaderF" />
         <TriangleCollisionModel simulated="0" moving="0" bothSide="false" group="1"/>
@@ -119,14 +144,14 @@
 		
 		<!--
         <Node name="VisuTool" >
-            <MeshObjLoader name="meshLoader_1" filename="./mesh/dental_instrument.obj" handleSeams="1" />
+            <MeshOBJLoader name="meshLoader_1" filename="./mesh/dental_instrument.obj" handleSeams="1" />
             <OglModel name="InstrumentVisualModel" src="@meshLoader_1" color="1.0 0.2 0.2 1.0" />
             <RigidMapping name="MM->VM mapping" input="@instrumentState" output="@InstrumentVisualModel" />
         </Node>
 		-->
         
         <Node name="CollisionModel" >
-            <MeshObjLoader filename="./mesh/dental_instrument_centerline.obj"  name="loader"/>
+            <MeshOBJLoader filename="./mesh/dental_instrument_centerline.obj"  name="loader"/>
             <MeshTopology src="@loader" name="InstrumentCollisionModel" />
             <MechanicalObject src="@loader" name="instrumentCollisionState" />
             <LineCollisionModel contactStiffness="100"/>			

@@ -1,14 +1,33 @@
 <?xml version="1.0" ?>
 <Node name="root" dt="0.005" gravity="10 0 0" >
-    <RequiredPlugin name="SofaOpenglVisual"/>
+    <RequiredPlugin name="Sofa.Component.AnimationLoop"/> <!-- Needed to use components [FreeMotionAnimationLoop] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Detection.Algorithm"/> <!-- Needed to use components [BVHNarrowPhase, BruteForceBroadPhase, DefaultPipeline] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Detection.Intersection"/> <!-- Needed to use components [LocalMinDistance] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Geometry"/> <!-- Needed to use components [LineCollisionModel, PointCollisionModel, TriangleCollisionModel] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Response.Contact"/> <!-- Needed to use components [DefaultContactManager] -->
+    <RequiredPlugin name="Sofa.Component.Constraint.Lagrangian.Correction"/> <!-- Needed to use components [LinearSolverConstraintCorrection] -->
+    <RequiredPlugin name="Sofa.Component.Constraint.Lagrangian.Solver"/> <!-- Needed to use components [LCPConstraintSolver] -->
+    <RequiredPlugin name="Sofa.Component.Controller"/> <!-- Needed to use components [MechanicalStateController] -->
+    <RequiredPlugin name="Sofa.Component.Haptics"/> <!-- Needed to use components [LCPForceFeedback] -->
+    <RequiredPlugin name="Sofa.Component.IO.Mesh"/> <!-- Needed to use components [MeshOBJLoader] -->
+    <RequiredPlugin name="Sofa.Component.LinearSolver.Iterative"/> <!-- Needed to use components [CGLinearSolver] -->
+    <RequiredPlugin name="Sofa.Component.Mapping.Linear"/> <!-- Needed to use components [IdentityMapping] -->
+    <RequiredPlugin name="Sofa.Component.Mapping.NonLinear"/> <!-- Needed to use components [RigidMapping] -->
+    <RequiredPlugin name="Sofa.Component.Mass"/> <!-- Needed to use components [UniformMass] -->
+    <RequiredPlugin name="Sofa.Component.ODESolver.Backward"/> <!-- Needed to use components [EulerImplicitSolver] -->
+    <RequiredPlugin name="Sofa.Component.SolidMechanics.Spring"/> <!-- Needed to use components [RestShapeSpringsForceField] -->
+    <RequiredPlugin name="Sofa.Component.StateContainer"/> <!-- Needed to use components [MechanicalObject] -->
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Constant"/> <!-- Needed to use components [MeshTopology] -->
+    <RequiredPlugin name="Sofa.Component.Visual"/> <!-- Needed to use components [VisualStyle] -->
+    <RequiredPlugin name="Sofa.GL.Component.Rendering3D"/> <!-- Needed to use components [OglModel] -->
+    <RequiredPlugin name="Geomagic"/>
+    
     <VisualStyle displayFlags="hideBehaviorModels hideCollisionModels hideMappings hideForceFields" />
-    <RequiredPlugin name="Geomagic plugin" pluginName="Geomagic" />
-    <RequiredPlugin pluginName='SofaHaptics'/>
     
     <DefaultPipeline name="pipeline" depth="6" verbose="0"/>
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
-    <DefaultContactManager name="response" response="FrictionContact" />
+    <DefaultContactManager name="response" response="FrictionContactConstraint" />
     <LocalMinDistance name="proximity" alarmDistance="0.15" contactDistance="0.05" angleCone="0.0" />
     <FreeMotionAnimationLoop/>
     <LCPConstraintSolver tolerance="0.001" maxIt="1000"/>
@@ -17,7 +36,7 @@
     <CGLinearSolver name="linear solver" iterations="25" tolerance="1e-10" threshold="10e-10" /> 
 
     <Node name="Floor">
-        <MeshObjLoader name="loaderF" filename="./mesh/cube.obj" scale3d="20 0.5 40" translation="0 -10 0"/>
+        <MeshOBJLoader name="loaderF" filename="./mesh/cube.obj" scale3d="20 0.5 40" translation="0 -10 0"/>
         <MeshTopology src="@loaderF" />
         <MechanicalObject src="@loaderF" />
         <TriangleCollisionModel simulated="0" moving="0" bothSide="false" group="1"/>
@@ -31,11 +50,11 @@
     
     <Node name="Tooth" >
         <Node name="VisualModel" >
-            <MeshObjLoader name="meshLoader_0" filename="./mesh/skull_and_teeth.obj" scale3d="2.2 2.2 2.2" rotation="165 -90 0" translation="4 -6 0" handleSeams="1" />
+            <MeshOBJLoader name="meshLoader_0" filename="./mesh/skull_and_teeth.obj" scale3d="2.2 2.2 2.2" rotation="165 -90 0" translation="4 -6 0" handleSeams="1" />
             <OglModel name="ToothVisualModel" src="@meshLoader_0" color="white" /> 
         </Node>
         <Node name="CollisionModel" >
-            <MeshObjLoader filename="./mesh/skull_and_teeth_coarse.obj" scale3d="2.2 2.2 2.2" rotation="165 -90 0" translation="4 -6 0" name="loader"/>
+            <MeshOBJLoader filename="./mesh/skull_and_teeth_coarse.obj" scale3d="2.2 2.2 2.2" rotation="165 -90 0" translation="4 -6 0" name="loader"/>
             <MeshTopology src="@loader" name="ToothCollisionModel"  />
             <MechanicalObject src="@loader" name="toothState" />        
             <TriangleCollisionModel contactStiffness="100" simulated="0" moving="0" group="1"/>
@@ -45,11 +64,11 @@
     </Node>
     
     
-    <MeshObjLoader filename="./mesh/dental_instrument.obj"  name="loader_instrument_col" />
-    <MeshObjLoader filename="./mesh/dental_instrument.obj"  name="loader_instrument_visu"/>
+    <MeshOBJLoader filename="./mesh/dental_instrument.obj"  name="loader_instrument_col" />
+    <MeshOBJLoader filename="./mesh/dental_instrument.obj"  name="loader_instrument_visu"/>
     
     <GeomagicDriver name="GeomagicDevice" deviceName="Left Device" scale="1" drawDeviceFrame="0" drawDevice="0" 
-    positionBase="0 0 -14" orientationBase="0 0.707 0 -0.707" forceFeedBack="@Instrument_1/LCPFF1" manualStart="true" />
+    positionBase="0 0 -14" orientationBase="0 0.707 0 -0.707" forceFeedBack="@Instrument_1/LCPFF1" manualStart="1" />
     
     <!-- ADDED: the Mechanical state Controller gathers events from the Tool_1 driver and populates the Mechanical state -->
     <Node name="Tool_1">
@@ -63,7 +82,7 @@
 		
 		<RestShapeSpringsForceField stiffness='1000000' angularStiffness='1000000' external_rest_shape='@../Tool_1/DOFs' points='0' external_points='0' />
         <LCPForceFeedback name="LCPFF1" activate="true" forceCoef="0.001"/>
-        <LinearSolverConstraintCorrection />
+        <UncoupledConstraintCorrection useOdeSolverIntegrationFactors="0"/>
 <!--        
 		<Node name="VisualModel_1" >
             <OglModel name="InstrumentVisualModel1" src="@../../loader_instrument_visu" color="0.2 0.2 1.0 1.0" />
@@ -82,7 +101,7 @@
 
     
     <GeomagicDriver name="GeomagicDevice2" deviceName="Right Device" scale="1" drawDeviceFrame="0" drawDevice="0" 
-    positionBase="0 0 14" orientationBase="0 0.707 0 -0.707" forceFeedBack="@Instrument_2/LCPFF2" manualStart="true" />
+    positionBase="0 0 14" orientationBase="0 0.707 0 -0.707" forceFeedBack="@Instrument_2/LCPFF2" manualStart="1" />
     
     <Node name="Tool_2">
         <MechanicalObject template="Rigid3d" name="DOFs2" position="@GeomagicDevice2.positionDevice"/>
@@ -96,7 +115,7 @@
 		
 		<RestShapeSpringsForceField stiffness='1000000' angularStiffness='1000000' external_rest_shape='@../Tool_2/DOFs2' points='0' external_points='0' />
         <LCPForceFeedback name="LCPFF2" activate="true" forceCoef="0.001"/>
-        <LinearSolverConstraintCorrection />
+        <UncoupledConstraintCorrection useOdeSolverIntegrationFactors="0"/>
 <!--        
 		<Node name="VisualModel_2" >
             <OglModel name="InstrumentVisualModel2" src="@../../loader_instrument_visu" color="0.2 0.2 1.0 1.0" />

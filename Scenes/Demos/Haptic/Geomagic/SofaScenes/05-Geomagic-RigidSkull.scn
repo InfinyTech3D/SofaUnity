@@ -1,28 +1,46 @@
 <?xml version="1.0" ?>
 <Node name="root" dt="0.005" gravity="10 0 0" >
-    <RequiredPlugin name="SofaOpenglVisual"/>
-    <RequiredPlugin pluginName='SofaHaptics'/>
+    <RequiredPlugin name="Sofa.Component.AnimationLoop"/> <!-- Needed to use components [FreeMotionAnimationLoop] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Detection.Algorithm"/> <!-- Needed to use components [BVHNarrowPhase, BruteForceBroadPhase, DefaultPipeline] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Detection.Intersection"/> <!-- Needed to use components [LocalMinDistance] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Geometry"/> <!-- Needed to use components [LineCollisionModel, PointCollisionModel, TriangleCollisionModel] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Response.Contact"/> <!-- Needed to use components [DefaultContactManager] -->
+    <RequiredPlugin name="Sofa.Component.Constraint.Lagrangian.Correction"/> <!-- Needed to use components [UncoupledConstraintCorrection] -->
+    <RequiredPlugin name="Sofa.Component.Constraint.Lagrangian.Solver"/> <!-- Needed to use components [LCPConstraintSolver] -->
+    <RequiredPlugin name="Sofa.Component.Controller"/> <!-- Needed to use components [MechanicalStateController] -->
+    <RequiredPlugin name="Sofa.Component.Haptics"/> <!-- Needed to use components [LCPForceFeedback] -->
+    <RequiredPlugin name="Sofa.Component.IO.Mesh"/> <!-- Needed to use components [MeshOBJLoader] -->
+    <RequiredPlugin name="Sofa.Component.LinearSolver.Iterative"/> <!-- Needed to use components [CGLinearSolver] -->
+    <RequiredPlugin name="Sofa.Component.Mapping.NonLinear"/> <!-- Needed to use components [RigidMapping] -->
+    <RequiredPlugin name="Sofa.Component.Mass"/> <!-- Needed to use components [UniformMass] -->
+    <RequiredPlugin name="Sofa.Component.ODESolver.Backward"/> <!-- Needed to use components [EulerImplicitSolver] -->
+    <RequiredPlugin name="Sofa.Component.SolidMechanics.Spring"/> <!-- Needed to use components [RestShapeSpringsForceField] -->
+    <RequiredPlugin name="Sofa.Component.StateContainer"/> <!-- Needed to use components [MechanicalObject] -->
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Constant"/> <!-- Needed to use components [MeshTopology] -->
+    <RequiredPlugin name="Sofa.Component.Visual"/> <!-- Needed to use components [VisualStyle] -->
+    <RequiredPlugin name="Sofa.GL.Component.Rendering3D"/> <!-- Needed to use components [OglModel] -->
+    <RequiredPlugin name="Geomagic"/>
+
     <VisualStyle displayFlags="hideBehaviorModels hideMappings hideForceFields" />
-    <RequiredPlugin name="Geomagic plugin" pluginName="Geomagic" />
     
     <DefaultPipeline name="pipeline" depth="6" verbose="0"/>
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
-    <DefaultContactManager name="response" response="FrictionContact" />
+    <DefaultContactManager name="response" response="FrictionContactConstraint" />
     <LocalMinDistance name="proximity" alarmDistance="0.15" contactDistance="0.05" angleCone="0.0" />
     <FreeMotionAnimationLoop/>
     <LCPConstraintSolver tolerance="0.001" maxIt="1000"/>
     <GeomagicDriver name="GeomagicDevice" deviceName="Default Device" scale="1" drawDeviceFrame="1" 
-    positionBase="0 0 0" orientationBase="0 0.707 0 -0.707" manualStart="true" />
+    positionBase="0 0 0" orientationBase="0 0.707 0 -0.707" manualStart="1" />
 
 
     <Node name="Tooth" >
-        <Node name="VisualModel" >
-            <MeshObjLoader name="meshLoader_0" filename="./mesh/skull_and_teeth.obj" handleSeams="1" scale3d="1.5 1.5 1.5" translation="0 -2 7" rotation="0 -90 140" />
+        <Node name="VisualModel_Tooth" >
+            <MeshOBJLoader name="meshLoader_0" filename="./mesh/skull_and_teeth.obj" handleSeams="1" scale3d="1.5 1.5 1.5" translation="0 -2 7" rotation="0 -90 140" />
             <OglModel name="ToothVisualModel" src="@meshLoader_0" color="white" /> 
         </Node>
-        <Node name="CollisionModel" >
-            <MeshObjLoader filename="./mesh/skull_and_teeth_coarse.obj"  name="loader" scale3d="1.5 1.5 1.5" translation="0 -2 7" rotation="0 -90 140"/>
+        <Node name="CollisionModel_Tooth" >
+            <MeshOBJLoader filename="./mesh/skull_and_teeth_coarse.obj"  name="loader" scale3d="1.5 1.5 1.5" translation="0 -2 7" rotation="0 -90 140"/>
             <MeshTopology src="@loader" name="ToothCollisionModel"  />
             <MechanicalObject src="@loader" name="toothState" />        
             <TriangleCollisionModel contactStiffness="100" simulated="0" moving="0"/>
@@ -38,8 +56,8 @@
     </Node>
 
     <Node name="Instrument" >
-        <EulerImplicitSolver name="ODE solver" rayleighStiffness="0.05" rayleighMass="1.0" />
-        <CGLinearSolver name="linear solver" iterations="25" tolerance="1e-10" threshold="10e-10" /> 
+        <EulerImplicitSolver name="ODESolver" rayleighStiffness="0.05" rayleighMass="1.0" />
+        <CGLinearSolver name="linearSolver" iterations="25" tolerance="1e-10" threshold="10e-10" /> 
         
 		<MechanicalObject name="instrumentState" template="Rigid3d" tags="GeomagicDevice" position="@../GeomagicDevice.positionBase"/>
 		<UniformMass name="mass" totalMass="0.05" />
@@ -50,19 +68,19 @@
         
         <!--
 		<Node name="VisualModel" >
-            <MeshObjLoader name="meshLoader_1" filename="./mesh/dental_instrument.obj" handleSeams="1" />
+            <MeshOBJLoader name="meshLoader_1" filename="./mesh/dental_instrument.obj" handleSeams="1" />
             <OglModel name="InstrumentVisualModel" src="@meshLoader_1" color="1.0 0.2 0.2 1.0" />
             <RigidMapping name="MM->VM mapping" input="@instrumentState" output="@InstrumentVisualModel" />
         </Node>
         -->
         
-        <Node name="CollisionModel" >
-            <MeshObjLoader filename="./mesh/dental_instrument_centerline.obj"  name="loader"/>
+        <Node name="CollisionModel_Instrument" >
+            <MeshOBJLoader filename="./mesh/dental_instrument_centerline.obj"  name="loader"/>
             <MeshTopology src="@loader" name="InstrumentCollisionModel" />
             <MechanicalObject src="@loader" name="instrumentCollisionState" />
             <LineCollisionModel contactStiffness="10" />
             <PointCollisionModel contactStiffness="10" /> 
-            <RigidMapping name="MM->CM mapping" input="@instrumentState" output="@instrumentCollisionState" />
+            <RigidMapping input="@instrumentState" output="@instrumentCollisionState" />
         </Node>        
     </Node>  
 
