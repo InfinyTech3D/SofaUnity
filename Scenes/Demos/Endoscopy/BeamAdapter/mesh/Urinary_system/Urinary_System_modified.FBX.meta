@@ -1,109 +1,225 @@
 fileFormatVersion: 2
 guid: a4f1579b8a614424aa9c442f175546ed
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: Adrenal_Gland_Left
-    100002: Adrenal_Gland_Right
-    100004: Bladder
-    100006: Camera
-    100008: Kidney_Left
-    100010: Kidney_Right
-    100012: Lamp
-    100014: Male_Urinary_System
-    100016: Prostate_Uretra
-    100018: //RootNode
-    100020: Urinary_Ureter_Left
-    100022: Urinary_Ureter_Right
-    400000: Adrenal_Gland_Left
-    400002: Adrenal_Gland_Right
-    400004: Bladder
-    400006: Camera
-    400008: Kidney_Left
-    400010: Kidney_Right
-    400012: Lamp
-    400014: Male_Urinary_System
-    400016: Prostate_Uretra
-    400018: //RootNode
-    400020: Urinary_Ureter_Left
-    400022: Urinary_Ureter_Right
-    2000000: Camera
-    2100000: Bladder
-    2100002: Prostate_Uretra
-    2100004: Kidney_Right
-    2100006: Adrenal_Gland_Right
-    2100008: Urinary_Ureter_Right
-    2100010: Adrenal_Gland_Left
-    2100012: Kidney_Left
-    2100014: Urinary_Ureter_Left
-    2300000: Adrenal_Gland_Left
-    2300002: Adrenal_Gland_Right
-    2300004: Bladder
-    2300006: Kidney_Left
-    2300008: Kidney_Right
-    2300010: Prostate_Uretra
-    2300012: Urinary_Ureter_Left
-    2300014: Urinary_Ureter_Right
-    3300000: Adrenal_Gland_Left
-    3300002: Adrenal_Gland_Right
-    3300004: Bladder
-    3300006: Kidney_Left
-    3300008: Kidney_Right
-    3300010: Prostate_Uretra
-    3300012: Urinary_Ureter_Left
-    3300014: Urinary_Ureter_Right
-    4300000: Bladder
-    4300002: Prostate_Uretra
-    4300004: Kidney_Right
-    4300006: Adrenal_Gland_Right
-    4300008: Urinary_Ureter_Right
-    4300010: Adrenal_Gland_Left
-    4300012: Kidney_Left
-    4300014: Urinary_Ureter_Left
-    10800000: Lamp
+  serializedVersion: 21300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Adrenal_Gland_Left
+  - first:
+      1: 100002
+    second: Adrenal_Gland_Right
+  - first:
+      1: 100004
+    second: Bladder
+  - first:
+      1: 100006
+    second: Camera
+  - first:
+      1: 100008
+    second: Kidney_Left
+  - first:
+      1: 100010
+    second: Kidney_Right
+  - first:
+      1: 100012
+    second: Lamp
+  - first:
+      1: 100014
+    second: Male_Urinary_System
+  - first:
+      1: 100016
+    second: Prostate_Uretra
+  - first:
+      1: 100018
+    second: //RootNode
+  - first:
+      1: 100020
+    second: Urinary_Ureter_Left
+  - first:
+      1: 100022
+    second: Urinary_Ureter_Right
+  - first:
+      4: 400000
+    second: Adrenal_Gland_Left
+  - first:
+      4: 400002
+    second: Adrenal_Gland_Right
+  - first:
+      4: 400004
+    second: Bladder
+  - first:
+      4: 400006
+    second: Camera
+  - first:
+      4: 400008
+    second: Kidney_Left
+  - first:
+      4: 400010
+    second: Kidney_Right
+  - first:
+      4: 400012
+    second: Lamp
+  - first:
+      4: 400014
+    second: Male_Urinary_System
+  - first:
+      4: 400016
+    second: Prostate_Uretra
+  - first:
+      4: 400018
+    second: //RootNode
+  - first:
+      4: 400020
+    second: Urinary_Ureter_Left
+  - first:
+      4: 400022
+    second: Urinary_Ureter_Right
+  - first:
+      20: 2000000
+    second: Camera
+  - first:
+      21: 2100000
+    second: Bladder
+  - first:
+      21: 2100002
+    second: Prostate_Uretra
+  - first:
+      21: 2100004
+    second: Kidney_Right
+  - first:
+      21: 2100006
+    second: Adrenal_Gland_Right
+  - first:
+      21: 2100008
+    second: Urinary_Ureter_Right
+  - first:
+      21: 2100010
+    second: Adrenal_Gland_Left
+  - first:
+      21: 2100012
+    second: Kidney_Left
+  - first:
+      21: 2100014
+    second: Urinary_Ureter_Left
+  - first:
+      23: 2300000
+    second: Adrenal_Gland_Left
+  - first:
+      23: 2300002
+    second: Adrenal_Gland_Right
+  - first:
+      23: 2300004
+    second: Bladder
+  - first:
+      23: 2300006
+    second: Kidney_Left
+  - first:
+      23: 2300008
+    second: Kidney_Right
+  - first:
+      23: 2300010
+    second: Prostate_Uretra
+  - first:
+      23: 2300012
+    second: Urinary_Ureter_Left
+  - first:
+      23: 2300014
+    second: Urinary_Ureter_Right
+  - first:
+      33: 3300000
+    second: Adrenal_Gland_Left
+  - first:
+      33: 3300002
+    second: Adrenal_Gland_Right
+  - first:
+      33: 3300004
+    second: Bladder
+  - first:
+      33: 3300006
+    second: Kidney_Left
+  - first:
+      33: 3300008
+    second: Kidney_Right
+  - first:
+      33: 3300010
+    second: Prostate_Uretra
+  - first:
+      33: 3300012
+    second: Urinary_Ureter_Left
+  - first:
+      33: 3300014
+    second: Urinary_Ureter_Right
+  - first:
+      43: 4300000
+    second: Bladder
+  - first:
+      43: 4300002
+    second: Prostate_Uretra
+  - first:
+      43: 4300004
+    second: Kidney_Right
+  - first:
+      43: 4300006
+    second: Adrenal_Gland_Right
+  - first:
+      43: 4300008
+    second: Urinary_Ureter_Right
+  - first:
+      43: 4300010
+    second: Adrenal_Gland_Left
+  - first:
+      43: 4300012
+    second: Kidney_Left
+  - first:
+      43: 4300014
+    second: Urinary_Ureter_Left
+  - first:
+      108: 10800000
+    second: Lamp
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Adrenal_Gland_Left
-    second: {fileID: 2100000, guid: 080addae496718844848c202a485da1d, type: 2}
+    second: {fileID: 2100000, guid: 49f9d74c49e669d4d84bf2a6e8494972, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Adrenal_Gland_Right
-    second: {fileID: 2100000, guid: 5379a745abbca024fb1380a35fc2fae2, type: 2}
+    second: {fileID: 2100000, guid: 27db65886b88a614aa2bf2294935b6db, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Bladder
-    second: {fileID: 2100000, guid: 493d2840e09fdfd468f230b5d971aa64, type: 2}
+    second: {fileID: 2100000, guid: da39217c3ac465c44850c0973ada8184, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Kidney_Left
-    second: {fileID: 2100000, guid: 3029ddc804104834d94d6eb8f1a5a384, type: 2}
+    second: {fileID: 2100000, guid: e1c0e9662206ae74793dcbd1b97ac251, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Kidney_Right
-    second: {fileID: 2100000, guid: ddcaaf9d92666fa44b3853f2624f9f2a, type: 2}
+    second: {fileID: 2100000, guid: 8b63b43fa00236a42b48cb93f096a0aa, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Prostate_Uretra
-    second: {fileID: 2100000, guid: fd4616cfa7a2c7449aaea45ea6a7824d, type: 2}
+    second: {fileID: 2100000, guid: f8fcf628030e924459740e156236e66e, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Urinary_Ureter_Left
-    second: {fileID: 2100000, guid: bf364de59d6e8864aa5e775ec83bdc2a, type: 2}
+    second: {fileID: 2100000, guid: 762580bb38d1304409deed66913e06fc, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Urinary_Ureter_Right
-    second: {fileID: 2100000, guid: 8c44bc6ce8a52274a810a67c06717024, type: 2}
+    second: {fileID: 2100000, guid: ed51c288473de9043a2d33150b903273, type: 2}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -112,6 +228,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -136,25 +253,34 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -163,10 +289,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -176,13 +302,18 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 0
   humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
