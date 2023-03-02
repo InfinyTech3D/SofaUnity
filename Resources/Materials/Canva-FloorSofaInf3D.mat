@@ -29,7 +29,6 @@ Material:
   - _DETAIL_MAP
   - _DISABLE_SSR_TRANSPARENT
   - _DISPLACEMENT_LOCK_TILING_SCALE
-  - _HEIGHTMAP
   - _NORMALMAP
   - _NORMALMAP_TANGENT_SPACE
   - _PIXEL_DISPLACEMENT
@@ -98,7 +97,7 @@ Material:
         m_Scale: {x: 12, y: 10}
         m_Offset: {x: 0, y: 0}
     - _HeightMap:
-        m_Texture: {fileID: 2800000, guid: bad29950f5c7f0f4695a9009708ae056, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _IridescenceMaskMap:
@@ -221,8 +220,8 @@ Material:
     - _GlossMapScale: 0.147
     - _Glossiness: 0.935
     - _GlossyReflections: 1
-    - _HeightAmplitude: 0.02
-    - _HeightCenter: 0.5
+    - _HeightAmplitude: 0.00036200002
+    - _HeightCenter: 1
     - _HeightMapParametrization: 0
     - _HeightMax: 1
     - _HeightMin: -1
@@ -236,12 +235,12 @@ Material:
     - _IridescenceThickness: 1
     - _LinkDetailsWithBase: 0
     - _MaterialID: 1
-    - _Metallic: 0.51866686
+    - _Metallic: 0.657
     - _MetallicRemapMax: 0.51866686
     - _MetallicRemapMin: 0
     - _Mode: 0
     - _NormalMapSpace: 0
-    - _NormalScale: 0.7
+    - _NormalScale: 2.16
     - _OcclusionStrength: 0.363
     - _OpaqueCullMode: 2
     - _PPDLodThreshold: 5
@@ -254,7 +253,7 @@ Material:
     - _ReceivesSSR: 1
     - _ReceivesSSRTransparent: 0
     - _RefractionModel: 0
-    - _Smoothness: 0.935
+    - _Smoothness: 0.283
     - _SmoothnessRemapMax: 0.935
     - _SmoothnessRemapMin: 0
     - _SmoothnessTextureChannel: 0
