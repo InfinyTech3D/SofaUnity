@@ -20,6 +20,10 @@ namespace SofaUnity
         /// Member: Unity Mesh object of this GameObject
         protected Mesh m_mesh;
 
+        /// Parameter bool to store information if vec3 or rigid are parsed.
+        [SerializeField]
+        public bool isRigidMesh = false;
+
         /// Parameter of this beam, it determnines the discretisation of the circonference around each center point of the beam.
         [SerializeField]
         protected int m_beamDiscretisation = 4;
@@ -155,9 +159,14 @@ namespace SofaUnity
             m_mesh.Clear();
             float[] sofaVertices = m_sofaMesh.SofaMeshTopology.m_vertexBuffer;
             m_vertCenter = new Vector3[nbrV];
+
+            int sizeDof = 3;
+            if (isRigidMesh)
+                sizeDof = 7;
+
             for (int i = 0; i < nbrV; i++)
             {
-                m_vertCenter[i] = new Vector3(sofaVertices[i * 3], sofaVertices[i * 3 + 1], sofaVertices[i * 3 + 2]);
+                m_vertCenter[i] = new Vector3(sofaVertices[i * sizeDof], sofaVertices[i * sizeDof + 1], sofaVertices[i * sizeDof + 2]);
             }
 
             int nbrPointPerCircle = 4 * m_beamDiscretisation + 1; // +1 to close cylinder UV
@@ -290,12 +299,16 @@ namespace SofaUnity
             if (nbrV < 2)
                 return;
 
-            //Debug.Log("BeamModel::UpdateLinearMesh");            
+            int sizeDof = 3;
+            if (isRigidMesh)
+                sizeDof = 7;
+
             float[] sofaVertices = m_sofaMesh.SofaMeshTopology.m_vertexBuffer;
             for (int i = 0; i < nbrV; i++)
             {
-                m_vertCenter[i] = new Vector3(sofaVertices[i * 3], sofaVertices[i * 3 + 1], sofaVertices[i * 3 + 2]);
+                m_vertCenter[i] = new Vector3(sofaVertices[i * sizeDof], sofaVertices[i * sizeDof + 1], sofaVertices[i * sizeDof + 2]);
             }
+
 
             // update borders first
             int idLast = m_vertices.Length - 1;
