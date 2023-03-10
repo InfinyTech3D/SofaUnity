@@ -65,5 +65,6 @@ public class SofaBeamModelEditor : Editor
         model.m_sofaMesh = (SofaMesh)EditorGUILayout.ObjectField("Beam SofaMesh", model.m_sofaMesh, typeof(SofaMesh), true);
         model.BeamDiscretisation = EditorGUILayout.IntField("Beam Discretisation", model.BeamDiscretisation);
         model.BeamRadius = EditorGUILayout.Slider("Beam Radius", model.BeamRadius, 0.001f, 30);
+        model.isRigidMesh = EditorGUILayout.Toggle("use Rigid Dof", model.isRigidMesh);
     }
 }
