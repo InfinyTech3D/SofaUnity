@@ -114,11 +114,17 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     {
         if (checkNativePointer())
         {
-            bool[] val = new bool[1];
-            int res = sofaComponentAPI_getBoolValue(m_simu, m_name, dataName, val);
+            int[] val = new int[1];
+            val[0] = 0;
+            int res = sofaComponentAPI_getBoolValueAsInt(m_simu, m_name, dataName, val);
 
             if (res == 0)
-                return val[0];
+            {
+                if (val[0] == 1)
+                    return true;
+                else
+                    return false;
+            }
             else
                 Debug.LogError("Method getBoolValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]); 
         }
@@ -936,6 +942,9 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     /// Bool API
     [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_getBoolValue(IntPtr obj, string componentName, string dataName, bool[] value);
+
+    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    public static extern int sofaComponentAPI_getBoolValueAsInt(IntPtr obj, string componentName, string dataName, int[] value);
 
     [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaComponentAPI_setBoolValue(IntPtr obj, string componentName, string dataName, bool value);
