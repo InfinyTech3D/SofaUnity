@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using SofaUnity;
 
 [CustomEditor(typeof(CuttingManager), true)]
 public class CuttingManagerEditor : Editor
@@ -11,6 +12,8 @@ public class CuttingManagerEditor : Editor
         CuttingManager model = this.target as CuttingManager;
         if (model == null)
             return;
+
+        model.m_sofaCuttingMgr = (SofaComponent)EditorGUILayout.ObjectField("SofaCuttingController", model.m_sofaCuttingMgr, typeof(SofaComponent), true);
 
         EditorGUILayout.ObjectField("Point A", model.m_pointA, typeof(GameObject), true);
         EditorGUILayout.ObjectField("Point B", model.m_pointB, typeof(GameObject), true);
