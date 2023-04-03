@@ -268,13 +268,7 @@ namespace SofaUnity
             if (m_impl != null)
             {
                 if (m_log)
-                    Debug.Log("SofaContext::OnDestroy stop now.");
-
-                if (isMsgHandlerActivated)
-                {
-                    m_impl.activateMessageHandler(false);
-                    isMsgHandlerActivated = false;
-                }
+                    Debug.Log("SofaContext::OnDestroy stop now.");                
 
                 if (m_log)
                     Debug.Log("## SofaContext status before stop: " + m_impl.contextStatus());
@@ -288,6 +282,13 @@ namespace SofaUnity
 
                 if (m_log)
                     Debug.Log("## SofaContext status after unload: " + m_impl.contextStatus());
+
+                DoCatchSofaMessages();
+                if (isMsgHandlerActivated)
+                {
+                    m_impl.activateMessageHandler(false);
+                    isMsgHandlerActivated = false;
+                }
 
                 m_impl.Dispose();
             }
