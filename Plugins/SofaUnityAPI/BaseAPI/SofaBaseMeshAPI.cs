@@ -872,6 +872,17 @@ public class SofaBaseMeshAPI : SofaBaseAPI
 
     }
 
+    public void SetVelocities(float[] values)
+    {
+        if (!m_isReady)
+            return;
+
+        int resUpdate = sofaMeshAPI_setVelocities(m_simu, m_name, values);
+        if (resUpdate < 0)
+            Debug.LogError("SofaBaseMeshAPI updateMesh: " + m_name + " return error: " + SofaDefines.msg_error[resUpdate]);
+
+    }
+
 
     /// Method to set new vertices position to this mesh
     public void SetRestPositions(float[] vertices)

@@ -144,6 +144,12 @@ namespace SofaUnity
                 m_sofaMeshAPI.SetPositions(vertices);
         }
 
+        public void SetVelocities(float[] vels)
+        {
+            if (m_sofaMeshAPI != null)
+                m_sofaMeshAPI.SetVelocities(vels);
+        }
+
 
         /// Method to set new vertices position to this mesh
         public void SetRestPositions(float[] vertices)
