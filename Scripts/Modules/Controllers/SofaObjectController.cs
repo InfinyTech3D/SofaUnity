@@ -10,6 +10,9 @@ public class SofaObjectController : MonoBehaviour
     public string m_dataName = "";
     public float m_speed = 0.1f;
 
+    /// Parameter bool to store information if vec3 or rigid are parsed.
+    [SerializeField]
+    public bool isRigidMesh = false;
 
     private bool m_ready = false;
     private Vector3 unityToSofa;
@@ -18,6 +21,10 @@ public class SofaObjectController : MonoBehaviour
     private Vector3 objectOri = Vector3.zero;
     private Vector3[] newPosition;
     private Vector3[] stopVelocity;
+
+    private float[] newPositionRigid;
+    private float[] stopVelocityRigid;
+
     private bool valueTracker;
     private SofaBoolData m_value = null;
 
@@ -62,11 +69,22 @@ public class SofaObjectController : MonoBehaviour
         newPosition = new Vector3[1];
         stopVelocity = new Vector3[1];
         stopVelocity[0] = Vector3.zero;
+
+        newPositionRigid = new float[7];
+        stopVelocityRigid = new float[7];
+        for (int i = 0; i < 6; i++)
+        {
+            newPositionRigid[i] = 0;
+            stopVelocityRigid[i] = 0;
+        }
+        newPositionRigid[6] = 1;
+        stopVelocityRigid[6] = 0;
+
         m_ready = true;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (!m_ready)
             return;
@@ -86,20 +104,19 @@ public class SofaObjectController : MonoBehaviour
         else if (Input.GetKey(KeyCode.Keypad2))
             MoveDown();
 
-        if (Input.GetKeyDown(KeyCode.Space) && m_value != null)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            valueTracker = !valueTracker;
-            m_value.Value = valueTracker;
+            ApplyAction();
         }
     }
 
-    void FixedUpdate()
-    {
-        if (!m_ready)
-            return;
+    //void FixedUpdate()
+    //{
+    //    if (!m_ready)
+    //        return;
 
-        UpdateCapsuleFromSofa();
-    }
+    //    //UpdateCapsuleFromSofa();
+    //}
 
 
     protected void UpdateCapsuleFromSofa()
@@ -115,44 +132,71 @@ public class SofaObjectController : MonoBehaviour
         this.transform.position = objectOri;
     }
 
-    protected void MoveForward()
+    public void MoveForward()
     {
         newPosition[0] = objectOri - this.transform.up * m_speed;
-        m_sofaMesh.SetVelocities(stopVelocity);
-        m_sofaMesh.SetVertices(newPosition);
+        UpdateToSofa(newPosition[0]);        
     }
 
-    protected void MoveBackward()
+    public void MoveBackward()
     {
         newPosition[0] = objectOri + this.transform.up * m_speed;
-        m_sofaMesh.SetVelocities(stopVelocity);
-        m_sofaMesh.SetVertices(newPosition);
+        UpdateToSofa(newPosition[0]);
     }
 
 
 
 
-    protected void MoveUp()
+    public void MoveUp()
     {
         newPosition[0] = objectOri + this.transform.forward * m_speed;
-        m_sofaMesh.SetVertices(newPosition);
+        UpdateToSofa(newPosition[0]);
     }
 
-    protected void MoveDown()
+    public void MoveDown()
     {
         newPosition[0] = objectOri - this.transform.forward * m_speed;
-        m_sofaMesh.SetVertices(newPosition);
+        UpdateToSofa(newPosition[0]);
     }
 
-    protected void MoveLeft()
+    public void MoveLeft()
     {
         newPosition[0] = objectOri + this.transform.right * m_speed;
-        m_sofaMesh.SetVertices(newPosition);
+        UpdateToSofa(newPosition[0]);
     }
 
-    protected void MoveRight()
+    public void MoveRight()
     {
         newPosition[0] = objectOri - this.transform.right * m_speed;
-        m_sofaMesh.SetVertices(newPosition);
+        UpdateToSofa(newPosition[0]);
+    }
+
+    public void ApplyAction()
+    {
+        if (m_value != null)
+        {
+            valueTracker = !valueTracker;
+            m_value.Value = valueTracker;
+        }
+    }
+
+    protected void UpdateToSofa(Vector3 my_newPosition)
+    {
+        if (isRigidMesh)
+        {
+            newPositionRigid[0] = my_newPosition[0];
+            newPositionRigid[1] = my_newPosition[1];
+            newPositionRigid[2] = my_newPosition[2];
+            m_sofaMesh.SetVelocities(stopVelocityRigid);
+            m_sofaMesh.SetPositions(newPositionRigid);
+        }
+        else
+        {
+            m_sofaMesh.SetVelocities(stopVelocity);
+            m_sofaMesh.SetVertices(newPosition);
+        }
+
+        this.transform.position = my_newPosition;
+        objectOri = my_newPosition;
     }
 }
