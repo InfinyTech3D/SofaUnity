@@ -5,7 +5,6 @@ using SofaUnity;
 
 public class KeyActionsRecorder : MonoBehaviour
 {
-
     public bool recordMode = true;
     public SofaObjectController m_controller = null;
 
@@ -18,6 +17,9 @@ public class KeyActionsRecorder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        recordMode = false;
+#endif
         step = 0;
         if(!recordMode)
         {
@@ -39,7 +41,7 @@ public class KeyActionsRecorder : MonoBehaviour
             if (step >= m_keysTime.Count || m_controller == null)
                 return;
 
-            if (Mathf.Abs(currentTime - m_keysTime[step]) < 0.01) // change action
+            if (currentTime >= m_keysTime[step]) // change action
             {
                 currentAction = m_keysAction[step];
 
