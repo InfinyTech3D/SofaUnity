@@ -191,20 +191,42 @@ namespace SofaUnity
         }
 
 
-        /// Method to load the plugins one by one from the list of enable plugins
-        public void LoadPlugins()
+        public string getPluginFullPrefixPath()
         {
             string pluginPath = "";
             if (Application.isEditor)
                 pluginPath = "/SofaUnity/Plugins/Native/x64/";
             else
+#if UNITY_ANDROID
+                pluginPath = "/Plugins/Android/";
+#else
                 pluginPath = "/Plugins/x86_64/";
+#endif
+            return Application.dataPath + pluginPath + "/";
+        }
+
+        public string getPluginFullName(string pluginName)
+        {
+            string pluginFullPath = "";
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+            pluginFullPath = pluginName + ".dll";
+#elif UNITY_EDITOR_LINUX || UNITY_STANDALONE_LINUX || UNITY_ANDROID
+            pluginFullPath = "lib" + pluginName + ".so";
+#endif
+            return pluginFullPath;
+        }
+
+        /// Method to load the plugins one by one from the list of enable plugins
+        public void LoadPlugins()
+        {
+            string fullPrefixPath = getPluginFullPrefixPath();
 
             // Internally load all default plugins from core and module
-            m_sofaAPI.loadDefaultPlugins(Application.dataPath + pluginPath);
+            m_sofaAPI.loadDefaultPlugins(fullPrefixPath);
 
             foreach (string pluginName in m_savedPlugins)
             {
+                string fullPluginPath = getPluginFullPrefixPath() + getPluginFullName(pluginName);
 #if UNITY_EDITOR
                 Plugin plug = PluginManager.Instance.GetPluginByName(pluginName);
                 if (plug == null || plug.IsAvailable == false)
@@ -215,24 +237,19 @@ namespace SofaUnity
                 else
                 {
                     plug.IsEnable = true;
-                    m_sofaAPI.loadPlugin(Application.dataPath + pluginPath + pluginName + ".dll");
+                    m_sofaAPI.loadPlugin(fullPluginPath);
                 }
 #else
-                m_sofaAPI.loadPlugin(Application.dataPath + pluginPath + pluginName + ".dll");
+                m_sofaAPI.loadPlugin(fullPluginPath);
 #endif
             }
         }
 
-
         public void LoadPlugin(string pluginName)
         {
-            string pluginPath = "";
-            if (Application.isEditor)
-                pluginPath = "/SofaUnity/Plugins/Native/x64/";
-            else
-                pluginPath = "/Plugins/x86_64/";
+            string fullPluginPath = getPluginFullPrefixPath() + getPluginFullName(pluginName);
 
-            m_sofaAPI.loadPlugin(Application.dataPath + pluginPath + pluginName + ".dll");
+            m_sofaAPI.loadPlugin(fullPluginPath);
         }
 
 

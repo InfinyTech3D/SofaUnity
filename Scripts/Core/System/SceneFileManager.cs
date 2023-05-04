@@ -96,7 +96,7 @@ namespace SofaUnity
         /// method to get the full path of the file inside the unity asset
         public string AbsoluteFilename()
         {
-            return Application.dataPath + m_filename;
+            return SofaContextAPI.getResourcesPath() + m_filename;
         }
 
 
@@ -108,7 +108,7 @@ namespace SofaUnity
         /// Internal method to check if the filename is valid
         protected bool CheckValidFilename(string newFilename)
         {
-            if (!File.Exists(Application.dataPath + newFilename)) // if not found test with relative path
+            if (!File.Exists(SofaContextAPI.getResourcesPath() + newFilename)) // if not found test with relative path
             {
                 int pos = newFilename.IndexOf("Assets", 0);
                 if (pos > 0)
@@ -122,7 +122,7 @@ namespace SofaUnity
                     newFilename = "/SofaUnity/" + newFilename;
             }
 
-            if (!File.Exists(Application.dataPath + newFilename)) // try again with relative path
+            if (!File.Exists(SofaContextAPI.getResourcesPath() + newFilename)) // try again with relative path
             {
                 return false;
             }
