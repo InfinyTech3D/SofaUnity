@@ -1,6 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
+#if UNITY_ANDROID
 #if UNITY_EDITOR
 public class GenerateZIP
 {
@@ -13,4 +14,5 @@ public class GenerateZIP
         Utility_SharpZipCommands.CreateTarGZ_FromDirectory(fileToCreate, dataDirectory);
     }
 }
-#endif 
+#endif
+#endif

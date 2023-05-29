@@ -1,12 +1,12 @@
 ﻿using System.IO;
+#if UNITY_ANDROID
 using Unity.SharpZipLib.GZip;
 using Unity.SharpZipLib.Tar;
-
 public class Utility_SharpZipCommands
 {
-
     //// Calling example
     //CreateTarGZ(@"c:\temp\gzip-test.tar.gz", @"c:\data");
+    // Package to be downloaded using the package manager: com.unity.sharp-zip-lib
 
     //USE THIS:
     public static void CreateTarGZ_FromDirectory(string tgzFilename, string sourceDirectory)
@@ -69,3 +69,4 @@ public class Utility_SharpZipCommands
     }
 
 }    // Calling example
+#endif
