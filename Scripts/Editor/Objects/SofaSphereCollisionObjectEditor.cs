@@ -70,17 +70,15 @@ public class SofaSphereCollisionObjectEditor : SofaMeshObjectEditor
 
     public override void OnInspectorGUI()
     {
-        
-
         SofaSphereCollisionObject model = (SofaSphereCollisionObject)this.target;
-        model.parentT = (GameObject)EditorGUILayout.ObjectField("Parent Gameobject to mirror position", model.parentT, typeof(GameObject), true);
+        model.SofaSphereCollision.ParentT = (GameObject)EditorGUILayout.ObjectField("Parent Gameobject to mirror position", model.SofaSphereCollision.ParentT, typeof(GameObject), true);
         model.UsePositionOnly = EditorGUILayout.Toggle("Use Object Position Only (1 dof)", model.UsePositionOnly);
         model.Factor = EditorGUILayout.Slider("Interpolation factor", model.Factor, 1, 100);
         model.Radius = EditorGUILayout.Slider("Sphere radius", model.Radius, 0.001f, 10);
-        model.Activated = EditorGUILayout.Toggle("Activate collision", model.Activated);
-        model.Stiffness = EditorGUILayout.Slider("Contact stiffness", model.Stiffness, 1, 5000);
-        model.m_startOnPlay = EditorGUILayout.Toggle("Start on Play", model.m_startOnPlay);
+        model.SofaSphereCollision.Activated = EditorGUILayout.Toggle("Activate collision", model.SofaSphereCollision.Activated);
+        model.SofaSphereCollision.Stiffness = EditorGUILayout.Slider("Contact stiffness", model.SofaSphereCollision.Stiffness, 1, 5000);
+        model.SofaSphereCollision.StartOnPlay = EditorGUILayout.Toggle("Start on Play", model.SofaSphereCollision.StartOnPlay);
 
-        EditorGUILayout.LabelField("Number of spheres", model.NbrSpheres.ToString());
+        EditorGUILayout.LabelField("Number of spheres", model.SofaSphereCollision.NbrSpheres.ToString());
     }
 }
