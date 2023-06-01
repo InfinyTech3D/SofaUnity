@@ -154,7 +154,7 @@ public class SofaVR_API : MonoBehaviour
             Debug.Log("handleRightController Off");
             if (m_rightCtrlActivated) // was activated and now view mode
             {
-                m_rightCollisionModel.Activated = false;
+                m_rightCollisionModel.SofaSphereCollision.Activated = false;
                 m_rightRayCaster.ActivateTool = false;
                 m_rightCtrlActivated = false;
             }
@@ -165,9 +165,9 @@ public class SofaVR_API : MonoBehaviour
         if (m_rightCollisionModel)
         {
             if (gripR)
-                m_rightCollisionModel.Activated = true;
+                m_rightCollisionModel.SofaSphereCollision.Activated = true;
             else
-                m_rightCollisionModel.Activated = false;
+                m_rightCollisionModel.SofaSphereCollision.Activated = false;
         }
 
         if (m_rightRayCaster.RayInteractionType == SofaDefines.SRayInteraction.AttachTool) // need trigger
@@ -208,7 +208,7 @@ public class SofaVR_API : MonoBehaviour
         {
             if (m_leftCtrlActivated) // was activated and now view mode
             {
-                m_leftCollisionModel.Activated = false;
+                m_leftCollisionModel.SofaSphereCollision.Activated = false;
                 m_leftRayCaster.ActivateTool = false;
                 m_leftCtrlActivated = false;
             }
@@ -218,9 +218,9 @@ public class SofaVR_API : MonoBehaviour
         if (m_leftCollisionModel)
         {
             if (gripL)
-                m_leftCollisionModel.Activated = true;
+                m_leftCollisionModel.SofaSphereCollision.Activated = true;
             else
-                m_leftCollisionModel.Activated = false;
+                m_leftCollisionModel.SofaSphereCollision.Activated = false;
         }
 
 
