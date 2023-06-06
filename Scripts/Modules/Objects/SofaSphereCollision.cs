@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using SofaUnity;
 
+/// <summary>
+/// Genereric class to factorise commun part on SofaSphereCollisionHand and SofaSphereCollisionObject
+/// </summary>
 public class SofaSphereCollision 
 {
     protected SofaCustomMeshAPI m_impl = null;
@@ -21,24 +24,36 @@ public class SofaSphereCollision
     [SerializeField]
     private bool m_startOnPlay = true;
 
+    /// <summary>
+    /// Getter / Setter of sofa implementation 
+    /// </summary>
     public SofaCustomMeshAPI Impl
     {
         get => m_impl;
         set => m_impl = value;
     }
 
+    /// <summary>
+    /// Getter / Setter of the parent 
+    /// </summary>
     public GameObject ParentT
     {
         get => parentT;
         set => parentT = value;
     }
 
+    /// <summary>
+    /// Getter / Setter of StartOnPlay attibute
+    /// </summary>
     public bool StartOnPlay
     {
         get => m_startOnPlay;
         set => m_startOnPlay = value;
     }
 
+    /// <summary>
+    /// Getter / setter for list of points
+    /// </summary>
     public Vector3[] Centers
     {
         get => m_centers;
@@ -81,7 +96,11 @@ public class SofaSphereCollision
         }
     }
 
-
+    /// <summary>
+    /// Update position of sphere depending on parent position 
+    /// </summary>
+    /// <param name="transform"></param>
+    /// <param name="ctxt"></param>
     public void UpdateLoop(Transform transform, SofaContext ctxt)
     {
         if (parentT != null)
@@ -95,6 +114,12 @@ public class SofaSphereCollision
         }
     }
 
+    /// <summary>
+    /// Draw spheres on unity side using Gizmo to know where collision happend 
+    /// </summary>
+    /// <param name="radius"></param>
+    /// <param name="transform"></param>
+    /// <param name="ctxt"></param>
     public void DrawGizmos(float radius, Transform transform, SofaContext ctxt)
     {
         if (m_centers == null || ctxt == null)

@@ -34,14 +34,18 @@ public class SofaSphereCollisionHand : SofaBaseObject
     /////  SofaSphereCollisionObject public API /////
     /////////////////////////////////////////////////
 
-    [SerializeField]
-    public SofaSphereCollision SofaSphereCollision
+    /// <summary>
+    /// Reference to SofaSphereCollision : commun part of  SofaSphereCollisionHand and SofaSphereCollisionObject
+    /// </summary>
+    [SerializeField] public SofaSphereCollision SofaSphereCollision
     {
         get => m_sofaSphereCollision;
         set => m_sofaSphereCollision = value;
     }
 
-
+    /// <summary>
+    /// Reference of collider list 
+    /// </summary>
     public List<GameObject> CapsuleColliderList
     {
         get => m_capsuleColliderList;
@@ -72,6 +76,7 @@ public class SofaSphereCollisionHand : SofaBaseObject
 
     private void Awake()
     {
+        /// Make sure m_sofaSphereCollision is not null
         if (m_sofaSphereCollision == null)
         {
             print("set m_sofaSphereCollision");
@@ -86,7 +91,10 @@ public class SofaSphereCollisionHand : SofaBaseObject
     // Use this for initialization
     void Start()
     {
+        // Clear the capsule collider list on start to avoid duplicate 
         m_capsuleColliderList.Clear();
+
+        // Looking for Capsule collider in children
         CapsuleCollider[] colliders = gameObject.GetComponentsInChildren<CapsuleCollider>();
         for (int i = 0; i < colliders.Length; i++)
         {
@@ -184,6 +192,9 @@ public class SofaSphereCollisionHand : SofaBaseObject
         Create_impl();
     }
 
+    /// <summary>
+    /// Update list of Sphere position depending on the capsule collider  
+    /// </summary>
     private void UpdatePoints()
     {
         int j = 0;
@@ -207,6 +218,11 @@ public class SofaSphereCollisionHand : SofaBaseObject
         }
     }
 
+    /// <summary>
+    /// Define the sphere position for the first iteration ; 
+    /// The list is empty on start.
+    /// </summary>
+    /// <returns></returns>
     private Vector3[] DefinePoints()
     {
         for (int i = 0; i < m_capsuleColliderList.Count; i++)

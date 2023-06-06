@@ -3,10 +3,15 @@ using UnityEditor;
 using SofaUnity;
 using System.Collections.Generic;
 
-
+/// <summary>
+/// Create full VR player from prefab and add sphere to collide with Sofa 
+/// </summary>
 public class CreatePlayerInEditor : Editor
 {
-    private static GameObject m_playerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Sofa Complete XR Origin Set Up Physic.prefab");
+    /// <summary>
+    /// Instance of player prefab
+    /// </summary>
+    private static GameObject m_playerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/SofaUnity/Prefabs/Sofa Complete XR Origin Set Up Physic.prefab");
 
     [MenuItem("SofaUnity/VR/VRPlayer")]
     [MenuItem("GameObject/Create Other/VR/VRPlayer")]
@@ -45,7 +50,7 @@ public class CreatePlayerInEditor : Editor
             }
         }
 
-
+        // Add sphere due to capsule position to collide with sofa
         selectObj.AddComponent<SofaSphereCollisionHand>();
 
         SofaDAGNodeManager nodeMgr = parentDagN.m_sofaContext.NodeGraphMgr;
@@ -54,11 +59,12 @@ public class CreatePlayerInEditor : Editor
         else
             Debug.LogError("Error creating SofaSphereCollisionHand. Can't access SofaDAGNodeManager.");
 
+        // Get reference to SofaSphereCollisionHand component to disable / enable colision on grab.
         selectObj.GetComponent<DesactivateCollision>().SetSofaSphereCollisionHand(selectObj.GetComponent<SofaSphereCollisionHand>());
         selectObj.GetComponent<DesactivateCollision>().enabled = true;
 
 
-        // Right Hand
+        // Right Hand (exacly like the left hand but for the right)
         selectObj = GameObject.FindGameObjectWithTag("RightHandModel");
 
         if (selectObj.GetComponent<MeshFilter>() == null)
@@ -90,7 +96,7 @@ public class CreatePlayerInEditor : Editor
             }
         }
 
-
+        // Add sphere due to capsule position to collide with sofa
         selectObj.AddComponent<SofaSphereCollisionHand>();
 
 
@@ -99,9 +105,10 @@ public class CreatePlayerInEditor : Editor
         else
             Debug.LogError("Error creating SofaSphereCollisionHand. Can't access SofaDAGNodeManager.");
 
+        // Get reference to SofaSphereCollisionHand component to disable / enable colision on grab.
         selectObj.GetComponent<DesactivateCollision>().SetSofaSphereCollisionHand(selectObj.GetComponent<SofaSphereCollisionHand>());
         selectObj.GetComponent<DesactivateCollision>().enabled = true;
 
         return ;
-    }
+   }
 }

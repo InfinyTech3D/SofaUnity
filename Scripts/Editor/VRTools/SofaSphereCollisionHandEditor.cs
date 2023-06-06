@@ -1,8 +1,10 @@
 using UnityEngine;
 using UnityEditor;
 using SofaUnity;
-using System.Collections.Generic;
 
+/// <summary>
+/// Add SofaSphereCollisionHand component on a selected hand
+/// </summary>
 [CustomEditor(typeof(SofaSphereCollisionHand), true)]
 public class SofaSphereCollisionHandEditor : Editor
 {
@@ -12,7 +14,7 @@ public class SofaSphereCollisionHandEditor : Editor
     {
         if (Selection.activeTransform == null)
         {
-            Debug.LogError("Error1 creating SofaSphereCollisionObject GameObject. No valid gameObject selected under SofaContext.");
+            Debug.LogError("Error1 creating SofaSphereCollisionHand GameObject. No valid gameObject selected under SofaContext.");
             return null;
         }
 
@@ -20,7 +22,7 @@ public class SofaSphereCollisionHandEditor : Editor
 
         if (selectObj.GetComponent<MeshFilter>() == null)
         {
-            Debug.LogError("Error2 creating SofaSphereCollisionObject GameObject. Object should have a valid MeshFilter.");
+            Debug.LogError("Error2 creating SofaSphereCollisionHand GameObject. Object should have a valid MeshFilter.");
             return null;
         }
 
@@ -38,7 +40,7 @@ public class SofaSphereCollisionHandEditor : Editor
             // still null, no SofaContext found
             if (parentDagN == null)
             {
-                Debug.LogError("Error3 creating SofaSphereCollisionObject GameObject. No valid SofaDAGNode found as parent of this gameObject or in SofaContext.");
+                Debug.LogError("Error3 creating SofaSphereCollisionHand GameObject. No valid SofaDAGNode found as parent of this gameObject or in SofaContext.");
                 return null;
             }
             else
@@ -53,14 +55,14 @@ public class SofaSphereCollisionHandEditor : Editor
         if (nodeMgr != null)
             nodeMgr.RegisterCustomObject(selectObj, parentDagN);
         else
-            Debug.LogError("Error creating SofaSphereCollisionObject. Can't access SofaDAGNodeManager.");
+            Debug.LogError("Error creating SofaSphereCollisionHand. Can't access SofaDAGNodeManager.");
 
         return selectObj;
     }
 
     public override void OnInspectorGUI()
     {
-        Debug.Log("SofaSphereCollisionObjectEditor::OnInspectorGUI");
+        Debug.Log("SofaSphereCollisionHandEditor::OnInspectorGUI");
 
         SofaSphereCollisionHand model = (SofaSphereCollisionHand)this.target;
         model.SofaSphereCollision.ParentT = (GameObject)EditorGUILayout.ObjectField("Parent Gameobject to mirror position", model.SofaSphereCollision.ParentT, typeof(GameObject), true);
@@ -69,6 +71,7 @@ public class SofaSphereCollisionHandEditor : Editor
         model.SofaSphereCollision.Stiffness = EditorGUILayout.Slider("Contact stiffness", model.SofaSphereCollision.Stiffness, 1, 5000);
         model.SofaSphereCollision.StartOnPlay = EditorGUILayout.Toggle("Start on Play", model.SofaSphereCollision.StartOnPlay);
 
+        // display the list of capsule collider in the inspector 
         int size = Mathf.Max(0, EditorGUILayout.IntField("Size", model.CapsuleColliderList.Count));
         while (size > model.CapsuleColliderList.Count)
         {
@@ -83,7 +86,7 @@ public class SofaSphereCollisionHandEditor : Editor
             model.CapsuleColliderList[i] = EditorGUILayout.ObjectField("Capsule " + i.ToString(), model.CapsuleColliderList[i], typeof(GameObject), true) as GameObject;
         }
 
-
+        // Normaly twice the number of capsules (2 spheres by capsule collider) 
         EditorGUILayout.LabelField("Number of spheres", model.SofaSphereCollision.NbrSpheres.ToString());
 
     }

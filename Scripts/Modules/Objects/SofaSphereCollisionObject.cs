@@ -37,9 +37,10 @@ public class SofaSphereCollisionObject : SofaBaseObject
     /////  SofaSphereCollisionObject public API /////
     /////////////////////////////////////////////////
 
-
-    [SerializeField]
-    public SofaSphereCollision SofaSphereCollision
+    /// <summary>
+    /// Reference to SofaSphereCollision : commun part of  SofaSphereCollisionHand and SofaSphereCollisionObject
+    /// </summary>
+    [SerializeField] public SofaSphereCollision SofaSphereCollision
     {
         get => m_sofaSphereCollision;
         set => m_sofaSphereCollision = value;
