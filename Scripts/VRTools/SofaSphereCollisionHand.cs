@@ -21,9 +21,6 @@ public class SofaSphereCollisionHand : SofaBaseObject
     /// Collision sphere radius
     [SerializeField] protected float m_radius = 1.0f;
 
-    /// List of unique vertex that discribe the GameObject geometry
-    protected List<Vector3> m_keyVertices = null;
-
     [SerializeField]
     private List<GameObject> m_capsuleColliderList = new List<GameObject>();
     private List<Vector3> m_pointsList = new List<Vector3>();
@@ -250,8 +247,6 @@ public class SofaSphereCollisionHand : SofaBaseObject
     /// Method called by @sa Awake() method. As post process method after creation.
     protected override void Init_impl()
     {
-        m_keyVertices = new List<Vector3>();
-
         Mesh m_mesh = this.GetComponent<MeshFilter>().sharedMesh;
 
         if (m_mesh == null) // look for a mesh in the current gameObject
