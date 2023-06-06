@@ -261,58 +261,14 @@ public class SofaSphereCollisionHand : SofaBaseObject
         }
 
         Vector3[] vertices = DefinePoints();
-        //Vector3[] vertices = m_mesh.vertices;
-        for (int i = 0; i < vertices.Length; i++)
-        {
-            bool found = false;
-            foreach (Vector3 vert in m_keyVertices)
-            {
-                if (vert == vertices[i])
-                {
-                    found = true;
-                    break;
-                }
-            }
-
-            if (!found)
-                m_keyVertices.Add(vertices[i]);
-        }
-        ComputeSphereCenters();
-    }
-
-
-
-
-    /// Method to compute the centers according to the @see m_keyVertices and @sa m_factor
-    protected void ComputeSphereCenters()
-    {
-        if (m_keyVertices == null)
-        {
-            AwakePostProcess();
-            return;
-        }
-
-
-        m_sofaSphereCollision.Centers = new Vector3[m_keyVertices.Count];
+        m_sofaSphereCollision.Centers = new Vector3[vertices.Length];
         int cpt = 0;
-        foreach (Vector3 vert in m_keyVertices)
+        foreach (Vector3 vert in vertices)
         {
             m_sofaSphereCollision.Centers[cpt] = transform.InverseTransformPoint(vert);
             cpt++;
         }
-
-        if (cpt >= 1000) // too much spheres
-        {
-            Debug.LogWarning("This factor create too many spheres: " + cpt + " Change the factor.");
-            return;
-        }
-
-
-        if (m_sofaSphereCollision.Impl != null)
-            m_sofaSphereCollision.Impl.SetNumberOfVertices(m_keyVertices.Count);
     }
-
-
 
 }
 
