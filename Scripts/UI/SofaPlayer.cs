@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SofaUnity;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class SofaPlayer : MonoBehaviour
 {
@@ -40,7 +41,6 @@ public class SofaPlayer : MonoBehaviour
     public void restartSofaSimulation()
     {
         Debug.Log("restartSofaSimulation");
-        if (m_sofaContext != null)
-            m_sofaContext.ResetSofa();
+        SceneManager.LoadScene(0);
     }
 }
