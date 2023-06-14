@@ -179,7 +179,7 @@ namespace SofaUnity
             : base(owner, dataName, dataType, "Vec2")
         {
             m_isDouble = isDouble;
-            m_vecSize = m_owner.m_impl.GetVecofVec2Size(m_dataName, m_isDouble);            
+            m_vecSize = m_owner.m_impl.GetVecofVec2Size(m_dataName, m_isDouble);
         }
 
         /// <summary>
@@ -187,8 +187,11 @@ namespace SofaUnity
         /// </summary>
         /// <param name="values">Array of Vector2 to store SOFA values</param>
         /// <returns>int code from SOFA communication</returns>
-        public int GetValues(Vector2[] values)
+        public int GetValues(Vector2[] values, bool updateSize = false)
         {
+            if (updateSize)
+                m_vecSize = m_owner.m_impl.GetVecofVec2Size(m_dataName, m_isDouble);
+
             float[] rawValues = new float[m_vecSize * 2];
 
             int res = m_owner.m_impl.GetVecofVec2Value(m_dataName, m_vecSize, rawValues, m_isDouble);

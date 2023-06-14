@@ -85,13 +85,21 @@ public class BurningManager : MonoBehaviour
             if (counter == texCpt)
                 return;
 
+            bool updateSize = false;
+            if (m_mesh.vertices.Length != m_nbrV) // carving in process
+            {
+                m_nbrV = m_mesh.vertices.Length;
+                m_uv2 = new Vector2[m_nbrV];
+                updateSize = true;
+            }                       
+
             texCpt = counter;
             if (bData != null)
             {
                 bool vector = bData.IsVector();
                 SofaDataVectorVec2 dataV = (SofaDataVectorVec2)(bData);
 
-                dataV.GetValues(m_uv2);
+                dataV.GetValues(m_uv2, updateSize);
                 m_mesh.uv2 = m_uv2;
             }
             //vModel.UpdateTexCoords();
