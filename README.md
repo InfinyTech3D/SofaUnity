@@ -14,7 +14,7 @@ All SOFA `VisualModel` components present in the loaded simulation will be rende
 
 #### Compatibility:
 - Unity version > 2020.3.x
-- SOFA version >= 22.12 with SofaPhysicsAPI 
+- SOFA version 22.12 with SofaPhysicsAPI activated (23.06 support will be tested soon)
 - Only tested on Windows
 
 ## Installation guide
@@ -24,11 +24,11 @@ All SOFA `VisualModel` components present in the loaded simulation will be rende
 #### Installation from source:
 3. clone the repo inside your unity project: 
 ```git clone git@github.com:InfinyTech3D/SofaUnity-Renderer.git /myUnityProject/Assets/SofaUnity```
-5. Copy the SOFA dll libraries inside: ```/myUnityProject/Assets/SofaUnity/Plugins/Native/x64```  (for windows)
+4. Copy the SOFA dll libraries inside: ```/myUnityProject/Assets/SofaUnity/Plugins/Native/x64```  (for windows) | ```/myUnityProject/Assets/SofaUnity/Plugins/Native/x86_64``` (for linux)
 
 #### Installation from asset:
 3. install the unity asset: In Unity3D Editor, use ```Assets -> Import Package -> Custom Package``` and load the package `SofaUnity-Renderer.unitypackage`
-
+4. Copy the SOFA dll libraries inside: ```/myUnityProject/Assets/SofaUnity/Plugins/Native/x64```  (for windows) | ```/myUnityProject/Assets/SofaUnity/Plugins/Native/x86_64``` (for linux)
 
 ## Usage
 As soon as the `SofaUnity-Renderer.unitypackage` is loaded inside your Unity project, you will have access to a top menu panel called `SofaUnity`. 
