@@ -185,7 +185,7 @@ namespace SofaUnityAPI
             if (m_isReady)
             {
                 int res = sofaPhysicsAPI_loadScene(m_native, filename);
-                if (res != 0)
+                if (res < 0)
                     Debug.LogError("SofaContextAPI::loadScene method returns: " + SofaDefines.msg_error[res] + " for scene: " + filename);
             }
             else
@@ -228,7 +228,14 @@ namespace SofaUnityAPI
         {
             get {
                 if (m_isReady)
-                    return (float)sofaPhysicsAPI_timeStep(m_native);
+                {
+                    float val = sofaPhysicsAPI_timeStep(m_native);
+                    if (val == 0.0f)
+                    {
+                        Debug.LogWarning("Time stepping is set to 0. You might need to set the SOFA timestep manually in Unity Editor.");
+                    }
+                    return val;
+                }
                 else
                     return 0.01f;
             }
