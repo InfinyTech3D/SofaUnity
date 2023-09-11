@@ -373,7 +373,7 @@ namespace SofaUnity
             }
 #elif SofaUnityRenderer
             if (m_renderer.m_visualModels == null)
-                m_renderer.createScene();
+                m_renderer.createScene(m_log);
             else
                 ReconnectSofaScene();
 #endif
@@ -477,7 +477,9 @@ namespace SofaUnity
 
         protected void ReconnectSofaScene()
         {
-            Debug.Log("ReconnectSofaScene");
+            if (m_log)
+                Debug.Log("## SofaContext ## ReconnectSofaScene ");
+
             if (m_sceneFileMgr == null)
                 return;
 
@@ -492,7 +494,7 @@ namespace SofaUnity
             // reconnect node hiearchy in unity
             m_nodeGraphMgr.ReconnectNodeGraph();
 #elif SofaUnityRenderer
-            m_renderer.Reconnect();
+            m_renderer.Reconnect(m_log);
 #endif
 
             DoCatchSofaMessages();
@@ -500,6 +502,9 @@ namespace SofaUnity
 
         public void ClearSofaScene()
         {
+            if (m_log)
+                Debug.Log("## SofaContext ## ClearSofaScene ");
+            
             m_impl.stop();
             m_impl.unload();
 #if SofaUnityEngine

@@ -102,7 +102,8 @@ public class SofaContextEditor : Editor
         EditorGUI.EndDisabledGroup();
 #endif
         
-        context.CatchSofaMessages = EditorGUILayout.Toggle("Activate Sofa Logs", context.CatchSofaMessages);
+        context.CatchSofaMessages = EditorGUILayout.Toggle("Activate SOFA message handler", context.CatchSofaMessages);
+        context.m_log = EditorGUILayout.Toggle("Activate SofaContext Logs", context.m_log);
         EditorGUILayout.Separator();
 
         EditorGUILayout.Separator();        

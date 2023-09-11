@@ -62,7 +62,6 @@ public class SofaVisualModel : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Start: '" + m_uniqName + "'");
         // Add a MeshFilter to the GameObject
         MeshFilter mf = gameObject.GetComponent<MeshFilter>();
         if (mf == null)

@@ -39,6 +39,7 @@ namespace SofaUnity
 
         [SerializeField]
         public List<SofaVisualModel> m_visualModels = null;
+        
 
         /// Default constructor, will create the pointer to SofaPhysicsAPI
         public SofaUnityRenderer(SofaContext context)
@@ -80,12 +81,17 @@ namespace SofaUnity
         }
 
 
-        public void createScene()
+        public void createScene(bool logResults = false)
         {
             SofaUnityAPI.SofaContextAPI sofaAPI = m_sofaContext.GetSofaAPI();
-            Debug.Log("### SofaVisualModel:createScene");
+            
+            if (logResults)
+                Debug.Log("### SofaUnityRenderer::createScene access API");
+            
             int nbrVM = sofaPhysicsAPI_getNbrVisualModel(sofaAPI.getSimuContext());
-            Debug.Log("createScene: Nbr VisualM: " + nbrVM);
+
+            if (logResults)
+                Debug.Log("### SofaUnityRenderer::createScene: Nbr VisualM: " + nbrVM);
 
             if (m_visualModels == null)
                 m_visualModels = new List<SofaVisualModel>();
@@ -104,18 +110,24 @@ namespace SofaUnity
         }
 
 
-        public void Reconnect()
+        public void Reconnect(bool logResults = false)
         {
-            Debug.Log("## SofaVisualModel:Reconnect ");
+            if (logResults)
+                Debug.Log("### SofaUnityRenderer::Reconnect method");
 
             if (m_visualModels == null)
                 m_visualModels = new List<SofaVisualModel>();
 
             SofaVisualModel[] Vms = m_sofaContext.GetComponentsInChildren<SofaVisualModel>();
 
+            if (logResults)
+                Debug.Log("### SofaUnityRenderer::Reconnect: Nbr VisualM: " + Vms.Length);
+
             foreach (SofaVisualModel visuM in Vms)
             {
-                Debug.Log("Reconnect SofaVisualModel: " + visuM.m_uniqName);
+                if (logResults)
+                    Debug.Log("### SofaUnityRenderer::SofaVisualModel found: " + visuM.m_uniqName);
+
                 visuM.setSofaContext(m_sofaContext);
                 m_visualModels.Add(visuM);
             }
