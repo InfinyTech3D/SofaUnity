@@ -13,24 +13,23 @@ All SOFA `VisualModel` components present in the loaded simulation will be rende
 
 
 #### Compatibility:
-- Unity version > 2020.3.x
-- SOFA version 22.12 with SofaPhysicsAPI activated (23.06 support will be tested soon)
-- Only tested on Windows
+- Unity version > 2020.3.x (Tested with LTS: 2020.3.17 and 2021.3.19)
+- SOFA version > 22.12 with SofaPhysicsAPI activated (Tested with SOFA releases 22.12 and 23.06)
+- Only tested on Windows for now
 
 ## Installation guide
 1. Install Unity engine version > 2020.3.x
 2. (optionnal) Create a new project
 
 #### Installation from asset:
-3. Download the unity asset provided in the release page:
-   [For the SofaUnity-Renderer_v22.12_Win64](https://github.com/InfinyTech3D/SofaUnity-Renderer/releases/download/v22.12/SofaUnity-Renderer_v22.12_Win64.unitypackage) 
-5. Load the unity asset inside Unity3D Editor, use ```Assets -> Import Package -> Custom Package``` and load the package `SofaUnity-Renderer_v22.12_Win64.unitypackage`
+3. Download the unity asset provided in the [release page](https://github.com/InfinyTech3D/SofaUnity-Renderer/releases): Here for the [SofaUnity-Renderer_v22.12_Win64](https://github.com/InfinyTech3D/SofaUnity-Renderer/releases/download/v22.12/SofaUnity-Renderer_v22.12_Win64.unitypackage) and here for the [SofaUnity-Renderer_v23.06_Win64](https://github.com/InfinyTech3D/SofaUnity-Renderer/releases/download/v23.06/SofaUnity-Renderer_v23.06_Win64.unitypackage) 
+5. Load the unity asset inside Unity3D Editor, use ```Assets -> Import Package -> Custom Package``` and load the corresponding package `SofaUnity-Renderer_vXX.XX_Win64.unitypackage`
 
 #### Installation from source:
 3. Clone this repository inside your unity project: 
 ```git clone git@github.com:InfinyTech3D/SofaUnity-Renderer.git /myUnityProject/Assets/SofaUnity```
-4. Download the release v22.12 of SOFA (either using the installer or the zip file) provided here: https://github.com/sofa-framework/sofa/releases/tag/v22.12.00
-5. Copy the SOFA .dll from the folder ```/SOFA_v22.12.00_Win64\bin\ ``` inside: ```/myUnityProject/Assets/SofaUnity/Plugins/Native/x64```  (for windows) | ```/myUnityProject/Assets/SofaUnity/Plugins/Native/x86_64``` (for linux)
+4. Download the SOFA release [v22.12](https://github.com/sofa-framework/sofa/releases/tag/v22.12.00) or [v23.06](https://github.com/sofa-framework/sofa/releases/tag/v23.06.00), either using the installer or the zip file 
+5. Copy the SOFA .dll from the folder ```/SOFA_vXX.XX.00_Win64\bin\ ``` inside: ```/myUnityProject/Assets/SofaUnity/Plugins/Native/x64```  (for windows) | ```/myUnityProject/Assets/SofaUnity/Plugins/Native/x86_64``` (for linux)
 
 
 ## Usage
