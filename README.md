@@ -21,14 +21,17 @@ All SOFA `VisualModel` components present in the loaded simulation will be rende
 1. Install Unity engine version > 2020.3.x
 2. (optionnal) Create a new project
 
-#### Installation from source:
-3. clone the repo inside your unity project: 
-```git clone git@github.com:InfinyTech3D/SofaUnity-Renderer.git /myUnityProject/Assets/SofaUnity```
-4. Copy the SOFA dll libraries inside: ```/myUnityProject/Assets/SofaUnity/Plugins/Native/x64```  (for windows) | ```/myUnityProject/Assets/SofaUnity/Plugins/Native/x86_64``` (for linux)
-
 #### Installation from asset:
-3. install the unity asset: In Unity3D Editor, use ```Assets -> Import Package -> Custom Package``` and load the package `SofaUnity-Renderer.unitypackage`
-4. Copy the SOFA dll libraries inside: ```/myUnityProject/Assets/SofaUnity/Plugins/Native/x64```  (for windows) | ```/myUnityProject/Assets/SofaUnity/Plugins/Native/x86_64``` (for linux)
+3. Download the unity asset provided in the release page:
+   [For the SofaUnity-Renderer_v22.12_Win64](https://github.com/InfinyTech3D/SofaUnity-Renderer/releases/download/v22.12/SofaUnity-Renderer_v22.12_Win64.unitypackage) 
+5. Load the unity asset inside Unity3D Editor, use ```Assets -> Import Package -> Custom Package``` and load the package `SofaUnity-Renderer_v22.12_Win64.unitypackage`
+
+#### Installation from source:
+3. Clone this repository inside your unity project: 
+```git clone git@github.com:InfinyTech3D/SofaUnity-Renderer.git /myUnityProject/Assets/SofaUnity```
+4. Download the release v22.12 of SOFA (either using the installer or the zip file) provided here: https://github.com/sofa-framework/sofa/releases/tag/v22.12.00
+5. Copy the SOFA .dll from the folder ```/SOFA_v22.12.00_Win64\bin\ ``` inside: ```/myUnityProject/Assets/SofaUnity/Plugins/Native/x64```  (for windows) | ```/myUnityProject/Assets/SofaUnity/Plugins/Native/x86_64``` (for linux)
+
 
 ## Usage
 As soon as the `SofaUnity-Renderer.unitypackage` is loaded inside your Unity project, you will have access to a top menu panel called `SofaUnity`. 
