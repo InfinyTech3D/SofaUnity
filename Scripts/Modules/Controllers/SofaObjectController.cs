@@ -108,18 +108,11 @@ public class SofaObjectController : MonoBehaviour
         {
             ApplyAction();
         }
+
+        UpdateFromSofa();
     }
 
-    //void FixedUpdate()
-    //{
-    //    if (!m_ready)
-    //        return;
-
-    //    //UpdateCapsuleFromSofa();
-    //}
-
-
-    protected void UpdateCapsuleFromSofa()
+    protected void UpdateFromSofa()
     {
         int nbrV = m_sofaMesh.NbVertices();
         float[] sofaVertices = m_sofaMesh.SofaMeshTopology.m_vertexBuffer;
