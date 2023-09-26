@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using UnityEditor;
 using System.IO;
 using UnityEngine.SceneManagement;
-using UnityEditor.SceneManagement;
 
 
 public class ScenesTestRunner : MonoBehaviour
@@ -49,7 +48,6 @@ public class ScenesTestRunner : MonoBehaviour
 
 
         EditorBuildSettings.scenes = m_editorBuildSettingsScenes.ToArray();
-        Debug.Log("Nbr scene Editor: " + EditorSceneManager.loadedSceneCount);
         Debug.Log("Nbr scene Play: " + SceneManager.sceneCount);
         Debug.Log("Nbr scene Build: " + SceneManager.sceneCountInBuildSettings);
     }
