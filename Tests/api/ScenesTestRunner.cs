@@ -90,7 +90,6 @@ public class ScenesTestRunner : MonoBehaviour
         {
             string relativepath = f.FullName.Substring(Application.dataPath.Length);
             relativepath = "Assets/" + relativepath.Replace("\\", "/");
-            Debug.Log(f.Name + " = " + relativepath);
 
             m_editorBuildSettingsScenes.Add(new EditorBuildSettingsScene(relativepath, true));
             cptScene++;
@@ -113,39 +112,38 @@ public class ScenesTestRunner : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        //if (m_testedLevel >= SceneManager.sceneCountInBuildSettings - 1)
-        if (m_testedLevel >= 2)
+        if (m_testedLevel >= SceneManager.sceneCountInBuildSettings - 1)
             return;
 
-        if (m_cptInternal == 50)
+        if (m_cptInternal == 20)
         {
             // open scene to test
             openTestScene(m_testedLevel);
         }
 
-        if (m_cptInternal == 300)
+        if (m_cptInternal == 320)
         {
             // write scene logs
-            writeLogs(m_testedLevel);
+            writeLogs(m_sceneName);
 
             // take screenshot
             takeScreenShot(m_sceneName);
 
             // close scene
             closeTestScene(m_testedLevel);
-
-            m_testedLevel++;
-
+            
             if (WriteRefMode)
             {
+                m_testedLevel++;
                 m_cptInternal = 0;
                 m_sceneName = "";
             }
         }
 
-        if (!WriteRefMode && m_cptInternal == 310)
+        if (!WriteRefMode && m_cptInternal == 330)
         {
-            compareScreenshots(m_sceneName);
+            compareLogs(m_sceneName);
+            m_testedLevel++;
             m_cptInternal = 0;
             m_sceneName = "";
         }
@@ -180,11 +178,10 @@ public class ScenesTestRunner : MonoBehaviour
         else
             folderPath = Directory.GetCurrentDirectory() + "/Assets/SofaUnity/Tests/logs/";
 
-        string screenshotName = "Snap_" + sceneName + ".png";
+        string screenshotName = "Test_" + sceneName + ".png";
         string fullPath = System.IO.Path.Combine(folderPath, screenshotName);
         ScreenCapture.CaptureScreenshot(fullPath);
         
-        Debug.Log("Capture: " + fullPath);
         string logPath = System.IO.Path.Combine(folderPath, "All-Logs.txt");
         StreamWriter writer = new StreamWriter(logPath, false);
         writer.Write(m_logs);
@@ -213,14 +210,12 @@ public class ScenesTestRunner : MonoBehaviour
     }
 
 
-    void writeLogs(int level)
+    void writeLogs(string sceneName)
     {
-        Scene my_scene = SceneManager.GetSceneByBuildIndex(level);
-        Debug.Log("#########  Close Level: " + level + " -> " + my_scene.name + "  #########");
         GameObject _sofaContext = GameObject.Find("SofaContext");
         if (_sofaContext == null)
         {
-            Debug.LogError("SofaContext not found in scene: " + level + " -> " + my_scene.name);
+            Debug.LogError("SofaContext not found in scene: " + sceneName);
             return;
         }
 
@@ -230,17 +225,39 @@ public class ScenesTestRunner : MonoBehaviour
         else
             folderLogs = Directory.GetCurrentDirectory() + "/Assets/SofaUnity/Tests/logs/";
 
-        string screenshotName = "Snap_" + my_scene.name + ".log";
+        string screenshotName = "Test_" + sceneName + ".log";
         string fullPath = System.IO.Path.Combine(folderLogs, screenshotName);
 
         MeshFilter[] MeshFilters = _sofaContext.GetComponentsInChildren<MeshFilter>();
 
-        SceneTestData sceneData = new SceneTestData(my_scene.name, MeshFilters.Length);
+        SceneTestData sceneData = new SceneTestData(sceneName, MeshFilters.Length);
         foreach (MeshFilter mesh in MeshFilters)
         {
             sceneData.AddMeshData(mesh);
         }
         sceneData.WriteData(fullPath);
+    }
+
+
+    void compareLogs(string sceneName)
+    {
+        string folderLogs = Directory.GetCurrentDirectory() + "/Assets/SofaUnity/Tests/logs/";
+        string folderRefs = Directory.GetCurrentDirectory() + "/Assets/SofaUnity/Tests/references/";
+
+        string logFilename = "Test_" + sceneName + ".log";
+        string fullLogPath = System.IO.Path.Combine(folderLogs, logFilename);
+        string fullRefPath = System.IO.Path.Combine(folderRefs, logFilename);
+
+        SceneTestData sceneRefData = new SceneTestData(sceneName);
+        sceneRefData.ReadData(fullRefPath);
+        SceneTestData sceneLogData = new SceneTestData(sceneName);
+        sceneLogData.ReadData(fullLogPath);
+
+        bool res = sceneRefData.CompareScene(sceneLogData);
+        if (res)
+            Debug.Log("####  Test success for scene: " + sceneName + "  ####");
+        else
+            Debug.LogError("####  Test fail for scene: " + sceneName + "  ####");
     }
 
 
