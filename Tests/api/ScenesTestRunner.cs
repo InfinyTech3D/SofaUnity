@@ -112,52 +112,61 @@ public class ScenesTestRunner : MonoBehaviour
 
     // Update is called once per frame
     void FixedUpdate()
-    {        
-        if (m_testedLevel >= SceneManager.sceneCountInBuildSettings - 1)
+    {
+        //if (m_testedLevel >= SceneManager.sceneCountInBuildSettings - 1)
+        if (m_testedLevel >= 2)
             return;
 
         if (m_cptInternal == 50)
         {
-            testScene(m_testedLevel);
+            // open scene to test
+            openTestScene(m_testedLevel);
         }
 
         if (m_cptInternal == 300)
         {
-            // reinit
-            closeScene(m_testedLevel);
+            // write scene logs
+            writeLogs(m_testedLevel);
+
+            // take screenshot
+            takeScreenShot(m_sceneName);
+
+            // close scene
+            closeTestScene(m_testedLevel);
 
             m_testedLevel++;
-            
+
             if (WriteRefMode)
+            {
                 m_cptInternal = 0;
+                m_sceneName = "";
+            }
         }
 
         if (!WriteRefMode && m_cptInternal == 310)
         {
             compareScreenshots(m_sceneName);
             m_cptInternal = 0;
+            m_sceneName = "";
         }
 
         m_cptInternal++;
     }
 
     
-    void testScene(int level)
+    void openTestScene(int level)
     {
         SceneManager.LoadScene(level, LoadSceneMode.Additive);
         Scene my_scene = SceneManager.GetSceneByBuildIndex(level);
         m_sceneName = my_scene.name;
         Debug.Log("#########  Load Level: " + level + " -> " + m_sceneName + "  #########");
-        //Scene test = SceneManager.GetActiveScene();
     }
 
 
-    bool closeScene(int level)
+    bool closeTestScene(int level)
     {
-        Scene my_scene = SceneManager.GetSceneByBuildIndex(level);        
+        Scene my_scene = SceneManager.GetSceneByBuildIndex(level);
         Debug.Log("#########  Close Level: " + level + " -> " + my_scene.name + "  #########");
-        takeScreenShot(my_scene.name);
-
         bool res = SceneManager.UnloadScene(level);
         return res;
     }
@@ -201,6 +210,37 @@ public class ScenesTestRunner : MonoBehaviour
         {
             m_logs += mylog;
         }
+    }
+
+
+    void writeLogs(int level)
+    {
+        Scene my_scene = SceneManager.GetSceneByBuildIndex(level);
+        Debug.Log("#########  Close Level: " + level + " -> " + my_scene.name + "  #########");
+        GameObject _sofaContext = GameObject.Find("SofaContext");
+        if (_sofaContext == null)
+        {
+            Debug.LogError("SofaContext not found in scene: " + level + " -> " + my_scene.name);
+            return;
+        }
+
+        string folderLogs;
+        if (WriteRefMode)
+            folderLogs = Directory.GetCurrentDirectory() + "/Assets/SofaUnity/Tests/references/";
+        else
+            folderLogs = Directory.GetCurrentDirectory() + "/Assets/SofaUnity/Tests/logs/";
+
+        string screenshotName = "Snap_" + my_scene.name + ".log";
+        string fullPath = System.IO.Path.Combine(folderLogs, screenshotName);
+
+        MeshFilter[] MeshFilters = _sofaContext.GetComponentsInChildren<MeshFilter>();
+
+        SceneTestData sceneData = new SceneTestData(my_scene.name, MeshFilters.Length);
+        foreach (MeshFilter mesh in MeshFilters)
+        {
+            sceneData.AddMeshData(mesh);
+        }
+        sceneData.WriteData(fullPath);
     }
 
 
