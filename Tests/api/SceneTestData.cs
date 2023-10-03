@@ -10,22 +10,57 @@ public class MeshTestData
     public int m_nbrVertices = 0;
     public int m_nbrTriangles = 0;
     public Vector3 m_center;
-    public Vector3 m_min;
-    public Vector3 m_max;
+    public Vector3 m_size;
+
+
+    public bool CompareMesh(MeshTestData logMesh)
+    {
+        if (m_meshName != logMesh.m_meshName)
+        {
+            Debug.LogError("MeshName differ between ref: " + m_meshName + " and new log: " + logMesh.m_meshName);
+            return false;
+        }
+
+        if (m_nbrVertices != logMesh.m_nbrVertices)
+        {
+            Debug.LogError("In mesh: " + m_meshName + ". Number of vertices differ between ref: " + m_nbrVertices + " and new log: " + logMesh.m_nbrVertices);
+            return false;
+        }
+
+        if (m_nbrTriangles != logMesh.m_nbrTriangles)
+        {
+            Debug.LogError("In mesh: " + m_meshName + ". Number of triangles differ between ref: " + m_nbrTriangles + " and new log: " + logMesh.m_nbrTriangles);
+            return false;
+        }
+
+        if (m_center != logMesh.m_center)
+        {
+            Debug.LogError("In mesh: " + m_meshName + ". Mesh center differ between ref: " + m_center + " and new log: " + logMesh.m_center);
+            return false;
+        }
+
+        if (m_size != logMesh.m_size)
+        {
+            Debug.LogError("In mesh: " + m_meshName + ". Mesh size differ between ref: " + m_size + " and new log: " + logMesh.m_size);
+            return false;
+        }
+
+        return true;
+    }
 
     public void LogMesh()
     {
         Debug.Log("### Found Mesh: " + m_meshName + " ###");
         Debug.Log("nbr vertices: " + m_nbrVertices);
         Debug.Log("nbr triangles: " + m_nbrTriangles);
-        Debug.Log("bounds: [" + m_min + " | " + m_center + " | " + m_max + "]");
+        Debug.Log("bounds: [" + m_center.ToString("F6") + " | " + m_size.ToString("F6") + "]");
     }
 
 }
 
 public class SceneTestData
 {
-    public SceneTestData() { }
+    public SceneTestData(string sceneName) { }
 
     public SceneTestData(string sceneName, int nbrMeshes)
     {
@@ -34,6 +69,7 @@ public class SceneTestData
         m_meshes = new List<MeshTestData>(nbrMeshes);
     }
 
+
     public void AddMeshData(MeshFilter mesh, bool log = false)
     {
         MeshTestData meshData = new MeshTestData();
@@ -41,19 +77,17 @@ public class SceneTestData
         meshData.m_nbrVertices = mesh.mesh.vertexCount;
         meshData.m_nbrTriangles = mesh.mesh.triangles.Length / 3;
         meshData.m_center = mesh.mesh.bounds.center;
-        meshData.m_min = mesh.mesh.bounds.min;
-        meshData.m_max = mesh.mesh.bounds.max;
+        meshData.m_size = mesh.mesh.bounds.size;
 
         m_meshes.Add(meshData);
-        Debug.Log("nbr meshes: " + m_meshes.Count);
         if (log)
             meshData.LogMesh();
     }
 
+
     public void WriteData(string path)
     {
         StreamWriter writer = new StreamWriter(path, false);
-        writer.WriteLine("SceneName: " + m_sceneName);
         writer.WriteLine("NbrMeshes: " + m_nbrMeshes);
 
         foreach (MeshTestData mesh in m_meshes)
@@ -61,25 +95,68 @@ public class SceneTestData
             writer.WriteLine("Mesh: " + mesh.m_meshName);
             writer.WriteLine("NbrVertices: " + mesh.m_nbrVertices);
             writer.WriteLine("NbrTriangles: " + mesh.m_nbrTriangles);
-            writer.WriteLine("Center: " + mesh.m_center);
-            writer.WriteLine("Min: " + mesh.m_min);
-            writer.WriteLine("Max: " + mesh.m_max);
+            writer.WriteLine("Center: " + mesh.m_center.x + ";" + mesh.m_center.y + ";" + mesh.m_center.z);
+            writer.WriteLine("Min: " + mesh.m_size.x + ";" + mesh.m_size.y + ";" + mesh.m_size.z);
         }
 
         writer.Close();
     }
 
-    public void ReadData(string path)
+
+    public void ReadData(string path, bool log = false)
     {
-        //    string path = "Assets/Resources/test.txt";
+        StreamReader reader = new StreamReader(path);
+        
+        // get number of meshes
+        string meshLine = reader.ReadLine();
+        int nbrMesh = int.Parse(meshLine.Split(" ")[1]);
+        
+        for (int cptMesh = 0; cptMesh< nbrMesh; cptMesh++)
+        {
+            MeshTestData meshData = new MeshTestData();
 
-        //    //Read the text from directly from the test.txt file
+            string nameLine = reader.ReadLine();
+            meshData.m_meshName = nameLine.Split(" ")[1];
 
-        //    StreamReader reader = new StreamReader(path);
+            string verticesLine = reader.ReadLine();
+            meshData.m_nbrVertices = int.Parse(verticesLine.Split(" ")[1]);
 
-        //    Debug.Log(reader.ReadToEnd());
+            string trianglesLine = reader.ReadLine();
+            meshData.m_nbrTriangles = int.Parse(trianglesLine.Split(" ")[1]);
 
-        //    reader.Close();
+            string centerLine = reader.ReadLine();
+            centerLine = centerLine.Split(" ")[1];
+            string[] centerString = centerLine.Split(";");
+            meshData.m_center = new Vector3(float.Parse(centerString[0]), float.Parse(centerString[1]), float.Parse(centerString[2]));
+
+            string sizeLine = reader.ReadLine();
+            sizeLine = sizeLine.Split(" ")[1];
+            string[] sizeString = sizeLine.Split(";");
+            meshData.m_size = new Vector3(float.Parse(sizeString[0]), float.Parse(sizeString[1]), float.Parse(sizeString[2]));
+
+            if (log)
+                meshData.LogMesh();
+        }
+
+        reader.Close();
+    }
+
+    public bool CompareScene(SceneTestData otherScene)
+    {
+        if (otherScene.m_nbrMeshes != m_nbrMeshes)
+        {
+            Debug.LogError("In scene: " + m_sceneName + ". Number of mesh differ between ref: " + m_nbrMeshes + " and new log: " + otherScene.m_nbrMeshes);
+            return false;
+        }
+
+        for (int i=0; i<m_nbrMeshes; ++i)
+        {
+            bool res = m_meshes[i].CompareMesh(otherScene.m_meshes[i]);
+            if (!res)
+                return false;
+        }
+
+        return true;
     }
 
 
