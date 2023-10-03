@@ -74,9 +74,12 @@ public class ScenesTestRunner : MonoBehaviour
         }
 
         EditorBuildSettings.scenes = m_editorBuildSettingsScenes.ToArray();
+
+        Debug.Log("############");
         Debug.Log("Nbr scene in EditorBuildSettings: " + EditorBuildSettings.scenes.Length);
         Debug.Log("Nbr SceneManager.sceneCountInBuildSettings: " + SceneManager.sceneCountInBuildSettings);
         Debug.Log("Nbr scene counted: " + m_nbrTestedScenes);
+        Debug.Log("############");
     }
 
 
@@ -101,7 +104,7 @@ public class ScenesTestRunner : MonoBehaviour
 
     void OnDisable()
     {
-        Debug.Log("#########  ScenesTestRunner OnDisable  #########");
+        Debug.Log("########  ScenesTestRunner OnDisable  ########");
         Application.logMessageReceived -= HandleLog;
     }
 
@@ -157,14 +160,14 @@ public class ScenesTestRunner : MonoBehaviour
         SceneManager.LoadScene(level, LoadSceneMode.Additive);
         Scene my_scene = SceneManager.GetSceneByBuildIndex(level);
         m_sceneName = my_scene.name;
-        Debug.Log("#########  Load Level: " + level + " -> " + m_sceneName + "  #########");
+        Debug.Log("####  Load Level: " + level + " -> " + m_sceneName + "  ####");
     }
 
 
     bool closeTestScene(int level)
     {
         Scene my_scene = SceneManager.GetSceneByBuildIndex(level);
-        Debug.Log("#########  Close Level: " + level + " -> " + my_scene.name + "  #########");
+        Debug.Log("####  Close Level: " + level + " -> " + my_scene.name + "  ####");
         bool res = SceneManager.UnloadScene(level);
         return res;
     }
@@ -255,9 +258,9 @@ public class ScenesTestRunner : MonoBehaviour
 
         bool res = sceneRefData.CompareScene(sceneLogData);
         if (res)
-            Debug.Log("####  Test success for scene: " + sceneName + "  ####");
+            Debug.Log("########  Test success for scene: " + sceneName + "  ########");
         else
-            Debug.LogError("####  Test fail for scene: " + sceneName + "  ####");
+            Debug.LogError("########  Test fail for scene: " + sceneName + "  ########");
     }
 
 
@@ -269,7 +272,7 @@ public class ScenesTestRunner : MonoBehaviour
         string screenshotName = "Snap_" + sceneName + ".png";
         string fullPath = System.IO.Path.Combine(folderLogs, screenshotName);
 
-        Debug.Log("#########  Start compareScreenshots Level: " + screenshotName + "  #########");
+        Debug.Log("########  Start compareScreenshots Level: " + screenshotName + "  ########");
 
         string refPath = folderRefs + screenshotName;
         Debug.Log(screenshotName + " -> " + fullPath);
@@ -301,6 +304,6 @@ public class ScenesTestRunner : MonoBehaviour
             }
         }
 
-        Debug.Log("#########  End compareScreenshots Level: " + screenshotName + "  #########");
+        Debug.Log("########  End compareScreenshots Level: " + screenshotName + "  ########");
     }
 }
