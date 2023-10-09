@@ -71,6 +71,18 @@ Here are a some results of the integration:
 	<img src="https://github.com/InfinyTech3D/SofaUnity-Renderer/blob/main/Doc/img/interface_02.jpg" style="width:1000px;"/>
 </p>
 
+## Tutorials
+Here is a set of Youtube tutorials. Whether you're just starting out or an experienced developer, our step-by-step guides offer valuable insights into leveraging SofaUnity-Renderer.
+<p align="center">
+	<img src="https://github.com/InfinyTech3D/SofaUnity-Renderer/blob/main/Doc/img/snake_in_nature.gif" style="width:400px;"/>
+</p>
+
+- [Tutorial 01: How to Install SofaUnity-Renderer](https://youtu.be/7ucROUFBfus?si=eIe5EfD-c241BBn2)
+- [Tutorial 02: How to install from source code and use custom SOFA version](https://youtu.be/fcVxm02jN0A?si=vcd-vFmlX93BCD3r)
+- [Tutorial 03: Importing a SOFA scene in your Unity project](https://youtu.be/jpLGx8j4LYg?si=PsVcKx5nNIDe7dup)
+
+
+
 ## License
 This Unity asset is under GPL license. 
 <br>
