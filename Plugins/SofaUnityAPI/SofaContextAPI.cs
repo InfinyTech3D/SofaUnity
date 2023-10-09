@@ -232,7 +232,8 @@ namespace SofaUnityAPI
                     float val = sofaPhysicsAPI_timeStep(m_native);
                     if (val == 0.0f)
                     {
-                        Debug.LogWarning("Time stepping is set to 0. You might need to set the SOFA timestep manually in Unity Editor.");
+                        Debug.LogWarning("Time stepping loading returns wrong value: 0.0f. Setting it to default value: 0.01f. You should set the SOFA timestep wanted manually in the Unity Editor.");
+                        return 0.01f;
                     }
                     return val;
                 }
