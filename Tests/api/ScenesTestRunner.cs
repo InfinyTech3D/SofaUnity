@@ -108,9 +108,9 @@ public class ScenesTestRunner : MonoBehaviour
         Application.logMessageReceived -= HandleLog;
     }
 
-    int m_cptInternal = 0;
-    int m_testedLevel = 0; // Last being the scene checker in build settings
-    string m_sceneName = "";
+    private int m_cptInternal = 0;
+    private int m_testedLevel = 0; // Last being the scene checker in build settings
+    private string m_sceneName = "";
 
     // Update is called once per frame
     void FixedUpdate()
@@ -160,14 +160,19 @@ public class ScenesTestRunner : MonoBehaviour
         SceneManager.LoadScene(level, LoadSceneMode.Additive);
         Scene my_scene = SceneManager.GetSceneByBuildIndex(level);
         m_sceneName = my_scene.name;
-        Debug.Log("####  Load Level: " + level + " -> " + m_sceneName + "  ####");
+
+        int cptLog = level + 1;
+        Debug.Log("####  Load Level: " + cptLog + "/" + m_nbrTestedScenes + " -> " + m_sceneName + "  ####");
     }
 
 
     bool closeTestScene(int level)
     {
-        Scene my_scene = SceneManager.GetSceneByBuildIndex(level);
-        Debug.Log("####  Close Level: " + level + " -> " + my_scene.name + "  ####");
+        Scene my_scene = SceneManager.GetSceneByBuildIndex(level);              
+
+        int cptLog = level + 1;
+        Debug.Log("####  Close Level: " + cptLog + "/" + m_nbrTestedScenes + " -> " + my_scene.name + "  ####");
+
         bool res = SceneManager.UnloadScene(level);
         return res;
     }
