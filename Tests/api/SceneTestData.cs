@@ -109,29 +109,29 @@ public class SceneTestData
         
         // get number of meshes
         string meshLine = reader.ReadLine();
-        int nbrMesh = int.Parse(meshLine.Split(" ")[1]);
+        int nbrMesh = int.Parse(meshLine.Split(' ')[1]);
         
         for (int cptMesh = 0; cptMesh< nbrMesh; cptMesh++)
         {
             MeshTestData meshData = new MeshTestData();
 
             string nameLine = reader.ReadLine();
-            meshData.m_meshName = nameLine.Split(" ")[1];
+            meshData.m_meshName = nameLine.Split(' ')[1];
 
             string verticesLine = reader.ReadLine();
-            meshData.m_nbrVertices = int.Parse(verticesLine.Split(" ")[1]);
+            meshData.m_nbrVertices = int.Parse(verticesLine.Split(' ')[1]);
 
             string trianglesLine = reader.ReadLine();
-            meshData.m_nbrTriangles = int.Parse(trianglesLine.Split(" ")[1]);
+            meshData.m_nbrTriangles = int.Parse(trianglesLine.Split(' ')[1]);
 
             string centerLine = reader.ReadLine();
-            centerLine = centerLine.Split(" ")[1];
-            string[] centerString = centerLine.Split(";");
+            centerLine = centerLine.Split(' ')[1];
+            string[] centerString = centerLine.Split(';');
             meshData.m_center = new Vector3(float.Parse(centerString[0]), float.Parse(centerString[1]), float.Parse(centerString[2]));
 
             string sizeLine = reader.ReadLine();
-            sizeLine = sizeLine.Split(" ")[1];
-            string[] sizeString = sizeLine.Split(";");
+            sizeLine = sizeLine.Split(' ')[1];
+            string[] sizeString = sizeLine.Split(';');
             meshData.m_size = new Vector3(float.Parse(sizeString[0]), float.Parse(sizeString[1]), float.Parse(sizeString[2]));
 
             if (log)
