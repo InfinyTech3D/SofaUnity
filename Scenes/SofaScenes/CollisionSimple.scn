@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+<Node name="root" dt="0.02">
+    <RequiredPlugin pluginName='SofaOpenglVisual'/>
+    <RequiredPlugin pluginName='SofaMiscCollision'/>
+    <DefaultPipeline verbose="0" depth="10" draw="0" />
+    <BruteForceDetection name="N2" />
+    <MinProximityIntersection name="Proximity" alarmDistance="0.5" contactDistance="0.1" />
+    <DefaultContactManager name="Response" response="default" />
+    <DefaultCollisionGroupManager name="Group" />
+    
+    <Node name="Cylinder">
+        <EulerImplicitSolver name="cg_odesolver" printLog="false" />
+        <CGLinearSolver iterations="25" name="linear solver" tolerance="1.0e-9" threshold="1.0e-9" />
+		<MeshGmshLoader name="loader" filename="./mesh/cylinder.msh" translation="0 6 0"/>
+        <MechanicalObject src="@loader" name="Volume"/>
+		
+		<TetrahedronSetTopologyContainer  name="TetraContainer" position="@Volume.position" src="@loader"/>
+		<TetrahedronSetTopologyModifier   name="Modifier" />
+		<TetrahedronSetTopologyAlgorithms name="TopoAlgo"  template="Vec3d" />
+		<TetrahedronSetGeometryAlgorithms name="GeomAlgo"  template="Vec3d" />
+		
+		<DiagonalMass massDensity="1.0" topology="@TetraContainer"/>
+		<TetrahedralCorotationalFEMForceField name="FEM" youngModulus="1600" poissonRatio="0.3" method="large" topology="@TetraContainer"/>		
+        <PlaneForceField normal="0 1 0" d="-1" stiffness="100000" showPlane="1" showPlaneSize="20"/>
+        <Node name="Surface">
+            <TriangleSetTopologyContainer  name="TriContainer" />
+			<TriangleSetTopologyModifier   name="Modifier" />
+			<TriangleSetTopologyAlgorithms name="TopoAlgo"   template="Vec3d" />
+			<TriangleSetGeometryAlgorithms name="GeomAlgo"   template="Vec3d" />
+			
+            <Tetra2TriangleTopologicalMapping input="@../TetraContainer" output="@TriContainer" />
+			<TriangularBendingSprings name="FEM-Bend" stiffness="400" damping="1.0" topology="@TriContainer"/>
+			<TriangleCollisionModel contactFriction="100"/>
+            
+            <Node name="Cylinder-Visu">
+                <OglModel name="Visual" color="blue" />
+                <IdentityMapping input="@../../Volume" output="@Visual" />
+            </Node>
+        </Node>
+    </Node>    
+    
+    <Node name="Cube">
+        <MeshObjLoader name="loader" filename="mesh/cube.obj" />
+        <MeshTopology src="@loader" />
+        <MechanicalObject name="Floor" src="@loader" />
+        <TriangleCollisionModel name="FloorTC" simulated="0" moving="0" />
+        <LineCollisionModel name="FloorLC" simulated="0" moving="0" />
+        <PointCollisionModel name="FloorPC" simulated="0" moving="0" />
+        <Node name="Cube-Visu">
+            <OglModel name="Visual" color="red" />
+            <IdentityMapping input="@../Floor" output="@Visual" />
+        </Node>
+    </Node>
+</Node>

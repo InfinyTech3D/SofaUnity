@@ -1,0 +1,58 @@
+<?xml version="1.0" ?>
+<Node dt="0.005" gravity="0 -10 0" bbox="-5 -5 -5 5 5 5">
+    <RequiredPlugin name="SofaOpenglVisual"/>
+    <RequiredPlugin pluginName="SofaSphFluid"/>
+
+    <VisualStyle displayFlags="hideBehaviorModels hideForceFields" />
+
+    <FreeMotionAnimationLoop displayTime="true"/>
+	<GenericConstraintSolver unbuilt="false" tolerance="1e-4" maxIt="200"   printLog="0"/>
+	<DefaultPipeline verbose="0" depth="10" draw="0" />
+    <BruteForceDetection name="N2" />
+	<MinProximityIntersection name="Proximity" alarmDistance="0.8" contactDistance="0.4" />
+    <DefaultContactManager name="Response" response="default" />
+    
+    <EulerImplicitSolver name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.1" />
+    <CGLinearSolver iterations="25" name="linear solver" tolerance="1.0e-9" threshold="1.0e-9" />
+
+    
+    <Node name="Fluid">
+        <MechanicalObject name="MModel" showObject="1"/>
+        
+        <RegularGridTopology nx="5" ny="20" nz="5" xmin="-1.5" xmax="0" ymin="2" ymax="10" zmin="-1.5" zmax="0" drawEdges="0"/>
+        <UniformMass name="M1" vertexMass="0.5" />
+        <SpatialGridContainer cellWidth="0.75" />
+        <SPHFluidForceField radius="1.0" density="15" kernelType="1" viscosityType="2" viscosity="10" pressure="1000" surfaceTension="-1000" printLog="0" />       
+        
+        <SphereCollisionModel radius="0.1"/>
+        <UncoupledConstraintCorrection />
+    </Node>
+    
+    
+    <Node name="Tissue">
+        <MeshGmshLoader name="meshLoader" filename="./mesh/square3.msh" translation="-5 0 -5" rotation="90 0 0" scale="10" createSubelements="true" />
+
+        <TriangleSetTopologyContainer  name="Container" src="@meshLoader" />
+		<TriangleSetTopologyModifier   name="Modifier" />
+		<TriangleSetTopologyAlgorithms name="TopoAlgo"   template="Vec3d" />
+		<TriangleSetGeometryAlgorithms name="GeomAlgo"   template="Vec3d" />
+
+        <MechanicalObject name="Mo"/>
+        <UniformMass totalMass="1" />
+        
+        <BoxROI name="ROI1" box="-10 -1 -6 10 1 -4.9" drawBoxes="1"/>
+        <FixedConstraint indices="@ROI1.indices" />
+        
+        <BoxROI name="ROI2" box="-10 -1 4.9 10 1 5.1" drawBoxes="1"/>
+        <FixedConstraint indices="@ROI2.indices" />
+        
+        <TriangularFEMForceField name="FEM" youngModulus="60" poissonRatio="0.3" method="large" />
+        <TriangularBendingSprings name="FEM-Bend" stiffness="300" damping="1.0" topology="@Container"/>
+        <TriangleCollisionModel />
+        <UncoupledConstraintCorrection />
+        <Node name="VisualNode">
+            <OglModel name="Visual" color="red" />
+            <IdentityMapping input="@.." output="@Visual" />
+        </Node>
+    </Node>
+</Node>

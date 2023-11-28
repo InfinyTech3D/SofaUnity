@@ -1,33 +1,39 @@
 <?xml version="1.0" ?>
-<Node name="root" dt="0.05" showBoundingTree="0" gravity="0 -9 1">
+<Node name="root" dt="0.02" showBoundingTree="0" gravity="1 -9 0">
+    <RequiredPlugin pluginName='SofaOpenglVisual'/>
+    <RequiredPlugin pluginName='SofaMiscCollision'/>
     <VisualStyle displayFlags="showVisual showBehaviorModels" />
-    
-    <DefaultAnimationLoop />
-    <DefaultVisualManagerLoop />
-    
-    <DefaultPipeline verbose="0" />
-    <BruteForceBroadPhase/>
-    <BVHNarrowPhase/>
-    <DefaultContactManager response="PenalityContactForceField" />
-    <MinProximityIntersection name="Proximity" alarmDistance="0.5" contactDistance="0.2" />
-    
-    <Node name="SquareGravity_test">
-        <EulerImplicitSolver name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.1" />
+
+    <DefaultPipeline name="default21" verbose="0" depth="1"/>
+    <BruteForceDetection name="N2" />
+    <DefaultContactManager name="default22" response="default" />
+    <DefaultCollisionGroupManager name="default23" />
+    <MinProximityIntersection name="Proximity" alarmDistance="2.0" contactDistance="0.001" />
+	
+    <Node name="tissue_node">
+        <EulerImplicitSolver name="cg_odesolver" printLog="false" />
         <CGLinearSolver iterations="25" name="linear solver" tolerance="1.0e-9" threshold="1.0e-9" />
-		<MeshGmshLoader name="meshLoader"  filename="mesh/square3.msh"  scale3d="10 10 10" />
-		<TriangleSetTopologyContainer name="Container"  position="@meshLoader.position"  edges="@meshLoader.edges"  triangles="@meshLoader.triangles" />
-		<TriangleSetTopologyModifier name="Modifier" />
-		<TriangleSetGeometryAlgorithms template="Vec3d" name="GeomAlgo" />
-		<MechanicalObject template="Vec3d" name="mObject1"  position="0 0 0"  velocity="0 0 0"  force="0 0 0"  externalForce="0 0 0"  derivX="0 0 0"  restScale="1" />
-		<UniformMass name="uniformMass2" totalMass="10" />
-		<FixedConstraint name="fixedConstraint1"  indices="0 1" />
-		<TriangularFEMForceField name="FEM" youngModulus="200" poissonRatio="0.3" method="large" />
-	    <TriangularBendingSprings name="FEM-Bend" stiffness="200" damping="1.0" topology="@Container" />
-		<TriangleCollisionModel name="tTriangleModel1" />
+        <MeshGmshLoader name="meshLoader" filename="mesh/square3.msh" scale="10" createSubelements="true" />
+		
+        <TriangleSetTopologyContainer  name="Container" src="@meshLoader" tags=" " />
+		<TriangleSetTopologyModifier   name="Modifier" />
+		<TriangleSetTopologyAlgorithms name="TopoAlgo"   template="Vec3d" />
+		<TriangleSetGeometryAlgorithms name="GeomAlgo"   template="Vec3d" />
+		
+		<MechanicalObject name="tissue" rotation="90 0 0"/>
+		
+		<BoxROI name="FixedROI_2" template="Vec3d" box="-1 -5 9.8 11 5 10.2" drawBoxes="1" position="@tissue.rest_position"/>		
+        <FixedConstraint name="ROI2" indices="@FixedROI_2.indices" />
+       
+		<DiagonalMass massDensity="0.15" topology="@Container"/>
         
-		<Node name="Visu">
-            <OglModel name="Visual" color="red" />
-            <IdentityMapping input="@.." output="@Visual" />
-        </Node>
+        <TriangularFEMForceField name="FEM" youngModulus="300" poissonRatio="0.3" method="large" />
+        <TriangularBendingSprings name="FEM-Bend" stiffness="300" damping="1.0" topology="@Container" />
+        <SphereCollisionModel name="stomacCol" group="1" radius="0.3" contactStiffness="1.0"/>
+		
+		<Node name="tissue_visu">
+			<OglModel name="Visual" color="red" />
+			<IdentityMapping input="@../" output="@Visual" />
+		</Node>
     </Node>
 </Node>
