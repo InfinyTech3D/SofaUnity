@@ -147,6 +147,13 @@ public class SofaContextEditor : Editor
             context.SceneFileMgr.SceneFilename = absolutePath.Substring(Application.dataPath.Length);
             EditorGUILayout.Separator();
         }
+        else if (GUILayout.Button("Load SOFA Python Scene (.py) file"))
+        {
+            string absolutePath = EditorUtility.OpenFilePanel("Load file scene (*.py)", "", "py");
+            context.SceneFileMgr.SceneFilename = absolutePath.Substring(Application.dataPath.Length);
+            EditorGUILayout.Separator();
+        }
+
         // Label of the filename loaded
         EditorGUILayout.LabelField("Scene Filename: ", context.SceneFileMgr.SceneFilename);
 
