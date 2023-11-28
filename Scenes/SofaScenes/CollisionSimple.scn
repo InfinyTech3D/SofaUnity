@@ -40,7 +40,7 @@
     </Node>    
     
     <Node name="Cube">
-        <MeshObjLoader name="loader" filename="mesh/cube.obj" />
+        <MeshObjLoader name="loader" filename="mesh/cube_HD.obj" />
         <MeshTopology src="@loader" />
         <MechanicalObject name="Floor" src="@loader" />
         <TriangleCollisionModel name="FloorTC" simulated="0" moving="0" />
