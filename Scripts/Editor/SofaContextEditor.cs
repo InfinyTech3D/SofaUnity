@@ -1,32 +1,6 @@
-﻿/*****************************************************************************
- *                 - Copyright (C) - 2022 - InfinyTech3D -                   *
- *                                                                           *
- * This file is part of the SofaUnity-Renderer asset from InfinyTech3D       *
- *                                                                           *
- * GNU General Public License Usage:                                         *
- * This file may be used under the terms of the GNU General                  *
- * Public License version 3. The licenses are as published by the Free       *
- * Software Foundation and appearing in the file LICENSE.GPL3 included in    *
- * the packaging of this file. Please review the following information to    *
- * ensure the GNU General Public License requirements will be met:           *
- * https://www.gnu.org/licenses/gpl-3.0.html.                                *
- *                                                                           *
- * Commercial License Usage:                                                 *
- * Licensees holding valid commercial license from InfinyTech3D may use this *
- * file in accordance with the commercial license agreement provided with    *
- * the Software or, alternatively, in accordance with the terms contained in *
- * a written agreement between you and InfinyTech3D. For further information *
- * on the licensing terms and conditions, contact: contact@infinytech3d.com  *
- *                                                                           *
- * Authors: see Authors.txt                                                  *
- * Further information: https://infinytech3d.com                             *
- ****************************************************************************/
-
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 using SofaUnity;
-using System.Collections;
-using System.Collections.Generic;
 
 /// <summary>
 /// Editor Class to define the creation and UI of SofaContext GameObject
@@ -45,11 +19,11 @@ public class SofaContextEditor : Editor
         int cpt = 0;
         if (GameObject.FindObjectOfType<SofaContext>() != null)
         {
-            Debug.LogWarning("The Scene already includes a SofaContext. Only one context is possible for the moment.");            
-            cpt++;
+            Debug.LogWarning("The Scene already includes a SofaContext. Only one context is possible for the moment.");
             return null;
+            cpt++;
         }
-
+        //GameObject go = new GameObject("SofaContext_" + cpt.ToString());
         GameObject go = new GameObject("SofaContext");
         go.AddComponent<SofaContext>();
 
@@ -66,10 +40,7 @@ public class SofaContextEditor : Editor
         {
             if (m_SofaLogo == null)
             {
-                Object logo = Resources.Load("icons/sofa_sprite_small");
-                if (logo == null)
-                    Debug.LogError("logo not found");
-
+                Object logo = Resources.Load("sofa_logo");
                 m_SofaLogo = (Texture2D)logo;
             }
             return m_SofaLogo;
@@ -86,7 +57,7 @@ public class SofaContextEditor : Editor
         // Add Sofa Logo
         GUIStyle logoGUIStyle = new GUIStyle();
         logoGUIStyle.border = new RectOffset(0, 0, 0, 0);
-        EditorGUILayout.LabelField(new GUIContent(SofaLogo), GUILayout.MinHeight(200.0f), GUILayout.ExpandWidth(true));
+        EditorGUILayout.LabelField(new GUIContent(SofaLogo), GUILayout.MinHeight(100.0f), GUILayout.ExpandWidth(true));
 
         // Add field for gravity
         context.Gravity = EditorGUILayout.Vector3Field("Gravity", context.Gravity);
@@ -96,29 +67,69 @@ public class SofaContextEditor : Editor
         context.TimeStep = EditorGUILayout.FloatField("TimeStep", context.TimeStep);
         EditorGUILayout.Separator();
 
-#if SofaUnityEngine
-        EditorGUI.BeginDisabledGroup(true);
-        context.AsyncSimulation = EditorGUILayout.Toggle("Asynchronous Simulation", context.AsyncSimulation);
-        EditorGUI.EndDisabledGroup();
-#endif
-        
-        context.CatchSofaMessages = EditorGUILayout.Toggle("Activate SOFA message handler", context.CatchSofaMessages);
-        context.m_log = EditorGUILayout.Toggle("Activate SofaContext Logs", context.m_log);
-        EditorGUILayout.Separator();
+        {
+            if (Application.isPlaying)
+            {
+                EditorGUI.BeginDisabledGroup(true);
+                context.AsyncSimulation = EditorGUILayout.Toggle("Asynchronous Simulation", context.AsyncSimulation);
+                EditorGUI.EndDisabledGroup();
+            }
+            else
+            {
+                context.AsyncSimulation = EditorGUILayout.Toggle("Asynchronous Simulation", context.AsyncSimulation);
+            }
+                
+
+            context.CatchSofaMessages = EditorGUILayout.Toggle("Activate Sofa Logs", context.CatchSofaMessages);
+            context.IsSofaUpdating = EditorGUILayout.Toggle("Animate SOFA simulation", context.IsSofaUpdating);
+            EditorGUILayout.Separator();
+
+            if (GUILayout.Button("Step"))
+            {
+                context.StepbyStep = true;
+                context.IsSofaUpdating = true;
+            }
+        }
 
         EditorGUILayout.Separator();        
+        EditorGUILayout.Separator();
+
+
+        // Add plugin section
+        PluginSection(context);
+        EditorGUILayout.Separator();
 
         // Add scene file section
         SceneFileSection(context);
-
-        EditorGUILayout.Separator();
-        EditorGUILayout.Separator();   
 
         if (GUI.changed)
         {
             EditorUtility.SetDirty(context);
         }
     }
+
+
+    void PluginSection(SofaContext context)
+    {
+        EditorGUILayout.Separator();
+        if (context.PluginManager == null)
+        {
+            EditorGUILayout.IntField("Plugins Count", 0);
+            return;
+        }
+        
+        int nbrPlugin = EditorGUILayout.IntField("Plugins Count", context.PluginManager.NbrPlugin);
+        context.PluginManager.NbrPlugin = nbrPlugin;
+        EditorGUI.indentLevel += 1;
+        for (int i = 0; i < nbrPlugin; i++)
+        {
+            string pluginName = EditorGUILayout.TextField("Plugin Name: ", context.PluginManager.GetPluginName(i));
+            context.PluginManager.SetPluginName(i, pluginName);
+        }
+        EditorGUI.indentLevel -= 1;
+        EditorGUILayout.Separator();
+    }
+
 
     void SceneFileSection(SofaContext context)
     {
@@ -136,13 +147,6 @@ public class SofaContextEditor : Editor
             context.SceneFileMgr.SceneFilename = absolutePath.Substring(Application.dataPath.Length);
             EditorGUILayout.Separator();
         }
-        //else if (GUILayout.Button("Load SOFA Python Scene (.py) file"))
-        //{
-        //    string absolutePath = EditorUtility.OpenFilePanel("Load file scene (*.py)", "", "py");
-        //    context.SceneFileMgr.PythonSceneFilename = absolutePath.Substring(Application.dataPath.Length);
-        //    EditorGUILayout.Separator();
-        //}
-
         // Label of the filename loaded
         EditorGUILayout.LabelField("Scene Filename: ", context.SceneFileMgr.SceneFilename);
 
