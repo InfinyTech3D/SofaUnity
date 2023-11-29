@@ -9,13 +9,12 @@
         <MeshGmshLoader name="meshLoader" filename="mesh/PointLine51gmesh.msh" createSubelements="true" />
         <EdgeSetTopologyContainer  name="Container" src="@meshLoader" tags=" " />
         <EdgeSetTopologyModifier   name="Modifier" />
-        <EdgeSetTopologyAlgorithms name="TopoAlgo"   template="Vec3d" />
-        <EdgeSetGeometryAlgorithms name="GeomAlgo"   template="Vec3d" />
+        <EdgeSetGeometryAlgorithms name="GeomAlgo" template="Vec3d" />
         
         <MechanicalObject translation="-2 0 0" rotation="60 0 0" scale="2 2 2"/>
         <UniformMass vertexMass="1" />
          
-        <FixedConstraint template="Vec3d" name="default6" indices="0 50" />
+        <FixedConstraint name="default6" indices="0 50" />
      
         <UncoupledConstraintCorrection />
         <MeshSpringForceField name="Springs" stiffness="10000" damping="0.3" /> 
@@ -30,13 +29,12 @@
         <MeshGmshLoader name="meshLoader" filename="mesh/PointLine51gmesh.msh" createSubelements="true"/>
         <EdgeSetTopologyContainer  name="Container" src="@meshLoader" tags=" " />
         <EdgeSetTopologyModifier   name="Modifier" />
-        <EdgeSetTopologyAlgorithms name="TopoAlgo"   template="Vec3d" />
-        <EdgeSetGeometryAlgorithms name="GeomAlgo"   template="Vec3d" />
+        <EdgeSetGeometryAlgorithms name="GeomAlgo" template="Vec3d" />
         
         <MechanicalObject  translation="2 0 0" rotation="60 0 0" scale="2 2 2"/>
         <UniformMass vertexMass="1" />
          
-        <FixedConstraint template="Vec3d" name="default6" indices="0" />
+        <FixedConstraint name="default6" indices="0" />
      
         <UncoupledConstraintCorrection />
         <MeshSpringForceField name="Springs" stiffness="10000" damping="0.3" /> 
