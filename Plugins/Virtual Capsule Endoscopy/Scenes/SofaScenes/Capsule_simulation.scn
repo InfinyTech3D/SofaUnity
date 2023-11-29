@@ -1,53 +1,69 @@
 <?xml version="1.0" ?>
 <Node name="root" dt="0.05" showBoundingTree="0" gravity="0 0 0">
     <VisualStyle displayFlags="showBehaviorModels showCollisionModels showForceFields" />
+    <RequiredPlugin pluginName='InteractionTools'/>
+    <RequiredPlugin pluginName='SofaOpenglVisual'/>
+    <RequiredPlugin pluginName='SofaMiscCollision'/>
+    
     <DefaultPipeline name="default21" verbose="0" depth="1"/>
     <BruteForceDetection name="N2" />
     <DefaultContactManager name="default22" response="default" />
     <DefaultCollisionGroupManager name="default23" />
-    <MinProximityIntersection name="Proximity" alarmDistance="1.0" contactDistance="0.1" />     
+    <MinProximityIntersection name="Proximity" alarmDistance="0.5" contactDistance="0.04" />     
 
-    <EulerImplicitSolver name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="1" />
+    <EulerImplicitSolver name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.1" />
     <CGLinearSolver iterations="20" name="linear solver" tolerance="1.0e-4" threshold="1.0e-4" />
     
+    <MeshObjLoader name="loader" filename="./mesh/colon_collision.obj" scale3d="1 1 1"/>
+    <SparseGridTopology name="grid" n="20 12 24" position="@loader.position" />
+    
     <Node name="Colon">
-        <MeshObjLoader name="loader" filename="./mesh/colon_collision.obj" scale3d="1 1 1"/>
-        <SparseGridTopology name="grid" n="24 15 30" position="@loader.position" />
+        <MechanicalObject src="@../grid" name="dofs" />
+        <TetrahedronSetTopologyContainer name="Container" />
+        <TetrahedronSetTopologyModifier name="Modifier" />
+        <TetrahedronSetTopologyAlgorithms name="TopoAlgo" template="Vec3d" />
+        <TetrahedronSetGeometryAlgorithms name="GeomAlgo" template="Vec3d" />
+        <Hexa2TetraTopologicalMapping name="default28" input="@../grid" output="@Container" />
         
-        <MechanicalObject name="dofs"/>
-        <UniformMass totalMass="1.0" />
         
-        <HexahedronFEMForceField name="FEM" youngModulus="100.0" poissonRatio="0.3" method="large" printLog="0" />
-        
-        <BoxROI name="FixedROI_1" box="-1 7 2  -7 8.5 5" drawBoxes="1" position="@dofs.rest_position"/>
+        <BoxROI name="FixedROI_1" box="-1 7 2  -7 8.5 5" drawBoxes="0" position="@dofs.rest_position"/>
         <FixedConstraint name="ROI1" indices="@FixedROI_1.indices" />
         
-        <BoxROI name="FixedROI_2" box="-1 8 -4  -7 9 0" drawBoxes="1" position="@dofs.rest_position"/>
+        <BoxROI name="FixedROI_2" box="-1 8 -4  -7 9.2 2" drawBoxes="1" position="@dofs.rest_position"/>
         <FixedConstraint name="ROI2" indices="@FixedROI_2.indices" />
         
-        <BoxROI name="FixedROI_3" box="-1 11 -4  -7 12 0.5" drawBoxes="1" position="@dofs.rest_position"/>
+        <BoxROI name="FixedROI_3" box="-1 11 -4  -7 12 0.5" drawBoxes="0" position="@dofs.rest_position"/>
         <FixedConstraint name="ROI3" indices="@FixedROI_3.indices" />
         
-        <BoxROI name="FixedROI_4" box="-4.5 11 -1  -7 12 2" drawBoxes="1" position="@dofs.rest_position"/>
+        <BoxROI name="FixedROI_4" box="-4.5 11 -1  -7 12 2" drawBoxes="0" position="@dofs.rest_position"/>
         <FixedConstraint name="ROI4" indices="@FixedROI_4.indices" />
-        
+
+        <DiagonalMass totalMass="0.1" />        
+        <TetrahedralCorotationalFEMForceField name="FEM" youngModulus="100" poissonRatio="0.3" method="large" />
+        <MiddleForceField name="center" force="0.015" pace="20.0" />
         
         <Node name="Colon_Collision">
-            <MechanicalObject name="dofs" src="@../loader" />
-            <TriangleSetTopologyContainer  name="TriContainer" src="@../loader" />
+            <MechanicalObject name="collision" src="@../../loader" />
+            <TriangleSetTopologyContainer  name="TriContainer" src="@../../loader" />
 			<TriangleSetTopologyModifier   name="TriModifier" />
 			<TriangleSetTopologyAlgorithms name="TopoAlgo" template="Vec3d" />
 			<TriangleSetGeometryAlgorithms name="GeomAlgo" template="Vec3d" />
             
             <TriangleCollisionModel group="1" contactStiffness="10"/>
             
-            <BarycentricMapping input="@.." output="@dofs" />
+            <BarycentricMapping input="@.." output="@collision" />
         </Node>
         
         <Node name="Colon_Visu">
-            <MeshObjLoader name="meshVisu" filename="mesh/colon_visu.obj" scale3d="1 1 1"/>
+            <MeshObjLoader name="meshVisu" filename="mesh/colon_visu.obj" handleSeams="1" scale3d="1 1 1"/>
             <OglModel name="Visual" src="@meshVisu" />
             <BarycentricMapping input="@.." output="@Visual" />
+        </Node>
+        
+        <Node name="Polyp1_Visu">
+            <MeshObjLoader name="mesh_polyp1" filename="mesh/polyp_1.obj" handleSeams="1" scale3d="1 1 1"/>
+            <OglModel name="Visu_polyp1" src="@mesh_polyp1" />
+            <BarycentricMapping input="@.." output="@Visu_polyp1" />
         </Node>
         
 	</Node>

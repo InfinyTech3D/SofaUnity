@@ -8,6 +8,13 @@ public class SofaCapsuleController : MonoBehaviour
     public SofaMesh m_sofaCapsuleMesh = null;
     public float m_speed = 0.1f;
 
+    public float speedH = 2.0f;
+    public float speedV = 2.0f;
+
+    private float yaw = 0.0f;
+    private float pitch = 0.0f;
+
+
     protected bool m_ready = false;
 
     protected Vector3 unityToSofa;
@@ -16,6 +23,7 @@ public class SofaCapsuleController : MonoBehaviour
     //protected Vector3 capsuleTip = Vector3.zero;
 
     protected Vector3[] newPosition;
+    protected Vector3[] stopVelocity;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +50,8 @@ public class SofaCapsuleController : MonoBehaviour
         sofaToUnity = m_sofaCapsuleMesh.m_sofaContext.GetScaleSofaToUnity();
         unityToSofa = m_sofaCapsuleMesh.m_sofaContext.GetScaleUnityToSofa();
         newPosition = new Vector3[1];
+        stopVelocity = new Vector3[1];
+        stopVelocity[0] = Vector3.zero;
         m_ready = true;
     }
 
@@ -53,29 +63,33 @@ public class SofaCapsuleController : MonoBehaviour
 
         //m_sofaCapsuleMesh.SofaMeshTopology.
 
-        if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+        if (Input.GetMouseButton(0) || Input.GetMouseButton(1) || Input.GetMouseButton(2))
         {
-            if (Input.GetKey(KeyCode.Keypad5))
-                MoveBackward();
-        }
-        else
-        {
+            yaw -= speedH * Input.GetAxis("Mouse X");
+            pitch += speedV * Input.GetAxis("Mouse Y");
+
+            transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
+
             if (Input.GetKey(KeyCode.Keypad5))
                 MoveForward();
         }
 
-        if (Input.GetKey(KeyCode.Keypad4))
-            TurnLeft();
+
+        if (Input.GetKey(KeyCode.Keypad5))
+        {
+            if (Input.GetMouseButton(0) || Input.GetMouseButton(1) || Input.GetMouseButton(2))
+                MoveForward();
+            else
+                MoveBackward();
+        }
         else if (Input.GetKey(KeyCode.Keypad6))
-            TurnRight();
+            MoveRight();
+        else if (Input.GetKey(KeyCode.Keypad4))
+            MoveLeft();
         else if (Input.GetKey(KeyCode.Keypad8))
-            RotateUp();
+            MoveUp();
         else if (Input.GetKey(KeyCode.Keypad2))
-            RotateDown();
-        else if (Input.GetKey(KeyCode.Keypad7))
-            RotateLeft();
-        else if (Input.GetKey(KeyCode.Keypad9))
-            RotateRight();
+            MoveDown();
     }
 
     void FixedUpdate()
@@ -103,92 +117,51 @@ public class SofaCapsuleController : MonoBehaviour
     protected void MoveForward()
     {
         newPosition[0] = capsuleOri + this.transform.up * m_speed;
-        m_sofaCapsuleMesh.SetVertices(newPosition);
+        m_sofaCapsuleMesh.SetVelocities(stopVelocity);
+        m_sofaCapsuleMesh.SetVertices(newPosition);        
     }
 
     protected void MoveBackward()
     {
         newPosition[0] = capsuleOri - this.transform.up * m_speed;
+        m_sofaCapsuleMesh.SetVelocities(stopVelocity);
         m_sofaCapsuleMesh.SetVertices(newPosition);
     }
 
-    protected void RotateUp()
-    {
-        //Vector3 center = (capsuleOri + capsuleTip) * 0.5f;
-        transform.Rotate(this.transform.right, m_speed * 57.3f, Space.Self);
+    
 
-        //newPosition[0] = capsuleOri - this.transform.forward * m_speed;
-        //m_sofaCapsuleMesh.SetVertices(newPosition);
+
+    protected void MoveUp()
+    {
+        newPosition[0] = capsuleOri + this.transform.forward * m_speed;
+        m_sofaCapsuleMesh.SetVertices(newPosition);
     }
 
-    protected void RotateDown()
+    protected void MoveDown()
     {
-        transform.Rotate(this.transform.right, -m_speed * 57.3f, Space.Self);
-        //newPosition[0] = capsuleOri + this.transform.forward * m_speed;
-        //m_sofaCapsuleMesh.SetVertices(newPosition);
+        newPosition[0] = capsuleOri - this.transform.forward * m_speed;
+        m_sofaCapsuleMesh.SetVertices(newPosition);
     }
 
-    protected void TurnLeft()
+    protected void MoveLeft()
     {
-        transform.Rotate(this.transform.forward, -m_speed * 57.3f, Space.Self);
-        //newPosition[0] = capsuleOri - this.transform.right * m_speed;
-        //m_sofaCapsuleMesh.SetVertices(newPosition);
+        newPosition[0] = capsuleOri + this.transform.right * m_speed;
+        m_sofaCapsuleMesh.SetVertices(newPosition);
     }
 
-    protected void TurnRight()
+    protected void MoveRight()
     {
-        transform.Rotate(this.transform.forward, m_speed * 57.3f, Space.Self);
-        //newPosition[0] = capsuleOri + this.transform.right * m_speed;
-        //m_sofaCapsuleMesh.SetVertices(newPosition);
-    }
-
-    protected void RotateLeft()
-    {
-        transform.Rotate(this.transform.up, -m_speed * 57.3f, Space.Self);
-        //newPosition[0] = capsuleOri - this.transform.right * m_speed;
-        //m_sofaCapsuleMesh.SetVertices(newPosition);
-    }
-
-    protected void RotateRight()
-    {
-        transform.Rotate(this.transform.up, m_speed * 57.3f, Space.Self);
-        //newPosition[0] = capsuleOri + this.transform.right * m_speed;
-        //m_sofaCapsuleMesh.SetVertices(newPosition);
+        newPosition[0] = capsuleOri - this.transform.right * m_speed;
+        m_sofaCapsuleMesh.SetVertices(newPosition);
     }
 
 
-
-    //protected void MoveUp()
+    //void OnDrawGizmosSelected()
     //{
-    //    newPosition[0] = capsuleOri + this.transform.forward * m_speed;
-    //    m_sofaCapsuleMesh.SetVertices(newPosition);
+    //    Gizmos.color = Color.blue;
+    //    Gizmos.DrawSphere(capsuleOri, 0.1f);
+
+    //    //Gizmos.color = Color.red;
+    //   // Gizmos.DrawSphere(capsuleTip, 0.1f);
     //}
-
-    //protected void MoveDown()
-    //{
-    //    newPosition[0] = capsuleOri - this.transform.forward * m_speed;
-    //    m_sofaCapsuleMesh.SetVertices(newPosition);
-    //}
-
-    //protected void MoveLeft()
-    //{
-    //    newPosition[0] = capsuleOri + this.transform.right * m_speed;
-    //    m_sofaCapsuleMesh.SetVertices(newPosition);
-    //}
-
-    //protected void MoveRight()
-    //{
-    //    newPosition[0] = capsuleOri - this.transform.right * m_speed;
-    //    m_sofaCapsuleMesh.SetVertices(newPosition);
-    //}
-
-
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawSphere(capsuleOri, 0.1f);
-
-        //Gizmos.color = Color.red;
-       // Gizmos.DrawSphere(capsuleTip, 0.1f);
-    }
 }

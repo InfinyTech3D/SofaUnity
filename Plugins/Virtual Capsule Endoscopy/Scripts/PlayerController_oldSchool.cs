@@ -2,29 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController_oldSchool : MonoBehaviour
+namespace SofaUnity
 {
-    public float speed;
-    private Rigidbody rb;
-
-    void Start ()
+    public class PlayerController_oldSchool : MonoBehaviour
     {
-        rb = GetComponent<Rigidbody>();
-    }
-    void FixedUpdate()
-    {
-        float moveHorizontal = Input.GetAxis ("Horizontal");
-        float moveVertical = Input.GetAxis ("Vertical");
+        public float speed;
+        private Rigidbody rb;
 
-        Vector3 movement = new Vector3 (moveHorizontal, 0f, moveVertical);
-        rb.AddForce (movement*speed);
-    }
-    private void Update() {
+        void Start()
+        {
+            rb = GetComponent<Rigidbody>();
+        }
+        void FixedUpdate()
+        {
+            float moveHorizontal = Input.GetAxis("Horizontal");
+            float moveVertical = Input.GetAxis("Vertical");
 
-        if (Input.GetKey(KeyCode.W))
-            rb.AddForce(Vector3.up);
-        if (Input.GetKey(KeyCode.S))
-            rb.AddForce(Vector3.down);
+            Vector3 movement = new Vector3(moveHorizontal, 0f, moveVertical);
+            rb.AddForce(movement * speed);
+        }
+        private void Update()
+        {
+
+            if (Input.GetKey(KeyCode.W))
+                rb.AddForce(Vector3.up);
+            if (Input.GetKey(KeyCode.S))
+                rb.AddForce(Vector3.down);
+
+        }
 
     }
 
