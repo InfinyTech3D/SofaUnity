@@ -1,0 +1,69 @@
+<Node name="root" dt="0.016">
+	<FreeMotionAnimationLoopAsync  scheduler="lockFree" threadNumber="0" displayTime="false"/>
+	<GenericConstraintSolverAsync unbuilt="false" tolerance="1e-3" maxIt="200"   printLog="0"/>
+	<CollisionPipelineAsync verbose="0" depth="10" draw="0" />
+    <BruteForceDetectionAsync name="N2" />
+    <MinProximityIntersection name="Proximity" alarmDistance="0.75" contactDistance="0.5" />
+    <CollisionResponse name="Response" response="FrictionContact" />
+    
+    <MeshObjLoader name="loader" filename="mesh/Armadillo_simplified.obj" />
+    <Node name="Armadillo_1">
+        <SparseGridTopology n="7 8 6" fileTopology="mesh/Armadillo_simplified.obj" />
+        <EulerImplicit name="cg_odesolver" printLog="false"  />
+        <SparseLDLSolverAsync  template="CompressedRowSparseMatrix3d" name="Torus1_SparseLDLSolver" printLog="false" saveMatrixToFile="false" useSparseMatrix="false" constraintGranularity="9" parallelizeMinvComputation="true"/>
+        <MechanicalObject name="Armadillo_1_meca" dx="0" dy="60" dz="15" />
+        <UniformMass totalMass="4" />
+        <HexahedronFEMForceField name="FEM" youngModulus="50" poissonRatio="0.3" method="large" />
+        <GenericConstraintCorrectionAsync name="Torus1_ConstraintCorrection" printLog="0" />
+        <Node name="Armadillo_1_Visu">
+            <OglModel name="Armadillo_1_ogl" src="@../../loader" color="blue" />
+            <BarycentricMapping input="@.." output="@Armadillo_1_ogl" />
+        </Node>
+        <Node name="Armadillo_1_Col">
+            <MeshObjLoader name="loader" filename="mesh/Armadillo_verysimplified.obj" />
+            <Mesh src="@loader" />
+            <MechanicalObject name="Armadillo_1_Col_meca" src="@loader"/>
+            <Triangle />
+            <Line />
+            <Point />
+            <BarycentricMapping />
+        </Node>
+    </Node>
+    
+    <Node name="Armadillo_2">
+        <SparseGridTopology n="7 8 6" fileTopology="mesh/Armadillo_simplified.obj" />
+        <EulerImplicit name="cg_odesolver" printLog="false"  />
+        <SparseLDLSolverAsync  template="CompressedRowSparseMatrix3d" name="Torus1_SparseLDLSolver" printLog="false" saveMatrixToFile="false" useSparseMatrix="false" constraintGranularity="9" parallelizeMinvComputation="true"/>
+        <MechanicalObject name="Armadillo_2_meca" dx="0" dy="60" dz="-15" ry="180" />
+        <UniformMass totalMass="4" />
+        <HexahedronFEMForceField name="FEM" youngModulus="50" poissonRatio="0.3" method="large" />
+        <GenericConstraintCorrectionAsync name="Torus1_ConstraintCorrection" printLog="0" />
+        <Node name="Armadillo_2_Visu">
+            <OglModel name="Armadillo_2_ogl" src="@../../loader" color="blue" />
+            <BarycentricMapping input="@.." output="@Armadillo_2_ogl" />
+        </Node>
+        <Node name="Armadillo_2_Col">
+            <MeshObjLoader name="loader" filename="mesh/Armadillo_verysimplified.obj" />
+            <Mesh src="@loader" />
+            <MechanicalObject name="Armadillo_2_Col_meca" src="@loader"/>
+            <Triangle />
+            <Line />
+            <Point />
+            <BarycentricMapping />
+        </Node>
+    </Node>
+    
+	
+    <Node name="Floor">
+        <MeshObjLoader name="loader" filename="mesh/floor2b.obj" />
+        <Mesh src="@loader" />
+        <MechanicalObject name="Floor" src="@loader" dy="-10.25" scale="0.5" />
+        <Triangle name="Floor" simulated="0" moving="0" />
+        <Line name="Floor" simulated="0" moving="0" />
+        <Point name="Floor" simulated="0" moving="0" />
+        <Node name="VisuFloor" tags="Visual">
+			<OglModel name="VisuFloor" filename="./mesh/floor2b.obj" scale="0.5"  dy="-10" />
+			<IdentityMapping input="@../" output="@VisuFloor" />
+		</Node>
+    </Node>
+</Node>
