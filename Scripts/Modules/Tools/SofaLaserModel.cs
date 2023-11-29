@@ -271,9 +271,9 @@ public class SofaLaserModel : SofaRayCaster
         // update llight color and parameters
         if (m_drawLight)
         {
-            m_light.intensity = m_length * 100;
-            m_light.bounceIntensity = m_rayWidth * 3;
-            m_light.range = m_rayWidth;
+            //m_light.intensity = m_length * 100;
+            //m_light.bounceIntensity = m_rayWidth * 3;
+            //m_light.range = m_rayWidth;
             if (m_isActivated)
                 m_light.color = Color.red;
             else
