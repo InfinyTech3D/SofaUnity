@@ -161,18 +161,23 @@ namespace SofaUnity
                 m_savedPlugins = new List<string>();
 
             InitDefaultPlugins();
+            SaveEnabledPlugins();
         }
 
         /// Method to set the SofaContextAPI to be used by this manager
         public void SetSofaContextAPI(SofaContextAPI sofaAPI)
         {
             m_sofaAPI = sofaAPI;
+#if UNITY_EDITOR
+            RegisterDefaultPlugin();
+            InitDefaultPlugins();
+#endif
         }
 
         /// Method to update the list of save plugin to load from plugins enable status
-        public void UpdateEnabledPlugins()
+        public void SaveEnabledPlugins()
         {
-            Debug.Log("UpdateEnabledPlugins");
+            Debug.Log("SaveEnabledPlugins");
             m_savedPlugins.Clear();
             List<Plugin> plugins = PluginManager.Instance.GetPluginList();
             foreach (Plugin plugin in plugins)
@@ -190,7 +195,7 @@ namespace SofaUnity
             if (Application.isEditor)
                 pluginPath = "/SofaUnity/Plugins/Native/x64/";
             else
-                pluginPath = "/Plugins/";
+                pluginPath = "/Plugins/x86_64/";
 
             foreach (string pluginName in m_savedPlugins)
             {
@@ -239,8 +244,28 @@ namespace SofaUnity
         static void RegisterDefaultPlugin()
         {
             PluginManager.Instance.AddPlugin("SofaOpenglVisual");
-            PluginManager.Instance.AddPlugin("SofaMiscCollision");
+            PluginManager.Instance.AddPlugin("SofaImplicitOdeSolver");
+            PluginManager.Instance.AddPlugin("SofaExplicitOdeSolver");
             PluginManager.Instance.AddPlugin("SofaSparseSolver");
+
+            PluginManager.Instance.AddPlugin("SofaGeneralLoader");
+            PluginManager.Instance.AddPlugin("SofaLoader");
+            PluginManager.Instance.AddPlugin("SofaEngine");
+            PluginManager.Instance.AddPlugin("SofaConstraint");
+
+            PluginManager.Instance.AddPlugin("SofaGeneralTopology");
+            PluginManager.Instance.AddPlugin("SofaTopologyMapping");
+            PluginManager.Instance.AddPlugin("SofaMiscMapping");
+
+            PluginManager.Instance.AddPlugin("SofaDeformable");
+            PluginManager.Instance.AddPlugin("SofaNonUniformFem");
+            PluginManager.Instance.AddPlugin("SofaMiscForceField");
+            PluginManager.Instance.AddPlugin("SofaGeneralSimpleFem");
+            PluginManager.Instance.AddPlugin("SofaSimpleFem");
+
+            PluginManager.Instance.AddPlugin("SofaMiscCollision");
+            PluginManager.Instance.AddPlugin("SofaMeshCollision");
+            
             PluginManager.Instance.AddPlugin("InteractionTools");
             PluginManager.Instance.AddPlugin("SofaCarving");
             PluginManager.Instance.AddPlugin("SofaSphFluid");
@@ -252,9 +277,27 @@ namespace SofaUnity
         private void InitDefaultPlugins()
         {
             PluginManager.Instance.GetPluginByName("SofaOpenglVisual").IsEnable = true;
-            PluginManager.Instance.GetPluginByName("SofaMiscCollision").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("SofaImplicitOdeSolver").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("SofaExplicitOdeSolver").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("SofaSparseSolver").IsEnable = true;
 
-            UpdateEnabledPlugins();
+            PluginManager.Instance.GetPluginByName("SofaGeneralLoader").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("SofaLoader").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("SofaEngine").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("SofaConstraint").IsEnable = true;
+
+            PluginManager.Instance.GetPluginByName("SofaGeneralTopology").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("SofaTopologyMapping").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("SofaMiscMapping").IsEnable = true;
+
+            PluginManager.Instance.GetPluginByName("SofaDeformable").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("SofaNonUniformFem").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("SofaMiscForceField").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("SofaGeneralSimpleFem").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("SofaSimpleFem").IsEnable = true;
+
+            PluginManager.Instance.GetPluginByName("SofaMiscCollision").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("SofaMeshCollision").IsEnable = true;
         }
 
     }

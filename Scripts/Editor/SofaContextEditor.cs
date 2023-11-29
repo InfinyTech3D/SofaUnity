@@ -140,7 +140,7 @@ public class SofaContextEditor : Editor
 
             if (EditorGUI.EndChangeCheck())
             {
-                context.PluginManagerInterface.UpdateEnabledPlugins();
+                context.PluginManagerInterface.SaveEnabledPlugins();
             }
         }
         else
