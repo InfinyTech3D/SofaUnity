@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [InitializeOnLoad]
@@ -97,14 +96,13 @@ public class CopyConfigPostProcessor
     [PostProcessBuild]
     public static void OnPostprocessBuild(BuildTarget target, string pathToBuiltProject)
     {
-        System.IO.FileInfo info = new FileInfo(pathToBuiltProject);
+        //System.IO.FileInfo info = new FileInfo(pathToBuiltProject);
         //string depPath = System.IO.Path.Combine(Application.dataPath, "Dependencies");
         Debug.Log("Path to built project: " + pathToBuiltProject);
 
         switch (target)
         {
             case BuildTarget.StandaloneLinux:
-            case BuildTarget.StandaloneOSXIntel64:
             case BuildTarget.StandaloneWindows:
             case BuildTarget.StandaloneWindows64:
                 {
