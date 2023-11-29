@@ -18,7 +18,6 @@
 
 		<TetrahedronSetTopologyContainer  name="Container" position="@Volume.position" src="@loader" tags=" "/>
 		<TetrahedronSetTopologyModifier   name="Modifier" />
-		<TetrahedronSetTopologyAlgorithms name="TopoAlgo"  template="Vec3d" />
 		<TetrahedronSetGeometryAlgorithms name="GeomAlgo"  template="Vec3d" />
 
         <DiagonalMass massDensity="1.0" />
