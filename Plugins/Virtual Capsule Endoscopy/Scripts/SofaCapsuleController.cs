@@ -77,11 +77,10 @@ public class SofaCapsuleController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Keypad5))
         {
-            if (Input.GetMouseButton(0) || Input.GetMouseButton(1) || Input.GetMouseButton(2))
-                MoveForward();
-            else
-                MoveBackward();
+            MoveBackward();
         }
+        else if (Input.GetKey(KeyCode.Keypad0))
+            MoveForward();
         else if (Input.GetKey(KeyCode.Keypad6))
             MoveRight();
         else if (Input.GetKey(KeyCode.Keypad4))
@@ -116,14 +115,14 @@ public class SofaCapsuleController : MonoBehaviour
 
     protected void MoveForward()
     {
-        newPosition[0] = capsuleOri + this.transform.up * m_speed;
+        newPosition[0] = capsuleOri - this.transform.up * m_speed;
         m_sofaCapsuleMesh.SetVelocities(stopVelocity);
         m_sofaCapsuleMesh.SetVertices(newPosition);        
     }
 
     protected void MoveBackward()
     {
-        newPosition[0] = capsuleOri - this.transform.up * m_speed;
+        newPosition[0] = capsuleOri + this.transform.up * m_speed;
         m_sofaCapsuleMesh.SetVelocities(stopVelocity);
         m_sofaCapsuleMesh.SetVertices(newPosition);
     }

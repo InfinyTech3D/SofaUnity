@@ -53,13 +53,13 @@
         </Node>
         
         <Node name="Colon_Visu">
-            <MeshObjLoader name="meshVisu" filename="mesh/colon_visu.obj" handleSeams="1" scale3d="1 1 1"/>
+            <MeshObjLoader name="meshVisu" filename="./mesh/colon_visu.obj" handleSeams="1" scale3d="1 1 1"/>
             <OglModel name="Visual" src="@meshVisu" />
             <BarycentricMapping input="@.." output="@Visual" />
         </Node>
         
         <Node name="Polyp1_Visu">
-            <MeshObjLoader name="mesh_polyp1" filename="mesh/polyp_1.obj" handleSeams="1" scale3d="1 1 1"/>
+            <MeshObjLoader name="mesh_polyp1" filename="./mesh/polyp_1.obj" handleSeams="1" scale3d="1 1 1"/>
             <OglModel name="Visu_polyp1" src="@mesh_polyp1" />
             <BarycentricMapping input="@.." output="@Visu_polyp1" />
         </Node>
