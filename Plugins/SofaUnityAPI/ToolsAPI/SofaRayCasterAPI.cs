@@ -29,11 +29,14 @@ public class SofaRayCasterAPI : IDisposable
                 res = sofaPhysicsAPI_createAttachTool(m_simu, m_name, length);
             else
                 res = sofaPhysicsAPI_createFixConstraintTool(m_simu, m_name, length);
+
+            if (res != 0)
+                Debug.LogError("SofaRayCasterAPI::Create Tool returns error: " + SofaDefines.msg_error[res]);
         }
     }
 
     // TODO: check if needed
-    bool m_isDisposed;
+    //bool m_isDisposed = false;
 
     /// Name of the Sofa object mapped to this Object.
     protected string m_name;
@@ -49,7 +52,7 @@ public class SofaRayCasterAPI : IDisposable
     {
         activateTool(false);
 
-        m_isDisposed = true;
+        //m_isDisposed = true;
     }   
 
     /// Method to activate or not the tool attached to the ray caster

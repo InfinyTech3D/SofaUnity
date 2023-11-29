@@ -61,7 +61,7 @@ namespace SofaUnity
             {
                 if (value != m_translation)
                 {
-                    Vector3 diffTrans = value - m_translation;
+                    //Vector3 diffTrans = value - m_translation;
                     m_translation = value;
                 //    if (m_impl != null)
                 //    {
@@ -80,7 +80,7 @@ namespace SofaUnity
             {
                 if (value != m_rotation)
                 {
-                    Vector3 diffRot = value - m_rotation;
+                    //Vector3 diffRot = value - m_rotation;
                     m_rotation = value;
                     //if (m_impl != null)
                     //{
@@ -99,7 +99,7 @@ namespace SofaUnity
             {
                 if (value != m_scale)
                 {
-                    Vector3 diffScale = value - m_scale;
+                    //Vector3 diffScale = value - m_scale;
                     m_scale = value;
                     //if (m_impl != null)
                     //{
