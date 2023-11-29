@@ -61,10 +61,11 @@ public class SofaDAGNodeEditor : Editor
 
         EditorGUI.BeginDisabledGroup(true);        
         EditorGUILayout.ObjectField("Sofa Context", node.m_sofaContext, typeof(Object), true);
-        EditorGUILayout.TextField("Parent DAGNode", node.ParentNodeName);        
+        EditorGUILayout.TextField("Parent DAGNode", node.ParentNodeName);
+        EditorGUILayout.TextField("DAGNode UniqID", node.UniqueNameId);
         EditorGUI.EndDisabledGroup();
 
-        EditorGUILayout.TextField("DAGNode Name", node.UniqueNameId);
+        node.DisplayName = EditorGUILayout.TextField("DAGNode Name", node.DisplayName);
 
         if (node.HasTransform()) // no tranformation for root node
         {
