@@ -17,7 +17,6 @@
 		
         <TriangleSetTopologyContainer  name="Container" src="@meshLoader" tags=" " />
 		<TriangleSetTopologyModifier   name="Modifier" />
-		<TriangleSetTopologyAlgorithms name="TopoAlgo"   template="Vec3d" />
 		<TriangleSetGeometryAlgorithms name="GeomAlgo"   template="Vec3d" />
 		
 		<MechanicalObject name="tissue" rotation="90 0 0"/>

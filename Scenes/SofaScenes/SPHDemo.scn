@@ -34,7 +34,6 @@
 
         <TriangleSetTopologyContainer  name="Container" src="@meshLoader" />
 		<TriangleSetTopologyModifier   name="Modifier" />
-		<TriangleSetTopologyAlgorithms name="TopoAlgo"   template="Vec3d" />
 		<TriangleSetGeometryAlgorithms name="GeomAlgo"   template="Vec3d" />
 
         <MechanicalObject name="Mo"/>

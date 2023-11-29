@@ -16,7 +16,6 @@
 		
 		<TetrahedronSetTopologyContainer  name="TetraContainer" position="@Volume.position" src="@loader"/>
 		<TetrahedronSetTopologyModifier   name="Modifier" />
-		<TetrahedronSetTopologyAlgorithms name="TopoAlgo"  template="Vec3d" />
 		<TetrahedronSetGeometryAlgorithms name="GeomAlgo"  template="Vec3d" />
 		
 		<DiagonalMass massDensity="1.0" topology="@TetraContainer"/>
@@ -25,7 +24,6 @@
         <Node name="Surface">
             <TriangleSetTopologyContainer  name="TriContainer" />
 			<TriangleSetTopologyModifier   name="Modifier" />
-			<TriangleSetTopologyAlgorithms name="TopoAlgo"   template="Vec3d" />
 			<TriangleSetGeometryAlgorithms name="GeomAlgo"   template="Vec3d" />
 			
             <Tetra2TriangleTopologicalMapping input="@../TetraContainer" output="@TriContainer" />
