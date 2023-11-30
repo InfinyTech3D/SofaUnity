@@ -297,7 +297,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     /// <summary> Generic method to set value of a Data<Vec2i> field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <param name="values"> New Vector2 values of the Data. </param>
-    public void SetVector2iValue(string dataName, Vector2Int values)
+    public void SetVector2iValue(string dataName, Vector2Int values, bool isUnsigned = false)
     {
         if (checkNativePointer())
         {
@@ -392,7 +392,7 @@ public class SofaBaseComponentAPI : SofaBaseAPI
     /// <summary> Generic method to set value of a Data<Vec3f> field. </summary>
     /// <param name="dataName"> Name of the Data field requested. </param>
     /// <param name="values"> New Vector3Int values of the Data. </param>
-    public void SetVector3iValue(string dataName, Vector3Int values)
+    public void SetVector3iValue(string dataName, Vector3Int values, bool isUnsigned = false)
     {
         if (checkNativePointer())
         {

@@ -236,14 +236,17 @@ namespace SofaUnity
             m_objects.Add(obj);
         }
        
-
+        
         /// Method called at GameObject creation.
         void Awake()
         {
-            if (Application.isPlaying)
-                Debug.Log("#### SofaContext is playing | StartOnPlay: " + IsSofaUpdating);
-            else
-                Debug.Log("#### SofaContext is editor | StartOnPlay: " + IsSofaUpdating);
+            if (m_log)
+            {
+                if (Application.isPlaying)
+                    Debug.Log("#### SofaContext is playing | StartOnPlay: " + IsSofaUpdating);
+                else
+                    Debug.Log("#### SofaContext is editor | StartOnPlay: " + IsSofaUpdating);
+            }
 
             //if (Application.isPlaying && StartOnPlay == false)
             //    return;
@@ -503,8 +506,6 @@ namespace SofaUnity
             {
                 nextUpdate += m_timeStep;
 
-                //Debug.Log(Time.deltaTime);
-
                 // if physics simulation async step is still running do not wait and return the control to Unity
                 if (m_impl.isAsyncStepCompleted())
                 {
@@ -570,10 +571,16 @@ namespace SofaUnity
             if (m_sceneFileMgr == null)
                 return;
 
-            Debug.Log("## SofaContext ## loadFilename: " + m_sceneFileMgr.AbsoluteFilename());
+            if (m_log)
+                Debug.Log("## SofaContext ## loadFilename: " + m_sceneFileMgr.AbsoluteFilename());
+
             // load scene file in SOFA
             if (m_impl == null)
+            {
                 Debug.LogError("m_impl is null");
+                return;
+            }
+            
             m_impl.loadScene(m_sceneFileMgr.AbsoluteFilename());
 
             // Retrieve current timestep and gravity
@@ -581,7 +588,6 @@ namespace SofaUnity
             m_gravity = m_impl.getGravity();
 
             // recreate node hiearchy in unity
-            Debug.Log("!!! m_nodeGraphMgr.LoadNodeGraph()");
             m_nodeGraphMgr.LoadNodeGraph();
 
             DoCatchSofaMessages();

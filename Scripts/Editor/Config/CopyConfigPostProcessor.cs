@@ -21,8 +21,6 @@ public class CopyConfigPostProcessor
             outputIniFile.WriteLine("EXAMPLES_DIR=" + SofaUnityDir);
             outputIniFile.WriteLine("LICENSE_DIR=" + Application.dataPath + "/SofaUnity/License/");
             outputIniFile.WriteLine("PYTHON_DIR=" + Application.dataPath + "/SofaUnity/Plugins/Native/x64/");
-
-            Debug.Log("Generate " + sofaIniFile + " file.");
         }
     }
 
@@ -102,7 +100,6 @@ public class CopyConfigPostProcessor
 
         switch (target)
         {
-            case BuildTarget.StandaloneLinux:
             case BuildTarget.StandaloneWindows:
             case BuildTarget.StandaloneWindows64:
                 {
