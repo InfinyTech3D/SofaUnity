@@ -1,14 +1,24 @@
 <?xml version="1.0" ?>
 <Node dt="0.005" gravity="0 -10 0" bbox="-5 -5 -5 5 5 5">
-    <RequiredPlugin name="SofaOpenglVisual"/>
     <RequiredPlugin pluginName="SofaSphFluid"/>
+    <RequiredPlugin name="SofaBoundaryCondition"/> <!-- Needed to use components [FixedConstraint, PlaneForceField] -->
+    <RequiredPlugin name="SofaEngine"/> <!-- Needed to use components [BoxROI] -->
+    <RequiredPlugin name="SofaGeneralEngine"/> <!-- Needed to use components [IndexValueMapper] -->
+    <RequiredPlugin name="SofaImplicitOdeSolver"/> <!-- Needed to use components [EulerImplicitSolver] -->
+    <RequiredPlugin name="SofaLoader"/> <!-- Needed to use components [MeshVTKLoader] -->
+    <RequiredPlugin name="SofaMeshCollision"/> <!-- Needed to use components [TriangleCollisionModel] -->
+    <RequiredPlugin name="SofaOpenglVisual"/> <!-- Needed to use components [OglModel] -->
+    <RequiredPlugin name="SofaSimpleFem"/> <!-- Needed to use components [TetrahedronFEMForceField] -->
+    <RequiredPlugin name="SofaTopologyMapping"/> <!-- Needed to use components [Tetra2TriangleTopologicalMapping] -->
+
 
     <VisualStyle displayFlags="hideBehaviorModels hideForceFields" />
 
     <FreeMotionAnimationLoop displayTime="true"/>
 	<GenericConstraintSolver unbuilt="false" tolerance="1e-4" maxIt="200"   printLog="0"/>
 	<DefaultPipeline verbose="0" depth="10" draw="0" />
-    <BruteForceDetection name="N2" />
+    <BruteForceBroadPhase/>
+    <BVHNarrowPhase/>
 	<MinProximityIntersection name="Proximity" alarmDistance="0.8" contactDistance="0.4" />
     <DefaultContactManager name="Response" response="default" />
     
