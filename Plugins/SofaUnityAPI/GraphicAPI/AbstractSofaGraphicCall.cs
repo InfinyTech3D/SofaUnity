@@ -21,6 +21,14 @@ public abstract class AbtractSofaGraphicCall : MonoBehaviour
     //// MonoBehavior API
     IEnumerator Start()
     {
+        string graphicVersion = SystemInfo.graphicsDeviceVersion;
+        if (!graphicVersion.Contains("OpenGL")) // only openGL version is supported
+        {
+            Debug.LogError("SofaGraphicCall - XRay rendering is only available with Unity in OpenGL mode.");
+            yield break;
+        }
+
+        bool successInit = false;
         //Get SofaContext
         if (m_sofaContext == null)
         {
@@ -29,24 +37,32 @@ public abstract class AbtractSofaGraphicCall : MonoBehaviour
             {
                 // Get Sofa context
                 m_sofaContext = _contextObject.GetComponent<SofaUnity.SofaContext>();
-                if(m_sofaContext)
-                {
-                    int res = InitCall();
-                    if (res != -1)
-                        RegisterID(res);
-                }
-                else
-                {
-                    Debug.LogError("SofaGraphicCall - No SofaContext found.");
-                }
             }
             else
             {
                 Debug.LogError("SofaGraphicCall - Could not find GameObject with tag GameController.");
             }
+
+            if (m_sofaContext)
+            {
+                int res = InitCall();
+                if (res >= 0)
+                    RegisterID(res);
+
+                successInit = true;
+            }
+            else
+            {
+                Debug.LogError("SofaGraphicCall - No SofaContext found.");
+            }
         }
 
-        yield return StartCoroutine("CallWaitForEndOfFrame");
+        if (successInit)
+        {
+            yield return StartCoroutine("CallWaitForEndOfFrame");
+        }
+        else
+            yield break;
     }
 
     void Update()
@@ -84,6 +100,10 @@ public abstract class AbtractSofaGraphicCall : MonoBehaviour
     void OnDestroy()
     {
         BeforeDestroy();
-        SofaUnityAPI.SofaGraphicAPI.clearUp(m_sofaContext.GetSimuContext());
+
+        if (m_sofaContext)
+        {
+            SofaUnityAPI.SofaGraphicAPI.clearUp(m_sofaContext.GetSimuContext());
+        }
     }
 }
