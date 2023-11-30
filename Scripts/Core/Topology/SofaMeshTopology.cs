@@ -45,7 +45,7 @@ namespace SofaUnity
 
 
         /// Member: if tetrahedron is detected, will gather the number of element
-        protected int nbTetra = 0;
+        protected int nbElemVol = 0;
         /// Member: if tetrahedron is detected, will store the tetrahedron topology
         protected int[] m_tetraBuffer;
         /// Member: if tetrahedron is detected, will store the vertex mapping between triangulation and tetrahedron topology
@@ -272,23 +272,110 @@ namespace SofaUnity
         /// Internal method to create the unity Mesh structure given a Hexahedron topology. Called by @sa ComputeMesh()
         protected void ComputeMeshFromHexahedron()
         {
-            Debug.LogError("SofaMeshTopology::ComputeMeshFromHexahedron() method not yet implemented!");
+            nbElemVol = m_hexahedron.Count;
+            int[] tris = new int[nbElemVol * 12 * 3];
+
+            Vector3[] verts = new Vector3[nbElemVol * 8];
+            Vector3[] norms = new Vector3[nbElemVol * 8];
+            Vector2[] uv = new Vector2[nbElemVol * 8];
+
+            mappingVertices = new Dictionary<int, int>();
+
+            for (int i = 0; i < nbElemVol; ++i)
+            {
+                Hexahedron hexa = m_hexahedron[i];
+                int[] id = new int[8];
+                int idHexa = i * 8;
+                for (int j = 0; j < 8; ++j)
+                {
+                    id[j] = idHexa + j;
+                    int vertId = hexa[j];
+
+                    verts[id[j]] = m_mesh.vertices[vertId];
+                    norms[id[j]] = m_mesh.normals[vertId];
+                    mappingVertices.Add(id[j], vertId);
+
+                    uv[id[j]].x = (float)j/8;
+                    uv[id[j]].y = (float)j /8;
+                }
+
+
+                // face back
+                int triVId = i * 12 * 3;
+                tris[triVId + 0] = id[0];
+                tris[triVId + 1] = id[2];
+                tris[triVId + 2] = id[1];
+
+                tris[triVId + 3] = id[0];
+                tris[triVId + 4] = id[3];
+                tris[triVId + 5] = id[2];
+
+                // face front
+                tris[triVId + 6] = id[4];
+                tris[triVId + 7] = id[5];
+                tris[triVId + 8] = id[6];
+
+                tris[triVId + 9] = id[4];
+                tris[triVId + 10] = id[6];
+                tris[triVId + 11] = id[7];
+
+                // face right
+                tris[triVId + 12] = id[1];
+                tris[triVId + 13] = id[2];
+                tris[triVId + 14] = id[6];
+
+                tris[triVId + 15] = id[5];
+                tris[triVId + 16] = id[1];
+                tris[triVId + 17] = id[6];
+
+                // face left
+                tris[triVId + 18] = id[0];
+                tris[triVId + 19] = id[7];
+                tris[triVId + 20] = id[3];
+
+                tris[triVId + 21] = id[0];
+                tris[triVId + 22] = id[4];
+                tris[triVId + 23] = id[7];
+
+                // face up
+                tris[triVId + 24] = id[2];
+                tris[triVId + 25] = id[3];
+                tris[triVId + 26] = id[6];
+
+                tris[triVId + 27] = id[3];
+                tris[triVId + 28] = id[7];
+                tris[triVId + 29] = id[6];
+
+                // face down
+                tris[triVId + 30] = id[0];
+                tris[triVId + 31] = id[1];
+                tris[triVId + 32] = id[5];
+
+                tris[triVId + 33] = id[0];
+                tris[triVId + 34] = id[5];
+                tris[triVId + 35] = id[4];
+            }
+
+            m_mesh.vertices = verts;
+            m_mesh.normals = norms;
+            m_mesh.uv = uv;
+            m_mesh.triangles = tris;
         }
 
 
         /// Internal method to create the unity Mesh structure given a Tetrahedron topology. Called by @sa ComputeMesh()
         protected void ComputeMeshFromTetrahedron()
         {
-            nbTetra = m_tetrahedra.Count;
-            int[] tris = new int[nbTetra * 12];
+            nbElemVol = m_tetrahedra.Count;
+            int[] tris = new int[nbElemVol * 12];
 
-            Vector3[] verts = new Vector3[nbTetra * 4];
-            Vector3[] norms = new Vector3[nbTetra * 4];
-            Vector2[] uv = new Vector2[nbTetra * 4];
+            Vector3[] verts = new Vector3[nbElemVol * 4];
+            Vector3[] norms = new Vector3[nbElemVol * 4];
+            Vector2[] uv = new Vector2[nbElemVol * 4];
 
             mappingVertices = new Dictionary<int, int>();
 
-            for (int i = 0; i < nbTetra; ++i)
+            for (int i = 0; i < nbElemVol; ++i)
             {
                 int[] id = new int[4];
                 int[] old_id = new int[4];
@@ -304,23 +391,26 @@ namespace SofaUnity
                     mappingVertices.Add(id[j], old_id[j]);
 
                     m_tetraBuffer[idTet + j] = id[j];
-                    uv[idTet + j].x = j / 4;
-                    uv[idTet + j].y = uv[i * 4 + j].x;
+                    uv[idTet + j].x = (float)j / 4;
+                    uv[idTet + j].y = (float)j / 4;
                 }
 
-
+                // face 0
                 tris[i * 12 + 0] = id[0];
                 tris[i * 12 + 1] = id[2];
                 tris[i * 12 + 2] = id[1];
 
+                // face 1
                 tris[i * 12 + 3] = id[1];
                 tris[i * 12 + 4] = id[2];
                 tris[i * 12 + 5] = id[3];
 
+                // face 2
                 tris[i * 12 + 6] = id[2];
                 tris[i * 12 + 7] = id[0];
                 tris[i * 12 + 8] = id[3];
 
+                // face 3
                 tris[i * 12 + 9] = id[0];
                 tris[i * 12 + 10] = id[1];
                 tris[i * 12 + 11] = id[3];
@@ -357,11 +447,11 @@ namespace SofaUnity
 
         /// Method to update the tetrahedron topology using the vertex mapping.
         /// TODO: like ComputeMesh and handle the different cases
-        public void UpdateTetraMesh()
+        public void ScaleVolumeMesh()
         {
             // Compute the barycenters of each tetra and update the vertices
             Vector3[] verts = m_mesh.vertices;
-            for (int i = 0; i < nbTetra; ++i)
+            for (int i = 0; i < nbElemVol; ++i)
             {
                 Vector3 bary = new Vector3(0.0f, 0.0f, 0.0f);
                 int idI = i * 4;
