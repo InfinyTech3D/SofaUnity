@@ -60,17 +60,17 @@ public class SofaBaseComponentEditor : Editor
                 SofaBoolData data = dataArchiver.GetSofaBoolData(dataName);
                 data.Value = EditorGUILayout.Toggle(data.DataName, data.Value);
             }
-            else if (dataType == "int" || dataType == "uint")
+            else if (dataType == "i" || dataType == "uint")
             {
                 SofaIntData data = dataArchiver.GetSofaIntData(dataName);
                 data.Value = EditorGUILayout.IntField(data.DataName, data.Value);                
             }
-            else if (dataType == "float")
+            else if (dataType == "f")
             {
                 SofaFloatData data = dataArchiver.GetSofaFloatData(dataName);
                 data.Value = EditorGUILayout.FloatField(data.DataName, data.Value);
             }
-            else if (dataType == "double")
+            else if (dataType == "d")
             {
                 SofaDoubleData data = dataArchiver.GetSofaDoubleData(dataName);
                 data.Value = EditorGUILayout.FloatField(data.DataName, data.Value);
@@ -103,7 +103,8 @@ public class SofaBaseComponentEditor : Editor
             else
             {
                 SofaData data = dataArchiver.GetGenericData(dataName);
-                EditorGUILayout.TextField(data.DataName, "Unsupported type: " + data.DataType);
+                if (data != null)
+                    EditorGUILayout.TextField(data.DataName, "Unsupported type: " + data.DataType);
             }
     
         }
