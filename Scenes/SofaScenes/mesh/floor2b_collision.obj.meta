@@ -1,38 +1,9 @@
 fileFormatVersion: 2
-guid: b96f71dd0f829c349b195b2d9c6330d4
+guid: 07cf6b2a5d9a12c4a9555cabe93acc9a
 ModelImporter:
   serializedVersion: 19301
-  internalIDToNameTable:
-  - first:
-      1: 100000
-    second: default
-  - first:
-      1: 100002
-    second: //RootNode
-  - first:
-      4: 400000
-    second: default
-  - first:
-      4: 400002
-    second: //RootNode
-  - first:
-      21: 2100000
-    second: Organs
-  - first:
-      23: 2300000
-    second: default
-  - first:
-      33: 3300000
-    second: default
-  - first:
-      43: 4300000
-    second: default
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Organs
-    second: {fileID: 2100000, guid: b301f760a5169bb40b413cfda3d41179, type: 2}
+  internalIDToNameTable: []
+  externalObjects: {}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -60,7 +31,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 1
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
     globalScale: 1
@@ -72,7 +43,7 @@ ModelImporter:
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
-    fileIdsGeneration: 1
+    fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -117,7 +88,7 @@ ModelImporter:
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   avatarSetup: 0
   additionalBone: 0

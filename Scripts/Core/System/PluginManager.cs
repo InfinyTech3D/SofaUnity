@@ -238,7 +238,7 @@ namespace SofaUnity
         //////    PluginManager private API    /////
         ////////////////////////////////////////////
 
-/// Default onlload method to register default SOFA plugin
+        /// Default onlload method to register default SOFA plugin
 #if UNITY_EDITOR
         [InitializeOnLoadMethod]
         static void RegisterDefaultPlugin()
@@ -253,6 +253,8 @@ namespace SofaUnity
             PluginManager.Instance.AddPlugin("SofaEngine");
             PluginManager.Instance.AddPlugin("SofaConstraint");
 
+            PluginManager.Instance.AddPlugin("SofaGeneralObjectInteraction");
+            PluginManager.Instance.AddPlugin("SofaGeneralEngine");
             PluginManager.Instance.AddPlugin("SofaGeneralTopology");
             PluginManager.Instance.AddPlugin("SofaTopologyMapping");
             PluginManager.Instance.AddPlugin("SofaMiscMapping");
@@ -286,6 +288,8 @@ namespace SofaUnity
             PluginManager.Instance.GetPluginByName("SofaEngine").IsEnable = true;
             PluginManager.Instance.GetPluginByName("SofaConstraint").IsEnable = true;
 
+            PluginManager.Instance.GetPluginByName("SofaGeneralObjectInteraction").IsEnable = true;
+            PluginManager.Instance.GetPluginByName("SofaGeneralEngine").IsEnable = true;
             PluginManager.Instance.GetPluginByName("SofaGeneralTopology").IsEnable = true;
             PluginManager.Instance.GetPluginByName("SofaTopologyMapping").IsEnable = true;
             PluginManager.Instance.GetPluginByName("SofaMiscMapping").IsEnable = true;
