@@ -11,7 +11,6 @@ class InitImagingPlugin
     [InitializeOnLoadMethod]
     static void RegisterPluginDll()
     {
-        SofaUnity.PluginManager.Instance.AddPlugin("VirtualXRay");
         SofaUnity.PluginManager.Instance.AddPlugin("ImagingUS");
     }
 #endif
