@@ -541,6 +541,93 @@ namespace SofaUnity
 
 
     /// <summary>
+    /// Specialization of the class SofaBaseData for Vec2<int> data
+    /// </summary>
+    [System.Serializable]
+    public class SofaVec2IntData : SofaBaseData
+    {
+        /// Stored Bool value from Sofa
+        [SerializeField]
+        protected Vector2Int m_value;
+
+        /// Internal info to know if storing float or double
+        [SerializeField]
+        protected bool m_isUnsigned;
+
+
+        ////////////////////////////////////////////
+        //////       SofaVec2IntData API       /////
+        ////////////////////////////////////////////
+
+        /// Default constructor taking the value, the component owner and its name. Will set the type internally
+        public SofaVec2IntData(SofaBaseComponent owner, string nameID, Vector2Int value, bool isUnsigned)
+            : base(owner, nameID, "Vec2i")
+        {
+            m_value = new Vector2Int(value.x, value.y);
+            m_isUnsigned = isUnsigned;
+        }
+        /// Getter/Setter of the @sa m_value. Will call @sa SetValueImpl and @sa GetValueImpl internally for Sofa communication
+        public Vector2Int Value
+        {
+            get
+            {
+                if (m_isDirty) // nothing to do
+                    GetValueImpl();
+
+                return m_value;
+            }
+
+            set
+            {
+                if (m_value != value)
+                {
+                    m_value = value;
+                    if (SetValueImpl())
+                    {
+                        m_owner.m_impl.ReinitComponent();
+                        m_isEdited = true;
+                        Debug.Log("Set value: " + m_dataName + " = " + m_value);
+                    }
+                }
+            }
+        }
+
+        /// Log Method for Debug info
+        public void Log()
+        {
+            Debug.Log(m_owner.UniqueNameId + "{" + m_dataType + "}: " + m_dataName + " => " + m_value);
+        }
+
+
+        ////////////////////////////////////////////
+        //////   SofaVec2IntData internal API  /////
+        ////////////////////////////////////////////
+
+        /// Internal Method to set value inside Sofa simulation
+        protected override bool SetValueImpl()
+        {
+            if (m_owner.m_impl == null)
+                return false;
+
+            m_owner.m_impl.SetVector2iValue(m_dataName, m_value, m_isUnsigned);
+            return true;
+        }
+
+        /// Internal Method to get value from Sofa simulation
+        protected override bool GetValueImpl()
+        {
+            if (m_owner.m_impl == null)
+                return false;
+
+            m_value = m_owner.m_impl.GetVector2iValue(m_dataName/*, m_isUnsigned*/);
+            Debug.Log("Get value: " + m_dataName + " = " + m_value);
+            m_isDirty = false;
+            return true;
+        }
+    }
+
+
+    /// <summary>
     /// Specialization of the class SofaBaseData for Vec3<float> data
     /// </summary>
     [System.Serializable]
@@ -620,6 +707,93 @@ namespace SofaUnity
                 return false;
 
             m_value = m_owner.m_impl.GetVector3Value(m_dataName, m_isDouble);
+            Debug.Log("Get value: " + m_dataName + " = " + m_value);
+            m_isDirty = false;
+            return true;
+        }
+    }
+
+
+    /// <summary>
+    /// Specialization of the class SofaBaseData for Vec3<int> data
+    /// </summary>
+    [System.Serializable]
+    public class SofaVec3IntData : SofaBaseData
+    {
+        /// Stored Bool value from Sofa
+        [SerializeField]
+        protected Vector3Int m_value;
+
+        /// Internal info to know if storing float or double
+        [SerializeField]
+        protected bool m_isUnsigned;
+
+
+        ////////////////////////////////////////////
+        //////      SofaVec3IntData API        /////
+        ////////////////////////////////////////////
+
+        /// Default constructor taking the value, the component owner and its name. Will set the type internally
+        public SofaVec3IntData(SofaBaseComponent owner, string nameID, Vector3Int value, bool isUnsigned)
+            : base(owner, nameID, "Vec3i")
+        {
+            m_value = new Vector3Int(value.x, value.y, value.z);
+            m_isUnsigned = isUnsigned;
+        }
+
+        /// Getter/Setter of the @sa m_value. Will call @sa SetValueImpl and @sa GetValueImpl internally for Sofa communication
+        public Vector3Int Value
+        {
+            get
+            {
+                if (m_isDirty) // nothing to do
+                    GetValueImpl();
+
+                return m_value;
+            }
+
+            set
+            {
+                if (m_value != value)
+                {
+                    m_value = value;
+                    if (SetValueImpl())
+                    {
+                        m_owner.m_impl.ReinitComponent();
+                        m_isEdited = true;
+                    }
+                }
+            }
+        }
+
+        /// Log Method for Debug info
+        public void Log()
+        {
+            Debug.Log(m_owner.UniqueNameId + "{" + m_dataType + "}: " + m_dataName + " => " + m_value);
+        }
+
+
+        ////////////////////////////////////////////
+        //////   SofaVec3IntData internal API  /////
+        ////////////////////////////////////////////
+
+        /// Internal Method to set value inside Sofa simulation
+        protected override bool SetValueImpl()
+        {
+            if (m_owner.m_impl == null)
+                return false;
+
+            m_owner.m_impl.SetVector3iValue(m_dataName, m_value, m_isUnsigned);
+            return true;
+        }
+
+        /// Internal Method to get value from Sofa simulation
+        protected override bool GetValueImpl()
+        {
+            if (m_owner.m_impl == null)
+                return false;
+
+            m_value = m_owner.m_impl.GetVector3iValue(m_dataName/*, m_isUnsigned*/);
             Debug.Log("Get value: " + m_dataName + " = " + m_value);
             m_isDirty = false;
             return true;

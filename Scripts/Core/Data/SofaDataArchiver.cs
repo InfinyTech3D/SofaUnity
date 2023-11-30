@@ -27,6 +27,9 @@ public class SofaDataArchiver
     public List<SofaVec3Data> m_vec3Data = null;
     public List<SofaVec4Data> m_vec4Data = null;
 
+    public List<SofaVec2IntData> m_vec2iData = null;
+    public List<SofaVec3IntData> m_vec3iData = null;
+
 
     /// List of unssuported type names stored in this Archiver
     public List<string> m_otherNames = new List<string>();
@@ -76,6 +79,11 @@ public class SofaDataArchiver
             float value = owner.m_impl.GetDoubleValue(dataName);
             AddDoubleData(owner, dataName, value);
         }
+        else if (dataType == "Vec2i")
+        {
+            Vector2Int value = owner.m_impl.GetVector2iValue(dataName);
+            AddVec2IntData(owner, dataName, value, false);
+        }
         else if (dataType == "Vec2f")
         {
             Vector2 value = owner.m_impl.GetVector2Value(dataName);
@@ -85,6 +93,11 @@ public class SofaDataArchiver
         {
             Vector2 value = owner.m_impl.GetVector2Value(dataName, true);
             AddVec2Data(owner, dataName, value, true);
+        }
+        else if (dataType == "Vec3i")
+        {
+            Vector3Int value = owner.m_impl.GetVector3iValue(dataName);
+            AddVec3IntData(owner, dataName, value, false);
         }
         else if (dataType == "Vec3f")
         {
@@ -188,9 +201,24 @@ public class SofaDataArchiver
         }
 
 
+        if (m_vec2iData != null)
+        {
+            foreach (SofaVec2IntData data in m_vec2iData)
+                if (data.SetValueIfEdited())
+                    return true;
+        }
+
         if (m_vec2Data != null)
         {
             foreach (SofaVec2Data data in m_vec2Data)
+                if (data.SetValueIfEdited())
+                    return true;
+        }
+
+
+        if (m_vec3iData != null)
+        {
+            foreach (SofaVec3IntData data in m_vec3iData)
                 if (data.SetValueIfEdited())
                     return true;
         }
@@ -264,6 +292,15 @@ public class SofaDataArchiver
     }
 
 
+    /// Method to create a Vec2 int Data and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
+    public void AddVec2IntData(SofaBaseComponent owner, string nameID, Vector2Int value, bool isUnsigned = false)
+    {
+        if (m_vec2iData == null) // first time
+            m_vec2iData = new List<SofaVec2IntData>();
+
+        m_vec2iData.Add(new SofaVec2IntData(owner, nameID, value, isUnsigned));
+    }
+
     /// Method to create a Vec2 Data and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
     public void AddVec2Data(SofaBaseComponent owner, string nameID, Vector2 value, bool isDouble = false)
     {
@@ -273,6 +310,15 @@ public class SofaDataArchiver
         m_vec2Data.Add(new SofaVec2Data(owner, nameID, value, isDouble));
     }
 
+
+    /// Method to create a Vec3 int Data and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
+    public void AddVec3IntData(SofaBaseComponent owner, string nameID, Vector3Int value, bool isUnsigned = false)
+    {
+        if (m_vec3iData == null) // first time
+            m_vec3iData = new List<SofaVec3IntData>();
+
+        m_vec3iData.Add(new SofaVec3IntData(owner, nameID, value, isUnsigned));
+    }
 
     /// Method to create a Vec3 Data and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
     public void AddVec3Data(SofaBaseComponent owner, string nameID, Vector3 value, bool isDouble = false)
@@ -378,6 +424,17 @@ public class SofaDataArchiver
     }
 
 
+    /// Getter for SofaData Vec2<int> value given the Data name
+    public SofaVec2IntData GetSofaVec2IntData(string dataName)
+    {
+        foreach (SofaVec2IntData data in m_vec2iData)
+        {
+            if (data.DataName == dataName)
+                return data;
+        }
+        return null;
+    }
+
     /// Getter for SofaData Vec2<float> value given the Data name
     public SofaVec2Data GetSofaVec2Data(string dataName)
     {
@@ -389,6 +446,17 @@ public class SofaDataArchiver
         return null;
     }
 
+
+    /// Getter for SofaData Vec3<int> value given the Data name
+    public SofaVec3IntData GetSofaVec3IntData(string dataName)
+    {
+        foreach (SofaVec3IntData data in m_vec3iData)
+        {
+            if (data.DataName == dataName)
+                return data;
+        }
+        return null;
+    }
 
     /// Getter for SofaData Vec3<float> value given the Data name
     public SofaVec3Data GetSofaVec3Data(string dataName)
