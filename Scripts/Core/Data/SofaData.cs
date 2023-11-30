@@ -63,7 +63,6 @@ namespace SofaUnity
                     {
                         m_owner.m_impl.ReinitComponent();
                         m_isEdited = true;
-                        Debug.Log("Set value: " + m_dataName + " = " + m_value);
                     }                     
                 }
             }
@@ -97,7 +96,6 @@ namespace SofaUnity
                 return false;
 
             m_value = m_owner.m_impl.GetBoolValue(m_dataName);
-            Debug.Log("Get value: " + m_dataName + " = " + m_value);
             m_isDirty = false;
             return true;
         }
@@ -155,7 +153,6 @@ namespace SofaUnity
                     {
                         m_owner.m_impl.ReinitComponent();
                         m_isEdited = true;
-                        Debug.Log("Set value: " + m_dataName + " = " + m_value);
                     }
                 }
             }
@@ -196,7 +193,7 @@ namespace SofaUnity
                 m_value = m_owner.m_impl.GetUIntValue(m_dataName);
             else
                 m_value = m_owner.m_impl.GetIntValue(m_dataName);
-            Debug.Log("Get value: " + m_dataName + " = " + m_value);
+
             m_isDirty = false;
             return true;
         }
@@ -245,7 +242,6 @@ namespace SofaUnity
                     {
                         m_owner.m_impl.ReinitComponent();
                         m_isEdited = true;
-                        Debug.Log("Set value: " + m_dataName + " = " + m_value);
                     }
                 }
             }
@@ -279,7 +275,6 @@ namespace SofaUnity
                 return false;
 
             m_value = m_owner.m_impl.GetFloatValue(m_dataName);
-            Debug.Log("Get value: " + m_dataName + " = " + m_value);
             m_isDirty = false;
             return true;
         }
@@ -328,7 +323,6 @@ namespace SofaUnity
                     {
                         m_owner.m_impl.ReinitComponent();
                         m_isEdited = true;
-                        Debug.Log("Set value: " + m_dataName + " = " + m_value);
                     }
                 }
             }
@@ -362,7 +356,6 @@ namespace SofaUnity
                 return false;
 
             m_value = m_owner.m_impl.GetDoubleValue(m_dataName);
-            Debug.Log("Get value: " + m_dataName + " = " + m_value);
             m_isDirty = false;
             return true;
         }
@@ -411,7 +404,6 @@ namespace SofaUnity
                     {
                         m_owner.m_impl.ReinitComponent();
                         m_isEdited = true;
-                        Debug.Log("Set value: " + m_dataName + " = " + m_value);
                     }
                 }
             }
@@ -445,7 +437,6 @@ namespace SofaUnity
                 return false;
 
             m_value = m_owner.m_impl.getStringValue(m_dataName);
-            Debug.Log("Get value: " + m_dataName + " = " + m_value);
             m_isDirty = false;
             return true;
         }
@@ -499,7 +490,6 @@ namespace SofaUnity
                     {
                         m_owner.m_impl.ReinitComponent();
                         m_isEdited = true;
-                        Debug.Log("Set value: " + m_dataName + " = " + m_value);
                     }
                 }
             }
@@ -533,7 +523,6 @@ namespace SofaUnity
                 return false;
 
             m_value = m_owner.m_impl.GetVector2Value(m_dataName, m_isDouble);
-            Debug.Log("Get value: " + m_dataName + " = " + m_value);
             m_isDirty = false;
             return true;
         }
@@ -586,7 +575,6 @@ namespace SofaUnity
                     {
                         m_owner.m_impl.ReinitComponent();
                         m_isEdited = true;
-                        Debug.Log("Set value: " + m_dataName + " = " + m_value);
                     }
                 }
             }
@@ -620,7 +608,6 @@ namespace SofaUnity
                 return false;
 
             m_value = m_owner.m_impl.GetVector2iValue(m_dataName/*, m_isUnsigned*/);
-            Debug.Log("Get value: " + m_dataName + " = " + m_value);
             m_isDirty = false;
             return true;
         }
@@ -707,7 +694,6 @@ namespace SofaUnity
                 return false;
 
             m_value = m_owner.m_impl.GetVector3Value(m_dataName, m_isDouble);
-            Debug.Log("Get value: " + m_dataName + " = " + m_value);
             m_isDirty = false;
             return true;
         }
@@ -794,7 +780,6 @@ namespace SofaUnity
                 return false;
 
             m_value = m_owner.m_impl.GetVector3iValue(m_dataName/*, m_isUnsigned*/);
-            Debug.Log("Get value: " + m_dataName + " = " + m_value);
             m_isDirty = false;
             return true;
         }
@@ -847,7 +832,6 @@ namespace SofaUnity
                     {
                         m_owner.m_impl.ReinitComponent();
                         m_isEdited = true;
-                        Debug.Log("Set value: " + m_dataName + " = " + m_value);
                     }
                 }
             }
@@ -881,7 +865,6 @@ namespace SofaUnity
                 return false;
 
             m_value = m_owner.m_impl.GetVector4Value(m_dataName, m_isDouble);
-            Debug.Log("Get value: " + m_dataName + " = " + m_value);
             m_isDirty = false;
             return true;
         }
@@ -941,8 +924,6 @@ namespace SofaUnity
         public override string getType()
         {
             return m_type;
-            //Type toto = typeof(T);
-            //Debug.Log("Type: " + toto);
         }
     }
 }
