@@ -1,37 +1,63 @@
 fileFormatVersion: 2
 guid: 05925b156ae04e94c89b3d14bc566d8d
 ModelImporter:
-  serializedVersion: 22
-  fileIDToRecycleName:
-    100000: default
-    100002: //RootNode
-    100004: sub2:Group1
-    400000: default
-    400002: //RootNode
-    400004: sub2:Group1
-    2300000: default
-    2300002: sub2:Group1
-    3300000: default
-    3300002: sub2:Group1
-    4300000: default
-    4300002: sub2:Group1
-    2186277476908879412: ImportLogs
+  serializedVersion: 19301
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: default
+  - first:
+      1: 100002
+    second: //RootNode
+  - first:
+      1: 100004
+    second: sub2:Group1
+  - first:
+      4: 400000
+    second: default
+  - first:
+      4: 400002
+    second: //RootNode
+  - first:
+      4: 400004
+    second: sub2:Group1
+  - first:
+      23: 2300000
+    second: default
+  - first:
+      23: 2300002
+    second: sub2:Group1
+  - first:
+      33: 3300000
+    second: default
+  - first:
+      33: 3300002
+    second: sub2:Group1
+  - first:
+      43: 4300000
+    second: default
+  - first:
+      43: 4300002
+    second: sub2:Group1
+  - first:
+      41386430: 2186277476908879412
+    second: ImportLogs
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: defaultMat
-    second: {fileID: 2100000, guid: 19cb6929a3baa57468ce94697e130e87, type: 2}
+    second: {fileID: 2100000, guid: 606b1934901a9624bb3cd3823af01464, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: sub2_Group1Mat
-    second: {fileID: 2100000, guid: 2b05a9e30b6ff724085d3fe68900fe9a, type: 2}
+    second: {fileID: 2100000, guid: 606b1934901a9624bb3cd3823af01464, type: 2}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
-    materialLocation: 0
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -60,17 +86,23 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 0
     importBlendShapes: 1
     importCameras: 0
     importLights: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
     indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
@@ -82,10 +114,13 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -95,14 +130,16 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
-    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 0
   humanoidOversampling: 1
+  avatarSetup: 0
   additionalBone: 0
   userData: 
   assetBundleName: 
