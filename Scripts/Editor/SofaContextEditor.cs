@@ -81,7 +81,9 @@ public class SofaContextEditor : Editor
             }
             else
             {
+                EditorGUI.BeginDisabledGroup(true);
                 context.AsyncSimulation = EditorGUILayout.Toggle("Asynchronous Simulation", context.AsyncSimulation);
+                EditorGUI.EndDisabledGroup();
             }
                 
 
