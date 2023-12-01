@@ -70,6 +70,28 @@ namespace SofaUnity
             }
         }
 
+        public string PythonSceneFilename
+        {
+            get { return m_filename; }
+            set
+            {
+                Debug.Log("Set Python Filename: " + value);
+                if (CheckValidFilename(value))
+                {
+                    if (HasScene) // already one loaded
+                    {
+                        m_sofaContext.ClearSofaScene();
+                    }
+
+                    // load python plugin first
+                    m_sofaContext.PluginManagerInterface.LoadPlugin("SofaPython3");
+
+                    LoadFilename();
+                }
+            }
+        }
+
+
 
         /// method to get the full path of the file inside the unity asset
         public string AbsoluteFilename()
