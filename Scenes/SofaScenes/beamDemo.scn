@@ -7,6 +7,9 @@
     <RequiredPlugin name="SofaMeshCollision"/> <!-- Needed to use components [PointCollisionModel] -->
     <RequiredPlugin name="SofaOpenglVisual"/>
     
+    <DefaultAnimationLoop />
+    <DefaultVisualManagerLoop />
+    
     <Node name="beamsprings_01">
         <EulerImplicitSolver rayleighStiffness="0.01" rayleighMass="0.01" />
         <CGLinearSolver template="GraphScattered" iterations="20" threshold="1e-008" tolerance="1e-5" />
