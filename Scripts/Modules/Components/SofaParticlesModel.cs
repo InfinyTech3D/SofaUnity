@@ -75,7 +75,7 @@ public class SofaParticlesModel : MonoBehaviour
 
         if (m_pSystem)
         {
-            Debug.Log("init m_pSystem");
+            //Debug.Log("init m_pSystem");
             var main = m_pSystem.main;
             main.playOnAwake = false;
             main.loop = false;
