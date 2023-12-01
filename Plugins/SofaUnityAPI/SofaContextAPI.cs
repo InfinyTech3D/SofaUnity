@@ -170,6 +170,20 @@ namespace SofaUnityAPI
             }
         }        
 
+        /// Method to load the default list of SOFA plugin (default core and components plugins)
+        public void loadDefaultPlugins(string pluginPath)
+        {
+            if (m_isReady)
+            {
+                int res = sofaPhysicsAPI_loadDefaultPlugins(m_native, pluginPath);
+                if (res != 0)
+                    Debug.LogError("SofaContextAPI::loadDefaultPlugin method returns: " + SofaDefines.msg_error[res]);
+            }
+            else
+                Debug.LogError("SofaContextAPI::loadDefaultPlugin can't load plugins, no sofaPhysicsAPI created!");
+            
+        }
+
         /// <summary> Method to load a specific sofa plugin. </summary>
         /// <param name="pluginName"> Path to the plugin. </param>
         public void loadPlugin(string pluginName)
@@ -503,9 +517,12 @@ namespace SofaUnityAPI
         public static extern int sofaPhysicsAPI_unloadScene(IntPtr obj);
 
         [DllImport("SAPAPI")]
-        public static extern int sofaPhysicsAPI_getStateMachine(IntPtr obj);        
+        public static extern int sofaPhysicsAPI_getStateMachine(IntPtr obj);
 
         /// Binding to load a plugin
+        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int sofaPhysicsAPI_loadDefaultPlugins(IntPtr obj, string pluginPath);
+
         [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaPhysicsAPI_loadPlugin(IntPtr obj, string pluginName);
 
