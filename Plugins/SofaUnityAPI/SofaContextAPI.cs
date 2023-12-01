@@ -160,7 +160,13 @@ namespace SofaUnityAPI
         {
             if (m_isReady)
             {
-                sofaPhysicsAPI_unloadScene(m_native);
+                int res = sofaPhysicsAPI_unloadScene(m_native);
+                if (res != 0)
+                    Debug.LogError("SofaContextAPI::unload method returns: " + SofaDefines.msg_error[res]);
+            }
+            else
+            {
+                Debug.LogError("SofaContextAPI::unload scene file not possible without a valid sofaPhysicsAPI created!");
             }
         }        
 
