@@ -4,10 +4,12 @@
     <RequiredPlugin pluginName='SofaMiscCollision'/>
     <VisualStyle displayFlags="showVisual showBehaviorModels" />
 
+    <DefaultAnimationLoop />
+    <DefaultVisualManagerLoop />
     <DefaultPipeline name="default21" verbose="0" depth="1"/>
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
-    <DefaultContactManager name="default22" response="default" />
+    <DefaultContactManager name="default22" response="PenalityContactForceField" />
     <DefaultCollisionGroupManager name="default23" />
     <MinProximityIntersection name="Proximity" alarmDistance="2.0" contactDistance="0.001" />
 	

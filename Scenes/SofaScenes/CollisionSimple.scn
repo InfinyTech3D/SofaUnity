@@ -10,11 +10,14 @@
     <RequiredPlugin name="SofaMeshCollision"/> <!-- Needed to use components [LineCollisionModel, PointCollisionModel, TriangleCollisionModel] -->
     <RequiredPlugin name="SofaTopologyMapping"/> <!-- Needed to use components [Tetra2TriangleTopologicalMapping] -->
 
+    <DefaultAnimationLoop />
+    <DefaultVisualManagerLoop />
+    
     <DefaultPipeline verbose="0" depth="10" draw="0" />
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
     <MinProximityIntersection name="Proximity" alarmDistance="0.5" contactDistance="0.1" />
-    <DefaultContactManager name="Response" response="default" />
+    <DefaultContactManager name="Response" response="PenalityContactForceField" />
     <DefaultCollisionGroupManager name="Group" />
     
     <Node name="Cylinder">
