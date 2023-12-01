@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<Node name="root" dt="0.05" showBoundingTree="0" gravity="0 -9 0">
+    <RequiredPlugin pluginName='SofaOpenglVisual'/>
+    <RequiredPlugin pluginName='SofaMiscCollision'/>
+    <VisualStyle displayFlags="showVisual showBehaviorModels" />
+    
+    <DefaultAnimationLoop />
+    <DefaultVisualManagerLoop />
+    
+    <DefaultPipeline verbose="0" />
+    <BruteForceBroadPhase/>
+    <BVHNarrowPhase/>
+    <DefaultContactManager response="PenalityContactForceField" />
+    <MinProximityIntersection name="Proximity" alarmDistance="0.5" contactDistance="0.2" />
+    
+    <Node name="SquareGravity_test">
+        <EulerImplicitSolver name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.1" />
+        <CGLinearSolver iterations="25" name="linear solver" tolerance="1.0e-9" threshold="1.0e-9" />
+		<MeshGmshLoader name="meshLoader"  filename="mesh/square3.msh"  scale3d="10 10 10" />
+		<TriangleSetTopologyContainer name="Container"  position="@meshLoader.position"  edges="@meshLoader.edges"  triangles="@meshLoader.triangles" />
+		<TriangleSetTopologyModifier name="Modifier" />
+		<TriangleSetGeometryAlgorithms template="Vec3d" name="GeomAlgo" />
+		<MechanicalObject template="Vec3d" name="mObject1"  position="0 0 0"  velocity="0 0 0"  force="0 0 0"  externalForce="0 0 0"  derivX="0 0 0"  restScale="1" />
+		<UniformMass name="uniformMass2" totalMass="10" />
+		<FixedConstraint name="fixedConstraint1"  indices="0 1" />
+		<TriangularFEMForceField name="FEM" youngModulus="200" poissonRatio="0.3" method="large" />
+	    <TriangularBendingSprings name="FEM-Bend" stiffness="200" damping="1.0" topology="@Container" />
+		<TriangleCollisionModel name="tTriangleModel1" />
+        <!--<SurfacePressureForceField name="PressureFF" pressure="10" triangleIndices="836 840 841 830 822 977 813 807" mainDirection="0 0.5 -1"/>-->
+        <SurfacePressureForceField name="PressureFF" triangleIndices="0 1 2 3 4 15 16 17 18 19 20"/>
+		<Node name="Visu">
+            <OglModel name="Visual" color="red" />
+            <IdentityMapping input="@.." output="@Visual" />
+        </Node>
+    </Node>
+</Node>
