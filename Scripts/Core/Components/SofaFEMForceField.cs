@@ -56,7 +56,7 @@ namespace SofaUnity
 
             if (m_renderer.sharedMaterial == null)
             {
-                m_renderer.sharedMaterial = new Material(Shader.Find("Diffuse"));
+                m_renderer.sharedMaterial = UnityEngine.Rendering.GraphicsSettings.renderPipelineAsset.defaultMaterial;
             }
 
             m_meshInit = false;
