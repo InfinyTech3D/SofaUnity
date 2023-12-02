@@ -1,0 +1,21 @@
+NbrMeshes: 4
+Mesh: SPHFluidForceField  -  SPHFluidForceField1
+NbrVertices: 0
+NbrTriangles: 0
+Center: 0;0;0
+Min: 0;0;0
+Mesh: TriangularFEMForceField  -  FEM
+NbrVertices: 774
+NbrTriangles: 1450
+Center: 0;-1.110223E-15;0
+Min: 10;2.220446E-15;10
+Mesh: TriangularBendingSprings  -  FEM-Bend
+NbrVertices: 774
+NbrTriangles: 1450
+Center: 0;-1.110223E-15;0
+Min: 10;2.220446E-15;10
+Mesh: OglModel  -  Visual
+NbrVertices: 774
+NbrTriangles: 1450
+Center: 0;-2.980684;0
+Min: 10;5.961369;10
