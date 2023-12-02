@@ -1,0 +1,26 @@
+NbrMeshes: 5
+Mesh: TetrahedralCorotationalFEMForceField  -  FEM
+NbrVertices: 9720
+NbrTriangles: 9720
+Center: 0;6;0.5
+Min: 0.5;0.4755278;1
+Mesh: TriangularBendingSprings  -  FEM-Bend
+NbrVertices: 510
+NbrTriangles: 360
+Center: 0;0;0
+Min: 0;0;0
+Mesh: OglModel  -  Visual
+NbrVertices: 510
+NbrTriangles: 360
+Center: -0.6118968;0.5194987;-1.756427
+Min: 0.62082;1.09746;0.980095
+Mesh: PlaneForceField  -  PlaneForceField1
+NbrVertices: 9720
+NbrTriangles: 9720
+Center: 0;6;0.5
+Min: 0.5;0.4755278;1
+Mesh: OglModel  -  Visual
+NbrVertices: 277
+NbrTriangles: 550
+Center: 0;-4.768372E-07;0
+Min: 2;2.000001;2
