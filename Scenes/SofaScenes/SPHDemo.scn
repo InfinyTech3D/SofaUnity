@@ -1,35 +1,51 @@
 <?xml version="1.0" ?>
 <Node dt="0.005" gravity="0 -10 0" bbox="-5 -5 -5 5 5 5">
-    <RequiredPlugin pluginName="SofaSphFluid"/>
-    <RequiredPlugin name="SofaBoundaryCondition"/> <!-- Needed to use components [FixedConstraint, PlaneForceField] -->
-    <RequiredPlugin name="SofaEngine"/> <!-- Needed to use components [BoxROI] -->
-    <RequiredPlugin name="SofaGeneralEngine"/> <!-- Needed to use components [IndexValueMapper] -->
-    <RequiredPlugin name="SofaImplicitOdeSolver"/> <!-- Needed to use components [EulerImplicitSolver] -->
-    <RequiredPlugin name="SofaLoader"/> <!-- Needed to use components [MeshVTKLoader] -->
-    <RequiredPlugin name="SofaMeshCollision"/> <!-- Needed to use components [TriangleCollisionModel] -->
-    <RequiredPlugin name="SofaOpenglVisual"/> <!-- Needed to use components [OglModel] -->
-    <RequiredPlugin name="SofaSimpleFem"/> <!-- Needed to use components [TetrahedronFEMForceField] -->
-    <RequiredPlugin name="SofaTopologyMapping"/> <!-- Needed to use components [Tetra2TriangleTopologicalMapping] -->
+    <RequiredPlugin name="Sofa.Component.AnimationLoop"/> <!-- Needed to use components [FreeMotionAnimationLoop] -->  
+    <RequiredPlugin name="Sofa.Component.Collision.Detection.Algorithm"/> <!-- Needed to use components [BVHNarrowPhase, BruteForceBroadPhase, DefaultPipeline] -->  
+    <RequiredPlugin name="Sofa.Component.Collision.Detection.Intersection"/> <!-- Needed to use components [MinProximityIntersection] -->  
+    <RequiredPlugin name="Sofa.Component.Collision.Geometry"/> <!-- Needed to use components [SphereCollisionModel, TriangleCollisionModel] -->  
+    <RequiredPlugin name="Sofa.Component.Collision.Response.Contact"/> <!-- Needed to use components [DefaultContactManager] -->  
+    <RequiredPlugin name="Sofa.Component.Constraint.Lagrangian.Correction"/> <!-- Needed to use components [UncoupledConstraintCorrection] -->  
+    <RequiredPlugin name="Sofa.Component.Constraint.Lagrangian.Solver"/> <!-- Needed to use components [GenericConstraintSolver] -->  
+    <RequiredPlugin name="Sofa.Component.Constraint.Projective"/> <!-- Needed to use components [FixedConstraint] -->  
+    <RequiredPlugin name="Sofa.Component.Engine.Select"/> <!-- Needed to use components [BoxROI] -->  
+    <RequiredPlugin name="Sofa.Component.IO.Mesh"/> <!-- Needed to use components [MeshGmshLoader] -->  
+    <RequiredPlugin name="Sofa.Component.LinearSolver.Iterative"/> <!-- Needed to use components [CGLinearSolver] -->  
+    <RequiredPlugin name="Sofa.Component.Mapping.Linear"/> <!-- Needed to use components [IdentityMapping] -->  
+    <RequiredPlugin name="Sofa.Component.Mass"/> <!-- Needed to use components [UniformMass] -->  
+    <RequiredPlugin name="Sofa.Component.ODESolver.Backward"/> <!-- Needed to use components [EulerImplicitSolver] -->  
+    <RequiredPlugin name="Sofa.Component.SceneUtility"/> <!-- Needed to use components [InfoComponent] -->  
+    <RequiredPlugin name="Sofa.Component.SolidMechanics.FEM.Elastic"/> <!-- Needed to use components [TriangularFEMForceField] -->  
+    <RequiredPlugin name="Sofa.Component.SolidMechanics.Spring"/> <!-- Needed to use components [TriangularBendingSprings] -->  
+    <RequiredPlugin name="Sofa.Component.StateContainer"/> <!-- Needed to use components [MechanicalObject] -->  
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Dynamic"/> <!-- Needed to use components [TriangleSetGeometryAlgorithms, TriangleSetTopologyContainer, TriangleSetTopologyModifier] -->  
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Grid"/> <!-- Needed to use components [RegularGridTopology] -->  
+    <RequiredPlugin name="Sofa.Component.Visual"/> <!-- Needed to use components [VisualStyle] -->  
+    <RequiredPlugin name="Sofa.GL.Component.Rendering3D"/> <!-- Needed to use components [OglModel] -->  
 
 
     <VisualStyle displayFlags="hideBehaviorModels hideForceFields" />
     <DefaultVisualManagerLoop />
-    <FreeMotionAnimationLoop displayTime="true"/>
-	<GenericConstraintSolver unbuilt="false" tolerance="1e-4" maxIt="200"   printLog="0"/>
+    <FreeMotionAnimationLoop />
+	<GenericConstraintSolver tolerance="1e-4" maxIt="200"   printLog="0"/>
 	<DefaultPipeline verbose="0" depth="10" draw="0" />
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
 	<MinProximityIntersection name="Proximity" alarmDistance="0.8" contactDistance="0.4" />
     <DefaultContactManager name="Response" response="PenalityContactForceField" />
     
-    <EulerImplicitSolver name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.1" />
+    <EulerImplicitSolver name="cg_odesolver" rayleighStiffness="0.1" rayleighMass="0.1" />
     <CGLinearSolver iterations="25" name="linear solver" tolerance="1.0e-9" threshold="1.0e-9" />
 
     
+    <Node name="FGrid">
+        <RegularGridTopology name="grid" nx="5" ny="20" nz="5" xmin="-1.5" xmax="0" ymin="2" ymax="10" zmin="-1.5" zmax="0"/>
+        <MechanicalObject name="gridDofs" showObject="1" />
+    </Node>
+    
     <Node name="Fluid">
-        <MechanicalObject name="MModel" showObject="1"/>
+        <MechanicalObject name="MModel" showObject="1" position="@../FGrid/gridDofs.position"/>
         
-        <RegularGridTopology nx="5" ny="20" nz="5" xmin="-1.5" xmax="0" ymin="2" ymax="10" zmin="-1.5" zmax="0" drawEdges="0"/>
         <UniformMass name="M1" vertexMass="0.5" />
         <SpatialGridContainer cellWidth="0.75" />
         <SPHFluidForceField radius="1.0" density="15" kernelType="1" viscosityType="2" viscosity="10" pressure="1000" surfaceTension="-1000" printLog="0" />       
@@ -49,10 +65,10 @@
         <MechanicalObject name="Mo"/>
         <UniformMass totalMass="1" />
         
-        <BoxROI name="ROI1" box="-10 -1 -6 10 1 -4.9" drawBoxes="1"/>
+        <BoxROI name="ROI1" box="-10 -1 -6 10 1 -4.9" drawBoxes="0"/>
         <FixedConstraint indices="@ROI1.indices" />
         
-        <BoxROI name="ROI2" box="-10 -1 4.9 10 1 5.1" drawBoxes="1"/>
+        <BoxROI name="ROI2" box="-10 -1 4.9 10 1 5.1" drawBoxes="0"/>
         <FixedConstraint indices="@ROI2.indices" />
         
         <TriangularFEMForceField name="FEM" youngModulus="60" poissonRatio="0.3" method="large" />
