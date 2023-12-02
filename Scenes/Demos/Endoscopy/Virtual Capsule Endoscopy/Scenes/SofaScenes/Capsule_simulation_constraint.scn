@@ -5,7 +5,7 @@
     <DefaultPipeline name="pipeline" depth="6" verbose="0"/>
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
-    <DefaultContactManager name="response" response="FrictionContact" />
+    <DefaultContactManager name="response" response="FrictionContactConstraint" />
     <LocalMinDistance name="proximity" alarmDistance="0.15" contactDistance="0.05" angleCone="0.0" />
     <FreeMotionAnimationLoop/>
     <LCPConstraintSolver tolerance="0.001" maxIt="1000"/>
@@ -14,7 +14,7 @@
     <CGLinearSolver iterations="20" name="linear solver" tolerance="1.0e-4" threshold="1.0e-4" />
    
     <Node name="Colon">
-        <MeshObjLoader name="loader" filename="./mesh/colon_collision.obj" scale3d="1 1 1"/>
+        <MeshOBJLoader name="loader" filename="./mesh/colon_collision.obj" scale3d="1 1 1"/>
         <SparseGridTopology name="grid" n="24 15 30" position="@loader.position" />
         
         <MechanicalObject name="dofs"/>
@@ -48,7 +48,7 @@
         </Node>
         
         <Node name="Colon_Visu">
-            <MeshObjLoader name="meshVisu" filename="./mesh/colon_visu.obj" scale3d="1 1 1" handleSeams="1"/>
+            <MeshOBJLoader name="meshVisu" filename="./mesh/colon_visu.obj" scale3d="1 1 1" handleSeams="1"/>
             <OglModel name="Visual" src="@meshVisu" />
             <BarycentricMapping input="@.." output="@Visual" />
         </Node>

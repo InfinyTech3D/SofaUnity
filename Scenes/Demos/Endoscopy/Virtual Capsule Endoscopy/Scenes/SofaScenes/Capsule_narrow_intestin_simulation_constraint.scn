@@ -5,7 +5,7 @@
     <DefaultPipeline name="pipeline" depth="6" verbose="0"/>
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
-    <DefaultContactManager name="response" response="FrictionContact" />
+    <DefaultContactManager name="response" response="FrictionContactConstraint" />
     <LocalMinDistance name="proximity" alarmDistance="0.15" contactDistance="0.05" angleCone="0.0" />
     <FreeMotionAnimationLoop/>
     <LCPConstraintSolver tolerance="0.001" maxIt="1000"/>
@@ -13,17 +13,18 @@
     <EulerImplicitSolver name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="1" />
     <CGLinearSolver iterations="20" name="linear solver" tolerance="1.0e-4" threshold="1.0e-4" />
     
-    <MeshObjLoader name="loader" filename="./mesh/intestin_narrow_visu.obj" scale3d="1 1 1"/>
-    <BoxROI name="ROI" box="-4 9.5 2  -2 11.5 4" drawBoxes="0" src="@loader"/>
-    <!--<OglModel name="Visual" src="@loader" color="red"/>-->
-    <SparseGridTopology name="grid" n="10 10 10" position="@ROI.pointsInROI"  />
+    <Node name="colonROI" >
+        <MeshOBJLoader name="loader" filename="./mesh/intestin_narrow_visu.obj" scale3d="1 1 1"/>
+        <BoxROI name="ROI" box="-4 9.5 2  -2 11.5 4" drawBoxes="0" src="@loader"/>
+        <SparseGridTopology name="grid" n="10 10 10" position="@ROI.pointsInROI"  />
+    </Node>
 
     <Node name="Colon">
-        <MechanicalObject src="@../grid" name="dofs" />
+        <MechanicalObject src="@../colonROI/grid" name="dofs" />
         <TetrahedronSetTopologyContainer name="Container" />
         <TetrahedronSetTopologyModifier name="Modifier" />
         <TetrahedronSetGeometryAlgorithms name="GeomAlgo" template="Vec3d" />
-        <Hexa2TetraTopologicalMapping name="default28" input="@../grid" output="@Container" />
+        <Hexa2TetraTopologicalMapping name="default28" input="@../colonROI/grid" output="@Container" />
         
         
         <BoxROI name="FixedROI_1" box="-4.1 9.4 1.9  -3.7 11.6 4.1" drawBoxes="0" position="@dofs.rest_position"/>
@@ -40,11 +41,11 @@
         
         <DiagonalMass totalMass="0.1" />        
         <TetrahedralCorotationalFEMForceField name="FEM" youngModulus="60" poissonRatio="0.3" method="large" />
-        <PrecomputedConstraintCorrection printLog="1" fileCompliance="./Colon-1566-0.01.comp" recompute="0"/>
+        <PrecomputedConstraintCorrection printLog="0" fileCompliance="./Colon-1566-0.01.comp" recompute="0"/>
         
         <Node name="Colon_Collision">
-            <MechanicalObject name="collision" src="@../../ROI" />
-            <TriangleSetTopologyContainer  name="TriContainer" position="@../../ROI.pointsInROI" triangles="@../../ROI.trianglesInROI" edges="@../../ROI.edgesInROI"/>
+            <MechanicalObject name="collision" src="@../../colonROI/ROI" />
+            <TriangleSetTopologyContainer  name="TriContainer" triangles="@../../colonROI/ROI.trianglesInROI" />
 			<TriangleSetTopologyModifier   name="TriModifier" />
 			<TriangleSetGeometryAlgorithms name="GeomAlgo" template="Vec3d" />
             
@@ -54,7 +55,7 @@
         </Node>
         
         <Node name="Colon_Visu">
-            <MeshObjLoader name="meshVisu" filename="mesh/intestin_narrow_visu.obj" scale3d="1 1 1" handleSeams="1"/>
+            <MeshOBJLoader name="meshVisu" filename="mesh/intestin_narrow_visu.obj" scale3d="1 1 1" handleSeams="1"/>
             <OglModel name="Visual" src="@meshVisu" />
             <BarycentricMapping input="@.." output="@Visual" />
         </Node>
