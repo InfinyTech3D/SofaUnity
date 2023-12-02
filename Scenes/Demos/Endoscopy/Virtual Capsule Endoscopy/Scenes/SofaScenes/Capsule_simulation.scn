@@ -1,28 +1,18 @@
 <?xml version="1.0" ?>
 <Node name="root" dt="0.05" showBoundingTree="0" gravity="0 0 0">
     <VisualStyle displayFlags="showBehaviorModels hideCollisionModels hideForceFields" />
-    <RequiredPlugin pluginName='SofaOpenglVisual'/>
-    <RequiredPlugin pluginName='SofaMiscCollision'/>
-	<RequiredPlugin pluginName='SofaBoundaryCondition'/> <!-- Needed to use components [FixedConstraint, ]-->
-	<RequiredPlugin pluginName='SofaEngine'/> <!-- Needed to use components [BoxROI, ]-->
-	<RequiredPlugin pluginName='SofaGeneralSimpleFem'/> <!-- Needed to use components [TetrahedralCorotationalFEMForceField, ]-->
-	<RequiredPlugin pluginName='SofaImplicitOdeSolver'/> <!-- Needed to use components [EulerImplicitSolver, ]-->
-	<RequiredPlugin pluginName='SofaLoader'/> <!-- Needed to use components [MeshObjLoader, ]-->
-	<RequiredPlugin pluginName='SofaMeshCollision'/> <!-- Needed to use components [TriangleCollisionModel, ]-->
-	<RequiredPlugin pluginName='SofaTopologyMapping'/> <!-- Needed to use components [Hexa2TetraTopologicalMapping, ]-->
-
     
-    <DefaultPipeline name="default21" verbose="0" depth="1"/>
+    <DefaultAnimationLoop />
+    <DefaultPipeline verbose="0" depth="1"/>
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
-    <DefaultContactManager name="default22" response="default" />
-    <DefaultCollisionGroupManager name="default23" />
+    <DefaultContactManager name="default22" response="PenalityContactForceField" />
     <MinProximityIntersection name="Proximity" alarmDistance="0.5" contactDistance="0.04" />     
 
     <EulerImplicitSolver name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.1" />
     <CGLinearSolver iterations="20" name="linear solver" tolerance="1.0e-4" threshold="1.0e-4" />
     
-    <MeshObjLoader name="loader" filename="./mesh/colon_collision.obj" scale3d="1 1 1"/>
+    <MeshOBJLoader name="loader" filename="./mesh/colon_collision.obj" scale3d="1 1 1"/>
     <SparseGridTopology name="grid" n="20 12 24" position="@loader.position" />
     
     <Node name="Colon">
@@ -61,13 +51,13 @@
         </Node>
         
         <Node name="Colon_Visu">
-            <MeshObjLoader name="meshVisu" filename="./mesh/colon_visu.obj" handleSeams="1" scale3d="1 1 1"/>
+            <MeshOBJLoader name="meshVisu" filename="./mesh/colon_visu.obj" handleSeams="1" scale3d="1 1 1"/>
             <OglModel name="Visual" src="@meshVisu" />
             <BarycentricMapping input="@.." output="@Visual" />
         </Node>
         
         <Node name="Polyp1_Visu">
-            <MeshObjLoader name="mesh_polyp1" filename="./mesh/polyp_1.obj" handleSeams="1" scale3d="1 1 1"/>
+            <MeshOBJLoader name="mesh_polyp1" filename="./mesh/polyp_1.obj" handleSeams="1" scale3d="1 1 1"/>
             <OglModel name="Visu_polyp1" src="@mesh_polyp1" />
             <BarycentricMapping input="@.." output="@Visu_polyp1" />
         </Node>
