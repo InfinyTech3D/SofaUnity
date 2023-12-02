@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
 
 namespace SofaUnityAPI
 {
@@ -18,6 +19,44 @@ namespace SofaUnityAPI
 
         private bool m_isReady = false;
 
+        public static string getResourcesPath()
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            return Application.persistentDataPath;
+#else
+            return Application.dataPath;
+#endif
+        }
+
+        void CopyAssetToPersistent()
+        {
+            string sofaUnityResourcesPath = getResourcesPath() + "/SofaUnity";
+#if UNITY_STANDALONE_WIN && !UNITY_EDITOR && TEST_PERSISTENT_WIN  // to test the zip/unzip mechanism on Windows
+            // Merely a test to see if it is really doing its job
+            Debug.Log("unzipping to persistent data path (windows)");
+            Utility_SharpZipCommands.ExtractTGZ (Application.streamingAssetsPath + "/" + "Data.tgz",Application.persistentDataPath);
+#endif
+#if UNITY_ANDROID && !UNITY_EDITOR
+            //if stub file Resources.data doesn't exist, extract default data...
+            if (File.Exists(sofaUnityResourcesPath + "/" + "Resources.data") == false)
+            {
+                Debug.Log("Resources.data doesn't exist, creating it for the first time.");
+                //copy tgz to directory where we can extract it
+                WWW www = new WWW(Application.streamingAssetsPath + "/Resources.tgz");
+                while (!www.isDone) { }
+                System.IO.File.WriteAllBytes(Application.persistentDataPath + "/" + "Resources.tgz", www.bytes);
+                //extract it
+                Utility_SharpZipCommands.ExtractTGZ(Application.persistentDataPath + "/" + "Resources.tgz", sofaUnityResourcesPath);
+                //delete tgz
+                File.Delete(Application.persistentDataPath + "/" + "Resources.tgz");
+            }
+            else
+            {
+                Debug.Log("Resources.data does exist, will not extract default data.");
+            }
+#endif
+        }
+
         /// Default constructor, will create the pointer to SofaPhysicsAPI
         public SofaContextAPI(bool async)
         {
@@ -33,6 +72,13 @@ namespace SofaUnityAPI
                 m_isReady = false;
                 return;
             }
+
+            // Prepare Data
+            Debug.Log("data:" + Application.dataPath);
+            Debug.Log("persistent:" + Application.persistentDataPath);
+            Debug.Log("streaming:" + Application.streamingAssetsPath);
+
+            CopyAssetToPersistent();
 
             // load the sofaIni file
             string pathIni = Application.dataPath + "/SofaUnity/Plugins/Native/x64/sofa.ini";
@@ -62,7 +108,6 @@ namespace SofaUnityAPI
            // Dispose(false);
             Dispose();
         }
-
 
         /// Dispose method to release the object
         public void Dispose()

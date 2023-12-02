@@ -378,8 +378,9 @@ namespace SofaUnity
                 m_pluginMgr.SetSofaContextAPI(m_impl);
 
             // Load SOFA plugins
+#if !UNITY_ANDROID
             m_pluginMgr.LoadPlugins();
-
+#endif
             // start sofa instance
             if (m_log)
                 Debug.Log("## SofaContext status before start: " + m_impl.contextStatus());
