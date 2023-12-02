@@ -440,7 +440,7 @@ namespace SofaUnity
         /// Internal method to create the unity Mesh structure given a Edge topology. Called by @sa ComputeMesh()
         protected void ComputeMeshFromEdge()
         {
-            Debug.LogWarning("SofaMeshTopology::ComputeMeshFromEdge() method not yet implemented!");
+            //Debug.LogWarning("SofaMeshTopology::ComputeMeshFromEdge() method not yet implemented!");
         }
 
 
