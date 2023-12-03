@@ -11,9 +11,10 @@ namespace SofaUnity
     /// <summary>
     /// Data class refering to a plugin, to store it's name, and the options
     /// </summary>
-    public class Plugin
+    [System.Serializable]
+    public class PluginInfo
     {
-        public Plugin(string _name, bool available)
+        public PluginInfo(string _name, bool available)
         {
             Name = _name;
             IsAvailable = available;
@@ -38,7 +39,7 @@ namespace SofaUnity
         private static PluginManager instance;
 
         /// List of plugin dll library names to load
-        private List<Plugin> m_plugins = new List<Plugin>();
+        private List<PluginInfo> m_availablePlugins = new List<PluginInfo>();
 
         /// List of dll library in directory
         private string[] m_dllList = null;
@@ -53,22 +54,22 @@ namespace SofaUnity
 
         public int GetNbrPlugins()
         {
-            return m_plugins.Count;
+            return m_availablePlugins.Count;
         }
 
 
-        public List<Plugin> GetPluginList()
+        public List<PluginInfo> GetPluginList()
         {
-            return m_plugins;
+            return m_availablePlugins;
         }
 
-        public Plugin GetPluginByName(string pluginName)
+        public PluginInfo GetPluginByName(string pluginName)
         {
-            for (int id = 0; id < m_plugins.Count; id++)
+            for (int id = 0; id < m_availablePlugins.Count; id++)
             {
-                if (m_plugins[id].Name == pluginName)
+                if (m_availablePlugins[id].Name == pluginName)
                 {
-                    return m_plugins[id];
+                    return m_availablePlugins[id];
                 }
             }
 
@@ -76,7 +77,7 @@ namespace SofaUnity
         }
 
 
-        public bool CheckPlugin(string pluginName)
+        public bool CheckPluginExists(string pluginName)
         {
             if (m_dllList == null)
             {
@@ -104,13 +105,13 @@ namespace SofaUnity
         public void AddPlugin(string pluginName)
         {
             // first check if plugin is in dll list
-            bool exist = CheckPlugin(pluginName);
+            bool exist = CheckPluginExists(pluginName);
 
             bool found = false;
             int id = 0;
-            for (id = 0; id < m_plugins.Count; id++)
+            for (id = 0; id < m_availablePlugins.Count; id++)
             {
-                if (m_plugins[id].Name == pluginName)
+                if (m_availablePlugins[id].Name == pluginName)
                 {
                     found = true;
                     break;
@@ -119,11 +120,11 @@ namespace SofaUnity
 
             if (found) // already registered, nothing to do.
             {
-                m_plugins[id].IsAvailable = exist;
+                m_availablePlugins[id].IsAvailable = exist;
             }
             else
-            {
-                m_plugins.Add(new Plugin(pluginName, exist));
+            {                
+                m_availablePlugins.Add(new PluginInfo(pluginName, exist));
             }
         }
     }
@@ -145,8 +146,7 @@ namespace SofaUnity
 
         /// List of plugin dll library names to load for this simulation
         [SerializeField]
-        protected List<string> m_savedPlugins = null;
-
+        protected List<PluginInfo> m_savedPlugins = null;
 
         ////////////////////////////////////////////
         //////     PluginManager accessors     /////
@@ -157,29 +157,35 @@ namespace SofaUnity
         {
             m_sofaAPI = sofaAPI;
             if (m_savedPlugins == null)
-                m_savedPlugins = new List<string>();
-
-            SaveEnabledPlugins();
+            {
+                m_savedPlugins = new List<PluginInfo>();
+                List<PluginInfo> plugins = PluginManager.Instance.GetPluginList();
+                foreach (PluginInfo plugin in plugins)
+                {
+                    m_savedPlugins.Add(new PluginInfo(plugin.Name, plugin.IsAvailable));
+                }
+            }
         }
 
         /// Method to set the SofaContextAPI to be used by this manager
         public void SetSofaContextAPI(SofaContextAPI sofaAPI)
         {
             m_sofaAPI = sofaAPI;
-#if UNITY_EDITOR
-            RegisterDefaultPlugin();
-#endif
+            UpdateEnabledPlugins();
         }
 
         /// Method to update the list of save plugin to load from plugins enable status
-        public void SaveEnabledPlugins()
+        public void UpdateEnabledPlugins()
         {
-            m_savedPlugins.Clear();
-            List<Plugin> plugins = PluginManager.Instance.GetPluginList();
-            foreach (Plugin plugin in plugins)
+            foreach (PluginInfo plugin in m_savedPlugins)
             {
-                if (plugin.IsEnable)
-                    m_savedPlugins.Add(plugin.Name);
+                PluginInfo availabledPlug = PluginManager.Instance.GetPluginByName(plugin.Name);
+                if (availabledPlug != null)
+                {
+                    plugin.IsAvailable = availabledPlug.IsAvailable;
+                }
+                else
+                    plugin.IsAvailable = false;
             }
         }
 
@@ -188,6 +194,11 @@ namespace SofaUnity
         public void ClearSavedPlugin()
         {
             m_savedPlugins.Clear();
+            List<PluginInfo> plugins = PluginManager.Instance.GetPluginList();
+            foreach (PluginInfo plugin in plugins)
+            {
+                m_savedPlugins.Add(new PluginInfo(plugin.Name, plugin.IsAvailable));
+            }
         }
 
 
@@ -224,19 +235,22 @@ namespace SofaUnity
             // Internally load all default plugins from core and module
             m_sofaAPI.loadDefaultPlugins(fullPrefixPath);
 
-            foreach (string pluginName in m_savedPlugins)
+            foreach (PluginInfo plugin in m_savedPlugins)
             {
-                string fullPluginPath = getPluginFullPrefixPath() + getPluginFullName(pluginName);
+                if (!plugin.IsEnable)
+                    continue;
+
+                string fullPluginPath = getPluginFullPrefixPath() + getPluginFullName(plugin.Name);
 #if UNITY_EDITOR
-                Plugin plug = PluginManager.Instance.GetPluginByName(pluginName);
+                PluginInfo plug = GetPluginByName(plugin.Name);
                 if (plug == null || plug.IsAvailable == false)
                 {
-                    Debug.LogError("Plugin " + pluginName + " is requested but can't be found.");
+                    Debug.LogError("Plugin " + plugin.Name + " is requested but can't be found. Disable it for the moment but you should investigate the issue.");
+                    plug.IsEnable = false;
                     continue;
                 }
                 else
                 {
-                    plug.IsEnable = true;
                     m_sofaAPI.loadPlugin(fullPluginPath);
                 }
 #else
@@ -263,10 +277,29 @@ namespace SofaUnity
             return PluginManager.Instance.GetNbrPlugins();
         }
 
-        /// method to get access of the list of plugin registered
-        public List<Plugin> GetPluginList()
+        /// method to get access of the list of plugin available in the Native folder
+        public List<PluginInfo> GetAvailablePluginList()
         {
             return PluginManager.Instance.GetPluginList();
+        }
+
+        /// method to get access of the list of plugin registered
+        public List<PluginInfo> GetPluginList()
+        {
+            return m_savedPlugins;
+        }
+
+        public PluginInfo GetPluginByName(string pluginName)
+        {
+            for (int id = 0; id < m_savedPlugins.Count; id++)
+            {
+                if (m_savedPlugins[id].Name == pluginName)
+                {
+                    return m_savedPlugins[id];
+                }
+            }
+
+            return null;
         }
 
 
@@ -274,7 +307,11 @@ namespace SofaUnity
         //////    PluginManager private API    /////
         ////////////////////////////////////////////
 
-        /// Default onlload method to register default SOFA plugin
+    }
+
+    /// Default onlload method to register default SOFA plugin
+    class InitDefaultPlugin
+    {
 #if UNITY_EDITOR
         [InitializeOnLoadMethod]
         static void RegisterDefaultPlugin()
@@ -283,9 +320,9 @@ namespace SofaUnity
             PluginManager.Instance.AddPlugin("MeshRefinement");
             PluginManager.Instance.AddPlugin("SofaCarving");
             PluginManager.Instance.AddPlugin("SofaSphFluid");
+            PluginManager.Instance.AddPlugin("SofaCUDA");
             //PluginManager.Instance.AddPlugin("MultiCoreGPU");
         }
 #endif
-
     }
 }
