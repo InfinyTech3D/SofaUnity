@@ -37,6 +37,11 @@ namespace SofaUnityAPI
             Utility_SharpZipCommands.ExtractTGZ (Application.streamingAssetsPath + "/" + "Data.tgz",Application.persistentDataPath);
 #endif
 #if UNITY_ANDROID && !UNITY_EDITOR
+            // Prepare Data
+            Debug.Log("data:" + Application.dataPath);
+            Debug.Log("persistent:" + Application.persistentDataPath);
+            Debug.Log("streaming:" + Application.streamingAssetsPath);
+
             //if stub file Resources.data doesn't exist, extract default data...
             if (File.Exists(sofaUnityResourcesPath + "/" + "Resources.data") == false)
             {
@@ -72,11 +77,6 @@ namespace SofaUnityAPI
                 m_isReady = false;
                 return;
             }
-
-            // Prepare Data
-            Debug.Log("data:" + Application.dataPath);
-            Debug.Log("persistent:" + Application.persistentDataPath);
-            Debug.Log("streaming:" + Application.streamingAssetsPath);
 
             CopyAssetToPersistent();
 
