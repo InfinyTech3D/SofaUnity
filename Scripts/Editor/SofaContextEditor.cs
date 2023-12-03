@@ -130,9 +130,9 @@ public class SofaContextEditor : Editor
         {
             EditorGUI.BeginChangeCheck();
 
-            List<Plugin> plugins = context.PluginManagerInterface.GetPluginList();
+            List<PluginInfo> plugins = context.PluginManagerInterface.GetPluginList();
             EditorGUI.indentLevel += 1;
-            foreach (Plugin plug in plugins)
+            foreach (PluginInfo plug in plugins)
             {
                 EditorGUI.BeginDisabledGroup(!plug.IsAvailable);
                 plug.IsEnable = EditorGUILayout.Toggle(plug.Name, plug.IsEnable);
@@ -142,16 +142,12 @@ public class SofaContextEditor : Editor
 
             if (EditorGUI.EndChangeCheck())
             {
-                context.PluginManagerInterface.SaveEnabledPlugins();
+                context.PluginManagerInterface.LoadPlugins();
             }
         }
         else
         {
             int nbrPlugin = EditorGUILayout.IntField("Plugins Count", context.PluginManagerInterface.GetNbrPlugins());
-            if (GUILayout.Button("Save Plugin Config"))
-            {
-                context.PluginManagerInterface.SaveEnabledPlugins();
-            }
         }
 
         if (GUILayout.Button("Clear saved plugins"))
