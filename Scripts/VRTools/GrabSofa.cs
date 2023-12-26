@@ -2,18 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+#if ENABLE_INPUT_SYSTEM
+    // New input system backends are enabled.
+    using UnityEngine.InputSystem;
+#endif
+
 
 /// <summary>
 /// Used to grab Sofa simulation with attach tools (1 on each hand)
 /// </summary>
 public class GrabSofa : MonoBehaviour
 {
+#if ENABLE_INPUT_SYSTEM
     /// <summary>
     /// Reference of the right and left brab button (here trigger)
     /// </summary>
     [SerializeField] private InputActionReference m_leftGripButton = null;
     [SerializeField] private InputActionReference m_rightGripButton = null;
+#endif
 
     /// <summary>
     /// Reference to the right and left grab tool (Laser on attach mode)
@@ -23,22 +29,26 @@ public class GrabSofa : MonoBehaviour
 
     private void OnEnable()
     {
+#if ENABLE_INPUT_SYSTEM
         m_leftGripButton.action.performed += ActivateLeftGrab;
         m_leftGripButton.action.canceled += DesactivateLeftGrab;
         m_rightGripButton.action.performed += ActivateRightGrab;
         m_rightGripButton.action.canceled += DesactivateRightGrab;
+#endif
     }
 
 
     private void OnDisable()
     {
+#if ENABLE_INPUT_SYSTEM
         m_leftGripButton.action.performed -= ActivateLeftGrab;
         m_leftGripButton.action.canceled -= DesactivateLeftGrab;
         m_rightGripButton.action.performed -= ActivateRightGrab;
         m_rightGripButton.action.canceled -= DesactivateRightGrab;
-
+#endif
     }
 
+    #if ENABLE_INPUT_SYSTEM
     /// <summary>
     /// Activate left grab 
     /// </summary>
@@ -75,5 +85,5 @@ public class GrabSofa : MonoBehaviour
         m_rightSofaLaserModel.ActivateTool = false;
     }
 
-
+#endif
 }

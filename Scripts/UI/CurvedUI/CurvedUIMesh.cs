@@ -76,6 +76,12 @@ public class CurvedUIMesh : BaseRaycaster
             if (CanvasToProject.GetComponent<AnyUiFakeVRTKCanvas>() == null)
                 CanvasToProject.gameObject.AddComponent<AnyUiFakeVRTKCanvas>();
 #else
+        if (eventCamera == null)
+        {
+            Debug.LogWarning("eventCamera is null");
+            return;
+        }
+
         Ray rCurrent = eventCamera.ScreenPointToRay(eventData.position);
         Ray rLast = eventCamera.ScreenPointToRay(eventData.position - eventData.delta);
         Ray rPress = eventCamera.ScreenPointToRay(eventData.pressPosition);
