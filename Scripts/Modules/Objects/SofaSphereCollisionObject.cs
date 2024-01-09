@@ -18,11 +18,6 @@ public class SofaSphereCollisionObject : SofaBaseObject
     /////   SofaSphereCollisionObject members   /////
     /////////////////////////////////////////////////
 
-    /// Pointer to the corresponding SOFA API object
-    protected SofaCustomMeshAPI m_impl = null;
-
-    /// Booleen to activate/unactivate the collision
-    [SerializeField] protected bool m_activated = true;
     /// Booleen to activate/unactivate the factor or use unique position
     [SerializeField]
     protected bool m_usePositionOnly = true;
@@ -31,31 +26,24 @@ public class SofaSphereCollisionObject : SofaBaseObject
 
     /// Collision sphere radius
     [SerializeField] protected float m_radius = 1.0f;
-    /// Collision sphere contact stiffness
-    [SerializeField] protected float m_stiffness = 100.0f;
 
     
     /// List of unique vertex that discribe the GameObject geometry
     protected List<Vector3> m_keyVertices = null;
 
-    /// array of vertex corresponding to the sphere centers
-    protected Vector3[] m_centers = null;
-
-    [SerializeField]    
-    public GameObject parentT = null;
-
-    [SerializeField]
-    public bool m_startOnPlay = true;
+    private SofaSphereCollision m_sofaSphereCollision = new SofaSphereCollision();
 
     /////////////////////////////////////////////////
     /////  SofaSphereCollisionObject public API /////
     /////////////////////////////////////////////////
 
-    /// Getter/Setter of the parameter @see m_activated  
-    public bool Activated
+    /// <summary>
+    /// Reference to SofaSphereCollision : commun part of  SofaSphereCollisionHand and SofaSphereCollisionObject
+    /// </summary>
+    [SerializeField] public SofaSphereCollision SofaSphereCollision
     {
-        get { return m_activated; }
-        set { m_activated = value; }
+        get => m_sofaSphereCollision;
+        set => m_sofaSphereCollision = value;
     }
 
     /// Getter/Setter of the parameter @see m_usePositionOnly  
@@ -90,43 +78,14 @@ public class SofaSphereCollisionObject : SofaBaseObject
             if (value != m_radius)
             {
                 m_radius = value;
-                if (m_impl != null)
-                    m_impl.SetFloatValue("radius", m_radius * m_sofaContext.GetFactorUnityToSofa(1));
+                if (m_sofaSphereCollision.Impl != null)
+                    m_sofaSphereCollision.Impl.SetFloatValue("radius", m_radius * m_sofaContext.GetFactorUnityToSofa(1));
             }
             else
                 m_radius = value;
         }
     }
 
-    /// Getter/Setter of the parameter @see m_stiffness     
-    public float Stiffness
-    {
-        get { return m_stiffness; }
-        set
-        {
-            if (value != m_stiffness)
-            {
-                m_stiffness = value;
-                if (m_impl != null)
-                    m_impl.SetFloatValue("contactStiffness", m_stiffness);
-            }
-            else
-                m_stiffness = value;
-        }
-    }
-
-
-    /// Get the number of spheres
-    public int NbrSpheres
-    {
-        get
-        {
-            if (m_centers != null)
-                return m_centers.Length;
-            else
-                return 0;
-        }
-    }
 
 
     //////////////////////////////////////////////////
@@ -136,12 +95,12 @@ public class SofaSphereCollisionObject : SofaBaseObject
     // Use this for initialization
     void Start()
     {
-        if (m_impl != null)
+        if (m_sofaSphereCollision.Impl != null)
         {
             Init_impl();
 
-            m_impl.SetFloatValue("contactStiffness", m_stiffness);
-            m_impl.SetFloatValue("radius", m_radius * m_sofaContext.GetFactorUnityToSofa(1));
+            m_sofaSphereCollision.Impl.SetFloatValue("contactStiffness", m_sofaSphereCollision.Stiffness);
+            m_sofaSphereCollision.Impl.SetFloatValue("radius", m_radius * m_sofaContext.GetFactorUnityToSofa(1));
         }
         
     }
@@ -150,31 +109,14 @@ public class SofaSphereCollisionObject : SofaBaseObject
     // Update is called once per frame
     void Update()
     {
-        if (parentT != null)
-        {
-            this.transform.position = parentT.transform.position;
-        }
-
-        if (m_activated && m_centers != null)
-        {
-            m_impl.UpdateMesh(this.transform, m_centers, m_sofaContext.transform);
-        }
+        m_sofaSphereCollision.UpdateLoop(transform, m_sofaContext);
     }
 
 
     /// Method to draw debug information like the vertex being grabed
     void OnDrawGizmosSelected()
     {
-        if (m_centers == null || m_sofaContext == null)
-            return;
-
-        Gizmos.color = Color.yellow;
-        //float factor = m_sofaContext.GetFactorSofaToUnity();
-
-        foreach (Vector3 vert in m_centers)
-        {
-            Gizmos.DrawSphere(this.transform.TransformPoint(vert), m_radius/**m_sofaContext.GetFactorSofaToUnity(1)*/);
-        }
+        m_sofaSphereCollision.DrawGizmos(m_radius, transform, m_sofaContext);
     }
 
 
@@ -186,11 +128,11 @@ public class SofaSphereCollisionObject : SofaBaseObject
     protected override void Create_impl()
     {
         SofaLog("####### SofaSphereCollisionObject::Create_impl: " + UniqueNameId);
-        if (m_impl == null)
+        if (m_sofaSphereCollision.Impl == null)
         {
-            m_impl = new SofaCustomMeshAPI(m_sofaContext.GetSimuContext(), m_parentName, m_uniqueNameId);
+            m_sofaSphereCollision.Impl = new SofaCustomMeshAPI(m_sofaContext.GetSimuContext(), m_parentName, m_uniqueNameId);
 
-            if (m_impl == null || !m_impl.m_isCreated)
+            if (m_sofaSphereCollision.Impl == null || !m_sofaSphereCollision.Impl.m_isCreated)
             {
                 SofaLog("SofaSphereCollisionObject:: Object creation failed: " + m_uniqueNameId, 2);
                 this.enabled = false;
@@ -205,11 +147,11 @@ public class SofaSphereCollisionObject : SofaBaseObject
                     SofaCollisionModel _col = child.gameObject.GetComponent<SofaCollisionModel>();
                     if (_mesh)
                     {
-                        m_impl.SetMeshNameID(_mesh.UniqueNameId);                        
+                        m_sofaSphereCollision.Impl.SetMeshNameID(_mesh.UniqueNameId);                        
                     }
                     else if(_col)
                     {
-                        m_impl.SetCollisionNameID(_col.UniqueNameId);
+                        m_sofaSphereCollision.Impl.SetCollisionNameID(_col.UniqueNameId);
                     }                    
                 }
             }
@@ -268,12 +210,12 @@ public class SofaSphereCollisionObject : SofaBaseObject
     {
         if (m_usePositionOnly)
         {
-            m_centers = new Vector3[10];
+            m_sofaSphereCollision.Centers = new Vector3[10];
             for (int i=0; i<10; i++)
-                m_centers[i] = this.transform.InverseTransformPoint(this.transform.localPosition);
+                m_sofaSphereCollision.Centers[i] = this.transform.InverseTransformPoint(this.transform.localPosition);
 
-            if (m_impl != null)
-                m_impl.SetNumberOfVertices(1);
+            if (m_sofaSphereCollision.Impl != null)
+                m_sofaSphereCollision.Impl.SetNumberOfVertices(1);
 
             return;
         }
@@ -336,11 +278,11 @@ public class SofaSphereCollisionObject : SofaBaseObject
         if (m_log)
             Debug.Log("bufferTotal.Count: " + bufferTotal.Count);
 
-        m_centers = new Vector3[bufferTotal.Count];
+        m_sofaSphereCollision.Centers = new Vector3[bufferTotal.Count];
         cpt = 0;
         foreach (Vector3 vert in bufferTotal)
         {
-            m_centers[cpt] = vert;
+            m_sofaSphereCollision.Centers[cpt] = vert;
             cpt++;
         }
 
@@ -351,9 +293,8 @@ public class SofaSphereCollisionObject : SofaBaseObject
         }
 
 
-        if (m_impl != null)
-            m_impl.SetNumberOfVertices(bufferTotal.Count);
+        if (m_sofaSphereCollision.Impl != null)
+            m_sofaSphereCollision.Impl.SetNumberOfVertices(bufferTotal.Count);
     }
 
 }
-
