@@ -14,7 +14,9 @@ public class ScenesTestRunner : MonoBehaviour
     private int m_maxstack = 5000;
 
     // Use EditorBuildSettings Scene
+#if UNITY_EDITOR
     private List<EditorBuildSettingsScene> m_editorBuildSettingsScenes = null;
+#endif
 
     // Internal data to store the number of scene to test
     public int m_nbrTestedScenes = 0;
@@ -31,8 +33,9 @@ public class ScenesTestRunner : MonoBehaviour
         Application.logMessageReceived += HandleLog;
 
         // Create list of scene to add to build settings
+#if UNITY_EDITOR
         m_editorBuildSettingsScenes = new List<EditorBuildSettingsScene>();
-
+#endif
         // 1. Add basic examples
         string folderExamples = Application.dataPath + "/SofaUnity/Scenes/Examples/";
         m_nbrTestedScenes += AddUnitySceneFromFolder(folderExamples);
@@ -73,11 +76,13 @@ public class ScenesTestRunner : MonoBehaviour
             m_nbrTestedScenes += AddUnitySceneFromFolder(folderHaptics);
         }
 
-        EditorBuildSettings.scenes = m_editorBuildSettingsScenes.ToArray();
-
         Debug.Log("############");
+#if UNITY_EDITOR
+        EditorBuildSettings.scenes = m_editorBuildSettingsScenes.ToArray();
         Debug.Log("Nbr scene in EditorBuildSettings: " + EditorBuildSettings.scenes.Length);
+#else
         Debug.Log("Nbr SceneManager.sceneCountInBuildSettings: " + SceneManager.sceneCountInBuildSettings);
+#endif
         Debug.Log("Nbr scene counted: " + m_nbrTestedScenes);
         Debug.Log("############");
     }
@@ -94,7 +99,9 @@ public class ScenesTestRunner : MonoBehaviour
             string relativepath = f.FullName.Substring(Application.dataPath.Length);
             relativepath = "Assets/" + relativepath.Replace("\\", "/");
 
+#if UNITY_EDITOR
             m_editorBuildSettingsScenes.Add(new EditorBuildSettingsScene(relativepath, true));
+#endif
             cptScene++;
         }
 

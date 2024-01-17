@@ -20,8 +20,6 @@ public class BurningManager : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log("TextureInterpolationModel::Awake");
-
 #if UNITY_EDITOR
             MeshFilter mf = gameObject.GetComponent<MeshFilter>();
             m_mesh = mf.sharedMesh;
@@ -49,7 +47,6 @@ public class BurningManager : MonoBehaviour
         if (m_isReady == false)
             return;
 
-        Debug.Log("TextureInterpolationModel::Start m_nbrV: " + m_nbrV);
 #if UNITY_EDITOR
         MeshFilter mf = gameObject.GetComponent<MeshFilter>();
         m_mesh = mf.sharedMesh;
@@ -110,7 +107,6 @@ public class BurningManager : MonoBehaviour
 
     void computeBurnTissus()
     {
-        Debug.Log("computeBurnTissus");
         if (m_isReady == false)
             return;
 
