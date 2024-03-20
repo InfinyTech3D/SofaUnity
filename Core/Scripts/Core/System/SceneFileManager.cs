@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using SofaUnityAPI;
 using System.IO;
 
@@ -100,6 +101,16 @@ namespace SofaUnity
         }
 
 
+        public bool checkFileExists()
+        {
+            return File.Exists(SofaContextAPI.getResourcesPath() + m_filename);
+        }
+
+
+        public void restorePath()
+        {
+            CheckValidFilename(SofaContextAPI.getResourcesPath() + m_filename);
+        }
 
         ////////////////////////////////////////////
         //////  SceneFileManager internal API  /////
@@ -124,8 +135,19 @@ namespace SofaUnity
 
             if (!File.Exists(SofaContextAPI.getResourcesPath() + newFilename)) // try again with relative path
             {
-                return false;
+                // Try in SofaScenes relative path 
+                string scenePath = SceneManager.GetActiveScene().path;
+                string folderPath = Path.GetDirectoryName(scenePath) + "/SofaScenes/";
+                string filename = Path.GetFileName(newFilename);
+
+                newFilename = folderPath + filename;
+                int pos = newFilename.IndexOf("Assets", 0);
+                newFilename = newFilename.Substring(pos + 6); // remove all path until Assets/ to make it relative
+
+                if (!File.Exists(SofaContextAPI.getResourcesPath() + newFilename))
+                    return false;
             }
+
 
             // if ok update m_filename for loading
             m_filename = newFilename;

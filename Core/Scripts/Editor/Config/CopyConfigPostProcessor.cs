@@ -12,7 +12,7 @@ public class CopyConfigPostProcessor
     /// </summary>
     static CopyConfigPostProcessor()
     {
-        string sofaIniFile = Application.dataPath + "/SofaUnity/Plugins/Native/x64/sofa.ini";
+        string sofaIniFile = Application.dataPath + "/SofaUnity/Core/Plugins/Native/x64/sofa.ini";
         using (StreamWriter outputIniFile = new StreamWriter(sofaIniFile))
         {
             string SofaUnityDir = Application.dataPath + "/SofaUnity/scenes/SofaScenes";
@@ -20,7 +20,7 @@ public class CopyConfigPostProcessor
             outputIniFile.WriteLine("SHARE_DIR=C:/projects/sofa-src/share/");
             outputIniFile.WriteLine("EXAMPLES_DIR=" + SofaUnityDir);
             outputIniFile.WriteLine("LICENSE_DIR=" + Application.dataPath + "/SofaUnity/License/");
-            outputIniFile.WriteLine("PYTHON_DIR=" + Application.dataPath + "/SofaUnity/Plugins/Native/x64/");
+            outputIniFile.WriteLine("PYTHON_DIR=" + Application.dataPath + "/SofaUnity/Core/Plugins/Native/x64/");
         }
     }
 
@@ -121,7 +121,7 @@ public class CopyConfigPostProcessor
                     // Copy SOFA ini file
                     //{
                     // Create bin build path
-                    string binBuildPath = rootBuildPath + "/SofaUnity/Plugins/Native/x64/";
+                    string binBuildPath = rootBuildPath + "/SofaUnity/Core/Plugins/Native/x64/";
                     string dataBuildPath = rootBuildPath + "/SofaUnity/scenes/SofaScenes";
                     if (!Directory.Exists(binBuildPath))
                     {

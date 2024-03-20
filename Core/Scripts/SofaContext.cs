@@ -603,7 +603,12 @@ namespace SofaUnity
 
             // load scene file in SOFA
             if (m_sceneFileMgr.SceneFilename.Length != 0)
+            {
+                if (!m_sceneFileMgr.checkFileExists())
+                    m_sceneFileMgr.restorePath();
+
                 m_impl.loadScene(m_sceneFileMgr.AbsoluteFilename());
+            }
 
             // Do not retrieve timestep of gravity in case it has been changed in editor
 

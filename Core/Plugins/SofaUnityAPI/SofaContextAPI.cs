@@ -81,7 +81,7 @@ namespace SofaUnityAPI
             CopyAssetToPersistent();
 
             // load the sofaIni file
-            string pathIni = Application.dataPath + "/SofaUnity/Plugins/Native/x64/sofa.ini";
+            string pathIni = Application.dataPath + "/SofaUnity/Core/Plugins/Native/x64/sofa.ini";
             string sharePath = sofaPhysicsAPI_loadSofaIni(m_native, pathIni);
             
             if (sharePath.Contains("Error"))
@@ -197,7 +197,7 @@ namespace SofaUnityAPI
                     Debug.LogError("SofaContextAPI::loadScene method returns: " + SofaDefines.msg_error[res] + " for scene: " + filename);
             }
             else
-                Debug.LogError("SofaContextAPI::loadScene can't load file: " + filename + "no sofaPhysicsAPI created!");
+                Debug.LogError("SofaContextAPI::loadScene can't load file: " + filename + ". No sofaPhysicsAPI created!");
         }
 
         /// Method to stop the Sofa simulation

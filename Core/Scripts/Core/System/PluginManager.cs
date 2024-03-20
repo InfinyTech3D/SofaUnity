@@ -81,7 +81,7 @@ namespace SofaUnity
         {
             if (m_dllList == null)
             {
-                string dllDirPath = Application.dataPath + "/SofaUnity/Plugins/Native/x64/";
+                string dllDirPath = Application.dataPath + "/SofaUnity/Core/Plugins/Native/x64/";
                 m_dllList = Directory.GetFiles(dllDirPath, "*.dll");
 
                 for (int i = 0; i < m_dllList.Length; i++)
@@ -206,7 +206,7 @@ namespace SofaUnity
         {
             string pluginPath = "";
             if (Application.isEditor)
-                pluginPath = "/SofaUnity/Plugins/Native/x64/";
+                pluginPath = "/SofaUnity/Core/Plugins/Native/x64/";
             else
 #if UNITY_ANDROID
                 pluginPath = "/Plugins/Android/";
