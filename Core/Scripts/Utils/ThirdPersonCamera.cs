@@ -15,7 +15,7 @@ public class ThirdPersonCamera : MonoBehaviour
 	public float m_spanSpeed = 0.001f;
 	public Vector3 m_lookAtStatic;
     public float m_cameraDistance = 100.0f;
-	public float heartBeat = 1.5f;
+	public float heartBeat = 0.0f;
 
 	private float m_currentX = 0.0f;
 	private float m_currentY = 0.0f;
