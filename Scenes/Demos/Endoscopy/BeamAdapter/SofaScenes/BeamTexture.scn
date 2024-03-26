@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<Node name="root" dt="0.02"  gravity="0 0 0"> 
+    <RequiredPlugin name="Sofa.Component.AnimationLoop"/> <!-- Needed to use components [FreeMotionAnimationLoop] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Detection.Algorithm"/> <!-- Needed to use components [BVHNarrowPhase, BruteForceBroadPhase, DefaultPipeline] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Detection.Intersection"/> <!-- Needed to use components [LocalMinDistance] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Geometry"/> <!-- Needed to use components [PointCollisionModel] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Response.Contact"/> <!-- Needed to use components [DefaultContactManager] -->
+    <RequiredPlugin name="Sofa.Component.Constraint.Lagrangian.Correction"/> <!-- Needed to use components [LinearSolverConstraintCorrection] -->
+    <RequiredPlugin name="Sofa.Component.Constraint.Lagrangian.Solver"/> <!-- Needed to use components [LCPConstraintSolver] -->
+    <RequiredPlugin name="Sofa.Component.Constraint.Projective"/> <!-- Needed to use components [FixedConstraint] -->
+    <RequiredPlugin name="Sofa.Component.LinearSolver.Direct"/> <!-- Needed to use components [BTDLinearSolver] -->
+    <RequiredPlugin name="Sofa.Component.ODESolver.Backward"/> <!-- Needed to use components [EulerImplicitSolver] -->
+    <RequiredPlugin name="Sofa.Component.StateContainer"/> <!-- Needed to use components [MechanicalObject] -->
+    <RequiredPlugin name="Sofa.Component.SolidMechanics.Spring"/> <!-- Needed to use components [RestShapeSpringsForceField] -->
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Dynamic"/> <!-- Needed to use components [EdgeSetGeometryAlgorithms, EdgeSetTopologyContainer, EdgeSetTopologyModifier] -->
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Grid"/> <!-- Needed to use components [RegularGridTopology] -->
+    <RequiredPlugin name="Sofa.Component.Visual"/> <!-- Needed to use components [VisualStyle] -->
+    <RequiredPlugin name="BeamAdapter" />
+
+    <VisualStyle displayFlags="showVisualModels showBehaviorModels showCollisionModels hideMappings hideForceFields" />
+    <FreeMotionAnimationLoop />
+    <LCPConstraintSolver mu="0.1" tolerance="1e-10" maxIt="1000" build_lcp="false" />
+    
+    <CollisionPipeline depth="6" verbose="1" draw="0"/>
+    <BruteForceBroadPhase/>
+    <BVHNarrowPhase/>
+    <LocalMinDistance name="localmindistance" alarmDistance="3" contactDistance="1" angleCone="0.2"/>
+    <CollisionResponse name="Response" response="FrictionContactConstraint" />
+
+    <Node  name="NavigationSceneNode">
+        <!-- Shape of the catheter -->
+        <Node name="topoLines_cath">               
+            <RodStraightSection name="StraightSection" youngModulus="20000" radius="1" nbEdgesCollis="30" nbEdgesVisu="196" length="980.0"/>
+            <RodSpireSection name="SpireSection" youngModulus="20000" radius="1" nbEdgesCollis="5" nbEdgesVisu="4" length="20.0" spireDiameter="25" spireHeight="0.0"/>
+        
+            <WireRestShape template="Rigid3d" name="catheterRestShape" wireMaterials="@StraightSection @SpireSection"/>
+            <EdgeSetTopologyContainer name="meshLinesCath"/>
+            <EdgeSetTopologyModifier name="Modifier"/>
+            <EdgeSetGeometryAlgorithms name="GeomAlgo" template="Rigid3d" />
+            <MechanicalObject name="dofTopo1" template="Rigid3d"/>
+        </Node>
+
+        <!-- Interactive catheter and physics on it -->
+        <Node name="InstrumentCombined">
+            <EulerImplicitSolver rayleighStiffness="0.2" rayleighMass="0.1" />
+            <BTDLinearSolver />
+            <RegularGridTopology name="meshLinesCombined" nx="60" ny="1" nz="1"
+                xmax="0.0" xmin="0.0" ymin="0" ymax="0" zmax="0" zmin="0"
+                p0="0 0 0" drawEdges="1"/>
+            <MechanicalObject template="Rigid3d" name="DOFs Container" ry="-90" /> 
+
+            <WireBeamInterpolation name="BeamInterpolation" WireRestShape="@../topoLines_cath/catheterRestShape" radius="0.9"/>
+            <AdaptiveBeamForceFieldAndMass name="BeamForceField"  massDensity="0.00000155" interpolation="@BeamInterpolation"/>
+            
+            
+            <BeamAdapterActionController name="AController" interventionController="@DeployController" writeMode="1" />
+            <InterventionalRadiologyController name="DeployController" template="Rigid3d" instruments="BeamInterpolation"
+                                    startingPos="0 0 0 0 -0.7071068 0 0.7071068" xtip="0 0 0" 
+                                    step="0.5" speed="0.0" 
+                                    listening="1" controlledInstrument="0"/>
+            <FixedConstraint name="FixedConstraint" indices="0" />
+            <RestShapeSpringsForceField name="RestSPForceField" points="@DeployController.indexFirstNode" angularStiffness="1e20" stiffness="1e20"/> 
+            <LinearSolverConstraintCorrection wire_optimization="true" />
+            
+            <Node name="CollisionModel">
+                <EdgeSetTopologyContainer name="collisEdgeSet" />
+                <EdgeSetTopologyModifier name="colliseEdgeModifier" />
+                <MechanicalObject name="CollisionDOFs" />
+                <MultiAdaptiveBeamMapping controller="../DeployController" useCurvAbs="1" name="collisMap" />
+                <LineCollisionModel proximity="0.0" />
+                <PointCollisionModel proximity="0.0" />
+            </Node>
+        </Node>
+    </Node>
+</Node>

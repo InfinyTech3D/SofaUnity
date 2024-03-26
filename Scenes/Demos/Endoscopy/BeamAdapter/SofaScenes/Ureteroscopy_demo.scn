@@ -1,5 +1,5 @@
-<?xml version='1.0'?>
-<Node name='root' dt='0.02'  gravity='0 0 0'> 
+<?xml version="1.0"?>
+<Node name="root" dt="0.02"  gravity="0 0 0"> 
     <RequiredPlugin name="Sofa.Component.AnimationLoop"/> <!-- Needed to use components [FreeMotionAnimationLoop] -->
     <RequiredPlugin name="Sofa.Component.Collision.Detection.Algorithm"/> <!-- Needed to use components [BVHNarrowPhase, BruteForceBroadPhase, DefaultPipeline] -->
     <RequiredPlugin name="Sofa.Component.Collision.Detection.Intersection"/> <!-- Needed to use components [LocalMinDistance] -->
@@ -10,78 +10,74 @@
     <RequiredPlugin name="Sofa.Component.Constraint.Projective"/> <!-- Needed to use components [FixedConstraint] -->
     <RequiredPlugin name="Sofa.Component.IO.Mesh"/> <!-- Needed to use components [MeshOBJLoader] -->
     <RequiredPlugin name="Sofa.Component.LinearSolver.Direct"/> <!-- Needed to use components [BTDLinearSolver] -->
-    <RequiredPlugin name="Sofa.Component.Mapping.Linear"/> <!-- Needed to use components [IdentityMapping] -->
     <RequiredPlugin name="Sofa.Component.ODESolver.Backward"/> <!-- Needed to use components [EulerImplicitSolver] -->
     <RequiredPlugin name="Sofa.Component.SceneUtility"/> <!-- Needed to use components [InfoComponent] -->
+    <RequiredPlugin name="Sofa.Component.SolidMechanics.Spring"/> <!-- Needed to use components [RestShapeSpringsForceField] -->
     <RequiredPlugin name="Sofa.Component.StateContainer"/> <!-- Needed to use components [MechanicalObject] -->
     <RequiredPlugin name="Sofa.Component.Topology.Container.Constant"/> <!-- Needed to use components [MeshTopology] -->
     <RequiredPlugin name="Sofa.Component.Topology.Container.Dynamic"/> <!-- Needed to use components [EdgeSetGeometryAlgorithms, EdgeSetTopologyContainer, EdgeSetTopologyModifier] -->
     <RequiredPlugin name="Sofa.Component.Topology.Container.Grid"/> <!-- Needed to use components [RegularGridTopology] -->
     <RequiredPlugin name="Sofa.Component.Visual"/> <!-- Needed to use components [VisualStyle] -->
-    <RequiredPlugin name="Sofa.GL.Component.Rendering3D"/> <!-- Needed to use components [OglModel] -->
     <RequiredPlugin name="BeamAdapter" />
-
-
-    <VisualStyle displayFlags='showVisualModels showBehaviorModels showCollisionModels hideMappings hideForceFields' />
+  
+    <VisualStyle displayFlags="showVisualModels showBehaviorModels showCollisionModels hideMappings hideForceFields" />
     <FreeMotionAnimationLoop />
-    <LCPConstraintSolver mu='0.1' tolerance='1e-6' maxIt='1000' build_lcp='false' />
+    <LCPConstraintSolver mu="0.1" tolerance="1e-6" maxIt="1000" build_lcp="false" />
     
-    <DefaultPipeline depth='6' verbose='1' draw='0'/>
+    <CollisionPipeline depth="6" verbose="1" />
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
-    <LocalMinDistance name='localmindistance' alarmDistance='3' contactDistance='1' angleCone='0.02'/>
-    <DefaultContactManager name='Response' response='FrictionContactConstraint' />
+    <LocalMinDistance name="localmindistance" alarmDistance="1.0" contactDistance="0.1" angleCone="0.02"/>
+    <CollisionResponse name="Response" response="FrictionContactConstraint" />
 
-    <Node  name="NavigationSceneNode">
+    <Node name="NavigationSceneNode">
         <!-- Shape of the catheter -->
         <Node name="topoLines_cath">
+            <RodStraightSection name="StraightSection" youngModulus="25e3" radius="1" nbEdgesCollis="200" nbEdgesVisu="300" length="240.0"/>
+            <RodSpireSection name="SpireSection" youngModulus="25e3" radius="1" nbEdgesCollis="10" nbEdgesVisu="20" length="2.0" spireDiameter="10" spireHeight="0.0"/>
+            <WireRestShape template="Rigid3d" name="catheterRestShape" wireMaterials="@StraightSection @SpireSection"/>
 
-            <WireRestShape densityOfBeams="200" keyPoints="0.0 1400" length="1400.0" name="catheterRestShape" 
-            numEdges="200" numEdgesCollis="100" printLog="0" spireDiameter="400" spireHeight="0.0" straightLength="1270" 
-            template="Rigid3d" youngModulus="25e5" youngModulusExtremity="25e5" tags="catheter"/>
             <EdgeSetTopologyContainer name="meshLinesCath"/>
             <EdgeSetTopologyModifier name="Modifier"/>
             <EdgeSetGeometryAlgorithms name="GeomAlgo" template="Rigid3d" />
-            <MechanicalObject name="dofTopo1" template="Rigid3d"/>
+            <MechanicalObject name="dofTopo1" template="Rigid3d" />
         </Node>
 
 
         <!-- Interactive catheter and physics on it -->
         <Node name="InstrumentCombined">
-
             <EulerImplicitSolver printLog="false"/>
             <BTDLinearSolver/>
-            <RegularGridTopology name="meshLinesCombined" nx="92" ny="1" nz="1" xmax="1.0" xmin="0.0" ymax="0" ymin="0" zmax="1" zmin="1"/>
-            <MechanicalObject name="DOFs" template="Rigid3d"/>
-            <WireBeamInterpolation WireRestShape="@../topoLines_cath/catheterRestShape" name="InterpolCatheter" printLog="0" radius="0.05" lengthY="2" lengthZ="2" sideLength="2"/>
-            <AdaptiveBeamForceFieldAndMass interpolation="@InterpolCatheter" massDensity="0.0155" name="CatheterForceField" />
-            <InterventionalRadiologyController listening="true" controlledInstrument="0" instruments="InterpolCatheter" name="m_ircontroller" printLog="0" 
-            speed="0.0" startingPos="0 -360 5 0.354 -0.354 0 -0.854" step="0.05" template="Rigid3d" rotationInstrument="0" xtip="0.1"  />
+            <RegularGridTopology name="meshLinesCombined" nx="250" ny="1" nz="1" 
+                xmax="0.0" xmin="0.0" ymax="0" ymin="0" zmax="0" zmin="0"/>
+            <MechanicalObject name="DOFs" template="Rigid3d" translation="3 3 -4"  rotation="60 70 0" />
+            <WireBeamInterpolation WireRestShape="@../topoLines_cath/catheterRestShape" name="InterpolCatheter" radius="0.01" />
+            <AdaptiveBeamForceFieldAndMass interpolation="@InterpolCatheter" massDensity="0.0000155" name="CatheterForceField" />
+            <InterventionalRadiologyController listening="true" controlledInstrument="0" instruments="InterpolCatheter" name="DeployController" 
+                speed="0.0" startingPos="3 3 -4   0.4689105 0.5470623 0 0.6934305" step="0.1" template="Rigid3d"  xtip="0.1"  />
 
-            <LinearSolverConstraintCorrection printLog="0" wire_optimization="true"/>
-            <FixedConstraint name="FixStart1" indices="91" />
-            <FixedConstraint name="FixStart2" indices="91" />
+            <LinearSolverConstraintCorrection wire_optimization="true"/>
+            <FixedConstraint name="FixStart1" indices="0" />
+            <RestShapeSpringsForceField name="RestSPForceField" points="@DeployController.indexFirstNode" angularStiffness="1e8" stiffness="1e8"/> 
 
             <!-- COLLISION -->
-
             <Node name="Collision">
                 <EdgeSetTopologyContainer name="collisEdgeSet"  />
                 <EdgeSetTopologyModifier name="colliseEdgeModifier"/>
                 <MechanicalObject name="CollisionDOFs"  />
-                <MultiAdaptiveBeamMapping ircontroller="../m_ircontroller" name="collisMap" printLog="0" useCurvAbs="1"/> 
+                <MultiAdaptiveBeamMapping ircontroller="../DeployController" name="collisMap" useCurvAbs="1"/> 
                 <PointCollisionModel group="1" name="PointBeamModel" proximity="0.0"/>
+                <LineCollisionModel group="1" proximity="0.0" />
             </Node>
 
             <!-- VISUALIZATION -->
-            
 <!--
             <Node name="VisuCatheter">  
-
                 <MechanicalObject name="QuadsCatheter"/>
                 <QuadSetTopologyContainer name="ContainerCath" />
-                <QuadSetTopologyModifier name="Modifier"/>*
+                <QuadSetTopologyModifier name="Modifier"/>
                 <QuadSetGeometryAlgorithms name="GeomAlgo" template="Vec3d"/>
-                <Edge2QuadTopologicalMapping flipNormals="true" input="@../../topoLines_cath/meshLinesCath" nbPointsOnEachCircle="10" output="@ContainerCath" radius="0.5" tags="catheter" />
+                <Edge2QuadTopologicalMapping flipNormals="true" input="@../../topoLines_cath/meshLinesCath" nbPointsOnEachCircle="10" output="@ContainerCath" radius="0.1" tags="catheter" />
                 <AdaptiveBeamMapping input="@../DOFs" interpolation="@../InterpolCatheter" isMechanical="false" name="VisuMapCath" output="@QuadsCatheter" printLog="1" useCurvAbs="1"/>
 
                 <Node name="VisuOgl">
@@ -89,32 +85,26 @@
                     <OglModel quads="@../ContainerCath.quads" color="0 0.85 0.9" material="texture Ambient 1 0.2 0.2 0.2 0.0 Diffuse 1 1.0 1.0 1.0 1.0 Specular 1 1.0 1.0 1.0 1.0 Emissive 0 0.15 0.05 0.05 0.0 Shininess 1 20" name="VisualCatheter" />
                     <IdentityMapping input="@../QuadsCatheter" output="@VisualCatheter" name="VisuCathIM"/>
                 </Node>
-
             </Node>
             -->
         </Node>
     </Node>
 
 
-
-
     <!-- Collision model of the vessels -->
-    <Node name='Ureter'> 
-        <MeshObjLoader name='meshLoader' scale3d='1 1 1' filename='mesh/Kidney_full/KV1_ureter_reduced.obj' triangulate='true' flipNormals='1'/>
-        <MeshTopology position='@meshLoader.position'  triangles='@meshLoader.triangles'/>
-        <MechanicalObject name='mecaUreter' position='0 0 400' showObject="1"/>   
-        <TriangleCollisionModel simulated='0' moving='0'/>    
-        <LineCollisionModel simulated='0' moving='0'/>
-        <PointCollisionModel simulated='0' moving='0'/>
+    <Node name="Ureter"> 
+        <MeshOBJLoader name="meshLoader" filename="mesh/Urinary_system/Urinary_left.obj" triangulate="true" flipNormals="1"/>
+        <MeshTopology position="@meshLoader.position"  triangles="@meshLoader.triangles"/>
+        <MechanicalObject name="mecaUreter" position="0 0 0" showObject="1"/>   
+        <TriangleCollisionModel simulated="0" moving="0"/>    
+        <LineCollisionModel simulated="0" moving="0"/>
+        <PointCollisionModel simulated="0" moving="0"/>
         
-        <Node name='UreterVisu'> 
-            <OglModel name='OglUreter'  color='1 0 0 0.3'  />
+        <!--<Node name="UreterVisu"> 
+            <OglModel name="OglUreter"  color="1 0 0 0.3"  />
             <IdentityMapping input="@../mecaUreter" output="@OglUreter"/>
         </Node>
-
+-->
     </Node>
-    
-
-    
 
 </Node>
