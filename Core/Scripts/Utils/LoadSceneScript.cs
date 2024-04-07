@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class LoadSceneScript : MonoBehaviour
 {
     public GameObject loadingImage = null;
-    public Text m_Text;    
+    public Text m_Text;
+    public bool m_useAdditive = false;
 
     protected string m_currentSceneName = "";
     protected int m_levelId = -1;
@@ -73,7 +74,9 @@ public class LoadSceneScript : MonoBehaviour
         }
 
         // load new scene
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(level, LoadSceneMode.Additive);
+        LoadSceneMode mode = (m_useAdditive) ? LoadSceneMode.Additive : LoadSceneMode.Single;
+        
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(level, mode);
         //asyncLoad.allowSceneActivation = false;
         cptSecu = 0;
         while (!asyncLoad.isDone && cptSecu < 10000)
@@ -116,7 +119,8 @@ public class LoadSceneScript : MonoBehaviour
         }
 
         // load new scene
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        LoadSceneMode mode = (m_useAdditive) ? LoadSceneMode.Additive : LoadSceneMode.Single;
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, mode);
         //asyncLoad.allowSceneActivation = false;
         cptSecu = 0;
         while (!asyncLoad.isDone && cptSecu < 10000)
