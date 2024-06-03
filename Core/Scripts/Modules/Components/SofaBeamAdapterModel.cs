@@ -100,9 +100,9 @@ namespace SofaUnity
             // update position vectors for camera
             Vector3 sofaScale = m_sofaMesh.m_sofaContext.GetScaleSofaToUnity();
             
-            m_tipPosition[0] = m_vertCenter[0][0]* sofaScale[0];
-            m_tipPosition[1] = m_vertCenter[0][1] * sofaScale[1];
-            m_tipPosition[2] = m_vertCenter[0][2] * sofaScale[2];
+            m_tipPosition[0] = m_vertCenter[0][0] * sofaScale[0] + this.transform.position[0];
+            m_tipPosition[1] = m_vertCenter[0][1] * sofaScale[1] + this.transform.position[1];
+            m_tipPosition[2] = m_vertCenter[0][2] * sofaScale[2] + this.transform.position[2];
 
             // TODO: to be removed by rigid handling
             m_tipDirection = Vector3.forward;
@@ -110,10 +110,9 @@ namespace SofaUnity
             if (tmpDirection.magnitude > 0.001f)
                 m_tipDirection = tmpDirection;
     
-            m_tipDirection[0] *= sofaScale[0];
-            m_tipDirection[1] *= sofaScale[1];
-            m_tipDirection[2] *= sofaScale[2];
-
+            m_tipDirection[0] = m_tipDirection[0] * sofaScale[0] + this.transform.rotation.eulerAngles[0];
+            m_tipDirection[1] = m_tipDirection[1] * sofaScale[1] + this.transform.rotation.eulerAngles[1];
+            m_tipDirection[2] = m_tipDirection[2] * sofaScale[2] + this.transform.rotation.eulerAngles[2];
 
             // update borders first
             int idLast = m_vertices.Length - 1;
