@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class SofaPlayer : MonoBehaviour
-{  
+{
     public Toggle m_playButton;
     public Toggle m_stopButton;
     public Toggle m_restartButton;
@@ -54,7 +54,19 @@ public class SofaPlayer : MonoBehaviour
         }
 
         m_isReady = true;
+
+        if (m_sofaContext.IsSofaUpdating)
+        {
+            m_playButton.isOn = true;
+            m_stopButton.isOn = false;
+        }
+        else
+        {
+            m_playButton.isOn = false;
+            m_stopButton.isOn = true;
+        }
     }
+
 
     // Update is called once per frame
     void LateUpdate()
@@ -76,7 +88,7 @@ public class SofaPlayer : MonoBehaviour
             // update all FPS info
             if (t_unityFPS)
             {
-                t_unityFPS.text = "<b>FPS: </b>" + fps;
+                t_unityFPS.text = "<b>Unity FPS: </b>" + fps;
             }
 
             if (t_sofaFPS)
@@ -132,5 +144,21 @@ public class SofaPlayer : MonoBehaviour
     {
         Debug.Log("restartSofaSimulation not implemented yet!");
         //SceneManager.LoadScene(0);
+    }
+
+
+    public void DisplayFPS(Toggle _toggle)
+    {
+       
+        if (_toggle.isOn)
+        {
+            t_unityFPS.gameObject.SetActive(true);
+            t_sofaFPS.gameObject.SetActive(true);
+        }
+        else
+        {
+            t_unityFPS.gameObject.SetActive(false);
+            t_sofaFPS.gameObject.SetActive(false);
+        }
     }
 }
