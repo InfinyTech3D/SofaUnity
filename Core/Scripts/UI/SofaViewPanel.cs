@@ -67,7 +67,6 @@ public class SofaViewPanel : MonoBehaviour
             SofaVisualModel objV = child.GetComponent<SofaVisualModel>();
             if (objV != null)
             {
-                Debug.Log("Add " + objV.DisplayName);
                 m_visualModels.Add(objV);
                 m_nbrVModel++;
                 m_nbrVVertices += objV.NbVertices();
@@ -99,7 +98,6 @@ public class SofaViewPanel : MonoBehaviour
             SofaVisualModel objV = child.GetComponent<SofaVisualModel>();
             if (objV != null)
             {
-                Debug.Log("Add " + objV.DisplayName);
                 m_visualModels.Add(objV);
                 m_nbrVModel++;
                 m_nbrVVertices += objV.NbVertices();
@@ -135,9 +133,6 @@ public class SofaViewPanel : MonoBehaviour
         if (!m_isReady)
             return;
 
-        Debug.Log("DisplayVisualModel: " + _toggle.isOn);
-        Debug.Log("DisplayVisualModel: " + m_visualModels.Count);
-
         foreach (SofaVisualModel visuModel in m_visualModels)
         {
             visuModel.gameObject.SetActive(_toggle.isOn);
@@ -149,7 +144,6 @@ public class SofaViewPanel : MonoBehaviour
         if (!m_isReady)
             return;
 
-        Debug.Log("DisplayForceField: " + _toggle.isOn);
         foreach (SofaFEMForceField fem in m_forceFields)
         {
             fem.DisplayForcefield(_toggle.isOn);
@@ -161,15 +155,13 @@ public class SofaViewPanel : MonoBehaviour
         if (!m_isReady)
             return;
 
-        Debug.Log("DisplaySpringsForceField: " + _toggle.isOn);
+        Debug.Log("DisplaySpringsForceField Not implemented yet: " + _toggle.isOn);
     }
 
     public void DisplayCollisionModels(Toggle _toggle)
     {
         if (!m_isReady)
             return;
-
-        Debug.Log("DisplayCollisionModels: " + _toggle.isOn);
 
         foreach (SofaCollisionModel col in m_collisionModels)
         {

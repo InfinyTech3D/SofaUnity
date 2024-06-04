@@ -21,6 +21,8 @@ public class SofaPlayer : MonoBehaviour
 
 
     public Toggle m_displayFPS = null;
+    public GameObject m_viewsPanel = null;
+    public GameObject m_debugConsole = null;
 
     protected bool m_isReady = false;
     protected SofaContext m_sofaContext = null;
@@ -128,14 +130,12 @@ public class SofaPlayer : MonoBehaviour
 
     public void startSofaSimulation()
     {
-        Debug.Log("startSofaSimulation");
         if (m_sofaContext != null)
             m_sofaContext.IsSofaUpdating = true;
     }
 
     public void stopSofaSimulation()
     {
-        Debug.Log("stopSofaSimulation");
         if (m_sofaContext != null)
             m_sofaContext.IsSofaUpdating = false;
     }
@@ -149,16 +149,18 @@ public class SofaPlayer : MonoBehaviour
 
     public void DisplayFPS(Toggle _toggle)
     {
-       
-        if (_toggle.isOn)
-        {
-            t_unityFPS.gameObject.SetActive(true);
-            t_sofaFPS.gameObject.SetActive(true);
-        }
-        else
-        {
-            t_unityFPS.gameObject.SetActive(false);
-            t_sofaFPS.gameObject.SetActive(false);
-        }
+        t_unityFPS.gameObject.SetActive(_toggle.isOn);
+        t_sofaFPS.gameObject.SetActive(_toggle.isOn);
+    }
+
+    public void DisplayViews(Toggle _toggle)
+    {
+        m_viewsPanel.SetActive(_toggle.isOn);
+    }
+
+
+    public void DisplayConsole(Toggle _toggle)
+    {
+        m_debugConsole.SetActive(_toggle.isOn);
     }
 }
