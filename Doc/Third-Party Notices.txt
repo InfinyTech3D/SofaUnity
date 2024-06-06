@@ -1,9 +1,15 @@
-One shader from UCLA Wireframe Shader asset is included:
-    SofaUnity/Core/Resources/Shaders/UCLA GameLab Wireframe Functions.cginc
-        From: https://assetstore.unity.com/packages/vfx/shaders/directx-11/ucla-wireframe-shader-21897
-        License agreement: Standard Unity Asset Store EULA
+All files under SofaUnity/Core/Plugins/Native/x64/ 
+are Dynamic Link Library to use the SOFA framework and need to be downloaded from the Github release page of the project:
+https://github.com/InfinyTech3D/SofaUnity/releases/tag/SofaUnity_v23.12
 
-All files under SofaUnity/Core/Plugins/Native/x64/ are Dynamic Link Library to use the SOFA framework
+See the section "How to install" in the documentation for more details.
+
+
+
+---------------------------------------------------------------------------
+
+Below is the list of dll dependencies which need to be included from the package available on Github project page cited above.
+
     Core of SOFA Dynamic Link Library:
         From: https://github.com/sofa-framework/sofa
         License: LGPL-2.1 license
