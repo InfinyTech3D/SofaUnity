@@ -14,15 +14,16 @@
     <RequiredPlugin name="Sofa.Component.Topology.Container.Constant"/> <!-- Needed to use components [MeshTopology] -->  
     <RequiredPlugin name="Sofa.Component.Topology.Container.Grid"/> <!-- Needed to use components [RegularGridTopology] -->  
     <RequiredPlugin name="Sofa.GL.Component.Rendering3D"/> <!-- Needed to use components [OglModel] -->  
-
+    <RequiredPlugin name="InfinyToolkit"/>
+    
     <DefaultAnimationLoop />
     <DefaultVisualManagerLoop />
     
-    <DefaultPipeline verbose="0" depth="10" draw="0" />
+    <CollisionPipeline verbose="0" depth="10" draw="0" />
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
     <MinProximityIntersection name="Proximity" alarmDistance="0.75" contactDistance="0.5" />
-    <DefaultContactManager name="Response" response="PenalityContactForceField" />
+    <CollisionResponse name="Response" response="PenalityContactForceField" />
     <CollisionDetectionDisplay name="CollisionDetectionDisplay"/>
     
     <Node name="Torus">
@@ -30,15 +31,15 @@
         <CGLinearSolver iterations="25" name="linear solver" tolerance="1.0e-9" threshold="1.0e-9" />
         <MechanicalObject dx="0" dy="20" dz="29" rz="64" />
         <UniformMass totalMass="10" />
-        <RegularGridTopology nx="6" ny="5" nz="2" xmin="-7.5" xmax="7.5" ymin="-6" ymax="6" zmin="-1.75" zmax="1.75" />
-        <RegularGridSpringForceField name="Springs" stiffness="350" damping="1" />
+        <RegularGridTopology nx="8" ny="6" nz="3" xmin="-7.5" xmax="7.5" ymin="-6" ymax="6" zmin="-1.75" zmax="1.75" />
+        <TetrahedronFEMForceField name="FEM" youngModulus="200" poissonRatio="0.3" method="large" computeVonMisesStress="1"/>
         <Node name="VisuTorus" tags="Visual">
-            <MeshObjLoader name="meshLoader_0" filename="./mesh/torus2_scale3.obj" handleSeams="1" />
+            <MeshOBJLoader name="meshLoader_0" filename="./mesh/torus2_scale3.obj" handleSeams="1" />
             <OglModel name="VisualTorus" src="@meshLoader_0" color="blue" />
             <BarycentricMapping input="@.." output="@VisualTorus" />
         </Node>
         <Node name="SurfTorus">
-            <MeshObjLoader name="loader" filename="./mesh/torus2_scale3.obj" />
+            <MeshOBJLoader name="loader" filename="./mesh/torus2_scale3.obj" />
             <MeshTopology src="@loader" />
             <MechanicalObject src="@loader" />
             <TriangleCollisionModel />
@@ -53,15 +54,15 @@
         <CGLinearSolver iterations="25" name="linear solver" tolerance="1.0e-9" threshold="1.0e-9" />
         <MechanicalObject dx="20" dy="20" dz="29" rx="33" />
         <UniformMass totalMass="10" />
-        <RegularGridTopology nx="6" ny="5" nz="3" xmin="-11" xmax="11" ymin="-7" ymax="7" zmin="-4" zmax="4" />
-        <RegularGridSpringForceField name="Springs" stiffness="350" damping="1" />
+        <RegularGridTopology nx="8" ny="6" nz="4" xmin="-11" xmax="11" ymin="-7" ymax="7" zmin="-4" zmax="4" />
+        <TetrahedronFEMForceField name="FEM" youngModulus="200" poissonRatio="0.3" method="large" computeVonMisesStress="1"/>
         <Node name="VisuDragon" tags="Visual">
-            <MeshObjLoader name="meshLoader_1" filename="./mesh/dragon.obj" handleSeams="1" />
+            <MeshOBJLoader name="meshLoader_1" filename="./mesh/dragon.obj" handleSeams="1" />
             <OglModel name="VisualDragon" src="@meshLoader_1" color="red" />
             <BarycentricMapping input="@.." output="@VisualDragon" />
         </Node>
         <Node name="SurfDragon">
-            <MeshObjLoader name="loader" filename="./mesh/dragon.obj" />
+            <MeshOBJLoader name="loader" filename="./mesh/dragon.obj" />
             <MeshTopology src="@loader" />
             <MechanicalObject src="@loader" />
             <TriangleCollisionModel />
@@ -76,30 +77,30 @@
         <CGLinearSolver iterations="25" name="linear solver" tolerance="1.0e-9" threshold="1.0e-9" />
         <MechanicalObject dx="-20" dy="20" dz="29" ry="10" />
         <UniformMass totalMass="10" />
-        <RegularGridTopology nx="6" ny="3" nz="5" xmin="-10" xmax="8" ymin="-3" ymax="2.5" zmin="-7" zmax="7" />
-        <RegularGridSpringForceField name="Springs" stiffness="350" damping="1" />
+        <RegularGridTopology nx="9" ny="5" nz="8" xmin="-10" xmax="8" ymin="-3" ymax="2.5" zmin="-7" zmax="7" />
+        <TetrahedronFEMForceField name="FEM" youngModulus="200" poissonRatio="0.3" method="large" computeVonMisesStress="1"/>
 		<Node name="VisuBodyFrog" tags="Visual">
-            <MeshObjLoader name="loader_VisuBody" filename="./mesh/frog_body.obj" />
+            <MeshOBJLoader name="loader_VisuBody" filename="./mesh/frog_body.obj" />
 			<OglModel name="VisualBody" src="@loader_VisuBody" normals="0" color="0.17 0.70 0.05" />
 			<BarycentricMapping input="@.." output="@VisualBody" />
 		</Node>
 		<Node name="VisuEyesFrog" tags="Visual">
-            <MeshObjLoader name="loader_VisuEyes" filename="./mesh/frog_eyes.obj" />
+            <MeshOBJLoader name="loader_VisuEyes" filename="./mesh/frog_eyes.obj" />
 			<OglModel name="VisualEyes" src="@loader_VisuEyes" normals="0" color="0.04 0.19 0.52" />
 			<BarycentricMapping input="@.." output="@VisualEyes" />
 		</Node>
 		<Node name="VisuEyebrowsFrog" tags="Visual">
-            <MeshObjLoader name="loader_VisuEyebrows" filename="./mesh/frog_eyebrows.obj" />
+            <MeshOBJLoader name="loader_VisuEyebrows" filename="./mesh/frog_eyebrows.obj" />
 			<OglModel name="VisualEyebrows" src="@loader_VisuEyebrows" normals="0" color="0.44 0.43 0.00" />
 			<BarycentricMapping input="@.." output="@VisualEyebrows" />
 		</Node>
 		<Node name="VisuLipsFrog" tags="Visual">
-            <MeshObjLoader name="loader_VisuLips" filename="./mesh/frog_lips.obj" />
+            <MeshOBJLoader name="loader_VisuLips" filename="./mesh/frog_lips.obj" />
 			<OglModel name="VisualLips" src="@loader_VisuLips" normals="0" color="0.47 0.25 0.03" />
 			<BarycentricMapping input="@.." output="@VisualLips" />
 		</Node>
         <Node name="SurfFrog">
-            <MeshObjLoader name="loader" filename="./mesh/frog-push25.obj" />
+            <MeshOBJLoader name="loader" filename="./mesh/frog-push25.obj" />
             <MeshTopology src="@loader" />
             <MechanicalObject src="@loader" />
             <TriangleCollisionModel />
@@ -110,7 +111,7 @@
     </Node>
     
     <Node name="Floor">
-        <MeshObjLoader name="loader" filename="./mesh/floor2b.obj" />
+        <MeshOBJLoader name="loader" filename="./mesh/floor2b.obj" />
         <MeshTopology src="@loader" />
         <MechanicalObject src="@loader" dy="-10.25" scale="0.5" />
         <TriangleCollisionModel simulated="0" moving="0" />
