@@ -12,8 +12,8 @@ public class SofaBeamAdapterModelEditor : Editor
     ///  Add SofaBeamAdapterModel creation to the SofaUnity Menu
     /// </summary>
     /// <returns>Pointer to the SofaBeamAdapterModel GameObject</returns>
-    [MenuItem("SofaUnity/SofaComponent/SofaBeamAdapterModel")]
-    [MenuItem("GameObject/Create Other/SofaComponent/SofaBeamAdapterModel")]
+    [MenuItem("Tools/SofaUnity/SofaComponent/SofaBeamAdapterModel")]
+    [MenuItem("GameObject/Tools/SofaUnity/SofaComponent/SofaBeamAdapterModel")]
     public static GameObject CreateNew()
     {
         if (Selection.activeTransform != null)
