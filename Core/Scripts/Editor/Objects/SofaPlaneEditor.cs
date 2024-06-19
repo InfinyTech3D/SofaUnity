@@ -16,8 +16,8 @@ public class SofaPlaneEditor : SofaGridEditor
     ///  Add SofaPlane Object creation to the SofaUnity Menu
     /// </summary>
     /// <returns>Pointer to the SofaPlane GameObject</returns>
-    [MenuItem("SofaUnity/PrimitiveObject/SofaPlane")]
-    [MenuItem("GameObject/Create Other/SofaPrimitiveObject/SofaPlane")]
+    [MenuItem("Tools/SofaUnity/PrimitiveObject/SofaPlane")]
+    [MenuItem("GameObject/Tools/SofaUnity/SofaPrimitiveObject/SofaPlane")]
     new public static GameObject CreateNew()
     {
         SofaDAGNode parentDagN = GetDAGNodeSelected();
@@ -63,8 +63,8 @@ public class SofaRigidPlaneEditor : SofaGridEditor
     ///  Add SofaRigidPlane Object creation to the SofaUnity Menu
     /// </summary>
     /// <returns>Pointer to the SofaRigidPlane GameObject</returns>
-    [MenuItem("SofaUnity/PrimitiveObject/SofaRigidPlane")]
-    [MenuItem("GameObject/Create Other/SofaPrimitiveObject/SofaRigidPlane")]
+    [MenuItem("Tools/SofaUnity/PrimitiveObject/SofaRigidPlane")]
+    [MenuItem("GameObject/Tools/SofaUnity/SofaPrimitiveObject/SofaRigidPlane")]
     new public static GameObject CreateNew()
     {
         SofaDAGNode parentDagN = GetDAGNodeSelected();

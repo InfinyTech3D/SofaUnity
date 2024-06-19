@@ -6,7 +6,7 @@ using SofaUnity;
 
 public class SofaSceneFixer : Editor
 {
-    [MenuItem("SofaUnity/Utils/FixSceneDAGNodeNames")]
+    [MenuItem("Tools/SofaUnity/Utils/FixSceneDAGNodeNames")]
     static void DoFixSofaScene()
     {
         Debug.Log("Performing: FixSceneDAGNodeNames");
