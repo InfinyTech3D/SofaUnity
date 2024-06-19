@@ -36,6 +36,9 @@ namespace SofaUnity
 
         /// public method to get vector size
         public int GetSize() { return m_vecSize; }
+
+        /// public method to request vector size update
+        public virtual void UpdateSize() { }
     }
 
 
@@ -53,6 +56,12 @@ namespace SofaUnity
         /// Default constructor taking the component owner, the data name and the vector size. Will set the type internally
         public SofaDataVectorInt(SofaBaseComponent owner, string dataName, string dataType)
             : base(owner, dataName, dataType, "int")
+        {
+            m_vecSize = m_owner.m_impl.GetVectoriSize(m_dataName);
+        }
+
+        /// public method to request vector<int> size update
+        public override void UpdateSize() 
         {
             m_vecSize = m_owner.m_impl.GetVectoriSize(m_dataName);
         }
@@ -97,6 +106,12 @@ namespace SofaUnity
             m_vecSize = m_owner.m_impl.GetVectorfSize(m_dataName);
         }
 
+        /// public method to request vector<float> size update
+        public override void UpdateSize()
+        {
+            m_vecSize = m_owner.m_impl.GetVectorfSize(m_dataName);
+        }
+
         /// <summary>
         /// Method to get values from SOFA
         /// </summary>
@@ -133,6 +148,12 @@ namespace SofaUnity
         /// Default constructor taking the component owner, the data name and the vector size. Will set the type internally
         public SofaDataVectorDouble(SofaBaseComponent owner, string dataName, string dataType)
             : base(owner, dataName, dataType, "double")
+        {
+            m_vecSize = m_owner.m_impl.GetVectordSize(m_dataName);
+        }
+
+        /// public method to request vector<double> size update
+        public override void UpdateSize()
         {
             m_vecSize = m_owner.m_impl.GetVectordSize(m_dataName);
         }
@@ -179,6 +200,12 @@ namespace SofaUnity
             : base(owner, dataName, dataType, "Vec2")
         {
             m_isDouble = isDouble;
+            m_vecSize = m_owner.m_impl.GetVecofVec2Size(m_dataName, m_isDouble);
+        }
+
+        /// public method to request vector<Vec2> size update
+        public override void UpdateSize()
+        {
             m_vecSize = m_owner.m_impl.GetVecofVec2Size(m_dataName, m_isDouble);
         }
 
@@ -246,6 +273,12 @@ namespace SofaUnity
         {
             m_isDouble = isDouble;
             m_vecSize = m_owner.m_impl.GetVecofVec3Size(m_dataName, m_isDouble);            
+        }
+
+        /// public method to request vector<Vec3> size update
+        public override void UpdateSize()
+        {
+            m_vecSize = m_owner.m_impl.GetVecofVec3Size(m_dataName, m_isDouble);
         }
 
         /// <summary>
