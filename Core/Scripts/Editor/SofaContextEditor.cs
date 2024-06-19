@@ -14,8 +14,8 @@ public class SofaContextEditor : Editor
     ///  Add SofaContext Object creation to the SofaUnity Menu
     /// </summary>
     /// <returns>Pointer to the SofaContext GameObject</returns>
-    [MenuItem("SofaUnity/SofaContext")]
-    [MenuItem("GameObject/Create Other/SofaContext")]  //right click menu
+    [MenuItem("Tools/SofaUnity/SofaContext")]
+    [MenuItem("GameObject/Tools/SofaUnity/SofaContext")]  //right click menu
     public static GameObject CreateNew()
     {
         int cpt = 0;

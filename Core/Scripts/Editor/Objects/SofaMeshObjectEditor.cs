@@ -51,8 +51,8 @@ public class SofaMeshObjectEditor : Editor
     ///  Add SofaMeshObject Object creation to the SofaUnity Menu
     /// </summary>
     /// <returns>Pointer to the SofaMeshObject GameObject</returns>
-    [MenuItem("SofaUnity/SofaObject/SofaMeshObject")]
-    [MenuItem("GameObject/Create Other/SofaObject/SofaMeshObject")]
+    [MenuItem("Tools/SofaUnity/SofaObject/SofaMeshObject")]
+    [MenuItem("GameObject/Tools/SofaUnity/SofaObject/SofaMeshObject")]
     public static GameObject CreateNew()
     {
         GameObject go = new GameObject("SofaMeshObject");

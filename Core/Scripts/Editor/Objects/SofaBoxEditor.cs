@@ -15,8 +15,8 @@ public class SofaBoxEditor : SofaGridEditor
     ///  Add SofaBox Object creation to the SofaUnity Menu
     /// </summary>
     /// <returns>Pointer to the SofaBox GameObject</returns>
-    [MenuItem("SofaUnity/PrimitiveObject/SofaBox")]
-    [MenuItem("GameObject/Create Other/SofaPrimitiveObject/SofaBox")]
+    [MenuItem("Tools/SofaUnity/PrimitiveObject/SofaBox")]
+    [MenuItem("GameObject/Tools/SofaUnity/SofaPrimitiveObject/SofaBox")]
     new public static GameObject CreateNew()
     {
         SofaDAGNode parentDagN = GetDAGNodeSelected();
@@ -64,8 +64,8 @@ public class SofaRigidBoxEditor : SofaGridEditor
     ///  Add SofaRigidBox Object creation to the SofaUnity Menu
     /// </summary>
     /// <returns>Pointer to the SofaRigidBox GameObject</returns>
-    [MenuItem("SofaUnity/PrimitiveObject/SofaRigidBox")]
-    [MenuItem("GameObject/Create Other/SofaPrimitiveObject/SofaRigidBox")]
+    [MenuItem("Tools/SofaUnity/PrimitiveObject/SofaRigidBox")]
+    [MenuItem("GameObject/Tools/SofaUnity/SofaPrimitiveObject/SofaRigidBox")]
     new public static GameObject CreateNew()
     {
         SofaDAGNode parentDagN = GetDAGNodeSelected();

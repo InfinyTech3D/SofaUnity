@@ -12,8 +12,8 @@ using SofaUnity;
 [CustomEditor(typeof(SofaCollisionPipeline), true)]
 public class SofaCollisionPipelineEditor : Editor
 {
-    [MenuItem("SofaUnity/SofaCollisionPipeline")]
-    [MenuItem("GameObject/Create Other/SofaCollisionPipeline")]
+    [MenuItem("Tools/SofaUnity/SofaCollisionPipeline")]
+    [MenuItem("GameObject/Tools/SofaUnity/SofaCollisionPipeline")]
     public static void CreateNew()
     {
         if (Selection.activeTransform == null)

@@ -14,8 +14,8 @@ public class SofaParticlesModelEditor : Editor
     ///  Add SofaParticlesModel creation to the SofaUnity Menu
     /// </summary>
     /// <returns>Pointer to the SofaParticlesModel GameObject</returns>
-    [MenuItem("SofaUnity/SofaComponent/SofaParticlesModel")]
-    [MenuItem("GameObject/Create Other/SofaComponent/SofaParticlesModel")]
+    [MenuItem("Tools/SofaUnity/SofaComponent/SofaParticlesModel")]
+    [MenuItem("GameObject/Tools/SofaUnity/SofaComponent/SofaParticlesModel")]
     public static GameObject CreateNew()
     {
         if (Selection.activeTransform != null)

@@ -10,8 +10,8 @@ using System.Collections.Generic;
 public class SofaDAGNodeEditor : Editor
 {
 
-    [MenuItem("SofaUnity/SofaDAGNode")]
-    [MenuItem("GameObject/Create Other/SofaDAGNode")]
+    [MenuItem("Tools/SofaUnity/SofaDAGNode")]
+    [MenuItem("GameObject/Tools/SofaUnity/SofaDAGNode")]
     public static void CreateNew()
     {
         if (Selection.activeTransform != null)

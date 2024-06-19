@@ -15,8 +15,8 @@ public class SofaSphereCollisionObjectEditor : SofaMeshObjectEditor
     ///  Add SofaSphereCollisionModel creation to the SofaUnity Menu
     /// </summary>
     /// <returns>Pointer to the SofaSphereCollisionModel GameObject</returns>
-    [MenuItem("SofaUnity/SofaObject/SofaSphereCollisionObject")]
-    [MenuItem("GameObject/Create Other/SofaObject/SofaSphereCollisionObject")]
+    [MenuItem("Tools/SofaUnity/SofaObject/SofaSphereCollisionObject")]
+    [MenuItem("GameObject/Tools/SofaUnity/SofaObject/SofaSphereCollisionObject")]
     new public static GameObject CreateNew()
     {
         if (Selection.activeTransform == null)
