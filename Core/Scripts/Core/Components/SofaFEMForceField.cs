@@ -148,7 +148,7 @@ namespace SofaUnity
         //////        FEM Von Mises API        /////
         ////////////////////////////////////////////
 
-        SofaDataVectorDouble m_data_vonMisesPerNode = null;
+        SofaDataVectorDouble d_vonMisesPerNode = null;
 
         protected float[] m_vonMisesValues = null;
 
@@ -162,17 +162,17 @@ namespace SofaUnity
         protected void computeVonMisesDisplay()
         {
             // Init Data to track von mises values
-            if (m_data_vonMisesPerNode == null)
+            if (d_vonMisesPerNode == null)
             {
-                m_data_vonMisesPerNode = (SofaDataVectorDouble)this.m_dataArchiver.GetVectorData("vonMisesPerNode");
+                d_vonMisesPerNode = (SofaDataVectorDouble)this.m_dataArchiver.GetVectorData("vonMisesPerNode");
             }
 
             // if no Data vonMises, exit
-            if (m_data_vonMisesPerNode == null)
+            if (d_vonMisesPerNode == null)
                 return;
 
             // init buffer to store vonMises values
-            int nbrV = m_data_vonMisesPerNode.GetSize();
+            int nbrV = d_vonMisesPerNode.GetSize();
             if (m_vonMisesValues == null)
                 m_vonMisesValues = new float[nbrV];
 
@@ -186,22 +186,22 @@ namespace SofaUnity
             if (!m_vonMisesInit)
                 return;
 
-            int nbrV = m_data_vonMisesPerNode.GetSize();
-            int res = m_data_vonMisesPerNode.GetValues(m_vonMisesValues);
+            int nbrV = d_vonMisesPerNode.GetSize();
+            int res = d_vonMisesPerNode.GetValues(m_vonMisesValues);
             if (res == -1)
                 return;
 
-                                // Store pointer to this MeshFilter
-                    if (m_mesh == null)
-                    {
+            // Store pointer to this MeshFilter
+            if (m_mesh == null)
+            {
 #if UNITY_EDITOR
-                        MeshFilter mf = gameObject.GetComponent<MeshFilter>();
-                        m_mesh = mf.sharedMesh;
+                MeshFilter mf = gameObject.GetComponent<MeshFilter>();
+                m_mesh = mf.sharedMesh;
 #else
-                        //do this in play mode
-                        m_mesh = GetComponent<MeshFilter>().mesh;
+                //do this in play mode
+                m_mesh = GetComponent<MeshFilter>().mesh;
 #endif
-                    }
+            }
 
             // init buffer to store computed UV 
             int nbrTV = m_mesh.vertices.Length;
