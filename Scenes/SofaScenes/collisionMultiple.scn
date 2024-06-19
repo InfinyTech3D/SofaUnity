@@ -23,7 +23,8 @@
     <BVHNarrowPhase/>
     <MinProximityIntersection name="Proximity" alarmDistance="0.75" contactDistance="0.5" />
     <DefaultContactManager name="Response" response="PenalityContactForceField" />
-
+    <CollisionDetectionDisplay name="CollisionDetectionDisplay"/>
+    
     <Node name="Torus">
         <EulerImplicitSolver name="cg_odesolver" printLog="false" />
         <CGLinearSolver iterations="25" name="linear solver" tolerance="1.0e-9" threshold="1.0e-9" />
