@@ -840,7 +840,7 @@ public class SofaBaseMeshAPI : SofaBaseAPI
 
 
     /// Method to set new vertices position to this mesh
-    public void SetVertices(Vector3[] vertices)
+    public void SetVertices(Vector3[] vertices, Transform sofaTransform)
     {
         if (!m_isReady)
             return;
@@ -850,9 +850,10 @@ public class SofaBaseMeshAPI : SofaBaseAPI
 
         for (int i = 0; i < nbrV; i++)
         {
-            val[i * 3] = vertices[i].x;
-            val[i * 3 + 1] = vertices[i].y;
-            val[i * 3 + 2] = vertices[i].z;
+            Vector3 vec = sofaTransform.InverseTransformPoint(vertices[i]);
+            val[i * 3] = vec.x;
+            val[i * 3 + 1] = vec.y;
+            val[i * 3 + 2] = vec.z;
         }
 
         int resUpdate = sofaMeshAPI_setVertices(m_simu, m_name, val);

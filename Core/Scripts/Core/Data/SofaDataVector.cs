@@ -253,17 +253,28 @@ namespace SofaUnity
         /// </summary>
         /// <param name="values">Array of Vector3 to store SOFA values</param>
         /// <returns>int code from SOFA communication</returns>
-        public int GetValues(Vector3[] values)
+        public int GetValues(Vector3[] values, bool toUnityWorld = false)
         {
             float[] rawValues = new float[m_vecSize * 3];
-
             int res = m_owner.m_impl.GetVecofVec3Value(m_dataName, m_vecSize, rawValues, m_isDouble);
-            for (int i = 0; i < m_vecSize; ++i)
+            if (res == -1)
+                return res;
+            
+            if (toUnityWorld)
             {
-                values[i].x = rawValues[i * 3];
-                values[i].y = rawValues[i * 3 + 1];
-                values[i].z = rawValues[i * 3 + 2];
+                Transform sofaTransform = m_owner.m_sofaContext.transform;
+                for (int i = 0; i < m_vecSize; ++i)
+                {
+                    values[i] = sofaTransform.TransformPoint(new Vector3(rawValues[i * 3], rawValues[i * 3 + 1], rawValues[i * 3 + 2]));
+                }
             }
+            else
+            {
+                for (int i = 0; i < m_vecSize; ++i)
+                {
+                    values[i] = new Vector3(rawValues[i * 3], rawValues[i * 3 + 1], rawValues[i * 3 + 2]);
+                }
+            }            
 
             return res;
         }
