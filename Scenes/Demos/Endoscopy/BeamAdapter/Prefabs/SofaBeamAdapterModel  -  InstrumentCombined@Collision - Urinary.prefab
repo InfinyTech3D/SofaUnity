@@ -44,7 +44,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.98039216, g: 0.92941177, b: 0.5137255, a: 1}
-  m_Intensity: 5
+  m_Intensity: 1
   m_Range: 8
   m_SpotAngle: 80
   m_InnerSpotAngle: 8
@@ -119,7 +119,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6262925316792995382}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: -1.110223e-15, z: -4}
+  m_LocalPosition: {x: 3, y: 3, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -152,7 +152,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 60
+  field of view: 100
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -218,6 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_sofaMesh: {fileID: 0}
+  isRigidMesh: 0
   m_beamDiscretisation: 4
   m_beamRadius: 0.1
   m_childCameraScript: {fileID: 6262925316792995382}

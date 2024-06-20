@@ -100,21 +100,16 @@ namespace SofaUnity
             // update position vectors for camera
             Vector3 sofaScale = m_sofaMesh.m_sofaContext.GetScaleSofaToUnity();
             
-            m_tipPosition[0] = m_vertCenter[nbrV - 1][0]* sofaScale[0];
-            m_tipPosition[1] = m_vertCenter[nbrV - 1][1] * sofaScale[1];
-            m_tipPosition[2] = m_vertCenter[nbrV - 1][2] * sofaScale[2];
+            m_tipPosition[0] = m_vertCenter[0][0]* sofaScale[0];
+            m_tipPosition[1] = m_vertCenter[0][1] * sofaScale[1];
+            m_tipPosition[2] = m_vertCenter[0][2] * sofaScale[2];
 
             // TODO: to be removed by rigid handling
             m_tipDirection = Vector3.forward;
-            for (int i = 1; i < nbrV; i++)
-            {
-                Vector3 tmpDirection = m_vertCenter[i] - m_vertCenter[i - 1];
-                if (tmpDirection.magnitude < 0.001f)
-                    break;
-
+            Vector3 tmpDirection = m_vertCenter[0] - m_vertCenter[1];
+            if (tmpDirection.magnitude > 0.001f)
                 m_tipDirection = tmpDirection;
-            }
-
+    
             m_tipDirection[0] *= sofaScale[0];
             m_tipDirection[1] *= sofaScale[1];
             m_tipDirection[2] *= sofaScale[2];
