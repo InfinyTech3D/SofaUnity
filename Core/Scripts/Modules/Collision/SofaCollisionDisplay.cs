@@ -69,7 +69,7 @@ namespace SofaUnity
             int nbrV = d_sofaCollisionPoints.GetSize();
 
             m_collisionPoints = new Vector3[nbrV];
-            int res = d_sofaCollisionPoints.GetValues(m_collisionPoints);
+            int res = d_sofaCollisionPoints.GetValues(m_collisionPoints, true);
             if (res == -1)
                 return;
         }
