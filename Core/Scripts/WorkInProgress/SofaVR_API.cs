@@ -8,17 +8,14 @@ public class SofaVR_API : MonoBehaviour
     public CurvedInterface m_curvedUI = null;
     public ScenesManager m_scenes = null;
     public LoadSceneScript m_loader = null;
-    public SofaViewController m_viewCtrl = null;
+    //public SofaViewController m_viewCtrl = null;
     public SceneInfo m_sceneInfo = null;
 
-    public GameObject m_rightHand = null;
-    public GameObject m_leftHand = null;
+    //public GameObject m_rightHand = null;
+    //public GameObject m_leftHand = null;
 
-    public GameObject m_rightTooltip = null;
-    public GameObject m_leftTooltip = null;
-
-    public SofaSphereCollisionObject m_rightCollisionModel = null;
-    public SofaSphereCollisionObject m_leftCollisionModel = null;
+    //public GameObject m_rightTooltip = null;
+    //public GameObject m_leftTooltip = null;
 
     protected HandlerController m_rightHandCtrl = null;
     protected HandlerController m_leftHandCtrl = null;
@@ -45,36 +42,39 @@ public class SofaVR_API : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (m_loader == null)
+            print("loader null");
+
         if (m_scenes == null || m_curvedUI == null || m_loader == null)
             return;
 
-        if (m_rightHand != null && m_leftHand != null)
-        {
-            m_rightHandCtrl = m_rightHand.GetComponent<HandlerController>();
-            m_rightRayCaster = m_rightHand.GetComponent<SofaLaserModel>();
+        //if (m_rightHand != null && m_leftHand != null)
+        //{
+        //    m_rightHandCtrl = m_rightHand.GetComponent<HandlerController>();
+        //    m_rightRayCaster = m_rightHand.GetComponent<SofaLaserModel>();
 
-            m_leftHandCtrl = m_leftHand.GetComponent<HandlerController>();
-            m_leftRayCaster = m_leftHand.GetComponent<SofaLaserModel>();
+        //    m_leftHandCtrl = m_leftHand.GetComponent<HandlerController>();
+        //    m_leftRayCaster = m_leftHand.GetComponent<SofaLaserModel>();
 
-            if (m_rightHandCtrl == null || m_rightRayCaster == null)
-            {
-                Debug.LogError("Problem with right hand");
-                m_VRControlMode = false;
-            }
-            else if (m_leftHandCtrl == null || m_leftRayCaster == null)
-            {
-                Debug.LogError("Problem with left hand");
-                m_VRControlMode = false;
-            }
-            else
-                m_VRControlMode = true;
-        }
+        //    if (m_rightHandCtrl == null || m_rightRayCaster == null)
+        //    {
+        //        Debug.LogError("Problem with right hand");
+        //        m_VRControlMode = false;
+        //    }
+        //    else if (m_leftHandCtrl == null || m_leftRayCaster == null)
+        //    {
+        //        Debug.LogError("Problem with left hand");
+        //        m_VRControlMode = false;
+        //    }
+        //    else
+        //        m_VRControlMode = true;
+        //}
 
         m_scenes.parseScenes();
         m_curvedUI.initUI(this, m_scenes);
 
-        showToolTip(true, true);
-        m_showFirstToolTip = true;
+        //showToolTip(true, true);
+        //m_showFirstToolTip = true;
     }
 
     // Update is called once per frame
@@ -87,174 +87,174 @@ public class SofaVR_API : MonoBehaviour
             {
                 // do stuff here to update everyone from new sofa scene
                 m_loading = false;
-                OnSofaSceneLoaded();                
+                OnSofaSceneLoaded();
             }
         }
 
-        if (!m_VRControlMode)
-            return;
+        //if (!m_VRControlMode)
+        //    return;
 
         // show tooltip
-        bool buttonTT = m_rightHandCtrl.isButtonTwoPressed();
-        showToolTip(buttonTT);
+        //bool buttonTT = m_rightHandCtrl.isButtonTwoPressed();
+        //showToolTip(buttonTT);
 
         if (m_sofaContext == null)
             return;
 
-        showWireframe(m_leftHandCtrl.isButtonTwoPressed());
+        //showWireframe(m_leftHandCtrl.isButtonTwoPressed());
 
         // check if controller view
-        bool gripR = m_rightHandCtrl.isGripPressed();
-        bool trigR = m_rightHandCtrl.isTriggerPressed();
+        //bool gripR = m_rightHandCtrl.isGripPressed();
+        //bool trigR = m_rightHandCtrl.isTriggerPressed();
 
-        bool gripL = m_leftHandCtrl.isGripPressed();
-        bool trigL = m_leftHandCtrl.isTriggerPressed();
+        //bool gripL = m_leftHandCtrl.isGripPressed();
+        //bool trigL = m_leftHandCtrl.isTriggerPressed();
 
         // check view mode first
-        if (m_viewCtrl)
-        {
-            handleViewController(gripR, gripL);
-        }
+        //if (m_viewCtrl)
+        //{
+        //    handleViewController(gripR, gripL);
+        //}
 
-        // handle right tool
-        if (m_viewCtrl)
-        {
-            handleRightController(gripR, trigR);
-        }
+        //// handle right tool
+        //if (m_viewCtrl)
+        //{
+        //    handleRightController(gripR, trigR);
+        //}
 
-        // handle left tool
-        if (m_viewCtrl)
-        {
-            handleLeftController(gripL, trigL);
-        }
+        //// handle left tool
+        //if (m_viewCtrl)
+        //{
+        //    handleLeftController(gripL, trigL);
+        //}
     }
 
 
-    protected void handleViewController(bool gripR, bool gripL)
-    {
-        if (gripR && gripL)
-        {
-            if (!m_viewMode) // first time
-            {
-                m_viewCtrl.activeInteraction(SofaViewController.MoveMode.ALL);
-                m_viewMode = true;
-            }
-        }
-        else if (m_viewMode) // unactive
-        {
-            m_viewCtrl.activeInteraction(SofaViewController.MoveMode.FIX);
-            m_viewMode = false;
-        }
-    }
+    //protected void handleViewController(bool gripR, bool gripL)
+    //{
+    //    if (gripR && gripL)
+    //    {
+    //        if (!m_viewMode) // first time
+    //        {
+    //            m_viewCtrl.activeInteraction(SofaViewController.MoveMode.ALL);
+    //            m_viewMode = true;
+    //        }
+    //    }
+    //    else if (m_viewMode) // unactive
+    //    {
+    //        m_viewCtrl.activeInteraction(SofaViewController.MoveMode.FIX);
+    //        m_viewMode = false;
+    //    }
+    //}
 
-    protected void handleRightController(bool gripR, bool trigR)
-    {
-        if (m_viewMode)
-        {
-            Debug.Log("handleRightController Off");
-            if (m_rightCtrlActivated) // was activated and now view mode
-            {
-                m_rightCollisionModel.Activated = false;
-                m_rightRayCaster.ActivateTool = false;
-                m_rightCtrlActivated = false;
-            }
-            return;
-        }
-
-
-        if (m_rightCollisionModel)
-        {
-            if (gripR)
-                m_rightCollisionModel.Activated = true;
-            else
-                m_rightCollisionModel.Activated = false;
-        }
-
-        if (m_rightRayCaster.RayInteractionType == SofaDefines.SRayInteraction.AttachTool) // need trigger
-        {
-            if (trigR)
-            {
-                m_rightRayCaster.ActivateTool = true;
-                m_rightCtrlActivated = true;
-            }
-            else if (m_rightCtrlActivated)
-            {
-                m_rightRayCaster.ActivateTool = false;
-                m_rightCtrlActivated = false;
-            }
-        }
-        else if (m_rightRayCaster.RayInteractionType == SofaDefines.SRayInteraction.CuttingTool) // need grip
-        {
-            if (trigR)
-            {
-                m_rightRayCaster.ActivateTool = true;
-                m_rightCtrlActivated = true;
-            }
-            else if (m_rightCtrlActivated)
-            {
-                m_rightRayCaster.ActivateTool = false;
-                m_rightCtrlActivated = false;
-            }
-        }
-        else if (m_rightRayCaster.RayInteractionType == SofaDefines.SRayInteraction.FixTool) // not yet
-        {
-
-        }
-    }
-
-    protected void handleLeftController(bool gripL, bool trigL)
-    {
-        if (m_viewMode)
-        {
-            if (m_leftCtrlActivated) // was activated and now view mode
-            {
-                m_leftCollisionModel.Activated = false;
-                m_leftRayCaster.ActivateTool = false;
-                m_leftCtrlActivated = false;
-            }
-            return;
-        }
-
-        if (m_leftCollisionModel)
-        {
-            if (gripL)
-                m_leftCollisionModel.Activated = true;
-            else
-                m_leftCollisionModel.Activated = false;
-        }
+    //protected void handleRightController(bool gripR, bool trigR)
+    //{
+    //    if (m_viewMode)
+    //    {
+    //        Debug.Log("handleRightController Off");
+    //        if (m_rightCtrlActivated) // was activated and now view mode
+    //        {
+    //            m_rightCollisionModel.SofaSphereCollision.Activated = false;
+    //            m_rightRayCaster.ActivateTool = false;
+    //            m_rightCtrlActivated = false;
+    //        }
+    //        return;
+    //    }
 
 
-        if (m_leftRayCaster.RayInteractionType == SofaDefines.SRayInteraction.AttachTool) // need trigger
-        {
-            if (trigL)
-            {
-                m_leftRayCaster.ActivateTool = true;
-                m_leftCtrlActivated = true;
-            }
-            else if (m_leftCtrlActivated)
-            {
-                m_leftRayCaster.ActivateTool = false;
-                m_leftCtrlActivated = false;
-            }
-        }
-        else if (m_leftRayCaster.RayInteractionType == SofaDefines.SRayInteraction.CuttingTool) // need grip
-        {
-            if (trigL)
-            {
-                m_leftRayCaster.ActivateTool = true;
-                m_leftCtrlActivated = true;
-            }
-            else if (m_leftCtrlActivated)
-            {
-                m_leftRayCaster.ActivateTool = false;
-                m_leftCtrlActivated = false;
-            }
-        }
-        else if (m_leftRayCaster.RayInteractionType == SofaDefines.SRayInteraction.FixTool) // not yet
-        {
+    //    if (m_rightCollisionModel)
+    //    {
+    //        if (gripR)
+    //            m_rightCollisionModel.SofaSphereCollision.Activated = true;
+    //        else
+    //            m_rightCollisionModel.SofaSphereCollision.Activated = false;
+    //    }
 
-        }
-    }
+    //    if (m_rightRayCaster.RayInteractionType == SofaDefines.SRayInteraction.AttachTool) // need trigger
+    //    {
+    //        if (trigR)
+    //        {
+    //            m_rightRayCaster.ActivateTool = true;
+    //            m_rightCtrlActivated = true;
+    //        }
+    //        else if (m_rightCtrlActivated)
+    //        {
+    //            m_rightRayCaster.ActivateTool = false;
+    //            m_rightCtrlActivated = false;
+    //        }
+    //    }
+    //    else if (m_rightRayCaster.RayInteractionType == SofaDefines.SRayInteraction.CuttingTool) // need grip
+    //    {
+    //        if (trigR)
+    //        {
+    //            m_rightRayCaster.ActivateTool = true;
+    //            m_rightCtrlActivated = true;
+    //        }
+    //        else if (m_rightCtrlActivated)
+    //        {
+    //            m_rightRayCaster.ActivateTool = false;
+    //            m_rightCtrlActivated = false;
+    //        }
+    //    }
+    //    else if (m_rightRayCaster.RayInteractionType == SofaDefines.SRayInteraction.FixTool) // not yet
+    //    {
+
+    //    }
+    //}
+
+    //protected void handleLeftController(bool gripL, bool trigL)
+    //{
+    //    if (m_viewMode)
+    //    {
+    //        if (m_leftCtrlActivated) // was activated and now view mode
+    //        {
+    //            m_leftCollisionModel.SofaSphereCollision.Activated = false;
+    //            m_leftRayCaster.ActivateTool = false;
+    //            m_leftCtrlActivated = false;
+    //        }
+    //        return;
+    //    }
+
+    //    if (m_leftCollisionModel)
+    //    {
+    //        if (gripL)
+    //            m_leftCollisionModel.SofaSphereCollision.Activated = true;
+    //        else
+    //            m_leftCollisionModel.SofaSphereCollision.Activated = false;
+    //    }
+
+
+    //    if (m_leftRayCaster.RayInteractionType == SofaDefines.SRayInteraction.AttachTool) // need trigger
+    //    {
+    //        if (trigL)
+    //        {
+    //            m_leftRayCaster.ActivateTool = true;
+    //            m_leftCtrlActivated = true;
+    //        }
+    //        else if (m_leftCtrlActivated)
+    //        {
+    //            m_leftRayCaster.ActivateTool = false;
+    //            m_leftCtrlActivated = false;
+    //        }
+    //    }
+    //    else if (m_leftRayCaster.RayInteractionType == SofaDefines.SRayInteraction.CuttingTool) // need grip
+    //    {
+    //        if (trigL)
+    //        {
+    //            m_leftRayCaster.ActivateTool = true;
+    //            m_leftCtrlActivated = true;
+    //        }
+    //        else if (m_leftCtrlActivated)
+    //        {
+    //            m_leftRayCaster.ActivateTool = false;
+    //            m_leftCtrlActivated = false;
+    //        }
+    //    }
+    //    else if (m_leftRayCaster.RayInteractionType == SofaDefines.SRayInteraction.FixTool) // not yet
+    //    {
+
+    //    }
+    //}
 
 
 
@@ -275,11 +275,11 @@ public class SofaVR_API : MonoBehaviour
             Debug.LogError("No LoadSceneScript created.");
             return;
         }
-        
-        if (m_viewCtrl != null)
-        {
-            m_viewCtrl.unloadSofaScene();
-        }
+
+        //if (m_viewCtrl != null)
+        //{
+        //    m_viewCtrl.unloadSofaScene();
+        //}
 
         if (m_leftRayCaster != null)
         {
@@ -303,8 +303,8 @@ public class SofaVR_API : MonoBehaviour
             m_sofaContext = null;
         }
 
-        if (sceneName.Contains("xray") || sceneName.Contains("cadu"))
-            return;
+        //if (sceneName.Contains("xray") || sceneName.Contains("cadu"))
+        //    return;
 
         // Set loading info
         m_loading = true;    
@@ -343,8 +343,8 @@ public class SofaVR_API : MonoBehaviour
     public void resetSofaView()
     {
         Debug.Log("resetSofaView");
-        if (m_viewCtrl)
-            m_viewCtrl.resetSofaView();
+        //if (m_viewCtrl)
+        //    m_viewCtrl.resetSofaView();
     }
 
 
@@ -365,18 +365,49 @@ public class SofaVR_API : MonoBehaviour
             }
         }
 
-        // set sofaContext to viewCtrl
-        if (m_viewCtrl != null)
-        {
-            m_viewCtrl.setSofaContext(_contextObject);
-        }
+        //// set sofaContext to viewCtrl
+        //if (m_viewCtrl != null)
+        //{
+        //    m_viewCtrl.setSofaContext(_contextObject);
+        //}
 
         // set sofaContext to collision model
         //if (m_rightCollisionModel != null)
-        //    m_rightCollisionModel.setSofaContext(m_sofaContext);
+        //    m_rightCollisionModel.SetSofaContext(m_sofaContext);
+
 
         //if (m_leftCollisionModel != null)
-        //    m_leftCollisionModel.setSofaContext(m_sofaContext);
+        //    m_leftCollisionModel.SetSofaContext(m_sofaContext);
+
+
+        //m_sofaContext.IsSofaUpdating = false;
+
+        //GameObject selectObj = GameObject.FindGameObjectWithTag("LeftHandModel");
+        //SofaDAGNode parentDagN = m_sofaContext.GetComponent<SofaDAGNode>();
+        //if (selectObj == null)
+        //    Debug.LogError("hand null");
+        //if (parentDagN == null)
+        //    Debug.LogError("Parent node null");
+        //if (m_sofaContext == null)
+        //    Debug.LogError("sofa ctxt null");
+        //// Add sphere due to capsule position to collide with sofa
+        //selectObj.AddComponent<SofaSphereCollisionHand>();
+        //selectObj.GetComponent<SofaSphereCollisionHand>().SetSofaContext(m_sofaContext);
+
+        //SofaDAGNodeManager nodeMgr = m_sofaContext.NodeGraphMgr;
+        //if (nodeMgr != null)
+        //    nodeMgr.RegisterCustomObject(selectObj, parentDagN);
+        //else
+        //    Debug.LogError("Error creating SofaSphereCollisionHand. Can't access SofaDAGNodeManager.");
+
+        //m_sofaContext.IsSofaUpdating = true;
+
+        //// Get reference to SofaSphereCollisionHand component to disable / enable colision on grab.
+        //selectObj.GetComponent<DesactivateCollision>().SetSofaSphereCollisionHand(selectObj.GetComponent<SofaSphereCollisionHand>());
+        //selectObj.GetComponent<DesactivateCollision>().enabled = true;
+
+
+
 
         // update actions here.
         ScenesManager.SceneMenuInfo sceneInfo = m_scenes.getSceneInfo(m_currentSceneId);        
@@ -399,8 +430,8 @@ public class SofaVR_API : MonoBehaviour
         }
 
         // update tooltip
-        showToolTip(true, true);
-        m_showFirstToolTip = true;
+        //showToolTip(true, true);
+        //m_showFirstToolTip = true;
 
     }
 
@@ -409,43 +440,43 @@ public class SofaVR_API : MonoBehaviour
 
     }
 
-    protected void showToolTip(bool value, bool force = false)
-    {
-        //Debug.Log("showToolTip: " + value + " | m_showToolTip: " + m_showToolTip);
-        if (force)
-        {
-            if (m_rightTooltip != null)
-                m_rightTooltip.SetActive(value);
+    //protected void showToolTip(bool value, bool force = false)
+    //{
+    //    //Debug.Log("showToolTip: " + value + " | m_showToolTip: " + m_showToolTip);
+    //    if (force)
+    //    {
+    //        if (m_rightTooltip != null)
+    //            m_rightTooltip.SetActive(value);
 
-            if (m_leftTooltip != null)
-                m_leftTooltip.SetActive(value);
+    //        if (m_leftTooltip != null)
+    //            m_leftTooltip.SetActive(value);
 
-            m_showToolTip = value;
-            return;
-        }
+    //        m_showToolTip = value;
+    //        return;
+    //    }
 
-        if (m_showFirstToolTip)// first time
-        {
-            if (value)
-            {
-                Debug.Log("First time");
-                m_showFirstToolTip = false;
-            }
-            else
-                return;
-        }
+    //    if (m_showFirstToolTip)// first time
+    //    {
+    //        if (value)
+    //        {
+    //            Debug.Log("First time");
+    //            m_showFirstToolTip = false;
+    //        }
+    //        else
+    //            return;
+    //    }
 
-        if (value == m_showToolTip)
-            return;
+    //    if (value == m_showToolTip)
+    //        return;
 
-        if (m_rightTooltip != null)
-            m_rightTooltip.SetActive(value);
+    //    if (m_rightTooltip != null)
+    //        m_rightTooltip.SetActive(value);
 
-        if (m_leftTooltip != null)
-            m_leftTooltip.SetActive(value);
+    //    if (m_leftTooltip != null)
+    //        m_leftTooltip.SetActive(value);
 
-        m_showToolTip = value;
-    }
+    //    m_showToolTip = value;
+    //}
 
     protected bool firstWireClick = false;
     protected void showWireframe(bool value)
@@ -466,9 +497,10 @@ public class SofaVR_API : MonoBehaviour
         foreach (Transform child in m_sofaContext.transform)
         {
             showWireFrameChilds(child, value);
-            SofaVisualMesh obj = child.GetComponent<SofaVisualMesh>();
-
             // TODO: restore that
+            //SofaVisualMesh obj = child.GetComponent<SofaVisualMesh>();
+
+            
             //if (obj != null)
             //{
             //    if (obj.m_isSelected)
