@@ -128,7 +128,7 @@ namespace SofaUnity
         public void SetVertices(Vector3[] vertices)
         {
             if (m_sofaMeshAPI != null)
-                m_sofaMeshAPI.SetVertices(vertices);
+                m_sofaMeshAPI.SetVertices(vertices, m_sofaContext.transform);
         }
 
         /// Method to set new vertices velocity to this mesh

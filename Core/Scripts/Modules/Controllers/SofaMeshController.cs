@@ -88,9 +88,6 @@ public class SofaMeshController : MonoBehaviour
         for (int i = 0; i < nbrSofaV; ++i)
         {
             newPosition[i] = transform.TransformPoint(m_unityMesh.mesh.vertices[map[i]]);
-            newPosition[i][0] = unityToSofa[0] * newPosition[i][0];
-            newPosition[i][1] = unityToSofa[1] * newPosition[i][1];
-            newPosition[i][2] = unityToSofa[2] * newPosition[i][2];
         }
         m_sofaMesh.SetVertices(newPosition);
 
