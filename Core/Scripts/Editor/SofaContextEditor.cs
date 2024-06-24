@@ -170,13 +170,15 @@ public class SofaContextEditor : Editor
         if (GUILayout.Button("Load SOFA Scene (.scn) file"))
         {
             string absolutePath = EditorUtility.OpenFilePanel("Load file scene (*.scn)", "", "scn");
-            context.SceneFileMgr.SceneFilename = absolutePath.Substring(Application.dataPath.Length);
+            if (absolutePath.Length > 0)
+                context.SceneFileMgr.SceneFilename = absolutePath.Substring(Application.dataPath.Length);
             EditorGUILayout.Separator();
         }
         else if (GUILayout.Button("Load SOFA Python Scene (.py) file"))
         {
             string absolutePath = EditorUtility.OpenFilePanel("Load file scene (*.py)", "", "py");
-            context.SceneFileMgr.PythonSceneFilename = absolutePath.Substring(Application.dataPath.Length);
+            if (absolutePath.Length > 0)
+                context.SceneFileMgr.PythonSceneFilename = absolutePath.Substring(Application.dataPath.Length);
             EditorGUILayout.Separator();
         }
 
