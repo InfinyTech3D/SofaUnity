@@ -19,19 +19,20 @@ public class SofaMouseInteractor : SofaRayCaster
     /// Bool parameter to draw or not the selected primitive
     [SerializeField]
     protected bool m_drawSelection = false;
+    [SerializeField]
+    protected bool m_drawSpring = false;
 
-
-    /// Pointer to the inner Mesh to render the selection. Will be linked to a SofaMesh
-    protected Mesh m_mesh;
-
-    /// Pointer to the MeshRenderer linked to the Mesh to draw the selection
-    protected MeshRenderer m_renderer;
+    // Draws a triangle that covers the middle of the screen
+    public Material m_selectionMaterial = null;
+    public Material m_springMaterial = null;
 
 
     /// Id of the selected Triangle
     private int m_selectedTriID = -1;
     /// Vertex Id of the of the selected Triangle
     private int[] m_selectedTri = new int[3];
+    private Vector3[] m_selectedVertices = null;
+    private Vector3[] m_springVertices = null;
 
     /// Pointer to the Sofa Mesh selected
     private SofaMesh m_sofaMesh = null;
@@ -42,10 +43,9 @@ public class SofaMouseInteractor : SofaRayCaster
     private bool firstTouch = true;
 
 
-    protected LineRenderer m_springRenderer = null;
+    protected bool isCastingRay = false;
 
-    public Color c1 = Color.yellow;
-    public Color c2 = Color.green;
+    
 
 
     ////////////////////////////////////////////
@@ -58,12 +58,19 @@ public class SofaMouseInteractor : SofaRayCaster
         get { return m_drawSelection; }
         set {
             m_drawSelection = value;
-            if (m_renderer)
-                m_renderer.enabled = value;
         }
     }
 
-    
+    public bool DrawSpring
+    {
+        get { return m_drawSpring; }
+        set
+        {
+            m_drawSpring = value;
+        }
+    }
+
+
     ////////////////////////////////////////////
     //////     SofaMouseInteractor API     /////
     ////////////////////////////////////////////
@@ -74,38 +81,11 @@ public class SofaMouseInteractor : SofaRayCaster
         // create init sofaRay caster
         CreateSofaRayCaster();
 
-        // Add a MeshFilter to the GameObject
-        MeshFilter mf = gameObject.GetComponent<MeshFilter>();
-        if (mf == null)
-            mf = gameObject.AddComponent<MeshFilter>();
+        if (m_selectedVertices == null)
+            m_selectedVertices = new Vector3[3];
 
-        //to see it, we have to add a renderer
-        m_renderer = gameObject.GetComponent<MeshRenderer>();
-        if (m_renderer == null)
-        {
-            m_renderer = gameObject.AddComponent<MeshRenderer>();
-            m_renderer.enabled = m_drawSelection;
-        }
-
-        if (m_renderer.sharedMaterial == null)
-        {
-            m_renderer.sharedMaterial = new Material(Shader.Find("Diffuse"));
-        }
-
-        // create a single triangle mesh
-        m_mesh = mf.mesh = new Mesh();
-        m_mesh.name = "SofaSelection";
-
-        Vector3[] initVert = new Vector3[3];
-        int[] initTri = new int[3];
-        for (int i=0; i<3; i++)
-        {
-            initVert[i] = new Vector3(0.0f, 0.0f, 0.0f);
-            initTri[i] = i;
-        }
-        m_mesh.vertices = initVert;
-        m_mesh.triangles = initTri;        
-
+        if (m_springVertices == null)
+            m_springVertices = new Vector3[2];
     }
 
 
@@ -143,24 +123,6 @@ public class SofaMouseInteractor : SofaRayCaster
         }
 
 
-        if (m_springRenderer == null)
-        {
-            m_springRenderer = gameObject.AddComponent<LineRenderer>();
-            m_springRenderer.material = new Material(Shader.Find("Sprites/Default"));
-            m_springRenderer.widthMultiplier = 0.2f;
-            m_springRenderer.positionCount = 2;
-
-            // A simple 2 color gradient with a fixed alpha of 1.0f.
-            float alpha = 1.0f;
-            Gradient gradient = new Gradient();
-            gradient.SetKeys(
-                new GradientColorKey[] { new GradientColorKey(c1, 0.0f), new GradientColorKey(c2, 1.0f) },
-                new GradientAlphaKey[] { new GradientAlphaKey(alpha, 0.0f), new GradientAlphaKey(alpha, 1.0f) }
-            );
-            m_springRenderer.colorGradient = gradient;
-        }
-
-
         /// Will create the real sofa Ray caster when simulation start.
         CreateSofaRayCaster_impl();
         /// automatically activate the ray.
@@ -168,7 +130,7 @@ public class SofaMouseInteractor : SofaRayCaster
     }
 
 
-    int m_foundTri = 0;
+    int m_foundTri = -1;
 
     /// Update is called once per frame in unity animation loop
     void Update()
@@ -176,26 +138,36 @@ public class SofaMouseInteractor : SofaRayCaster
         if (!m_initialized)
             return;
 
-        if (this.ActivateTool)
+        // As soon as shift is press we start sending ray but the tool is not active == no interaction
+        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         {
-            /// if already activated and release shift or mouse. Will unactive the interactor
-            if (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift) || Input.GetMouseButtonUp(0))
-            {
-                this.ActivateTool = false;
-                UnTargetMesh();
-                firstTouch = true;
-            }
+            isCastingRay = true;
+            firstTouch = true;
+            //TargetMeshes();
         }
 
-        /// cast ray only if shift is hold
-        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+        // When shift is release, we stop casting ray, we unactive tool and set tri selected to -1
+        if (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift))
         {
-            /// If left mouse button is clicked will activate interactor tool
-            if (Input.GetMouseButtonDown(0))
-            {
-                this.ActivateTool = true;
-            }
+            isCastingRay = false;
+            m_foundTri = -1;
+            this.ActivateTool = false;
+            UnTargetMesh();
+        }
 
+
+        // Mouse button control the activation of tool
+        if (Input.GetMouseButtonDown(0))
+        {
+            this.ActivateTool = true;
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            this.ActivateTool = false;
+        }
+
+        if (isCastingRay)
+        {
             /// compute 3D ray position and direction according to mouse position on screen
             Vector3 pos = Input.mousePosition;
             Ray ray = m_camera.ScreenPointToRay(Input.mousePosition);
@@ -204,80 +176,98 @@ public class SofaMouseInteractor : SofaRayCaster
 
             /// Compute position in sofa world.
             Vector3 originS = m_sofaContext.transform.InverseTransformPoint(m_origin);
-            Vector3 directionS = m_sofaContext.transform.InverseTransformDirection(m_direction);
-            
+            Vector3 directionS = m_sofaContext.transform.InverseTransformPoint(m_direction);
+
             // cast ray here and get the selected indice
             m_selectedTriID = -1;
             m_selectedTriID = m_sofaRC.castRay(originS, directionS);
+            
             if (m_selectedTriID >= 0)
             {
                 if (firstTouch)
                 {
                     string resMesh = m_sofaRC.getTouchedObjectName();
+                    
                     if (resMesh != "None")
                     {
                         TargetMesh(resMesh);
                         firstTouch = false;
-                    }                    
+                    }
                 }
 
-                if (m_selectedTriID != m_foundTri)
+                //Debug.Log(this.gameObject.name + " || origin: " + m_origin + " => originS: " + originS + " |  direction : " + m_direction + " => directionS: " + directionS + " | triId: " + m_selectedTriID);
+                if (!this.ActivateTool)
                 {
-                    //Debug.Log(this.gameObject.name + " || origin: " + m_origin + " => originS: " + originS + " |  direction : " + m_direction + " => directionS: " + directionS + " | triId: " + m_selectedTriID);
                     m_foundTri = m_selectedTriID;
                 }
+            }
 
-                /// Update selection mesh to render only if SofaMesh is set.
-                if (m_sofaMesh != null)
-                {
-                    m_selectedTri[0] = m_sofaMesh.SofaMeshTopology.m_mesh.triangles[m_selectedTriID * 3];
-                    m_selectedTri[1] = m_sofaMesh.SofaMeshTopology.m_mesh.triangles[m_selectedTriID * 3 + 1];
-                    m_selectedTri[2] = m_sofaMesh.SofaMeshTopology.m_mesh.triangles[m_selectedTriID * 3 + 2];
+            /// Update selection mesh to render only if SofaMesh is set and option are set.
+            if ((m_sofaMesh != null) && (m_foundTri != -1) && (m_drawSelection || m_drawSpring))
+            {
+                // verticesIds in Unity world
+                m_selectedTri[0] = m_sofaMesh.SofaMeshTopology.m_mesh.triangles[m_foundTri * 3];
+                m_selectedTri[1] = m_sofaMesh.SofaMeshTopology.m_mesh.triangles[m_foundTri * 3 + 1];
+                m_selectedTri[2] = m_sofaMesh.SofaMeshTopology.m_mesh.triangles[m_foundTri * 3 + 2];
 
-                    Vector3[] testVert = new Vector3[3];                    
-                    testVert[0] = this.transform.InverseTransformPoint(m_sofaMesh.SofaMeshTopology.m_mesh.vertices[m_selectedTri[0]]);
-                    testVert[1] = this.transform.InverseTransformPoint(m_sofaMesh.SofaMeshTopology.m_mesh.vertices[m_selectedTri[1]]);
-                    testVert[2] = this.transform.InverseTransformPoint(m_sofaMesh.SofaMeshTopology.m_mesh.vertices[m_selectedTri[2]]);
-                    m_mesh.vertices = testVert;
+                
+                //m_selectedVertices[0] = this.transform.InverseTransformPoint(m_sofaMesh.SofaMeshTopology.m_mesh.vertices[m_selectedTri[0]]);
+                //m_selectedVertices[1] = this.transform.InverseTransformPoint(m_sofaMesh.SofaMeshTopology.m_mesh.vertices[m_selectedTri[1]]);
+                //m_selectedVertices[2] = this.transform.InverseTransformPoint(m_sofaMesh.SofaMeshTopology.m_mesh.vertices[m_selectedTri[2]]);
 
-                    Vector3 bary = Vector3.zero;
-                    bary = (testVert[0] + testVert[1] + testVert[2]) / 3;
-                    UpdateSpringRenderer(m_origin, bary);
-                }
+                m_selectedVertices[0] = m_sofaContext.transform.TransformPoint(m_sofaMesh.SofaMeshTopology.m_mesh.vertices[m_selectedTri[0]]);
+                m_selectedVertices[1] = m_sofaContext.transform.TransformPoint(m_sofaMesh.SofaMeshTopology.m_mesh.vertices[m_selectedTri[1]]);
+                m_selectedVertices[2] = m_sofaContext.transform.TransformPoint(m_sofaMesh.SofaMeshTopology.m_mesh.vertices[m_selectedTri[2]]);
+
+
+                m_springVertices[0] = (m_selectedVertices[0] + m_selectedVertices[1] + m_selectedVertices[2]) / 3;
+                float length = (m_origin - m_springVertices[0]).magnitude;
+                m_springVertices[1] = m_origin + m_direction * length;
             }
         }
     }
 
 
 
+
     /// Internal method to search for a SofaMesh and track it for rendering selection. Will AddListener to it.
     protected void TargetMesh(string meshName)
     {
-        // nothing to do if no drawing
-        if (!m_drawSelection)
-            return;
-
         // need to go through UntargetMesh before selecting a new one.
         if (m_sofaMesh != null)
             return;
 
+        // Hack as the name of the Mesh is not the name of MechanicalObject. Work only for one mesh.
+        if (m_meshes.Count == 1)
+        {
+            m_sofaMesh = m_meshes[0];
+            m_sofaMesh.AddListener();
+        }
+
+        //foreach (SofaMesh mesh in m_meshes)
+        //{
+        //    Debug.Log("mesh: " + mesh.UniqueNameId + " looking for: " + meshName);
+        //    if (mesh.UniqueNameId == meshName)
+        //    {
+        //        m_sofaMesh = mesh;
+        //        m_sofaMesh.AddListener();
+        //    }
+        //}        
+    }
+
+
+    protected void TargetMeshes()
+    {
         foreach (SofaMesh mesh in m_meshes)
         {
-            if (mesh.UniqueNameId == meshName)
-            {
-                m_sofaMesh = mesh;
-                m_sofaMesh.AddListener();
-            }
-        }        
+            mesh.AddListener();
+        }
     }
+
 
     /// Internal method to release the target mesh and remove listener.
     protected void UnTargetMesh()
     {
-        // nothing to do if no drawing
-        if (!m_drawSelection)
-            return;
-
         if (m_sofaMesh)
         {
             m_sofaMesh.RemoveListener();
@@ -285,15 +275,65 @@ public class SofaMouseInteractor : SofaRayCaster
         }
     }
 
-
-    protected void UpdateSpringRenderer(Vector3 origin, Vector3 end)
+    protected void UnTargetMeshes()
     {
-        Debug.Log("origin: " + origin + " | end: " + end);
-        LineRenderer lineRenderer = GetComponent<LineRenderer>();
-        var points = new Vector3[2];
-        points[0] = origin;
-        points[1] = end;
-        lineRenderer.SetPositions(points);
+        foreach (SofaMesh mesh in m_meshes)
+        {
+            mesh.RemoveListener();
+        }
+    }
+
+
+    void OnPostRender()
+    {
+        if (m_drawSelection)
+            RenderSelection();
+
+        if (m_drawSpring)
+            RenderSpring();
+    }
+
+    void OnDrawGizmos()
+    {
+        if (m_drawSelection)
+            RenderSelection();
+    }
+
+
+    protected void RenderSelection()
+    {
+        if (m_foundTri < 0)
+            return;
+
+        if (!m_selectionMaterial)
+        {
+            Debug.LogError("Please Assign a material on the inspector");
+            return;
+        }
+
+        m_selectionMaterial.SetPass(0);
+        GL.Begin(GL.TRIANGLES);
+        GL.Vertex3(m_selectedVertices[0].x, m_selectedVertices[0].y, m_selectedVertices[0].z);
+        GL.Vertex3(m_selectedVertices[1].x, m_selectedVertices[1].y, m_selectedVertices[1].z);
+        GL.Vertex3(m_selectedVertices[2].x, m_selectedVertices[2].y, m_selectedVertices[2].z);
+
+        GL.Vertex3(m_selectedVertices[0].x, m_selectedVertices[0].y, m_selectedVertices[0].z);        
+        GL.Vertex3(m_selectedVertices[2].x, m_selectedVertices[2].y, m_selectedVertices[2].z);
+        GL.Vertex3(m_selectedVertices[1].x, m_selectedVertices[1].y, m_selectedVertices[1].z);
+        GL.End();
+    }
+
+
+    protected void RenderSpring()
+    {
+        if (m_foundTri < 0 || !this.ActivateTool)
+            return;
+
+        GL.Begin(GL.LINES);
+        m_springMaterial.SetPass(0);
+        GL.Vertex3(m_springVertices[0].x, m_springVertices[0].y, m_springVertices[0].z);
+        GL.Vertex3(m_springVertices[1].x, m_springVertices[1].y, m_springVertices[1].z);
+        GL.End();
     }
 
 }
