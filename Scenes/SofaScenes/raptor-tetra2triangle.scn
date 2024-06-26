@@ -47,7 +47,7 @@
 		<BoxROI name="box1" box="-2.2 -1  -1 2.2 2.5 1.5" drawBoxes="1" />
 		<IndexValueMapper name="ind_box0"                                      indices="@box0.tetrahedronIndices" value="100000" />
 		<IndexValueMapper name="ind_box1" inputValues="@ind_box0.outputValues" indices="@box1.tetrahedronIndices" value="1000000" />
-		<TetrahedronFEMForceField name="FEM" youngModulus="3300" poissonRatio="0.3" computeGlobalMatrix="false" method="large" />
+		<TetrahedronFEMForceField name="FEM" youngModulus="3300" poissonRatio="0.3" computeGlobalMatrix="false" computeVonMisesStress="1" method="large" />
 		
 		
 		<BoxROI name="box3" box="-2.2 -0.3 -9.2    2.2 0.110668 2.88584" drawBoxes="1" drawSize="2" />
