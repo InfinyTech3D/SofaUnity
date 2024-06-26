@@ -35,6 +35,13 @@ namespace SofaUnity
         //////      SofaFEMForceField API      /////
         ////////////////////////////////////////////
 
+        /// Setter to activate FEM display
+        public void DisplayForcefield(bool value)
+        {
+            m_renderer.enabled = value;
+        }
+
+
         /// Method called by @sa SofaBaseComponent::CreateSofaAPI() method. to add more creation step
         protected override void CreateSofaAPI_Impl()
         {            
