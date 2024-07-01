@@ -11,6 +11,7 @@ public class SofaViewPanel : MonoBehaviour
     public Toggle m_visuFEM;
     public Toggle m_visuSprings;
     public Toggle m_visuCollision;
+    public Toggle m_visuCollisionOutputs;
 
     protected bool m_isReady = false;
     protected SofaContext m_sofaContext = null;
@@ -19,7 +20,8 @@ public class SofaViewPanel : MonoBehaviour
     protected List<SofaVisualModel> m_visualModels = null;
     protected List<SofaFEMForceField> m_forceFields = null;
     protected List<SofaCollisionModel> m_collisionModels = null;
-    
+    protected SofaCollisionDisplay m_collisionDisplay = null;
+
 
     /// Number of visual meshes in the scene.
     protected int m_nbrVModel = 0;
@@ -46,6 +48,8 @@ public class SofaViewPanel : MonoBehaviour
                 return;
             }
         }
+
+        m_collisionDisplay = GameObject.FindObjectOfType<SofaCollisionDisplay>();
 
         m_isReady = true;
 
@@ -168,6 +172,16 @@ public class SofaViewPanel : MonoBehaviour
             col.DrawCollision = _toggle.isOn;
         }
     }
+
+    public void DisplayCollisionOutputs(Toggle _toggle)
+    {
+        if (!m_isReady)
+            return;
+
+        if (m_collisionDisplay)
+            m_collisionDisplay.DrawCollisions = _toggle.isOn;
+    }
+
 
 
     public void UnloadSofaContext()

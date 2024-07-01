@@ -117,7 +117,7 @@ public class SofaPlayer : MonoBehaviour
             {
                 this.startSofaSimulation();
             }
-            else if (_toggle.gameObject.name.Contains("stop"))
+            else if (_toggle.gameObject.name.Contains("reload"))
             {
                 this.restartSofaSimulation();
             }
@@ -142,8 +142,7 @@ public class SofaPlayer : MonoBehaviour
 
     public void restartSofaSimulation()
     {
-        Debug.Log("restartSofaSimulation not implemented yet!");
-        //SceneManager.LoadScene(0);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
 
