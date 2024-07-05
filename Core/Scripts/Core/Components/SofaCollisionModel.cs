@@ -31,6 +31,7 @@ namespace SofaUnity
         [SerializeField]
         private List<GameObject> m_collisionElement = null;
 
+        private SofaBoolData m_isCollisionActive = null;
 
 
         ////////////////////////////////////////////
@@ -54,6 +55,25 @@ namespace SofaUnity
             }
         }
 
+        public bool ActivateCollision
+        {
+            get {
+                if (m_isCollisionActive != null)
+                    return m_isCollisionActive.Value;
+                else
+                    return false;
+            }
+            set
+            {
+                if (m_isCollisionActive != null)
+                {
+                    m_isCollisionActive.Value = value;
+                }
+                else
+                    Debug.LogWarning("Can't ActivateCollision as m_isCollisionActive is not set.");
+            }
+        }
+
 
 
         ////////////////////////////////////////////
@@ -72,6 +92,16 @@ namespace SofaUnity
                 if (m_sofaMesh && m_drawCollision)
                 {
                     CreateCollisionElements();
+                }
+            }
+
+            if (m_isCollisionActive == null)
+            {
+                m_isCollisionActive = m_dataArchiver.GetSofaBoolData("active");
+
+                if (m_isCollisionActive == null)
+                {
+                    Debug.LogWarning("GetSofaBoolData named 'active' failed.");
                 }
             }
         }
