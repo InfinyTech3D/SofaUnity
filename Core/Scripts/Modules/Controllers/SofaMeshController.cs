@@ -7,6 +7,7 @@ public class SofaMeshController : MonoBehaviour
 {
     public SofaMesh m_sofaMesh = null;
     public MeshFilter m_unityMesh = null;
+    public string m_sofaMeshName = "";
 
     /// Parameter bool to store information if vec3 or rigid are parsed.
     private bool m_ready = false;
@@ -15,13 +16,25 @@ public class SofaMeshController : MonoBehaviour
 
     private List<int> map;
 
-//    private Vector3 objectOri = Vector3.zero;
+    //    private Vector3 objectOri = Vector3.zero;
     private Vector3[] newPosition;
     private int nbrSofaV = 0;
 
     // Start is called before the first frame update
     void Start()
     {
+        if (m_sofaMeshName.Length > 0)
+        {
+            SofaMesh[] meshes = GameObject.FindObjectsOfType<SofaMesh>();
+            Debug.Log("Nbr Mesh: " + meshes.Length);
+            foreach (SofaMesh mesh in meshes)
+            {
+                if (mesh.UniqueNameId.Contains(m_sofaMeshName))
+                    m_sofaMesh = mesh;
+            }
+        }
+
+
         if (m_sofaMesh == null)
         {
             Debug.LogError("m_sofaMesh is not set.");
@@ -49,7 +62,7 @@ public class SofaMeshController : MonoBehaviour
             bool found = false;
             for (int j = 0; j < tmp.Count; ++j)
             {
-                if ((vert- tmp[j]).magnitude <0.0001) // found duplicate
+                if ((vert - tmp[j]).magnitude < 0.0001) // found duplicate
                 {
                     found = true;
                     break;
@@ -60,7 +73,7 @@ public class SofaMeshController : MonoBehaviour
             {
                 tmp.Add(vert);
                 map.Add(i);
-            }                
+            }
         }
 
         if (nbrSofaV == 0 || nbrSofaV != tmp.Count)
