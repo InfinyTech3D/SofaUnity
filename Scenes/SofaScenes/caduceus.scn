@@ -28,6 +28,7 @@
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
     <MinProximityIntersection name="Proximity" alarmDistance="1.5" contactDistance="1" />
+    <CollisionDetectionDisplay name="CollisionDetectionDisplay"/>
 
     <DefaultContactManager name="Response" response="FrictionContactConstraint" />
     <Node name="Snake" >
