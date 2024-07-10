@@ -84,7 +84,7 @@ namespace SofaUnity
         protected override void Init_impl()
         {
             // check if real FEM
-            if (!m_componentType.Contains("FEMForceField")) {
+            if (!(m_componentType.Contains("FEMForceField") || m_componentType.Contains("Tetrahedral"))) {
                 m_meshInit = false;
                 return;
             }
