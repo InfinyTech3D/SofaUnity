@@ -38,7 +38,8 @@ namespace SofaUnity
         /// Setter to activate FEM display
         public void DisplayForcefield(bool value)
         {
-            m_renderer.enabled = value;
+            if (m_meshInit)
+                m_renderer.enabled = value;
         }
 
 
@@ -82,11 +83,13 @@ namespace SofaUnity
         /// Method called by @sa SofaBaseComponent::Start() method. to add more init steps
         protected override void Init_impl()
         {
-            computeVonMisesDisplay();
-
-            if (!m_vonMisesInit)
+            // check if real FEM
+            if (!(m_componentType.Contains("FEMForceField") || m_componentType.Contains("Tetrahedral"))) {
+                m_meshInit = false;
                 return;
-
+            }
+            
+            // Init mesh 
             if (m_meshInit == false)
             {
                 m_sofaMesh = m_ownerNode.GetSofaMesh();
@@ -103,6 +106,9 @@ namespace SofaUnity
                     m_trackedTopologyRevision = m_sofaMesh.GetTopologyRevision();
                 }
             }
+
+            // Init VonMises if available
+            computeVonMisesDisplay();
         }
 
 
@@ -116,7 +122,7 @@ namespace SofaUnity
         /// Method called by @sa Update() method.        
         protected override void Update_impl()
         {
-            if (!m_vonMisesInit)
+            if (!m_meshInit)
                 return;
 
             if (m_renderer.enabled != m_oldRendererStatus)
@@ -171,7 +177,11 @@ namespace SofaUnity
             // Init Data to track von mises values
             if (d_vonMisesPerNode == null)
             {
-                d_vonMisesPerNode = (SofaDataVectorDouble)this.m_dataArchiver.GetVectorData("vonMisesPerNode");
+                SofaDataVector dataPtr = this.m_dataArchiver.GetVectorData("vonMisesPerNode");
+                if (dataPtr != null)
+                    d_vonMisesPerNode = (SofaDataVectorDouble)dataPtr;
+                else
+                    d_vonMisesPerNode = null;
             }
 
             // if no Data vonMises, exit
@@ -185,7 +195,6 @@ namespace SofaUnity
 
             m_vonMisesInit = true;
         }
-
         
 
         protected void updateVonMises()
