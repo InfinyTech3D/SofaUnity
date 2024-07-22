@@ -100,6 +100,6 @@ public class SofaSphereAPI : SofaBaseObjectAPI
     ////////////          Communication API to sofaPhysicsAdvanceAPI         ////////////////
     /////////////////////////////////////////////////////////////////////////////////////////
 
-    [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+    [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
     public static extern int sofaPhysicsAPI_addSphere(IntPtr obj, string name, string parentNodeName, bool isRigid);
 }
