@@ -4,84 +4,87 @@ using UnityEngine;
 using UnityEngine.Events;
 using SofaUnity;
 
-public class InteractiveMenuPanel : MonoBehaviour
+namespace SofaUnity
 {
-    public GameObject radialProgressBar = null;
-    public RadialProgressBar progressB = null;
-    public Dictionary<string, UnityEvent> buttonActions;
-
-    public bool singleAction = true;
-    protected bool actionDone = false;
-    protected InteractiveButton m_currentIButton = null;
-
-
-    void Awake()
+    public class InteractiveMenuPanel : MonoBehaviour
     {
-        foreach (Transform child in this.transform)
-        {            
-            InteractiveButton Ibtn = child.gameObject.AddComponent<InteractiveButton>() as InteractiveButton;
-            if (Ibtn)
-                Ibtn.m_menuOwner = this;
-        }
-    }
+        public GameObject radialProgressBar = null;
+        public RadialProgressBar progressB = null;
+        public Dictionary<string, UnityEvent> buttonActions;
 
-    // Use this for initialization
-    void Start ()
-    {
-		
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-		
-	}
+        public bool singleAction = true;
+        protected bool actionDone = false;
+        protected InteractiveButton m_currentIButton = null;
 
-    public void buttonTriggerEnter(InteractiveButton button)
-    {        
-        actionDone = false;
-        if (m_currentIButton != null)
+
+        void Awake()
         {
-            m_currentIButton.buttonExit();
-            buttonTriggerExit(m_currentIButton);
+            foreach (Transform child in this.transform)
+            {
+                InteractiveButton Ibtn = child.gameObject.AddComponent<InteractiveButton>() as InteractiveButton;
+                if (Ibtn)
+                    Ibtn.m_menuOwner = this;
+            }
         }
 
-        m_currentIButton = button;
+        // Use this for initialization
+        void Start()
+        {
 
-        if (radialProgressBar)
-            radialProgressBar.SetActive(true);
-    }
+        }
 
-    public void buttonTriggerStay(InteractiveButton button)
-    {
-        if (m_currentIButton != button)
-            return;
+        // Update is called once per frame
+        void Update()
+        {
 
-        if (progressB && progressB.isCompleted)
-            buttonAction();
-        else if (progressB == null)
-            buttonAction();
-    }
+        }
 
-    public void buttonTriggerExit(InteractiveButton button)
-    {        
-        if (m_currentIButton != button)
-            return;
+        public void buttonTriggerEnter(InteractiveButton button)
+        {
+            actionDone = false;
+            if (m_currentIButton != null)
+            {
+                m_currentIButton.buttonExit();
+                buttonTriggerExit(m_currentIButton);
+            }
 
-        m_currentIButton = null;
+            m_currentIButton = button;
 
-        if (radialProgressBar)
-            radialProgressBar.SetActive(false);
-    }
+            if (radialProgressBar)
+                radialProgressBar.SetActive(true);
+        }
 
-    public void buttonAction()
-    {
-        if (singleAction && actionDone)
-            return;
+        public void buttonTriggerStay(InteractiveButton button)
+        {
+            if (m_currentIButton != button)
+                return;
 
-        if (m_currentIButton)
-            m_currentIButton.buttonAction();
+            if (progressB && progressB.isCompleted)
+                buttonAction();
+            else if (progressB == null)
+                buttonAction();
+        }
 
-        actionDone = true;
+        public void buttonTriggerExit(InteractiveButton button)
+        {
+            if (m_currentIButton != button)
+                return;
+
+            m_currentIButton = null;
+
+            if (radialProgressBar)
+                radialProgressBar.SetActive(false);
+        }
+
+        public void buttonAction()
+        {
+            if (singleAction && actionDone)
+                return;
+
+            if (m_currentIButton)
+                m_currentIButton.buttonAction();
+
+            actionDone = true;
+        }
     }
 }

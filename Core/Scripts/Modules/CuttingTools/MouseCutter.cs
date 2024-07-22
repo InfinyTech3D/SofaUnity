@@ -2,31 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MouseCutter : TriangleCutter
+namespace SofaUnity
 {
-
-    // Use this for initialization
-    void Start()
+    public class MouseCutter : TriangleCutter
     {
-        m_length = 1000f;
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //get ray from current mouse position
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        m_origin = ray.origin;
-        m_direction = ray.direction;
-
-        CastRay();
-
-        if (Input.GetMouseButton(2))
+        // Use this for initialization
+        void Start()
         {
-            cutTriangles();
+            m_length = 1000f;
         }
 
-        resetCollider();
+        // Update is called once per frame
+        void Update()
+        {
+            //get ray from current mouse position
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            m_origin = ray.origin;
+            m_direction = ray.direction;
+
+            CastRay();
+
+            if (Input.GetMouseButton(2))
+            {
+                cutTriangles();
+            }
+
+            resetCollider();
+        }
     }
 }

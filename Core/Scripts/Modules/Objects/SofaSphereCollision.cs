@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SofaUnity;
+using SofaUnityAPI;
 
 /// <summary>
 /// Genereric class to factorise commun part on SofaSphereCollisionHand and SofaSphereCollisionObject

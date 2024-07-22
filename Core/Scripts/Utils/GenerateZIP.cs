@@ -3,15 +3,18 @@ using UnityEngine;
 
 #if UNITY_ANDROID
 #if UNITY_EDITOR
-public class GenerateZIP
+namespace SofaUnity
 {
-    [MenuItem("Assets/Build ZIP")]
-    static void BuildZIP()
+    public class GenerateZIP
     {
-        string dataDirectory = Application.dataPath + "/SofaUnity/";
-        string fileToCreate = Application.streamingAssetsPath + "/Resources.tgz";
+        [MenuItem("Assets/Build ZIP")]
+        static void BuildZIP()
+        {
+            string dataDirectory = Application.dataPath + "/SofaUnity/";
+            string fileToCreate = Application.streamingAssetsPath + "/Resources.tgz";
 
-        Utility_SharpZipCommands.CreateTarGZ_FromDirectory(fileToCreate, dataDirectory);
+            Utility_SharpZipCommands.CreateTarGZ_FromDirectory(fileToCreate, dataDirectory);
+        }
     }
 }
 #endif

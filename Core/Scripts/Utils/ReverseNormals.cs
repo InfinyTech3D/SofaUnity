@@ -1,32 +1,35 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(MeshFilter))]
-public class ReverseNormals : MonoBehaviour
+namespace SofaUnity
 {
-
-    void Start()
+    [RequireComponent(typeof(MeshFilter))]
+    public class ReverseNormals : MonoBehaviour
     {
-        MeshFilter filter = GetComponent(typeof(MeshFilter)) as MeshFilter;
-        if (filter != null)
+
+        void Start()
         {
-            Mesh mesh = filter.mesh;
-
-            Vector3[] normals = mesh.normals;
-            for (int i = 0; i < normals.Length; i++)
-                normals[i] = -normals[i];
-            mesh.normals = normals;
-
-            for (int m = 0; m < mesh.subMeshCount; m++)
+            MeshFilter filter = GetComponent(typeof(MeshFilter)) as MeshFilter;
+            if (filter != null)
             {
-                int[] triangles = mesh.GetTriangles(m);
-                for (int i = 0; i < triangles.Length; i += 3)
+                Mesh mesh = filter.mesh;
+
+                Vector3[] normals = mesh.normals;
+                for (int i = 0; i < normals.Length; i++)
+                    normals[i] = -normals[i];
+                mesh.normals = normals;
+
+                for (int m = 0; m < mesh.subMeshCount; m++)
                 {
-                    int temp = triangles[i + 0];
-                    triangles[i + 0] = triangles[i + 1];
-                    triangles[i + 1] = temp;
+                    int[] triangles = mesh.GetTriangles(m);
+                    for (int i = 0; i < triangles.Length; i += 3)
+                    {
+                        int temp = triangles[i + 0];
+                        triangles[i + 0] = triangles[i + 1];
+                        triangles[i + 1] = temp;
+                    }
+                    mesh.SetTriangles(triangles, m);
                 }
-                mesh.SetTriangles(triangles, m);
             }
         }
     }

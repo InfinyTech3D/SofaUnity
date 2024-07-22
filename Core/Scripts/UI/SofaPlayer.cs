@@ -5,42 +5,45 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class SofaPlayer : MonoBehaviour
+namespace SofaUnity
 {
-    public SofaContext m_sofaContext;
-    public Button m_playButton;
-    public Button m_stopButton;
-    public Button m_restartButton;
-
-    // Start is called before the first frame update
-    void Start()
+    public class SofaPlayer : MonoBehaviour
     {
-        
-    }
+        public SofaContext m_sofaContext;
+        public Button m_playButton;
+        public Button m_stopButton;
+        public Button m_restartButton;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+        // Start is called before the first frame update
+        void Start()
+        {
 
-    public void startSofaSimulation()
-    {
-        Debug.Log("startSofaSimulation");
-        if (m_sofaContext != null)
-            m_sofaContext.IsSofaUpdating = true;
-    }
+        }
 
-    public void stopSofaSimulation()
-    {
-        Debug.Log("stopSofaSimulation");
-        if (m_sofaContext != null)
-            m_sofaContext.IsSofaUpdating = false;
-    }
+        // Update is called once per frame
+        void Update()
+        {
 
-    public void restartSofaSimulation()
-    {
-        Debug.Log("restartSofaSimulation");
-        SceneManager.LoadScene(0);
+        }
+
+        public void startSofaSimulation()
+        {
+            Debug.Log("startSofaSimulation");
+            if (m_sofaContext != null)
+                m_sofaContext.IsSofaUpdating = true;
+        }
+
+        public void stopSofaSimulation()
+        {
+            Debug.Log("stopSofaSimulation");
+            if (m_sofaContext != null)
+                m_sofaContext.IsSofaUpdating = false;
+        }
+
+        public void restartSofaSimulation()
+        {
+            Debug.Log("restartSofaSimulation");
+            SceneManager.LoadScene(0);
+        }
     }
 }
