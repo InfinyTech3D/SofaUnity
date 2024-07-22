@@ -4,21 +4,24 @@ using UnityEditor;
 using UnityEngine;
 using SofaUnity;
 
-public class SofaSceneFixer : Editor
+namespace SofaUnity
 {
-    [MenuItem("Tools/SofaUnity/Utils/FixSceneDAGNodeNames")]
-    static void DoFixSofaScene()
+    public class SofaSceneFixer : Editor
     {
-        Debug.Log("Performing: FixSceneDAGNodeNames");
-        GameObject SofaObj = GameObject.Find("SofaContext");
-        SofaContext sofaCon = SofaObj.GetComponent<SofaContext>();
-
-        if (sofaCon)
+        [MenuItem("Tools/SofaUnity/Utils/FixSceneDAGNodeNames")]
+        static void DoFixSofaScene()
         {
-            sofaCon.NodeGraphMgr.FixGraphNames();
-        }
-        else
-            Debug.LogWarning("No Sofacontext found");
-    }
+            Debug.Log("Performing: FixSceneDAGNodeNames");
+            GameObject SofaObj = GameObject.Find("SofaContext");
+            SofaContext sofaCon = SofaObj.GetComponent<SofaContext>();
 
+            if (sofaCon)
+            {
+                sofaCon.NodeGraphMgr.FixGraphNames();
+            }
+            else
+                Debug.LogWarning("No Sofacontext found");
+        }
+
+    }
 }
