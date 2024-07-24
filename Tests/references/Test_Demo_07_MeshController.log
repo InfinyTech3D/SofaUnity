@@ -1,0 +1,21 @@
+NbrMeshes: 4
+Mesh: RestShapeSpringsForceField  -  RestShapeSpringsForceField1
+NbrVertices: 8
+NbrTriangles: 12
+Center: 0;15;4.768372E-07
+Min: 2;2;2.000001
+Mesh: OglModel  -  Visual
+NbrVertices: 8
+NbrTriangles: 12
+Center: 5;15;4.768372E-07
+Min: 2;2;2.000001
+Mesh: TetrahedralCorotationalFEMForceField  -  CFEM
+NbrVertices: 24000
+NbrTriangles: 24000
+Center: 5;5;5
+Min: 10;10;10
+Mesh: OglModel  -  Visual
+NbrVertices: 1331
+NbrTriangles: 1200
+Center: 4.99107;4.818248;5.00274
+Min: 10.1689;9.636496;10.17396
