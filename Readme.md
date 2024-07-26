@@ -14,7 +14,7 @@ This integration fully embeds SOFA as a physics engine within Unity3D, allowing 
 With this module, you can develop Unity3D applications that include simulations of deformable objects, interactions with haptic devices, and VR or AR capabilities. 
 
 <p align="center">
-	<img src="https://infinytech3d.com/wp-content/uploads/elementor/thumbs/liver06-1-pndkwsbo5lgcvczjnlz9k0besh26w6ctmx66969bco.jpg" style="width:400px;"/>
+	<img src="https://infinytech3d.com/wp-content/uploads/elementor/thumbs/liver06-1-pndkwsbo5lgcvczjnlz9k0besh26w6ctmx66969bco.jpg" style="width:80%;"/>
 </p>
 
 ## Project details
@@ -36,13 +36,19 @@ Full installation process available [here](https://infinytech3d.com/getting-star
 
 
 ## Examples
-Here are a some results of the integration:
-<p align="center">
-	<img src="https://infinytech3d.com/wp-content/uploads/2023/03/Example_02_Caduceus.gif" style="width:400px;"/>
-    <img src="https://infinytech3d.com/wp-content/uploads/2023/03/Example_05_SoftTissue.gif" style="width:400px;"/>
-</p>
+Here are a some results of the basic integration:
+|<img align="center" height="auto" src="https://infinytech3d.com/wp-content/uploads/2023/03/Example_01_SimpleLiver.gif">|<img align="center" height="auto" src="https://infinytech3d.com/wp-content/uploads/2023/03/Demo_01_LiverInteraction_cropped.gif">|<img align="center" height="auto" src="https://infinytech3d.com/wp-content/uploads/2023/03/Demo_05_LiverCut.gif">|
+|--|--|--|
+| Simple Liver simulation | Carving simulation | Cutting simulation |
+
+- **Endoscopy:** Here are other examples for endoscopy:
+
+|<img align="center" height="auto" src="https://infinytech3d.com/wp-content/uploads/2023/03/BeamDemo_02_KV1.gif">|<img align="center" height="auto" src="https://infinytech3d.com/wp-content/uploads/2022/03/endoscopy_02-1024x576.jpg">|
+|--|--|
+| BeamAdapter SOFA plugin integration | Endoscopy Capsule navigation |
 
 All examples are described [here](https://infinytech3d.com/basic-examples/) 
+
 
 
 ## Tutorials
