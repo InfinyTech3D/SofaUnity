@@ -1,6 +1,5 @@
 # SofaUnity Asset
 
-# SOFA Tearing Plugin
 [![Documentation](https://img.shields.io/badge/doc-on_website-green.svg)](https://infinytech3d.com/sapapi-unity3d/)
 [![Support](https://img.shields.io/badge/support-on_GitHub_Discussions-blue.svg)](https://github.com/InfinyTech3D/SofaUnity/discussions/)
 [![Discord](https://img.shields.io/badge/chat-on_Discord-darkred.svg)](https://discord.gg/G63t3a8Ra6)
@@ -37,13 +36,13 @@ Full installation process available [here](https://infinytech3d.com/getting-star
 
 ## Examples
 Here are a some results of the basic integration:
-|<img align="center" width="30%" src="https://infinytech3d.com/wp-content/uploads/2023/03/Example_01_SimpleLiver.gif">|<img align="center" width="30%" src="https://infinytech3d.com/wp-content/uploads/2023/03/Demo_01_LiverInteraction_cropped.gif">|<img align="center" width="30%" src="https://infinytech3d.com/wp-content/uploads/2023/03/Demo_05_LiverCut.gif">|
+|<img align="center" height="360" src="https://infinytech3d.com/wp-content/uploads/2023/03/Example_01_SimpleLiver.gif">|<img align="center" height="360" src="https://infinytech3d.com/wp-content/uploads/2023/03/Demo_01_LiverInteraction_cropped.gif">|<img align="center" height="360" src="https://infinytech3d.com/wp-content/uploads/2023/03/Demo_05_LiverCut.gif">|
 |--|--|--|
 | Simple Liver simulation | Carving simulation | Cutting simulation |
 
 - **Endoscopy:** Here are other examples for endoscopy:
 
-|<img align="center" height="auto" src="https://infinytech3d.com/wp-content/uploads/2023/03/BeamDemo_02_KV1.gif">|<img align="center" height="auto" src="https://infinytech3d.com/wp-content/uploads/2022/03/endoscopy_02-1024x576.jpg">|
+|<img align="center" height="360" src="https://infinytech3d.com/wp-content/uploads/2023/03/BeamDemo_02_KV1.gif">|<img align="center" height="360" src="https://infinytech3d.com/wp-content/uploads/2022/03/endoscopy_02-1024x576.jpg">|
 |--|--|
 | BeamAdapter SOFA plugin integration | Endoscopy Capsule navigation |
 
@@ -53,9 +52,6 @@ All examples are described [here](https://infinytech3d.com/basic-examples/)
 
 ## Tutorials
 Here is a set of Youtube tutorials. Whether you're just starting out or an experienced developer, our step-by-step guides offer valuable insights into leveraging SofaUnity-Renderer.
-<p align="center">
-	<img src="https://github.com/InfinyTech3D/SofaUnity-Renderer/blob/main/Doc/img/snake_in_nature.gif" style="width:400px;"/>
-</p>
 
 - [Tutorial 01: How to Install SofaUnity-Renderer](https://youtu.be/7ucROUFBfus?si=eIe5EfD-c241BBn2)
 - [Tutorial 02: How to install from source code and use custom SOFA version](https://youtu.be/fcVxm02jN0A?si=vcd-vFmlX93BCD3r)
