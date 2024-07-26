@@ -33,8 +33,7 @@
         <MechanicalObject name="dofs" src="@meshLoader"/>
         <TetrahedronSetGeometryAlgorithms template="Vec3d" name="GeomAlgo" />
         <DiagonalMass  name="computed using mass density" massDensity="0.1" topology="@topo" />
-        <TetrahedralCorotationalFEMForceField template="Vec3d" name="FEM" method="large" poissonRatio="0.3" 
-		youngModulus="600" computeGlobalMatrix="0" topology="@topo" />
+        <TetrahedronFEMForceField name="FEM" youngModulus="600" poissonRatio="0.3" method="large" computeVonMisesStress="1"/>	
         <FixedConstraint  name="FixedConstraint" indices="3 39 64" />
         
 		<Node name="VisuLiver" tags="Visual" gravity="0 -9.81 0">
