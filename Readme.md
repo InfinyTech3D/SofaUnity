@@ -37,7 +37,7 @@ Full installation process available [here](https://infinytech3d.com/getting-star
 
 ## Examples
 Here are a some results of the basic integration:
-|<img align="center" height="auto" src="https://infinytech3d.com/wp-content/uploads/2023/03/Example_01_SimpleLiver.gif">|<img align="center" height="auto" src="https://infinytech3d.com/wp-content/uploads/2023/03/Demo_01_LiverInteraction_cropped.gif">|<img align="center" height="auto" src="https://infinytech3d.com/wp-content/uploads/2023/03/Demo_05_LiverCut.gif">|
+|<img align="center" width="30%" src="https://infinytech3d.com/wp-content/uploads/2023/03/Example_01_SimpleLiver.gif">|<img align="center" width="30%" src="https://infinytech3d.com/wp-content/uploads/2023/03/Demo_01_LiverInteraction_cropped.gif">|<img align="center" width="30%" src="https://infinytech3d.com/wp-content/uploads/2023/03/Demo_05_LiverCut.gif">|
 |--|--|--|
 | Simple Liver simulation | Carving simulation | Cutting simulation |
 
