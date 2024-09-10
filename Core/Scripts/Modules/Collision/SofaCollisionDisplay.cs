@@ -22,6 +22,10 @@ namespace SofaUnity
         protected Vector3[] m_collisionPoints = null;
         protected SofaDataVectorVec3 d_sofaCollisionPoints = null;
 
+        // Choose the Unlit/Color shader in the Material Settings
+        // You can change that color, to change the color of the connecting lines
+        public Material lineMat;
+
         public bool DrawCollisions
         {
             get { return m_drawCollisions; }
@@ -44,6 +48,16 @@ namespace SofaUnity
                 }
                 // if no collision outputs, exit
                 if (d_sofaCollisionPoints == null)
+                {
+                    isReady = false;
+                    return;
+                }
+            }
+
+            if (lineMat == null)
+            {
+                lineMat = new Material(Shader.Find("Diffuse"));
+                if (lineMat == null)
                 {
                     isReady = false;
                     return;
@@ -87,15 +101,9 @@ namespace SofaUnity
         }
 
 
-        // Fill/drag these in from the editor
-
-        // Choose the Unlit/Color shader in the Material Settings
-        // You can change that color, to change the color of the connecting lines
-        public Material lineMat;
-        // Connect all of the `points` to the `mainPoint`
         void DrawCollisionLines()
         {
-            if (!m_drawCollisions)
+            if (!m_drawCollisions || !isReady)
                 return;
 
             for (int i=0; i<m_collisionPoints.Length; i+=2)
