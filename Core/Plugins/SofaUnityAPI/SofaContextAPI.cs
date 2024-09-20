@@ -91,7 +91,7 @@ namespace SofaUnityAPI
 
             // Create a simulation scene.
             int res = sofaPhysicsAPI_createScene(m_native);
-            if (res == 0)
+            if (res == 0 || res == 100)
             {
                 m_isReady = true;
             }
