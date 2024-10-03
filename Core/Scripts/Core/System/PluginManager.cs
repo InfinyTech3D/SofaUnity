@@ -323,7 +323,7 @@ namespace SofaUnity
             PluginManager.Instance.AddPlugin("SofaCUDA");
             PluginManager.Instance.AddPlugin("SofaPython3");
             PluginManager.Instance.AddPlugin("Tearing");
-            //PluginManager.Instance.AddPlugin("MultiCoreGPU");
+            PluginManager.Instance.AddPlugin("MultiThreading");
         }
 #endif
     }
