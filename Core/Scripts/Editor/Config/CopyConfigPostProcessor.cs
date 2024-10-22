@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 namespace SofaUnity
 {
@@ -65,7 +66,7 @@ namespace SofaUnity
                 string temppath = Path.Combine(destDirName, file.Name);
 
                 // Copy the file.
-                file.CopyTo(temppath, false);
+                file.CopyTo(temppath, true);
             }
 
             // If copySubDirs is true, copy the subdirectories.
@@ -83,114 +84,120 @@ namespace SofaUnity
             }
         }
 
-        static string scenePath = "";
+        static string unityScenePath = "";
+        static string sofaScenePath = "";
 
         [PostProcessSceneAttribute(2)]
         public static void OnPostprocessScene()
         {
             Scene scene = SceneManager.GetActiveScene();
-            scenePath = scene.path;
+            unityScenePath = scene.path;
+
+            List<GameObject> rootGameObjects= new List<GameObject>();
+            SceneManager.GetActiveScene().GetRootGameObjects(rootGameObjects);
+
+            // Retrieving SofaContext object
+            SofaContext _sofaContext = null;
+            foreach (GameObject obj in rootGameObjects)
+            {
+                _sofaContext = obj.GetComponent<SofaContext>();
+                if (_sofaContext != null)
+                    break;
+            }
+
+            if (_sofaContext == null)
+            {
+                Debug.LogError("No 'SofaContext' found in the Root GameObject of the scene: " + unityScenePath);
+                return;
+            }
+
+            sofaScenePath = _sofaContext.SceneFileMgr.SceneFilename;
         }
 
 
         [PostProcessBuild]
         public static void OnPostprocessBuild(BuildTarget target, string pathToBuiltProject)
         {
-            //System.IO.FileInfo info = new FileInfo(pathToBuiltProject);
-            //string depPath = System.IO.Path.Combine(Application.dataPath, "Dependencies");
-            Debug.Log("Path to built project: " + pathToBuiltProject);
+            if (unityScenePath.Length == 0)
+            {
+                OnPostprocessScene();
+            }
 
             switch (target)
             {
                 case BuildTarget.StandaloneWindows:
                 case BuildTarget.StandaloneWindows64:
                     {
-                        // Get root data path
-                        string rootBuildPath = string.Empty;
-                        if (target == BuildTarget.StandaloneWindows || target == BuildTarget.StandaloneWindows64)
-                        {
-                            rootBuildPath = pathToBuiltProject.Replace(".exe", "") + "_Data";
-                        }
-                        else
-                        {
-                            rootBuildPath = pathToBuiltProject + "/Contents/Resources/Data";
-                        }
-
-                        // Copy current License
-                        DirectoryCopy(Application.dataPath + "/SofaUnity/License/", rootBuildPath + "/License/", true);
-
-
-                        // Copy SOFA ini file
-                        //{
-                        // Create bin build path
-                        string binBuildPath = rootBuildPath + "/SofaUnity/Core/Plugins/Native/x64/";
-                        string dataBuildPath = rootBuildPath + "/SofaUnity/scenes/SofaScenes";
-                        if (!Directory.Exists(binBuildPath))
-                        {
-                            Directory.CreateDirectory(binBuildPath);
-                            Debug.Log("Create directory " + binBuildPath);
-                        }
-
-                        // Update SOFA ini file with build dir paths
-                        string outputIniPath = Path.Combine(binBuildPath, "sofa.ini");
-                        using (StreamWriter outputIniFile = new StreamWriter(outputIniPath))
-                        {
-                            outputIniFile.WriteLine("SHARE_DIR=" + dataBuildPath);
-                            outputIniFile.WriteLine("EXAMPLES_DIR=" + dataBuildPath);
-                            outputIniFile.WriteLine("LICENSE_DIR=" + rootBuildPath + "/License/");
-                            Debug.Log("Generate " + outputIniPath + " file.");
-                        }
-                        //}
-
-
-                        // Copy SOFA scene folder
-                        // Get current scene path
-                        bool copied = false;
-                        System.IO.FileInfo scenePathInfo = new FileInfo(scenePath);
-                        DirectoryInfo sceneDirInfo = scenePathInfo.Directory;
-                        string filename = System.IO.Path.GetFileName(scenePath);
-
-                        string fullScenePath = scenePathInfo.DirectoryName;
-                        string fullScenePathParent = fullScenePath.Replace(sceneDirInfo.Name, "");
-
-                        string relativeScenePath = scenePath.Replace(filename, "");
-                        relativeScenePath = relativeScenePath.Replace("Assets", "");
-                        string relativeScenePathParent = relativeScenePath.Replace(sceneDirInfo.Name, "");
-
-                        //Debug.Log("fullScenePath: " + fullScenePath);
-                        //Debug.Log("fullScenePathParent: " + fullScenePathParent);
-                        //Debug.Log("relativeScenePathParent: " + relativeScenePathParent);
-
-                        // test first SofaScenes directory below Unity scenes
-                        string buildSofaScenePath = rootBuildPath + relativeScenePath + "/SofaScenes";
-                        string currentSofaScenePath = fullScenePath + "/SofaScenes";
-                        if (Directory.Exists(currentSofaScenePath))
-                        {
-                            Debug.Log("Copying: " + currentSofaScenePath + "  ----->  " + buildSofaScenePath);
-                            DirectoryCopy(currentSofaScenePath, buildSofaScenePath, true);
-                            copied = true;
-                        }
-
-                        // test SofaScenes at same level than unity folder
-                        string buildSofaScenePath2 = rootBuildPath + relativeScenePathParent + "/SofaScenes";
-                        string currentSofaScenePath2 = fullScenePathParent + "/SofaScenes";
-                        if (Directory.Exists(currentSofaScenePath2))
-                        {
-
-                            Debug.Log("Copying: " + currentSofaScenePath2 + "  ----->  " + buildSofaScenePath2);
-                            DirectoryCopy(currentSofaScenePath2, buildSofaScenePath2, true);
-                            copied = true;
-                        }
-
-                        if (!copied)
-                        {
-                            Debug.LogError("No 'SofaScenes' folder found to copy at: " + currentSofaScenePath + " or " + currentSofaScenePath2);
-                        }
+                        Debug.Log("[SofaUnity - Build process] StandaloneWindows build to: " + pathToBuiltProject);
+                        BuildForWindows(pathToBuiltProject);
 
                         break;
                     }
-
+                    // else rootBuildPath = pathToBuiltProject + "/Contents/Resources/Data";
             }
         }
+
+        // Specific method to build SofaUnity folders on windows build. Will create SofaUnity/Core with plugin and sofa.ini file as well as SofaUnity/Scenes/SofaScenes folder
+        static void BuildForWindows(string pathToBuiltProject)
+        {
+            // Get build root Path
+            string rootBuildPath = pathToBuiltProject.Replace(".exe", "") + "_Data";
+
+            // Create bin build path
+            string binBuildPath = rootBuildPath + "/SofaUnity/Core/Plugins/Native/x64/";
+            string dataBuildPath = rootBuildPath + "/SofaUnity/scenes/SofaScenes";
+
+            Directory.CreateDirectory(binBuildPath);
+            Debug.Log("[SofaUnity - BuildForWindows] Create directory: " + binBuildPath);
+            Directory.CreateDirectory(dataBuildPath);
+            Debug.Log("[SofaUnity - BuildForWindows] Create directory: " + dataBuildPath);
+
+            // Copy current License
+            DirectoryCopy(Application.dataPath + "/SofaUnity/License/", rootBuildPath + "/License/", true);
+
+            // Update SOFA ini file with build dir paths
+            string outputIniPath = Path.Combine(binBuildPath, "sofa.ini");
+            using (StreamWriter outputIniFile = new StreamWriter(outputIniPath))
+            {
+                outputIniFile.WriteLine("SHARE_DIR=" + dataBuildPath);
+                outputIniFile.WriteLine("EXAMPLES_DIR=" + dataBuildPath);
+                outputIniFile.WriteLine("LICENSE_DIR=" + rootBuildPath + "/License/");
+                Debug.Log("[SofaUnity - BuildForWindows] Generate: " + outputIniPath + " file.");
+            }
+
+            // Copy SOFA scene folder
+            bool copyDone = false;
+            Debug.Log("[SofaUnity - BuildForWindows] Unity scene Path: " + unityScenePath);
+            Debug.Log("[SofaUnity - BuildForWindows] SOFA scenePath: " + sofaScenePath);
+
+            System.IO.FileInfo sofaScenePathInfo = new FileInfo("Assets/" + sofaScenePath);
+            string filename = System.IO.Path.GetFileName(sofaScenePath);
+            
+            string currentScenePath = sofaScenePathInfo.DirectoryName;
+            string relativeScenePath = sofaScenePath.Replace(filename, "");
+            relativeScenePath = relativeScenePath.Replace("Assets", "");
+
+            copyDone = CopySofaSceneData(currentScenePath, rootBuildPath + relativeScenePath);
+
+            if (!copyDone)
+            {
+                Debug.LogError("No 'SofaScenes' folder found to copy Sofa scene related to: " + unityScenePath);
+            }
+        }
+
+
+        static bool CopySofaSceneData(string currentSofaScenePath, string buildSofaScenePath)
+        {
+            if (Directory.Exists(currentSofaScenePath))
+            {
+                Debug.Log("[SofaUnity - Build process] Copying SofaScenes from directory: " + currentSofaScenePath + "  ----->  " + buildSofaScenePath);
+                DirectoryCopy(currentSofaScenePath, buildSofaScenePath, true);
+                return true;
+            }
+
+            return false;
+        }
+
+
     }
 }
