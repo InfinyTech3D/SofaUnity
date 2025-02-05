@@ -20,15 +20,15 @@
     <RequiredPlugin name="Sofa.Component.Visual"/> <!-- Needed to use components [VisualStyle] -->  
     <RequiredPlugin name="Sofa.GL.Component.Rendering3D"/> <!-- Needed to use components [OglModel] -->  
     <VisualStyle displayFlags="showBehaviorModels showVisual" />
-    <DefaultPipeline verbose="0" />
+    <CollisionPipeline verbose="0" />
     
     <DefaultAnimationLoop />
     <DefaultVisualManagerLoop />
     
-    <DefaultPipeline name="CollisionPipeline" verbose="0" />
+    <CollisionPipeline name="CollisionPipeline" verbose="0" />
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
-    <DefaultContactManager name="collision response" response="PenalityContactForceField" />
+    <CollisionResponse name="collision response" response="PenalityContactForceField" />
 	<MinProximityIntersection name="Proximity" alarmDistance="0.8" contactDistance="0.5" />
 
     <Node name="Volume">
@@ -51,7 +51,7 @@
 		
 		
 		<BoxROI name="box3" box="-2.2 -0.3 -9.2    2.2 0.110668 2.88584" drawBoxes="1" drawSize="2" />
-		<FixedConstraint indices="@box3.indices" />	  
+		<FixedProjectiveConstraint indices="@box3.indices" />	  
 
 		<PlaneForceField normal="0 1 0" d="-0.2" stiffness="100"  showPlane="1" showPlaneSize="20" />
 		
