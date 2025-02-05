@@ -36,9 +36,18 @@ namespace SofaUnity
         {
             if (m_sofaDetectionOutputs == null)
             {
-                Debug.LogError("SofaDetectionDisplay component not set.");
-                isReady = false;
-                return;
+                GameObject GODisplay = GameObject.Find("BaseController  -  CollisionDetectionDisplay");
+                if (GODisplay != null)
+                {
+                    m_sofaDetectionOutputs = GODisplay.GetComponent<SofaComponent>();
+                }
+
+                if (m_sofaDetectionOutputs == null)
+                {
+                    Debug.LogError("SofaDetectionDisplay component not set and not found.");
+                    isReady = false;
+                    return;
+                }
             }
             else
             {
