@@ -21,12 +21,12 @@
     <RequiredPlugin name="MeshRefinement"/>
     <RequiredPlugin name="SofaCUDA"/>
 
-    <DefaultPipeline />
+    <CollisionPipeline />
     <DefaultVisualManagerLoop />
     <DefaultAnimationLoop />
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
-    <DefaultContactManager response="PenalityContactForceField" />
+    <CollisionResponse response="PenalityContactForceField" />
     <MinProximityIntersection name="Proximity" alarmDistance="0.8" contactDistance="0.5" />
      
 
@@ -42,7 +42,7 @@
 
         <DiagonalMass massDensity="4.0" />
         <BoxROI template="Vec3d" box="-1 6 -0.5   1 7 1.5" drawBoxes="1" position="@Volume.rest_position" name="FixedROI"/>
-        <FixedConstraint indices="@FixedROI.indices" />
+        <FixedProjectiveConstraint indices="@FixedROI.indices" />
 
         <TetrahedronFEMForceField name="FEM" template="CudaVec3f" youngModulus="3000" poissonRatio="0.3" method="large" />    
 
