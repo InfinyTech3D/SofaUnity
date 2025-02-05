@@ -98,7 +98,7 @@
         <DiagonalMass massDensity="1.0" />
 
         <BoxROI name="box" box="-1 -1 -1 11 0 11" drawBoxes="true" />
-        <FixedConstraint  name="FixedConstraint" indices="@box.indices" activate_projectVelocity="1"/>
+        <FixedProjectiveConstraint  name="FixedConstraint" indices="@box.indices" activate_projectVelocity="1"/>
 
         <TetrahedralCorotationalFEMForceField name="CFEM" youngModulus="1000" poissonRatio="0.3" method="large" />
         <UncoupledConstraintCorrection/>
