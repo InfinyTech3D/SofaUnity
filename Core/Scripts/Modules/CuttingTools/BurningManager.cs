@@ -68,45 +68,60 @@ namespace SofaUnity
             m_mesh.uv2 = m_uv2;
 
 
-            //Debug.Log("Start: " + m_nbrV);
+            Debug.Log("########## Start texcoords: " + m_nbrV);
             //InvokeRepeating("computeBurnTissus", 0.0f, 1.0f);
         }
 
         int texCpt = 0;
+        bool firstInit = true;
 
         void Update()
         {
-            if (m_carving)
+            if (m_carving == null)
+                return;
+
+            var bData = m_carving.m_dataArchiver.GetBaseData("texcoords");
+            int counter = bData.GetDataCounter();
+
+            if (counter == texCpt)
+                return;
+
+
+            texCpt = counter;
+
+            if (firstInit)
             {
-                var bData = m_carving.m_dataArchiver.GetBaseData("texcoords");
-                int counter = bData.GetDataCounter();
-
-                if (counter == texCpt)
-                    return;
-
-                bool updateSize = false;
-                if (m_mesh.vertices.Length != m_nbrV) // carving in process
+                Debug.Log("########## firstInit m_mesh.vertices.Length: " + m_nbrV);
+                for (int i = 0; i < m_nbrV; i++)
                 {
-                    m_nbrV = m_mesh.vertices.Length;
-                    m_uv2 = new Vector2[m_nbrV];
-                    updateSize = true;
+                    m_uv2[i].x = 0.0f;
+                    m_uv2[i].y = 0.0f;
                 }
+                m_mesh.uv2 = m_uv2;
+                firstInit = false;
+                return;
+            }
+                
+            bool updateSize = false;
+            Debug.Log("########## m_mesh.vertices.Length: " + m_mesh.vertices.Length);
+            Debug.Log("########## m_nbrV: " + m_nbrV);
+            if (m_mesh.vertices.Length != m_nbrV) // carving in process
+            {
+                m_nbrV = m_mesh.vertices.Length;
+                m_uv2 = new Vector2[m_nbrV];
+                updateSize = true;
+            }
+            
+            if (bData != null)
+            {
+                SofaDataVectorVec2 dataV = (SofaDataVectorVec2)(bData);
 
-                texCpt = counter;
-                if (bData != null)
-                {
-                    bool vector = bData.IsVector();
-                    SofaDataVectorVec2 dataV = (SofaDataVectorVec2)(bData);
-
-                    dataV.GetValues(m_uv2, updateSize);
-                    m_mesh.uv2 = m_uv2;
-                }
-                //vModel.UpdateTexCoords();
+                dataV.GetValues(m_uv2, updateSize);
+                m_mesh.uv2 = m_uv2;
             }
         }
 
-        //Vector3 firstVertex;
-
+        
         void computeBurnTissus()
         {
             if (m_isReady == false)
@@ -135,14 +150,14 @@ namespace SofaUnity
                 m_mesh.uv2 = m_uv2;
         }
 
-        //void OnDrawGizmosSelected()
-        //{
-        //    if (!m_isReady)
-        //        return;
+        void OnDrawGizmosSelected()
+        {
+            if (!m_isReady)
+                return;
 
-        //    Gizmos.color = Color.yellow;
-        //    Gizmos.DrawWireSphere(m_burner.transform.position, 0.005f);
-        //    Gizmos.DrawLine(firstVertex, m_burner.transform.position);
-        //}
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(m_burner.transform.position, 0.005f);
+            
+        }
     }
 }
