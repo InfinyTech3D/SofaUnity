@@ -56,6 +56,16 @@ namespace SofaUnity
                 return 0;
         }
 
+        public Mesh GetMesh()
++       {
++            return m_mesh;
++       }
+
++       public void SetMesh(Mesh mesh)
++       {
++           m_mesh=mesh;
++       }
+
         public e_UVType UVType
         {
             get { return m_uvType; }
