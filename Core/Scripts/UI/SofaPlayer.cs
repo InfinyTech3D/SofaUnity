@@ -127,6 +127,10 @@ namespace SofaUnity
                 {
                     this.stopSofaSimulation();
                 }
+                else if (_toggle.gameObject.name.Contains("quit"))
+                {
+                    this.exitApplication();
+                }
             }
         }
 
@@ -140,6 +144,17 @@ namespace SofaUnity
         {
             if (m_sofaContext != null)
                 m_sofaContext.IsSofaUpdating = false;
+        }
+
+        public void exitApplication()
+        {
+            if (m_sofaContext != null)
+            {
+                m_sofaContext.IsSofaUpdating = false;
+                m_sofaContext.ClearSofaScene();
+            }
+
+            Application.Quit();
         }
 
         public void restartSofaSimulation()
