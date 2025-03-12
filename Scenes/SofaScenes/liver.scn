@@ -18,10 +18,10 @@
     <DefaultAnimationLoop />
     <DefaultVisualManagerLoop />
     
-    <DefaultPipeline name="CollisionPipeline" verbose="0" />
+    <CollisionPipeline name="CollisionPipeline" verbose="0" />
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
-    <DefaultContactManager name="collision response" response="PenalityContactForceField" />
+    <CollisionResponse name="collision response" response="PenalityContactForceField" />
 	<MinProximityIntersection name="Proximity" alarmDistance="0.8" contactDistance="0.5" />
 	
 	<EulerImplicitSolver name="cg_odesolver"  />
@@ -34,10 +34,10 @@
         <TetrahedronSetGeometryAlgorithms template="Vec3d" name="GeomAlgo" />
         <DiagonalMass  name="computed using mass density" massDensity="0.1" topology="@topo" />
         <TetrahedronFEMForceField name="FEM" youngModulus="600" poissonRatio="0.3" method="large" computeVonMisesStress="1"/>	
-        <FixedConstraint  name="FixedConstraint" indices="3 39 64" />
+        <FixedProjectiveConstraint  name="FixedConstraint" indices="3 39 64" />
         
 		<Node name="VisuLiver" tags="Visual" gravity="0 -9.81 0">
-            <MeshObjLoader name="meshLoaderVisu" filename="mesh/liver-smooth.obj" handleSeams="1" />
+            <MeshOBJLoader name="meshLoaderVisu" filename="mesh/liver-smooth.obj" handleSeams="1" />
             <OglModel  name="VisualModel" src="@meshLoaderVisu"/>
             <BarycentricMapping name="visual mapping" input="@../dofs" output="@VisualModel" />
         </Node>

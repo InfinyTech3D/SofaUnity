@@ -22,11 +22,11 @@
     <VisualStyle displayFlags="hideCollisionModels showVisual" />
     <DefaultVisualManagerLoop />
     
-    <DefaultPipeline verbose="0" depth="10" draw="0" />
-    <DefaultPipeline verbose="0" />
+    <CollisionPipeline verbose="0" depth="10" draw="0" />
+    <CollisionPipeline verbose="0" />
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
-    <DefaultContactManager response="PenalityContactForceField" />
+    <CollisionResponse response="PenalityContactForceField" />
     <MinProximityIntersection name="Proximity" alarmDistance="1.0" contactDistance="0.2" />
 
     <EulerImplicitSolver name="EulerImplicit"  rayleighStiffness="0.1" rayleighMass="0.1" />
@@ -58,7 +58,7 @@
         <DiagonalMass massDensity="1.0" />
 
         <BoxROI name="box" box="-1 -1 -1 11 0 11" drawBoxes="true" />
-        <FixedConstraint  name="FixedConstraint" indices="@box.indices" activate_projectVelocity="1"/>
+        <FixedProjectiveConstraint  name="FixedConstraint" indices="@box.indices" activate_projectVelocity="1"/>
 
         <TetrahedralCorotationalFEMForceField name="CFEM" youngModulus="100" poissonRatio="0.3" method="large" />
         

@@ -21,11 +21,11 @@
     <DefaultAnimationLoop />
     <DefaultVisualManagerLoop />
     
-    <DefaultPipeline verbose="0" depth="10" draw="0" />
+    <CollisionPipeline verbose="0" depth="10" draw="0" />
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
     <MinProximityIntersection name="Proximity" alarmDistance="0.5" contactDistance="0.1" />
-    <DefaultContactManager name="Response" response="PenalityContactForceField" />
+    <CollisionResponse name="Response" response="PenalityContactForceField" />
     
     <Node name="Cylinder">
         <EulerImplicitSolver name="cg_odesolver" printLog="false" />
@@ -57,7 +57,7 @@
     </Node>    
     
     <Node name="Cube">
-        <MeshObjLoader name="loader" filename="mesh/cube_HD.obj" />
+        <MeshOBJLoader name="loader" filename="mesh/cube_HD.obj" />
         <MeshTopology src="@loader" />
         <MechanicalObject name="Floor" src="@loader" />
         <TriangleCollisionModel name="FloorTC" simulated="0" moving="0" />
