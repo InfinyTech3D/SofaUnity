@@ -106,10 +106,9 @@ namespace SofaUnity
             int nbrV = m_sofaCapsuleMesh.NbVertices();
             float[] sofaVertices = m_sofaCapsuleMesh.SofaMeshTopology.m_vertexBuffer;
 
-            for (int i = 0; i < 3; i++)
-            {
-                capsuleOri[i] = sofaVertices[i] * sofaToUnity[i];
-            }
+            capsuleOri[0] = -sofaVertices[0] * sofaToUnity[0];
+            capsuleOri[1] = sofaVertices[1] * sofaToUnity[1];
+            capsuleOri[2] = sofaVertices[2] * sofaToUnity[2];
 
             this.transform.position = capsuleOri;
         }

@@ -166,7 +166,7 @@ namespace SofaUnity
 
             for (int i = 0; i < nbrV; i++)
             {
-                m_vertCenter[i] = new Vector3(sofaVertices[i * sizeDof], sofaVertices[i * sizeDof + 1], sofaVertices[i * sizeDof + 2]);
+                m_vertCenter[i] = new Vector3(-sofaVertices[i * sizeDof], sofaVertices[i * sizeDof + 1], sofaVertices[i * sizeDof + 2]);
             }
 
             int nbrPointPerCircle = 4 * m_beamDiscretisation + 1; // +1 to close cylinder UV
@@ -306,7 +306,7 @@ namespace SofaUnity
             float[] sofaVertices = m_sofaMesh.SofaMeshTopology.m_vertexBuffer;
             for (int i = 0; i < nbrV; i++)
             {
-                m_vertCenter[i] = new Vector3(sofaVertices[i * sizeDof], sofaVertices[i * sizeDof + 1], sofaVertices[i * sizeDof + 2]);
+                m_vertCenter[i] = new Vector3(-sofaVertices[i * sizeDof], sofaVertices[i * sizeDof + 1], sofaVertices[i * sizeDof + 2]);
             }
 
 

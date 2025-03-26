@@ -365,7 +365,7 @@ namespace SofaUnityAPI
 
                 for (int i = 0; i < nbrV; ++i)
                 {
-                    unityVertices[i].x = vertices[i * 3];
+                    unityVertices[i].x = -vertices[i * 3];
                     unityVertices[i].y = vertices[i * 3 + 1];
                     unityVertices[i].z = vertices[i * 3 + 2];
                 }
@@ -399,8 +399,13 @@ namespace SofaUnityAPI
 
             // fill triangles first
             int nbrIntTri = nbrTris * 3;
-            for (int i = 0; i < nbrIntTri; ++i)
-                trisOut[i] = tris[i];
+            for (int i = 0; i < nbrTris; ++i)
+            {
+                trisOut[i * 3] = tris[i * 3];
+                trisOut[i * 3 + 1] = tris[i * 3 + 2];
+                trisOut[i * 3 + 2] = tris[i * 3 + 1];
+            }
+                
 
             // Add quads splited as triangles
             for (int i = 0; i < nbrQuads; ++i)
@@ -470,7 +475,7 @@ namespace SofaUnityAPI
                             norms[i] = new Vector3(0, 0, 0);
                         }
 
-                        verts[i].x = vertices[i * 3];
+                        verts[i].x = -vertices[i * 3];
                         verts[i].y = vertices[i * 3 + 1];
                         verts[i].z = vertices[i * 3 + 2];
 
@@ -483,7 +488,7 @@ namespace SofaUnityAPI
                         }
                         else
                         {
-                            norms[i].x = normals[i * 3] * factor;
+                            norms[i].x = -normals[i * 3] * factor;
                             norms[i].y = normals[i * 3 + 1] * factor;
                             norms[i].z = normals[i * 3 + 2] * factor;
                         }
@@ -542,7 +547,7 @@ namespace SofaUnityAPI
                         break;
                     }
 
-                    verts[id].x = verts[id].x + timestep * velocities[i * 4 + 1];
+                    verts[id].x = -verts[id].x + timestep * velocities[i * 4 + 1];
                     verts[id].y = verts[id].y + timestep * velocities[i * 4 + 2];
                     verts[id].z = verts[id].z + timestep * velocities[i * 4 + 3];
 
@@ -666,7 +671,7 @@ namespace SofaUnityAPI
                 {
                     for (int i = 0; i < nbrV; ++i)
                     {
-                        verts[i].x = vertices[i * 3];
+                        verts[i].x = -vertices[i * 3];
                         verts[i].y = vertices[i * 3 + 1];
                         verts[i].z = vertices[i * 3 + 2];
 
@@ -679,7 +684,7 @@ namespace SofaUnityAPI
                         }
                         else
                         {
-                            norms[i].x = normals[i * 3];
+                            norms[i].x = -normals[i * 3];
                             norms[i].y = normals[i * 3 + 1];
                             norms[i].z = normals[i * 3 + 2];
                         }

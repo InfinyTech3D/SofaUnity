@@ -34,7 +34,7 @@ namespace SofaUnity
         /// number of points inside this mesh
         public int m_meshDim = 3;
 
-        /// real buffer sent to SOFA
+        /// real buffer sent to SOFA (right handed)
         public float[] m_vertexBuffer = null;
         public float[] m_restVertexBuffer = null;
 
@@ -238,7 +238,7 @@ namespace SofaUnity
             Vector3[] unityVertices = new Vector3[m_nbVertices];
             for (int i = 0; i < m_nbVertices; ++i)
             {
-                unityVertices[i].x = m_vertexBuffer[i * 3];
+                unityVertices[i].x = -m_vertexBuffer[i * 3];
                 unityVertices[i].y = m_vertexBuffer[i * 3 + 1];
                 unityVertices[i].z = m_vertexBuffer[i * 3 + 2];
             }
@@ -255,7 +255,7 @@ namespace SofaUnity
             Vector3[] unityVertices = new Vector3[m_nbVertices];
             for (int i = 0; i < m_nbVertices; ++i)
             {
-                unityVertices[i].x = m_vertexBuffer[i * 2];
+                unityVertices[i].x = -m_vertexBuffer[i * 2];
                 unityVertices[i].y = m_vertexBuffer[i * 2 + 1];
                 unityVertices[i].z = 0.0f;
             }

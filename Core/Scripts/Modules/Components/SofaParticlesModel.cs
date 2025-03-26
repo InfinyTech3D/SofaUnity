@@ -117,7 +117,7 @@ namespace SofaUnity
             for (int i = 0; i < nbrV; ++i)
             {
                 //ParticleSystem.Particle part = m_particles[i];
-                m_particles[i].position = new Vector3(sofaVertices[i * 3], sofaVertices[i * 3 + 1], sofaVertices[i * 3 + 2]);
+                m_particles[i].position = new Vector3(-sofaVertices[i * 3], sofaVertices[i * 3 + 1], sofaVertices[i * 3 + 2]);
                 m_particles[i].startSize = m_particleSize;
                 //m_particles[i].remainingLifetime = 1000.0f;
                 //part.remainingLifetime = 10000.0f;
