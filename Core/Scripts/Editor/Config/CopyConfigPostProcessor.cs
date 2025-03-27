@@ -88,7 +88,7 @@ namespace SofaUnity
         static string sofaScenePath = "";
 
         [PostProcessSceneAttribute(2)]
-        public static void OnPostprocessScene()
+        public static bool OnPostprocessScene()
         {
             Scene scene = SceneManager.GetActiveScene();
             unityScenePath = scene.path;
@@ -107,11 +107,11 @@ namespace SofaUnity
 
             if (_sofaContext == null)
             {
-                Debug.LogError("No 'SofaContext' found in the Root GameObject of the scene: " + unityScenePath);
-                return;
+                return false;
             }
 
             sofaScenePath = _sofaContext.SceneFileMgr.SceneFilename;
+            return true;
         }
 
 
@@ -120,7 +120,9 @@ namespace SofaUnity
         {
             if (unityScenePath.Length == 0)
             {
-                OnPostprocessScene();
+                bool res = OnPostprocessScene();
+                if (!res)
+                    Debug.LogError("No 'SofaContext' found in the Root GameObject of the scene: " + unityScenePath);
             }
 
             switch (target)

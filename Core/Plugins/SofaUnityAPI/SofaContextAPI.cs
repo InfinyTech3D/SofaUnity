@@ -193,7 +193,7 @@ namespace SofaUnityAPI
             if (m_isReady)
             {
                 int res = sofaPhysicsAPI_loadScene(m_native, filename);
-                if (res != 0)
+                if (res < 0)
                     Debug.LogError("SofaContextAPI::loadScene method returns: " + SofaDefines.msg_error[res] + " for scene: " + filename);
             }
             else
@@ -206,7 +206,7 @@ namespace SofaUnityAPI
             if (m_isReady)
             {
                 int res = sofaPhysicsAPI_unloadScene(m_native);
-                if (res != 0)
+                if (res < 0)
                     Debug.LogError("SofaContextAPI::unload method returns: " + SofaDefines.msg_error[res]);
             }
             else
@@ -221,7 +221,7 @@ namespace SofaUnityAPI
             if (m_isReady)
             {
                 int res = sofaPhysicsAPI_loadDefaultPlugins(m_native, pluginPath);
-                if (res != 0)
+                if (res < 0)
                     Debug.LogError("SofaContextAPI::loadDefaultPlugin method returns: " + SofaDefines.msg_error[res]);
             }
             else
@@ -236,7 +236,7 @@ namespace SofaUnityAPI
             if (m_isReady)
             {
                 int res = sofaPhysicsAPI_loadPlugin(m_native, pluginName);
-                if (res != 0)
+                if (res < 0)
                     Debug.LogError("SofaContextAPI::loadPlugin: " + pluginName + ", method returns: " + SofaDefines.msg_error[res]);
             }
             else
@@ -250,7 +250,7 @@ namespace SofaUnityAPI
             if (m_native != IntPtr.Zero)
             {
                 int initGl = sofaPhysicsAPI_initGlutGlew(m_native);
-                if (initGl != 0)
+                if (initGl < 0)
                     Debug.LogError("Error: loading glut/glew in Sofa. Method returns error: " + SofaDefines.msg_error[initGl]);
             }
             else

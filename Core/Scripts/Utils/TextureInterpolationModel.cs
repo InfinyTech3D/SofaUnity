@@ -27,8 +27,6 @@ namespace SofaUnity
 
         void Awake()
         {
-            Debug.Log("TextureInterpolationModel::Awake");
-
 #if UNITY_EDITOR
             MeshFilter mf = gameObject.GetComponent<MeshFilter>();
             m_mesh = mf.sharedMesh;
