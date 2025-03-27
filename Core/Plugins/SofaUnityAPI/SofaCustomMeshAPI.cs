@@ -91,7 +91,7 @@ namespace SofaUnityAPI
                 Vector3 vert = trans.TransformPoint(vertices[i]);
                 Vector3 vertS = sofaCTransform.InverseTransformPoint(vert);
 
-                val[i * 3] = vertS.x;
+                val[i * 3] = -vertS.x; // left to right coordinate system conversion
                 val[i * 3 + 1] = vertS.y;
                 val[i * 3 + 2] = vertS.z;
             }

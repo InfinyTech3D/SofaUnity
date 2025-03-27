@@ -365,7 +365,7 @@ namespace SofaUnityAPI
 
                 for (int i = 0; i < nbrV; ++i)
                 {
-                    unityVertices[i].x = -vertices[i * 3];
+                    unityVertices[i].x = -vertices[i * 3]; // left to right coordinate system conversion
                     unityVertices[i].y = vertices[i * 3 + 1];
                     unityVertices[i].z = vertices[i * 3 + 2];
                 }
@@ -399,7 +399,7 @@ namespace SofaUnityAPI
 
             // fill triangles first
             int nbrIntTri = nbrTris * 3;
-            for (int i = 0; i < nbrTris; ++i)
+            for (int i = 0; i < nbrTris; ++i) // Triangle inversion: right to left coordinate system conversion
             {
                 trisOut[i * 3] = tris[i * 3];
                 trisOut[i * 3 + 1] = tris[i * 3 + 2];
@@ -408,15 +408,15 @@ namespace SofaUnityAPI
                 
 
             // Add quads splited as triangles
-            for (int i = 0; i < nbrQuads; ++i)
+            for (int i = 0; i < nbrQuads; ++i) // Triangle inversion: right to left coordinate system conversion
             {
                 trisOut[nbrIntTri + i * 6] = quads[i * 4];
-                trisOut[nbrIntTri + i * 6 + 1] = quads[i * 4 + 1];
-                trisOut[nbrIntTri + i * 6 + 2] = quads[i * 4 + 2];
+                trisOut[nbrIntTri + i * 6 + 1] = quads[i * 4 + 2];
+                trisOut[nbrIntTri + i * 6 + 2] = quads[i * 4 + 1];
 
                 trisOut[nbrIntTri + i * 6 + 3] = quads[i * 4];
-                trisOut[nbrIntTri + i * 6 + 4] = quads[i * 4 + 2];
-                trisOut[nbrIntTri + i * 6 + 5] = quads[i * 4 + 3];
+                trisOut[nbrIntTri + i * 6 + 4] = quads[i * 4 + 3];
+                trisOut[nbrIntTri + i * 6 + 5] = quads[i * 4 + 2];
             }
 
             // Force future deletion
@@ -475,20 +475,20 @@ namespace SofaUnityAPI
                             norms[i] = new Vector3(0, 0, 0);
                         }
 
-                        verts[i].x = -vertices[i * 3];
+                        verts[i].x = -vertices[i * 3]; // right to left coordinate system conversion
                         verts[i].y = vertices[i * 3 + 1];
                         verts[i].z = vertices[i * 3 + 2];
 
                         if (resN < 0) // no normals
                         {
                             Vector3 vec = Vector3.Normalize(verts[i]);
-                            norms[i].x = vec.x * factor;
+                            norms[i].x = - vec.x * factor; // right to left coordinate system conversion
                             norms[i].y = vec.y * factor;
                             norms[i].z = vec.z * factor;
                         }
                         else
                         {
-                            norms[i].x = -normals[i * 3] * factor;
+                            norms[i].x = -normals[i * 3] * factor; // right to left coordinate system conversion
                             norms[i].y = normals[i * 3 + 1] * factor;
                             norms[i].z = normals[i * 3 + 2] * factor;
                         }
@@ -547,7 +547,7 @@ namespace SofaUnityAPI
                         break;
                     }
 
-                    verts[id].x = -verts[id].x + timestep * velocities[i * 4 + 1];
+                    verts[id].x = -verts[id].x + timestep * velocities[i * 4 + 1]; // right to left coordinate system conversion
                     verts[id].y = verts[id].y + timestep * velocities[i * 4 + 2];
                     verts[id].z = verts[id].z + timestep * velocities[i * 4 + 3];
 
@@ -671,20 +671,20 @@ namespace SofaUnityAPI
                 {
                     for (int i = 0; i < nbrV; ++i)
                     {
-                        verts[i].x = -vertices[i * 3];
+                        verts[i].x = -vertices[i * 3]; // right to left coordinate system conversion
                         verts[i].y = vertices[i * 3 + 1];
                         verts[i].z = vertices[i * 3 + 2];
 
                         if (resN < 0) // no normals
                         {
                             Vector3 vec = Vector3.Normalize(verts[i]);
-                            norms[i].x = vec.x;// normals[i * 3];
+                            norms[i].x = -vec.x;// normals[i * 3]; // right to left coordinate system conversion
                             norms[i].y = vec.y; //normals[i * 3 + 1];
                             norms[i].z = vec.z; //normals[i * 3 + 2];
                         }
                         else
                         {
-                            norms[i].x = -normals[i * 3];
+                            norms[i].x = -normals[i * 3]; // right to left coordinate system conversion
                             norms[i].y = normals[i * 3 + 1];
                             norms[i].z = normals[i * 3 + 2];
                         }
@@ -849,7 +849,7 @@ namespace SofaUnityAPI
 
 
         /// Method to set new vertices position to this mesh
-        public void SetVertices(Vector3[] vertices, Transform sofaTransform)
+        public void SetPositions(Vector3[] vertices, Transform sofaTransform)
         {
             if (!m_isReady)
                 return;
@@ -860,7 +860,7 @@ namespace SofaUnityAPI
             for (int i = 0; i < nbrV; i++)
             {
                 Vector3 vec = sofaTransform.InverseTransformPoint(vertices[i]);
-                val[i * 3] = vec.x;
+                val[i * 3] = -vec.x; // left to right coordinate system conversion
                 val[i * 3 + 1] = vec.y;
                 val[i * 3 + 2] = vec.z;
             }
@@ -871,7 +871,7 @@ namespace SofaUnityAPI
 
         }
 
-        public void SetPositions(float[] vertices)
+        public void SetRawPositions(float[] vertices)
         {
             if (!m_isReady)
                 return;
@@ -882,7 +882,7 @@ namespace SofaUnityAPI
 
         }
 
-        public void SetVelocities(float[] values)
+        public void SetRawVelocities(float[] values)
         {
             if (!m_isReady)
                 return;
@@ -895,7 +895,7 @@ namespace SofaUnityAPI
 
 
         /// Method to set new vertices position to this mesh
-        public void SetRestPositions(float[] vertices)
+        public void SetRawRestPositions(float[] vertices)
         {
             if (!m_isReady)
                 return;
@@ -928,7 +928,7 @@ namespace SofaUnityAPI
 
             for (int i = 0; i < nbrV; i++)
             {
-                val[i * 3] = vels[i].x;
+                val[i * 3] = -vels[i].x; // left to right coordinate system conversion
                 val[i * 3 + 1] = vels[i].y;
                 val[i * 3 + 2] = vels[i].z;
             }
@@ -946,7 +946,7 @@ namespace SofaUnityAPI
                 return;
 
             float[] val = new float[3];
-            val[0] = value[0];
+            val[0] = -value[0]; // left to right coordinate system conversion
             val[1] = value[1];
             val[2] = value[2];
             int resUpdate = sofaMeshAPI_setVertices(m_simu, m_name, val);

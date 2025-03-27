@@ -126,10 +126,10 @@ namespace SofaUnity
         }
 
         /// Method to set new vertices position to this mesh
-        public void SetVertices(Vector3[] vertices)
+        public void SetPositions(Vector3[] vertices)
         {
             if (m_sofaMeshAPI != null)
-                m_sofaMeshAPI.SetVertices(vertices, m_sofaContext.transform);
+                m_sofaMeshAPI.SetPositions(vertices, m_sofaContext.transform);
         }
 
         /// Method to set new vertices velocity to this mesh
@@ -139,24 +139,28 @@ namespace SofaUnity
                 m_sofaMeshAPI.SetVelocities(vels);
         }
 
-        public void SetPositions(float[] vertices)
+        /// Method to set new vertices position to this mesh, using raw float buffer. 
+        /// !! Be careful, no conversion from left-right coordinates system
+        public void SetRawPositions(float[] vertices)
         {
             if (m_sofaMeshAPI != null)
-                m_sofaMeshAPI.SetPositions(vertices);
+                m_sofaMeshAPI.SetRawPositions(vertices);
         }
 
-        public void SetVelocities(float[] vels)
+        /// Method to set new vertices velocity to this mesh, using raw float buffer. 
+        /// !! Be careful, no conversion from left-right coordinates system
+        public void SetRawVelocities(float[] vels)
         {
             if (m_sofaMeshAPI != null)
-                m_sofaMeshAPI.SetVelocities(vels);
+                m_sofaMeshAPI.SetRawVelocities(vels);
         }
 
 
         /// Method to set new vertices position to this mesh
-        public void SetRestPositions(float[] vertices)
+        public void SetRawRestPositions(float[] vertices)
         {
             if (m_sofaMeshAPI != null)
-                m_sofaMeshAPI.SetRestPositions(vertices);
+                m_sofaMeshAPI.SetRawRestPositions(vertices);
         }
 
 
