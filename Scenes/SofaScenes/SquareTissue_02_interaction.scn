@@ -27,7 +27,7 @@
     <VisualStyle displayFlags="showVisual showBehaviorModels" />
 
     <DefaultAnimationLoop />
-    <DefaultPipeline verbose="0" />
+    <CollisionPipeline verbose="0" />
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
     <CollisionResponse response="PenalityContactForceField" />
@@ -46,7 +46,7 @@
         <DiagonalMass massDensity="2.0" />
         
         <BoxROI name="FixedSide" box="-0.1 9.9 0.1  10.1 10.1 -0.1" drawBoxes="1" />
-        <FixedConstraint name="FixedConstraint" indices="@FixedSide.indices" />
+        <FixedProjectiveConstraint name="FixedConstraint" indices="@FixedSide.indices" />
 
         <TriangularFEMForceField name="FEM" youngModulus="300" poissonRatio="0.3" method="large" computePrincipalStress="1"/>
         <TriangularBendingSprings name="FEM-Bend" stiffness="300" />
