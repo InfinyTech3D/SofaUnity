@@ -53,7 +53,7 @@
         <SPHFluidForceField radius="1.0" density="15" kernelType="1" viscosityType="2" viscosity="10" pressure="1000" surfaceTension="-1000" printLog="0" />       
         
         <SphereCollisionModel radius="0.1"/>
-        <UncoupledConstraintCorrection />
+        <UncoupledConstraintCorrection defaultCompliance="0.001"/>
     </Node>
     
     
@@ -76,7 +76,7 @@
         <TriangularFEMForceField name="FEM" youngModulus="60" poissonRatio="0.3" method="large" />
         <TriangularBendingSprings name="FEM-Bend" stiffness="300" damping="1.0" topology="@Container"/>
         <TriangleCollisionModel />
-        <UncoupledConstraintCorrection />
+        <UncoupledConstraintCorrection defaultCompliance="0.1"/>
         <Node name="VisualNode">
             <OglModel name="Visual" color="red" />
             <IdentityMapping input="@.." output="@Visual" />

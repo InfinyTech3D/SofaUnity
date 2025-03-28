@@ -28,7 +28,7 @@
          
         <FixedProjectiveConstraint name="default6" indices="0 50" />
      
-        <UncoupledConstraintCorrection />
+        <UncoupledConstraintCorrection defaultCompliance="0.001"/>
         <MeshSpringForceField name="Springs" stiffness="10000" damping="0.3" /> 
         
         <PointCollisionModel group="1" tags="thread"/>
@@ -48,7 +48,7 @@
          
         <FixedProjectiveConstraint name="default6" indices="0" />
      
-        <UncoupledConstraintCorrection />
+        <UncoupledConstraintCorrection defaultCompliance="0.001"/>
         <MeshSpringForceField name="Springs" stiffness="10000" damping="0.3" /> 
         
         <PointCollisionModel group="1" tags="thread"/>
