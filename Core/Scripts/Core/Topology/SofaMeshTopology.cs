@@ -16,13 +16,12 @@ namespace SofaUnity
         ////////////////////////////////////////////
 
         /// Higher level of topology handle in this class
-        protected TopologyObjectType m_topologyType = TopologyObjectType.NO_TOPOLOGY;
+        protected TopologyObjectType m_topologyType = TopologyObjectType.UNKNOWN;
 
         /// Pointer to the Unity Mesh structure
         public Mesh m_mesh = null;
 
         // Do we need dynamic or static buffer here??
-        protected List<Vector3> m_vertices = null;
         protected List<Edge> m_edges = null;
         protected List<Triangle> m_triangles = null;
         protected List<Quad> m_quads = null;
@@ -205,6 +204,11 @@ namespace SofaUnity
             else if (m_topologyType == TopologyObjectType.EDGE)
             {
                 ComputeMeshFromEdge();
+            }
+            else // means no topology
+            {
+                m_topologyType = TopologyObjectType.NO_TOPOLOGY;
+                Debug.LogError("No mesh can be created as this object has no topology.");
             }
         }
 

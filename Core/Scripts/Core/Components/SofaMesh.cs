@@ -28,6 +28,7 @@ namespace SofaUnity
         /// real vertices buffer from SOFA (right handed)
         protected float[] m_vertexBuffer = null;
         protected float[] m_restVertexBuffer = null;
+        protected Vector3[] m_unityVertices = null; // only used for NO_TOPOLOGY case
 
         /// number of points inside this mesh
         public int m_meshDim = 3;
@@ -174,7 +175,10 @@ namespace SofaUnity
         /// Method to return the position of the id th vertex inside the Mesh
         public Vector3 GetPosition(int id)
         {
-            return m_topology.m_mesh.vertices[id];
+            if (m_topology != null)
+                return m_topology.m_mesh.vertices[id];
+            else
+                return m_unityVertices[id];
         }
 
         ////////////////////////////////////////////
@@ -316,7 +320,11 @@ namespace SofaUnity
                 m_topology.ComputeMesh(m_vertexBuffer, m_nbVertices, m_meshDim);
                 UpdateTopology();
             }
-                
+            else
+            {
+                m_topology = null; // no topology, only points are stored here.
+                CreateUnityVertices();
+            }
         }
 
 
@@ -338,6 +346,25 @@ namespace SofaUnity
             for (int i = 0; i < nbrFloat; i++)
             {
                 m_restVertexBuffer[i] = m_vertexBuffer[i];
+            }
+        }
+
+        /// For NO TOPOLOGY case, hande a array of Vector3 here
+        protected void CreateUnityVertices()
+        {
+            if (m_nbVertices == 0)
+                return;
+
+            m_unityVertices = new Vector3[m_nbVertices];
+            for (int i = 0; i < m_nbVertices; ++i)
+            {
+                m_unityVertices[i].x = -m_vertexBuffer[i * m_meshDim];
+                m_unityVertices[i].y = m_vertexBuffer[i * m_meshDim + 1];
+
+                if (m_meshDim > 2)
+                    m_unityVertices[i].z = m_vertexBuffer[i * m_meshDim + 2];
+                else
+                    m_unityVertices[i].z = 0.0f;
             }
         }
 
@@ -396,15 +423,7 @@ namespace SofaUnity
             }
             else if (this.TopologyType() == TopologyObjectType.NO_TOPOLOGY)
             {
-                int _nbV = m_sofaMeshAPI.getNbVertices();
-                if (m_nbVertices != _nbV)
-                {
-                    m_nbVertices = _nbV;
-                   // Debug.Log("UpdateTopology: " + m_nbVertices);
-                    CreateVertexBuffer();
-                }
-
-                m_sofaMeshAPI.GetRawPositions(m_vertexBuffer);
+                m_sofaMeshAPI.updateVertices(m_unityVertices);
             }
 
             if (drawForces)
