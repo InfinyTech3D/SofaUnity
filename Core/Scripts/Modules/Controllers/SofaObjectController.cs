@@ -117,12 +117,11 @@ namespace SofaUnity
         protected void UpdateFromSofa()
         {
             int nbrV = m_sofaMesh.NbVertices();
-            float[] sofaVertices = m_sofaMesh.SofaMeshTopology.m_vertexBuffer;
+            Vector3 sofaVertices = m_sofaMesh.GetPosition(0);
 
-            for (int i = 0; i < 3; i++)
-            {
-                objectOri[i] = sofaVertices[i] * sofaToUnity[i];
-            }
+            objectOri[0] = sofaVertices[0] * sofaToUnity[0];
+            objectOri[1] = sofaVertices[1] * sofaToUnity[1];
+            objectOri[2] = sofaVertices[2] * sofaToUnity[2];
 
             this.transform.position = objectOri;
         }
@@ -182,13 +181,13 @@ namespace SofaUnity
                 newPositionRigid[0] = my_newPosition[0];
                 newPositionRigid[1] = my_newPosition[1];
                 newPositionRigid[2] = my_newPosition[2];
-                m_sofaMesh.SetVelocities(stopVelocityRigid);
-                m_sofaMesh.SetPositions(newPositionRigid);
+                m_sofaMesh.SetRawVelocities(stopVelocityRigid);
+                m_sofaMesh.SetRawPositions(newPositionRigid);
             }
             else
             {
                 m_sofaMesh.SetVelocities(stopVelocity);
-                m_sofaMesh.SetVertices(newPosition);
+                m_sofaMesh.SetPositions(newPosition);
             }
 
             this.transform.position = my_newPosition;

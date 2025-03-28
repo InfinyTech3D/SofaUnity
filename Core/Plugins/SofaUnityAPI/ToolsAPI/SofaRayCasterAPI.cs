@@ -93,11 +93,14 @@ namespace SofaUnityAPI
             float[] ori = new float[3];
             float[] dir = new float[3];
 
-            for (int i = 0; i < 3; ++i)
-            {
-                ori[i] = originInSofa[i];
-                dir[i] = directionInSofa[i];
-            }
+            // left to right coordinate system conversion
+            ori[0] = -originInSofa[0];
+            ori[1] = originInSofa[1];
+            ori[2] = originInSofa[2];
+
+            dir[0] = -directionInSofa[0];
+            dir[1] = directionInSofa[1];
+            dir[2] = directionInSofa[2];
 
             int res = sofaPhysicsAPI_castRay(m_simu, m_name, ori, dir);
 

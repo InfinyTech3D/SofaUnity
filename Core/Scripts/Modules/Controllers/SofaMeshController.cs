@@ -104,7 +104,7 @@ namespace SofaUnity
             {
                 newPosition[i] = transform.TransformPoint(m_unityMesh.mesh.vertices[map[i]]);
             }
-            m_sofaMesh.SetVertices(newPosition);
+            m_sofaMesh.SetPositions(newPosition);
 
             UpdateFromSofa();
         }
