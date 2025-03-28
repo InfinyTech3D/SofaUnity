@@ -104,9 +104,9 @@ namespace SofaUnity
         protected void UpdateCapsuleFromSofa()
         {
             int nbrV = m_sofaCapsuleMesh.NbVertices();
-            float[] sofaVertices = m_sofaCapsuleMesh.SofaMeshTopology.m_vertexBuffer;
+            Vector3 sofaVertices = m_sofaCapsuleMesh.GetPosition(0);
 
-            capsuleOri[0] = -sofaVertices[0] * sofaToUnity[0];
+            capsuleOri[0] = sofaVertices[0] * sofaToUnity[0];
             capsuleOri[1] = sofaVertices[1] * sofaToUnity[1];
             capsuleOri[2] = sofaVertices[2] * sofaToUnity[2];
 

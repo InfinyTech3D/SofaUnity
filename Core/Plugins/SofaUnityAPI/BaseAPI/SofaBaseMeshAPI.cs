@@ -298,7 +298,7 @@ namespace SofaUnityAPI
         }
 
 
-        public int GetVertices(float[] vertices)
+        public int GetRawPositions(float[] vertices)
         {
             if (m_isReady)
             {
@@ -312,7 +312,7 @@ namespace SofaUnityAPI
             }
         }
 
-        public int GetVelocities(float[] velocities)
+        public int GetRawVelocities(float[] velocities)
         {
             if (m_isReady)
             {
@@ -326,7 +326,7 @@ namespace SofaUnityAPI
             }
         }
 
-        public int GetForces(float[] forces)
+        public int GetRawForces(float[] forces)
         {
             if (m_isReady)
             {

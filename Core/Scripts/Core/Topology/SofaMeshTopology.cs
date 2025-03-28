@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using SofaUnityAPI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,10 +34,6 @@ namespace SofaUnity
         protected int m_nbVertices = 0;
         /// number of points inside this mesh
         public int m_meshDim = 3;
-
-        /// real buffer sent to SOFA (right handed)
-        public float[] m_vertexBuffer = null;
-        public float[] m_restVertexBuffer = null;
 
         /// number of triangles inside this mesh
         protected int nbTriangles = 0;
@@ -166,38 +163,20 @@ namespace SofaUnity
             m_topologyType = TopologyObjectType.EDGE;
         }
 
-
-        /// Method to create a vertex static float buffer given the number of vertices
-        public void CreateVertexBuffer(int nbVertices, int meshDimension)
-        {
-            m_nbVertices = nbVertices;
-            m_meshDim = meshDimension;
-            m_vertexBuffer = new float[nbVertices * m_meshDim];
-        }
-
-        public void CreateRestVertexBuffer()
-        {
-            int nbrFloat = m_nbVertices * m_meshDim;
-            m_restVertexBuffer = new float[nbrFloat];
-
-            for (int i=0; i< nbrFloat; i++)
-            {
-                m_restVertexBuffer[i] = m_vertexBuffer[i];
-            }
-        }
-
         
         /// Main method to compute the mesh given its topology type and static buffer. Will call internal method according to the type.
-        public void ComputeMesh()
+        public void ComputeMesh(float[] sofaVertices, int nbVertices, int meshDim)
         {
+            m_nbVertices = nbVertices;
+
             // compute mesh in fonction of its dimension
-            if (m_meshDim == 3)
+            if (meshDim == 3)
             {
-                Compute3DMesh();
+                Compute3DMesh(sofaVertices);
             }
-            else if (m_meshDim == 2)
+            else if (meshDim == 2)
             {
-                Compute2DMesh();
+                Compute2DMesh(sofaVertices);
             }
             else
             {
@@ -231,16 +210,16 @@ namespace SofaUnity
         }
 
 
-        protected void Compute3DMesh()
+        protected void Compute3DMesh(float[] sofaVertices)
         {
             m_mesh = new Mesh();
             m_mesh.name = "SofaMesh";
             Vector3[] unityVertices = new Vector3[m_nbVertices];
             for (int i = 0; i < m_nbVertices; ++i)
             {
-                unityVertices[i].x = -m_vertexBuffer[i * 3];
-                unityVertices[i].y = m_vertexBuffer[i * 3 + 1];
-                unityVertices[i].z = m_vertexBuffer[i * 3 + 2];
+                unityVertices[i].x = -sofaVertices[i * 3];
+                unityVertices[i].y = sofaVertices[i * 3 + 1];
+                unityVertices[i].z = sofaVertices[i * 3 + 2];
             }
             m_mesh.vertices = unityVertices;
             m_mesh.normals = new Vector3[m_nbVertices];
@@ -248,21 +227,22 @@ namespace SofaUnity
         }
 
 
-        protected void Compute2DMesh()
+        protected void Compute2DMesh(float[] sofaVertices)
         {
             m_mesh = new Mesh();
             m_mesh.name = "SofaMesh";
             Vector3[] unityVertices = new Vector3[m_nbVertices];
             for (int i = 0; i < m_nbVertices; ++i)
             {
-                unityVertices[i].x = -m_vertexBuffer[i * 2];
-                unityVertices[i].y = m_vertexBuffer[i * 2 + 1];
+                unityVertices[i].x = -sofaVertices[i * 2];
+                unityVertices[i].y = sofaVertices[i * 2 + 1];
                 unityVertices[i].z = 0.0f;
             }
             m_mesh.vertices = unityVertices;
             m_mesh.normals = new Vector3[m_nbVertices];
             m_mesh.uv = new Vector2[m_nbVertices];
         }
+
 
 
         ////////////////////////////////////////////

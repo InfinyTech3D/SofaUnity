@@ -91,10 +91,9 @@ namespace SofaUnity
                 return;
 
             //Debug.Log("BeamModel::UpdateLinearMesh");            
-            float[] sofaVertices = m_sofaMesh.SofaMeshTopology.m_vertexBuffer;
             for (int i = 0; i < nbrV; i++)
             {
-                m_vertCenter[nbrV - i - 1] = new Vector3(-sofaVertices[i * 3], sofaVertices[i * 3 + 1], sofaVertices[i * 3 + 2]);
+                m_vertCenter[nbrV - i - 1] = m_sofaMesh.SofaMeshTopology.m_mesh.vertices[i];
             }
 
             // update position vectors for camera

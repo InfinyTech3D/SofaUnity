@@ -25,6 +25,13 @@ namespace SofaUnity
         protected int m_listenerCounter = 0;
 
 
+        /// real vertices buffer from SOFA (right handed)
+        protected float[] m_vertexBuffer = null;
+        protected float[] m_restVertexBuffer = null;
+
+        /// number of points inside this mesh
+        public int m_meshDim = 3;
+
         /// Number of vertices stored in this mesh
         protected int m_nbVertices = 0;
         /// Number of edges stored in this mesh
@@ -164,6 +171,12 @@ namespace SofaUnity
         }
 
 
+        /// Method to return the position of the id th vertex inside the Mesh
+        public Vector3 GetPosition(int id)
+        {
+            return m_topology.m_mesh.vertices[id];
+        }
+
         ////////////////////////////////////////////
         //////          SofaMesh API           /////
         ////////////////////////////////////////////
@@ -242,13 +255,16 @@ namespace SofaUnity
             if (m_sofaMeshAPI == null)
                 return;
 
+            // class to handle the topology of the mesh
             m_topology = new SofaMeshTopology();
 
+            // get the number of vertices on the SOFA side
             m_nbVertices = m_sofaMeshAPI.getNbVertices();
-            int meshDimension = m_sofaMeshAPI.GetMeshDimension();
-            m_topology.CreateVertexBuffer(m_nbVertices, meshDimension);
+            m_meshDim = m_sofaMeshAPI.GetMeshDimension();
 
-            m_sofaMeshAPI.GetVertices(m_topology.m_vertexBuffer);
+            // create the vertex buffer and get buffer from SOFA
+            CreateVertexBuffer();
+            m_sofaMeshAPI.GetRawPositions(m_vertexBuffer);
 
 
             bool HasTopo = false;
@@ -297,10 +313,32 @@ namespace SofaUnity
 
             if (HasTopo && m_nbVertices > 0)
             {
-                m_topology.ComputeMesh();
+                m_topology.ComputeMesh(m_vertexBuffer, m_nbVertices, m_meshDim);
                 UpdateTopology();
             }
                 
+        }
+
+
+        /// Method to create a vertex static float buffer given the number of vertices and the dimension (2D or 3D)
+        protected void CreateVertexBuffer()
+        {
+            m_vertexBuffer = null;
+            m_vertexBuffer = new float[m_nbVertices * m_meshDim];
+        }
+
+
+        /// Method to create a vertex static float buffer of rest position (position at current step will be copied in this array)
+        protected void CreateRestVertexBuffer()
+        {
+            m_restVertexBuffer = null;
+            int nbrFloat = m_nbVertices * m_meshDim;
+            m_restVertexBuffer = new float[nbrFloat];
+
+            for (int i = 0; i < nbrFloat; i++)
+            {
+                m_restVertexBuffer[i] = m_vertexBuffer[i];
+            }
         }
 
 
@@ -317,7 +355,7 @@ namespace SofaUnity
                 if (m_nbVertices != _nbV)
                 {
                     m_nbVertices = _nbV;
-                    m_topology.CreateVertexBuffer(m_nbVertices, m_sofaMeshAPI.GetMeshDimension());
+                    CreateVertexBuffer();
                 }
             }
             else if (this.TopologyType() == TopologyObjectType.TETRAHEDRON)
@@ -326,7 +364,7 @@ namespace SofaUnity
                 if (m_nbTetrahedra > 0)
                 {
                     m_topology.CreateTetrahedronBuffer(m_nbTetrahedra, m_sofaMeshAPI.GetTetrahedraArray(m_nbTetrahedra));
-                    m_topology.ComputeMesh();
+                    m_topology.ComputeMesh(m_vertexBuffer, m_nbVertices, m_meshDim);
                 }
             }
         }
@@ -345,7 +383,7 @@ namespace SofaUnity
             }
             else if (this.TopologyType() == TopologyObjectType.EDGE)
             {
-                m_sofaMeshAPI.GetVertices(m_topology.m_vertexBuffer);
+                m_sofaMeshAPI.GetRawPositions(m_vertexBuffer);
             }
             else if (this.TopologyType() == TopologyObjectType.HEXAHEDRON)
             {
@@ -363,18 +401,18 @@ namespace SofaUnity
                 {
                     m_nbVertices = _nbV;
                    // Debug.Log("UpdateTopology: " + m_nbVertices);
-                    m_topology.CreateVertexBuffer(m_nbVertices, m_sofaMeshAPI.GetMeshDimension());
+                    CreateVertexBuffer();
                 }
 
-                m_sofaMeshAPI.GetVertices(m_topology.m_vertexBuffer);
+                m_sofaMeshAPI.GetRawPositions(m_vertexBuffer);
             }
 
             if (drawForces)
             {
-                m_sofaMeshAPI.GetForces(rawForces);
+                m_sofaMeshAPI.GetRawForces(rawForces);
                 for (int i = 0; i < m_nbVertices; i++)
                 {
-                    forces[i] = new Vector3(rawForces[i * 3], rawForces[i * 3 + 1], rawForces[i * 3 + 2]);
+                    forces[i] = new Vector3(-rawForces[i * 3], rawForces[i * 3 + 1], rawForces[i * 3 + 2]);
                 }
             }
                 
