@@ -148,7 +148,6 @@ namespace SofaUnity
                 //if (res == -1)
                 //    m_sofaContext.breakerProcedure();
                 m_sofaMeshAPI.updateMesh(m_mesh);
-                //m_mesh.RecalculateNormals();
             }
             m_mesh.RecalculateBounds();
         }
