@@ -470,8 +470,9 @@ namespace SofaUnityAPI
 
                 if (res == 0)
                 {
-                    for (int i = 0; i < 3; ++i)
-                        values[i] = val[i];
+                    values[0] = -val[0];
+                    values[1] = val[1];
+                    values[2] = val[2];
                 }
                 else
                     Debug.LogError("Method getVector3Value of Data: " + dataName + " of object: " + m_name + " in double: " + doubleValue + " returns error: " + SofaDefines.msg_error[res]);
@@ -489,8 +490,9 @@ namespace SofaUnityAPI
             if (checkNativePointer())
             {
                 float[] val = new float[3];
-                for (int i = 0; i < 3; ++i)
-                    val[i] = values[i];
+                val[0] = -values[0];
+                val[1] = values[1];
+                val[2] = values[2];
 
                 int res = -1;
                 if (doubleValue)
