@@ -165,6 +165,7 @@ namespace SofaUnity
         /// Main method to compute the mesh given its topology type and static buffer. Will call internal method according to the type.
         public void ComputeMesh(float[] sofaVertices, int nbVertices, int meshDim)
         {
+            Debug.Log("ComputeMesh: " + nbVertices + " | " + meshDim);
             m_nbVertices = nbVertices;
 
             // compute mesh in fonction of its dimension
