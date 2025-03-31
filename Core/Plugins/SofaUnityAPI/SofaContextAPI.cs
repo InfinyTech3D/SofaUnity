@@ -315,8 +315,10 @@ namespace SofaUnityAPI
         public void setGravity(Vector3 gravity)
         {
             double[] grav = new double[3];
-            for (int i = 0; i < 3; ++i)
-                grav[i] = (double)gravity[i];
+            // left to right coordinate system conversion
+            grav[0] = -gravity.x;
+            grav[1] = gravity.y;
+            grav[2] = gravity.z;
 
             if (m_isReady)
                 sofaPhysicsAPI_setGravity(m_native, grav);
@@ -332,8 +334,10 @@ namespace SofaUnityAPI
 
                 if (res == 0)
                 {
-                    for (int i = 0; i < 3; ++i)
-                        gravity[i] = (float)grav[i];
+                    // right to left coordinate system conversion
+                    gravity[0] = (float)(-grav[0]);
+                    gravity[1] = (float)grav[1];
+                    gravity[2] = (float)grav[2];
                 }
                 else
                     Debug.LogError("SofaContextAPI::getGravity method returns: " + SofaDefines.msg_error[res]);

@@ -157,7 +157,6 @@ namespace SofaUnity
                 return;
 
             m_mesh.Clear();
-            float[] sofaVertices = m_sofaMesh.SofaMeshTopology.m_vertexBuffer;
             m_vertCenter = new Vector3[nbrV];
 
             int sizeDof = 3;
@@ -166,7 +165,7 @@ namespace SofaUnity
 
             for (int i = 0; i < nbrV; i++)
             {
-                m_vertCenter[i] = new Vector3(sofaVertices[i * sizeDof], sofaVertices[i * sizeDof + 1], sofaVertices[i * sizeDof + 2]);
+                m_vertCenter[i] = m_sofaMesh.GetPosition(i);
             }
 
             int nbrPointPerCircle = 4 * m_beamDiscretisation + 1; // +1 to close cylinder UV
@@ -303,10 +302,9 @@ namespace SofaUnity
             if (isRigidMesh)
                 sizeDof = 7;
 
-            float[] sofaVertices = m_sofaMesh.SofaMeshTopology.m_vertexBuffer;
             for (int i = 0; i < nbrV; i++)
             {
-                m_vertCenter[i] = new Vector3(sofaVertices[i * sizeDof], sofaVertices[i * sizeDof + 1], sofaVertices[i * sizeDof + 2]);
+                m_vertCenter[i] = m_sofaMesh.GetPosition(i);
             }
 
 

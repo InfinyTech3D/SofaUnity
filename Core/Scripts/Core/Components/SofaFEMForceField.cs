@@ -103,7 +103,8 @@ namespace SofaUnity
 
                     //Only do this in the editor
                     MeshFilter mf = GetComponent<MeshFilter>();
-                    mf.mesh = m_sofaMesh.SofaMeshTopology.m_mesh;
+                    if (m_sofaMesh.HasTopology())
+                        mf.mesh = m_sofaMesh.SofaMeshTopology.m_mesh;
                     m_trackedTopologyRevision = m_sofaMesh.GetTopologyRevision();
                 }
             }
