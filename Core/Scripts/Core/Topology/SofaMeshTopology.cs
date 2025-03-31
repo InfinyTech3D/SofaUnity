@@ -286,57 +286,57 @@ namespace SofaUnity
                 // face back
                 int triVId = i * 12 * 3;
                 tris[triVId + 0] = id[0];
-                tris[triVId + 1] = id[2];
-                tris[triVId + 2] = id[1];
+                tris[triVId + 1] = id[1];
+                tris[triVId + 2] = id[2];
 
                 tris[triVId + 3] = id[0];
-                tris[triVId + 4] = id[3];
-                tris[triVId + 5] = id[2];
+                tris[triVId + 4] = id[2];
+                tris[triVId + 5] = id[3];
 
                 // face front
                 tris[triVId + 6] = id[4];
-                tris[triVId + 7] = id[5];
-                tris[triVId + 8] = id[6];
+                tris[triVId + 7] = id[6];
+                tris[triVId + 8] = id[5];
 
                 tris[triVId + 9] = id[4];
-                tris[triVId + 10] = id[6];
-                tris[triVId + 11] = id[7];
+                tris[triVId + 10] = id[7];
+                tris[triVId + 11] = id[6];
 
                 // face right
                 tris[triVId + 12] = id[1];
-                tris[triVId + 13] = id[2];
-                tris[triVId + 14] = id[6];
+                tris[triVId + 13] = id[6];
+                tris[triVId + 14] = id[2];
 
                 tris[triVId + 15] = id[5];
-                tris[triVId + 16] = id[1];
-                tris[triVId + 17] = id[6];
+                tris[triVId + 16] = id[6];
+                tris[triVId + 17] = id[1];
 
                 // face left
                 tris[triVId + 18] = id[0];
-                tris[triVId + 19] = id[7];
-                tris[triVId + 20] = id[3];
+                tris[triVId + 19] = id[3];
+                tris[triVId + 20] = id[7];
 
                 tris[triVId + 21] = id[0];
-                tris[triVId + 22] = id[4];
-                tris[triVId + 23] = id[7];
+                tris[triVId + 22] = id[7];
+                tris[triVId + 23] = id[4];
 
                 // face up
                 tris[triVId + 24] = id[2];
-                tris[triVId + 25] = id[3];
-                tris[triVId + 26] = id[6];
+                tris[triVId + 25] = id[6];
+                tris[triVId + 26] = id[3];
 
                 tris[triVId + 27] = id[3];
-                tris[triVId + 28] = id[7];
-                tris[triVId + 29] = id[6];
+                tris[triVId + 28] = id[6];
+                tris[triVId + 29] = id[7];
 
                 // face down
                 tris[triVId + 30] = id[0];
-                tris[triVId + 31] = id[1];
-                tris[triVId + 32] = id[5];
+                tris[triVId + 31] = id[5];
+                tris[triVId + 32] = id[1];
 
                 tris[triVId + 33] = id[0];
-                tris[triVId + 34] = id[5];
-                tris[triVId + 35] = id[4];
+                tris[triVId + 34] = id[4];
+                tris[triVId + 35] = id[5];
             }
 
             m_mesh.vertices = verts;
@@ -380,23 +380,23 @@ namespace SofaUnity
 
                 // face 0
                 tris[i * 12 + 0] = id[0];
-                tris[i * 12 + 1] = id[2];
-                tris[i * 12 + 2] = id[1];
+                tris[i * 12 + 1] = id[1];
+                tris[i * 12 + 2] = id[2];
 
                 // face 1
                 tris[i * 12 + 3] = id[1];
-                tris[i * 12 + 4] = id[2];
-                tris[i * 12 + 5] = id[3];
+                tris[i * 12 + 4] = id[3];
+                tris[i * 12 + 5] = id[2];
 
                 // face 2
                 tris[i * 12 + 6] = id[2];
-                tris[i * 12 + 7] = id[0];
-                tris[i * 12 + 8] = id[3];
+                tris[i * 12 + 7] = id[3];
+                tris[i * 12 + 8] = id[0];
 
                 // face 3
                 tris[i * 12 + 9] = id[0];
-                tris[i * 12 + 10] = id[1];
-                tris[i * 12 + 11] = id[3];
+                tris[i * 12 + 10] = id[3];
+                tris[i * 12 + 11] = id[1];
             }
 
             m_mesh.vertices = verts;
