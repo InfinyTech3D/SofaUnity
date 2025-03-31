@@ -107,32 +107,11 @@ namespace SofaUnity
                 if (m_uv == null)
                     m_uv = new Vector2[m_nbrV];
 
-                Vector3[] dataValues = m_meshValues.SofaMeshTopology.m_mesh.vertices;
-
-                //float[] dataValues = m_meshValues.SofaMeshTopology.m_vertexBuffer;
-                //float min = 100.0f;
-                //float max = -100.0f;
-
-                int meshDim = m_meshValues.SofaMeshTopology.m_meshDim;
-
-                //for (int i = 0; i < nbrV; i++)
-                //{
-                //    float val = dataValues[i * meshDim];
-                //    if (val < min)
-                //        min = val;
-
-                //    if (val > max)
-                //        max = val;
-                //}
-
-                //max += 0.01f;
-                //min -= 0.01f;
-
                 float scale = 1 / (m_maxValue - m_minValue);
 
                 for (int i = 0; i < nbrV; i++)
                 {
-                    float val = dataValues[i][0];
+                    float val = m_meshValues.GetPosition(i)[0];
 
                     float tex = (val - m_minValue) * scale;
 

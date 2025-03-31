@@ -358,13 +358,12 @@ namespace SofaUnity
             m_unityVertices = new Vector3[m_nbVertices];
             for (int i = 0; i < m_nbVertices; ++i)
             {
-                m_unityVertices[i].x = -m_vertexBuffer[i * m_meshDim];
-                m_unityVertices[i].y = m_vertexBuffer[i * m_meshDim + 1];
-
                 if (m_meshDim > 2)
-                    m_unityVertices[i].z = m_vertexBuffer[i * m_meshDim + 2];
+                    m_unityVertices[i] = new Vector3(-m_vertexBuffer[i * m_meshDim], m_vertexBuffer[i * m_meshDim + 1], m_vertexBuffer[i * m_meshDim + 2]);
+                else if (m_meshDim > 1)
+                    m_unityVertices[i] = new Vector3(-m_vertexBuffer[i * m_meshDim], m_vertexBuffer[i * m_meshDim + 1], 0.0f);
                 else
-                    m_unityVertices[i].z = 0.0f;
+                    m_unityVertices[i] = new Vector3(-m_vertexBuffer[i * m_meshDim], 0.0f, 0.0f);
             }
         }
 
@@ -410,7 +409,7 @@ namespace SofaUnity
             }
             else if (this.TopologyType() == TopologyObjectType.EDGE)
             {
-                m_sofaMeshAPI.GetRawPositions(m_vertexBuffer);
+                m_sofaMeshAPI.updateMesh(m_topology.m_mesh);
             }
             else if (this.TopologyType() == TopologyObjectType.HEXAHEDRON)
             {
@@ -423,6 +422,13 @@ namespace SofaUnity
             }
             else if (this.TopologyType() == TopologyObjectType.NO_TOPOLOGY)
             {
+                int _nbV = m_sofaMeshAPI.getNbVertices();
+                if (m_nbVertices != _nbV)
+                {
+                    m_nbVertices = _nbV;
+                    m_unityVertices = new Vector3[m_nbVertices];
+                }
+
                 m_sofaMeshAPI.updateVertices(m_unityVertices);
             }
 
