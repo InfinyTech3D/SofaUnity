@@ -2,10 +2,10 @@
 <Node name="root" dt="0.01" showBoundingTree="0" gravity="0 0 0">
     <VisualStyle displayFlags="showBehaviorModels hideCollisionModels hideForceFields" />
 
-    <DefaultPipeline name="pipeline" depth="6" verbose="0"/>
+    <CollisionPipeline />
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
-    <DefaultContactManager name="response" response="FrictionContactConstraint" />
+    <CollisionResponse name="response" response="FrictionContactConstraint" />
     <LocalMinDistance name="proximity" alarmDistance="0.15" contactDistance="0.05" angleCone="0.0" />
     <FreeMotionAnimationLoop/>
     <LCPConstraintSolver tolerance="0.001" maxIt="1000"/>
