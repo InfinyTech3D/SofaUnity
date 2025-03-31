@@ -224,7 +224,7 @@ namespace SofaUnity
             int res = m_owner.m_impl.GetVecofVec2Value(m_dataName, m_vecSize, rawValues, m_isDouble);
             for (int i = 0; i < m_vecSize; ++i)
             {
-                values[i].x = rawValues[i * 2];
+                values[i].x = -rawValues[i * 2];
                 values[i].y = rawValues[i * 2 + 1];
             }
 
@@ -242,7 +242,7 @@ namespace SofaUnity
             float[] rawValues = new float[m_vecSize * 2];
             for (int i = 0; i < m_vecSize; ++i)
             {
-                rawValues[i * 2] = values[i].x;
+                rawValues[i * 2] = -values[i].x;
                 rawValues[i * 2 + 1] = values[i].y;
             }
 
@@ -298,14 +298,14 @@ namespace SofaUnity
                 Transform sofaTransform = m_owner.m_sofaContext.transform;
                 for (int i = 0; i < m_vecSize; ++i)
                 {
-                    values[i] = sofaTransform.TransformPoint(new Vector3(rawValues[i * 3], rawValues[i * 3 + 1], rawValues[i * 3 + 2]));
+                    values[i] = sofaTransform.TransformPoint(new Vector3(-rawValues[i * 3], rawValues[i * 3 + 1], rawValues[i * 3 + 2]));
                 }
             }
             else
             {
                 for (int i = 0; i < m_vecSize; ++i)
                 {
-                    values[i] = new Vector3(rawValues[i * 3], rawValues[i * 3 + 1], rawValues[i * 3 + 2]);
+                    values[i] = new Vector3(-rawValues[i * 3], rawValues[i * 3 + 1], rawValues[i * 3 + 2]);
                 }
             }            
 
@@ -323,7 +323,7 @@ namespace SofaUnity
             float[] rawValues = new float[m_vecSize * 3];
             for (int i = 0; i < m_vecSize; ++i)
             {
-                 rawValues[i * 3] = values[i].x;
+                 rawValues[i * 3] = -values[i].x;
                  rawValues[i * 3 + 1] = values[i].y;
                  rawValues[i * 3 + 2] = values[i].z;
             }
