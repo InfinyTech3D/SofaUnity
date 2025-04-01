@@ -268,8 +268,6 @@ namespace SofaUnity
 
             // create the vertex buffer and get buffer from SOFA
             CreateVertexBuffer();
-            m_sofaMeshAPI.GetRawPositions(m_vertexBuffer);
-
 
             bool HasTopo = false;
             m_nbHexahedra = m_sofaMeshAPI.GetNbHexahedra();
@@ -315,8 +313,15 @@ namespace SofaUnity
                 }
             }
 
+            // For now Rigid type are handle as NO_TOPOLOGY
+            if (m_meshDim > 3)
+            {
+                HasTopo = false;
+            }
+
             if (HasTopo && m_nbVertices > 0)
             {
+                m_sofaMeshAPI.GetRawPositions(m_vertexBuffer);
                 m_topology.ComputeMesh(m_vertexBuffer, m_nbVertices, m_meshDim);
                 UpdateTopology();
             }
@@ -356,6 +361,17 @@ namespace SofaUnity
                 return;
 
             m_unityVertices = new Vector3[m_nbVertices];
+            UpdateUnityVertices();
+        }
+
+
+        /// For NO TOPOLOGY case, hande a array of Vector3 here
+        protected void UpdateUnityVertices()
+        {
+            if (m_nbVertices == 0)
+                return;
+
+            m_sofaMeshAPI.GetRawPositions(m_vertexBuffer);
             for (int i = 0; i < m_nbVertices; ++i)
             {
                 if (m_meshDim > 2)
@@ -366,7 +382,6 @@ namespace SofaUnity
                     m_unityVertices[i] = new Vector3(-m_vertexBuffer[i * m_meshDim], 0.0f, 0.0f);
             }
         }
-
 
         /// Method called by \sa update_impl() to recompute the topology if changed
         protected void HandleTopologyChange()
@@ -429,7 +444,7 @@ namespace SofaUnity
                     m_unityVertices = new Vector3[m_nbVertices];
                 }
 
-                m_sofaMeshAPI.updateVertices(m_unityVertices);
+                UpdateUnityVertices();
             }
 
             if (drawForces)
@@ -440,7 +455,6 @@ namespace SofaUnity
                     forces[i] = new Vector3(-rawForces[i * 3], rawForces[i * 3 + 1], rawForces[i * 3 + 2]);
                 }
             }
-                
         }
 
 
