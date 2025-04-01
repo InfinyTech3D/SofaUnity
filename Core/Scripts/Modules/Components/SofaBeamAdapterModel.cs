@@ -25,8 +25,6 @@ namespace SofaUnity
                 return;
 
             int nbrV = m_sofaMesh.NbVertices();
-            Debug.Log("SofaBeamAdapterModel: " + nbrV);
-
 
             // nothing to do
             if (nbrV < 2)

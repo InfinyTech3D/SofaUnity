@@ -35,8 +35,8 @@
     <Node  name="NavigationSceneNode">
         <!-- Shape of the catheter -->
         <Node name="topoLines_cath">
-            <RodStraightSection name="StraightSection" youngModulus="25e3" radius="1" nbEdgesCollis="200" nbEdgesVisu="300" length="1270.0"/>
-            <RodSpireSection name="SpireSection" youngModulus="25e3" radius="1" nbEdgesCollis="10" nbEdgesVisu="20" length="5.0" spireDiameter="10" spireHeight="0.0"/>
+            <RodStraightSection name="StraightSection" youngModulus="10000" massDensity="0.0000155" radius="0.9" nbEdgesCollis="200" nbEdgesVisu="300" length="600.0"/>
+            <RodSpireSection name="SpireSection" youngModulus="10000" massDensity="0.0000155" radius="0.9" nbEdgesCollis="10" nbEdgesVisu="20" length="5.0" spireDiameter="10" spireHeight="0.0"/>
             <WireRestShape template="Rigid3d" name="catheterRestShape" wireMaterials="@StraightSection @SpireSection"/>
 
             <EdgeSetTopologyContainer name="meshLinesCath"/>
@@ -55,8 +55,8 @@
                 p0="0 0 0" />
             <MechanicalObject name="DOFs" template="Rigid3d" translation="0 -360 5" rotation="0 220 0"/>
 
-            <WireBeamInterpolation name="InterpolCatheter" WireRestShape="@../topoLines_cath/catheterRestShape" radius="0.9"/>
-            <AdaptiveBeamForceFieldAndMass interpolation="@InterpolCatheter" massDensity="0.0000155" name="CatheterForceField" />
+            <WireBeamInterpolation name="InterpolCatheter" WireRestShape="@../topoLines_cath/catheterRestShape" />
+            <AdaptiveBeamForceFieldAndMass interpolation="@InterpolCatheter"  name="CatheterForceField" />
             
             <BeamAdapterActionController name="AController" interventionController="@DeployController" writeMode="1" />
             <InterventionalRadiologyController name="DeployController" listening="true" template="Rigid3d" 
