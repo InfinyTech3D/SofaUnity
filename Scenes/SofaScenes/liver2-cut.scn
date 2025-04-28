@@ -44,7 +44,7 @@
     
         <FastTetrahedralCorotationalForceField name="FEM" youngModulus="3000" poissonRatio="0.3" method="large" />		
 
-        <TetrahedronCuttingController name="ACutting" listening="1" printLog="0" methodToTest="1" 
+        <TetrahedronCuttingController name="ACutting" template="Vec3" listening="1" printLog="0" methodToTest="1" 
         cutPointA="3.1 6 -2" cutPointB="3.1 6 2" cutDir="0 1 0" cutDepth="2" drawDebugCut="0" />
 
 		<PlaneForceField normal="0 1 0" d="-5  " stiffness="100000" showPlane="1" showPlaneSize="20"/>
