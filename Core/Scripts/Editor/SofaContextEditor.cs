@@ -45,8 +45,8 @@ namespace SofaUnity
                 if (m_SofaLogo == null)
                 {
                     Object logo = Resources.Load("icons/sofa_sprite");
-                if (logo == null)
-                    Debug.LogError("logo not found");
+                    //if (logo == null)
+                    //    Debug.LogError("logo not found");
 
                     m_SofaLogo = (Texture2D)logo;
                 }
