@@ -22,10 +22,10 @@
     <DefaultAnimationLoop />
     <DefaultVisualManagerLoop />
     
-    <DefaultPipeline verbose="0" />
+    <CollisionPipeline verbose="0" />
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
-    <DefaultContactManager response="PenalityContactForceField" />
+    <CollisionResponse response="PenalityContactForceField" />
     <MinProximityIntersection name="Proximity" alarmDistance="0.8" contactDistance="0.5" />
     
     <Node name="Volume">
@@ -40,7 +40,7 @@
 
         <DiagonalMass massDensity="0.1" topology="@TetraContainer" />
         <FixedPlaneConstraint name="plane" direction="0 0 1" dmin="-0.1" dmax="0.1" />
-        <FixedConstraint indices="@plane.indices" />
+        <FixedProjectiveConstraint indices="@plane.indices" />
         <TetrahedralCorotationalFEMForceField name="FEM" youngModulus="1200" poissonRatio="0.3" method="large" topology="@TetraContainer"/>		
         <Node name="Surface">
             <TriangleSetTopologyContainer  name="TriContainer" />

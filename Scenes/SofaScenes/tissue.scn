@@ -21,10 +21,10 @@
 
     <DefaultAnimationLoop />
     <DefaultVisualManagerLoop />
-    <DefaultPipeline name="default21" verbose="0" depth="1"/>
+    <CollisionPipeline name="default21" verbose="0" depth="1"/>
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
-    <DefaultContactManager name="default22" response="PenalityContactForceField" />
+    <CollisionResponse name="default22" response="PenalityContactForceField" />
     <MinProximityIntersection name="Proximity" alarmDistance="2.0" contactDistance="0.001" />
 	
     <Node name="tissue_node">
@@ -39,7 +39,7 @@
 		<MechanicalObject name="tissue" rotation="90 0 0"/>
 		
 		<BoxROI name="FixedROI_2" template="Vec3d" box="-1 -5 9.8 11 5 10.2" drawBoxes="1" position="@tissue.rest_position"/>		
-        <FixedConstraint name="ROI2" indices="@FixedROI_2.indices" />
+        <FixedProjectiveConstraint name="ROI2" indices="@FixedROI_2.indices" />
        
 		<DiagonalMass massDensity="0.15" topology="@Container"/>
         

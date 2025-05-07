@@ -20,14 +20,14 @@
     <RequiredPlugin name="Sofa.Component.Visual"/> <!-- Needed to use components [VisualStyle] -->  
     <RequiredPlugin name="Sofa.GL.Component.Rendering3D"/> <!-- Needed to use components [OglModel] -->  
     <VisualStyle displayFlags="showBehaviorModels showVisual" />
-    <DefaultPipeline verbose="0" />
+    <CollisionPipeline verbose="0" />
     
     <DefaultAnimationLoop />
     <DefaultVisualManagerLoop />
     
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
-    <DefaultContactManager response="PenalityContactForceField" />
+    <CollisionResponse response="PenalityContactForceField" />
     <MinProximityIntersection name="Proximity" alarmDistance="0.8" contactDistance="0.5" />
     <Node name="Volume">
         <EulerImplicitSolver name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.01" />
@@ -45,11 +45,11 @@
 		<BoxROI name="box1" box="-2.2 -1  -1 2.2 2.5 1.5" drawBoxes="1" />
 		<IndexValueMapper name="ind_box0"                                      indices="@box0.tetrahedronIndices" value="100000" />
 		<IndexValueMapper name="ind_box1" inputValues="@ind_box0.outputValues" indices="@box1.tetrahedronIndices" value="1000000" />
-		<TetrahedronFEMForceField name="FEM" template="CudaVec3f" youngModulus="3300" poissonRatio="0.3" computeGlobalMatrix="false" method="large" />
+		<TetrahedronFEMForceField name="FEM" template="CudaVec3f" youngModulus="3300" poissonRatio="0.3" computeGlobalMatrix="false" method="large" computeVonMisesStress="0"/>
 		
 		
 		<BoxROI name="box3" box="-2.2 -0.3 -9.2    2.2 0.110668 2.88584" drawBoxes="1" drawSize="2" />
-		<FixedConstraint indices="@box3.indices" />	  
+		<FixedProjectiveConstraint indices="@box3.indices" />	  
 
 		<PlaneForceField template="CudaVec3f" normal="0 1 0" d="-0.2" stiffness="100"  showPlane="1" showPlaneSize="20" />
 		
