@@ -204,7 +204,7 @@ namespace SofaUnity
 
         public string getPluginFullPrefixPath()
         {
-            string pluginPath = "";
+            string pluginPath;
             if (Application.isEditor)
                 pluginPath = "/SofaUnity/Core/Plugins/Native/x64/";
             else
@@ -213,7 +213,7 @@ namespace SofaUnity
 #else
                 pluginPath = "/Plugins/x86_64/";
 #endif
-            return Application.dataPath + pluginPath + "/";
+            return Application.dataPath + pluginPath;
         }
 
         public string getPluginFullName(string pluginName)
@@ -321,7 +321,9 @@ namespace SofaUnity
             PluginManager.Instance.AddPlugin("SofaCarving");
             PluginManager.Instance.AddPlugin("SofaSphFluid");
             PluginManager.Instance.AddPlugin("SofaCUDA");
-            //PluginManager.Instance.AddPlugin("MultiCoreGPU");
+            PluginManager.Instance.AddPlugin("SofaPython3");
+            PluginManager.Instance.AddPlugin("Tearing");
+            PluginManager.Instance.AddPlugin("MultiThreading");
         }
 #endif
     }

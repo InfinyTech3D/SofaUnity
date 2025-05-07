@@ -492,7 +492,7 @@ namespace SofaUnity
 
         protected void UpdateImplSync()
         {
-            if (Time.time >= nextUpdate)
+            //if (Time.time >= nextUpdate)
             {
                 nextUpdate += m_timeStep;
 

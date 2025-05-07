@@ -104,12 +104,11 @@ namespace SofaUnity
         protected void UpdateCapsuleFromSofa()
         {
             int nbrV = m_sofaCapsuleMesh.NbVertices();
-            float[] sofaVertices = m_sofaCapsuleMesh.SofaMeshTopology.m_vertexBuffer;
+            Vector3 sofaVertices = m_sofaCapsuleMesh.GetPosition(0);
 
-            for (int i = 0; i < 3; i++)
-            {
-                capsuleOri[i] = sofaVertices[i] * sofaToUnity[i];
-            }
+            capsuleOri[0] = sofaVertices[0] * sofaToUnity[0];
+            capsuleOri[1] = sofaVertices[1] * sofaToUnity[1];
+            capsuleOri[2] = sofaVertices[2] * sofaToUnity[2];
 
             this.transform.position = capsuleOri;
         }
@@ -118,14 +117,14 @@ namespace SofaUnity
         {
             newPosition[0] = capsuleOri - this.transform.up * m_speed;
             m_sofaCapsuleMesh.SetVelocities(stopVelocity);
-            m_sofaCapsuleMesh.SetVertices(newPosition);
+            m_sofaCapsuleMesh.SetPositions(newPosition);
         }
 
         protected void MoveBackward()
         {
             newPosition[0] = capsuleOri + this.transform.up * m_speed;
             m_sofaCapsuleMesh.SetVelocities(stopVelocity);
-            m_sofaCapsuleMesh.SetVertices(newPosition);
+            m_sofaCapsuleMesh.SetPositions(newPosition);
         }
 
 
@@ -134,25 +133,25 @@ namespace SofaUnity
         protected void MoveUp()
         {
             newPosition[0] = capsuleOri + this.transform.forward * m_speed;
-            m_sofaCapsuleMesh.SetVertices(newPosition);
+            m_sofaCapsuleMesh.SetPositions(newPosition);
         }
 
         protected void MoveDown()
         {
             newPosition[0] = capsuleOri - this.transform.forward * m_speed;
-            m_sofaCapsuleMesh.SetVertices(newPosition);
+            m_sofaCapsuleMesh.SetPositions(newPosition);
         }
 
         protected void MoveLeft()
         {
             newPosition[0] = capsuleOri + this.transform.right * m_speed;
-            m_sofaCapsuleMesh.SetVertices(newPosition);
+            m_sofaCapsuleMesh.SetPositions(newPosition);
         }
 
         protected void MoveRight()
         {
             newPosition[0] = capsuleOri - this.transform.right * m_speed;
-            m_sofaCapsuleMesh.SetVertices(newPosition);
+            m_sofaCapsuleMesh.SetPositions(newPosition);
         }
 
 

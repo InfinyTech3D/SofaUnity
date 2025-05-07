@@ -1,0 +1,62 @@
+<?xml version="1.0" ?>
+<Node name="root" dt="0.03" showBoundingTree="0" gravity="0 -9.8 0">
+    <RequiredPlugin name="Sofa.Component.Collision.Detection.Algorithm"/> <!-- Needed to use components [BVHNarrowPhase, BruteForceBroadPhase, DefaultPipeline] -->  
+    <RequiredPlugin name="Sofa.Component.Collision.Detection.Intersection"/> <!-- Needed to use components [MinProximityIntersection] -->  
+    <RequiredPlugin name="Sofa.Component.Collision.Geometry"/> <!-- Needed to use components [TriangleCollisionModel] -->  
+    <RequiredPlugin name="Sofa.Component.Collision.Response.Contact"/> <!-- Needed to use components [DefaultContactManager] -->  
+    <RequiredPlugin name="Sofa.Component.Constraint.Projective"/> <!-- Needed to use components [FixedConstraint] -->  
+    <RequiredPlugin name="Sofa.Component.Engine.Select"/> <!-- Needed to use components [BoxROI] -->  
+    <RequiredPlugin name="Sofa.Component.IO.Mesh"/> <!-- Needed to use components [MeshGmshLoader] -->  
+    <RequiredPlugin name="Sofa.Component.LinearSolver.Iterative"/> <!-- Needed to use components [CGLinearSolver] -->  
+    <RequiredPlugin name="Sofa.Component.Mapping.Linear"/> <!-- Needed to use components [IdentityMapping] -->  
+    <RequiredPlugin name="Sofa.Component.Mass"/> <!-- Needed to use components [DiagonalMass] -->  
+    <RequiredPlugin name="Sofa.Component.MechanicalLoad"/> <!-- Needed to use components [PlaneForceField] -->  
+    <RequiredPlugin name="Sofa.Component.ODESolver.Backward"/> <!-- Needed to use components [EulerImplicitSolver] -->  
+    <RequiredPlugin name="Sofa.Component.SceneUtility"/> <!-- Needed to use components [InfoComponent] -->  
+    <RequiredPlugin name="Sofa.Component.SolidMechanics.FEM.Elastic"/> <!-- Needed to use components [FastTetrahedralCorotationalForceField] -->  
+    <RequiredPlugin name="Sofa.Component.StateContainer"/> <!-- Needed to use components [MechanicalObject] -->  
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Dynamic"/> <!-- Needed to use components [TetrahedronSetGeometryAlgorithms, TetrahedronSetTopologyContainer, TetrahedronSetTopologyModifier, TriangleSetGeometryAlgorithms, TriangleSetTopologyContainer, TriangleSetTopologyModifier] -->  
+    <RequiredPlugin name="Sofa.Component.Topology.Mapping"/> <!-- Needed to use components [Tetra2TriangleTopologicalMapping] -->  
+    <RequiredPlugin name="Sofa.GL.Component.Rendering3D"/> <!-- Needed to use components [OglModel] -->  
+   
+    <CollisionPipeline />
+    <DefaultVisualManagerLoop />
+    <DefaultAnimationLoop />
+    <BruteForceBroadPhase/>
+    <BVHNarrowPhase/>
+    <CollisionResponse response="PenalityContactForceField" />
+    <MinProximityIntersection name="Proximity" alarmDistance="0.8" contactDistance="0.5" />
+
+    <Node name="LiverVolume">
+        <EulerImplicitSolver name="cg_odesolver" printLog="false"  rayleighStiffness="0.01" rayleighMass="1.0" />
+        <CGLinearSolver iterations="25" name="linear solver" tolerance="1.0e-9" threshold="1.0e-9" />
+        <MeshGmshLoader name="loader" filename="./mesh/liver2.msh" scale3d="5 5 5" rotation="150 0 0" translation="3.2 7 0"/>
+        <MechanicalObject src="@loader" name="Volume"  />
+
+		<TetrahedronSetTopologyContainer  name="TetraContainer" position="@Volume.position" src="@loader" tags=" "/>
+		<TetrahedronSetTopologyModifier   name="Modifier" />
+		<TetrahedronSetGeometryAlgorithms name="GeomAlgo"  template="Vec3d" drawTetrahedra="0" drawScaleTetrahedra="0.7"/>
+
+        <DiagonalMass massDensity="4.0" />
+        <BoxROI template="Vec3d" box="-1 6 -0.5   1 7 1.5" drawBoxes="1" position="@Volume.rest_position" name="FixedROI"/>
+        <FixedProjectiveConstraint indices="@FixedROI.indices" />
+    
+        <TetrahedronFEMForceField name="FEM" youngModulus="3000" poissonRatio="0.3" method="large" computeVonMisesStress="1"/>		
+
+		<PlaneForceField normal="0 1 0" d="-5  " stiffness="100000" showPlane="1" showPlaneSize="20"/>
+        
+        <Node name="LiverSurface">
+            <TriangleSetTopologyContainer  name="TriContainer" fileTopology="" tags=" " />
+			<TriangleSetTopologyModifier   name="Modifier" />
+			<TriangleSetGeometryAlgorithms name="GeomAlgo"   template="Vec3d" />
+			
+            <Tetra2TriangleTopologicalMapping input="@../TetraContainer" output="@TriContainer" />
+			<TriangleCollisionModel />
+            
+            <Node name="LiverVisu">
+                <OglModel name="Visual" color="red" />
+                <IdentityMapping input="@../../Volume" output="@Visual" />
+            </Node>
+        </Node>        
+    </Node>
+</Node>

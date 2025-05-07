@@ -23,10 +23,10 @@
     <VisualStyle displayFlags="showBehaviorModels hideCollisionModels hideForceFields" />
     
     <DefaultAnimationLoop />
-    <DefaultPipeline name="default21" verbose="0" depth="1"/>
+    <CollisionPipeline />
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
-    <DefaultContactManager name="default22" response="PenalityContactForceField" />
+    <CollisionResponse name="Response" response="PenalityContactForceField" />
     <MinProximityIntersection name="Proximity" alarmDistance="0.5" contactDistance="0.04" />     
 
     <EulerImplicitSolver name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.1" />

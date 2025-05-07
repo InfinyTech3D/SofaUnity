@@ -22,10 +22,15 @@ namespace SofaScripts
         // Internal data to store the number of scene to test
         public int m_nbrTestedScenes = 0;
         public bool WriteRefMode = false;
-        public bool m_testEndoscopy = true;
+        public bool m_testExamples = true;
+        public bool m_testDemoInteraction = true;
+        public bool m_testDemoEndoscopy = true;
+        public bool m_testDemoOthers = true;
         public bool m_testFluoroscopy = true;
         public bool m_testUltrasound = true;
         public bool m_testHaptic = true;
+
+        public bool m_debugLogs = false;
 
         // Start is called before the first frame update
         void Start()
@@ -38,14 +43,31 @@ namespace SofaScripts
             m_editorBuildSettingsScenes = new List<EditorBuildSettingsScene>();
 #endif
             // 1. Add basic examples
-            string folderExamples = Application.dataPath + "/SofaUnity/Scenes/Examples/";
-            m_nbrTestedScenes += AddUnitySceneFromFolder(folderExamples);
+            if (m_testExamples)
+            {
+                string folderExamples = Application.dataPath + "/SofaUnity/Scenes/Examples/";
+                m_nbrTestedScenes += AddUnitySceneFromFolder(folderExamples);
+            }
 
-            // 2. Add Demos Interaction
-            string folderInteraction = Application.dataPath + "/SofaUnity/Scenes/Demos/Interaction/";
-            m_nbrTestedScenes += AddUnitySceneFromFolder(folderInteraction);
+            if (m_testDemoInteraction)
+            {
+                // 2.1 Add Demos Interaction
+                string folderInteraction = Application.dataPath + "/SofaUnity/Scenes/Demos/Interaction/";
+                m_nbrTestedScenes += AddUnitySceneFromFolder(folderInteraction);
+            }
 
-            if (m_testEndoscopy)
+            if (m_testDemoOthers)
+            { 
+                // 2.2 Add Demos Interaction
+                string folderPython = Application.dataPath + "/SofaUnity/Scenes/Demos/Python/";
+                m_nbrTestedScenes += AddUnitySceneFromFolder(folderPython);
+
+                // 2.3 Add Demos Interaction
+                string folderTearing = Application.dataPath + "/SofaUnity/Scenes/Demos/Tearing/";
+                m_nbrTestedScenes += AddUnitySceneFromFolder(folderTearing);
+            }
+
+            if (m_testDemoEndoscopy)
             {
                 // 3. Add Demos Capsule Endoscopy
                 string folderCapsuleEndoscopy = Application.dataPath + "/SofaUnity/Scenes/Demos/Endoscopy/Virtual Capsule Endoscopy/Scenes/";
@@ -150,6 +172,7 @@ namespace SofaScripts
                     m_sceneName = "";
                 }
             }
+
 
             if (!WriteRefMode && m_cptInternal == 330)
             {
@@ -261,15 +284,28 @@ namespace SofaScripts
             string folderRefs = Directory.GetCurrentDirectory() + "/Assets/SofaUnity/Tests/references/";
 
             string logFilename = "Test_" + sceneName + ".log";
+
             string fullLogPath = System.IO.Path.Combine(folderLogs, logFilename);
             string fullRefPath = System.IO.Path.Combine(folderRefs, logFilename);
 
             SceneTestData sceneRefData = new SceneTestData(sceneName);
-            sceneRefData.ReadData(fullRefPath);
+            bool resRef = sceneRefData.ReadData(fullRefPath, false);
             SceneTestData sceneLogData = new SceneTestData(sceneName);
-            sceneLogData.ReadData(fullLogPath);
+            bool resLog = sceneLogData.ReadData(fullLogPath, false);
 
-            bool res = sceneRefData.CompareScene(sceneLogData);
+            if (!resRef)
+            {
+                Debug.LogError("########  Test fail for scene: " + sceneName + ", No Reference file ######## ");
+                return;
+            }
+
+            if (!resLog)
+            {
+                Debug.LogError("########  Test fail for scene: " + sceneName + ", No log file generated ######## ");
+                return;
+            }
+
+            bool res = sceneRefData.CompareScene(sceneLogData, m_debugLogs);
             if (res)
                 Debug.Log("########  Test success for scene: " + sceneName + "  ########");
             else

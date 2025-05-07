@@ -30,8 +30,8 @@
     <Node  name="NavigationSceneNode">
         <!-- Shape of the catheter -->
         <Node name="topoLines_cath">               
-            <RodStraightSection name="StraightSection" youngModulus="20000" radius="1" nbEdgesCollis="30" nbEdgesVisu="196" length="980.0"/>
-            <RodSpireSection name="SpireSection" youngModulus="20000" radius="1" nbEdgesCollis="5" nbEdgesVisu="4" length="20.0" spireDiameter="25" spireHeight="0.0"/>
+            <RodStraightSection name="StraightSection" youngModulus="20000" radius="0.9" massDensity="0.00000155" nbEdgesCollis="30" nbEdgesVisu="196" length="980.0"/>
+            <RodSpireSection name="SpireSection" youngModulus="20000" radius="0.9" massDensity="0.00000155" nbEdgesCollis="5" nbEdgesVisu="4" length="20.0" spireDiameter="25" spireHeight="0.0"/>
         
             <WireRestShape template="Rigid3d" name="catheterRestShape" wireMaterials="@StraightSection @SpireSection"/>
             <EdgeSetTopologyContainer name="meshLinesCath"/>
@@ -49,8 +49,8 @@
                 p0="0 0 0" drawEdges="1"/>
             <MechanicalObject template="Rigid3d" name="DOFs Container" ry="-90" /> 
 
-            <WireBeamInterpolation name="BeamInterpolation" WireRestShape="@../topoLines_cath/catheterRestShape" radius="0.9"/>
-            <AdaptiveBeamForceFieldAndMass name="BeamForceField"  massDensity="0.00000155" interpolation="@BeamInterpolation"/>
+            <WireBeamInterpolation name="BeamInterpolation" WireRestShape="@../topoLines_cath/catheterRestShape"/>
+            <AdaptiveBeamForceFieldAndMass name="BeamForceField" interpolation="@BeamInterpolation"/>
             
             
             <BeamAdapterActionController name="AController" interventionController="@DeployController" writeMode="1" />

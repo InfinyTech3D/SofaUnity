@@ -29,11 +29,12 @@
     <DefaultVisualManagerLoop />
     <FreeMotionAnimationLoop />
 	<GenericConstraintSolver tolerance="1e-4" maxIt="200"   printLog="0"/>
-	<DefaultPipeline verbose="0" depth="10" draw="0" />
+	<CollisionPipeline verbose="0" depth="10" draw="0" />
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
 	<MinProximityIntersection name="Proximity" alarmDistance="0.8" contactDistance="0.4" />
-    <DefaultContactManager name="Response" response="PenalityContactForceField" />
+    <CollisionResponse name="Response" response="PenalityContactForceField" />
+    <CollisionDetectionDisplay name="CollisionDetectionDisplay"/>
     
     <EulerImplicitSolver name="cg_odesolver" rayleighStiffness="0.1" rayleighMass="0.1" />
     <CGLinearSolver iterations="25" name="linear solver" tolerance="1.0e-9" threshold="1.0e-9" />
@@ -52,7 +53,7 @@
         <SPHFluidForceField radius="1.0" density="15" kernelType="1" viscosityType="2" viscosity="10" pressure="1000" surfaceTension="-1000" printLog="0" />       
         
         <SphereCollisionModel radius="0.1"/>
-        <UncoupledConstraintCorrection />
+        <UncoupledConstraintCorrection defaultCompliance="0.001"/>
     </Node>
     
     
@@ -67,15 +68,15 @@
         <UniformMass totalMass="1" />
         
         <BoxROI name="ROI1" box="-10 -1 -6 10 1 -4.9" drawBoxes="0"/>
-        <FixedConstraint indices="@ROI1.indices" />
+        <FixedProjectiveConstraint indices="@ROI1.indices" />
         
         <BoxROI name="ROI2" box="-10 -1 4.9 10 1 5.1" drawBoxes="0"/>
-        <FixedConstraint indices="@ROI2.indices" />
+        <FixedProjectiveConstraint indices="@ROI2.indices" />
         
         <TriangularFEMForceField name="FEM" youngModulus="60" poissonRatio="0.3" method="large" />
         <TriangularBendingSprings name="FEM-Bend" stiffness="300" damping="1.0" topology="@Container"/>
         <TriangleCollisionModel />
-        <UncoupledConstraintCorrection />
+        <UncoupledConstraintCorrection defaultCompliance="0.1"/>
         <Node name="VisualNode">
             <OglModel name="Visual" color="red" />
             <IdentityMapping input="@.." output="@Visual" />

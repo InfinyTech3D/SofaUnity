@@ -157,28 +157,27 @@ namespace SofaUnityAPI
         /////////////////////////////////////////////////////////////////////////////////////////
 
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern string sofaPhysicsAPI_getDAGNodeComponentsName(IntPtr obj, string nodeName);
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern string sofaPhysicsAPI_getDAGNodeParentAPIName(IntPtr obj, string nodeName);
 
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern string sofaComponentAPI_getBaseComponentType(IntPtr obj, string componentName);
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaPhysicsAPI_addDAGNode(IntPtr obj, string parentNodeName, string nodeName);
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaPhysicsAPI_changeDAGNodeAPIName(IntPtr obj, string oldNodeName, string newNodeName);
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaPhysicsAPI_getDAGNodeTransform(IntPtr obj, string nodeName, string transformType, float[] values);
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaPhysicsAPI_setDAGNodeTransform(IntPtr obj, string nodeName, string transformType, float[] values);
-
 
     }
 }

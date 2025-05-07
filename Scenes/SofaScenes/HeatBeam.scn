@@ -22,15 +22,15 @@
     <DefaultAnimationLoop />
     <DefaultVisualManagerLoop />
     
-    <DefaultPipeline verbose="0" depth="10" draw="0" />
+    <CollisionPipeline verbose="0" depth="10" draw="0" />
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
     <MinProximityIntersection name="Proximity" alarmDistance="0.75" contactDistance="0.5" />
-    <DefaultContactManager name="Response" response="PenalityContactForceField" />
+    <CollisionResponse name="Response" response="PenalityContactForceField" />
 	
     <Node name="BeamModel" >
         <RegularGridTopology name="grid" n="31 9 9" min="0 0 0" max="10 2 2" p0="0.0 0.0 0.0" tags="meca"/>
-        <MechanicalObject template="Vec3d" name="beamGrid" position="grid.position"/>
+        <MechanicalObject template="Vec3d" name="beamGrid" position="@grid.position"/>
     </Node>
     
     
@@ -45,7 +45,7 @@
 		<!--
 		<DiagonalMass massDensity="0.2" />
         <TetrahedralCorotationalFEMForceField name="CFEM" youngModulus="1000" poissonRatio="0.3" method="large" />
-        <FixedConstraint template="Vec3d" indices="@box_hot.indices" />
+        <FixedProjectiveConstraint template="Vec3d" indices="@box_hot.indices" />
 		-->
         <Node name="ElecNode"  >
             <EulerImplicitSolver name="Euler" firstOrder="1" tags="diffu"/>
@@ -55,7 +55,7 @@
 
 			<TetrahedronDiffusionFEMForceField template="Vec1d" name="DiffusionForceField" constantDiffusionCoefficient="1500" printLog="0" drawConduc="0" tagMechanics="meca" tags="diffu"/>
 			<MeshMatrixMass name="Mass" template="Vec1d,Vec3d" lumping="1" massDensity="1" tags="mass"/>
-			<LinearMovementConstraint template="Vec1d" keyTimes="0.1 0.2 0.3 1.0 1.5" movements="1 10 10 0 10" indices="@../box_hot.indices" />
+			<LinearMovementProjectiveConstraint template="Vec1d" keyTimes="0.1 0.2 0.3 1.0 1.5" movements="1 10 10 0 10" indices="@../box_hot.indices" />
 
             <Node 	name="Surface" >
                 <TriangleSetTopologyContainer name="TriContainer" tags="surf"/>

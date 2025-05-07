@@ -4,8 +4,6 @@ using UnityEngine;
 
 namespace SofaUnity
 {
-
-
     public class MouseCameraController : MonoBehaviour
     {
 

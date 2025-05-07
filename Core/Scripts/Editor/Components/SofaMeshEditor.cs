@@ -19,7 +19,8 @@ namespace SofaUnity
             base.OnInspectorGUI();
 
             SofaMesh compo = (SofaMesh)this.target;
-            compo.DrawForces = EditorGUILayout.Toggle("DrawGizmoForces", compo.DrawForces);
+
+            EditorGUILayout.IntField("Nb Points", compo.NbVertices());
 
             if (!compo.HasTopology())
                 return;
@@ -47,11 +48,8 @@ namespace SofaUnity
             {
                 EditorGUILayout.IntField("Nb Edges", compo.NbEdges());
             }
-            else
-            {
-                EditorGUILayout.IntField("Nb Points", compo.NbVertices());
-            }
 
+            compo.DrawForces = EditorGUILayout.Toggle("DrawGizmoForces", compo.DrawForces);
 
             EditorGUI.EndDisabledGroup();
         }

@@ -17,7 +17,8 @@ namespace SofaUnity
         QUAD,
         TETRAHEDRON,
         HEXAHEDRON,
-        NO_TOPOLOGY
+        NO_TOPOLOGY,
+        UNKNOWN
     };
 
 

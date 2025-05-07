@@ -1,34 +1,49 @@
-NbrMeshes: 7
+NbrMeshes: 10
 Mesh: OglModel  -  VisualTorus
 NbrVertices: 861
 NbrTriangles: 1600
-Center: -3.190829;-0.168761;-9.890519
-Min: 12.51615;9.582628;12.3529
+Center: 4.033978;0.1455135;-9.297276
+Min: 13.83211;7.764331;12.59095
+Mesh: TetrahedronFEMForceField  -  FEM
+NbrVertices: 560
+NbrTriangles: 840
+Center: 0;20;29
+Min: 17.3611;18.74236;3.5
 Mesh: OglModel  -  VisualDragon
 NbrVertices: 2741
 NbrTriangles: 2452
-Center: 8.518085;0.9277663;2.133493
-Min: 18.54856;17.57322;20.06862
+Center: 1.481216;3.714797;-1.099609
+Min: 19.00361;11.82875;22.14198
+Mesh: TetrahedronFEMForceField  -  FEM
+NbrVertices: 840
+NbrTriangles: 1260
+Center: 20;20;29
+Min: 22;16.0985;14.33431
 Mesh: OglModel  -  VisualBody
 NbrVertices: 2399
 NbrTriangles: 4754
-Center: -7.572928;-0.4378169;0.833178
-Min: 18.14717;11.15444;20.08245
+Center: -3.57455;-1.177974;2.326094
+Min: 18.84281;6.570995;18.28218
 Mesh: OglModel  -  VisualEyes
 NbrVertices: 532
 NbrTriangles: 1056
-Center: -0.02081269;-0.9062093;-2.204014
-Min: 2.22646;2.120668;3.832272
+Center: 3.900921;-1.072429;0.06833708
+Min: 2.069144;1.315997;4.035208
 Mesh: OglModel  -  VisualEyebrows
 NbrVertices: 48
 NbrTriangles: 76
-Center: 0.0173648;-0.826463;-2.136224
-Min: 2.476652;2.142434;3.631542
+Center: 3.933837;-0.9961871;0.1029959
+Min: 2.249947;1.361974;3.810783
 Mesh: OglModel  -  VisualLips
 NbrVertices: 320
 NbrTriangles: 576
-Center: -0.3799143;-2.158277;-2.279625
-Min: 2.668852;2.156173;3.70864
+Center: 3.990028;-2.650708;0.2055605
+Min: 2.959676;1.387517;3.822713
+Mesh: TetrahedronFEMForceField  -  FEM
+NbrVertices: 1792
+NbrTriangles: 2688
+Center: -20.98481;19.75;29.17365
+Min: 20.15761;5.5;16.91297
 Mesh: OglModel  -  VisuFloor
 NbrVertices: 122
 NbrTriangles: 240

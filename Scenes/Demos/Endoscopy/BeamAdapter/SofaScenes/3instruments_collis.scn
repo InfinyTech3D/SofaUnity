@@ -1,0 +1,156 @@
+<?xml version="1.0"?>
+<Node name="root" dt="0.05"  gravity="0 0 0"> 
+	<Node name="Plugins">
+	    <RequiredPlugin name="BeamAdapter"/> <!-- Needed to use components [MultiAdaptiveBeamMapping WireBeamInterpolation WireRestShape] -->
+	    <RequiredPlugin name="Sofa.Component.AnimationLoop"/> <!-- Needed to use components [FreeMotionAnimationLoop] -->
+	    <RequiredPlugin name="Sofa.Component.Collision.Detection.Algorithm"/> <!-- Needed to use components [BVHNarrowPhase BruteForceBroadPhase DefaultPipeline] -->
+	    <RequiredPlugin name="Sofa.Component.Collision.Detection.Intersection"/> <!-- Needed to use components [LocalMinDistance] -->
+	    <RequiredPlugin name="Sofa.Component.Collision.Geometry"/> <!-- Needed to use components [LineCollisionModel PointCollisionModel TriangleCollisionModel] -->
+	    <RequiredPlugin name="Sofa.Component.Collision.Response.Contact"/> <!-- Needed to use components [DefaultContactManager] -->
+	    <RequiredPlugin name="Sofa.Component.Constraint.Lagrangian.Correction"/> <!-- Needed to use components [LinearSolverConstraintCorrection] -->
+	    <RequiredPlugin name="Sofa.Component.Constraint.Lagrangian.Solver"/> <!-- Needed to use components [LCPConstraintSolver] -->
+	    <RequiredPlugin name="Sofa.Component.Constraint.Projective"/> <!-- Needed to use components [FixedConstraint] -->
+	    <RequiredPlugin name="Sofa.Component.IO.Mesh"/> <!-- Needed to use components [MeshOBJLoader] -->
+	    <RequiredPlugin name="Sofa.Component.LinearSolver.Direct"/> <!-- Needed to use components [BTDLinearSolver] -->
+	    <RequiredPlugin name="Sofa.Component.Mapping.Linear"/> <!-- Needed to use components [IdentityMapping] -->
+	    <RequiredPlugin name="Sofa.Component.ODESolver.Backward"/> <!-- Needed to use components [EulerImplicitSolver] -->
+	    <RequiredPlugin name="Sofa.Component.SolidMechanics.Spring"/> <!-- Needed to use components [RestShapeSpringsForceField] -->
+	    <RequiredPlugin name="Sofa.Component.StateContainer"/> <!-- Needed to use components [MechanicalObject] -->
+	    <RequiredPlugin name="Sofa.Component.Topology.Container.Constant"/> <!-- Needed to use components [MeshTopology] -->
+	    <RequiredPlugin name="Sofa.Component.Topology.Container.Dynamic"/> <!-- Needed to use components [EdgeSetGeometryAlgorithms EdgeSetTopologyContainer EdgeSetTopologyModifier QuadSetGeometryAlgorithms QuadSetTopologyContainer QuadSetTopologyModifier] -->
+	    <RequiredPlugin name="Sofa.Component.Topology.Container.Grid"/> <!-- Needed to use components [RegularGridTopology] -->
+	    <RequiredPlugin name="Sofa.Component.Topology.Mapping"/> <!-- Needed to use components [Edge2QuadTopologicalMapping] -->
+	    <RequiredPlugin name="Sofa.Component.Visual"/> <!-- Needed to use components [VisualStyle] -->
+	    <RequiredPlugin name="Sofa.GL.Component.Rendering3D"/> <!-- Needed to use components [OglModel] -->
+	</Node>
+    <VisualStyle displayFlags="showVisualModels showBehaviorModels showCollisionModels hideMappings hideForceFields" />
+ 	<DefaultVisualManagerLoop/>
+
+ 	<FreeMotionAnimationLoop />
+	<LCPConstraintSolver mu="0.1" tolerance="1e-4" maxIt="1000" build_lcp="false" />
+	
+	<CollisionPipeline depth="6" verbose="1" draw="0"/>
+	<BruteForceBroadPhase/>
+	<BVHNarrowPhase/>
+	<LocalMinDistance name="localmindistance" alarmDistance="2" contactDistance="1" angleCone="0.5" coneFactor="0.5" />
+	<CollisionResponse name="Response" response="FrictionContactConstraint" />
+    <CollisionDetectionDisplay name="CollisionDetectionDisplay"/>
+
+<!-- ------------------------- INTERVENTIONAL RADIOLOGY INSTRUMENTS (catheter, guidewire, coil)  ------------------------------ -->
+
+	<Node name="topoLines_cath">
+        <RodStraightSection name="StraightSection" youngModulus="10000" massDensity="0.00000155" radius="1" nbEdgesCollis="40" nbEdgesVisu="220" length="600.0"/>
+        <RodSpireSection name="SpireSection" youngModulus="10000" massDensity="0.00000155" radius="1" nbEdgesCollis="10" nbEdgesVisu="80" length="400.0" spireDiameter="4000.0" spireHeight="0.0"/>        
+        
+        <WireRestShape template="Rigid3d" name="catheterRestShape" wireMaterials="@StraightSection @SpireSection"/> <!-- silicone -->		
+    
+		<EdgeSetTopologyContainer name="meshLinesCath" />
+		<EdgeSetTopologyModifier   name="Modifier" />
+		<EdgeSetGeometryAlgorithms name="GeomAlgo"   template="Rigid3d" />
+		<MechanicalObject template="Rigid3d" name="dofTopo1" />
+	</Node>
+	<Node name="topoLines_guide">
+        <RodStraightSection name="StraightSection" youngModulus="10000" massDensity="0.00000155" radius="0.9" nbEdgesCollis="50" nbEdgesVisu="196" length="980.0"/>
+        <RodSpireSection name="SpireSection" youngModulus="10000" massDensity="0.00000155" radius="0.9" nbEdgesCollis="10" nbEdgesVisu="4" length="20.0" spireDiameter="25" spireHeight="0.0"/>        
+		
+        <WireRestShape template="Rigid3d" name="GuideRestShape" wireMaterials="@StraightSection @SpireSection"/>
+    
+		<EdgeSetTopologyContainer name="meshLinesGuide" />
+		<EdgeSetTopologyModifier   name="Modifier" />
+		<EdgeSetGeometryAlgorithms name="GeomAlgo"   template="Rigid3d" />
+		<MechanicalObject template="Rigid3d" name="dofTopo2" />
+	</Node>
+	<Node name="topoLines_coils">
+        <RodStraightSection name="StraightSection" youngModulus="168000" massDensity="0.000021" radius="0.1" nbEdgesCollis="30" nbEdgesVisu="360" length="540.0"/>
+        <RodSpireSection name="SpireSection" youngModulus="168000" massDensity="0.000021" radius="0.1" nbEdgesCollis="30" nbEdgesVisu="40" length="60.0" spireDiameter="7" spireHeight="5.0"/>        
+		
+        <WireRestShape template="Rigid3d" name="CoilRestShape" wireMaterials="@StraightSection @SpireSection"/>
+        
+		<EdgeSetTopologyContainer name="meshLinesCoils" />
+		<EdgeSetTopologyModifier   name="Modifier" />
+		<EdgeSetGeometryAlgorithms name="GeomAlgo"   template="Rigid3d" />
+		<MechanicalObject template="Rigid3d" name="dofTopo3" />
+	</Node>
+	
+
+	<Node name="InstrumentCombined">
+		<EulerImplicitSolver rayleighStiffness="0.2" rayleighMass="0.1" printLog="false" />
+		<BTDLinearSolver subpartSolve="0" verification="0" verbose="0"/>
+		<RegularGridTopology name="meshLinesCombined"
+            nx="180" ny="1" nz="1"
+            xmin="0.0" xmax="1.0"
+            ymin="0" ymax="0"
+            zmin="1" zmax="1"
+		/>
+		<MechanicalObject template="Rigid3d" name="DOFs" showIndices="0" ry="-90"/> 
+
+		<WireBeamInterpolation name="InterpolCatheter" WireRestShape="@../topoLines_cath/catheterRestShape" /> 
+		<AdaptiveBeamForceFieldAndMass name="CatheterForceField" interpolation="@InterpolCatheter"/> <!--stiff silicone E = 10000 MPa // 1550 Kg/m3-->	
+
+		<WireBeamInterpolation name="InterpolGuide" WireRestShape="@../topoLines_guide/GuideRestShape" /> 
+		<AdaptiveBeamForceFieldAndMass name="GuideForceField" interpolation="@InterpolGuide" /> 	
+
+		<WireBeamInterpolation name="InterpolCoils" WireRestShape="@../topoLines_coils/CoilRestShape" /> 
+		<AdaptiveBeamForceFieldAndMass name="CoilsForceField" interpolation="@InterpolCoils" /> <!-- platine E = 168000 MPa // 21000 Kg/m3-->	
+
+        <BeamAdapterActionController name="AController" interventionController="@IRController" writeMode="0"
+            timeSteps="4.3 7.5 7.65 7.85 8.05 8.25 8.45 8.7 8.9 9.2 9.4 9.6 9.8 10 10.25 10.4 10.65 10.85 11.05 11.25 11.45 11.7 11.95 12.2 12.4 12.6 12.8 13 13.2 13.4 13.6 13.85 14.05 14.35 14.55 14.75 14.95 15.15 15.35 15.5 15.7 15.85 16.1 16.25 16.4 16.55 16.7 16.85 17 17.2 17.35 17.55 17.7 17.85 17.95 18.1 18.25 18.35 18.5 18.65 18.85 19 19.2 19.35 19.45 19.6 19.75 19.95 20.1 20.25 20.4 20.55 20.7 20.85 21.35 22.35 23.05 23.65 25 25.1 25.2 25.35 25.5 25.65 25.8 29 30.5 31.9 33.85 33.95 34.1 34.2 34.3 34.45 34.55 34.65 34.8 34.95 35.05 35.15 35.3 35.4 35.5 35.6 35.7 35.8 35.95 36.1 36.2 36.3 36.45 36.5 36.65 36.75 36.9 37 37.1 37.2 37.3 37.45 37.55 37.65 37.75 37.85 38 38.1 38.2 38.3 38.45 38.55 38.65 38.8 38.9 39.05 39.15 39.3 39.4 39.55 39.65 39.7 39.85 39.9 40.1 40.2 40.3 40.4 40.55 40.65 40.8 40.9 41.05 41.15 41.3 41.4 41.6 41.7 41.8 41.95 42 42.1 42.2 42.35 42.45 42.6 42.65 42.8 42.95 43.05 43.2 43.3 43.45 43.55 43.65 43.8 43.9 44 44.15 44.25 44.4 44.55 45.5 47.35 47.45 47.55 47.65 47.7 47.8 47.9 48 50.4 52.35 52.45 52.55 52.65 52.75 52.9 53 53.1 53.2 53.3 53.4 54.35 56.05 56.15 56.2 56.3 56.4 56.5 56.6 56.65 56.7 57.95 58.6 59.45 59.55 59.6 59.7 59.8 59.9 59.95 60.05 60.1 60.15 60.25 60.3 60.4 60.5 60.6 60.65 60.75 60.85 60.95 61 61.1 61.15 61.2 61.3 61.4 61.5 61.65 61.75 61.85 62 62.15 62.25 62.35 62.45 62.55 62.65 62.75 62.85 62.9 63 63.05 63.15 63.2 63.25 63.35 63.4 63.5 63.6 63.7 63.75 63.85 63.95 64.05 64.2 64.3 64.35 64.45 64.55 64.6 64.7 64.8 64.9 65 65.1 65.2 65.3 65.45 65.55 65.65 65.75 65.8 65.9 72.15 73.6 73.7 73.8 73.85 73.95 74 74.1 74.25 74.35 74.45 74.55 75.4 76.1 76.7 77.65 79.85 82 82.85 84.25 84.35 84.45 84.55 84.65 84.75 84.8 84.9 84.95 85.1 85.2 85.3 85.4 85.5 85.6 85.7 85.8 85.9 86 86.1 86.2 86.3 86.4 86.45 86.55 86.65 86.75 86.8 86.9 87 87.15 87.25 87.3 87.4 87.5 87.6 87.7 87.75 87.85 87.95 88 88.1 88.25 88.35 88.45 88.55 88.65 88.75 88.85 88.95 89.05 89.15 89.25 89.35 89.5 89.6 89.75 89.85 89.95 90.05 90.15 90.75 92.4 92.5 92.6 92.7 94.45 97.25 98.1 99.3 99.4 99.5 99.55 99.65 99.7 99.8 99.85 99.95 100.05 100.15 100.2 100.3 100.35 100.45 100.5 100.55 100.65 100.7 100.8 100.85 100.95 101.05 101.15 101.2 101.25 101.35 101.4 101.5 101.55 101.65 101.7 101.75 101.85 101.9 102 102.05 102.15 102.2 102.3 102.35 102.45 102.5 102.6 102.65 102.7 102.8 102.85 102.95 103.05 103.1 103.2 103.25 103.35 103.4 103.5 103.55 103.65 103.7 103.75 103.85 103.95 104.05 104.1 104.2 104.25 104.3 104.4 104.45 104.55 104.6 104.7 104.75 104.85 104.95 105 105.1 105.15 105.25 105.3 105.4 105.45 105.55 105.6 105.65 105.75 105.85 105.95 106 106.05 106.15 106.2 106.3 106.35 106.45 106.5 106.6 106.65 106.75 106.85 106.9 107 107.05 107.15 107.2 107.3 107.35 107.45 107.5 107.6 107.7 107.75 107.85 107.9 107.95 108.05 108.1 108.2 108.25 108.3 108.4 108.45 108.55 108.65 108.7 108.8 108.85 108.95 109 109.1 109.15 109.25 109.3 109.35 109.45 109.55 109.65 109.7 109.8 109.85 109.9 110 110.05 110.15 110.2 110.3 110.35 110.45 110.55 110.6 110.7 110.75 110.8 110.9 110.95 111.05 111.1 111.2 111.25 111.35 111.45 111.5 111.6 111.65 111.75 111.8 111.9 111.95 112.05 112.1 112.2 112.25 112.35 112.4 112.5 112.55 112.65 112.7 112.75 112.85 112.9 113 113.1 113.15 113.2 113.3 113.4 113.45 113.55 113.6 113.65 113.75 113.8 113.9 113.95 114 114.1 114.2 114.25 114.35 114.4 114.5 114.6 114.65 114.75 114.85 114.9 114.95 115.05 115.1 115.2 115.3 115.35 115.4 115.5 115.6 115.65 115.75 115.8 115.9 116 116.05 116.1 116.2 116.3 116.4 116.5 116.55 116.6 116.7 116.8 116.85 116.95 117.05 117.1 117.15 117.25 117.35 117.45 117.5 117.6 117.65 117.75 117.85 117.9 117.95 118.05 118.15 118.25 118.35 118.4 118.5 122.65"
+            actions="1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 9 9 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 4 4 4 4 4 4 4 4 4 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 8 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 9 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 10 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1"
+        />
+		<InterventionalRadiologyController template="Rigid3d" name="IRController" printLog="0" xtip="1 0 0"  step="3" rotationInstrument="0 0 0" 
+							controlledInstrument="0" startingPos="0 0 0 0 -0.7071068 0 0.7071068" speed="2" instruments="InterpolCatheter InterpolGuide InterpolCoils" />
+
+		<LinearSolverConstraintCorrection printLog="false" wire_optimization="true"/>
+
+		<FixedProjectiveConstraint name="FixedConstraint" indices="0" />
+        <RestShapeSpringsForceField  points="@IRController.indexFirstNode" stiffness="1e8" angularStiffness="1e8"   />
+
+		<Node name="Collis" activated="true">
+				<EdgeSetTopologyContainer name="collisEdgeSet" />
+				<EdgeSetTopologyModifier   name="colliseEdgeModifier" />
+				<MechanicalObject name="CollisionDOFs"/>
+				<MultiAdaptiveBeamMapping  name="collisMap"  controller="../IRController" useCurvAbs="1" printLog="0"/> 
+				<LineCollisionModel proximity="0.0" group="1"/>
+				<PointCollisionModel proximity="0.0" group="1"/>
+		</Node>	
+
+		<Node name="VisuCatheter" activated="true">
+			<OglModel name="Visual" color="0.7 0.7 0.7"  quads="@../ContainerCath.quads" material="texture Ambient 1 0.2 0.2 0.2 0.0 Diffuse 1 1.0 1.0 1.0 1.0 Specular 1 1.0 1.0 1.0 1.0 Emissive 0 0.15 0.05 0.05 0.0 Shininess 1 20"/>
+			<QuadSetTopologyContainer  name="ContainerCath" />
+			<QuadSetTopologyModifier   name="Modifier" />
+			<QuadSetGeometryAlgorithms name="GeomAlgo"  template="Vec3d" />
+			<Edge2QuadTopologicalMapping nbPointsOnEachCircle="10" radius="1" input="@../../topoLines_cath/meshLinesCath" output="@ContainerCath" flipNormals="true"/>
+
+			<AdaptiveBeamMapping  name="VisuMapCath" useCurvAbs="1" printLog="0" interpolation="@../InterpolCatheter" input="@../DOFs" output="@Visual"  />
+		</Node>
+	
+		<Node name="VisuGuide" activated="true">
+			<OglModel name="Visual" color="0.2 0.2 0.8"  material="texture Ambient 1 0.2 0.2 0.2 0.0 Diffuse 1 1.0 1.0 1.0 1.0 Specular 1 1.0 1.0 1.0 1.0 Emissive 0 0.15 0.05 0.05 0.0 Shininess 1 20" quads="@../ContainerGuide.quads"/>
+			<QuadSetTopologyContainer  name="ContainerGuide" />
+			<QuadSetTopologyModifier   name="Modifier" />
+			<QuadSetGeometryAlgorithms name="GeomAlgo"  template="Vec3d" />
+			<Edge2QuadTopologicalMapping nbPointsOnEachCircle="10" radius="0.7" input="@../../topoLines_guide/meshLinesGuide" output="@ContainerGuide"  flipNormals="true" listening="true"/> 
+			<AdaptiveBeamMapping  name="visuMapGuide" useCurvAbs="1" printLog="0" interpolation="@../InterpolGuide" input="@../DOFs" output="@Visual" />
+		</Node> 
+	   
+		<Node name="VisuCoils" activated="true">
+			<OglModel name="Visual" color="0.2 0.8 0.2"  material="texture Ambient 1 0.2 0.2 0.2 0.0 Diffuse 1 1.0 1.0 1.0 1.0 Specular 1 1.0 1.0 1.0 1.0 Emissive 0 0.15 0.05 0.05 0.0 Shininess 1 20" quads="@../ContainerCoils.quads"/>
+			<QuadSetTopologyContainer  name="ContainerCoils" />
+			<QuadSetTopologyModifier   name="Modifier" />
+			<QuadSetGeometryAlgorithms name="GeomAlgo"  template="Vec3d" />
+			<Edge2QuadTopologicalMapping nbPointsOnEachCircle="10" radius="0.3"  input="@../../topoLines_coils/meshLinesCoils" output="@ContainerCoils"  flipNormals="true" listening="true" /> 
+			<AdaptiveBeamMapping  name="visuMapCoils" useCurvAbs="1" printLog="0" interpolation="@../InterpolCoils" input="@../DOFs" output="@Visual" />
+		</Node>   
+	</Node>
+
+	<Node name="CollisionModel"> 
+		<MeshOBJLoader name="meshLoader" filename="./mesh/phantom.obj" triangulate="true" flipNormals="1"/>
+		<MeshTopology position="@meshLoader.position"  triangles="@meshLoader.triangles"/>
+		<MechanicalObject name="DOFs1" position="0 0 400" scale="3" ry="90"/>	
+		<TriangleCollisionModel simulated="0" moving="0"/>	
+		<LineCollisionModel simulated="0" moving="0"/>
+		<PointCollisionModel simulated="0" moving="0"/>
+		<OglModel name="Visual" src="@meshLoader" color="1 0 0 0.3" scale="3" ry="90"/>
+	</Node>
+	
+</Node>

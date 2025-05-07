@@ -31,6 +31,7 @@ namespace SofaUnity
         [SerializeField]
         private List<GameObject> m_collisionElement = null;
 
+        private SofaBoolData m_isCollisionActive = null;
 
 
         ////////////////////////////////////////////
@@ -54,6 +55,25 @@ namespace SofaUnity
             }
         }
 
+        public bool ActivateCollision
+        {
+            get {
+                if (m_isCollisionActive != null)
+                    return m_isCollisionActive.Value;
+                else
+                    return false;
+            }
+            set
+            {
+                if (m_isCollisionActive != null)
+                {
+                    m_isCollisionActive.Value = value;
+                }
+                else
+                    Debug.LogWarning("Can't ActivateCollision as m_isCollisionActive is not set.");
+            }
+        }
+
 
 
         ////////////////////////////////////////////
@@ -72,6 +92,16 @@ namespace SofaUnity
                 if (m_sofaMesh && m_drawCollision)
                 {
                     CreateCollisionElements();
+                }
+            }
+
+            if (m_isCollisionActive == null)
+            {
+                m_isCollisionActive = m_dataArchiver.GetSofaBoolData("active");
+
+                if (m_isCollisionActive == null)
+                {
+                    Debug.LogWarning("GetSofaBoolData named 'active' failed.");
                 }
             }
         }
@@ -163,8 +193,6 @@ namespace SofaUnity
             int nbrSpheres = m_sofaMesh.NbVertices();
             m_collisionElement = new List<GameObject>();
 
-            float[] vertices = m_sofaMesh.SofaMeshTopology.m_vertexBuffer;
-
             // get sphere radius
             float radius = 1.0f;
             if (fixedRadius == 0.0f)
@@ -188,7 +216,7 @@ namespace SofaUnity
             {
                 GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 sphere.name = "SphereCollision_" + i;
-                sphere.transform.position = new Vector3(vertices[i * 3], vertices[i * 3 + 1], vertices[i * 3 + 2]);
+                sphere.transform.localPosition = m_sofaMesh.GetPosition(i);
                 sphere.transform.localScale = scaleRadius;
                 sphere.transform.parent = this.transform;
                 m_collisionElement.Add(sphere);
@@ -267,11 +295,10 @@ namespace SofaUnity
             if (this.m_componentType == "SphereCollisionModel" || this.m_componentType == "PointCollisionModel")
             {
                 int nbrSpheres = m_collisionElement.Count;
-                float[] vertices = m_sofaMesh.SofaMeshTopology.m_vertexBuffer;
                 for (int i = 0; i < nbrSpheres; i++)
                 {
                     GameObject sphere = m_collisionElement[i];
-                    sphere.transform.localPosition = new Vector3(vertices[i * 3], vertices[i * 3 + 1], vertices[i * 3 + 2]);
+                    sphere.transform.localPosition = m_sofaMesh.GetPosition(i);
                 }
             }
             else if (this.m_componentType == "TriangleCollisionModel")

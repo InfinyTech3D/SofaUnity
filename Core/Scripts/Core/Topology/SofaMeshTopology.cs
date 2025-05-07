@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,13 +16,12 @@ namespace SofaUnity
         ////////////////////////////////////////////
 
         /// Higher level of topology handle in this class
-        protected TopologyObjectType m_topologyType = TopologyObjectType.NO_TOPOLOGY;
+        protected TopologyObjectType m_topologyType = TopologyObjectType.UNKNOWN;
 
         /// Pointer to the Unity Mesh structure
         public Mesh m_mesh = null;
 
         // Do we need dynamic or static buffer here??
-        protected List<Vector3> m_vertices = null;
         protected List<Edge> m_edges = null;
         protected List<Triangle> m_triangles = null;
         protected List<Quad> m_quads = null;
@@ -33,10 +32,6 @@ namespace SofaUnity
         protected int m_nbVertices = 0;
         /// number of points inside this mesh
         public int m_meshDim = 3;
-
-        /// real buffer sent to SOFA
-        public float[] m_vertexBuffer = null;
-        public float[] m_restVertexBuffer = null;
 
         /// number of triangles inside this mesh
         protected int nbTriangles = 0;
@@ -166,38 +161,20 @@ namespace SofaUnity
             m_topologyType = TopologyObjectType.EDGE;
         }
 
-
-        /// Method to create a vertex static float buffer given the number of vertices
-        public void CreateVertexBuffer(int nbVertices, int meshDimension)
-        {
-            m_nbVertices = nbVertices;
-            m_meshDim = meshDimension;
-            m_vertexBuffer = new float[nbVertices * m_meshDim];
-        }
-
-        public void CreateRestVertexBuffer()
-        {
-            int nbrFloat = m_nbVertices * m_meshDim;
-            m_restVertexBuffer = new float[nbrFloat];
-
-            for (int i=0; i< nbrFloat; i++)
-            {
-                m_restVertexBuffer[i] = m_vertexBuffer[i];
-            }
-        }
-
         
         /// Main method to compute the mesh given its topology type and static buffer. Will call internal method according to the type.
-        public void ComputeMesh()
+        public void ComputeMesh(float[] sofaVertices, int nbVertices, int meshDim)
         {
+            m_nbVertices = nbVertices;
+
             // compute mesh in fonction of its dimension
-            if (m_meshDim == 3)
+            if (meshDim == 3)
             {
-                Compute3DMesh();
+                Compute3DMesh(sofaVertices);
             }
-            else if (m_meshDim == 2)
+            else if (meshDim == 2)
             {
-                Compute2DMesh();
+                Compute2DMesh(sofaVertices);
             }
             else
             {
@@ -228,19 +205,24 @@ namespace SofaUnity
             {
                 ComputeMeshFromEdge();
             }
+            else // means no topology
+            {
+                m_topologyType = TopologyObjectType.NO_TOPOLOGY;
+                Debug.LogError("No mesh can be created as this object has no topology.");
+            }
         }
 
 
-        protected void Compute3DMesh()
+        protected void Compute3DMesh(float[] sofaVertices)
         {
             m_mesh = new Mesh();
             m_mesh.name = "SofaMesh";
             Vector3[] unityVertices = new Vector3[m_nbVertices];
             for (int i = 0; i < m_nbVertices; ++i)
             {
-                unityVertices[i].x = m_vertexBuffer[i * 3];
-                unityVertices[i].y = m_vertexBuffer[i * 3 + 1];
-                unityVertices[i].z = m_vertexBuffer[i * 3 + 2];
+                unityVertices[i].x = -sofaVertices[i * 3];
+                unityVertices[i].y = sofaVertices[i * 3 + 1];
+                unityVertices[i].z = sofaVertices[i * 3 + 2];
             }
             m_mesh.vertices = unityVertices;
             m_mesh.normals = new Vector3[m_nbVertices];
@@ -248,21 +230,22 @@ namespace SofaUnity
         }
 
 
-        protected void Compute2DMesh()
+        protected void Compute2DMesh(float[] sofaVertices)
         {
             m_mesh = new Mesh();
             m_mesh.name = "SofaMesh";
             Vector3[] unityVertices = new Vector3[m_nbVertices];
             for (int i = 0; i < m_nbVertices; ++i)
             {
-                unityVertices[i].x = m_vertexBuffer[i * 2];
-                unityVertices[i].y = m_vertexBuffer[i * 2 + 1];
+                unityVertices[i].x = -sofaVertices[i * 2];
+                unityVertices[i].y = sofaVertices[i * 2 + 1];
                 unityVertices[i].z = 0.0f;
             }
             m_mesh.vertices = unityVertices;
             m_mesh.normals = new Vector3[m_nbVertices];
             m_mesh.uv = new Vector2[m_nbVertices];
         }
+
 
 
         ////////////////////////////////////////////
@@ -303,57 +286,57 @@ namespace SofaUnity
                 // face back
                 int triVId = i * 12 * 3;
                 tris[triVId + 0] = id[0];
-                tris[triVId + 1] = id[2];
-                tris[triVId + 2] = id[1];
+                tris[triVId + 1] = id[1];
+                tris[triVId + 2] = id[2];
 
                 tris[triVId + 3] = id[0];
-                tris[triVId + 4] = id[3];
-                tris[triVId + 5] = id[2];
+                tris[triVId + 4] = id[2];
+                tris[triVId + 5] = id[3];
 
                 // face front
                 tris[triVId + 6] = id[4];
-                tris[triVId + 7] = id[5];
-                tris[triVId + 8] = id[6];
+                tris[triVId + 7] = id[6];
+                tris[triVId + 8] = id[5];
 
                 tris[triVId + 9] = id[4];
-                tris[triVId + 10] = id[6];
-                tris[triVId + 11] = id[7];
+                tris[triVId + 10] = id[7];
+                tris[triVId + 11] = id[6];
 
                 // face right
                 tris[triVId + 12] = id[1];
-                tris[triVId + 13] = id[2];
-                tris[triVId + 14] = id[6];
+                tris[triVId + 13] = id[6];
+                tris[triVId + 14] = id[2];
 
                 tris[triVId + 15] = id[5];
-                tris[triVId + 16] = id[1];
-                tris[triVId + 17] = id[6];
+                tris[triVId + 16] = id[6];
+                tris[triVId + 17] = id[1];
 
                 // face left
                 tris[triVId + 18] = id[0];
-                tris[triVId + 19] = id[7];
-                tris[triVId + 20] = id[3];
+                tris[triVId + 19] = id[3];
+                tris[triVId + 20] = id[7];
 
                 tris[triVId + 21] = id[0];
-                tris[triVId + 22] = id[4];
-                tris[triVId + 23] = id[7];
+                tris[triVId + 22] = id[7];
+                tris[triVId + 23] = id[4];
 
                 // face up
                 tris[triVId + 24] = id[2];
-                tris[triVId + 25] = id[3];
-                tris[triVId + 26] = id[6];
+                tris[triVId + 25] = id[6];
+                tris[triVId + 26] = id[3];
 
                 tris[triVId + 27] = id[3];
-                tris[triVId + 28] = id[7];
-                tris[triVId + 29] = id[6];
+                tris[triVId + 28] = id[6];
+                tris[triVId + 29] = id[7];
 
                 // face down
                 tris[triVId + 30] = id[0];
-                tris[triVId + 31] = id[1];
-                tris[triVId + 32] = id[5];
+                tris[triVId + 31] = id[5];
+                tris[triVId + 32] = id[1];
 
                 tris[triVId + 33] = id[0];
-                tris[triVId + 34] = id[5];
-                tris[triVId + 35] = id[4];
+                tris[triVId + 34] = id[4];
+                tris[triVId + 35] = id[5];
             }
 
             m_mesh.vertices = verts;
@@ -397,23 +380,23 @@ namespace SofaUnity
 
                 // face 0
                 tris[i * 12 + 0] = id[0];
-                tris[i * 12 + 1] = id[2];
-                tris[i * 12 + 2] = id[1];
+                tris[i * 12 + 1] = id[1];
+                tris[i * 12 + 2] = id[2];
 
                 // face 1
                 tris[i * 12 + 3] = id[1];
-                tris[i * 12 + 4] = id[2];
-                tris[i * 12 + 5] = id[3];
+                tris[i * 12 + 4] = id[3];
+                tris[i * 12 + 5] = id[2];
 
                 // face 2
                 tris[i * 12 + 6] = id[2];
-                tris[i * 12 + 7] = id[0];
-                tris[i * 12 + 8] = id[3];
+                tris[i * 12 + 7] = id[3];
+                tris[i * 12 + 8] = id[0];
 
                 // face 3
                 tris[i * 12 + 9] = id[0];
-                tris[i * 12 + 10] = id[1];
-                tris[i * 12 + 11] = id[3];
+                tris[i * 12 + 10] = id[3];
+                tris[i * 12 + 11] = id[1];
             }
 
             m_mesh.vertices = verts;

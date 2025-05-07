@@ -56,6 +56,23 @@ namespace SofaUnity
                 return 0;
         }
 
+        /// Getter: returns Unity Mesh object attached to the MeshFilter of this GameObject
+        public Mesh GetMesh()
+        {
+             return m_mesh;
+        }
+
+        /// Setter: Method to set Mesh attached to the MeshFilter of this GameObject
+        public void SetMesh(Mesh mesh)
+        {
+            m_mesh = mesh;
+            MeshFilter mf = gameObject.GetComponent<MeshFilter>();
+            if (mf != null)
+            {
+                mf.mesh = m_mesh;
+            }
+        }
+
         public e_UVType UVType
         {
             get { return m_uvType; }

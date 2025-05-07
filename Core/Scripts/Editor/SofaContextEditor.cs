@@ -45,8 +45,8 @@ namespace SofaUnity
                 if (m_SofaLogo == null)
                 {
                     Object logo = Resources.Load("icons/sofa_sprite");
-                    //if (logo == null)
-                    //    Debug.LogError("logo not found");
+                if (logo == null)
+                    Debug.LogError("logo not found");
 
                     m_SofaLogo = (Texture2D)logo;
                 }
@@ -62,9 +62,9 @@ namespace SofaUnity
             SofaContext context = (SofaContext)this.target;
 
             // Add Sofa Logo
-            GUIStyle logoGUIStyle = new GUIStyle();
-            logoGUIStyle.border = new RectOffset(0, 0, 0, 0);
-            EditorGUILayout.LabelField(new GUIContent(SofaLogo), GUILayout.MinHeight(100.0f), GUILayout.ExpandWidth(true));
+            //GUIStyle logoGUIStyle = new GUIStyle();
+            //logoGUIStyle.border = new RectOffset(0, 0, 0, 0);
+            //EditorGUILayout.LabelField(new GUIContent(SofaLogo), GUILayout.MinHeight(100.0f), GUILayout.ExpandWidth(true));
 
             // Add field for gravity
             context.Gravity = EditorGUILayout.Vector3Field("Gravity", context.Gravity);
@@ -172,12 +172,14 @@ namespace SofaUnity
             if (GUILayout.Button("Load SOFA Scene (.scn) file"))
             {
                 string absolutePath = EditorUtility.OpenFilePanel("Load file scene (*.scn)", "", "scn");
+            if (absolutePath.Length > 0)
                 context.SceneFileMgr.SceneFilename = absolutePath.Substring(Application.dataPath.Length);
                 EditorGUILayout.Separator();
             }
             else if (GUILayout.Button("Load SOFA Python Scene (.py) file"))
             {
                 string absolutePath = EditorUtility.OpenFilePanel("Load file scene (*.py)", "", "py");
+            if (absolutePath.Length > 0)
                 context.SceneFileMgr.PythonSceneFilename = absolutePath.Substring(Application.dataPath.Length);
                 EditorGUILayout.Separator();
             }
