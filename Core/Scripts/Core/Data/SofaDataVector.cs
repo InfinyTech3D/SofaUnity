@@ -36,6 +36,9 @@ namespace SofaUnity
 
         /// public method to get vector size
         public int GetSize() { return m_vecSize; }
+
+        /// public method to request vector size update
+        public virtual void UpdateSize() { }
     }
 
 
@@ -53,6 +56,12 @@ namespace SofaUnity
         /// Default constructor taking the component owner, the data name and the vector size. Will set the type internally
         public SofaDataVectorInt(SofaBaseComponent owner, string dataName, string dataType)
             : base(owner, dataName, dataType, "int")
+        {
+            m_vecSize = m_owner.m_impl.GetVectoriSize(m_dataName);
+        }
+
+        /// public method to request vector<int> size update
+        public override void UpdateSize() 
         {
             m_vecSize = m_owner.m_impl.GetVectoriSize(m_dataName);
         }
@@ -97,6 +106,12 @@ namespace SofaUnity
             m_vecSize = m_owner.m_impl.GetVectorfSize(m_dataName);
         }
 
+        /// public method to request vector<float> size update
+        public override void UpdateSize()
+        {
+            m_vecSize = m_owner.m_impl.GetVectorfSize(m_dataName);
+        }
+
         /// <summary>
         /// Method to get values from SOFA
         /// </summary>
@@ -133,6 +148,12 @@ namespace SofaUnity
         /// Default constructor taking the component owner, the data name and the vector size. Will set the type internally
         public SofaDataVectorDouble(SofaBaseComponent owner, string dataName, string dataType)
             : base(owner, dataName, dataType, "double")
+        {
+            m_vecSize = m_owner.m_impl.GetVectordSize(m_dataName);
+        }
+
+        /// public method to request vector<double> size update
+        public override void UpdateSize()
         {
             m_vecSize = m_owner.m_impl.GetVectordSize(m_dataName);
         }
@@ -182,6 +203,12 @@ namespace SofaUnity
             m_vecSize = m_owner.m_impl.GetVecofVec2Size(m_dataName, m_isDouble);
         }
 
+        /// public method to request vector<Vec2> size update
+        public override void UpdateSize()
+        {
+            m_vecSize = m_owner.m_impl.GetVecofVec2Size(m_dataName, m_isDouble);
+        }
+
         /// <summary>
         /// Method to get values from SOFA. Array of Vector2 to raw float conversion will be performed
         /// </summary>
@@ -197,7 +224,7 @@ namespace SofaUnity
             int res = m_owner.m_impl.GetVecofVec2Value(m_dataName, m_vecSize, rawValues, m_isDouble);
             for (int i = 0; i < m_vecSize; ++i)
             {
-                values[i].x = rawValues[i * 2];
+                values[i].x = -rawValues[i * 2];
                 values[i].y = rawValues[i * 2 + 1];
             }
 
@@ -215,7 +242,7 @@ namespace SofaUnity
             float[] rawValues = new float[m_vecSize * 2];
             for (int i = 0; i < m_vecSize; ++i)
             {
-                rawValues[i * 2] = values[i].x;
+                rawValues[i * 2] = -values[i].x;
                 rawValues[i * 2 + 1] = values[i].y;
             }
 
@@ -248,22 +275,39 @@ namespace SofaUnity
             m_vecSize = m_owner.m_impl.GetVecofVec3Size(m_dataName, m_isDouble);            
         }
 
+        /// public method to request vector<Vec3> size update
+        public override void UpdateSize()
+        {
+            m_vecSize = m_owner.m_impl.GetVecofVec3Size(m_dataName, m_isDouble);
+        }
+
         /// <summary>
         /// Method to get values from SOFA. Array of Vector3 to raw float conversion will be performed
         /// </summary>
         /// <param name="values">Array of Vector3 to store SOFA values</param>
         /// <returns>int code from SOFA communication</returns>
-        public int GetValues(Vector3[] values)
+        public int GetValues(Vector3[] values, bool toUnityWorld = false)
         {
             float[] rawValues = new float[m_vecSize * 3];
-
             int res = m_owner.m_impl.GetVecofVec3Value(m_dataName, m_vecSize, rawValues, m_isDouble);
-            for (int i = 0; i < m_vecSize; ++i)
+            if (res == -1)
+                return res;
+            
+            if (toUnityWorld)
             {
-                values[i].x = rawValues[i * 3];
-                values[i].y = rawValues[i * 3 + 1];
-                values[i].z = rawValues[i * 3 + 2];
+                Transform sofaTransform = m_owner.m_sofaContext.transform;
+                for (int i = 0; i < m_vecSize; ++i)
+                {
+                    values[i] = sofaTransform.TransformPoint(new Vector3(-rawValues[i * 3], rawValues[i * 3 + 1], rawValues[i * 3 + 2]));
+                }
             }
+            else
+            {
+                for (int i = 0; i < m_vecSize; ++i)
+                {
+                    values[i] = new Vector3(-rawValues[i * 3], rawValues[i * 3 + 1], rawValues[i * 3 + 2]);
+                }
+            }            
 
             return res;
         }
@@ -279,7 +323,7 @@ namespace SofaUnity
             float[] rawValues = new float[m_vecSize * 3];
             for (int i = 0; i < m_vecSize; ++i)
             {
-                 rawValues[i * 3] = values[i].x;
+                 rawValues[i * 3] = -values[i].x;
                  rawValues[i * 3 + 1] = values[i].y;
                  rawValues[i * 3 + 2] = values[i].z;
             }

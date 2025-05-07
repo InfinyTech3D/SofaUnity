@@ -91,7 +91,7 @@ namespace SofaUnityAPI
                 Vector3 vert = trans.TransformPoint(vertices[i]);
                 Vector3 vertS = sofaCTransform.InverseTransformPoint(vert);
 
-                val[i * 3] = vertS.x;
+                val[i * 3] = -vertS.x; // left to right coordinate system conversion
                 val[i * 3 + 1] = vertS.y;
                 val[i * 3 + 2] = vertS.z;
             }
@@ -122,19 +122,19 @@ namespace SofaUnityAPI
         ////////////          Communication API to sofaPhysicsAdvanceAPI         ////////////////
         /////////////////////////////////////////////////////////////////////////////////////////
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaPhysicsAPI_addSphereCollisionsObject(IntPtr obj, string name, string parentNodeName);
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_setNbVertices(IntPtr obj, string name, int nbrV);
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_setVertices(IntPtr obj, string name, float[] arr);
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaComponentAPI_setDoubleValue(IntPtr obj, string componentName, string dataName, double value);
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaComponentAPI_reinitComponent(IntPtr obj, string componentName);
     }
 }

@@ -298,7 +298,7 @@ namespace SofaUnityAPI
         }
 
 
-        public int GetVertices(float[] vertices)
+        public int GetRawPositions(float[] vertices)
         {
             if (m_isReady)
             {
@@ -312,7 +312,7 @@ namespace SofaUnityAPI
             }
         }
 
-        public int GetVelocities(float[] velocities)
+        public int GetRawVelocities(float[] velocities)
         {
             if (m_isReady)
             {
@@ -326,7 +326,7 @@ namespace SofaUnityAPI
             }
         }
 
-        public int GetForces(float[] forces)
+        public int GetRawForces(float[] forces)
         {
             if (m_isReady)
             {
@@ -365,7 +365,7 @@ namespace SofaUnityAPI
 
                 for (int i = 0; i < nbrV; ++i)
                 {
-                    unityVertices[i].x = vertices[i * 3];
+                    unityVertices[i].x = -vertices[i * 3]; // left to right coordinate system conversion
                     unityVertices[i].y = vertices[i * 3 + 1];
                     unityVertices[i].z = vertices[i * 3 + 2];
                 }
@@ -399,19 +399,24 @@ namespace SofaUnityAPI
 
             // fill triangles first
             int nbrIntTri = nbrTris * 3;
-            for (int i = 0; i < nbrIntTri; ++i)
-                trisOut[i] = tris[i];
+            for (int i = 0; i < nbrTris; ++i) // Triangle inversion: right to left coordinate system conversion
+            {
+                trisOut[i * 3] = tris[i * 3];
+                trisOut[i * 3 + 1] = tris[i * 3 + 2];
+                trisOut[i * 3 + 2] = tris[i * 3 + 1];
+            }
+                
 
             // Add quads splited as triangles
-            for (int i = 0; i < nbrQuads; ++i)
+            for (int i = 0; i < nbrQuads; ++i) // Triangle inversion: right to left coordinate system conversion
             {
                 trisOut[nbrIntTri + i * 6] = quads[i * 4];
-                trisOut[nbrIntTri + i * 6 + 1] = quads[i * 4 + 1];
-                trisOut[nbrIntTri + i * 6 + 2] = quads[i * 4 + 2];
+                trisOut[nbrIntTri + i * 6 + 1] = quads[i * 4 + 2];
+                trisOut[nbrIntTri + i * 6 + 2] = quads[i * 4 + 1];
 
                 trisOut[nbrIntTri + i * 6 + 3] = quads[i * 4];
-                trisOut[nbrIntTri + i * 6 + 4] = quads[i * 4 + 2];
-                trisOut[nbrIntTri + i * 6 + 5] = quads[i * 4 + 3];
+                trisOut[nbrIntTri + i * 6 + 4] = quads[i * 4 + 3];
+                trisOut[nbrIntTri + i * 6 + 5] = quads[i * 4 + 2];
             }
 
             // Force future deletion
@@ -470,20 +475,20 @@ namespace SofaUnityAPI
                             norms[i] = new Vector3(0, 0, 0);
                         }
 
-                        verts[i].x = vertices[i * 3];
+                        verts[i].x = -vertices[i * 3]; // right to left coordinate system conversion
                         verts[i].y = vertices[i * 3 + 1];
                         verts[i].z = vertices[i * 3 + 2];
 
                         if (resN < 0) // no normals
                         {
                             Vector3 vec = Vector3.Normalize(verts[i]);
-                            norms[i].x = vec.x * factor;
+                            norms[i].x = - vec.x * factor; // right to left coordinate system conversion
                             norms[i].y = vec.y * factor;
                             norms[i].z = vec.z * factor;
                         }
                         else
                         {
-                            norms[i].x = normals[i * 3] * factor;
+                            norms[i].x = -normals[i * 3] * factor; // right to left coordinate system conversion
                             norms[i].y = normals[i * 3 + 1] * factor;
                             norms[i].z = normals[i * 3 + 2] * factor;
                         }
@@ -542,7 +547,7 @@ namespace SofaUnityAPI
                         break;
                     }
 
-                    verts[id].x = verts[id].x + timestep * velocities[i * 4 + 1];
+                    verts[id].x = -verts[id].x + timestep * velocities[i * 4 + 1]; // right to left coordinate system conversion
                     verts[id].y = verts[id].y + timestep * velocities[i * 4 + 2];
                     verts[id].z = verts[id].z + timestep * velocities[i * 4 + 3];
 
@@ -666,20 +671,20 @@ namespace SofaUnityAPI
                 {
                     for (int i = 0; i < nbrV; ++i)
                     {
-                        verts[i].x = vertices[i * 3];
+                        verts[i].x = -vertices[i * 3]; // right to left coordinate system conversion
                         verts[i].y = vertices[i * 3 + 1];
                         verts[i].z = vertices[i * 3 + 2];
 
                         if (resN < 0) // no normals
                         {
                             Vector3 vec = Vector3.Normalize(verts[i]);
-                            norms[i].x = vec.x;// normals[i * 3];
+                            norms[i].x = -vec.x;// normals[i * 3]; // right to left coordinate system conversion
                             norms[i].y = vec.y; //normals[i * 3 + 1];
                             norms[i].z = vec.z; //normals[i * 3 + 2];
                         }
                         else
                         {
-                            norms[i].x = normals[i * 3];
+                            norms[i].x = -normals[i * 3]; // right to left coordinate system conversion
                             norms[i].y = normals[i * 3 + 1];
                             norms[i].z = normals[i * 3 + 2];
                         }
@@ -844,7 +849,7 @@ namespace SofaUnityAPI
 
 
         /// Method to set new vertices position to this mesh
-        public void SetVertices(Vector3[] vertices)
+        public void SetPositions(Vector3[] vertices, Transform sofaTransform)
         {
             if (!m_isReady)
                 return;
@@ -854,9 +859,10 @@ namespace SofaUnityAPI
 
             for (int i = 0; i < nbrV; i++)
             {
-                val[i * 3] = vertices[i].x;
-                val[i * 3 + 1] = vertices[i].y;
-                val[i * 3 + 2] = vertices[i].z;
+                Vector3 vec = sofaTransform.InverseTransformPoint(vertices[i]);
+                val[i * 3] = -vec.x; // left to right coordinate system conversion
+                val[i * 3 + 1] = vec.y;
+                val[i * 3 + 2] = vec.z;
             }
 
             int resUpdate = sofaMeshAPI_setVertices(m_simu, m_name, val);
@@ -865,7 +871,7 @@ namespace SofaUnityAPI
 
         }
 
-        public void SetPositions(float[] vertices)
+        public void SetRawPositions(float[] vertices)
         {
             if (!m_isReady)
                 return;
@@ -876,7 +882,7 @@ namespace SofaUnityAPI
 
         }
 
-        public void SetVelocities(float[] values)
+        public void SetRawVelocities(float[] values)
         {
             if (!m_isReady)
                 return;
@@ -889,7 +895,7 @@ namespace SofaUnityAPI
 
 
         /// Method to set new vertices position to this mesh
-        public void SetRestPositions(float[] vertices)
+        public void SetRawRestPositions(float[] vertices)
         {
             if (!m_isReady)
                 return;
@@ -922,7 +928,7 @@ namespace SofaUnityAPI
 
             for (int i = 0; i < nbrV; i++)
             {
-                val[i * 3] = vels[i].x;
+                val[i * 3] = -vels[i].x; // left to right coordinate system conversion
                 val[i * 3 + 1] = vels[i].y;
                 val[i * 3 + 2] = vels[i].z;
             }
@@ -940,7 +946,7 @@ namespace SofaUnityAPI
                 return;
 
             float[] val = new float[3];
-            val[0] = value[0];
+            val[0] = -value[0]; // left to right coordinate system conversion
             val[1] = value[1];
             val[2] = value[2];
             int resUpdate = sofaMeshAPI_setVertices(m_simu, m_name, val);
@@ -953,35 +959,35 @@ namespace SofaUnityAPI
         ///////////            API to Communication with mesh geometry           ////////////////
         /////////////////////////////////////////////////////////////////////////////////////////
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_getId(IntPtr obj, string name);
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_setActive(IntPtr obj, string name, bool active);
 
 
         /// Get number of vertices in the object
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_getNbVertices(IntPtr obj, string name);
 
         /// Binding to access to the position buffer
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_getVertices(IntPtr obj, string name, float[] arr);
 
         /// Binding to access to the velocity buffer
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_getVelocities(IntPtr obj, string name, float[] arr);
 
         /// Binding to access to the velocity buffer
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_getForces(IntPtr obj, string name, float[] arr);
 
         /// Binding to access to the normal buffer
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_getNormals(IntPtr obj, string name, float[] arr);
 
         /// Binding to access to the texcoord buffer
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_getTexCoords(IntPtr obj, string name, float[] arr);
 
 
@@ -991,67 +997,67 @@ namespace SofaUnityAPI
         /////////////////////////////////////////////////////////////////////////////////////////
 
         /// Binding to Edges API
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_getNbEdges(IntPtr obj, string name);
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_getEdges(IntPtr obj, string name, int[] arr);
 
 
         /// Binding to Triangles API
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_getNbTriangles(IntPtr obj, string name);
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_getTriangles(IntPtr obj, string name, int[] arr);
 
 
         /// Binding to Quads API
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_getNbQuads(IntPtr obj, string name);
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_getQuads(IntPtr obj, string name, int[] arr);
 
 
         /// Binding to Tetra API
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_getNbTetrahedra(IntPtr obj, string name);
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_getTetrahedra(IntPtr obj, string name, int[] arr);
 
 
         /// Binding to Hexa API
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_getNbHexahedra(IntPtr obj, string name);
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_getHexahedra(IntPtr obj, string name, int[] arr);
 
 
         /// Binding to Topology change API
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_getTopologyRevision(IntPtr obj, string name);
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_setTopologyChanged(IntPtr obj, string name, bool value);
 
         /// Binding to set a new mesh
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_setNbVertices(IntPtr obj, string name, int nbrV);
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_setVertices(IntPtr obj, string name, float[] arr);
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_setVelocities(IntPtr obj, string name, float[] arr);
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_setRestPositions(IntPtr obj, string name, float[] arr);
 
 
-        [DllImport("SAPAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaMeshAPI_getMeshDimension(IntPtr obj, string name);
 
     }
