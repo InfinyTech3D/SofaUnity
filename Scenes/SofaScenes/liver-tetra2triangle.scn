@@ -24,11 +24,12 @@
     <DefaultAnimationLoop />
     <DefaultVisualManagerLoop />
     
-    <DefaultPipeline verbose="0" />
+    <CollisionPipeline verbose="0" />
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
-    <DefaultContactManager response="PenalityContactForceField" />
-    <MinProximityIntersection name="Proximity" alarmDistance="0.8" contactDistance="0.5" />
+    <CollisionResponse response="PenalityContactForceField" />
+    <MinProximityIntersection name="Proximity" alarmDistance="1.0" contactDistance="0.6" />
+    <CollisionDetectionDisplay name="CollisionDetectionDisplay"/>
 
     <Node name="LiverVolume">
         <EulerImplicitSolver name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.1" />
@@ -42,10 +43,10 @@
 
         <MeshMatrixMass massDensity="1.0" topology="@TetraContainer"/>
         <BoxROI template="Vec3d" box="4 -4 -3 10 2 3" drawBoxes="1" position="@Volume.rest_position" name="FixedROI"/>
-        <FixedConstraint indices="@FixedROI.indices" />
-        <FastTetrahedralCorotationalForceField name="FEM" youngModulus="1300" poissonRatio="0.3" method="large" />		
-		<!--<TetrahedronFEMForceField name="FEM" youngModulus="1300" poissonRatio="0.3" computeGlobalMatrix="false" 
-        method="large" topology="@TetraContainer"/>-->
+        <FixedProjectiveConstraint indices="@FixedROI.indices" />
+        <!--<FastTetrahedralCorotationalForceField name="FEM" youngModulus="1300" poissonRatio="0.3" method="large" />		-->
+		<TetrahedronFEMForceField name="FEM" youngModulus="1300" poissonRatio="0.3" computeGlobalMatrix="false" 
+        method="large" topology="@TetraContainer" computeVonMisesStress="1"/>
 		<PlaneForceField normal="0 1 0" d="-120" stiffness="100000" showPlane="1" showPlaneSize="20"/>
         
         <Node name="LiverSurface">

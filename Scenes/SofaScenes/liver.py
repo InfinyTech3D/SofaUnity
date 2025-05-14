@@ -2,33 +2,60 @@
 import Sofa
 
 
+# Choose in your script to activate or not the GUI
+USE_GUI = True
+
+
 def main():
     import SofaRuntime
     import Sofa.Gui
-    SofaRuntime.importPlugin("SofaOpenglVisual")
-    SofaRuntime.importPlugin("SofaImplicitOdeSolver")
 
     root = Sofa.Core.Node("root")
     createScene(root)
     Sofa.Simulation.init(root)
+
+    if not USE_GUI:
+        for iteration in range(10):
+            Sofa.Simulation.animate(root, root.dt.value)
+    else:
+        Sofa.Gui.GUIManager.Init("myscene", "qglviewer")
+        Sofa.Gui.GUIManager.createGUI(root, __file__)
+        Sofa.Gui.GUIManager.SetDimension(1080, 1080)
+        Sofa.Gui.GUIManager.MainLoop(root)
+        Sofa.Gui.GUIManager.closeGUI()
 
 
 def createScene(root):
     root.gravity=[0, -9.81, 0]
     root.dt=0.02
 
-    root.addObject('DefaultVisualManagerLoop')
+    root.addObject("RequiredPlugin", pluginName=[    'Sofa.Component.Collision.Detection.Algorithm',
+    'Sofa.Component.Collision.Detection.Intersection',
+    'Sofa.Component.Collision.Geometry',
+    'Sofa.Component.Collision.Response.Contact',
+    'Sofa.Component.Constraint.Projective',
+    'Sofa.Component.IO.Mesh',
+    'Sofa.Component.LinearSolver.Iterative',
+    'Sofa.Component.Mapping.Linear',
+    'Sofa.Component.Mass',
+    'Sofa.Component.ODESolver.Backward',
+    'Sofa.Component.SolidMechanics.FEM.Elastic',
+    'Sofa.Component.StateContainer',
+    'Sofa.Component.Topology.Container.Dynamic',
+    'Sofa.Component.Visual',
+    'Sofa.GL.Component.Rendering3D'
+    ])
+
     root.addObject('DefaultAnimationLoop')
 
     root.addObject('VisualStyle', displayFlags="showCollisionModels")
-    root.addObject('RequiredPlugin', pluginName="SofaImplicitOdeSolver SofaLoader SofaOpenglVisual SofaBoundaryCondition SofaGeneralLoader SofaGeneralSimpleFem")
-    root.addObject('DefaultPipeline', name="CollisionPipeline")
+    root.addObject('CollisionPipeline', name="CollisionPipeline")
     root.addObject('BruteForceBroadPhase', name="BroadPhase")
     root.addObject('BVHNarrowPhase', name="NarrowPhase")
-    root.addObject('DefaultContactManager', name="CollisionResponse", response="default")
+    root.addObject('DefaultContactManager', name="CollisionResponse", response="PenalityContactForceField")
     root.addObject('DiscreteIntersection')
 
-    root.addObject('MeshObjLoader', name="LiverSurface", filename="mesh/liver-smooth.obj")
+    root.addObject('MeshOBJLoader', name="LiverSurface", filename="mesh/liver-smooth.obj")
 
     liver = root.addChild('Liver')
     liver.addObject('EulerImplicitSolver', name="cg_odesolver", rayleighStiffness="0.1", rayleighMass="0.1")

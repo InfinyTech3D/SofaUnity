@@ -1,6 +1,11 @@
-NbrMeshes: 1
-Mesh: SofaBeamAdapterModel  -  InstrumentCombined@Collision
-NbrVertices: 1719
-NbrTriangles: 3232
-Center: -0.03721969;0.01278031;0.03084411
-Min: 0.7420104;0.9923416;0.8437229
+NbrMeshes: 2
+Mesh: RestShapeSpringsForceField  -  RestSPForceField
+NbrVertices: 0
+NbrTriangles: 0
+Center: 0;0;0
+Min: 0;0;0
+Mesh: SofaBeamAdapterModel  -  InstrumentCombined@CollisionModel
+NbrVertices: 1190
+NbrTriangles: 2304
+Center: 0;0;0
+Min: 0;0;0

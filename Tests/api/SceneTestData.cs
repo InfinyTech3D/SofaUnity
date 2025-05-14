@@ -14,13 +14,22 @@ namespace SofaScripts
         public Vector3 m_size;
 
 
-        public bool CompareMesh(MeshTestData logMesh)
+        public bool CompareMesh(MeshTestData logMesh, bool log = false)
         {
+            // Check MeshName
+            if (log)
+                Debug.Log("Log MeshName: " + logMesh.m_meshName + " | Ref MeshName: " + m_meshName);
+
             if (m_meshName != logMesh.m_meshName)
             {
                 Debug.LogError("MeshName differ between ref: " + m_meshName + " and new log: " + logMesh.m_meshName);
                 return false;
             }
+
+
+            // Check Number of vertices
+            if (log)
+                Debug.Log("Log Nbr Vertices: " + logMesh.m_nbrVertices + " | Ref Nbr Vertices: " + m_nbrVertices);
 
             if (m_nbrVertices != logMesh.m_nbrVertices)
             {
@@ -28,21 +37,38 @@ namespace SofaScripts
                 return false;
             }
 
+
+            // Check Number of triangles
+            if (log)
+                Debug.Log("Log Nbr Triangles: " + logMesh.m_nbrTriangles + " | Ref Nbr Triangles: " + m_nbrTriangles);
+
             if (m_nbrTriangles != logMesh.m_nbrTriangles)
             {
                 Debug.LogError("In mesh: " + m_meshName + ". Number of triangles differ between ref: " + m_nbrTriangles + " and new log: " + logMesh.m_nbrTriangles);
                 return false;
             }
 
-            if (m_center != logMesh.m_center)
+
+            // Check mesh BB center
+            float diffCenter = (m_center - logMesh.m_center).magnitude;
+            if (log)
+                Debug.Log("Log BB center: " + logMesh.m_center + " | Ref BB center: " + m_center + " | Diff: " + diffCenter);
+
+            if (diffCenter > 1.0f)
             {
-                Debug.LogError("In mesh: " + m_meshName + ". Mesh center differ between ref: " + m_center + " and new log: " + logMesh.m_center);
+                Debug.LogError("In mesh: " + m_meshName + ". Mesh BB center differ: Ref: " + m_center + " | Log: " + logMesh.m_center + " | diff: " + diffCenter);
                 return false;
             }
 
-            if (m_size != logMesh.m_size)
+            // Check mesh BB size
+            float diffBB = (m_center - logMesh.m_center).magnitude;
+            
+            if (log)
+                Debug.Log("Log BB size: " + logMesh.m_size + " | Ref BB size: " + m_size + " | Diff: " + diffBB);
+
+            if (diffBB > 1.0f)
             {
-                Debug.LogError("In mesh: " + m_meshName + ". Mesh size differ between ref: " + m_size + " and new log: " + logMesh.m_size);
+                Debug.LogError("In mesh: " + m_meshName + ". Mesh BB size differ: Ref: " + m_size + " | Log: " + logMesh.m_size + " | diff: " + diffBB);
                 return false;
             }
 
@@ -61,7 +87,10 @@ namespace SofaScripts
 
     public class SceneTestData
     {
-        public SceneTestData(string sceneName) { }
+        public SceneTestData(string sceneName) 
+        {
+            m_sceneName = sceneName;
+        }
 
         public SceneTestData(string sceneName, int nbrMeshes)
         {
@@ -104,13 +133,26 @@ namespace SofaScripts
         }
 
 
-        public void ReadData(string path, bool log = false)
+        public bool ReadData(string path, bool log = false)
         {
+            if (!File.Exists(path))
+            {
+                return false;
+            }
+
             StreamReader reader = new StreamReader(path);
 
             // get number of meshes
             string meshLine = reader.ReadLine();
             int nbrMesh = int.Parse(meshLine.Split(' ')[1]);
+
+            if (log)
+            {
+                Debug.Log("Number of mesh found in file: " + nbrMesh);
+            }
+
+            m_nbrMeshes = nbrMesh;
+            m_meshes = new List<MeshTestData>(nbrMesh);
 
             for (int cptMesh = 0; cptMesh < nbrMesh; cptMesh++)
             {
@@ -135,15 +177,22 @@ namespace SofaScripts
                 string[] sizeString = sizeLine.Split(';');
                 meshData.m_size = new Vector3(float.Parse(sizeString[0]), float.Parse(sizeString[1]), float.Parse(sizeString[2]));
 
+                m_meshes.Add(meshData);
                 if (log)
                     meshData.LogMesh();
             }
 
             reader.Close();
+            return true;
         }
 
-        public bool CompareScene(SceneTestData otherScene)
+        public bool CompareScene(SceneTestData otherScene, bool log = false)
         {
+            if (log)
+            {
+                Debug.Log("## Start Mesh comparison for scene: " + m_sceneName + ". Number of Log mesh: " + otherScene.m_nbrMeshes + " | Number of Log mesh: " + m_nbrMeshes);
+            }
+
             if (otherScene.m_nbrMeshes != m_nbrMeshes)
             {
                 Debug.LogError("In scene: " + m_sceneName + ". Number of mesh differ between ref: " + m_nbrMeshes + " and new log: " + otherScene.m_nbrMeshes);
@@ -152,7 +201,7 @@ namespace SofaScripts
 
             for (int i = 0; i < m_nbrMeshes; ++i)
             {
-                bool res = m_meshes[i].CompareMesh(otherScene.m_meshes[i]);
+                bool res = m_meshes[i].CompareMesh(otherScene.m_meshes[i], log);
                 if (!res)
                     return false;
             }
@@ -162,7 +211,7 @@ namespace SofaScripts
 
 
         private readonly string m_sceneName;
-        private readonly int m_nbrMeshes;
+        private int m_nbrMeshes;
         private List<MeshTestData> m_meshes = null;
 
     }

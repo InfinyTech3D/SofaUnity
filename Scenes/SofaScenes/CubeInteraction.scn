@@ -1,0 +1,121 @@
+<?xml version="1.0" ?>
+<Node name="root" dt="0.05" showBoundingTree="0" gravity="0 -9 0">
+   <Node name="RequiredPlugins">
+        <RequiredPlugin name="Sofa.Component.AnimationLoop"/> <!-- Needed to use components [FreeMotionAnimationLoop] -->
+        <RequiredPlugin name="Sofa.Component.Collision.Detection.Algorithm"/> <!-- Needed to use components [BVHNarrowPhase,BruteForceBroadPhase,CollisionPipeline] -->
+        <RequiredPlugin name="Sofa.Component.Collision.Detection.Intersection"/> <!-- Needed to use components [MinProximityIntersection] -->
+        <RequiredPlugin name="Sofa.Component.Collision.Geometry"/> <!-- Needed to use components [LineCollisionModel,PointCollisionModel,TriangleCollisionModel] -->
+        <RequiredPlugin name="Sofa.Component.Collision.Response.Contact"/> <!-- Needed to use components [CollisionResponse] -->
+        <RequiredPlugin name="Sofa.Component.Constraint.Lagrangian.Correction"/> <!-- Needed to use components [LinearSolverConstraintCorrection,UncoupledConstraintCorrection] -->
+        <RequiredPlugin name="Sofa.Component.Constraint.Lagrangian.Solver"/> <!-- Needed to use components [LCPConstraintSolver] -->
+        <RequiredPlugin name="Sofa.Component.Constraint.Projective"/> <!-- Needed to use components [FixedProjectiveConstraint] -->
+        <RequiredPlugin name="Sofa.Component.Engine.Select"/> <!-- Needed to use components [BoxROI] -->
+        <RequiredPlugin name="Sofa.Component.IO.Mesh"/> <!-- Needed to use components [MeshOBJLoader] -->
+        <RequiredPlugin name="Sofa.Component.LinearSolver.Direct"/> <!-- Needed to use components [SparseLDLSolver] -->
+        <RequiredPlugin name="Sofa.Component.LinearSolver.Iterative"/> <!-- Needed to use components [CGLinearSolver] -->
+        <RequiredPlugin name="Sofa.Component.Mapping.Linear"/> <!-- Needed to use components [IdentityMapping] -->
+        <RequiredPlugin name="Sofa.Component.Mass"/> <!-- Needed to use components [DiagonalMass,UniformMass] -->
+        <RequiredPlugin name="Sofa.Component.ODESolver.Backward"/> <!-- Needed to use components [EulerImplicitSolver] -->
+        <RequiredPlugin name="Sofa.Component.SolidMechanics.FEM.Elastic"/> <!-- Needed to use components [TetrahedralCorotationalFEMForceField] -->
+        <RequiredPlugin name="Sofa.Component.SolidMechanics.Spring"/> <!-- Needed to use components [RestShapeSpringsForceField] -->
+        <RequiredPlugin name="Sofa.Component.StateContainer"/> <!-- Needed to use components [MechanicalObject] -->
+        <RequiredPlugin name="Sofa.Component.Topology.Container.Constant"/> <!-- Needed to use components [MeshTopology] -->
+        <RequiredPlugin name="Sofa.Component.Topology.Container.Dynamic"/> <!-- Needed to use components [TetrahedronSetGeometryAlgorithms,TetrahedronSetTopologyContainer,TetrahedronSetTopologyModifier,TriangleSetGeometryAlgorithms,TriangleSetTopologyContainer,TriangleSetTopologyModifier] -->
+        <RequiredPlugin name="Sofa.Component.Topology.Container.Grid"/> <!-- Needed to use components [RegularGridTopology] -->
+        <RequiredPlugin name="Sofa.Component.Topology.Mapping"/> <!-- Needed to use components [Hexa2TetraTopologicalMapping,Tetra2TriangleTopologicalMapping] -->
+        <RequiredPlugin name="Sofa.Component.Visual"/> <!-- Needed to use components [VisualStyle] -->
+        <RequiredPlugin name="Sofa.GL.Component.Rendering3D"/> <!-- Needed to use components [OglModel] -->
+    </Node>
+    
+    <VisualStyle displayFlags="hideCollisionModels showVisual" />
+    <DefaultVisualManagerLoop />
+    
+    <DefaultVisualManagerLoop />    
+    <FreeMotionAnimationLoop/>
+    <LCPConstraintSolver tolerance="0.001" maxIt="1000"/>
+    
+    <CollisionPipeline name="pipeline" depth="6" verbose="0"/>
+    <BruteForceBroadPhase/>
+    <BVHNarrowPhase/>
+    <CollisionResponse name="response" response="FrictionContactConstraint" />
+    <!--<MinProximityIntersection name="Proximity" alarmDistance="0.5" contactDistance="0.1" />-->
+    <LocalMinDistance name="localmindistance" alarmDistance="0.5" contactDistance="0.1" angleCone='0.8' coneFactor='0.8' />
+
+    <Node name="ToolController">
+        <MeshOBJLoader name="loader" filename="mesh/cube.obj" translation="0 15 0" handleSeams="0"/>
+        <MeshTopology src="@loader" />
+        <MechanicalObject name="DOFs" src="@loader" />
+        <!--<TriangleCollisionModel name="FloorTC" simulated="0" moving="0" contactStiffness="1000"/>
+        <LineCollisionModel name="FloorLC" simulated="0" moving="0" contactStiffness="1000"/>
+        <PointCollisionModel name="FloorPC" simulated="0" moving="0" contactStiffness="1000"/>
+        <Node name="Cube-Visu">
+            <OglModel name="Visual" color="red" />
+            <IdentityMapping input="@../DOFs" output="@Visual" />
+        </Node>-->
+    </Node>
+    
+    
+    <Node name="Instrument" >
+        <EulerImplicitSolver name="ODE solver" rayleighStiffness="0.05" rayleighMass="1.0" />
+		<SparseLDLSolver template="CompressedRowSparseMatrixMat3x3d"/>
+        
+        <MeshOBJLoader name="loader" filename="mesh/cube.obj" handleSeams="0"/>        
+		<MechanicalObject name="instrumentState" src="@loader" translation="0 15 0"/>
+        <MeshTopology name="InstrumentCollisionModel" src="@loader"/>
+		<UniformMass name="mass" totalMass="1" />
+		
+		<RestShapeSpringsForceField stiffness='1000000000' angularStiffness='1000000000' external_rest_shape='@../ToolController/DOFs'  />
+        <LinearSolverConstraintCorrection/>
+        
+        <TriangleCollisionModel name="FloorTC" contactStiffness="1000" simulated="1" moving="1"/>
+        <LineCollisionModel name="FloorLC" contactStiffness="1000" simulated="1" moving="1"/>
+        <PointCollisionModel name="FloorPC" contactStiffness="1000" simulated="1" moving="1"/>
+        
+        <Node name="Cube-Visu">
+            <OglModel name="Visual" color="red" />
+            <IdentityMapping input="@../instrumentState" output="@Visual" />
+        </Node>
+    </Node>
+    
+
+    <Node name="Hexa2Tetra" >
+        <RegularGridTopology name="HexaTop" n="11 11 11" min="0 0 0" max="10 10 10" />
+        <MechanicalObject name="cube" position="@HexaTop.position" />
+        <TetrahedronSetTopologyContainer name="Container" position="@HexaTop.position" />
+        <TetrahedronSetTopologyModifier name="Modifier"/>
+        <Hexa2TetraTopologicalMapping input="@HexaTop" output="@Container" swapping="false" />
+    </Node>
+
+    <Node name="Cube">
+        <EulerImplicitSolver name="EulerImplicit"  rayleighStiffness="0.0" rayleighMass="0.0" />
+        <CGLinearSolver name="CG Solver" iterations="25" tolerance="1e-9" threshold="1e-9"/>
+        <MechanicalObject position="@../Hexa2Tetra/Container.position" name="Volume" />
+
+        <TetrahedronSetTopologyContainer name="Tetra_topo" src="@../Hexa2Tetra/Container" />
+        <TetrahedronSetTopologyModifier name="Modifier" />
+        <TetrahedronSetGeometryAlgorithms name="GeomAlgo" template="Vec3d" drawTetrahedra="0" drawScaleTetrahedra="0.8"/>
+
+        <DiagonalMass massDensity="1.0" />
+
+        <BoxROI name="box" box="-1 -1 -1 11 0 11" drawBoxes="true" />
+        <FixedProjectiveConstraint  name="FixedConstraint" indices="@box.indices" activate_projectVelocity="1"/>
+
+        <TetrahedralCorotationalFEMForceField name="CFEM" youngModulus="1000" poissonRatio="0.3" method="large" />
+        <UncoupledConstraintCorrection/>
+        <Node name="Surface">
+            <TriangleSetTopologyContainer  name="Container"/>
+            <TriangleSetTopologyModifier   name="Modifier" />
+            <TriangleSetGeometryAlgorithms name="GeomAlgo" template="Vec3d" drawTriangles="0"/>
+            <Tetra2TriangleTopologicalMapping input="@../Tetra_topo" output="@Container" />
+
+            <TriangleCollisionModel name="triangleCol" />
+            <LineCollisionModel name='edgeCol' />
+            <PointCollisionModel name="pointCol" />
+
+            <Node name="liver-Visual">
+                <OglModel name="Visual" />
+                <IdentityMapping input="@../../Volume" output="@Visual" />
+            </Node>
+        </Node>
+    </Node>
+</Node>

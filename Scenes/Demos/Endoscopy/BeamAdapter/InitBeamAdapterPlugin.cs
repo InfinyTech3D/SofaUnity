@@ -1,16 +1,19 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-/// <summary>
-/// Class to init BeamAdapter SOFA-Unity plugin. Can be used to load a specific dll plugin inside SOFA or load prefabs
-/// </summary>
-class InitBeamAdapterPlugin
+namespace SofaUnity
 {
-#if UNITY_EDITOR
-    [InitializeOnLoadMethod]
-    static void RegisterPluginDll()
+    /// <summary>
+    /// Class to init BeamAdapter SOFA-Unity plugin. Can be used to load a specific dll plugin inside SOFA or load prefabs
+    /// </summary>
+    class InitBeamAdapterPlugin
     {
-        SofaUnity.PluginManager.Instance.AddPlugin("BeamAdapter");
-    }
+#if UNITY_EDITOR
+        [InitializeOnLoadMethod]
+        static void RegisterPluginDll()
+        {
+            SofaUnity.PluginManager.Instance.AddPlugin("BeamAdapter");
+        }
 #endif
+    }
 }

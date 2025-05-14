@@ -26,9 +26,9 @@
         <MechanicalObject translation="-2 0 0" rotation="60 0 0" scale="2 2 2"/>
         <UniformMass vertexMass="1" />
          
-        <FixedConstraint name="default6" indices="0 50" />
+        <FixedProjectiveConstraint name="default6" indices="0 50" />
      
-        <UncoupledConstraintCorrection />
+        <UncoupledConstraintCorrection defaultCompliance="0.001"/>
         <MeshSpringForceField name="Springs" stiffness="10000" damping="0.3" /> 
         
         <PointCollisionModel group="1" tags="thread"/>
@@ -46,9 +46,9 @@
         <MechanicalObject  translation="2 0 0" rotation="60 0 0" scale="2 2 2"/>
         <UniformMass vertexMass="1" />
          
-        <FixedConstraint name="default6" indices="0" />
+        <FixedProjectiveConstraint name="default6" indices="0" />
      
-        <UncoupledConstraintCorrection />
+        <UncoupledConstraintCorrection defaultCompliance="0.001"/>
         <MeshSpringForceField name="Springs" stiffness="10000" damping="0.3" /> 
         
         <PointCollisionModel group="1" tags="thread"/>
