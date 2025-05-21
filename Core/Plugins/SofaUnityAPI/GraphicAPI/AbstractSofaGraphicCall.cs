@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Rendering;
 
 namespace SofaUnityAPI
 {
@@ -14,6 +15,8 @@ namespace SofaUnityAPI
 
         protected abstract int InitCall();
         protected abstract void BeforeDestroy();
+
+        protected abstract bool checkGraphicsDeviceType();
 
         public void RegisterID(int renderID)
         {
@@ -28,10 +31,8 @@ namespace SofaUnityAPI
         //// MonoBehavior API
         IEnumerator Start()
         {
-            string graphicVersion = SystemInfo.graphicsDeviceVersion;
-            if (!graphicVersion.Contains("OpenGL")) // only openGL version is supported
+            if (!checkGraphicsDeviceType())
             {
-                Debug.LogError("SofaGraphicCall - XRay and Ultrasound rendering are only available with Unity in OpenGL mode.");
                 yield break;
             }
 
@@ -94,7 +95,6 @@ namespace SofaUnityAPI
                 {
                     foreach (int renderID in m_registeredRenderIDList)
                     {
-                        //Debug.Log("Calling renderID " + renderID);
                         GL.IssuePluginEvent(SofaUnityAPI.SofaGraphicAPI.getRenderEventFunc(), renderID);
                     }
                 }
