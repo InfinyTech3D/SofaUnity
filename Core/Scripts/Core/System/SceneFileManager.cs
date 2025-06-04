@@ -112,6 +112,11 @@ namespace SofaUnity
             CheckValidFilename(SofaContextAPI.getResourcesPath() + m_filename);
         }
 
+        public void changeSceneFilename(string value)
+        {
+            CheckValidFilename(value);
+        }
+
         ////////////////////////////////////////////
         //////  SceneFileManager internal API  /////
         ////////////////////////////////////////////

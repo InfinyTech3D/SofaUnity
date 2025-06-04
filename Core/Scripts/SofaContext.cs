@@ -255,7 +255,15 @@ namespace SofaUnity
             if (m_objects == null)
                 m_objects = new List<SofaBaseObject>();
 
-            StartSofa();
+            if (this.PreStartSofa())
+            {
+                StartSofa();
+                PostStartSofa();
+            }
+            else
+            {
+                Debug.LogError("SofaContext::PreStartSofa returns error, SOFA start will not be called.");
+            }
         }
 
 
@@ -306,7 +314,14 @@ namespace SofaUnity
             }
         }
 
-        void StartSofa()
+
+        // public method to be implemented by child to preprocess thing before starting SOFA
+        public virtual bool PreStartSofa()
+        {
+            return true;
+        }
+
+        protected void StartSofa()
         {
             // Call the init method to create the Sofa Context
             Init();
@@ -321,6 +336,14 @@ namespace SofaUnity
             breakerActivated = false;
             cptBreaker = 0;
         }
+
+
+        // public method to be implemented by child to preprocess thing before starting SOFA
+        public virtual bool PostStartSofa()
+        {
+            return true;
+        }
+
 
         public void ResetSofa()
         {
