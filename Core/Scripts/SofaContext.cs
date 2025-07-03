@@ -651,7 +651,7 @@ namespace SofaUnity
         {
             m_impl.stop();
             m_impl.unload();
-            m_nodeGraphMgr.LoadNodeGraph();
+            m_nodeGraphMgr.ClearManager();
             m_impl.start();
         }
 

@@ -173,20 +173,12 @@ namespace SofaUnity
             AddDAGNode(dagNode);
 
             // Find all other DAGNode
-            SofaDAGNode[] nodes = ScenesManager.FindObjectsOfType<SofaDAGNode>();
+            SofaDAGNode[] nodes = GameObject.FindObjectsByType<SofaDAGNode>(FindObjectsSortMode.None);
             
             if (nbrNode != nodes.Length)
             {
-                Debug.LogError("SofaDAGNodeManager Error while reconnecting the graph: " + nodes.Length + " DAGNode found in Unity instead of : " + nbrNode + " from SOFA side.");
-                string NodeToFound = "";
-                for (int i = 0; i < nbrNode; i++)
-                    NodeToFound = NodeToFound + m_sofaContextAPI.getDAGNodeName(i) + ",";
-                Debug.LogError("Node to be found: " + NodeToFound);
-
-                string NodeFound = "";
-                for (int i = 0; i < nodes.Length; i++)
-                    NodeFound = NodeFound + nodes[i].UniqueNameId + ",";
-                Debug.LogError("Node found: " + NodeFound);
+                Debug.LogWarning("SofaDAGNodeManager Error while reconnecting the graph: " + nodes.Length + " DAGNode found in Unity instead of : " + nbrNode + " from SOFA side.");
+                RepairDAGNodeGraph();
                 return;
             }
 
@@ -196,6 +188,38 @@ namespace SofaUnity
                 AddDAGNode(nodes[i]);
                 nodes[i].Reconnect(m_sofaContext);
             }
+        }
+
+
+        /// Method to clear a existing Node hierarchy
+        public void ClearManager()
+        {
+            for (int i = 0; i < m_dagNodes.Count; i++)
+            {
+                SofaDAGNode node = m_dagNodes[i];
+                node.DestroyDAGNode(true);
+                node = null;
+            }
+            m_dagNodes.Clear();
+
+            // check if some DAGNodes were not saved in the list and have to be destroyed
+            SofaDAGNode[] nodes = GameObject.FindObjectsByType<SofaDAGNode>(FindObjectsSortMode.None);
+
+            for (int i = 0; i < nodes.Length; i++)
+            {
+                
+                SofaDAGNode node = nodes[i];
+                if (node == null)
+                {
+                    Debug.LogWarning("Tryng to Destroy node already destroyed: " + i);
+                    continue;
+                }
+
+                node.DestroyDAGNode(true);
+                node = null;
+            }
+            m_dagNodes.Clear();
+            // copy back the root node pointer
         }
 
 
@@ -333,22 +357,7 @@ namespace SofaUnity
             }            
         }
 
-
-        /// Internal Method to clear a previous Node hierarchy
-        protected void ClearManager()
-        {
-            for (int i=0; i<m_dagNodes.Count; i++)
-            {
-                SofaDAGNode node = m_dagNodes[i];
-                node.DestroyDAGNode(true);
-                node = null;
-            }
-            m_dagNodes.Clear();
-
-            // copy back the root node pointer
-        }
-
-
+        
         /// Method to refresh the full DAGNode graph. Will ask the number of DAGNode on the Sofa side and compare to what is stored.
         protected void RefreshDAGNodeGraph()
         {
@@ -424,6 +433,70 @@ namespace SofaUnity
 
             if (!found)
                 m_dagNodes.Add(dagNode);
+        }
+
+
+        protected void RepairDAGNodeGraph()
+        {
+            SofaDAGNode[] unityDAGNodes = GameObject.FindObjectsByType<SofaDAGNode>(FindObjectsSortMode.None);
+            // Store existing node in a map for easier search
+            var unityNodeMap = new Dictionary<string, SofaDAGNode>();
+            for (int i = 0; i < unityDAGNodes.Length; i++)
+            {
+                unityNodeMap[unityDAGNodes[i].UniqueNameId] = unityDAGNodes[i];
+            }
+
+            // Reconnect reloaded SOFA Node
+            int nbrSofaNode = m_sofaContextAPI.getNbrDAGNode();
+            for (int i = 0; i < nbrSofaNode; i++)
+            {
+                string uniqId = m_sofaContextAPI.getDAGNodeName(i);
+                if (unityNodeMap.ContainsKey(uniqId)) // if found, reconnect it and remove from map
+                {
+                    AddDAGNode(unityNodeMap[uniqId]);
+                    unityNodeMap[uniqId].Reconnect(m_sofaContext);
+
+                    unityNodeMap.Remove(uniqId);
+                }
+                else // if not found, this is a new DAGNode, we add it to the hierarchy
+                {
+                    Debug.LogWarning("SOFA Node not found in current Unity Graph. Will add it: " + uniqId);
+
+                    //string NodeName = m_sofaContextAPI.getDAGNodeName(i);
+                    string nodeDisplayName = m_sofaContextAPI.getDAGNodeDisplayName(i);
+
+                    GameObject nodeGO = new GameObject("SofaNode - " + nodeDisplayName);
+                    SofaDAGNode dagNode = nodeGO.AddComponent<SofaDAGNode>();
+                    dagNode.Create(m_sofaContext, uniqId, nodeDisplayName);
+                    AddDAGNode(dagNode);
+
+                    // temporary child of sofaContext until reordering ndoes
+                    nodeGO.transform.parent = m_sofaContext.gameObject.transform;
+
+                    string parentName = dagNode.ParentNodeName;
+
+                    if (parentName == "root") // under root node
+                        continue;
+
+                    // search for parent (no optimisation needed here)
+                    foreach (SofaDAGNode snodeP in m_dagNodes)
+                    {
+                        if (snodeP.UniqueNameId == parentName)
+                        {
+                            dagNode.gameObject.transform.parent = snodeP.gameObject.transform;
+                            break;
+                        }
+                    }
+
+                }
+            }
+
+            // Check if some Node are still in the map. They are no longer mapped to a SOFA node. Remove them
+            foreach (KeyValuePair<string, SofaDAGNode> entry in unityNodeMap)
+            {
+                Debug.LogWarning("Unity DAG Node not reconnected. Will remove it: " + entry.Key);
+                entry.Value.DestroyDAGNode(true);
+            }
         }
     }
 }
