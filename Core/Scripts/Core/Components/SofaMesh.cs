@@ -181,6 +181,15 @@ namespace SofaUnity
                 return m_unityVertices[id];
         }
 
+
+        /// Method to set new vertices velocity to this mesh, using raw float buffer. 
+        /// !! Be careful, no conversion from left-right coordinates system
+        public void GetRawPositions(float[] vertices)
+        {
+            if (m_sofaMeshAPI != null)
+                m_sofaMeshAPI.GetRawPositions(vertices);
+        }
+
         ////////////////////////////////////////////
         //////          SofaMesh API           /////
         ////////////////////////////////////////////
