@@ -27,7 +27,7 @@ namespace SofaUnity
         {
             if (m_sofaMeshName.Length > 0)
             {
-                SofaMesh[] meshes = GameObject.FindObjectsOfType<SofaMesh>();
+                SofaMesh[] meshes = GameObject.FindObjectsByType<SofaMesh>(FindObjectsSortMode.None);
                 Debug.Log("Nbr Mesh: " + meshes.Length);
                 foreach (SofaMesh mesh in meshes)
                 {
