@@ -171,7 +171,7 @@ namespace SofaUnity
             // Add Button to load a filename
             if (GUILayout.Button("Load SOFA Scene (.scn) file"))
             {
-                string absolutePath = EditorUtility.OpenFilePanel("Load file scene (*.scn)", "", "scn");
+                string absolutePath = EditorUtility.OpenFilePanel("Load file scene (*.scn)", Application.dataPath, "scn");
             if (absolutePath.Length > 0)
                 context.SceneFileMgr.SceneFilename = absolutePath.Substring(Application.dataPath.Length);
                 EditorGUILayout.Separator();
