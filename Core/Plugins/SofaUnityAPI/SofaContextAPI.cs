@@ -91,8 +91,13 @@ namespace SofaUnityAPI
 
             // Create a simulation scene.
             int res = sofaPhysicsAPI_createScene(m_native);
-            if (res == 0 || res == 100)
+            if (res == 0)
             {
+                m_isReady = true;
+            }
+            else if (res == 100)
+            {
+                Debug.Log("No license detected. SofaContextAPI will use the free version of the integration.");
                 m_isReady = true;
             }
             else
