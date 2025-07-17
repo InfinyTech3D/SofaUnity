@@ -470,7 +470,7 @@ namespace SofaUnity
                     dagNode.Create(m_sofaContext, uniqId, nodeDisplayName);
                     AddDAGNode(dagNode);
 
-                    // temporary child of sofaContext until reordering ndoes
+                    // temporary child of sofaContext until reordering nodes
                     nodeGO.transform.parent = m_sofaContext.gameObject.transform;
 
                     string parentName = dagNode.ParentNodeName;
@@ -484,6 +484,9 @@ namespace SofaUnity
                         if (snodeP.UniqueNameId == parentName)
                         {
                             dagNode.gameObject.transform.parent = snodeP.gameObject.transform;
+                            dagNode.transform.localPosition = Vector3.zero;
+                            dagNode.transform.localRotation = Quaternion.identity;
+                            dagNode.transform.localScale = Vector3.one;
                             break;
                         }
                     }
