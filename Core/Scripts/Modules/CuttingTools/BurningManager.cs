@@ -67,8 +67,6 @@ namespace SofaUnity
             }
             m_mesh.uv2 = m_uv2;
 
-
-            Debug.Log("########## Start texcoords: " + m_nbrV);
             //InvokeRepeating("computeBurnTissus", 0.0f, 1.0f);
         }
 
@@ -91,7 +89,6 @@ namespace SofaUnity
 
             if (firstInit)
             {
-                Debug.Log("########## firstInit m_mesh.vertices.Length: " + m_nbrV);
                 for (int i = 0; i < m_nbrV; i++)
                 {
                     m_uv2[i].x = 0.0f;
@@ -103,8 +100,6 @@ namespace SofaUnity
             }
                 
             bool updateSize = false;
-            Debug.Log("########## m_mesh.vertices.Length: " + m_mesh.vertices.Length);
-            Debug.Log("########## m_nbrV: " + m_nbrV);
             if (m_mesh.vertices.Length != m_nbrV) // carving in process
             {
                 m_nbrV = m_mesh.vertices.Length;
@@ -138,7 +133,6 @@ namespace SofaUnity
                 if (dist < m_burnDistance) // in distance scope
                 {
                     float coef = (m_burnDistance - dist) / m_burnDistance;
-                    //Debug.Log("dist: " + dist + " | coef: " + coef);
                     if (m_uv2[i].x < coef)
                     {
                         m_uv2[i].x = coef;
