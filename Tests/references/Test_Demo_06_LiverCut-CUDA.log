@@ -2,8 +2,8 @@ NbrMeshes: 3
 Mesh: TetrahedronFEMForceField  -  FEM
 NbrVertices: 21072
 NbrTriangles: 21072
-Center: 2.544597;5.974266;0.4747998
-Min: 10.74681;6.543386;6.540838
+Center: 0;0;0
+Min: 0;0;0
 Mesh: PlaneForceField  -  PlaneForceField1
 NbrVertices: 21072
 NbrTriangles: 21072
@@ -12,5 +12,5 @@ Min: 10.74681;6.543386;6.540838
 Mesh: OglModel  -  Visual
 NbrVertices: 1501
 NbrTriangles: 2336
-Center: 1.707593;5.284844;0.6061554
-Min: 10.54324;6.483878;6.63041
+Center: -2.544597;5.974266;0.4747998
+Min: 10.74681;6.543386;6.540838

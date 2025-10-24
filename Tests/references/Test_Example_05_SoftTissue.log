@@ -2,15 +2,15 @@ NbrMeshes: 3
 Mesh: TriangularFEMForceField  -  FEM
 NbrVertices: 774
 NbrTriangles: 1450
-Center: 5;5;0
+Center: -5;5;0
 Min: 10;10;0
 Mesh: TriangularBendingSprings  -  FEM-Bend
-NbrVertices: 774
-NbrTriangles: 1450
-Center: 5;5;0
-Min: 10;10;0
+NbrVertices: 0
+NbrTriangles: 0
+Center: 0;0;0
+Min: 0;0;0
 Mesh: OglModel  -  Visual
 NbrVertices: 774
 NbrTriangles: 1450
-Center: 5.001053;4.888396;0.5553912
-Min: 10.00554;10.22321;1.285042
+Center: -5.003456;4.887086;0.5169526
+Min: 10.00803;10.22583;1.284504
