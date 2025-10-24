@@ -10,6 +10,7 @@ Shader "SofaUnity/Double Sided/Standard Diffuse" {
     }
     SubShader {
         Tags {
+            "RenderPipeline"="UniversalPipeline" 
             "RenderType"="Opaque"
         }
         Pass {
