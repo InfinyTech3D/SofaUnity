@@ -19,7 +19,7 @@ namespace SofaUnityAPI
         public static extern int AddRenderEvent_SetPluginTexture(System.IntPtr simuContext, System.IntPtr texture, int w, int h, string objectName);
 
         [DllImport("VirtualXRay")]
-        public static extern int AddRenderEvent_SetVirtualXRayTexture(System.IntPtr simuContext, System.IntPtr texture, int w, int h, string objectName);
+        public static extern int AddRenderEvent_SetVirtualXRayTexture(System.IntPtr simuContext, System.IntPtr texture, int w, int h, string objectName, int graphicsType);
 
         [DllImport("ImagingUS")]
         public static extern int AddRenderEvent_SetImagingUSTexture(System.IntPtr simuContext, System.IntPtr texture, int w, int h, string objectName, int graphicsType);
