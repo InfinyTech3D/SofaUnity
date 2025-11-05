@@ -49,9 +49,7 @@ namespace SofaUnity
         {
             get
             {
-                if (m_isDirty) // nothing to do
-                    GetValueImpl();
-
+                GetValueImpl();
                 return m_value;
             }
 
@@ -136,9 +134,7 @@ namespace SofaUnity
         {
             get
             {
-                if (m_isDirty) // nothing to do
-                    GetValueImpl();
-
+                GetValueImpl();
                 return m_value;
             }
 
@@ -229,9 +225,7 @@ namespace SofaUnity
         {
             get
             {
-                if (m_isDirty) // nothing to do
-                    GetValueImpl();
-
+                GetValueImpl();
                 return m_value;
             }
 
@@ -311,9 +305,7 @@ namespace SofaUnity
         {
             get
             {
-                if (m_isDirty) // nothing to do
-                    GetValueImpl();
-
+                GetValueImpl();
                 return m_value;
             }
 
