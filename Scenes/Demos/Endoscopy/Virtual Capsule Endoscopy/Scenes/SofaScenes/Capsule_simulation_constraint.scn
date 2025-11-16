@@ -23,16 +23,16 @@
         <HexahedronFEMForceField name="FEM" youngModulus="100.0" poissonRatio="0.3" method="large" printLog="0" />
         
         <BoxROI name="FixedROI_1" box="-1 7 2  -7 8.5 5" drawBoxes="1" position="@dofs.rest_position"/>
-        <FixedConstraint name="ROI1" indices="@FixedROI_1.indices" />
+        <FixedProjectiveConstraint name="ROI1" indices="@FixedROI_1.indices" />
         
         <BoxROI name="FixedROI_2" box="-1 8 -4  -7 9 0" drawBoxes="1" position="@dofs.rest_position"/>
-        <FixedConstraint name="ROI2" indices="@FixedROI_2.indices" />
+        <FixedProjectiveConstraint name="ROI2" indices="@FixedROI_2.indices" />
         
         <BoxROI name="FixedROI_3" box="-1 11 -4  -7 12 0.5" drawBoxes="1" position="@dofs.rest_position"/>
-        <FixedConstraint name="ROI3" indices="@FixedROI_3.indices" />
+        <FixedProjectiveConstraint name="ROI3" indices="@FixedROI_3.indices" />
         
         <BoxROI name="FixedROI_4" box="-4.5 11 -1  -7 12 2" drawBoxes="1" position="@dofs.rest_position"/>
-        <FixedConstraint name="ROI4" indices="@FixedROI_4.indices" />
+        <FixedProjectiveConstraint name="ROI4" indices="@FixedROI_4.indices" />
         
         <UncoupledConstraintCorrection />
         

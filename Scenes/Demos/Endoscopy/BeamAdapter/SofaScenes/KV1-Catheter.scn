@@ -65,7 +65,7 @@
             />
 
             <LinearSolverConstraintCorrection printLog="0" wire_optimization="true"/>
-            <FixedConstraint name="FixStart1" indices="0" />
+            <FixedProjectiveConstraint name="FixStart1" indices="0" />
             <RestShapeSpringsForceField name="RestSPForceField" points="@DeployController.indexFirstNode" angularStiffness="1e8" stiffness="1e8"/> 
 
             <!-- COLLISION 
