@@ -96,7 +96,7 @@ namespace SofaUnity
 
             // update position vectors for camera
             Vector3 sofaScale = m_sofaMesh.m_sofaContext.GetScaleSofaToUnity();
-            
+
             m_tipPosition[0] = m_vertCenter[0][0] * sofaScale[0] + this.transform.position[0];
             m_tipPosition[1] = m_vertCenter[0][1] * sofaScale[1] + this.transform.position[1];
             m_tipPosition[2] = m_vertCenter[0][2] * sofaScale[2] + this.transform.position[2];
@@ -141,9 +141,11 @@ namespace SofaUnity
             if (m_childCameraScript == null)
                 return;
 
-            
-            m_childCameraScript.transform.position = m_tipPosition;
-            m_childCameraScript.transform.forward = m_tipDirection;
+
+            Vector3 localPos = m_sofaMesh.m_sofaContext.transform.TransformPoint(m_vertCenter[0]);
+            Vector3 localPosN = m_sofaMesh.m_sofaContext.transform.TransformPoint(m_vertCenter[1]);
+            m_childCameraScript.transform.position = localPos;// m_sofaMesh.m_sofaContext.transform.TransformPoint(m_tipPosition);
+            m_childCameraScript.transform.forward = (localPos - localPosN);
         }
 
 
