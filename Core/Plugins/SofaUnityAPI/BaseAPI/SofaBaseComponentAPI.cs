@@ -561,15 +561,21 @@ namespace SofaUnityAPI
 
         ///  Generic method to get value of a Data<Rigid3f> field. </summary>
         /// <param name="dataName"> Name of the Data field requested. </param>
-        /// <param name="values"> Buffer to get the values of the Rigid3f. </param>
+        /// <param name="values"> Buffer to get the values of the Rigid3 float. </param>
+        /// <param name="doubleValue"> Parameter to inform if data is in double and should be converted to float. </param>
         /// <returns></returns>
-        public int GetRigidfValue(string dataName, float[] values)
+        public int GetRigidValue(string dataName, float[] values, bool doubleValue = false)
         {
             if (checkNativePointer())
             {
-                int res = sofaComponentAPI_getRigid3fValue(m_simu, m_name, dataName, values);
+                int res = -1;
+                if (doubleValue)
+                    res = sofaComponentAPI_getRigid3Value(m_simu, m_name, dataName, true, values);
+                else
+                    res = sofaComponentAPI_getRigid3fValue(m_simu, m_name, dataName, values);
+
                 if (res != 0)
-                    Debug.LogError("Method getRigidfValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
+                    Debug.LogError("Method GetRigidValue of Data: " + dataName + " of object: " + m_name + " returns error: " + SofaDefines.msg_error[res]);
                 return res;
             }
 
@@ -1070,10 +1076,10 @@ namespace SofaUnityAPI
 
         /// Rigid3 API
         [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public static extern int sofaComponentAPI_getRigid3Value(IntPtr obj, string componentName, string dataName, bool doubleValue, int[] values);
+        public static extern int sofaComponentAPI_getRigid3Value(IntPtr obj, string componentName, string dataName, bool doubleValue, float[] values);
 
         [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public static extern int sofaComponentAPI_setRigid3Value(IntPtr obj, string componentName, string dataName, bool doubleValue, int[] values);
+        public static extern int sofaComponentAPI_setRigid3Value(IntPtr obj, string componentName, string dataName, bool doubleValue, float[] values);
 
 
 

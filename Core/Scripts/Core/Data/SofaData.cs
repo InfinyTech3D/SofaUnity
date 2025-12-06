@@ -871,4 +871,134 @@ namespace SofaUnity
         }
     }
 
+
+    /// <summary>
+    /// Specialization of the class SofaBaseData to handle SOFA Data<Vec4f> and Data<Vec4d>
+    /// float or double info will be stored @sa m_isDouble
+    /// </summary>
+    [System.Serializable]
+    public class SofaRigidData : SofaBaseData
+    {
+        [SerializeField]
+        protected Vector3 m_position;
+
+        [SerializeField]
+        protected Quaternion m_orientation;
+
+        /// Internal info to know if storing float or double
+        [SerializeField]
+        protected bool m_isDouble;
+
+        private float[] m_buff = new float[7];
+
+        ////////////////////////////////////////////
+        //////        SofaVec3Data API         /////
+        ////////////////////////////////////////////
+
+        /// Default constructor taking the value, the component owner and its name. Will set the type internally
+        public SofaRigidData(SofaBaseComponent owner, string dataName, bool isDouble)
+            : base(owner, dataName, "Vec3")
+        {
+            m_position = Vector3.zero;
+            m_orientation = Quaternion.identity;
+            m_isDouble = isDouble;
+
+            for (int i = 0; i < 6; i++)
+                m_buff[i] = 0;
+            m_buff[6] = 1;
+
+            GetValueImpl();
+        }
+
+        /// Getter/Setter of the @sa m_value. Will call @sa SetValueImpl and @sa GetValueImpl internally for Sofa communication
+        public Vector3 Position
+        {
+            get
+            {
+                if (m_isDirty) // nothing to do
+                    GetValueImpl();
+
+                return m_position;
+            }
+
+            set
+            {
+                if (m_position != value)
+                {
+                    m_position = value;
+                    if (SetValueImpl())
+                    {
+                        m_owner.m_impl.ReinitComponent();
+                        m_isEdited = true;
+                    }
+                }
+            }
+        }
+
+
+        public Vector3 Angles
+        {
+            get
+            {
+                if (m_isDirty) // nothing to do
+                    GetValueImpl();
+
+                Vector3 angles = new Vector3(m_orientation.eulerAngles[0], -m_orientation.eulerAngles[1], -m_orientation.eulerAngles[2]);
+                return angles;
+            }
+
+            set
+            {
+                //if (m_orientation != value)
+                //{
+                //    m_orientation = value;
+                //    if (SetValueImpl())
+                //    {
+                //        m_owner.m_impl.ReinitComponent();
+                //        m_isEdited = true;
+                //    }
+                //}
+            }
+        }
+
+        /// Log Method for Debug info
+        public void Log()
+        {
+            Debug.Log(m_owner.UniqueNameId + "{" + m_dataType + "}: " + m_dataName + " => " + m_position + " | " + m_orientation);
+        }
+
+
+        ////////////////////////////////////////////
+        //////    SofaVec3Data internal API    /////
+        ////////////////////////////////////////////
+
+        /// Internal Method to set value inside Sofa simulation
+        protected override bool SetValueImpl()
+        {
+            if (m_owner.m_impl == null)
+                return false;
+
+            //m_owner.m_impl.SetVector3Value(m_dataName, m_value, m_isDouble);
+            return true;
+        }
+
+        /// Internal Method to get value from Sofa simulation
+        protected override bool GetValueImpl()
+        {
+            if (m_owner.m_impl == null)
+                return false;
+
+            int res = m_owner.m_impl.GetRigidValue(m_dataName, m_buff, m_isDouble);
+            if ( res == 0)
+            {
+                // Getting raw values from SOFA, need to inverse left-right hand coordinate system
+                m_position = new Vector3(-m_buff[0], m_buff[1], m_buff[2]);
+                m_orientation = new Quaternion(m_buff[3], m_buff[4], m_buff[5], m_buff[6]);
+            }
+
+            m_isDirty = false;
+            return true;
+        }
+    }
+
 }

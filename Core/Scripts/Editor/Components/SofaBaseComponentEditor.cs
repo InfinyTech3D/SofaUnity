@@ -134,6 +134,12 @@ namespace SofaUnity
                     SofaVec4Data data = (SofaVec4Data)(bData);
                     data.Value = EditorGUILayout.Vector4Field(data.DataName, data.Value);
                 }
+                else if (dataType == "RigidCoord3f" || dataType == "RigidCoord3d")
+                {
+                    SofaRigidData data = (SofaRigidData)(bData);
+                    EditorGUILayout.Vector3Field(data.DataName, data.Position);
+                    EditorGUILayout.Vector3Field(data.DataName, data.Angles);
+                }
                 else
                 {
                     Debug.LogError("Data not handled: " + dataName + " [" + dataType + "]");
