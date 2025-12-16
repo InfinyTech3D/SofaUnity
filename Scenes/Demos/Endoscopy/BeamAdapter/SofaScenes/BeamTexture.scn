@@ -58,7 +58,7 @@
                                     startingPos="0 0 0 0 -0.7071068 0 0.7071068" xtip="0 0 0" 
                                     step="0.5" speed="0.0" 
                                     listening="1" controlledInstrument="0"/>
-            <FixedConstraint name="FixedConstraint" indices="0" />
+            <FixedProjectiveConstraint name="FixedConstraint" indices="0" />
             <RestShapeSpringsForceField name="RestSPForceField" points="@DeployController.indexFirstNode" angularStiffness="1e20" stiffness="1e20"/> 
             <LinearSolverConstraintCorrection wire_optimization="true" />
             
