@@ -227,12 +227,10 @@ namespace SofaUnity
             else if (m_listenerCounter < 0)
                 Debug.LogError("SofaMesh has " + m_listenerCounter + " listerners, this should not be possible");
 
-            if (this.TopologyType() != TopologyObjectType.NO_TOPOLOGY && m_sofaMeshAPI.HasTopologyChanged())
-            {
-                //Debug.Log("SofaMesh::updateImpl TopologyChanged");
-                HandleTopologyChange();
-            }
+            // First check if topology has changed and handle it
+            HandleTopologyChange();
 
+            // Then update the topology and vertices positions
             UpdateTopology();            
         }
 
@@ -395,6 +393,27 @@ namespace SofaUnity
         /// Method called by \sa update_impl() to recompute the topology if changed
         protected void HandleTopologyChange()
         {
+            // Handle specific case of point cloud without topology first
+            if (this.TopologyType() == TopologyObjectType.NO_TOPOLOGY)
+            {
+                int _nbV = m_sofaMeshAPI.getNbVertices();
+                if (m_nbVertices != _nbV)
+                {
+                    m_nbVertices = _nbV;
+                    m_unityVertices = new Vector3[m_nbVertices];
+                    m_vertexBuffer = null;
+                    m_vertexBuffer = new float[m_nbVertices * m_meshDim];
+                }
+
+                return;
+            }
+
+            // Check if topology has changed. If not, nothing to do
+            if (!m_sofaMeshAPI.HasTopologyChanged()) {
+                return;
+            }
+
+            // Handle change of topology depending on the type of topology
             if (this.TopologyType() == TopologyObjectType.TRIANGLE)
             {
                 Debug.LogError("HandleTopologyChange for TRIANGLE not implemented yet!");
@@ -446,13 +465,6 @@ namespace SofaUnity
             }
             else if (this.TopologyType() == TopologyObjectType.NO_TOPOLOGY)
             {
-                int _nbV = m_sofaMeshAPI.getNbVertices();
-                if (m_nbVertices != _nbV)
-                {
-                    m_nbVertices = _nbV;
-                    m_unityVertices = new Vector3[m_nbVertices];
-                }
-
                 UpdateUnityVertices();
             }
 
