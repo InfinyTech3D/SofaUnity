@@ -9,6 +9,7 @@ namespace SofaUnity
     public class SofaRigidMapper : MonoBehaviour
     {
         public SofaMesh m_sofaMesh = null;
+        public bool m_isReadOnly = false;
 
         private bool m_updatedFromSofa = true;
 
@@ -51,11 +52,20 @@ namespace SofaUnity
             if (!m_ready)
                 return;
 
-            if (m_updatedFromSofa) {
+            if (m_isReadOnly)
+            {
                 UpdateFromSofa();
             }
+            else 
+            {
+                if (m_updatedFromSofa)
+                {
+                    UpdateFromSofa();
+                    m_updatedFromSofa = false;
+                }
 
-            UpdateToSofa();
+                UpdateToSofa();
+            }
         }
 
 
@@ -77,8 +87,6 @@ namespace SofaUnity
 
             // Combine current rotation with SofaContext one
             this.transform.rotation = m_sofaMesh.m_sofaContext.transform.rotation * this.transform.rotation;
-
-            m_updatedFromSofa = false;
         }
 
 
