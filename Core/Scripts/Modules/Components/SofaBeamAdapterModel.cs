@@ -145,7 +145,11 @@ namespace SofaUnity
             Vector3 localPos = m_sofaMesh.m_sofaContext.transform.TransformPoint(m_vertCenter[0]);
             Vector3 localPosN = m_sofaMesh.m_sofaContext.transform.TransformPoint(m_vertCenter[1]);
             m_childCameraScript.transform.position = localPos;// m_sofaMesh.m_sofaContext.transform.TransformPoint(m_tipPosition);
-            m_childCameraScript.transform.forward = (localPos - localPosN);
+            Vector3 forwardTmp = (localPos - localPosN);
+            if (forwardTmp.magnitude < 0.0001f)
+                forwardTmp = Vector3.forward;
+            
+            m_childCameraScript.transform.forward = forwardTmp;
         }
 
 
