@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SofaUnity;
+using XCharts.Runtime;
 
 namespace SofaUnity
 {
@@ -96,6 +97,14 @@ namespace SofaUnity
             {
                 AddVec4Data(owner, dataName, true);
             }
+            else if (dataType == "RigidCoord3f")
+            {
+                AddRigidData(owner, dataName, false);
+            }
+            else if (dataType == "RigidCoord3d")
+            {
+                AddRigidData(owner, dataName, true);
+            }
             else if (dataType == "vector<I>" || dataType == "vector < int >" || dataType == "vector<int>")
             {
                 m_dataArray.Add(new SofaDataVectorInt(owner, dataName, dataType));
@@ -124,6 +133,7 @@ namespace SofaUnity
             {
                 m_dataArray.Add(new SofaDataVectorVec3(owner, dataName, dataType, true));
             }
+            
             //else if (dataType == "vector < unsigned int >" || dataType == "vector<unsigned int>")
 
             //{
@@ -331,6 +341,18 @@ namespace SofaUnity
         }
 
 
+        public void PrintAllDataAndTypes()
+        {
+            foreach (SofaBaseData data in m_dataArray)
+            {
+                Debug.Log("Data Name: " + data.DataName + " Type: " + data.DataType);
+            }
+        }
+
+
+        ////////////////////////////////////////////////
+        //////   Internal Method To Register Data  /////
+        ////////////////////////////////////////////////
 
         /// Internal Method to create a String Data and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
         private void AddStringData(SofaBaseComponent owner, string dataName)
@@ -413,12 +435,20 @@ namespace SofaUnity
             m_dataArray.Add(new SofaVec4Data(owner, dataName, value, isDouble));
         }
 
+        private void AddRigidData(SofaBaseComponent owner, string dataName, bool isDouble = false)
+        {
+            SofaRigidData data = new SofaRigidData(owner, dataName, isDouble);
+            m_dataArray.Add(data);
+        }
+
 
         /// Internal Method to create a SofaData for unsupported type and add it to the List. Will create the container if it is the first Data. Called by @sa AdddData
         private void AddUnssuportedData(SofaBaseComponent owner, string nameID, string type)
         {
             m_dataArray.Add(new SofaData(owner, nameID, type));
         }
+
+
 
 
     }
