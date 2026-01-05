@@ -25,7 +25,6 @@ namespace SofaUnity
                 }
             }
 
-
             SofaCollisionPipeline collisionPipe = null;
             if (collisionUnityObject == null)
             {
@@ -42,7 +41,7 @@ namespace SofaUnity
             SofaComponent sofaCompo = collisionUnityObject.AddComponent<SofaComponent>();
             sofaCompo.SetDAGNode(sofaNodeOwner);
             sofaCompo.SetPropagateName(false);
-            sofaCompo.ShowData = false;
+            sofaCompo.ShowData = true;
             sofaCompo.Create(sofaNodeOwner.m_sofaContext, nameId, "unset");
             sofaCompo.m_baseComponentType = sofaCompo.BaseTypeFromString(componentType);
 
@@ -125,7 +124,7 @@ namespace SofaUnity
         {
             
             if (componentType != "SofaCollisionModel" && componentType.IndexOf("SofaCollision") != -1)
-                return CreateSofaCollisionPipeline(nameId, componentType, sofaNodeOwner, parent);                    
+                return CreateSofaCollisionPipeline(nameId, componentType, sofaNodeOwner, parent);
 
 
             GameObject compoGO = new GameObject("SofaComponent - " + nameId);
