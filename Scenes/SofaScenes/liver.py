@@ -52,7 +52,7 @@ def createScene(root):
     root.addObject('CollisionPipeline', name="CollisionPipeline")
     root.addObject('BruteForceBroadPhase', name="BroadPhase")
     root.addObject('BVHNarrowPhase', name="NarrowPhase")
-    root.addObject('DefaultContactManager', name="CollisionResponse", response="PenalityContactForceField")
+    root.addObject('CollisionResponse', name="CollisionResponse", response="PenalityContactForceField")
     root.addObject('DiscreteIntersection')
 
     root.addObject('MeshOBJLoader', name="LiverSurface", filename="mesh/liver-smooth.obj")
@@ -66,7 +66,7 @@ def createScene(root):
     liver.addObject('TetrahedronSetGeometryAlgorithms', template="Vec3d", name="GeomAlgo")
     liver.addObject('DiagonalMass', name="Mass", massDensity="1.0")
     liver.addObject('TetrahedralCorotationalFEMForceField', template="Vec3d", name="FEM", method="large", poissonRatio="0.3", youngModulus="3000", computeGlobalMatrix="0")
-    liver.addObject('FixedConstraint', name="FixedConstraint", indices="3 39 64")
+    liver.addObject('FixedProjectiveConstraint', name="FixedConstraint", indices="3 39 64")
 
     visu = liver.addChild('Visu')
     visu.addObject('OglModel', name="VisualModel", src="@../../LiverSurface")
