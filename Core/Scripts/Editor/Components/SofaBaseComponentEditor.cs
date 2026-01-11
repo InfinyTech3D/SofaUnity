@@ -28,19 +28,16 @@ namespace SofaUnity
         public override void OnInspectorGUI()
         {
             SofaBaseComponent compo = (SofaBaseComponent)this.target;
-            //if (compo.isAwake() == false)
-            //return;
-
+            EditorGUILayout.LabelField("Sofa Component Information", EditorStyles.whiteLargeLabel);
             EditorGUI.BeginDisabledGroup(true);
-            compo.UniqueNameId = EditorGUILayout.TextField("Unique Name Id", compo.UniqueNameId);
-            EditorGUILayout.ObjectField("Sofa Context", compo.m_sofaContext, typeof(Object), true);
-            EditorGUILayout.ObjectField("Sofa DAG Node", compo.m_ownerNode, typeof(Object), true);
+            EditorGUILayout.TextField("Component Type", compo.m_componentType);
             EditorGUILayout.EnumPopup("BaseComponentType", compo.m_baseComponentType);
-            compo.m_componentType = EditorGUILayout.TextField("Component Type", compo.m_componentType);
+            EditorGUILayout.TextField("Unique Name Id", compo.UniqueNameId);
+            EditorGUILayout.ObjectField("Sofa DAG Node", compo.m_ownerNode, typeof(Object), true);
             EditorGUI.EndDisabledGroup();
 
             EditorGUILayout.Separator();
-
+            EditorGUILayout.LabelField("SofaUnity Parameters", EditorStyles.whiteLargeLabel);
             compo.m_log = EditorGUILayout.Toggle("Dump logs", compo.m_log);
 
             EditorGUILayout.Separator();
@@ -48,6 +45,7 @@ namespace SofaUnity
             if (dataArchiver == null || !m_showData)
                 return;
 
+            EditorGUILayout.LabelField("Sofa Data", EditorStyles.whiteLargeLabel);
             List<SofaData> m_unssuportedData = new List<SofaData>();
 
             for (int i = 0; i < dataArchiver.m_names.Count; i++)
