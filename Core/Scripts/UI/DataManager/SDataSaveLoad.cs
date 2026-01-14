@@ -59,6 +59,13 @@ namespace SofaUnityXR
 
         public void SaveDynamicData()
         {
+            if (!File.Exists(m_SavePath))
+            {
+#if !UNITY_EDITOR
+                Debug.LogWarning($"File not find in {m_SavePath}. Creation in Application.dataPath.");
+                m_SavePath = Application.dataPath;
+#endif
+            }
             m_DataSaveList.dataSaveList.Clear();
             int i = 0;
             foreach(SofaDataReference sdr in m_SDManager.DSDataList)
@@ -88,6 +95,13 @@ namespace SofaUnityXR
 
         public void LoadDynamicData()
         {
+            if (!File.Exists(m_SavePath))
+            {
+#if !UNITY_EDITOR
+                Debug.LogWarning($"File not find in {m_SavePath}. Creation in Application.dataPath.");
+                m_SavePath = Application.dataPath;
+#endif
+            }
             if (!File.Exists(m_SavePath + m_SceneName))
             {
                 Debug.LogError("JSON file not found: " + m_SavePath + m_SceneName);
