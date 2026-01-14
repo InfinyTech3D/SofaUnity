@@ -34,6 +34,8 @@ namespace SofaUnityXR
         [Header("Files will be saved in : ")]
         public static string m_SavePath;
         private static string m_SceneName;
+        public Button saveButton;
+        public Button loadButton;
         private DynamicSDataManager m_SDManger;
         private DynamicDataSaveList m_DataSaveList;
 
@@ -48,14 +50,15 @@ namespace SofaUnityXR
                 Debug.LogError("SDataSaveLoad:Can't find any Data manager");
                 return;
             }
-            
-            SaveDynamicData();
+
+            saveButton.onClick.AddListener(SaveDynamicData);
 
 
         }
 
         public void SaveDynamicData()
         {
+            m_DataSaveList.dataSaveList.Clear();
             int i = 0;
             foreach(SofaDataReference sdr in m_SDManger.DSDataList)
             {
