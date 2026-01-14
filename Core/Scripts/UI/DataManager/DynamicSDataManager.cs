@@ -167,7 +167,7 @@ namespace SofaUnityXR
         /// <param name="data"></param>
         void FindSofaComponentInScene(SofaDataReference data)
         {
-            SofaBaseComponent[] allBaseComponents = FindObjectsOfType<SofaBaseComponent>();
+            SofaBaseComponent[] allBaseComponents = FindObjectsByType<SofaBaseComponent>(FindObjectsSortMode.None);
 
             bool found = false;
 

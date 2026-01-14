@@ -112,7 +112,8 @@ namespace SofaUnityXR
                 foreach (DynamicDataSave dds in dataList.dataSaveList)
                 {
                     UpdateValueFromType(m_SDManager.DSDataList[i], dds.value);
-                    Debug.Log("tryed to update " + m_SDManager.DSDataList[i].dataName);
+                    //update UI sliders
+                    UpdateDynamicDataUI(m_SDManager.DSDataList[i], dds.value);
                     i++;
                 }
             }
@@ -120,8 +121,10 @@ namespace SofaUnityXR
             {
                 Debug.LogError("LoadDynamicData : Data file empty or not found");
             }
+
             
-           
+
+
 
         }
 
@@ -207,10 +210,6 @@ namespace SofaUnityXR
             }
         }
 
-
-
-
-
         public string GetValueFromType(SofaDataReference sdr)
         {
             if (sdr == null || sdr.sofaComponent == null)
@@ -260,6 +259,42 @@ namespace SofaUnityXR
             
             return null;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sdr"></param>
+        /// <param name="newValue"></param>
+        public void UpdateDynamicDataUI(SofaDataReference sdr, string newValue)
+        {
+            if (sdr == null || string.IsNullOrEmpty(newValue))
+                return;
+
+            if (!float.TryParse(newValue, out float thisValue))
+            {
+                Debug.LogWarning("Failed to parse Float value: " + newValue);
+                return;
+            }
+
+            DynamicSdata[] allDynamicData = FindObjectsByType<DynamicSdata>(FindObjectsSortMode.None);
+            foreach (DynamicSdata element in allDynamicData)
+            {
+                if (!string.IsNullOrEmpty(element.GetUIName()))
+                {
+                    if (element.GetUIName()== sdr.optionalCustomName)
+                    {
+                        element.GetSlider().value = Mathf.Clamp01(thisValue);
+                        return;
+                    }
+                }
+                if (element.GetDataName() == sdr.dataName)
+                {
+                    element.GetSlider().value = Mathf.Clamp01(thisValue);
+                    return;
+                }
+            }
+        }
+
 
     }//end class
 

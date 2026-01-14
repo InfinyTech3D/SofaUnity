@@ -145,7 +145,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -46, y: 0}
+  m_AnchoredPosition: {x: -46, y: -1.6}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4133571076758841288
@@ -176,7 +176,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Data Name :'
+  m_text: Default Data Name
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 522c1115e7013564d92c8fe0fd6d554b, type: 2}
   m_sharedMaterial: {fileID: 2833549502675358344, guid: 522c1115e7013564d92c8fe0fd6d554b, type: 2}
@@ -203,8 +203,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22
-  m_fontSizeBase: 22
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -241,7 +241,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 22.125357}
+  m_margin: {x: 0, y: 0, z: -97.41943, w: 22.125357}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -603,6 +603,8 @@ MonoBehaviour:
   mainPropretySlider: {fileID: 4087773701116171958}
   PropretyName: {fileID: 3080495347422872568}
   PropretyValue: {fileID: 5782485129368148144}
+  MIN: 0
+  MAX: 0
 --- !u!1 &6919628777754564137
 GameObject:
   m_ObjectHideFlags: 0
