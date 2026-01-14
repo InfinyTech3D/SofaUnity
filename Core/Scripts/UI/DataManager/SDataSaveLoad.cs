@@ -36,7 +36,7 @@ namespace SofaUnityXR
         private static string m_SceneName;
         public Button saveButton;
         public Button loadButton;
-        private DynamicSDataManager m_SDManger;
+        private DynamicSDataManager m_SDManager;
         private DynamicDataSaveList m_DataSaveList;
 
         void Start()
@@ -44,14 +44,15 @@ namespace SofaUnityXR
             m_SavePath = Application.dataPath + "/SofaUnity/Core/Scripts/UI/DataManager/DynamicDataSaves/";
             m_SceneName = SceneManager.GetActiveScene().name+".JSON";
             m_DataSaveList = new DynamicDataSaveList();
-            m_SDManger = this.GetComponent<DynamicSDataManager>();
-            if (m_SDManger == null)
+            m_SDManager = this.GetComponent<DynamicSDataManager>();
+            if (m_SDManager == null)
             {
                 Debug.LogError("SDataSaveLoad:Can't find any Data manager");
                 return;
             }
 
             saveButton.onClick.AddListener(SaveDynamicData);
+            loadButton.onClick.AddListener(LoadDynamicData);
 
 
         }
@@ -60,7 +61,7 @@ namespace SofaUnityXR
         {
             m_DataSaveList.dataSaveList.Clear();
             int i = 0;
-            foreach(SofaDataReference sdr in m_SDManger.DSDataList)
+            foreach(SofaDataReference sdr in m_SDManager.DSDataList)
             {
                 string valueCall = GetValueFromType(sdr);
                 if (valueCall != null)
@@ -84,6 +85,131 @@ namespace SofaUnityXR
             string json = JsonUtility.ToJson(m_DataSaveList, true);
             File.WriteAllText(m_SavePath+m_SceneName, json);
         }
+
+        public void LoadDynamicData()
+        {
+            if (!File.Exists(m_SavePath + m_SceneName))
+            {
+                Debug.LogError("JSON file not found: " + m_SavePath + m_SceneName);
+                return;
+            }
+
+            //m_DataSaveList.dataSaveList.Clear();
+            DynamicDataSaveList dataList;
+            string json = File.ReadAllText(m_SavePath + m_SceneName);
+            if (!string.IsNullOrEmpty(json))
+            {
+                dataList = JsonUtility.FromJson<DynamicDataSaveList>(json);
+                if (dataList.dataSaveList.Count != m_SDManager.DSDataList.Count)
+                {
+                    Debug.LogError("LoadDynamicData : The Datas that your are trying to load doesn't match this scene datas");
+                    return;
+                }
+                //We make the guess that you didn't change the data order in the editor between the save and the load
+                //Heavy to check for a very special case so be carefull
+
+                int i = 0;
+                foreach (DynamicDataSave dds in dataList.dataSaveList)
+                {
+                    UpdateValueFromType(m_SDManager.DSDataList[i], dds.value);
+                    Debug.Log("tryed to update " + m_SDManager.DSDataList[i].dataName);
+                    i++;
+                }
+            }
+            else
+            {
+                Debug.LogError("LoadDynamicData : Data file empty or not found");
+            }
+            
+           
+
+        }
+
+
+
+        public void UpdateValueFromType(SofaDataReference sdr, string newValue)
+        {
+            if (sdr == null || string.IsNullOrEmpty(newValue))
+                return;
+
+            SofaBaseComponent sBaseComp = sdr.sofaComponent;
+            string dataName = sdr.dataName;
+
+            if (sBaseComp == null)
+                return;
+
+            switch (sdr.dataType)
+            {
+                case SofaDataType.Vectord:
+                    {
+                        if (!float.TryParse(newValue, out float parsedFloat))
+                        {
+                            Debug.LogWarning("Failed to parse Vectord value: " + newValue);
+                            return;
+                        }
+
+                        float[] valFloatList = new float[1];
+                        valFloatList[0] = parsedFloat;
+
+                        int res = sBaseComp.m_impl.SetVectordValue(dataName, 1, valFloatList);
+                        if (res != 0)
+                            Debug.LogError("Failed to set VectordSizeOne");
+                        break;
+                    }
+
+                case SofaDataType.Int:
+                    {
+                        if (!int.TryParse(newValue, out int parsedInt))
+                        {
+                            Debug.LogWarning("Failed to parse Int value: " + newValue);
+                            return;
+                        }
+
+                        sBaseComp.m_impl.SetIntValue(dataName, parsedInt);
+                        break;
+                    }
+
+                case SofaDataType.Float:
+                    {
+                        if (!float.TryParse(newValue, out float parsedFloat))
+                        {
+                            Debug.LogWarning("Failed to parse Float value: " + newValue);
+                            return;
+                        }
+
+                        sBaseComp.m_impl.SetFloatValue(dataName, parsedFloat);
+                        break;
+                    }
+
+                case SofaDataType.Double:
+                    {
+                        if (!float.TryParse(newValue, out float parsedDouble))
+                        {
+                            Debug.LogWarning("Failed to parse Double value: " + newValue);
+                            return;
+                        }
+
+                        sBaseComp.m_impl.SetDoubleValue(dataName, parsedDouble);
+                        break;
+                    }
+
+                case SofaDataType.Bool:
+                    {
+                        if (!bool.TryParse(newValue, out bool parsedBool))
+                        {
+                            Debug.LogWarning("Failed to parse Bool value: " + newValue);
+                            return;
+                        }
+
+                        sBaseComp.m_impl.SetBoolValue(dataName, parsedBool);
+                        break;
+                    }
+            }
+        }
+
+
+
+
 
         public string GetValueFromType(SofaDataReference sdr)
         {
