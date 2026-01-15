@@ -23,7 +23,7 @@ namespace SofaUnity
                 outputIniFile.WriteLine("SHARE_DIR=C:/projects/sofa-src/share/");
                 outputIniFile.WriteLine("EXAMPLES_DIR=" + SofaUnityDir);
                 outputIniFile.WriteLine("LICENSE_DIR=" + Application.dataPath + "/SofaUnity/License/");
-                outputIniFile.WriteLine("PYTHON_DIR=" + Application.dataPath + "/SofaUnity/Core/Plugins/Native/x64/");
+                outputIniFile.WriteLine("BUILD_DIR=" + Application.dataPath + "/SofaUnity/Core/Plugins/Native/x64/");
             }
         }
 
