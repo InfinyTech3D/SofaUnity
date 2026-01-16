@@ -285,6 +285,21 @@ namespace SofaUnityXR
             dataName = DataName;
         }
 
+        public string GetDataName()
+        {
+            return dataName;
+        }
+
+        public string GetUIName()
+        {
+            return UIName;
+        }
+
+        public Slider GetSlider()
+        {
+            return (mainPropretySlider);
+        }
+
         public void SetUIName(string thisUIName)
         {
             UIName = thisUIName;

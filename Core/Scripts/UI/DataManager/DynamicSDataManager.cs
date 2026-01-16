@@ -48,7 +48,7 @@ namespace SofaUnityXR
 
     public class DynamicSDataManager : MonoBehaviour
     {
-        [SerializeField] private List<SofaDataReference> DSDataList = new List<SofaDataReference>();
+        [SerializeField] public List<SofaDataReference> DSDataList = new List<SofaDataReference>();
         public GameObject UIContainer;
         public GameObject DSDataprefab;
         public GameObject Vec3_DSDataprefab;
@@ -167,7 +167,7 @@ namespace SofaUnityXR
         /// <param name="data"></param>
         void FindSofaComponentInScene(SofaDataReference data)
         {
-            SofaBaseComponent[] allBaseComponents = FindObjectsOfType<SofaBaseComponent>();
+            SofaBaseComponent[] allBaseComponents = FindObjectsByType<SofaBaseComponent>(FindObjectsSortMode.None);
 
             bool found = false;
 
