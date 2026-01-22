@@ -10,7 +10,7 @@ using TMPro;
 namespace SofaUnityXR
 {
     /// <summary>
-    /// Data types
+    /// Data types supported
     /// </summary>
     public enum SofaDataType
     {
@@ -48,7 +48,7 @@ namespace SofaUnityXR
 
     public class DynamicSDataManager : MonoBehaviour
     {
-        [SerializeField] private List<SofaDataReference> DSDataList = new List<SofaDataReference>();
+        [SerializeField] public List<SofaDataReference> DSDataList = new List<SofaDataReference>();
         public GameObject UIContainer;
         public GameObject DSDataprefab;
         public GameObject Vec3_DSDataprefab;
@@ -128,6 +128,17 @@ namespace SofaUnityXR
                     components[i].MAX= data.MAX;
                     components[i].SetDataName(dataName);
                     components[i].SetDataType(dataType);
+                    
+
+                    if (string.IsNullOrEmpty(data.optionalCustomName))
+                    {
+                        components[i].SetUIName(dataName);//No custom name so default
+                    }
+                    else
+                    {
+                        components[i].SetUIName(data.optionalCustomName);
+                    }
+
                     components[i].DynamicSdataSetup(SBcomp);
                 }
 
@@ -167,7 +178,7 @@ namespace SofaUnityXR
         /// <param name="data"></param>
         void FindSofaComponentInScene(SofaDataReference data)
         {
-            SofaBaseComponent[] allBaseComponents = FindObjectsOfType<SofaBaseComponent>();
+            SofaBaseComponent[] allBaseComponents = FindObjectsByType<SofaBaseComponent>(FindObjectsSortMode.None);
 
             bool found = false;
 

@@ -102,7 +102,7 @@ namespace SofaUnityXR
                     mainPropretySlider.onValueChanged.AddListener(SliderFloat);
                     break;
 
-                case SofaDataType.Double:
+                case SofaDataType.Double: //double
 
                    
                    
@@ -285,6 +285,21 @@ namespace SofaUnityXR
             dataName = DataName;
         }
 
+        public string GetDataName()
+        {
+            return dataName;
+        }
+
+        public string GetUIName()
+        {
+            return UIName;
+        }
+
+        public Slider GetSlider()
+        {
+            return (mainPropretySlider);
+        }
+
         public void SetUIName(string thisUIName)
         {
             UIName = thisUIName;
@@ -293,6 +308,11 @@ namespace SofaUnityXR
         public void SetDataType(SofaDataType DataType)
         {
             dataType = DataType;
+        }
+
+        public SofaDataType GetDataType()
+        {
+            return dataType;
         }
 
     } // end class
