@@ -15,10 +15,11 @@ namespace SofaUnityXR
     [System.Serializable]
     public class DynamicDataSave
     {
-        
+
         public string dataName;
         public string optionalCustomName;
         public string value;
+        public SofaDataType dataType; // help to indentify special cases (vec3)
 
 
     }
@@ -29,6 +30,9 @@ namespace SofaUnityXR
         public List<DynamicDataSave> dataSaveList = new List<DynamicDataSave>();
     }
 
+    /// <summary>
+    /// Class used to save and load datas from DynamicSDataManager script
+    /// </summary>
     public class SDataSaveLoad : MonoBehaviour
     {
         [Header("Files will be saved in : ")]
@@ -42,7 +46,7 @@ namespace SofaUnityXR
         void Start()
         {
             m_SavePath = Application.dataPath + "/SofaUnity/Core/Scripts/UI/DataManager/DynamicDataSaves/";
-            m_SceneName = SceneManager.GetActiveScene().name+".JSON";
+            m_SceneName = SceneManager.GetActiveScene().name + ".JSON";
             m_DataSaveList = new DynamicDataSaveList();
             m_SDManager = this.GetComponent<DynamicSDataManager>();
             if (m_SDManager == null)
@@ -57,18 +61,22 @@ namespace SofaUnityXR
 
         }
 
+        /// <summary>
+        /// Fonction call by main save button
+        /// </summary>
         public void SaveDynamicData()
         {
             if (!File.Exists(m_SavePath))
             {
 #if !UNITY_EDITOR
+                //build mode
                 Debug.LogWarning($"File not find in {m_SavePath}. Creation in Application.dataPath.");
                 m_SavePath = Application.dataPath;
 #endif
             }
             m_DataSaveList.dataSaveList.Clear();
             int i = 0;
-            foreach(SofaDataReference sdr in m_SDManager.DSDataList)
+            foreach (SofaDataReference sdr in m_SDManager.DSDataList)
             {
                 string valueCall = GetValueFromType(sdr);
                 if (valueCall != null)
@@ -77,22 +85,26 @@ namespace SofaUnityXR
                     {
                         dataName = sdr.dataName,
                         optionalCustomName = sdr.optionalCustomName,
-                        value = valueCall
+                        value = valueCall,
+                        dataType = sdr.dataType
                     };
                     m_DataSaveList.dataSaveList.Add(my_dynamicDataSave);
                 }
                 else
                 {
-                    Debug.LogError("SDataSaveLoad: Probleme finding the right type of the data to save");
+                    Debug.LogError("SDataSaveLoad: Probleme finding the right type of the data to save for:"+ sdr.dataName);
                     i++;
                     return;
                 }
                 //Debug.Log(sdr.dataName + " has been Saved");
             }
             string json = JsonUtility.ToJson(m_DataSaveList, true);
-            File.WriteAllText(m_SavePath+m_SceneName, json);
+            File.WriteAllText(m_SavePath + m_SceneName, json);
         }
 
+        /// <summary>
+        /// Fonction call by main Load button
+        /// </summary>
         public void LoadDynamicData()
         {
             if (!File.Exists(m_SavePath))
@@ -126,7 +138,6 @@ namespace SofaUnityXR
                 foreach (DynamicDataSave dds in dataList.dataSaveList)
                 {
                     UpdateValueFromType(m_SDManager.DSDataList[i], dds.value);
-                    //update UI sliders
                     UpdateDynamicDataUI(m_SDManager.DSDataList[i], dds.value);
                     i++;
                 }
@@ -136,14 +147,15 @@ namespace SofaUnityXR
                 Debug.LogError("LoadDynamicData : Data file empty or not found");
             }
 
-            
-
-
 
         }
 
 
-
+        /// <summary>
+        /// use to update the real sofa data after loading datas from file
+        /// </summary>
+        /// <param name="sdr"></param>
+        /// <param name="newValue"></param>
         public void UpdateValueFromType(SofaDataReference sdr, string newValue)
         {
             if (sdr == null || string.IsNullOrEmpty(newValue))
@@ -157,6 +169,34 @@ namespace SofaUnityXR
 
             switch (sdr.dataType)
             {
+                case SofaDataType.Vec3:
+                    {
+                        // Le format est "x,y,z"
+                        string[] values = newValue.Split('.');
+                        foreach(string toto in values)
+                        {
+                            Debug.Log("values is : " + toto);
+                        }
+
+                        if (values.Length != 3)
+                        {
+                            Debug.LogWarning("Failed to parse Vec3 value: " + newValue + ". Expected format: x,y,z");
+                            return;
+                        }
+
+                        if (!float.TryParse(values[0], out float x) ||
+                            !float.TryParse(values[1], out float y) ||
+                            !float.TryParse(values[2], out float z))
+                        {
+                            Debug.LogWarning("Failed to parse Vec3 components: " + newValue);
+                            return;
+                        }
+
+                        Vector3 vec3Values = new Vector3 ( x, y, z );
+                        sBaseComp.m_impl.SetVector3Value(dataName, vec3Values,true);
+                        break;
+                    }
+
                 case SofaDataType.Vectord:
                     {
                         if (!float.TryParse(newValue, out float parsedFloat))
@@ -224,6 +264,12 @@ namespace SofaUnityXR
             }
         }
 
+
+        /// <summary>
+        /// Get the value of a data using the sofaunity API and return it as a string
+        /// </summary>
+        /// <param name="sdr"></param>
+        /// <returns></returns>
         public string GetValueFromType(SofaDataReference sdr)
         {
             if (sdr == null || sdr.sofaComponent == null)
@@ -234,6 +280,16 @@ namespace SofaUnityXR
 
             switch (sdr.dataType)
             {
+                case SofaDataType.Vec3:
+                    var vec3Values = new Vector3(0,0,0);
+                    vec3Values = sBaseComp.m_impl.GetVector3Value(dataName, true);
+                    if (vec3Values[0] != float.MinValue)
+                    {
+                        // Format: "x.y.z" use . instead of , is important 
+                        return $"{vec3Values[0]}.{vec3Values[1]}.{vec3Values[2]}";
+                    }
+                    break;
+
                 case SofaDataType.Vectord:
 
                     var valFloatList = new float[1];
@@ -252,7 +308,7 @@ namespace SofaUnityXR
                 case SofaDataType.Float:
 
                     var valFloat = sBaseComp.m_impl.GetFloatValue(dataName);
-                    if (valFloat!=float.MinValue)
+                    if (valFloat != float.MinValue)
                         return valFloat.ToString();
                     break;
 
@@ -270,12 +326,12 @@ namespace SofaUnityXR
                     return valBool.ToString();
             }
 
-            
+
             return null;
         }
 
         /// <summary>
-        /// 
+        /// Update sliders from UI after loading data from file 
         /// </summary>
         /// <param name="sdr"></param>
         /// <param name="newValue"></param>
@@ -284,18 +340,77 @@ namespace SofaUnityXR
             if (sdr == null || string.IsNullOrEmpty(newValue))
                 return;
 
+            // special case vec3
+            if (sdr.dataType == SofaDataType.Vec3)
+            {
+                string[] values = newValue.Split('.');
+                if (values.Length != 3)
+                {
+                    Debug.LogWarning("Failed to parse Vec3 value for UI update: " + newValue);
+                    return;
+                }
+
+                float[] tempValues = new float[3];
+                for (int i = 0; i < 3; i++)
+                {
+                    if (!float.TryParse(values[i], out tempValues[i]))
+                    {
+                        Debug.LogWarning($"Failed to parse Vec3 component {i}: {values[i]}");
+                        return;
+                    }
+                }
+                //easier to do with float first to parse
+                Vector3 vec3FloatValues = new Vector3(tempValues[0], tempValues[1], tempValues[2]);
+
+                
+                DynamicSdata[] allDynamicData = FindObjectsByType<DynamicSdata>(FindObjectsSortMode.None);
+                List<DynamicSdata> vec3Components = new List<DynamicSdata>();
+
+                foreach (DynamicSdata element in allDynamicData)
+                {
+                    // Check if dynamic data is linked to our vec3
+                    bool matchesCustomName = !string.IsNullOrEmpty(sdr.optionalCustomName) &&
+                                            !string.IsNullOrEmpty(element.GetUIName()) &&
+                                            element.GetUIName() == sdr.optionalCustomName;
+
+                    bool matchesDataName = element.GetDataName() == sdr.dataName;
+
+                    if ((matchesCustomName || matchesDataName) && element.GetDataType() == SofaDataType.Vec3)
+                    {
+                        vec3Components.Add(element);
+                    }
+                }
+
+                
+                if (vec3Components.Count == 3)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        
+                        float normalizedValue = Mathf.InverseLerp(vec3Components[i].MIN, vec3Components[i].MAX, vec3FloatValues[i]);
+                        vec3Components[i].GetSlider().value = normalizedValue;
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning($"Found {vec3Components.Count} Vec3 components instead of 3 for {sdr.dataName}");
+                }
+                return;
+            }
+
+            // Normal cases 
             if (!float.TryParse(newValue, out float thisValue))
             {
                 Debug.LogWarning("Failed to parse Float value: " + newValue);
                 return;
             }
 
-            DynamicSdata[] allDynamicData = FindObjectsByType<DynamicSdata>(FindObjectsSortMode.None);
-            foreach (DynamicSdata element in allDynamicData)
+            DynamicSdata[] allDynamicDataSimple = FindObjectsByType<DynamicSdata>(FindObjectsSortMode.None);
+            foreach (DynamicSdata element in allDynamicDataSimple)
             {
                 if (!string.IsNullOrEmpty(element.GetUIName()))
                 {
-                    if (element.GetUIName()== sdr.optionalCustomName)
+                    if (element.GetUIName() == sdr.optionalCustomName)
                     {
                         element.GetSlider().value = Mathf.Clamp01(thisValue);
                         return;
@@ -313,4 +428,3 @@ namespace SofaUnityXR
     }//end class
 
 }//end namespace
-

@@ -10,7 +10,7 @@ using TMPro;
 namespace SofaUnityXR
 {
     /// <summary>
-    /// Data types
+    /// Data types supported
     /// </summary>
     public enum SofaDataType
     {
