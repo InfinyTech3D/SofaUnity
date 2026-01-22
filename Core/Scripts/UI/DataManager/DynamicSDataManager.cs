@@ -128,6 +128,17 @@ namespace SofaUnityXR
                     components[i].MAX= data.MAX;
                     components[i].SetDataName(dataName);
                     components[i].SetDataType(dataType);
+                    
+
+                    if (string.IsNullOrEmpty(data.optionalCustomName))
+                    {
+                        components[i].SetUIName(dataName);//No custom name so default
+                    }
+                    else
+                    {
+                        components[i].SetUIName(data.optionalCustomName);
+                    }
+
                     components[i].DynamicSdataSetup(SBcomp);
                 }
 
