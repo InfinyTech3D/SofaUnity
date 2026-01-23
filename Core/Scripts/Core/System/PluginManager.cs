@@ -302,6 +302,15 @@ namespace SofaUnity
             return null;
         }
 
+        public void LogPluginsInfo()
+        {
+            Debug.Log("PluginManager: Registered plugins:");
+            foreach (PluginInfo plugin in m_savedPlugins)
+            {
+                Debug.Log(" - Plugin " + plugin.Name + " : available=" + plugin.IsAvailable + " enabled=" + plugin.IsEnable);
+            }
+        }
+
 
         ////////////////////////////////////////////
         //////    PluginManager private API    /////
