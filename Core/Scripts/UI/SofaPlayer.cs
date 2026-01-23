@@ -146,16 +146,28 @@ namespace SofaUnity
                 m_sofaContext.IsSofaUpdating = false;
         }
 
+        private IEnumerator ReturnToProfile()
+        {
+            SceneManager.LoadScene("Profile");
+            yield break;
+        }
+
         public void exitApplication()
         {
+            //StartCoroutine(ReturnToProfile());
+
             if (m_sofaContext != null)
             {
                 m_sofaContext.IsSofaUpdating = false;
                 m_sofaContext.ClearSofaScene();
             }
+            m_sofaContext = null;
 
             Application.Quit();
+            
         }
+
+        
 
         public void restartSofaSimulation()
         {
