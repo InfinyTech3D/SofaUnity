@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 
 
-namespace SofaUnityXR
+namespace SofaUnity
 {
     public class DynamicSdata : MonoBehaviour
     {

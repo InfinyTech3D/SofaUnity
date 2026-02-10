@@ -10,7 +10,7 @@ using System.IO;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-namespace SofaUnityXR
+namespace SofaUnity
 {
     [System.Serializable]
     public class DynamicDataSave
@@ -128,18 +128,23 @@ namespace SofaUnityXR
                 dataList = JsonUtility.FromJson<DynamicDataSaveList>(json);
                 if (dataList.dataSaveList.Count != m_SDManager.DSDataList.Count)
                 {
-                    Debug.LogError("LoadDynamicData : The Datas that your are trying to load doesn't match this scene datas");
+                    Debug.LogError("LoadDynamicData : The number of Datas that your are trying to load doesn't match this scene datas");
                     return;
                 }
-                //We make the guess that you didn't change the data order in the editor between the save and the load
-                //Heavy to check for a very special case so be carefull
+              
 
                 int i = 0;
                 foreach (DynamicDataSave dds in dataList.dataSaveList)
                 {
-                    UpdateValueFromType(m_SDManager.DSDataList[i], dds.value);
-                    UpdateDynamicDataUI(m_SDManager.DSDataList[i], dds.value);
-                    i++;
+                    foreach (SofaDataReference myData in m_SDManager.DSDataList)
+                    {
+                        if (myData.dataName == dds.dataName)
+                        {
+                            UpdateValueFromType(myData, dds.value);
+                            UpdateDynamicDataUI(myData, dds.value);
+                        }
+                    }
+
                 }
             }
             else
@@ -175,7 +180,7 @@ namespace SofaUnityXR
                         string[] values = newValue.Split('.');
                         foreach(string toto in values)
                         {
-                            Debug.Log("values is : " + toto);
+                            Debug.Log("vec3 values is : " + toto);
                         }
 
                         if (values.Length != 3)

@@ -7,7 +7,7 @@ using SofaUnity;
 using SofaUnityAPI;
 using TMPro;
 
-namespace SofaUnityXR
+namespace SofaUnity
 {
     /// <summary>
     /// Data types supported
