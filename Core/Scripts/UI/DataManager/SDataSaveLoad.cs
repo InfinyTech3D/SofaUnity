@@ -45,7 +45,8 @@ namespace SofaUnity
 
         void Start()
         {
-            m_SavePath = Application.dataPath + "/SofaUnity/Core/Scripts/UI/DataManager/DynamicDataSaves/";
+            //m_SavePath = Application.dataPath + "/SofaUnity/Core/Scripts/UI/DataManager/DynamicDataSaves/";
+            m_SavePath = Path.GetDirectoryName(SceneManager.GetActiveScene().path) +"/";  
             m_SceneName = SceneManager.GetActiveScene().name + ".JSON";
             m_DataSaveList = new DynamicDataSaveList();
             m_SDManager = this.GetComponent<DynamicSDataManager>();
@@ -128,8 +129,7 @@ namespace SofaUnity
                 dataList = JsonUtility.FromJson<DynamicDataSaveList>(json);
                 if (dataList.dataSaveList.Count != m_SDManager.DSDataList.Count)
                 {
-                    Debug.LogError("LoadDynamicData : The number of Datas that your are trying to load doesn't match this scene datas");
-                    return;
+                    Debug.LogWarning("LoadDynamicData : The number of Datas that your are trying to load doesn't match this scene datas");
                 }
               
 
