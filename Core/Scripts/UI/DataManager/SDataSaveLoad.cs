@@ -431,13 +431,13 @@ namespace SofaUnity
                     {
                         if (element.GetUIName() == sdr.optionalCustomName)
                         {
-                            element.GetSlider().value = Mathf.Clamp01(thisValue);
+                            element.GetSlider().value = Mathf.InverseLerp(element.MIN, element.MAX, thisValue);
                             return;
                         }
                     }
                     if (element.GetDataName() == sdr.dataName)
                     {
-                        element.GetSlider().value = Mathf.Clamp01(thisValue);
+                        element.GetSlider().value = Mathf.InverseLerp(element.MIN, element.MAX, thisValue);
                         return;
                     }
                 }
