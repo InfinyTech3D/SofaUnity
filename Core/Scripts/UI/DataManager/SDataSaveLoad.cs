@@ -176,12 +176,9 @@ namespace SofaUnity
             {
                 case SofaDataType.Vec3:
                     {
-                        // Le format est "x,y,z"
+                        //format "x.y.z"
                         string[] values = newValue.Split('.');
-                        foreach(string toto in values)
-                        {
-                            Debug.Log("vec3 values is : " + toto);
-                        }
+                        
 
                         if (values.Length != 3)
                         {
@@ -342,6 +339,9 @@ namespace SofaUnity
         /// <param name="newValue"></param>
         public void UpdateDynamicDataUI(SofaDataReference sdr, string newValue)
         {
+            //find all ui element
+            DynamicSdata[] allDynamicData = FindObjectsByType<DynamicSdata>(FindObjectsSortMode.None);
+
             if (sdr == null || string.IsNullOrEmpty(newValue))
                 return;
 
@@ -366,9 +366,9 @@ namespace SofaUnity
                 }
                 //easier to do with float first to parse
                 Vector3 vec3FloatValues = new Vector3(tempValues[0], tempValues[1], tempValues[2]);
-
                 
-                DynamicSdata[] allDynamicData = FindObjectsByType<DynamicSdata>(FindObjectsSortMode.None);
+
+               
                 List<DynamicSdata> vec3Components = new List<DynamicSdata>();
 
                 foreach (DynamicSdata element in allDynamicData)
@@ -389,10 +389,23 @@ namespace SofaUnity
                 
                 if (vec3Components.Count == 3)
                 {
+                    
                     for (int i = 0; i < 3; i++)
                     {
-                        
-                        float normalizedValue = Mathf.InverseLerp(vec3Components[i].MIN, vec3Components[i].MAX, vec3FloatValues[i]);
+                        float normalizedValue = 0;
+                        if (vec3Components[i].GetSlider().gameObject.name== "XSlider")
+                        {
+                            normalizedValue = Mathf.InverseLerp(vec3Components[i].MIN, vec3Components[i].MAX, vec3FloatValues[0]);
+                        }
+                        if (vec3Components[i].GetSlider().gameObject.name == "YSlider")
+                        {
+                            normalizedValue = Mathf.InverseLerp(vec3Components[i].MIN, vec3Components[i].MAX, vec3FloatValues[1]);
+                        }
+                        if (vec3Components[i].GetSlider().gameObject.name == "ZSlider")
+                        {
+                            normalizedValue = Mathf.InverseLerp(vec3Components[i].MIN, vec3Components[i].MAX, vec3FloatValues[2]);   
+                        }
+
                         vec3Components[i].GetSlider().value = normalizedValue;
                     }
                 }
@@ -402,31 +415,36 @@ namespace SofaUnity
                 }
                 return;
             }
-
-            // Normal cases 
-            if (!float.TryParse(newValue, out float thisValue))
+            else// Normal cases 
             {
-                Debug.LogWarning("Failed to parse Float value: " + newValue);
-                return;
-            }
-
-            DynamicSdata[] allDynamicDataSimple = FindObjectsByType<DynamicSdata>(FindObjectsSortMode.None);
-            foreach (DynamicSdata element in allDynamicDataSimple)
-            {
-                if (!string.IsNullOrEmpty(element.GetUIName()))
+                
+                if (!float.TryParse(newValue, out float thisValue))
                 {
-                    if (element.GetUIName() == sdr.optionalCustomName)
+                    Debug.LogWarning("Failed to parse Float value: " + newValue);
+                    return;
+                }
+
+
+                foreach (DynamicSdata element in allDynamicData)
+                {
+                    if (!string.IsNullOrEmpty(element.GetUIName()))
+                    {
+                        if (element.GetUIName() == sdr.optionalCustomName)
+                        {
+                            element.GetSlider().value = Mathf.Clamp01(thisValue);
+                            return;
+                        }
+                    }
+                    if (element.GetDataName() == sdr.dataName)
                     {
                         element.GetSlider().value = Mathf.Clamp01(thisValue);
                         return;
                     }
                 }
-                if (element.GetDataName() == sdr.dataName)
-                {
-                    element.GetSlider().value = Mathf.Clamp01(thisValue);
-                    return;
-                }
+
             }
+
+            
         }
 
 
