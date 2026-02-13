@@ -68,7 +68,7 @@ namespace SofaUnity
 
 			if (m_rightButtonHold)
 			{
-				m_lookAtStatic.x += Input.GetAxis("Mouse X") * m_cameraDistance * m_spanSpeed;
+				m_lookAtStatic.x -= Input.GetAxis("Mouse X") * m_cameraDistance * m_spanSpeed;
 				m_lookAtStatic.y -= Input.GetAxis("Mouse Y") * m_cameraDistance * m_spanSpeed;
 			}
 
