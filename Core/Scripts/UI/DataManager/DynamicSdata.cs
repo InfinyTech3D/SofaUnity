@@ -64,8 +64,9 @@ namespace SofaUnity
 
 
             PropretyName.text = UIName;
+            PropretyName.fontSize = 14;
 
-      
+
 
             switch (dataType)
             {
