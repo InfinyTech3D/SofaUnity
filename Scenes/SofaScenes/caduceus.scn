@@ -41,7 +41,7 @@
         <HexahedronFEMForceField name="FEM" youngModulus="30000.0" poissonRatio="0.3" method="large" 
         updateStiffnessMatrix="false" printLog="0" topology="@grid"/>
 
-		<ConstantForceField indices="0" totalForce="0 1000 0"/>
+		<ConstantForceField indices="0" totalForce="0 0 0"/>
 		
 		<UncoupledConstraintCorrection defaultCompliance="184" useOdeSolverIntegrationFactors="0"/>
 
