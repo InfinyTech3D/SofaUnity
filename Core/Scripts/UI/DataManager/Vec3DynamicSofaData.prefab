@@ -319,7 +319,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -46, y: 32.9}
+  m_AnchoredPosition: {x: -46, y: 30}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4133571076758841288
@@ -377,8 +377,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22
-  m_fontSizeBase: 22
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1154,10 +1154,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainPropretySlider: {fileID: 4087773701116171958}
-  SecondPropretySlider: {fileID: 1903513906663703234}
-  ThirdPropretySlider: {fileID: 5874876166332455960}
   PropretyName: {fileID: 3080495347422872568}
-  PropretyValue: {fileID: 5782485129368148144}
+  PropretyValue: {fileID: 0}
+  MIN: 0
+  MAX: 0
 --- !u!114 &5717966060889753729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1171,10 +1171,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainPropretySlider: {fileID: 1903513906663703234}
-  SecondPropretySlider: {fileID: 0}
-  ThirdPropretySlider: {fileID: 0}
   PropretyName: {fileID: 3080495347422872568}
   PropretyValue: {fileID: 0}
+  MIN: 0
+  MAX: 0
 --- !u!114 &5460658868850060909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1188,10 +1188,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainPropretySlider: {fileID: 5874876166332455960}
-  SecondPropretySlider: {fileID: 0}
-  ThirdPropretySlider: {fileID: 0}
   PropretyName: {fileID: 3080495347422872568}
   PropretyValue: {fileID: 0}
+  MIN: 0
+  MAX: 0
 --- !u!1 &6356164342222133472
 GameObject:
   m_ObjectHideFlags: 0
