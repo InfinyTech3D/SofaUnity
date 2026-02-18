@@ -320,7 +320,8 @@ namespace SofaUnity
         {
             if (m_impl != null)
             {
-                SofaLog("SofaDAGNode " + UniqueNameId + " already has a SofaDAGNodeAPI.", 2);
+                // This is not an error if unity node is not deleted. The api is still there and jsut need to be reconnected.
+                SofaLog("SofaDAGNode " + UniqueNameId + " already has a SofaDAGNodeAPI.", 0);
                 return;
             }
             
