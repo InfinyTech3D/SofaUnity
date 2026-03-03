@@ -150,19 +150,35 @@ namespace SofaUnity
             }
         }
 
-
+        /// Setter to unload the current scene and clear the sofa context. Will call @sa ClearSofaScene.
         public bool UnLoadScene
         {
             set
             {
                 if (value && m_impl != null)
                 {
-                    Debug.Log("UnLoadScene " + value);
+                    if (m_log)
+                        Debug.Log("#### SofaContext UnLoadScene: " + value);
+
                     ClearSofaScene();
                 }
             }
         }
 
+        /// Setter to reload the current scene. Will clear SOFA scene and reload it internally. Then will reconnect the graph in Unity. Will call @sa ReloadSofaScene.
+        public bool ReloadScene
+        {
+            set
+            {
+                if (value && m_impl != null)
+                {
+                    if (m_log)
+                        Debug.Log("#### SofaContext ReloadScene: " + value);
+
+                    ReloadSofaScene();
+                }
+            }
+        }
         
         ////////////////////////////////////////////
         ////////      scale conversions      ///////
@@ -619,6 +635,8 @@ namespace SofaUnity
             DoCatchSofaMessages();
         }
 
+
+        /// Method to reconnect the current scene already loaded in SOFA with the existing Unity GameObject Hierarchy.
         protected void ReconnectSofaScene()
         {
             if (m_sceneFileMgr == null)
@@ -647,6 +665,20 @@ namespace SofaUnity
             DoCatchSofaMessages();
         }
 
+
+        /// Method to reload the current scene. Will clear SOFA scene and reload it internally. Then will reconnect the graph in Unity.
+        public void ReloadSofaScene()
+        {
+            m_impl.stop();
+            m_impl.unload();
+
+            ReconnectSofaScene();
+
+            m_impl.start();
+        }
+
+
+        /// Method to clear the current scene in SOFA and clear the graph in Unity.
         public void ClearSofaScene()
         {
             m_impl.stop();

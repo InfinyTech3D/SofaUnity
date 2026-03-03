@@ -184,10 +184,12 @@ namespace SofaUnity
                 EditorGUILayout.Separator();
             }
 
+            EditorGUILayout.Separator();
             // Label of the filename loaded
             EditorGUILayout.LabelField("Scene Filename: ", context.SceneFileMgr.SceneFilename);
 
             context.UnLoadScene = GUILayout.Button("Unload Scene file");
+            context.ReloadScene = GUILayout.Button("Reload Sofa Scene file");
             EditorGUILayout.Separator();
         }
 
