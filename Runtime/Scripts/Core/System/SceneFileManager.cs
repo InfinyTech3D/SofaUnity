@@ -124,6 +124,12 @@ namespace SofaUnity
         /// Internal method to check if the filename is valid
         protected bool CheckValidFilename(string newFilename)
         {
+            // Apply change to the filename due to major refactoring of the scene folder in SofaUnity
+            if (newFilename.Contains("Scenes/SofaScenes"))
+            {
+                newFilename = newFilename.Replace("Scenes/SofaScenes", "Samples/SofaScenes");
+            }
+
             if (!File.Exists(SofaContextAPI.getResourcesPath() + newFilename)) // if not found test with relative path
             {
                 int pos = newFilename.IndexOf("Assets", 0);
