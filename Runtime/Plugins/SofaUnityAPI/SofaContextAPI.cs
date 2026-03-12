@@ -81,7 +81,7 @@ namespace SofaUnityAPI
             CopyAssetToPersistent();
 
             // load the sofaIni file
-            string pathIni = Application.dataPath + "/SofaUnity/Core/Plugins/Native/x64/sofa.ini";
+            string pathIni = Application.dataPath + "/SofaUnity/Runtime/Plugins/Native/x64/sofa.ini";
             string sharePath = sofaPhysicsAPI_loadSofaIni(m_native, pathIni);
             
             if (sharePath.Contains("Error"))

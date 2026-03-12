@@ -15,15 +15,15 @@ namespace SofaUnity
         /// </summary>
         static CopyConfigPostProcessor()
         {
-            string sofaIniFile = Application.dataPath + "/SofaUnity/Core/Plugins/Native/x64/sofa.ini";
+            string sofaIniFile = Application.dataPath + "/SofaUnity/Runtime/Plugins/Native/x64/sofa.ini";
             using (StreamWriter outputIniFile = new StreamWriter(sofaIniFile))
             {
-                string SofaUnityDir = Application.dataPath + "/SofaUnity/scenes/SofaScenes";
+                string SofaUnityDir = Application.dataPath + "/SofaUnity/Samples/SofaScenes";
                 outputIniFile.WriteLine("SHARE_DIR=" + SofaUnityDir);
                 outputIniFile.WriteLine("SHARE_DIR=C:/projects/sofa-src/share/");
                 outputIniFile.WriteLine("EXAMPLES_DIR=" + SofaUnityDir);
                 outputIniFile.WriteLine("LICENSE_DIR=" + Application.dataPath + "/SofaUnity/License/");
-                outputIniFile.WriteLine("BUILD_DIR=" + Application.dataPath + "/SofaUnity/Core/Plugins/Native/x64/");
+                outputIniFile.WriteLine("BUILD_DIR=" + Application.dataPath + "/SofaUnity/Runtime/Plugins/Native/x64/");
             }
         }
 
@@ -139,15 +139,15 @@ namespace SofaUnity
             }
         }
 
-        // Specific method to build SofaUnity folders on windows build. Will create SofaUnity/Core with plugin and sofa.ini file as well as SofaUnity/Scenes/SofaScenes folder
+        // Specific method to build SofaUnity folders on windows build. Will create SofaUnity/Runtime with plugin and sofa.ini file as well as SofaUnity/Samples/SofaScenes folder
         static void BuildForWindows(string pathToBuiltProject)
         {
             // Get build root Path
             string rootBuildPath = pathToBuiltProject.Replace(".exe", "") + "_Data";
 
             // Create bin build path
-            string binBuildPath = rootBuildPath + "/SofaUnity/Core/Plugins/Native/x64/";
-            string dataBuildPath = rootBuildPath + "/SofaUnity/scenes/SofaScenes";
+            string binBuildPath = rootBuildPath + "/SofaUnity/Runtime/Plugins/Native/x64/";
+            string dataBuildPath = rootBuildPath + "/SofaUnity/Samples/SofaScenes";
 
             Directory.CreateDirectory(binBuildPath);
             Debug.Log("[SofaUnity - BuildForWindows] Create directory: " + binBuildPath);

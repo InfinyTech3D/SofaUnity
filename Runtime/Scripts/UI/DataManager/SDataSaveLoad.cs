@@ -45,7 +45,7 @@ namespace SofaUnity
 
         void Start()
         {
-            //m_SavePath = Application.dataPath + "/SofaUnity/Core/Scripts/UI/DataManager/DynamicDataSaves/";
+            //m_SavePath = Application.dataPath + "/SofaUnity/Runtime/Scripts/UI/DataManager/DynamicDataSaves/";
             m_SavePath = Path.GetDirectoryName(SceneManager.GetActiveScene().path) +"/";  
             m_SceneName = SceneManager.GetActiveScene().name + ".JSON";
             m_DataSaveList = new DynamicDataSaveList();
