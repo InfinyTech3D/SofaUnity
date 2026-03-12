@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Procedure Name ="Cholesystectomy">
+<Portals>
+  <Portal Number ="1" >
+    <PortalSettings Rail ="2" RailPos ="0" FlipAngle ="0" TiltAngle ="20" ComPort ="COM5"/>
+  </Portal>
+  <Portal Number ="2" >
+    <PortalSettings Rail ="-1" RailPos ="55" FlipAngle ="0" TiltAngle ="20" ComPort ="COM7"/>
+  </Portal>
+  <Portal Number ="3" >
+    <PortalSettings Rail ="0" RailPos ="0" FlipAngle ="0" TiltAngle ="20" ComPort ="COM4"/>
+  </Portal>
+  <Portal Number ="4" >
+    <PortalSettings Rail ="0" RailPos ="0" FlipAngle ="0" TiltAngle ="30" ComPort ="COM9"/>
+  </Portal>
+  <Portal Number ="5" >
+    <PortalSettings Rail ="0" RailPos ="0" FlipAngle ="0" TiltAngle ="0" ComPort ="COM6"/>
+  </Portal>  
+</Portals>
+</Procedure>
+
