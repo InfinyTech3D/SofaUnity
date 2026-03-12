@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<Node name="root" dt="0.05" gravity="0.0 0 -10">
+
+    <Node name="RequiredPlugins">
+        <RequiredPlugin name="Sofa.Component.Constraint.Projective"/> <!-- Needed to use components [FixedConstraint] -->
+        <RequiredPlugin name="Sofa.Component.Engine.Analyze"/> <!-- Needed to use components [AverageCoord] -->
+        <RequiredPlugin name="Sofa.Component.Engine.Select"/> <!-- Needed to use components [BoxROI] -->
+        <RequiredPlugin name="Sofa.Component.IO.Mesh"/> <!-- Needed to use components [MeshVTKLoader] -->
+        <RequiredPlugin name="Sofa.Component.LinearSolver.Iterative"/> <!-- Needed to use components [CGLinearSolver] -->
+        <RequiredPlugin name="Sofa.Component.Mapping.Linear"/> <!-- Needed to use components [BarycentricMapping] -->
+        <RequiredPlugin name="Sofa.Component.Mass"/> <!-- Needed to use components [DiagonalMass] -->
+        <RequiredPlugin name="Sofa.Component.ODESolver.Backward"/> <!-- Needed to use components [EulerImplicitSolver] -->
+        <RequiredPlugin name="Sofa.Component.SolidMechanics.FEM.Elastic"/> <!-- Needed to use components [HexahedronFEMForceField] -->
+        <RequiredPlugin name="Sofa.Component.StateContainer"/> <!-- Needed to use components [MechanicalObject] -->
+        <RequiredPlugin name="Sofa.Component.Topology.Container.Dynamic"/> <!-- Needed to use components [HexahedronSetGeometryAlgorithms] --> 
+        <RequiredPlugin name="Sofa.Component.Topology.Container.Grid"/> <!-- Needed to use components [SparseGridTopology] -->
+        <RequiredPlugin name="Sofa.Component.Visual"/> <!-- Needed to use components [VisualStyle] -->
+        <RequiredPlugin name="Sofa.GL.Component.Rendering3D"/> <!-- Needed to use components [OglModel] -->
+        <RequiredPlugin name="VirtualXRay"/> <!-- Needed to use components [CircularTrajectoryEngine,SurfaceXRayRenderer,XRayModel] -->
+    </Node>
+
+	<DefaultAnimationLoop />
+
+	<Node name="Physics">
+    	<EulerImplicitSolver name="euler" />
+    	<CGLinearSolver name="CG" iterations="50" tolerance="1e-9" threshold="1e-9" />
+
+		<SparseGridTopology name="loader" fileTopology="./mesh/set_liver.obj" n="8 8 8" />
+		<HexahedronSetGeometryAlgorithms />
+
+		<MechanicalObject template="Vec3d" name="DOFs" />
+		<DiagonalMass totalMass="10.0" />
+
+		<HexahedronFEMForceField name="FEM" youngModulus="600" poissonRatio="0.3" method="large" />
+
+		<BoxROI name="ROI1" box="0.2 0.0 1.7 2.0 2.5 2.2" drawBoxes="0" />
+		<FixedProjectiveConstraint indices="@ROI1.indices" />
+		
+        <Node name="XRay_models">
+			<VisualStyle name="AllVisualStyle"  displayFlags="showVisual" />
+			<Node name="Liver">
+				<MeshVTKLoader filename="./mesh/liver.vtk" name="loader" flipNormals="true" scale="0.01"/>
+				<XRayModel src="@loader" density="40" isInner="true"/>
+				<BarycentricMapping input="@../.." />
+			</Node>
+
+			<Node name="Artery">
+				<MeshVTKLoader filename="./mesh/artery.vtk" name="loader" flipNormals="true" scale="0.01"/>
+				<XRayModel src="@loader" density="800" isInner="true" />
+				<BarycentricMapping input="@../.." />
+			</Node>
+
+			<Node name="PortalVein">
+				<MeshVTKLoader filename="./mesh/portalvein.vtk" name="loader" flipNormals="true" scale="0.01"/>
+				<XRayModel src="@loader" density="800" isInner="true"/>
+				<BarycentricMapping input="@../.." />
+			</Node>
+		</Node>
+		
+        <Node name="Visual_models">
+			<VisualStyle name="AllVisualStyle"  displayFlags="showVisual" />
+			<Node name="Liver">
+				<MeshVTKLoader filename="./mesh/liver.vtk" name="loader" flipNormals="true" scale="0.01"/>
+				<OglModel src="@loader"/>
+				<BarycentricMapping input="@../.." />
+			</Node>
+
+			<Node name="Artery">
+				<MeshVTKLoader filename="./mesh/artery.vtk" name="loader" flipNormals="true" scale="0.01"/>
+				<OglModel src="@loader" color="1.0 0.0 0.0 1.0" />
+				<BarycentricMapping input="@../.." />
+			</Node>
+
+			<Node name="PortalVein">
+				<MeshVTKLoader filename="./mesh/portalvein.vtk" name="loader" flipNormals="true" scale="0.01"/>
+				<OglModel src="@loader" color="0.0 0.0 1.0 1.0" />
+				<BarycentricMapping input="@../.." />
+			</Node>
+		</Node>
+	</Node>
+
+
+	<Node name="XRay_renderers">
+		<SurfaceXRayRenderer name="XRenderer1"
+            detectorSize="4 4" detectorUpVector="0 0 1" detectorResolution="512 512" sourcePosition="4.5 1.2 1.5" detectorPosition="-2 1.2 1.5"
+			drawSource="1" normalizeColors="1"  drawBeam="1" beamPower="10" xrayFrameRate="40"
+		/>               
+	</Node>
+
+</Node>
