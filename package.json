@@ -10,9 +10,24 @@
   },
   "samples": [
     {
-      "displayName": "Core Examples",
-      "description": "Basic SofaUnity example scenes",
+      "displayName": "SofaScenes",
+      "description": "SofaScenes needed scenes and data for SofaUnity examples and demos",
+      "path": "Samples~/SofaScenes"
+    },
+    {
+      "displayName": "Examples",
+      "description": "Basic SofaUnity examples",
       "path": "Samples~/Examples"
+    },
+    {
+      "displayName": "Demos",
+      "description": "Advanced SofaUnity demos",
+      "path": "Samples~/Demos"
+    },
+    {
+      "displayName": "Benchmarks",
+      "description": "Performance benchmarks",
+      "path": "Samples~/Benchmarks"
     }
   ]
 }

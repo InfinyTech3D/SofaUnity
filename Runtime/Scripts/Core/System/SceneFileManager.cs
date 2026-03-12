@@ -127,7 +127,7 @@ namespace SofaUnity
             // Apply change to the filename due to major refactoring of the scene folder in SofaUnity
             if (newFilename.Contains("Scenes/SofaScenes"))
             {
-                newFilename = newFilename.Replace("Scenes/SofaScenes", "Samples/SofaScenes");
+                newFilename = newFilename.Replace("Scenes/SofaScenes", "Samples~/SofaScenes");
             }
 
             if (!File.Exists(SofaContextAPI.getResourcesPath() + newFilename)) // if not found test with relative path
