@@ -1,0 +1,33 @@
+{
+  "name": "com.infinytech3d.sofaunity",
+  "version": "25.12.0",
+  "displayName": "SofaUnity Core",
+  "description": "SOFA physics engine integration for Unity",
+  "unity": "6000.0",
+  "author": {
+    "name": "InfinyTech3D",
+    "email": "contact@infinytech3d.com"
+  },
+  "samples": [
+    {
+      "displayName": "SofaScenes",
+      "description": "SofaScenes needed scenes and data for SofaUnity examples and demos",
+      "path": "Samples~/SofaScenes"
+    },
+    {
+      "displayName": "Examples",
+      "description": "Basic SofaUnity examples",
+      "path": "Samples~/Examples"
+    },
+    {
+      "displayName": "Demos",
+      "description": "Advanced SofaUnity demos",
+      "path": "Samples~/Demos"
+    },
+    {
+      "displayName": "Benchmarks",
+      "description": "Performance benchmarks",
+      "path": "Samples~/Benchmarks"
+    }
+  ]
+}
