@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Rendering;
 
-namespace SofaUnityAPI
+namespace SofaUnity
 {
     public abstract class AbtractSofaGraphicCall : MonoBehaviour
     {

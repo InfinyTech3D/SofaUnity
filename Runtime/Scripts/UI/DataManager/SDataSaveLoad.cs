@@ -4,10 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using SofaUnity;
-using SofaUnityAPI;
-using TMPro;
 using System.IO;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 namespace SofaUnity
