@@ -29,14 +29,14 @@
     <CollisionPipeline depth="6" verbose="1" draw="0"/>
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
-    <LocalMinDistance name="localmindistance" alarmDistance="2" contactDistance="0.1" angleCone="0.8" coneFactor="0.8"/>
+    <LocalMinDistance name="localmindistance" alarmDistance="1.5" contactDistance="0.25" angleCone="0.6" coneFactor="0.6"/>
     <CollisionResponse name="Response" response="FrictionContactConstraint" />
 
     <Node  name="NavigationSceneNode">
         <!-- Shape of the catheter -->
         <Node name="topoLines_cath">
-            <RodStraightSection name="StraightSection" youngModulus="10000" massDensity="0.0000155" radius="0.9" nbEdgesCollis="200" nbEdgesVisu="300" length="600.0"/>
-            <RodSpireSection name="SpireSection" youngModulus="10000" massDensity="0.0000155" radius="0.9" nbEdgesCollis="10" nbEdgesVisu="20" length="5.0" spireDiameter="10" spireHeight="0.0"/>
+            <RodStraightSection name="StraightSection" youngModulus="800" massDensity="0.0000155" radius="0.9" nbEdgesCollis="200" nbEdgesVisu="300" length="600.0"/>
+            <RodSpireSection name="SpireSection" youngModulus="800" massDensity="0.0000155" radius="0.9" nbEdgesCollis="10" nbEdgesVisu="20" length="5.0" spireDiameter="10" spireHeight="0.0"/>
             <WireRestShape template="Rigid3d" name="catheterRestShape" wireMaterials="@StraightSection @SpireSection"/>
 
             <EdgeSetTopologyContainer name="meshLinesCath"/>
