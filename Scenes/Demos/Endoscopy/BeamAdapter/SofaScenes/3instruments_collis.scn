@@ -36,8 +36,6 @@
 	<CollisionResponse name="Response" response="FrictionContactConstraint" />
     <CollisionDetectionDisplay name="CollisionDetectionDisplay"/>
 
-<!-- ------------------------- INTERVENTIONAL RADIOLOGY INSTRUMENTS (catheter, guidewire, coil)  ------------------------------ -->
-
 	<Node name="topoLines_cath">
         <RodStraightSection name="StraightSection" youngModulus="10000" massDensity="0.00000155" radius="1" nbEdgesCollis="40" nbEdgesVisu="220" length="600.0"/>
         <RodSpireSection name="SpireSection" youngModulus="10000" massDensity="0.00000155" radius="1" nbEdgesCollis="10" nbEdgesVisu="80" length="400.0" spireDiameter="4000.0" spireHeight="0.0"/>        

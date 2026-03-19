@@ -27,14 +27,14 @@
     <CollisionPipeline depth="6" verbose="1" />
     <BruteForceBroadPhase/>
     <BVHNarrowPhase/>
-    <LocalMinDistance name="localmindistance" alarmDistance="1.0" contactDistance="0.1" angleCone="0.02"/>
+    <LocalMinDistance name="localmindistance" alarmDistance="1.0" contactDistance="0.25" angleCone="0.02"/>
     <CollisionResponse name="Response" response="FrictionContactConstraint" />
 
     <Node name="NavigationSceneNode">
         <!-- Shape of the catheter -->
         <Node name="topoLines_cath">
-            <RodStraightSection name="StraightSection" youngModulus="25e3" radius="0.01" massDensity="0.0000155" nbEdgesCollis="200" nbEdgesVisu="300" length="240.0"/>
-            <RodSpireSection name="SpireSection" youngModulus="25e3" radius="0.01" massDensity="0.0000155" nbEdgesCollis="10" nbEdgesVisu="20" length="2.0" spireDiameter="10" spireHeight="0.0"/>
+            <RodStraightSection name="StraightSection" youngModulus="1000" radius="0.01" massDensity="0.0000155" nbEdgesCollis="200" nbEdgesVisu="300" length="240.0"/>
+            <RodSpireSection name="SpireSection" youngModulus="1000" radius="0.01" massDensity="0.0000155" nbEdgesCollis="10" nbEdgesVisu="20" length="2.0" spireDiameter="10" spireHeight="0.0"/>
             <WireRestShape template="Rigid3d" name="catheterRestShape" wireMaterials="@StraightSection @SpireSection"/>
 
             <EdgeSetTopologyContainer name="meshLinesCath"/>
@@ -50,11 +50,11 @@
             <BTDLinearSolver/>
             <RegularGridTopology name="meshLinesCombined" nx="250" ny="1" nz="1" 
                 xmax="0.0" xmin="0.0" ymax="0" ymin="0" zmax="0" zmin="0"/>
-            <MechanicalObject name="DOFs" template="Rigid3d" translation="3 3 -4"  rotation="60 70 0" />
+            <MechanicalObject name="DOFs" template="Rigid3d" translation="3 1.0 -4"  rotation="60 70 0" />
             <WireBeamInterpolation WireRestShape="@../topoLines_cath/catheterRestShape" name="InterpolCatheter"  />
             <AdaptiveBeamForceFieldAndMass interpolation="@InterpolCatheter" name="CatheterForceField" />
             <InterventionalRadiologyController listening="true" controlledInstrument="0" instruments="InterpolCatheter" name="DeployController" 
-                speed="0.0" startingPos="3 3 -4   0.4689105 0.5470623 0 0.6934305" step="0.1" template="Rigid3d"  xtip="0.1"  />
+                speed="0.0" startingPos="3 1.0 -4   0.4689105 0.5470623 0 0.6934305" step="0.1" template="Rigid3d"  xtip="0.1"  />
 
             <LinearSolverConstraintCorrection wire_optimization="true"/>
             <FixedProjectiveConstraint name="FixStart1" indices="0" />
