@@ -20,31 +20,27 @@ namespace SofaUnity
         /////   SofaSphereCollisionObject members   /////
         /////////////////////////////////////////////////
 
-        /// Pointer to the corresponding SOFA API object
-        protected SofaCustomMeshAPI m_impl = null;
+        private SofaSphereCollision m_sofaSphereCollision = new SofaSphereCollision();
 
-        /// Booleen to activate/unactivate the collision
-        [SerializeField] protected bool m_activated = true;
-        /// Booleen to activate/unactivate the factor or use unique position
+        /// <summary>
+        /// Reference to SofaSphereCollision : commun part of  SofaSphereCollisionHand and SofaSphereCollisionObject
+        /// </summary>
         [SerializeField]
-        protected bool m_usePositionOnly = true;
+        public SofaSphereCollision SofaSphereCollision
+        {
+            get => m_sofaSphereCollision;
+            set => m_sofaSphereCollision = value;
+        }
+        
         /// Discretisation factor to compute the number of sphere to create on the object.
         [SerializeField] protected float m_factor = 50.0f;
 
-        /// Collision sphere radius
-        [SerializeField] protected float m_radius = 1.0f;
-        /// Collision sphere contact stiffness
-        [SerializeField] protected float m_stiffness = 100.0f;
-
 
         /// List of unique vertex that discribe the GameObject geometry
-        protected List<Vector3> m_keyVertices = null;
+        protected List<Vector3> m_keyVertices = new List<Vector3>();
+        protected List<int> m_keyVerticesIndex = new List<int>();
 
-        /// array of vertex corresponding to the sphere centers
-        protected Vector3[] m_centers = null;
-
-        [SerializeField]
-        public GameObject parentT = null;
+        private Mesh m_mesh = null;
 
         [SerializeField]
         public bool m_startOnPlay = true;
@@ -52,20 +48,6 @@ namespace SofaUnity
         /////////////////////////////////////////////////
         /////  SofaSphereCollisionObject public API /////
         /////////////////////////////////////////////////
-
-        /// Getter/Setter of the parameter @see m_activated  
-        public bool Activated
-        {
-            get { return m_activated; }
-            set { m_activated = value; }
-        }
-
-        /// Getter/Setter of the parameter @see m_usePositionOnly  
-        public bool UsePositionOnly
-        {
-            get { return m_usePositionOnly; }
-            set { m_usePositionOnly = value; }
-        }
 
         /// Getter/Setter of the parameter @see m_factor       
         public float Factor
@@ -76,60 +58,12 @@ namespace SofaUnity
                 if (value != m_factor)
                 {
                     m_factor = value;
-                    ComputeSphereCenters();
+                    //ComputeSphereCenters();
                 }
                 else
                     m_factor = value;
             }
         }
-
-        /// Getter/Setter of the parameter @see m_radius     
-        public float Radius
-        {
-            get { return m_radius; }
-            set
-            {
-                if (value != m_radius)
-                {
-                    m_radius = value;
-                    if (m_impl != null)
-                        m_impl.SetFloatValue("radius", m_radius * m_sofaContext.GetFactorUnityToSofa(1));
-                }
-                else
-                    m_radius = value;
-            }
-        }
-
-        /// Getter/Setter of the parameter @see m_stiffness     
-        public float Stiffness
-        {
-            get { return m_stiffness; }
-            set
-            {
-                if (value != m_stiffness)
-                {
-                    m_stiffness = value;
-                    if (m_impl != null)
-                        m_impl.SetFloatValue("contactStiffness", m_stiffness);
-                }
-                else
-                    m_stiffness = value;
-            }
-        }
-
-
-        /// Get the number of spheres
-        public int NbrSpheres
-        {
-            get
-            {
-                if (m_centers != null)
-                    return m_centers.Length;
-                else
-                    return 0;
-            }
-        }
-
 
         //////////////////////////////////////////////////
         /////  SofaSphereCollisionObject public API  /////
@@ -138,12 +72,12 @@ namespace SofaUnity
         // Use this for initialization
         void Start()
         {
-            if (m_impl != null)
+            if (m_sofaSphereCollision.Impl != null)
             {
                 Init_impl();
 
-                m_impl.SetFloatValue("contactStiffness", m_stiffness);
-                m_impl.SetFloatValue("radius", m_radius * m_sofaContext.GetFactorUnityToSofa(1));
+                m_sofaSphereCollision.Impl.SetFloatValue("contactStiffness", m_sofaSphereCollision.Stiffness);
+                m_sofaSphereCollision.Impl.SetFloatValue("radius", m_sofaSphereCollision.Radius);
             }
 
         }
@@ -152,31 +86,20 @@ namespace SofaUnity
         // Update is called once per frame
         void Update()
         {
-            if (parentT != null)
-            {
-                this.transform.position = parentT.transform.position;
-            }
+            if (!m_isCreated)
+                return;
 
-            if (m_activated && m_centers != null)
-            {
-                m_impl.UpdateMesh(this.transform, m_centers, m_sofaContext.transform);
-            }
+            // Update local key vertices position from unity mesh
+            UpdateKeyVertices();
+            // send world key vertices position to sofa (transform in sofa will be done in SofaCustomMeshAPI.UpdateMesh() method)
+            m_sofaSphereCollision.UpdateLoop(transform, m_sofaContext.transform);
         }
 
 
         /// Method to draw debug information like the vertex being grabed
         void OnDrawGizmosSelected()
         {
-            if (m_centers == null || m_sofaContext == null)
-                return;
-
-            Gizmos.color = Color.yellow;
-            //float factor = m_sofaContext.GetFactorSofaToUnity();
-
-            foreach (Vector3 vert in m_centers)
-            {
-                Gizmos.DrawSphere(this.transform.TransformPoint(vert), m_radius/**m_sofaContext.GetFactorSofaToUnity(1)*/);
-            }
+            m_sofaSphereCollision.DrawGizmos(m_sofaSphereCollision.Radius, transform);
         }
 
 
@@ -188,16 +111,16 @@ namespace SofaUnity
         protected override void Create_impl()
         {
             SofaLog("####### SofaSphereCollisionObject::Create_impl: " + UniqueNameId);
-            if (m_impl == null)
+            
+            if (!m_sofaSphereCollision.isCreated())
             {
-                m_impl = new SofaCustomMeshAPI(m_sofaContext.GetSimuContext(), m_parentName, m_uniqueNameId);
-
-                if (m_impl == null || !m_impl.m_isCreated)
+                bool resCreation = m_sofaSphereCollision.CreateSofaSphereCollisionObject(m_sofaContext, m_parentName, m_uniqueNameId); 
+                if (!resCreation)
                 {
                     SofaLog("SofaSphereCollisionObject:: Object creation failed: " + m_uniqueNameId, 2);
                     this.enabled = false;
                     return;
-                }
+                }                
                 else
                 {
                     m_isCreated = true;
@@ -207,11 +130,11 @@ namespace SofaUnity
                         SofaCollisionModel _col = child.gameObject.GetComponent<SofaCollisionModel>();
                         if (_mesh)
                         {
-                            m_impl.SetMeshNameID(_mesh.UniqueNameId);
+                            m_sofaSphereCollision.Impl.SetMeshNameID(_mesh.UniqueNameId);
                         }
-                        else if (_col)
+                        if (_col)
                         {
-                            m_impl.SetCollisionNameID(_col.UniqueNameId);
+                            m_sofaSphereCollision.Impl.SetCollisionNameID(_col.UniqueNameId);
                         }
                     }
                 }
@@ -231,16 +154,26 @@ namespace SofaUnity
         /// Method called by @sa Awake() method. As post process method after creation.
         protected override void Init_impl()
         {
-            m_keyVertices = new List<Vector3>();
+            Debug.Log("####### SofaSphereCollisionObject::Init_impl: " + UniqueNameId);
+            // First compute unity meshfilter unique position into m_keyVertices.
+            CreateKeyVertices();
 
-            Mesh m_mesh = this.GetComponent<MeshFilter>().sharedMesh;
+            // Then copy them into m_centers
+            m_sofaSphereCollision.CreateSphereCenters(m_keyVertices.ToArray());
+        }
+
+
+        private void CreateKeyVertices()
+        {
+            m_keyVertices.Clear();
+
+            m_mesh = this.GetComponent<MeshFilter>().sharedMesh;
 
             if (m_mesh == null) // look for a mesh in the current gameObject
             {
-                Debug.LogError("SofaSphereCollisionObject::AwakePostProcess Error No valid Meshfilter found in current gameObject.");
+                Debug.LogError("SofaSphereCollisionObject::Init_impl Error No valid Meshfilter found in current gameObject.");
                 return;
             }
-
 
             Vector3[] vertices = m_mesh.vertices;
             for (int i = 0; i < vertices.Length; i++)
@@ -254,108 +187,112 @@ namespace SofaUnity
                         break;
                     }
                 }
-
                 if (!found)
+                {
                     m_keyVertices.Add(vertices[i]);
+                    m_keyVerticesIndex.Add(i);
+                }
             }
 
-            ComputeSphereCenters();
+            // convert to world position
+            //for (int i = 0; i < m_keyVertices.Count; i++)
+            //{
+            //    m_keyVertices[i] = this.transform.TransformPoint(m_keyVertices[i]);
+            //}
         }
 
+        private void UpdateKeyVertices()
+        {
+            if (!m_mesh)
+                return;
+
+            Vector3[] vertices = m_mesh.vertices;
+            for (int i = 0; i < m_keyVerticesIndex.Count; i++)
+            {
+                m_sofaSphereCollision.Centers[i] = /*this.transform.TransformPoint*/(vertices[m_keyVerticesIndex[i]]);
+            }
+        }
 
 
 
         /// Method to compute the centers according to the @see m_keyVertices and @sa m_factor
-        protected void ComputeSphereCenters()
-        {
-            if (m_usePositionOnly)
-            {
-                m_centers = new Vector3[10];
-                for (int i = 0; i < 10; i++)
-                    m_centers[i] = this.transform.InverseTransformPoint(this.transform.localPosition);
+    //    protected void ComputeUnityPositions()
+    //    {
+    //        if (m_keyVertices == null)
+    //        {
+    //            AwakePostProcess();
+    //            return;
+    //        }
 
-                if (m_impl != null)
-                    m_impl.SetNumberOfVertices(1);
+    //        //Debug.Log("keyVertices.Count: " + m_keyVertices.Count);
+    //        Vector3[] buffer = m_keyVertices.ToArray();
 
-                return;
-            }
+    //        List<Vector3> bufferTotal = new List<Vector3>();
+    //        int cpt = 0;
 
+    //        float contextFactor = m_sofaContext.GetFactorUnityToSofa();
+    //        for (int i = 0; i < buffer.Length; ++i)
+    //        {
+    //            bufferTotal.Add(buffer[i]);
+    //            cpt++;
+    //            Vector3 pointA = this.transform.TransformPoint(buffer[i]);
+    //            for (int j = i + 1; j < buffer.Length; ++j)
+    //            {
+    //                Vector3 pointB = this.transform.TransformPoint(buffer[j]);
+    //                Vector3 dir = pointB - pointA;
+    //                float dist = dir.magnitude;
 
-            if (m_keyVertices == null)
-            {
-                AwakePostProcess();
-                return;
-            }
+    //                dist = dist * 10;
 
-            //Debug.Log("keyVertices.Count: " + m_keyVertices.Count);
-            Vector3[] buffer = m_keyVertices.ToArray();
+    //                int interpol = (int)Math.Floor((dist * contextFactor) / m_factor);
 
-            List<Vector3> bufferTotal = new List<Vector3>();
-            int cpt = 0;
+    //                if (interpol > 1)
+    //                {
+    //                    float interval = (dist * 0.1f) / interpol;
+    //                    //Debug.Log("dist: " + dist + " | interpol: " + interpol + " | from " + dist / m_factor + " | interval: " + interval);
 
-            float contextFactor = m_sofaContext.GetFactorUnityToSofa();
-            for (int i = 0; i < buffer.Length; ++i)
-            {
-                bufferTotal.Add(buffer[i]);
-                cpt++;
-                Vector3 pointA = this.transform.TransformPoint(buffer[i]);
-                for (int j = i + 1; j < buffer.Length; ++j)
-                {
-                    Vector3 pointB = this.transform.TransformPoint(buffer[j]);
-                    Vector3 dir = pointB - pointA;
-                    float dist = dir.magnitude;
+    //                    dir.Normalize();
+    //                    for (int k = 1; k < interpol; k++)
+    //                    {
+    //                        Vector3 newPoint = pointA + dir * interval * k;
 
-                    dist = dist * 10;
+    //                        if (cpt >= 1000)
+    //                            break;
 
-                    int interpol = (int)Math.Floor((dist * contextFactor) / m_factor);
+    //                        bufferTotal.Add(this.transform.InverseTransformPoint(newPoint));
+    //                        cpt++;
+    //                    }
+    //                }
 
-                    if (interpol > 1)
-                    {
-                        float interval = (dist * 0.1f) / interpol;
-                        //Debug.Log("dist: " + dist + " | interpol: " + interpol + " | from " + dist / m_factor + " | interval: " + interval);
+    //                if (cpt >= 1000)
+    //                    break;
+    //            }
 
-                        dir.Normalize();
-                        for (int k = 1; k < interpol; k++)
-                        {
-                            Vector3 newPoint = pointA + dir * interval * k;
+    //            if (cpt >= 1000)
+    //                break;
+    //        }
 
-                            if (cpt >= 1000)
-                                break;
+    //        if (m_log)
+    //            Debug.Log("bufferTotal.Count: " + bufferTotal.Count);
 
-                            bufferTotal.Add(this.transform.InverseTransformPoint(newPoint));
-                            cpt++;
-                        }
-                    }
+    //        m_centers = new Vector3[bufferTotal.Count];
+    //        cpt = 0;
+    //        foreach (Vector3 vert in bufferTotal)
+    //        {
+    //            m_centers[cpt] = vert;
+    //            cpt++;
+    //        }
 
-                    if (cpt >= 1000)
-                        break;
-                }
-
-                if (cpt >= 1000)
-                    break;
-            }
-
-            if (m_log)
-                Debug.Log("bufferTotal.Count: " + bufferTotal.Count);
-
-            m_centers = new Vector3[bufferTotal.Count];
-            cpt = 0;
-            foreach (Vector3 vert in bufferTotal)
-            {
-                m_centers[cpt] = vert;
-                cpt++;
-            }
-
-            if (cpt >= 1000) // too much spheres
-            {
-                Debug.LogWarning("This factor create too many spheres: " + cpt + " Change the factor.");
-                return;
-            }
+    //        if (cpt >= 1000) // too much spheres
+    //        {
+    //            Debug.LogWarning("This factor create too many spheres: " + cpt + " Change the factor.");
+    //            return;
+    //        }
 
 
-            if (m_impl != null)
-                m_impl.SetNumberOfVertices(bufferTotal.Count);
-        }
+    //        if (m_impl != null)
+    //            m_impl.SetNumberOfVertices(bufferTotal.Count);
+    //    }
 
     }
 
