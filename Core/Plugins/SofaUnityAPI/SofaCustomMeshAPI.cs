@@ -66,10 +66,14 @@ namespace SofaUnityAPI
                 return;
 
             int res = sofaMeshAPI_setNbVertices(m_simu, m_dofName, nbr);
+            Debug.Log("SofaCustomMeshAPI::SetNumberOfVertices: " + m_dofName + " | number of vertices: " + nbr + " | return code: " + res);
             if (res < 0)
                 Debug.LogError("mechanicalObject size: " + m_dofName + " " + SofaDefines.msg_error[res]);
             else
+            {
                 sofaComponentAPI_reinitComponent(m_simu, m_dofName);
+                sofaComponentAPI_initComponent(m_simu, m_collisionName);
+            }
         }
 
 
@@ -133,6 +137,9 @@ namespace SofaUnityAPI
 
         [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaComponentAPI_setDoubleValue(IntPtr obj, string componentName, string dataName, double value);
+
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int sofaComponentAPI_initComponent(IntPtr obj, string componentName);
 
         [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int sofaComponentAPI_reinitComponent(IntPtr obj, string componentName);
