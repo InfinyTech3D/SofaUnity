@@ -82,6 +82,20 @@ namespace SofaUnity
 
         }
 
+        void OnDestroy()
+        {
+            if (m_sofaSphereCollision.m_mecaObj != null)
+            {
+                Debug.Log("SofaSphereCollisionObject::OnDestroy, remove listener for: " + m_sofaSphereCollision.m_mecaObj.UniqueNameId);
+                m_sofaSphereCollision.m_mecaObj.RemoveListener();
+            }
+
+            //if (m_sofaSphereCollision.Impl != null)
+            //{
+            //    m_sofaSphereCollision.Impl.Destroy();
+            //}
+        }
+
 
         // Update is called once per frame
         void Update()
@@ -92,7 +106,10 @@ namespace SofaUnity
             // Update local key vertices position from unity mesh
             UpdateKeyVertices();
             // send world key vertices position to sofa (transform in sofa will be done in SofaCustomMeshAPI.UpdateMesh() method)
-            m_sofaSphereCollision.UpdateLoop(transform, m_sofaContext.transform);
+            //m_sofaSphereCollision.UpdateLoop(transform, m_sofaContext.transform);
+
+            //int nbrV = m_sofaSphereCollision.m_mecaObj.NbVertices();
+            //Debug.Log("SofaSphereCollisionObject::Update, number of vertices: " + nbrV + " | " + m_sofaSphereCollision.m_mecaObj.UniqueNameId);
         }
 
 
@@ -130,11 +147,16 @@ namespace SofaUnity
                         SofaCollisionModel _col = child.gameObject.GetComponent<SofaCollisionModel>();
                         if (_mesh)
                         {
+                            Debug.Log("SofaMesh set: " + _mesh.DisplayName);
                             m_sofaSphereCollision.Impl.SetMeshNameID(_mesh.UniqueNameId);
+                            m_sofaSphereCollision.m_mecaObj = _mesh;
+                            m_sofaSphereCollision.m_mecaObj.AddListener();
                         }
                         if (_col)
                         {
+                            Debug.Log("SofaCollisionModel set: " + _col.DisplayName);
                             m_sofaSphereCollision.Impl.SetCollisionNameID(_col.UniqueNameId);
+                            m_sofaSphereCollision.m_sphereModel = _col;
                         }
                     }
                 }
