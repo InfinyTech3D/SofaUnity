@@ -522,20 +522,62 @@ namespace SofaUnity
             }
         }
 
+
+        private bool drawDebugPositions = false;
+        public bool DrawDebugPositions
+        {
+            get { return drawDebugPositions; }
+            set
+            {
+                if (drawDebugPositions == value)
+                    return;
+
+                drawDebugPositions = value;
+                if (drawDebugPositions)
+                {
+                    m_listenerCounter++;
+                }
+                else
+                    m_listenerCounter--;
+            }
+        }
+
         void OnDrawGizmosSelected()
         {
-            if (!drawForces)
-                return;
+            if (drawDebugPositions)
+            {
+                Gizmos.color = Color.green;
+                if (m_topology != null && m_topology.m_mesh != null)
+                {
+                    for (int i = 0; i < m_topology.m_mesh.vertexCount; i++)
+                    {
+                        Vector3 pos = m_topology.m_mesh.vertices[i];
+                        Gizmos.DrawSphere(pos, 0.5f);
+                    }
+                }
+                else if (m_unityVertices != null)
+                {
+                    for (int i = 0; i < m_unityVertices.Length; i++)
+                    {
+                        Vector3 pos = m_unityVertices[i];
+                        Gizmos.DrawSphere(pos, 0.5f);
+                    }
+                }
+            }
+
 
             if (m_topology == null|| m_topology.m_mesh == null)
                 return;
 
-            Gizmos.color = Color.red;
-            for (int i=0; i< m_topology.m_mesh.vertexCount; i++)
+            if (drawForces && forces != null)
             {
-                Vector3 startPos = m_topology.m_mesh.vertices[i];
-                Vector3 endPos = startPos + forces[i].normalized;
-                Gizmos.DrawLine(startPos, endPos);
+                Gizmos.color = Color.red;
+                for (int i = 0; i < m_topology.m_mesh.vertexCount; i++)
+                {
+                    Vector3 startPos = m_topology.m_mesh.vertices[i];
+                    Vector3 endPos = startPos + forces[i].normalized;
+                    Gizmos.DrawLine(startPos, endPos);
+                }
             }
             
         }

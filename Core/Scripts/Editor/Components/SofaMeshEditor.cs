@@ -48,6 +48,7 @@ namespace SofaUnity
 
             EditorGUILayout.Separator();
             compo.DrawForces = EditorGUILayout.Toggle("DrawGizmoForces", compo.DrawForces);
+            compo.DrawDebugPositions = EditorGUILayout.Toggle("DrawDebugPositions", compo.DrawDebugPositions);            
         }
     }
 }
