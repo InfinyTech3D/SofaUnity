@@ -133,6 +133,20 @@ namespace SofaUnity
                 return m_sofaMeshAPI.GetTopologyRevision();
         }
 
+        public void setNbrVertices(int _nbVertices)
+        {
+            if (m_sofaMeshAPI != null)
+            {
+                m_sofaMeshAPI.SetNumberOfVertices(_nbVertices);
+                
+                // First check if topology has changed and handle it
+                HandleTopologyChange();
+
+                // Then update the topology and vertices positions
+                UpdateTopology();
+            }
+        }
+
         /// Method to set new vertices position to this mesh
         public void SetPositions(Vector3[] vertices)
         {

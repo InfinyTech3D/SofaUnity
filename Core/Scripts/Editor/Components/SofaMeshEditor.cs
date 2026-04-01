@@ -20,16 +20,11 @@ namespace SofaUnity
 
             SofaMesh compo = (SofaMesh)this.target;
 
-            EditorGUILayout.IntField("Nb Points", compo.NbVertices());
-
-            if (!compo.HasTopology())
-                return;
-
-            EditorGUILayout.Separator();
-
             EditorGUI.BeginDisabledGroup(true);
             TopologyObjectType type = compo.TopologyType();
             EditorGUILayout.EnumPopup("MeshTopology Type", type);
+
+            EditorGUILayout.IntField("Nb Points", compo.NbVertices());
 
             if (type == TopologyObjectType.HEXAHEDRON)
             {
@@ -48,10 +43,11 @@ namespace SofaUnity
             {
                 EditorGUILayout.IntField("Nb Edges", compo.NbEdges());
             }
-
-            compo.DrawForces = EditorGUILayout.Toggle("DrawGizmoForces", compo.DrawForces);
-
             EditorGUI.EndDisabledGroup();
+
+
+            EditorGUILayout.Separator();
+            compo.DrawForces = EditorGUILayout.Toggle("DrawGizmoForces", compo.DrawForces);
         }
     }
 }
