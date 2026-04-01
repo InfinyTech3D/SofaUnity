@@ -28,6 +28,8 @@ namespace SofaUnity
         private bool m_startOnPlay = true;
 
         private SofaContext m_sofaContext = null;
+        public SofaMesh m_mecaObj = null;
+        public SofaCollisionModel m_sphereModel = null;
 
         /// array of vertex corresponding to the sphere centers
         protected Vector3[] m_centers = null;
@@ -149,11 +151,20 @@ namespace SofaUnity
 
         public void CreateSphereCenters(Vector3[] values)
         {
+            Debug.Log("CreateSphereCenters: " + values.Length);
             m_centers = values;
-            if (m_impl != null)
-            {
-                m_impl.SetNumberOfVertices(m_centers.Length);
-            }
+            //if (m_impl != null)
+            //{
+            //    m_impl.SetNumberOfVertices(m_centers.Length);
+            //    SofaDataVectorDouble radii = (SofaDataVectorDouble)m_sphereModel.m_dataArchiver.GetVectorData("listRadius");
+            //    Debug.Log("CreateSphereCenters: sofa data listRadius size: " + radii.GetSize());
+            //    float[] raddiValues = new float[m_centers.Length];
+            //    for (int i = 0; i < m_centers.Length; ++i)
+            //    {
+            //        raddiValues[i] = m_radius;
+            //    }
+            //    radii.SetValue(raddiValues, m_centers.Length);
+            //}
         }
 
         /// <summary>
