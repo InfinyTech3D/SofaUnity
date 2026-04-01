@@ -166,6 +166,7 @@ namespace SofaUnity
         private void CreateKeyVertices()
         {
             m_keyVertices.Clear();
+            m_keyVerticesIndex.Clear();
 
             m_mesh = this.GetComponent<MeshFilter>().sharedMesh;
 
@@ -206,6 +207,7 @@ namespace SofaUnity
             if (!m_mesh)
                 return;
 
+            
             Vector3[] vertices = m_mesh.vertices;
             for (int i = 0; i < m_keyVerticesIndex.Count; i++)
             {
