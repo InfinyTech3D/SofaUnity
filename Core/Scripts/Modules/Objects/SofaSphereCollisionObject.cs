@@ -41,9 +41,12 @@ namespace SofaUnity
         protected List<int> m_keyVerticesIndex = new List<int>();
 
         private Mesh m_mesh = null;
+        public SofaMesh m_sofaMesh = null;
+        public string m_sofaMeshName = ""; // to automatically find it TODO
+        public SofaCollisionModel m_sphereModel = null;
 
-        [SerializeField]
-        public bool m_startOnPlay = true;
+        /// Parameter bool to store information if vec3 or rigid are parsed.
+        private bool m_ready = false;
 
         /////////////////////////////////////////////////
         /////  SofaSphereCollisionObject public API /////
@@ -72,14 +75,7 @@ namespace SofaUnity
         // Use this for initialization
         void Start()
         {
-            if (m_sofaSphereCollision.Impl != null)
-            {
-                Init_impl();
-
-                m_sofaSphereCollision.Impl.SetFloatValue("contactStiffness", m_sofaSphereCollision.Stiffness);
-                m_sofaSphereCollision.Impl.SetFloatValue("radius", m_sofaSphereCollision.Radius);
-            }
-
+            Init_impl();
         }
 
         void OnDestroy()
@@ -100,7 +96,7 @@ namespace SofaUnity
         // Update is called once per frame
         void Update()
         {
-            if (!m_isCreated)
+            if (!m_ready)
                 return;
 
             // Update local key vertices position from unity mesh
@@ -108,8 +104,7 @@ namespace SofaUnity
             // send world key vertices position to sofa (transform in sofa will be done in SofaCustomMeshAPI.UpdateMesh() method)
             //m_sofaSphereCollision.UpdateLoop(transform, m_sofaContext.transform);
 
-            //int nbrV = m_sofaSphereCollision.m_mecaObj.NbVertices();
-            //Debug.Log("SofaSphereCollisionObject::Update, number of vertices: " + nbrV + " | " + m_sofaSphereCollision.m_mecaObj.UniqueNameId);
+            m_sofaSphereCollision.UpdateLoop();
         }
 
 
@@ -127,6 +122,10 @@ namespace SofaUnity
         /// Method called by @sa CreateObject method to really create the MechanicalObject and the sphere collision model on SOFA side
         protected override void Create_impl()
         {
+            // Do not use this method for now.
+            return;
+
+
             SofaLog("####### SofaSphereCollisionObject::Create_impl: " + UniqueNameId);
             
             if (!m_sofaSphereCollision.isCreated())
@@ -176,12 +175,42 @@ namespace SofaUnity
         /// Method called by @sa Awake() method. As post process method after creation.
         protected override void Init_impl()
         {
-            Debug.Log("####### SofaSphereCollisionObject::Init_impl: " + UniqueNameId);
+            if (m_sofaMeshName.Length > 0)
+            {
+                SofaMesh[] meshes = GameObject.FindObjectsByType<SofaMesh>(FindObjectsSortMode.None);
+                Debug.Log("Nbr Mesh: " + meshes.Length);
+                foreach (SofaMesh mesh in meshes)
+                {
+                    if (mesh.UniqueNameId.Contains(m_sofaMeshName))
+                        m_sofaMesh = mesh;
+                }
+            }
+
+            if (m_sofaMesh == null)
+            {
+                Debug.LogError("m_sofaMesh is not set.");
+                m_ready = false;
+                return;
+            }
+
+            if (m_sphereModel == null)
+            {
+                Debug.LogError("m_sphereModel is not set.");
+                m_ready = false;
+                return;
+            }
+
+
             // First compute unity meshfilter unique position into m_keyVertices.
             CreateKeyVertices();
 
-            // Then copy them into m_centers
-            m_sofaSphereCollision.CreateSphereCenters(m_keyVertices.ToArray());
+            // Link to existing Mesh and CollisionModel in Sofa scene
+            m_sofaSphereCollision.LinkSofaSphereCollisionObject(m_sofaMesh, m_sphereModel);
+
+            // First time define the list of center and will check if SOFA buffer is correctly allocated
+            m_sofaSphereCollision.CreateSphereCenters(m_keyVertices.ToArray()); // store spheres center in world coordinates
+            m_isCreated = true;
+            m_ready = true;
         }
 
 
@@ -233,7 +262,7 @@ namespace SofaUnity
             Vector3[] vertices = m_mesh.vertices;
             for (int i = 0; i < m_keyVerticesIndex.Count; i++)
             {
-                m_sofaSphereCollision.Centers[i] = /*this.transform.TransformPoint*/(vertices[m_keyVerticesIndex[i]]);
+                m_sofaSphereCollision.Centers[i] = this.transform.TransformPoint(vertices[m_keyVerticesIndex[i]]);
             }
         }
 
