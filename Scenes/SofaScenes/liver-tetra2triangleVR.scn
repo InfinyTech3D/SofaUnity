@@ -28,6 +28,9 @@
     <BVHNarrowPhase/>
     <CollisionResponse response="PenalityContactForceField" />
     <MinProximityIntersection name="Proximity" alarmDistance="0.8" contactDistance="0.5" />
+   
+    <CollisionDetectionDisplay name="CollisionDetectionDisplay"/>
+   
 
     <Node name="RightHandController">
         <MechanicalObject name="DOFs" position="0 0 0" />  
