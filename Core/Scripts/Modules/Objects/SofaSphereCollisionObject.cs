@@ -116,7 +116,7 @@ namespace SofaUnity
         /// Method to draw debug information like the vertex being grabed
         void OnDrawGizmosSelected()
         {
-            m_sofaSphereCollision.DrawGizmos(m_sofaSphereCollision.Radius, transform);
+            m_sofaSphereCollision.DrawSphereGizmos();
         }
 
 

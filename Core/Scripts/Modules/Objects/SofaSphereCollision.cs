@@ -22,12 +22,13 @@ namespace SofaUnity
         [SerializeField] protected float m_stiffness = 1000.0f;
 
         [SerializeField]
-        private GameObject parentT = null;
+        private GameObject parentT = null; // TODO check if still used
 
         [SerializeField]
         private bool m_startOnPlay = true;
 
         private SofaContext m_sofaContext = null;
+        
         public SofaMesh m_mecaObj = null;
         public SofaCollisionModel m_sphereModel = null;
 
@@ -92,8 +93,12 @@ namespace SofaUnity
                 if (value != m_radius)
                 {
                     m_radius = value;
-                    if (m_impl != null)
-                        m_impl.SetFloatValue("radius", m_radius);
+                    if (m_sphereModel != null)
+                    {
+                        SofaDoubleData datad = m_sphereModel.m_dataArchiver.GetSofaDoubleData("radius");
+                        if (datad != null)
+                            datad.Value = m_radius;
+                    }
                 }
                 else
                     m_radius = value;
@@ -109,8 +114,12 @@ namespace SofaUnity
                 if (value != m_stiffness)
                 {
                     m_stiffness = value;
-                    if (m_impl != null)
-                        m_impl.SetFloatValue("contactStiffness", m_stiffness);
+                    if (m_sphereModel != null)
+                    {
+                        SofaDoubleData datad = m_sphereModel.m_dataArchiver.GetSofaDoubleData("contactStiffness");
+                        if (datad != null)
+                            datad.Value = m_stiffness;
+                    }
                 }
                 else
                     m_stiffness = value;
@@ -130,6 +139,7 @@ namespace SofaUnity
         }
 
 
+        // Mode 1: Using the SofaVerseAPI Object manager that will create MechanicalObject and CollisionModel in Sofa and link them together. The SofaCustomMeshAPI will be used to communicate.
         public bool CreateSofaSphereCollisionObject(SofaContext simu, string parentName, string uniqNameId)
         {
             if (m_impl == null)
@@ -149,23 +159,58 @@ namespace SofaUnity
             }
         }
 
+
+        // Mode 2: Using existing MechanicalObject and CollisionModel created in Sofa, and link them from unity UI
+        public void LinkSofaSphereCollisionObject(SofaMesh mecaObj, SofaCollisionModel sphereModel)
+        {
+            m_mecaObj = mecaObj;
+            m_sphereModel = sphereModel;
+
+            m_mecaObj.AddListener();
+
+            SofaDoubleData d_radius = m_sphereModel.m_dataArchiver.GetSofaDoubleData("radius");
+            if (d_radius != null)
+                d_radius.Value = m_radius;
+
+            SofaDoubleData d_stiff = m_sphereModel.m_dataArchiver.GetSofaDoubleData("contactStiffness");
+            if (d_stiff != null)
+                d_stiff.Value = m_stiffness;
+        }
+
+
+        public void ReleaseSofaSphereCollisionObject()
+        {
+            m_impl = null;
+            if (m_mecaObj != null)
+                m_mecaObj.RemoveListener();
+            m_mecaObj = null;
+            m_sphereModel = null;
+        }
+
         public void CreateSphereCenters(Vector3[] values)
         {
-            Debug.Log("CreateSphereCenters: " + values.Length);
             m_centers = values;
-            //if (m_impl != null)
-            //{
-            //    m_impl.SetNumberOfVertices(m_centers.Length);
-            //    SofaDataVectorDouble radii = (SofaDataVectorDouble)m_sphereModel.m_dataArchiver.GetVectorData("listRadius");
-            //    Debug.Log("CreateSphereCenters: sofa data listRadius size: " + radii.GetSize());
-            //    float[] raddiValues = new float[m_centers.Length];
-            //    for (int i = 0; i < m_centers.Length; ++i)
-            //    {
-            //        raddiValues[i] = m_radius;
-            //    }
-            //    radii.SetValue(raddiValues, m_centers.Length);
-            //}
+            if (m_impl != null)
+            {
+                m_impl.SetNumberOfVertices(m_centers.Length);
+            }
+            else
+            {
+                int nbrSpheres = m_centers.Length;
+                int nbrSofaV = m_mecaObj.NbVertices();
+
+                if (nbrSofaV == 0 || nbrSofaV != nbrSpheres)
+                {
+                    m_mecaObj.setNbrVertices(nbrSpheres);
+                    nbrSofaV = nbrSpheres;
+                }
+
+                m_mecaObj.SetPositions(m_centers); // Transform from unity world to SOFA world coordinates is handled by the SofaMesh
+            }
         }
+
+
+
 
         /// <summary>
         /// Update position of sphere depending on parent position 
@@ -191,7 +236,11 @@ namespace SofaUnity
             }
         }
 
-
+        public void UpdateLoop()
+        {
+            if (m_mecaObj != null)
+                m_mecaObj.SetPositions(m_centers);
+        }
 
         /// <summary>
         /// Draw spheres on unity side using Gizmo to know where collision happend 
@@ -199,16 +248,16 @@ namespace SofaUnity
         /// <param name="radius"></param>
         /// <param name="transform"></param>
         /// <param name="ctxt"></param>
-        public void DrawGizmos(float radius, Transform transform)
+        public void DrawSphereGizmos()
         {
             if (m_centers == null)
                 return;
 
-            Gizmos.color = Color.yellow;
+            Gizmos.color = Color.red;
 
             foreach (Vector3 vert in m_centers)
             {
-                Gizmos.DrawSphere(transform.TransformPoint(vert), radius);
+                Gizmos.DrawSphere(vert, m_radius);
             }
         }
 
