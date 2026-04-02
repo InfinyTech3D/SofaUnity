@@ -80,16 +80,19 @@ namespace SofaUnity
 
             if (nbrSofaV == 0 || nbrSofaV != tmp.Count)
             {
-                Debug.LogError("This controller can only act on a valid mesh similar to the same as the SOFA one.");
-                Debug.LogError("Found: Nbr Sofa vertices: " + nbrSofaV + " vs Nbr Unity vertices: " + nbrUnityV + " | not duplicated: " + tmp.Count);
-                m_ready = false;
-                return;
+                Debug.LogWarning("This controller can only act on a valid mesh similar to the same as the SOFA one.");
+                Debug.LogWarning("Found: Nbr Sofa vertices: " + nbrSofaV + " vs Nbr Unity vertices: " + nbrUnityV + " | not duplicated: " + tmp.Count);
+                m_sofaMesh.setNbrVertices(tmp.Count);
+                nbrSofaV = tmp.Count;
+                //m_ready = false;
+                //return;
             }
 
             sofaToUnity = m_sofaMesh.m_sofaContext.GetScaleSofaToUnity();
             unityToSofa = m_sofaMesh.m_sofaContext.GetScaleUnityToSofa();
 
             newPosition = new Vector3[nbrSofaV];
+            UpdateToSofa();
 
             m_ready = true;
         }
@@ -100,13 +103,9 @@ namespace SofaUnity
             if (!m_ready)
                 return;
 
-            for (int i = 0; i < nbrSofaV; ++i)
-            {
-                newPosition[i] = transform.TransformPoint(m_unityMesh.mesh.vertices[map[i]]);
-            }
-            m_sofaMesh.SetPositions(newPosition);
+            UpdateToSofa();
 
-            UpdateFromSofa();
+            //UpdateFromSofa();
         }
 
         protected void UpdateFromSofa()
@@ -123,7 +122,8 @@ namespace SofaUnity
         }
 
 
-        protected void UpdateToSofa(Vector3 my_newPosition)
+        //protected void UpdateToSofa(Vector3 my_newPosition)
+        protected void UpdateToSofa()
         {
             //if (isRigidMesh)
             //{
@@ -139,8 +139,12 @@ namespace SofaUnity
             //    m_sofaMesh.SetVertices(newPosition);
             //}
 
-            //this.transform.position = my_newPosition;
-            //objectOri = my_newPosition;
+            for (int i = 0; i < nbrSofaV; ++i)
+            {
+                //Debug.Log("vertex sofa: " + i + " | vertex unity: " + map[i] + " | pos unity: " + m_unityMesh.mesh.vertices[map[i]]);
+                newPosition[i] = transform.TransformPoint(m_unityMesh.mesh.vertices[map[i]]);
+            }
+            m_sofaMesh.SetPositions(newPosition);
         }
     }
 }
