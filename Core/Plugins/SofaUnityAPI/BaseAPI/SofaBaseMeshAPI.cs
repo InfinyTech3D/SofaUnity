@@ -848,6 +848,20 @@ namespace SofaUnityAPI
         }
 
 
+        /// <summary> Method to set the number of vertices to this Mesh Object. </summary>
+        /// <param name="nbr"> Number of vertices </param>
+        public void SetNumberOfVertices(int nbr)
+        {
+            if (!m_isReady)
+                return;
+
+            int res = sofaMeshAPI_setNbVertices(m_simu, m_name, nbr);
+
+            if (res < 0)
+                Debug.LogError("SofaBaseMeshAPI SetNumberOfVertices: " + m_name + " " + SofaDefines.msg_error[res]);
+        }
+
+
         /// Method to set new vertices position to this mesh
         public void SetPositions(Vector3[] vertices, Transform sofaTransform)
         {
@@ -867,7 +881,7 @@ namespace SofaUnityAPI
 
             int resUpdate = sofaMeshAPI_setVertices(m_simu, m_name, val);
             if (resUpdate < 0)
-                Debug.LogError("SofaBaseMeshAPI updateMesh: " + m_name + " return error: " + SofaDefines.msg_error[resUpdate]);
+                Debug.LogError("SofaBaseMeshAPI SetPositions: " + m_name + " return error: " + SofaDefines.msg_error[resUpdate]);
 
         }
 
@@ -878,7 +892,7 @@ namespace SofaUnityAPI
 
             int resUpdate = sofaMeshAPI_setVertices(m_simu, m_name, vertices);
             if (resUpdate < 0)
-                Debug.LogError("SofaBaseMeshAPI updateMesh: " + m_name + " return error: " + SofaDefines.msg_error[resUpdate]);
+                Debug.LogError("SofaBaseMeshAPI SetRawPositions: " + m_name + " return error: " + SofaDefines.msg_error[resUpdate]);
 
         }
 
@@ -889,7 +903,7 @@ namespace SofaUnityAPI
 
             int resUpdate = sofaMeshAPI_setVelocities(m_simu, m_name, values);
             if (resUpdate < 0)
-                Debug.LogError("SofaBaseMeshAPI updateMesh: " + m_name + " return error: " + SofaDefines.msg_error[resUpdate]);
+                Debug.LogError("SofaBaseMeshAPI SetRawVelocities: " + m_name + " return error: " + SofaDefines.msg_error[resUpdate]);
 
         }
 
@@ -912,7 +926,7 @@ namespace SofaUnityAPI
 
             int resUpdate = sofaMeshAPI_setRestPositions(m_simu, m_name, vertices);
             if (resUpdate < 0)
-                Debug.LogError("SofaBaseMeshAPI updateMesh: " + m_name + " return error: " + SofaDefines.msg_error[resUpdate]);
+                Debug.LogError("SofaBaseMeshAPI SetRawRestPositions: " + m_name + " return error: " + SofaDefines.msg_error[resUpdate]);
 
         }
 
@@ -935,7 +949,7 @@ namespace SofaUnityAPI
 
             int resUpdate = sofaMeshAPI_setVelocities(m_simu, m_name, val);
             if (resUpdate < 0)
-                Debug.LogError("SofaBaseMeshAPI updateMesh: " + m_name + " return error: " + SofaDefines.msg_error[resUpdate]);
+                Debug.LogError("SofaBaseMeshAPI SetVelocities: " + m_name + " return error: " + SofaDefines.msg_error[resUpdate]);
 
         }
 
@@ -951,7 +965,7 @@ namespace SofaUnityAPI
             val[2] = value[2];
             int resUpdate = sofaMeshAPI_setVertices(m_simu, m_name, val);
             if (resUpdate < 0)
-                Debug.LogError("SofaBaseMeshAPI updateMesh: " + m_name + " return error: " + SofaDefines.msg_error[resUpdate]);
+                Debug.LogError("SofaBaseMeshAPI SetNewPosition: " + m_name + " return error: " + SofaDefines.msg_error[resUpdate]);
 
         }
 
