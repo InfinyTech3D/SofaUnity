@@ -46,7 +46,7 @@
     <Node name="LiverVolume">
         <EulerImplicitSolver name="cg_odesolver" printLog="false"  rayleighStiffness="0.1" rayleighMass="0.1" />
         <CGLinearSolver iterations="25" name="linear solver" tolerance="1.0e-9" threshold="1.0e-9" />
-        <MeshGmshLoader name="loader" filename="./mesh/liver3-HD.msh" scale3d="2.5 2.5 2.5" rotation="-20 180 0" translation="0 -20 0"/>
+		<MeshGmshLoader name="loader" filename="./mesh/liver2.msh" scale3d="20 20 20" rotation="0 0 180" translation="0 -20 0"/>
         <MechanicalObject src="@loader" name="Volume"  />
 
 		<TetrahedronSetTopologyContainer  name="TetraContainer" position="@Volume.position" src="@loader" tags=" "/>
