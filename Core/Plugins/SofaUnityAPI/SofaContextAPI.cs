@@ -18,6 +18,7 @@ namespace SofaUnityAPI
         bool m_isDisposed = false;
 
         private bool m_isReady = false;
+        public string m_sofaVersion = "Unknown version";
 
         public static string getResourcesPath()
         {
@@ -105,6 +106,8 @@ namespace SofaUnityAPI
                 Debug.LogError("SofaContextAPI scene creation return: " + SofaDefines.msg_error[res]);
                 m_isReady = false;
             }
+
+            m_sofaVersion = sofaPhysicsAPI_version(m_native);
         }
 
         /// Destructor
@@ -558,6 +561,9 @@ namespace SofaUnityAPI
 
         [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern string sofaPhysicsAPI_APIName(IntPtr obj);
+
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern string sofaPhysicsAPI_version(IntPtr obj);
 
 
         /// Bindings to create or load an existing simulation scene
