@@ -109,6 +109,17 @@ namespace SofaUnity
             get { return m_graphicAPI; }
         }
 
+        public string SofaVersion
+        {
+            get
+            {
+                if (m_impl != null)
+                    return m_impl.m_sofaVersion;
+                else
+                    return "undefined";
+            }
+        }
+
         /// Getter/Setter of current gravity @see m_gravity
         public Vector3 Gravity
         {

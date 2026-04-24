@@ -66,6 +66,12 @@ namespace SofaUnity
             logoGUIStyle.border = new RectOffset(0, 0, 0, 0);
             EditorGUILayout.LabelField(new GUIContent(SofaLogo), GUILayout.MinHeight(100.0f), GUILayout.ExpandWidth(true));
 
+            // Add field for Sofa version
+            EditorGUI.BeginDisabledGroup(true);
+            EditorGUILayout.TextField("Sofa Version", context.SofaVersion);
+            EditorGUI.EndDisabledGroup();
+            EditorGUILayout.Separator();
+
             // Add field for gravity
             context.Gravity = EditorGUILayout.Vector3Field("Gravity", context.Gravity);
             EditorGUILayout.Separator();
