@@ -662,7 +662,9 @@ namespace SofaUnity
                 m_impl.loadScene(m_sceneFileMgr.AbsoluteFilename());
             }
 
-            // Do not retrieve timestep of gravity in case it has been changed in editor
+            // This is cause of error. TODO: find a way to not retrieve those values only if they have been changed intentionnaly in the editor
+            m_timeStep = m_impl.timeStep;
+            m_gravity = m_impl.getGravity();
 
             // re-create objects after scene loading and before graph reconnection
             foreach (SofaBaseObject obj in m_objects)
