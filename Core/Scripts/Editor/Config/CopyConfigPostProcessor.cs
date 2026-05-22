@@ -164,6 +164,7 @@ namespace SofaUnity
                 outputIniFile.WriteLine("SHARE_DIR=" + dataBuildPath);
                 outputIniFile.WriteLine("EXAMPLES_DIR=" + dataBuildPath);
                 outputIniFile.WriteLine("LICENSE_DIR=" + rootBuildPath + "/License/");
+                outputIniFile.WriteLine("BUILD_DIR=" + rootBuildPath + "/Plugins/x86_64/");
                 Debug.Log("[SofaUnity - BuildForWindows] Generate: " + outputIniPath + " file.");
             }
 
@@ -184,6 +185,20 @@ namespace SofaUnity
             if (!copyDone)
             {
                 Debug.LogError("No 'SofaScenes' folder found to copy Sofa scene related to: " + unityScenePath);
+            }
+
+            // Copy python3 folder if exists for python scene build 
+            string sourcePython3Path = Application.dataPath + "/SofaUnity/Core/Plugins/Native/x64/python3/";
+            string destPython3Path = rootBuildPath + "/Plugins/x86_64/python3/";
+
+            if (Directory.Exists(sourcePython3Path))
+            {
+                DirectoryCopy(sourcePython3Path, destPython3Path, true);
+                Debug.Log("[SofaUnity - BuildForWindows] Copied python3 folder to: " + destPython3Path);
+            }
+            else
+            {
+                Debug.LogWarning("[SofaUnity - BuildForWindows] python3 folder not found at: " + sourcePython3Path + " — skipping python3 copy.");
             }
         }
 
