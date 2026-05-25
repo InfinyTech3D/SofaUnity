@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using System.IO;
 
 namespace SofaUnityAPI
 {
@@ -80,7 +81,9 @@ namespace SofaUnityAPI
             }
 
             CopyAssetToPersistent();
-
+#if !UNITY_EDITOR
+            RegenerateSofaIni();
+#endif
             // load the sofaIni file
             string pathIni = Application.dataPath + "/SofaUnity/Core/Plugins/Native/x64/sofa.ini";
             string sharePath = sofaPhysicsAPI_loadSofaIni(m_native, pathIni);
@@ -108,6 +111,30 @@ namespace SofaUnityAPI
             }
 
             m_sofaVersion = sofaPhysicsAPI_version(m_native);
+        }
+
+
+        /// <summary>
+        /// simple method to regenerate sofa.ini
+        /// PS: don't update the liscence path it's not needed and will make the app crash
+        /// </summary>
+        private static void RegenerateSofaIni()
+        {
+            string dataPath = Application.dataPath.Replace("\\", "/");
+            string pluginsPath = dataPath + "/Plugins/x86_64";
+            string scenesPath = dataPath + "/SofaUnity/scenes/SofaScenes";
+            //string licensePath = dataPath + "/License/";
+            string iniPath = dataPath + "/SofaUnity/Core/Plugins/Native/x64/sofa.ini";
+
+            using (StreamWriter iniFile = new StreamWriter(iniPath))
+            {
+                iniFile.WriteLine("SHARE_DIR=" + scenesPath);
+                iniFile.WriteLine("EXAMPLES_DIR=" + scenesPath);
+                //iniFile.WriteLine("LICENSE_DIR=" + licensePath);
+                iniFile.WriteLine("BUILD_DIR=" + pluginsPath);
+            }
+
+            Debug.Log("[SofaUnity] sofa.ini regenerated at: " + iniPath);
         }
 
         /// Destructor
