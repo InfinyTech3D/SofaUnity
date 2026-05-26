@@ -431,6 +431,11 @@ namespace SofaUnity
 #if !UNITY_ANDROID
             m_pluginMgr.LoadPlugins();
 #endif
+            if (m_log)
+            {
+                m_pluginMgr.printAvailablePlugin();
+            }
+                
             // start sofa instance
             if (m_log)
                 Debug.Log("## SofaContext status before start: " + m_impl.contextStatus());
