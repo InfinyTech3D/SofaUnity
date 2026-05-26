@@ -127,6 +127,7 @@ namespace SofaUnity
                 m_availablePlugins.Add(new PluginInfo(pluginName, exist));
             }
         }
+
     }
 
 
@@ -302,6 +303,13 @@ namespace SofaUnity
             return null;
         }
 
+        public void printAvailablePlugin()
+        {
+            foreach (PluginInfo pi in m_savedPlugins)
+            {
+                Debug.Log("Loaded plugin " + pi.Name);
+            }
+        }
 
         ////////////////////////////////////////////
         //////    PluginManager private API    /////

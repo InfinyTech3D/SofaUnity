@@ -433,11 +433,7 @@ namespace SofaUnity
 #endif
             if (m_log)
             {
-                List<PluginInfo> pluginsPresent = m_pluginMgr.GetPluginList();
-                foreach (PluginInfo pi in pluginsPresent)
-                {
-                    Debug.Log("Loaded plugin " + pi.Name);
-                }
+                m_pluginMgrm_pluginMgr.printAvailablePlugin();
             }
                 
             // start sofa instance
