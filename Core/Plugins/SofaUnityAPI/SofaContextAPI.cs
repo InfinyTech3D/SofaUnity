@@ -5,15 +5,14 @@ using System.Collections.Generic;
 
 namespace SofaUnityAPI
 {
-    public class SofaConnexionTestAPI
+    public class SofaVerseAPI_ConnexionTest
     {
-        public void testConnexion()
+        public int testSofaVerseAPI_connexion()
         {
             int res = test_getAPI_ID();
             Debug.Log("SofaContextAPI::testConnection method returns: " + res);
+            return res;
         }
-
-
 
         [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int test_getAPI_ID();
