@@ -116,21 +116,20 @@ namespace SofaUnityAPI
 
         /// <summary>
         /// simple method to regenerate sofa.ini
-        /// PS: don't update the liscence path it's not needed and will make the app crash
         /// </summary>
         private static void RegenerateSofaIni()
         {
             string dataPath = Application.dataPath.Replace("\\", "/");
             string pluginsPath = dataPath + "/Plugins/x86_64";
             string scenesPath = dataPath + "/SofaUnity/scenes/SofaScenes";
-            //string licensePath = dataPath + "/License/";
+            string licensePath = dataPath + "/License/";
             string iniPath = dataPath + "/SofaUnity/Core/Plugins/Native/x64/sofa.ini";
 
             using (StreamWriter iniFile = new StreamWriter(iniPath))
             {
                 iniFile.WriteLine("SHARE_DIR=" + scenesPath);
                 iniFile.WriteLine("EXAMPLES_DIR=" + scenesPath);
-                //iniFile.WriteLine("LICENSE_DIR=" + licensePath);
+                iniFile.WriteLine("LICENSE_DIR=" + licensePath);
                 iniFile.WriteLine("BUILD_DIR=" + pluginsPath);
             }
 
