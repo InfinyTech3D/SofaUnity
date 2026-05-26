@@ -433,7 +433,7 @@ namespace SofaUnity
 #endif
             if (m_log)
             {
-                m_pluginMgrm_pluginMgr.printAvailablePlugin();
+                m_pluginMgr.printAvailablePlugin();
             }
                 
             // start sofa instance
