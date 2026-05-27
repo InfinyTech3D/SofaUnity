@@ -101,7 +101,7 @@ namespace SofaUnityAPI
             RegenerateSofaIni();
 #endif
             // load the sofaIni file
-            string pathIni = Application.dataPath + "/SofaUnity/Core/Plugins/Native/x64/sofa.ini";
+            string pathIni = SofaUtils.GetPluginFullPrefixPath() + "sofa.ini";
             string sharePath = sofaPhysicsAPI_loadSofaIni(m_native, pathIni);
             
             if (sharePath.Contains("Error"))
@@ -139,7 +139,7 @@ namespace SofaUnityAPI
             string pluginsPath = dataPath + "/Plugins/x86_64";
             string scenesPath = dataPath + "/SofaUnity/scenes/SofaScenes";
             string licensePath = dataPath + "/License/";
-            string iniPath = dataPath + "/SofaUnity/Core/Plugins/Native/x64/sofa.ini";
+            string iniPath = dataPath + SofaUtils.GetNativePluginPath() + "sofa.ini";
 
             using (StreamWriter iniFile = new StreamWriter(iniPath))
             {
@@ -285,6 +285,7 @@ namespace SofaUnityAPI
         {
             if (m_isReady)
             {
+                Debug.Log("SofaContextAPI.loadPlugin using fullPluginPath: " + pluginName);
                 int res = sofaPhysicsAPI_loadPlugin(m_native, pluginName);
                 if (res < 0)
                     Debug.LogError("SofaContextAPI::loadPlugin: " + pluginName + ", method returns: " + SofaDefines.msg_error[res]);
