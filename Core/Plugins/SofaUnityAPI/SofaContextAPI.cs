@@ -6,6 +6,22 @@ using System.IO;
 
 namespace SofaUnityAPI
 {
+    public class SofaVerseAPI_ConnexionTest
+    {
+        public int testSofaVerseAPI_connexion()
+        {
+            int res = test_getAPI_ID();
+            Debug.Log("SofaContextAPI::testConnection method returns: " + res);
+            return res;
+        }
+
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int test_getAPI_ID();
+    }
+
+   
+
+
     /// <summary>
     /// Main class of the Sofa plugin. This class handle all bindings to manage the Sofa simulation scene.
     /// It will connect to the SofaPhysicsAPI. Get the list of object or start/stop the simulation.
@@ -577,6 +593,9 @@ namespace SofaUnityAPI
         /////////////////////////////////////////////////////////////////////////////////////////
         //////////          API to Communication with SofaAdvancePhysicsAPI         /////////////
         /////////////////////////////////////////////////////////////////////////////////////////
+        [DllImport("SofaVerseAPI", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int test_getAPI_ID();
+
 
         /// Bindings to the SofaAdvancePhysicsAPI creation/destruction methods
         [DllImport("SofaVerseAPI")]
