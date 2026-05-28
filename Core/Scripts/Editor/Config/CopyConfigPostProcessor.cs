@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using SofaUnityAPI;
 
 namespace SofaUnity
 {
@@ -15,7 +16,7 @@ namespace SofaUnity
         /// </summary>
         static CopyConfigPostProcessor()
         {
-            string sofaIniFile = Application.dataPath + "/SofaUnity/Core/Plugins/Native/x64/sofa.ini";
+            string sofaIniFile = SofaUtils.GetPluginFullPrefixPath() + "sofa.ini";
             using (StreamWriter outputIniFile = new StreamWriter(sofaIniFile))
             {
                 string SofaUnityDir = Application.dataPath + "/SofaUnity/scenes/SofaScenes";
@@ -23,7 +24,7 @@ namespace SofaUnity
                 outputIniFile.WriteLine("SHARE_DIR=C:/projects/sofa-src/share/");
                 outputIniFile.WriteLine("EXAMPLES_DIR=" + SofaUnityDir);
                 outputIniFile.WriteLine("LICENSE_DIR=" + Application.dataPath + "/SofaUnity/License/");
-                outputIniFile.WriteLine("BUILD_DIR=" + Application.dataPath + "/SofaUnity/Core/Plugins/Native/x64/");
+                outputIniFile.WriteLine("BUILD_DIR=" + SofaUtils.GetPluginFullPrefixPath());
             }
         }
 
@@ -146,7 +147,7 @@ namespace SofaUnity
             string rootBuildPath = pathToBuiltProject.Replace(".exe", "") + "_Data";
 
             // Create bin build path
-            string binBuildPath = rootBuildPath + "/SofaUnity/Core/Plugins/Native/x64/";
+            string binBuildPath = rootBuildPath + SofaUtils.GetNativePluginPath();
             string dataBuildPath = rootBuildPath + "/SofaUnity/scenes/SofaScenes";
 
             Directory.CreateDirectory(binBuildPath);
@@ -188,7 +189,7 @@ namespace SofaUnity
             }
 
             // Copy python3 folder if exists for python scene build 
-            string sourcePython3Path = Application.dataPath + "/SofaUnity/Core/Plugins/Native/x64/python3/";
+            string sourcePython3Path = SofaUtils.GetPluginFullPrefixPath() + "python3/";
             string destPython3Path = rootBuildPath + "/Plugins/x86_64/python3/";
 
             if (Directory.Exists(sourcePython3Path))
