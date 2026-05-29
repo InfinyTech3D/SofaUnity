@@ -36,9 +36,11 @@
 	<CollisionResponse name="Response" response="FrictionContactConstraint" />
     <CollisionDetectionDisplay name="CollisionDetectionDisplay"/>
 
+	<!-- INTERVENTIONAL RADIOLOGY INSTRUMENTS (catheter, guidewire, coil)  -->
+
 	<Node name="topoLines_cath">
-        <RodStraightSection name="StraightSection" youngModulus="10000" massDensity="0.00000155" radius="1" nbEdgesCollis="40" nbEdgesVisu="220" length="600.0"/>
-        <RodSpireSection name="SpireSection" youngModulus="10000" massDensity="0.00000155" radius="1" nbEdgesCollis="10" nbEdgesVisu="80" length="400.0" spireDiameter="4000.0" spireHeight="0.0"/>        
+        <RodStraightSection name="StraightSection" youngModulus="10000" massDensity="0.00000155" radius="1" nbBeams="40" nbEdgesCollis="40" nbEdgesVisu="220" length="600.0"/><!--stiff silicone E = 10000 MPa // 1550 Kg/m3-->	
+        <RodSpireSection name="SpireSection" youngModulus="10000" massDensity="0.00000155" radius="1" nbBeams="10" nbEdgesCollis="10" nbEdgesVisu="80" length="400.0" spireDiameter="4000.0" spireHeight="0.0"/>        
         
         <WireRestShape template="Rigid3d" name="catheterRestShape" wireMaterials="@StraightSection @SpireSection"/> <!-- silicone -->		
     
@@ -48,8 +50,8 @@
 		<MechanicalObject template="Rigid3d" name="dofTopo1" />
 	</Node>
 	<Node name="topoLines_guide">
-        <RodStraightSection name="StraightSection" youngModulus="10000" massDensity="0.00000155" radius="0.9" nbEdgesCollis="50" nbEdgesVisu="196" length="980.0"/>
-        <RodSpireSection name="SpireSection" youngModulus="10000" massDensity="0.00000155" radius="0.9" nbEdgesCollis="10" nbEdgesVisu="4" length="20.0" spireDiameter="25" spireHeight="0.0"/>        
+        <RodStraightSection name="StraightSection" youngModulus="10000" massDensity="0.00000155" radius="0.9" nbBeams="50" nbEdgesCollis="50" nbEdgesVisu="196" length="980.0"/> <!--stiff silicone E = 10000 MPa // 1550 Kg/m3-->	
+        <RodSpireSection name="SpireSection" youngModulus="10000" massDensity="0.00000155" radius="0.9" nbBeams="10" nbEdgesCollis="10" nbEdgesVisu="4" length="20.0" spireDiameter="25" spireHeight="0.0"/>        
 		
         <WireRestShape template="Rigid3d" name="GuideRestShape" wireMaterials="@StraightSection @SpireSection"/>
     
@@ -59,8 +61,8 @@
 		<MechanicalObject template="Rigid3d" name="dofTopo2" />
 	</Node>
 	<Node name="topoLines_coils">
-        <RodStraightSection name="StraightSection" youngModulus="168000" massDensity="0.000021" radius="0.1" nbEdgesCollis="30" nbEdgesVisu="360" length="540.0"/>
-        <RodSpireSection name="SpireSection" youngModulus="168000" massDensity="0.000021" radius="0.1" nbEdgesCollis="30" nbEdgesVisu="40" length="60.0" spireDiameter="7" spireHeight="5.0"/>        
+        <RodStraightSection name="StraightSection" youngModulus="168000" massDensity="0.000021" radius="0.1" nbBeams="30" nbEdgesCollis="30" nbEdgesVisu="360" length="540.0"/> <!-- platine E = 168000 MPa // 21000 Kg/m3-->
+        <RodSpireSection name="SpireSection" youngModulus="168000" massDensity="0.000021" radius="0.1" nbBeams="30" nbEdgesCollis="30" nbEdgesVisu="40" length="60.0" spireDiameter="7" spireHeight="5.0"/>        
 		
         <WireRestShape template="Rigid3d" name="CoilRestShape" wireMaterials="@StraightSection @SpireSection"/>
         
