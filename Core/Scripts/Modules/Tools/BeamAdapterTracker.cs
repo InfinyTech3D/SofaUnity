@@ -5,56 +5,38 @@ using SofaUnity;
 
 namespace SofaUnity
 {
+    [System.Serializable]
+    public class BeamToolEntry
+    {
+        public SofaComponent m_tool = null;
+        public GameObject m_slave = null;
+
+        // Runtime (not shown in inspector)
+        [HideInInspector] public SofaIntData d_tool_id = null;
+        public Vector3 m_position = Vector3.zero;
+    }
+
     public class BeamAdapterTracker : MonoBehaviour
     {
-        [SerializeField]
-        public SofaComponent m_tool1 = null;
-
-        [SerializeField]
-        public SofaComponent m_tool2 = null;
-
-        [SerializeField]
-        public SofaComponent m_tool3 = null;
-
-        /// Pointer to the dofs of the 3 tools
+        /// Pointer to the unique sofa mesh
         public SofaMesh m_sofaMesh = null;
 
+        [SerializeField]
+        public List<BeamToolEntry> m_tools = new List<BeamToolEntry>();
 
         private bool m_isReady = false;
         private int m_nbrDofs = 0;
 
-        protected SofaIntData d_tool1_id = null;
-        protected SofaIntData d_tool2_id = null;
-        protected SofaIntData d_tool3_id = null;
-
-        public Vector3 m_tool1_position = Vector3.zero;
-        public Vector3 m_tool2_position = Vector3.zero;
-        public Vector3 m_tool3_position = Vector3.zero;
-
-        public GameObject tool1_slave = null;
-        public GameObject tool2_slave = null;
-        public GameObject tool3_slave = null;
-
-
-
         void Start()
         {
-            if (m_tool1 != null)
+            // Connect wireTipIndex for each tool
+            foreach (BeamToolEntry entry in m_tools)
             {
-                Debug.Log("BeamAdapterTracker: Tool 1 found. Connecting wireTipIndex");
-                d_tool1_id = (SofaIntData)m_tool1.m_dataArchiver.GetSofaIntData("wireTipIndex");
-            }
-
-            if (m_tool2 != null)
-            {
-                Debug.Log("BeamAdapterTracker: Tool 2 found. Connecting wireTipIndex");
-                d_tool2_id = (SofaIntData)m_tool2.m_dataArchiver.GetSofaIntData("wireTipIndex");
-            }
-
-            if (m_tool3 != null)
-            {
-                Debug.Log("BeamAdapterTracker: Tool 3 found. Connecting wireTipIndex");
-                d_tool3_id = (SofaIntData)m_tool3.m_dataArchiver.GetSofaIntData("wireTipIndex");
+                if (entry.m_tool != null)
+                {
+                    Debug.Log("BeamAdapterTracker: Tool found. Connecting wireTipIndex");
+                    entry.d_tool_id = (SofaIntData)entry.m_tool.m_dataArchiver.GetSofaIntData("wireTipIndex");
+                }
             }
 
             if (m_sofaMesh == null)
@@ -73,43 +55,21 @@ namespace SofaUnity
         // TODO for later: track orientation in addition to the position.
         private void Update()
         {
-            if (d_tool1_id != null)
+            if (!m_isReady) return;
+
+            foreach (BeamToolEntry entry in m_tools)
             {
-                int id1 = d_tool1_id.Value;
-                if (id1 >= 0 && id1 < m_nbrDofs)
+                if (entry.d_tool_id == null) continue;
+
+                int id = entry.d_tool_id.Value;
+                if (id >= 0 && id < m_nbrDofs)
                 {
                     // TODO: check why we need to do a transform point. The position should be world position already no?
-                    m_tool1_position = m_sofaMesh.GetPosition(id1);
-                    if (tool1_slave != null)
-                        tool1_slave.transform.position = m_sofaMesh.m_sofaContext.transform.TransformPoint(m_tool1_position);
-                }
-
-            }
-
-            if (d_tool2_id != null)
-            {
-                int id2 = d_tool2_id.Value;
-                if (id2 >= 0 && id2 < m_nbrDofs)
-                {
-                    m_tool2_position = m_sofaMesh.GetPosition(id2);
-                    if (tool2_slave != null)
-                        tool2_slave.transform.localPosition = m_sofaMesh.m_sofaContext.transform.TransformPoint(m_tool2_position);
-                }
-            }
-            
-            if (d_tool3_id != null)
-            {
-                int id3 = d_tool3_id.Value;
-                if (id3 >= 0 && id3 < m_nbrDofs) 
-                {
-                    
-                    m_tool3_position = m_sofaMesh.GetPosition(id3);
-                    if (tool3_slave != null)
-                        tool3_slave.transform.position = m_sofaMesh.m_sofaContext.transform.TransformPoint(m_tool3_position);
+                    entry.m_position = m_sofaMesh.GetPosition(id);
+                    if (entry.m_slave != null)
+                        entry.m_slave.transform.position = m_sofaMesh.m_sofaContext.transform.TransformPoint(entry.m_position);
                 }
             }
         }
-
     }
-
 } // namespace SofaUnity
