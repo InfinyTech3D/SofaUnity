@@ -6,7 +6,10 @@ using SofaUnityAPI;
 using System.IO;
 using System;
 using Unity.VisualScripting;
+#if UNITY_EDITOR
 using UnityEditor.VersionControl;
+#endif
+
 
 
 namespace SofaUnity
