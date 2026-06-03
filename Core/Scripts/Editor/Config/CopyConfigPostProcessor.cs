@@ -21,7 +21,6 @@ namespace SofaUnity
             {
                 string SofaUnityDir = Application.dataPath + "/SofaUnity/scenes/SofaScenes";
                 outputIniFile.WriteLine("SHARE_DIR=" + SofaUnityDir);
-                outputIniFile.WriteLine("SHARE_DIR=C:/projects/sofa-src/share/");
                 outputIniFile.WriteLine("EXAMPLES_DIR=" + SofaUnityDir);
                 outputIniFile.WriteLine("LICENSE_DIR=" + Application.dataPath + "/SofaUnity/License/");
                 outputIniFile.WriteLine("BUILD_DIR=" + SofaUtils.GetPluginFullPrefixPath());
@@ -149,14 +148,15 @@ namespace SofaUnity
             // Create bin build path
             string binBuildPath = rootBuildPath + SofaUtils.GetNativePluginPath();
             string dataBuildPath = rootBuildPath + "/SofaUnity/scenes/SofaScenes";
+            string licenseBuildPath = rootBuildPath + "/License/";
 
             Directory.CreateDirectory(binBuildPath);
-            Debug.Log("[SofaUnity - BuildForWindows] Create directory: " + binBuildPath);
+            Debug.Log("[SofaUnity - BuildForWindows] Create 'binBuildPath' directory: " + binBuildPath);
             Directory.CreateDirectory(dataBuildPath);
-            Debug.Log("[SofaUnity - BuildForWindows] Create directory: " + dataBuildPath);
+            Debug.Log("[SofaUnity - BuildForWindows] Create 'dataBuildPath' directory: " + dataBuildPath);
 
             // Copy current License
-            DirectoryCopy(Application.dataPath + "/SofaUnity/License/", rootBuildPath + "/License/", true);
+            DirectoryCopy(Application.dataPath + "/SofaUnity/License/", licenseBuildPath, true);
 
             // Update SOFA ini file with build dir paths
             string outputIniPath = Path.Combine(binBuildPath, "sofa.ini");
@@ -164,8 +164,8 @@ namespace SofaUnity
             {
                 outputIniFile.WriteLine("SHARE_DIR=" + dataBuildPath);
                 outputIniFile.WriteLine("EXAMPLES_DIR=" + dataBuildPath);
-                outputIniFile.WriteLine("LICENSE_DIR=" + rootBuildPath + "/License/");
-                outputIniFile.WriteLine("BUILD_DIR=" + rootBuildPath + "/Plugins/x86_64/");
+                outputIniFile.WriteLine("LICENSE_DIR=" + licenseBuildPath);
+                outputIniFile.WriteLine("BUILD_DIR=" + binBuildPath);
                 Debug.Log("[SofaUnity - BuildForWindows] Generate: " + outputIniPath + " file.");
             }
 
@@ -190,12 +190,12 @@ namespace SofaUnity
 
             // Copy python3 folder if exists for python scene build 
             string sourcePython3Path = SofaUtils.GetPluginFullPrefixPath() + "python3/";
-            string destPython3Path = rootBuildPath + "/Plugins/x86_64/python3/";
+            string destPython3Path = binBuildPath + "/python3/";
 
             if (Directory.Exists(sourcePython3Path))
             {
                 DirectoryCopy(sourcePython3Path, destPython3Path, true);
-                Debug.Log("[SofaUnity - BuildForWindows] Copied python3 folder to: " + destPython3Path);
+                Debug.Log("[SofaUnity - BuildForWindows] Copied python3 from directory: " + sourcePython3Path + "  ----->  " + destPython3Path);
             }
             else
             {
