@@ -146,7 +146,7 @@ namespace SofaUnity
             string rootBuildPath = pathToBuiltProject.Replace(".exe", "") + "_Data";
 
             // Create bin build path
-            string binBuildPath = rootBuildPath + SofaUtils.GetNativePluginPath();
+            string binBuildPath = rootBuildPath + SofaUtils.GetNativeBuildPath();
             string dataBuildPath = rootBuildPath + "/SofaUnity/scenes/SofaScenes";
             string licenseBuildPath = rootBuildPath + "/License/";
 

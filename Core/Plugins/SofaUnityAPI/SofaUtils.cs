@@ -39,7 +39,23 @@ throw new PlatformNotSupportedException();
         {
             string path;
 #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
-            path = "/SofaUnity/Core/Plugins/Native/Windows/x64/";
+            if (Application.isEditor)
+                path = "/SofaUnity/Core/Plugins/Native/Windows/x64/";
+            else
+                path = "/Plugins/x86_64/";
+#elif UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
+            path = "/SofaUnity/Core/Plugins/Native/macOS/";
+#elif UNITY_EDITOR_LINUX || UNITY_STANDALONE_LINUX
+            path = "/SofaUnity/Core/Plugins/Native/Linux/x86_64/";
+#endif
+            return path;
+        }
+
+        static public string GetNativeBuildPath()
+        {
+            string path;
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+            path = "/Plugins/x86_64/";
 #elif UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
             path = "/SofaUnity/Core/Plugins/Native/macOS/";
 #elif UNITY_EDITOR_LINUX || UNITY_STANDALONE_LINUX

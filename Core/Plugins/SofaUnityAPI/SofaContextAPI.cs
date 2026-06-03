@@ -101,8 +101,10 @@ namespace SofaUnityAPI
             RegenerateSofaIni();
 #endif
             // load the sofaIni file
-            string pathIni = SofaUtils.GetPluginFullPrefixPath() + "sofa.ini";
-            string sharePath = sofaPhysicsAPI_loadSofaIni(m_native, pathIni);
+            string iniPath = SofaUtils.GetPluginFullPrefixPath() + "sofa.ini";
+            Debug.Log("[SofaUnity] loading sofa.ini at: " + iniPath);
+
+            string sharePath = sofaPhysicsAPI_loadSofaIni(m_native, iniPath);
             
             if (sharePath.Contains("Error"))
             {
