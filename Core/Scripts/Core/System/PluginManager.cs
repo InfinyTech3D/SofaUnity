@@ -4,6 +4,12 @@ using UnityEngine;
 using UnityEditor;
 using SofaUnityAPI;
 using System.IO;
+using System;
+using Unity.VisualScripting;
+#if UNITY_EDITOR
+using UnityEditor.VersionControl;
+#endif
+
 
 
 namespace SofaUnity
@@ -63,6 +69,7 @@ namespace SofaUnity
             return m_availablePlugins;
         }
 
+
         public PluginInfo GetPluginByName(string pluginName)
         {
             for (int id = 0; id < m_availablePlugins.Count; id++)
@@ -81,8 +88,26 @@ namespace SofaUnity
         {
             if (m_dllList == null)
             {
-                string dllDirPath = Application.dataPath + "/SofaUnity/Core/Plugins/Native/x64/";
+                
+                string dllDirPath = SofaUtils.GetPluginFullPrefixPath();// Application.dataPath + "/SofaUnity/Core/Plugins/Native/x64/";
+
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
                 m_dllList = Directory.GetFiles(dllDirPath, "*.dll");
+#elif UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
+                m_dllList = Directory.GetFiles(dllDirPath, "*.dylib");
+#elif UNITY_EDITOR_LINUX || UNITY_STANDALONE_LINUX
+                m_dllList = Directory.GetFiles(dllDirPath, "*.so");
+#elif UNITY_ANDROID
+                m_dllList = Directory.GetFiles(dllDirPath, "*.so");
+#else
+                m_dllList = null;
+#endif
+                
+                if (m_dllList == null)
+                {
+                    Debug.LogError("PluginManager: Can't find any plugin in directory " + dllDirPath);
+                    return false;
+                }
 
                 for (int i = 0; i < m_dllList.Length; i++)
                 {
@@ -203,37 +228,13 @@ namespace SofaUnity
         }
 
 
-        public string getPluginFullPrefixPath()
-        {
-            string pluginPath;
-            if (Application.isEditor)
-                pluginPath = "/SofaUnity/Core/Plugins/Native/x64/";
-            else
-#if UNITY_ANDROID
-                pluginPath = "/Plugins/Android/";
-#else
-                pluginPath = "/Plugins/x86_64/";
-#endif
-            return Application.dataPath + pluginPath;
-        }
-
-        public string getPluginFullName(string pluginName)
-        {
-            string pluginFullPath = "";
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
-            pluginFullPath = pluginName + ".dll";
-#elif UNITY_EDITOR_LINUX || UNITY_STANDALONE_LINUX || UNITY_ANDROID
-            pluginFullPath = "lib" + pluginName + ".so";
-#endif
-            return pluginFullPath;
-        }
-
         /// Method to load the plugins one by one from the list of enable plugins
         public void LoadPlugins()
         {
-            string fullPrefixPath = getPluginFullPrefixPath();
+            string fullPrefixPath = SofaUtils.GetPluginFullPrefixPath(); 
 
             // Internally load all default plugins from core and module
+            Debug.Log("m_sofaAPI.loadDefaultPlugins using path: " + fullPrefixPath);
             m_sofaAPI.loadDefaultPlugins(fullPrefixPath);
 
             foreach (PluginInfo plugin in m_savedPlugins)
@@ -241,7 +242,7 @@ namespace SofaUnity
                 if (!plugin.IsEnable)
                     continue;
 
-                string fullPluginPath = getPluginFullPrefixPath() + getPluginFullName(plugin.Name);
+                string fullPluginPath = SofaUtils.GetPluginFullPrefixPath() + SofaUtils.GetPluginFullName(plugin.Name);
 #if UNITY_EDITOR
                 PluginInfo plug = GetPluginByName(plugin.Name);
                 if (plug == null || plug.IsAvailable == false)
@@ -251,7 +252,7 @@ namespace SofaUnity
                     continue;
                 }
                 else
-                {
+                {                    
                     m_sofaAPI.loadPlugin(fullPluginPath);
                 }
 #else
@@ -262,7 +263,7 @@ namespace SofaUnity
 
         public void LoadPlugin(string pluginName)
         {
-            string fullPluginPath = getPluginFullPrefixPath() + getPluginFullName(pluginName);
+            string fullPluginPath = SofaUtils.GetPluginFullPrefixPath() + SofaUtils.GetPluginFullName(pluginName);
 
             m_sofaAPI.loadPlugin(fullPluginPath);
         }
@@ -332,6 +333,7 @@ namespace SofaUnity
             PluginManager.Instance.AddPlugin("SofaPython3");
             PluginManager.Instance.AddPlugin("Tearing");
             PluginManager.Instance.AddPlugin("MultiThreading");
+            PluginManager.Instance.AddPlugin("EnclosedCollisionPlugin");
         }
 #endif
     }
