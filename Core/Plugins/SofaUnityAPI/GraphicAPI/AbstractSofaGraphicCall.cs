@@ -11,7 +11,7 @@ namespace SofaUnityAPI
         private bool m_bNewStep = false;
         private bool m_GLRenderEnd = true;
         private List<int> m_registeredRenderIDList = new List<int>();
-        public SofaUnity.SofaContext m_sofaContext = null;
+        [HideInInspector] public SofaUnity.SofaContext m_sofaContext = null;
 
         protected abstract int InitCall();
         protected abstract void BeforeDestroy();
@@ -53,6 +53,7 @@ namespace SofaUnityAPI
 
                 if (m_sofaContext)
                 {
+                    Debug.Log("just before initcall ?????");
                     int res = InitCall();
                     if (res >= 0)
                         RegisterID(res);
