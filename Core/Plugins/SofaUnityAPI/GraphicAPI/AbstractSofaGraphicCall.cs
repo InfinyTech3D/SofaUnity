@@ -53,7 +53,6 @@ namespace SofaUnityAPI
 
                 if (m_sofaContext)
                 {
-                    Debug.Log("just before initcall ?????");
                     int res = InitCall();
                     if (res >= 0)
                         RegisterID(res);
