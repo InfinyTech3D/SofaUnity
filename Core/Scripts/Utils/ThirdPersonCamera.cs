@@ -12,12 +12,16 @@ namespace SofaUnity
 		private const float Y_ANGLE_MIN = -50.0f;
 		private const float Y_ANGLE_MAX = 50.0f;
 
+
+
 		public GameObject target;
 		public float m_currentScale = 0.001f;
 		public float m_spanSpeed = 0.001f;
 		public Vector3 m_lookAtStatic;
 		public float m_cameraDistance = 100.0f;
 		public float heartBeat = 0.0f;
+
+		//public Quaternion Base rotation
 
 		private float m_currentX = 0.0f;
 		private float m_currentY = 0.0f;
@@ -69,7 +73,7 @@ namespace SofaUnity
 			if (m_rightButtonHold)
 			{
 				m_lookAtStatic.x += Input.GetAxis("Mouse X") * m_cameraDistance * m_spanSpeed;
-				m_lookAtStatic.y -= Input.GetAxis("Mouse Y") * m_cameraDistance * m_spanSpeed;
+				m_lookAtStatic.y += Input.GetAxis("Mouse Y") * m_cameraDistance * m_spanSpeed;
 			}
 
 			m_cameraDistance -= Input.GetAxis("Mouse ScrollWheel") * m_scrollSpeed * m_currentScale;
