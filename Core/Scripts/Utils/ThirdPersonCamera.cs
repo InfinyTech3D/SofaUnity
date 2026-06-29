@@ -70,13 +70,17 @@ namespace SofaUnity
 				m_currentY = Mathf.Clamp(m_currentY, Y_ANGLE_MIN, Y_ANGLE_MAX);
 			}
 
-			if (m_rightButtonHold)
-			{
-				m_lookAtStatic.x += Input.GetAxis("Mouse X") * m_cameraDistance * m_spanSpeed;
-				m_lookAtStatic.y += Input.GetAxis("Mouse Y") * m_cameraDistance * m_spanSpeed;
-			}
+            if (m_rightButtonHold)
+            {
+               
+                float xInput = Input.GetAxis("Mouse X") * m_cameraDistance * m_spanSpeed;
+                float yInput = Input.GetAxis("Mouse Y") * m_cameraDistance * m_spanSpeed;
 
-			m_cameraDistance -= Input.GetAxis("Mouse ScrollWheel") * m_scrollSpeed * m_currentScale;
+                m_lookAtStatic -= transform.right * xInput;
+                m_lookAtStatic -= transform.up * yInput;
+            }
+
+            m_cameraDistance -= Input.GetAxis("Mouse ScrollWheel") * m_scrollSpeed * m_currentScale;
 			m_cameraDistance = Mathf.Clamp(m_cameraDistance, m_cameraDistanceMin * m_currentScale, m_cameraDistanceMax * m_currentScale);
 		}
 
