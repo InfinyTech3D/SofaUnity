@@ -127,7 +127,7 @@ namespace SofaUnity
         }
 
 
-        public void AddPlugin(string pluginName)
+        public PluginInfo AddPlugin(string pluginName)
         {
             // first check if plugin is in dll list
             bool exist = CheckPluginExists(pluginName);
@@ -143,14 +143,20 @@ namespace SofaUnity
                 }
             }
 
+            PluginInfo pluginInfo;
+
             if (found) // already registered, nothing to do.
             {
                 m_availablePlugins[id].IsAvailable = exist;
+                pluginInfo = m_availablePlugins[id];                
             }
             else
-            {                
-                m_availablePlugins.Add(new PluginInfo(pluginName, exist));
+            {
+                pluginInfo = new PluginInfo(pluginName, exist);
+                m_availablePlugins.Add(pluginInfo);
             }
+
+            return pluginInfo;
         }
 
     }
@@ -291,6 +297,23 @@ namespace SofaUnity
             return m_savedPlugins;
         }
 
+        public PluginInfo AddPluginToLoad(string pluginName)
+        {
+            PluginInfo plugin = GetPluginByName(pluginName);
+
+            // if exist nothing to do
+            if (plugin != null)
+            {
+                return plugin;
+            }
+
+            // else first add it to the list of plugin
+            plugin = PluginManager.Instance.AddPlugin(pluginName);
+            m_savedPlugins.Add(plugin);
+
+            return plugin;
+        }
+
         public PluginInfo GetPluginByName(string pluginName)
         {
             for (int id = 0; id < m_savedPlugins.Count; id++)
@@ -333,7 +356,6 @@ namespace SofaUnity
             PluginManager.Instance.AddPlugin("SofaPython3");
             PluginManager.Instance.AddPlugin("Tearing");
             PluginManager.Instance.AddPlugin("MultiThreading");
-            PluginManager.Instance.AddPlugin("EnclosedCollisionPlugin");
         }
 #endif
     }
