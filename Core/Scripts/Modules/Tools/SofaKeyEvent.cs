@@ -38,10 +38,10 @@ namespace SofaUnity
 
             /// Keys for BeamAdapter:
             // moving tool up, down, left, right: 19, 21, 18, 20
-            if (Input.GetKeyDown(KeyCode.LeftArrow)) m_sofaContext.SofaKeyPressEvent(18);
-            if (Input.GetKeyDown(KeyCode.RightArrow)) m_sofaContext.SofaKeyPressEvent(20);
-            if (Input.GetKeyDown(KeyCode.UpArrow)) m_sofaContext.SofaKeyPressEvent(19);
-            if (Input.GetKeyDown(KeyCode.DownArrow)) m_sofaContext.SofaKeyPressEvent(21);
+            if (Input.GetKey(KeyCode.LeftArrow)) m_sofaContext.SofaKeyPressEvent(18);
+            if (Input.GetKey(KeyCode.RightArrow)) m_sofaContext.SofaKeyPressEvent(20);
+            if (Input.GetKey(KeyCode.UpArrow)) m_sofaContext.SofaKeyPressEvent(19);
+            if (Input.GetKey(KeyCode.DownArrow)) m_sofaContext.SofaKeyPressEvent(21);
 
             if (Input.GetKeyUp(KeyCode.LeftArrow)) m_sofaContext.SofaKeyReleaseEvent(18);
             if (Input.GetKeyUp(KeyCode.RightArrow)) m_sofaContext.SofaKeyReleaseEvent(20);
