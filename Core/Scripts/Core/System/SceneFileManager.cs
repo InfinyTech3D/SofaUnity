@@ -93,6 +93,19 @@ namespace SofaUnity
         }
 
 
+        public bool ChangeSceneFilepathNoLoad(string value)
+        {
+            if (!HasScene)
+            {
+                Debug.LogWarning("ChangeSceneFilepathNoLoad: No scene loaded, cannot change filepath");
+                return false;
+            }
+
+            Debug.Log("ChangeSceneFilepathNoLoad: " + value);
+            return CheckValidFilename(value);
+        }
+
+
 
         /// method to get the full path of the file inside the unity asset
         public string AbsoluteFilename()
