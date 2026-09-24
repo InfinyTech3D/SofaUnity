@@ -178,24 +178,29 @@ namespace SofaUnity
             if (GUILayout.Button("Load SOFA Scene (.scn) file"))
             {
                 string absolutePath = EditorUtility.OpenFilePanel("Load file scene (*.scn)", Application.dataPath, "scn");
-            if (absolutePath.Length > 0)
-                context.SceneFileMgr.SceneFilename = absolutePath.Substring(Application.dataPath.Length);
-                EditorGUILayout.Separator();
+                if (absolutePath.Length > 0)
+                    context.SceneFileMgr.SceneFilename = absolutePath.Substring(Application.dataPath.Length);
             }
             else if (GUILayout.Button("Load SOFA Python Scene (.py) file"))
             {
                 string absolutePath = EditorUtility.OpenFilePanel("Load file scene (*.py)", "", "py");
-            if (absolutePath.Length > 0)
-                context.SceneFileMgr.PythonSceneFilename = absolutePath.Substring(Application.dataPath.Length);
-                EditorGUILayout.Separator();
+                if (absolutePath.Length > 0)
+                    context.SceneFileMgr.PythonSceneFilename = absolutePath.Substring(Application.dataPath.Length);
             }
 
             EditorGUILayout.Separator();
             // Label of the filename loaded
             EditorGUILayout.LabelField("Scene Filename: ", context.SceneFileMgr.SceneFilename);
 
-            context.UnLoadScene = GUILayout.Button("Unload Scene file");
-            context.ReloadScene = GUILayout.Button("Reload Sofa Scene file");
+            context.UnLoadScene = GUILayout.Button("Unload SOFA Scene");
+            context.ReloadScene = GUILayout.Button("Reload SOFA Scene file");
+
+            if (GUILayout.Button("Change SOFA scene file path"))
+            {
+                string absolutePath = EditorUtility.OpenFilePanel("Load file scene (*.scn, *.py)", Application.dataPath, "scn, py");
+                if (absolutePath.Length > 0)
+                    context.SceneFileMgr.changeSceneFilename(absolutePath.Substring(Application.dataPath.Length));
+            }
             EditorGUILayout.Separator();
         }
 

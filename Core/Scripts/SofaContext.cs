@@ -190,7 +190,23 @@ namespace SofaUnity
                 }
             }
         }
-        
+
+
+        /// Setter to change the scene path. Will change SceneFileManager variable without any reload. Warning this assume the scene file is already loaded in SOFA and is exactly the same.
+        public bool ChangeScenePath(string newPath)
+        {
+            if (m_sceneFileMgr == null) {
+                Debug.LogError("SofaContext::ChangeScenePath: m_sceneFileMgr is null, cannot change scene path.");
+                return false;
+            }
+            
+            if (m_log)
+                Debug.Log("#### SofaContext ChangeScenePath to: " + newPath);
+            
+            return m_sceneFileMgr.ChangeSceneFilepathNoLoad(newPath);
+        }
+
+
         ////////////////////////////////////////////
         ////////      scale conversions      ///////
         ////////////////////////////////////////////
