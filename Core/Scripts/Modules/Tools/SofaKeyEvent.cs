@@ -10,6 +10,7 @@ namespace SofaUnity
         public SofaUnity.SofaContext m_sofaContext = null;
 
         public bool m_isListening = false;
+        public bool m_isholding = false;
 
         // Start is called before the first frame update
         void Start()
@@ -36,17 +37,37 @@ namespace SofaUnity
             if (m_isListening == false || m_sofaContext == null)
                 return;
 
+            if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
+            {
+                m_isholding = true;
+            }
+            if (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift))
+            {
+                m_isholding = false;
+            }
+
             /// Keys for BeamAdapter:
             // moving tool up, down, left, right: 19, 21, 18, 20
-            if (Input.GetKeyDown(KeyCode.LeftArrow)) m_sofaContext.SofaKeyPressEvent(18);
-            if (Input.GetKeyDown(KeyCode.RightArrow)) m_sofaContext.SofaKeyPressEvent(20);
-            if (Input.GetKeyDown(KeyCode.UpArrow)) m_sofaContext.SofaKeyPressEvent(19);
-            if (Input.GetKeyDown(KeyCode.DownArrow)) m_sofaContext.SofaKeyPressEvent(21);
+            if (m_isholding)
+            {
+                if (Input.GetKey(KeyCode.LeftArrow)) m_sofaContext.SofaKeyPressEvent(18);
+                if (Input.GetKey(KeyCode.RightArrow)) m_sofaContext.SofaKeyPressEvent(20);
+                if (Input.GetKey(KeyCode.UpArrow)) m_sofaContext.SofaKeyPressEvent(19);
+                if (Input.GetKey(KeyCode.DownArrow)) m_sofaContext.SofaKeyPressEvent(21);
+            }
+            else
+            {
+                if (Input.GetKeyDown(KeyCode.LeftArrow)) m_sofaContext.SofaKeyPressEvent(18);
+                if (Input.GetKeyDown(KeyCode.RightArrow)) m_sofaContext.SofaKeyPressEvent(20);
+                if (Input.GetKeyDown(KeyCode.UpArrow)) m_sofaContext.SofaKeyPressEvent(19);
+                if (Input.GetKeyDown(KeyCode.DownArrow)) m_sofaContext.SofaKeyPressEvent(21);
+            }
 
             if (Input.GetKeyUp(KeyCode.LeftArrow)) m_sofaContext.SofaKeyReleaseEvent(18);
             if (Input.GetKeyUp(KeyCode.RightArrow)) m_sofaContext.SofaKeyReleaseEvent(20);
             if (Input.GetKeyUp(KeyCode.UpArrow)) m_sofaContext.SofaKeyReleaseEvent(19);
             if (Input.GetKeyUp(KeyCode.DownArrow)) m_sofaContext.SofaKeyReleaseEvent(21);
+
 
             // key to switch tool: 0, 1, 2
             if (Input.GetKeyDown(KeyCode.Alpha0)) m_sofaContext.SofaKeyPressEvent((int)KeyCode.Alpha0);
