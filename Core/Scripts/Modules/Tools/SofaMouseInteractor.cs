@@ -125,6 +125,8 @@ namespace SofaUnity
                     m_meshes.Add(mesh);
             }
 
+            Debug.Log(" || SofaMouseInteractor found " + m_meshes.Count + " SofaMesh in the scene.");
+
 
             /// Will create the real sofa Ray caster when simulation start.
             CreateSofaRayCaster_impl();
@@ -171,66 +173,75 @@ namespace SofaUnity
 
             if (isCastingRay)
             {
-                /// compute 3D ray position and direction according to mouse position on screen
-                Vector3 pos = Input.mousePosition;
-                Ray ray = m_camera.ScreenPointToRay(Input.mousePosition);
-                m_origin = ray.origin;
-                m_direction = ray.direction;
-
-                /// Compute position in sofa world.
-                Vector3 originS = m_sofaContext.transform.InverseTransformPoint(m_origin);
-                Vector3 directionS = m_sofaContext.transform.InverseTransformPoint(m_direction);
-
-                // cast ray here and get the selected indice
-                m_selectedTriID = -1;
-                m_selectedTriID = m_sofaRC.castRay(originS, directionS);
-
-                if (m_selectedTriID >= 0)
-                {
-                    if (firstTouch)
-                    {
-                        string resMesh = m_sofaRC.getTouchedObjectName();
-
-                        if (resMesh != "None")
-                        {
-                            TargetMesh(resMesh);
-                            firstTouch = false;
-                        }
-                    }
-
-                    //Debug.Log(this.gameObject.name + " || origin: " + m_origin + " => originS: " + originS + " |  direction : " + m_direction + " => directionS: " + directionS + " | triId: " + m_selectedTriID);
-                    if (!this.ActivateTool)
-                    {
-                        m_foundTri = m_selectedTriID;
-                    }
-                }
-
-                /// Update selection mesh to render only if SofaMesh is set and option are set.
-                if ((m_sofaMesh != null) && (m_foundTri != -1) && (m_drawSelection || m_drawSpring))
-                {
-                    // verticesIds in Unity world
-                    m_selectedTri[0] = m_sofaMesh.SofaMeshTopology.m_mesh.triangles[m_foundTri * 3];
-                    m_selectedTri[1] = m_sofaMesh.SofaMeshTopology.m_mesh.triangles[m_foundTri * 3 + 1];
-                    m_selectedTri[2] = m_sofaMesh.SofaMeshTopology.m_mesh.triangles[m_foundTri * 3 + 2];
-
-
-                    //m_selectedVertices[0] = this.transform.InverseTransformPoint(m_sofaMesh.SofaMeshTopology.m_mesh.vertices[m_selectedTri[0]]);
-                    //m_selectedVertices[1] = this.transform.InverseTransformPoint(m_sofaMesh.SofaMeshTopology.m_mesh.vertices[m_selectedTri[1]]);
-                    //m_selectedVertices[2] = this.transform.InverseTransformPoint(m_sofaMesh.SofaMeshTopology.m_mesh.vertices[m_selectedTri[2]]);
-
-                    m_selectedVertices[0] = m_sofaContext.transform.TransformPoint(m_sofaMesh.SofaMeshTopology.m_mesh.vertices[m_selectedTri[0]]);
-                    m_selectedVertices[1] = m_sofaContext.transform.TransformPoint(m_sofaMesh.SofaMeshTopology.m_mesh.vertices[m_selectedTri[1]]);
-                    m_selectedVertices[2] = m_sofaContext.transform.TransformPoint(m_sofaMesh.SofaMeshTopology.m_mesh.vertices[m_selectedTri[2]]);
-
-
-                    m_springVertices[0] = (m_selectedVertices[0] + m_selectedVertices[1] + m_selectedVertices[2]) / 3;
-                    float length = (m_origin - m_springVertices[0]).magnitude;
-                    m_springVertices[1] = m_origin + m_direction * length;
-                }
+                CastSofaRay();
             }
         }
 
 
+        protected void CastSofaRay()
+        {
+            /// compute 3D ray position and direction according to mouse position on screen
+            Vector3 pos = Input.mousePosition;
+            Ray ray = m_camera.ScreenPointToRay(Input.mousePosition);
+            m_origin = ray.origin;
+            m_direction = ray.direction;
+
+            /// Compute position in sofa world.
+            Vector3 originS = m_sofaContext.transform.InverseTransformPoint(m_origin);
+            Vector3 directionS = m_sofaContext.transform.InverseTransformPoint(m_direction);
+
+            // cast ray here and get the selected indice            
+            m_selectedTriID = -1;
+            m_selectedTriID = m_sofaRC.castRay(originS, directionS);
+
+            //Debug.Log("m_selectedTriID: " + m_selectedTriID + " | originS: " + originS + " | directionS: " + directionS);
+
+            // Hack: due to change in SOFA right now the value returned is a vertexID
+            return;
+
+            if (m_selectedTriID >= 0)
+            {
+                if (firstTouch)
+                {
+                    string resMesh = m_sofaRC.getTouchedObjectName();
+
+                    if (resMesh != "None")
+                    {
+                        TargetMesh(resMesh);
+                        firstTouch = false;
+                    }
+                }
+
+                Debug.Log(this.gameObject.name + " || origin: " + m_origin + " => originS: " + originS + " |  direction : " + m_direction + " => directionS: " + directionS + " | triId: " + m_selectedTriID);
+                if (!this.ActivateTool)
+                {
+                    m_foundTri = m_selectedTriID;
+                }
+            }
+
+            /// Update selection mesh to render only if SofaMesh is set and option are set.
+            if ((m_sofaMesh != null) && (m_foundTri != -1) && (m_drawSelection || m_drawSpring))
+            {
+                // verticesIds in Unity world
+                m_selectedTri[0] = m_sofaMesh.SofaMeshTopology.m_mesh.triangles[m_foundTri * 3];
+                m_selectedTri[1] = m_sofaMesh.SofaMeshTopology.m_mesh.triangles[m_foundTri * 3 + 1];
+                m_selectedTri[2] = m_sofaMesh.SofaMeshTopology.m_mesh.triangles[m_foundTri * 3 + 2];
+
+
+                //m_selectedVertices[0] = this.transform.InverseTransformPoint(m_sofaMesh.SofaMeshTopology.m_mesh.vertices[m_selectedTri[0]]);
+                //m_selectedVertices[1] = this.transform.InverseTransformPoint(m_sofaMesh.SofaMeshTopology.m_mesh.vertices[m_selectedTri[1]]);
+                //m_selectedVertices[2] = this.transform.InverseTransformPoint(m_sofaMesh.SofaMeshTopology.m_mesh.vertices[m_selectedTri[2]]);
+
+                m_selectedVertices[0] = m_sofaContext.transform.TransformPoint(m_sofaMesh.SofaMeshTopology.m_mesh.vertices[m_selectedTri[0]]);
+                m_selectedVertices[1] = m_sofaContext.transform.TransformPoint(m_sofaMesh.SofaMeshTopology.m_mesh.vertices[m_selectedTri[1]]);
+                m_selectedVertices[2] = m_sofaContext.transform.TransformPoint(m_sofaMesh.SofaMeshTopology.m_mesh.vertices[m_selectedTri[2]]);
+
+
+                m_springVertices[0] = (m_selectedVertices[0] + m_selectedVertices[1] + m_selectedVertices[2]) / 3;
+                float length = (m_origin - m_springVertices[0]).magnitude;
+                m_springVertices[1] = m_origin + m_direction * length;
+            }
+        }
 
 
         /// Internal method to search for a SofaMesh and track it for rendering selection. Will AddListener to it.
@@ -246,16 +257,6 @@ namespace SofaUnity
                 m_sofaMesh = m_meshes[0];
                 m_sofaMesh.AddListener();
             }
-
-            //foreach (SofaMesh mesh in m_meshes)
-            //{
-            //    Debug.Log("mesh: " + mesh.UniqueNameId + " looking for: " + meshName);
-            //    if (mesh.UniqueNameId == meshName)
-            //    {
-            //        m_sofaMesh = mesh;
-            //        m_sofaMesh.AddListener();
-            //    }
-            //}        
         }
 
 

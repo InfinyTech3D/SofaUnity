@@ -33,7 +33,7 @@ namespace SofaUnityAPI
                     res = sofaPhysicsAPI_createFixConstraintTool(m_simu, m_name, length);
 
                 if (res != 0)
-                    Debug.LogError("SofaRayCasterAPI::Create Tool returns error: " + SofaDefines.msg_error[res]);
+                    Debug.LogError("SofaRayCasterAPI::Create Tool with type: '" + type + "' returns error: " + SofaDefines.msg_error[res]);
             }
         }
 
@@ -103,6 +103,12 @@ namespace SofaUnityAPI
             dir[2] = directionInSofa[2];
 
             int res = sofaPhysicsAPI_castRay(m_simu, m_name, ori, dir);
+
+            if (res < 0 && res != -412)
+            {
+                Debug.LogError("SofaRayCasterAPI::castRay returns error: " + SofaDefines.msg_error[res] +
+                    " For origin: [" + ori[0] + ", " + ori[1] + ", " + ori[2] + "] | Direction: [" + dir[0] + ", " + dir[1] + ", " + dir[2] + "] in SOFA world");
+            }
 
             ori = null;
             dir = null;
