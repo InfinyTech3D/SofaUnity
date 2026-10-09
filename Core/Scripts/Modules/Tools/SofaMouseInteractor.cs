@@ -92,13 +92,48 @@ namespace SofaUnity
         }
 
 
+        /// Search the SofaContext in this interactor's own scene first. When scenes are loaded additively,
+        /// another loaded scene can also hold a SofaContext tagged "GameController" (and be unloaded later).
+        public override void CreateSofaRayCaster()
+        {
+            if (m_sofaContext == null)
+            {
+                foreach (GameObject obj in GameObject.FindGameObjectsWithTag("GameController"))
+                {
+                    if (obj.scene != gameObject.scene)
+                        continue;
+
+                    m_sofaContext = obj.GetComponent<SofaUnity.SofaContext>();
+                    if (m_sofaContext != null)
+                        break;
+                }
+            }
+
+            // Fallback to the global search
+            base.CreateSofaRayCaster();
+        }
+
+
+        /// Return the first GameObject with this tag belonging to this interactor's scene, or any match otherwise.
+        protected GameObject FindTaggedInOwnScene(string tag)
+        {
+            GameObject[] objs = GameObject.FindGameObjectsWithTag(tag);
+            foreach (GameObject obj in objs)
+            {
+                if (obj.scene == gameObject.scene)
+                    return obj;
+            }
+            return objs.Length > 0 ? objs[0] : null;
+        }
+
+
         /// Method called by Unity animation loop when animation start. Will look for Camera if needed and SofaMesh.
         void Start()
         {
-            // If not camera set, will search for the Maincamera
+            // If not camera set, will search for the Maincamera (of this scene first)
             if (m_camera == null)
             {
-                GameObject _cam = GameObject.FindGameObjectWithTag("MainCamera");
+                GameObject _cam = FindTaggedInOwnScene("MainCamera");
                 if (_cam != null)
                 {
                     // Get Sofa context
@@ -113,13 +148,12 @@ namespace SofaUnity
             }
 
             /// Will store pointers to all SofaMesh found in the scene
-            GameObject[] meshes = GameObject.FindGameObjectsWithTag("Player");
-            int nbrM = meshes.Length;
-            if (nbrM > 0)
-                m_meshes = new List<SofaMesh>();
-
-            foreach (GameObject obj in meshes)
+            m_meshes = new List<SofaMesh>();
+            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Player"))
             {
+                if (obj.scene != gameObject.scene)
+                    continue;
+
                 SofaMesh mesh = obj.GetComponent<SofaMesh>();
                 if (mesh)
                     m_meshes.Add(mesh);
