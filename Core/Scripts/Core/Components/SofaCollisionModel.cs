@@ -339,7 +339,7 @@ namespace SofaUnity
             }
             else if ((shader = Shader.Find("Standard")) != null)
             {
-                // --- Built-in, Standard en mode "Fade" ---
+                // --- Built-in ---
                 m_collisionMaterial = new Material(shader);
                 m_collisionMaterial.SetFloat("_Mode", 2.0f); // 2 = Fade, 3 = Transparent
                 m_collisionMaterial.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
@@ -352,7 +352,7 @@ namespace SofaUnity
             }
             else
             {
-                // --- Secours : shader simple non éclairé qui gère l'alpha ---
+                
                 m_collisionMaterial = new Material(Shader.Find("Sprites/Default"));
                 m_collisionMaterial.color = m_collisionColor;
             }
