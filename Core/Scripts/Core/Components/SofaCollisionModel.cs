@@ -252,9 +252,8 @@ namespace SofaUnity
                 }
             }
 
-            GameObject triangulation = new GameObject();
-            triangulation.name = "TriangleCollision";
-            triangulation.transform.parent = this.transform;
+            GameObject triangulation = new GameObject("TriangleCollision");
+            triangulation.transform.SetParent(this.transform, false); 
 
             MeshRenderer renderer = triangulation.AddComponent<MeshRenderer>();
             renderer.enabled = true;
