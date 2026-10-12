@@ -33,6 +33,11 @@ namespace SofaUnity
 
         private SofaBoolData m_isCollisionActive = null;
 
+        [SerializeField] protected Material m_collisionMaterial = null;
+        // Jaune clair, alpha à 0.35 (0 = invisible, 1 = opaque)
+        [SerializeField] protected Color m_collisionColor = new Color(1.0f, 1.0f, 0.6f, 0.35f);
+
+        
 
         ////////////////////////////////////////////
         //////   SofaCollisionModel accessors  /////
@@ -104,6 +109,9 @@ namespace SofaUnity
                     Debug.LogWarning("GetSofaBoolData named 'active' failed.");
                 }
             }
+
+            //setup material
+            GetCollisionMaterial();
         }
 
 
@@ -219,6 +227,7 @@ namespace SofaUnity
                 sphere.transform.localPosition = m_sofaMesh.GetPosition(i);
                 sphere.transform.localScale = scaleRadius;
                 sphere.transform.parent = this.transform;
+                sphere.GetComponent<MeshRenderer>().sharedMaterial = m_collisionMaterial;
                 m_collisionElement.Add(sphere);
             }
 
@@ -308,6 +317,51 @@ namespace SofaUnity
                 mf.mesh.vertices = m_sofaMesh.SofaMeshTopology.m_mesh.vertices;
                 mf.mesh.normals = m_sofaMesh.SofaMeshTopology.m_mesh.normals;
             }
+        }
+
+      
+        //Work with URP and Base pipline 
+        protected Material GetCollisionMaterial()
+        {
+            if (m_collisionMaterial != null)
+                return m_collisionMaterial;
+
+            Shader shader = Shader.Find("Universal Render Pipeline/Lit");
+            if (shader != null)
+            {
+                // --- URP ---
+                m_collisionMaterial = new Material(shader);
+                m_collisionMaterial.SetFloat("_Surface", 1.0f); // 0 = Opaque, 1 = Transparent
+                m_collisionMaterial.SetFloat("_Blend", 0.0f);   // 0 = Alpha
+                m_collisionMaterial.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+                m_collisionMaterial.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+                m_collisionMaterial.SetInt("_ZWrite", 0);
+                m_collisionMaterial.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+                m_collisionMaterial.SetColor("_BaseColor", m_collisionColor);
+            }
+            else if ((shader = Shader.Find("Standard")) != null)
+            {
+                // --- Built-in, Standard en mode "Fade" ---
+                m_collisionMaterial = new Material(shader);
+                m_collisionMaterial.SetFloat("_Mode", 2.0f); // 2 = Fade, 3 = Transparent
+                m_collisionMaterial.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+                m_collisionMaterial.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+                m_collisionMaterial.SetInt("_ZWrite", 0);
+                m_collisionMaterial.DisableKeyword("_ALPHATEST_ON");
+                m_collisionMaterial.EnableKeyword("_ALPHABLEND_ON");
+                m_collisionMaterial.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+                m_collisionMaterial.SetColor("_Color", m_collisionColor);
+            }
+            else
+            {
+                // --- Secours : shader simple non éclairé qui gère l'alpha ---
+                m_collisionMaterial = new Material(Shader.Find("Sprites/Default"));
+                m_collisionMaterial.color = m_collisionColor;
+            }
+
+            m_collisionMaterial.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent; // 3000
+            m_collisionMaterial.name = "SphereCollisionMaterial";
+            return m_collisionMaterial;
         }
     }
 
