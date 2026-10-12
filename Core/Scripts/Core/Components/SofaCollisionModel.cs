@@ -34,10 +34,9 @@ namespace SofaUnity
         private SofaBoolData m_isCollisionActive = null;
 
         [SerializeField] protected Material m_collisionMaterial = null;
-        // Jaune clair, alpha à 0.35 (0 = invisible, 1 = opaque)
-        [SerializeField] protected Color m_collisionColor = new Color(1.0f, 1.0f, 0.6f, 0.35f);
+        [SerializeField] protected Color m_collisionColor = new Color(1.0f, 1.0f, 0.6f, 0.35f);//Light yellow
 
-        
+
 
         ////////////////////////////////////////////
         //////   SofaCollisionModel accessors  /////
