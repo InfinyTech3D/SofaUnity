@@ -258,7 +258,7 @@ namespace SofaUnity
 
             MeshRenderer renderer = triangulation.AddComponent<MeshRenderer>();
             renderer.enabled = true;
-            renderer.sharedMaterial = new Material(Shader.Find("Diffuse"));
+            renderer.sharedMaterial = m_collisionMaterial;
 
             MeshFilter mf = triangulation.AddComponent<MeshFilter>();
             mf.mesh = m_sofaMesh.SofaMeshTopology.m_mesh;
