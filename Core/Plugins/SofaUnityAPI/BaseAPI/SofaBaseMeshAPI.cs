@@ -820,7 +820,7 @@ namespace SofaUnityAPI
 
 
         /// Method to recompute the Tex coords according to mesh position and geometry.
-        public virtual void UpdateTexCoords(Mesh mesh)
+        public virtual bool UpdateTexCoords(Mesh mesh)
         {
             Vector3[] verts = mesh.vertices;
             int nbrV = verts.Length;
@@ -834,7 +834,7 @@ namespace SofaUnityAPI
 
             if (res < 0)
             {
-                return;
+                return false;
             }
             else
             {
@@ -845,6 +845,7 @@ namespace SofaUnityAPI
                 }
             }
             mesh.uv = uv;
+            return true;
         }
 
 

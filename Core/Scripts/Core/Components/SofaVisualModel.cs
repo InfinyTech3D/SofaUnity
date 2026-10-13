@@ -91,7 +91,15 @@ namespace SofaUnity
         public void UpdateTexCoords()
         {
             if (m_uvType == e_UVType.EMBEDDED)
-                m_sofaMeshAPI.UpdateTexCoords(m_mesh);
+            {
+                if (m_sofaMeshAPI.UpdateTexCoords(m_mesh) == false) // no uv found in the SofaMesh, we can compute them with a default method
+                {
+                    SofaLog("SofaVisualModel::UpdateTexCoords: Embedded UV method is set but no uv were found in the SofaMesh. Switch to BoxProjection mode", 1);
+                    m_uvType = e_UVType.BOXPROJECTION;
+                    UpdateTexCoords();
+                    return;
+                }
+            }
             else if (m_uvType == e_UVType.STEREOGRAPHICS_X)
                 m_sofaMeshAPI.ComputeStereographicsUV(m_mesh, 0);
             else if (m_uvType == e_UVType.STEREOGRAPHICS_Y)
