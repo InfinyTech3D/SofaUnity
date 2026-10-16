@@ -1,0 +1,4 @@
+2026-10-13 00:22:20.034 INFO  ws://localhost:10001 [WebSocketClient.cpp:40:hv::WebSocketClient::open]
+2026-10-13 00:22:20.038 INFO  EventLoopThread started, tid=23576 [EventLoopThread.h:84:hv::EventLoopThread::loop_thread]
+2026-10-13 00:23:17.992 INFO  reconnect... cnt=1, delay=1000 [TcpClient.h:165:hv::TcpClientEventLoopTmpl<class hv::WebSocketChannel>::startReconnect]
+2026-10-13 00:23:17.992 INFO  EventLoopThread stopped, tid=23576 [EventLoopThread.h:103:hv::EventLoopThread::loop_thread]

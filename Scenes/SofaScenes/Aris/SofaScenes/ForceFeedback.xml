@@ -1,0 +1,14 @@
+<Node name='ForceFeedback'>
+    <MechanicalObject name='mstate_lcp' template='Rigid3d' position="@../Needle/Base/ms.position"/>
+    <LCPForceFeedback name='lcp_ff' activate='true' forceCoef='3e-4'/>
+    <Node name='Collision'>
+        <EdgeSetTopologyContainer name='edge_container' position="@../../Needle/Shaft/edge_container.position" edges="@../../Needle/Shaft/edge_container.edges"/>
+        <MechanicalObject name='ms' constraint="@../../Needle/Shaft/ms.constraint"/>
+        <RigidMapping name="mapping"/>
+    </Node>
+    <Node name='Tip'>
+        <PointSetTopologyContainer name='point_container' position="@../../Needle/Tip/point_container.position"/>
+        <MechanicalObject name='ms' constraint="@../../Needle/Tip/ms.constraint"/>
+        <RigidMapping name="mapping"/>
+    </Node>
+</Node>

@@ -1,0 +1,171 @@
+<?xml version='1.0'?>
+<Node name='root' gravity ='0 0 0' dt='0.005'>
+    <Node name="plugins">
+        <RequiredPlugin pluginName="Sofa.Component.AnimationLoop"/>
+        <RequiredPlugin pluginName="Sofa.Component.Collision.Detection.Algorithm"/>
+        <RequiredPlugin pluginName="Sofa.Component.Collision.Detection.Intersection"/>
+        <RequiredPlugin pluginName="Sofa.Component.Collision.Geometry"/>
+        <RequiredPlugin pluginName="Sofa.Component.Collision.Response.Contact"/>
+        <RequiredPlugin pluginName="Sofa.Component.Constraint.Lagrangian.Correction"/>
+        <RequiredPlugin pluginName="Sofa.Component.Constraint.Lagrangian.Model"/>
+        <RequiredPlugin pluginName="Sofa.Component.Constraint.Lagrangian.Solver"/>
+        <RequiredPlugin pluginName="Sofa.Component.Constraint.Projective"/>
+        <RequiredPlugin pluginName="Sofa.Component.Engine.Select"/>
+        <RequiredPlugin pluginName="Sofa.Component.IO.Mesh"/>
+        <RequiredPlugin pluginName="Sofa.Component.LinearSolver.Direct"/>
+        <RequiredPlugin pluginName="Sofa.Component.LinearSolver.Iterative"/>
+        <RequiredPlugin pluginName="Sofa.Component.LinearSolver.Preconditioner"/>
+        <RequiredPlugin pluginName="Sofa.Component.LinearSystem"/>
+        <RequiredPlugin pluginName="Sofa.Component.Mapping.Linear"/>
+        <RequiredPlugin pluginName="Sofa.Component.Mass"/>
+        <RequiredPlugin pluginName="Sofa.Component.ODESolver.Backward"/>
+        <RequiredPlugin pluginName="Sofa.Component.SceneUtility"/>
+        <RequiredPlugin pluginName="Sofa.Component.SolidMechanics.FEM.Elastic"/>
+        <RequiredPlugin pluginName="Sofa.Component.SolidMechanics.Spring"/>
+        <RequiredPlugin pluginName="Sofa.Component.StateContainer"/>
+        <RequiredPlugin pluginName="Sofa.Component.Topology.Container.Constant"/>
+        <RequiredPlugin pluginName="Sofa.Component.Topology.Container.Dynamic"/>
+        <RequiredPlugin pluginName="Sofa.Component.Topology.Mapping"/>
+        <RequiredPlugin pluginName="Sofa.Component.Visual"/>
+        <RequiredPlugin pluginName="Sofa.GL.Component.Rendering3D"/>
+        <RequiredPlugin pluginName="Sofa.GUI.Component"/>
+        <RequiredPlugin pluginName="Sofa.Component.Haptics"/>
+        <RequiredPlugin pluginName="Sofa.Component.Mapping.NonLinear"/>
+        <RequiredPlugin pluginName="Sofa.Component.Playback"/>
+        <RequiredPlugin pluginName='InfinyPrefabs'/>
+        <RequiredPlugin pluginName='CollisionAlgorithm'/>
+        <RequiredPlugin pluginName='NeedleInsertion'/>
+        <RequiredPlugin pluginName='ConstraintGeometry'/>
+        <RequiredPlugin pluginName="SofaHaplyRobotics"/>
+
+    </Node>
+
+    <VisualStyle displayFlags='showVisualModels showForceFields hideCollisionModels'/>
+    <ConstraintAttachButtonSetting/>
+
+	<FreeMotionAnimationLoop parallelODESolving='true' nbThreads='3'/>
+    <BlockGaussSeidelConstraintSolver name="ConstraintSolver" tolerance='1e-6' maxIt='1000'/>
+
+    <AddDataRepository path='./'/>
+    <SceneConfig name='tissuesConfig' configFile='sceneConfig/tissues_config.json'/>
+
+    <Node name='Epidermis'>
+        <Node name='BCSelector'>
+            <MeshOBJLoader name='obj_loader' filename='mesh/forehead/Dermis_volume_selector.obj' scale3d='1000 1000 1000'/>
+            <MechanicalObject name='dofs' template="Vec3d" position='@obj_loader.position'/>
+        </Node>
+
+        <Node name='Simulated'>
+            <InsertionTissuePrefab template='BodyFitted' name='epidermis'/>
+
+            <!-- Boundary Selection and Fixing -->
+            <NearestPointROI name='BoundaryROI' template='Vec3d' object1='@epidermis_dofs' inputIndices1='@epidermis_dofs.indices' object2='@../BCSelector/dofs' inputIndices2='@../BCSelector/dofs.indices' radius='1e-2'/>
+            <RestShapeSpringsForceField name='BoundarySprings' points='@BoundaryROI.indices1' stiffness='1e6'/>
+
+            <!-- Solvers -->
+            <MatrixLinearSystem name="precondSystem" template="CompressedRowSparseMatrixd"/>
+            <SSORPreconditioner name="precond" linearSystem="@precondSystem"/>
+            <PreconditionedMatrixFreeSystem name="solverSystem" preconditionerSystem="@precondSystem"/>
+            <PCGLinearSolver name="linearSolver" iterations="60" tolerance="1e-9" linearSystem="@solverSystem" preconditioner="@precond"/>
+            <EulerImplicitSolver name="odeSolver" linearSolver="@linearSolver"/>
+            <LinearSolverConstraintCorrection name="correction" linearSolver="@precond"/>
+
+            <!--
+            <Node name='Interface'>
+                <MeshOBJLoader name='obj_loader' filename='mesh/forehead/Attachment_Interface_L1.obj' scale3d='1000 1000 1000'/>
+                <MechanicalObject name='dofs' template='Vec3d' position='@obj_loader.position'/>
+                <BarycentricMapping name='mapping' input='@../epidermis_dofs' output='@dofs'/>
+            </Node>
+            -->
+            
+            <Node name='VisualModel'>
+                <MeshOBJLoader name='obj_loader' filename='mesh/forehead/skin_forehead.obj' handleSeams="1" scale3d='1000 1000 1000'/>
+                <OglModel name='ogl_model' src="@obj_loader" color='0.8 0.8 0.8 1.0' />
+                <BarycentricMapping name='mapping' input='@../epidermis_dofs' output='@ogl_model'/>
+            </Node>
+        </Node>
+    </Node>
+
+    <Node name='Subcutaneous'>
+        <Node name='BCSelector'>
+            <MeshOBJLoader name='obj_loader' filename='mesh/forehead/Subcutaneous_volume_selector.obj' scale3d='1000 1000 1000'/>
+            <MechanicalObject name='dofs' template="Vec3d" position='@obj_loader.position'/>
+        </Node>
+
+        <Node name='Simulated'>
+            <InsertionTissuePrefab template='BodyFitted' name='subcutaneous'/>
+
+            <!-- Boundary Selection and Fixing -->
+            <NearestPointROI name='BoundaryROI' template='Vec3d' object1='@subcutaneous_dofs' inputIndices1='@subcutaneous_dofs.indices' object2='@../BCSelector/dofs' inputIndices2='@../BCSelector/dofs.indices' radius='1e-2'/>
+            <RestShapeSpringsForceField name='BoundarySprings' points='@BoundaryROI.indices1' stiffness='1e6'/>
+
+            <!-- Solvers -->
+            <MatrixLinearSystem name="precondSystem" template="CompressedRowSparseMatrixd"/>
+            <SSORPreconditioner name="precond" linearSystem="@precondSystem"/>
+            <PreconditionedMatrixFreeSystem name="solverSystem" preconditionerSystem="@precondSystem"/>
+            <PCGLinearSolver name="linearSolver" iterations="60" tolerance="1e-9" linearSystem="@solverSystem" preconditioner="@precond"/>
+            <EulerImplicitSolver name="odeSolver" linearSolver="@linearSolver"/>
+            <LinearSolverConstraintCorrection name="correction" linearSolver="@precond"/>
+
+            <!--
+            <Node name='Interface'>
+                <MeshOBJLoader name='obj_loader' filename='mesh/forehead/Attachment_Interface_L1.obj' scale3d='1000 1000 1000'/>
+                <MechanicalObject name='dofs' template='Vec3d' position='@obj_loader.position'/>
+                <BarycentricMapping name='mapping' input='@../subcutaneous_dofs' output='@dofs'/>
+            </Node>
+            -->
+
+        </Node>
+    </Node>
+
+    <!--
+    <Node name='EpidermisSubcutaneousAttachment'>
+        <NearestPointROI name='AttachmentROI' template='Vec3d' radius='1e-3'
+            object1='@/Epidermis/Simulated/Interface/dofs' object2='@/Subcutaneous/Simulated/Interface/dofs'/>
+        <BilateralLagrangianConstraint name='AttachmentConstraint' template='Vec3d' 
+            object1='@/Epidermis/Simulated/Interface/dofs' object2='@/Subcutaneous/Simulated/Interface/dofs' 
+            first_point='@AttachmentROI.indices1' second_point='@AttachmentROI.indices2'/>
+    </Node>
+    -->
+
+    <Node name='Skull'>
+        <MeshOBJLoader name='loader' filename='mesh/forehead/skull_forehead_collision.obj' scale3d='1000 1000 1000'/>
+        <TriangleSetTopologyContainer name='topology' triangles='@loader.triangles'/>
+        <MechanicalObject name='dofs' template='Vec3d' position='@loader.position'/>
+        <TriangleGeometry name='surfaceGeometry' mstate='@dofs' topology='@topology'/>
+        <PhongTriangleNormalHandler name='normalHandler' geometry='@surfaceGeometry'/>
+        <TriangleCollisionModel name="triangleCollisionModel" color="gray" moving='false' simulated='false'/>
+        <Node name='VisualModel'>
+            <MeshOBJLoader name='obj_loader' filename='mesh/forehead/skull.obj' handleSeams="1" scale3d='1000 1000 1000'/>
+            <OglModel name='ogl_model' src="@obj_loader" color='0.8 0.8 0.8 1.0' />
+        </Node>
+    </Node>
+
+
+    <Node name='NeedleInsertionComponents'>
+        <NeedlePrefab name='needle' tissues='@/Epidermis @/Subcutaneous @/Skull' config='sceneConfig/needle_config.json'/>
+        <TrajectoryMeshROI name="EpidermisROI"
+            position="@/NeedleInsertionComponents/Needle/Shaft/Tip/needle_dofs.position"
+            doUpdate="true"
+            ROItriangles="@/Epidermis/Simulated/epidermis_ExternalSurface/epidermis_topology.triangles"
+            ROIposition="@/Epidermis/Simulated/epidermis_dofs.position"
+        />
+        <TrajectoryMeshROI name="SubcutaneousROI"
+            position="@/NeedleInsertionComponents/Needle/Shaft/Tip/needle_dofs.position"
+            doUpdate="true"
+            ROItriangles="@/Subcutaneous/Simulated/subcutaneous_ExternalSurface/subcutaneous_topology.triangles"
+            ROIposition="@/Subcutaneous/Simulated/subcutaneous_dofs.position"
+        />
+    </Node>
+<!--
+    <Node name='Skin'>
+        <MeshOBJLoader name='obj_loader' filename='mesh/forehead/skin_out.obj' handleSeams="1" scale3d='1000 1000 1000'/>
+        <OglModel name='ogl_model' src="@obj_loader" color='0.8 0.7 0.6 0.8' />
+    </Node>
+
+    <Node name='Muscles'>
+        <MeshOBJLoader name='obj_loader' filename='mesh/forehead/muscles_out.obj' handleSeams="1" scale3d='1000 1000 1000'/>
+        <OglModel name='ogl_model' src="@obj_loader" color='1.0 0.2 0.2 1.0' />
+    </Node>
+-->
+</Node>

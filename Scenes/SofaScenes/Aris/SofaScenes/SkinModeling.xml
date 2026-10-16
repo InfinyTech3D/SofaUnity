@@ -1,0 +1,146 @@
+<Node name='Skin'>
+	<EulerImplicitSolver name='odeSolver' rayleighMass="0.01" rayleighStiffness="0.01"/>
+	<PreconditionedMatrixFreeSystem name='pcgLinearSystem' template="GraphScattered" assemblingRate='1'/>
+	<PCGLinearSolver name='linearSolver' template="GraphScattered" iterations='50' tolerance='1e-4' linearSystem="@pcgLinearSystem"/>
+
+	<MatrixLinearSystem name='ldlLinearSystem' template="CompressedRowSparseMatrixMat3x3d" />
+	<AsyncSparseLDLSolver name='preconditioner' template="CompressedRowSparseMatrixMat3x3d" linearSystem="@ldlLinearSystem"/>
+
+	<Node name='0102_EpidermisPapillary'>
+		<MeshGmshLoader name='mesh_loader' filename="mesh/0102_EpidermisPapillary_coarse.msh"/>
+		<TetrahedronSetTopologyContainer name='tet_container' position="@mesh_loader.position" tetrahedra="@mesh_loader.tetrahedra"/>
+		<TetrahedronSetTopologyModifier name='Modifier'/>
+		<TetrahedronSetGeometryAlgorithms name='GeomAlgo' template='Vec3d' drawTetrahedra='0' drawScaleTetrahedra='0.7'/>
+		<MechanicalObject name='ms' template="Vec3d" position='@tet_container.position'/>
+		
+		<DiagonalMass name='mass' topology='@tet_container' massDensity='1e3'/>
+		<FastTetrahedralCorotationalForceField name='FEM' youngModulus='9e6' poissonRatio='0.3' method='large'/>
+		<TetrahedronGeometry name="tet_geom" mstate="@ms" topology="@tet_container" />
+		
+		<Node name='0102_EpidermisPapillary_Collision'>
+			<TriangleSetTopologyContainer  name="tri_container" />
+			<TriangleSetTopologyModifier   name="tri_modifier" />
+			<TriangleSetGeometryAlgorithms name="tri_geom_algo" drawTriangles="0" template="Vec3d"/>
+			<Tetra2TriangleTopologicalMapping input="@../tet_container" output="@tri_container" />
+
+			<MechanicalObject name='ms' template="Vec3d" position='@tet_container.position'/>
+			<IdentityMapping name="mapping" input='@../ms' output='@ms'/>
+
+			<TriangleGeometry name='tri_geom' mstate='@ms' topology='@tri_container' draw='1'/>
+			<PhongTriangleNormalHandler name='tri_normals' geometry='@tri_geom'/>
+		</Node>
+		
+		<Node name='0102_EpidermisPapillary_VisualModel'>
+			<MeshOBJLoader name='obj_loader' filename='mesh/0102_EpidermisPapillary_visual.obj' handleSeams="1"/>
+			<OglModel name='ogl_model' src="@obj_loader" color='0.8 0.7 0.6 0.8'/>
+			<BarycentricMapping input="@../ms" output="@ogl_model"/>
+		</Node>
+		
+		<BoxROI name='StomachROI' drawBoxes='1'	box="-0.40 0.2 -0.47  0.80  1.7  -0.4
+		  -0.40  0.2  -1.60  0.80  1.7  -1.53
+		   0.72  0.2  -1.60  0.80  1.7  -0.4
+		  -0.40  0.2  -1.60 -0.30  1.7  -0.4"/>
+
+		<RestShapeSpringsForceField name="FixingSprings" stiffness='1000000' angularStiffness='1000000' points='@FixedROI.indices'/>
+		<PrecomputedConstraintCorrection printLog='1' name="ConstraintCorrection" recompute='0' fileCompliance="./compliance/0102_EpidermisPapillary-1839-0.005.comp"/>
+	</Node>
+	
+	
+	<Node name='03_ReticularDermis'>
+		<MeshGmshLoader name='mesh_loader' filename="mesh/03_ReticularDermis_coarse.msh"/>
+		<TetrahedronSetTopologyContainer name='tet_container' position="@mesh_loader.position" tetrahedra="@mesh_loader.tetrahedra"/>
+		<TetrahedronSetTopologyModifier name='Modifier'/>
+		<TetrahedronSetGeometryAlgorithms name='GeomAlgo' template='Vec3d' drawTetrahedra='0' drawScaleTetrahedra='0.7'/>
+		<MechanicalObject name='ms' template="Vec3d" position='@tet_container.position'/>
+		
+		<DiagonalMass name='mass' topology='@tet_container' massDensity='1e3'/>
+		<FastTetrahedralCorotationalForceField name='FEM' youngModulus='2e7' poissonRatio='0.3' method='large'/>
+		<TetrahedronGeometry name="tet_geom" mstate="@ms" topology="@tet_container" />
+		
+		<Node name='03_ReticularDermis_Collision'>
+			<TriangleSetTopologyContainer  name="tri_container" />
+			<TriangleSetTopologyModifier   name="tri_modifier" />
+			<TriangleSetGeometryAlgorithms name="tri_geom_algo" drawTriangles="0" template="Vec3d"/>
+			<Tetra2TriangleTopologicalMapping input="@../tet_container" output="@tri_container" />
+
+			<MechanicalObject name='ms' template="Vec3d" position='@tet_container.position'/>
+			<IdentityMapping name="mapping" input='@../ms' output='@ms'/>
+
+			<TriangleGeometry name='tri_geom' mstate='@ms' topology='@tri_container' draw='1'/>
+			<PhongTriangleNormalHandler name='tri_normals' geometry='@tri_geom'/>
+		</Node>
+		
+		<Node name='03_ReticularDermis_VisualModel'>
+			<MeshOBJLoader name='obj_loader' filename='mesh/03_ReticularDermis_visual.obj' handleSeams="1"/>
+			<OglModel name='ogl_model' src="@obj_loader" color='0.64 0.5 0.5 0.8' />
+			<BarycentricMapping input="@../ms" output="@ogl_model"/>
+		</Node>
+		
+		<BoxROI name='StomachROI' drawBoxes='1'	box="-0.40 0.2 -0.47  0.80  1.7  -0.4
+		  -0.40  0.2  -1.60  0.80  1.7  -1.53
+		   0.72  0.2  -1.60  0.80  1.7  -0.4
+		  -0.40  0.2  -1.60 -0.30  1.7  -0.4"/>
+
+		<RestShapeSpringsForceField name="FixingSprings" stiffness='1000000' angularStiffness='1000000' points='@FixedROI.indices'/>
+		<PrecomputedConstraintCorrection printLog='1' name="ConstraintCorrection" recompute='0' fileCompliance="./compliance/03_ReticularDermis-3222-0.005.comp"/>
+	
+		<NearestPointROI name="AttachROI_03_ReticularDermis_to_0102_EpidermisPapillary" template="Vec3d" radius="1e-2"
+		object1='@Skin/0102_EpidermisPapillary/ms' inputIndices1='@Skin/0102_EpidermisPapillary/ms.indices' 
+		object2='@Skin/03_ReticularDermis/ms' inputIndices2='@Skin/03_ReticularDermis/ms.indices' />
+	
+		<SpringForceField name="AttachmentSprings_03_ReticularDermis_to_0102_EpidermisPapillary"
+		object1='@Skin/0102_EpidermisPapillary/ms' springsIndices1='@AttachROI_03_ReticularDermis_to_0102_EpidermisPapillary.indices1' 
+		object2='@Skin/03_ReticularDermis/ms' springsIndices2='@AttachROI_03_ReticularDermis_to_0102_EpidermisPapillary.indices2' 
+		stiffness="1e5" damping="0" elongationOnly="0" enabled="1" lengths="@AttachROI_03_ReticularDermis_to_0102_EpidermisPapillary.distances" drawMode="2" showArrowSize="3e-3"/>	
+	</Node>
+	
+	
+	<Node name='04_SubcutaneousFat'>
+		<MeshGmshLoader name='mesh_loader' filename="mesh/04_SubcutaneousFat_coarse.msh"/>
+		<TetrahedronSetTopologyContainer name='tet_container' position="@mesh_loader.position" tetrahedra="@mesh_loader.tetrahedra"/>
+		<TetrahedronSetTopologyModifier name='Modifier'/>
+		<TetrahedronSetGeometryAlgorithms name='GeomAlgo' template='Vec3d' drawTetrahedra='0' drawScaleTetrahedra='0.7'/>
+		<MechanicalObject name='ms' template="Vec3d" position='@tet_container.position'/>
+		
+		<DiagonalMass name='mass' topology='@tet_container' massDensity='9e2'/>
+		<FastTetrahedralCorotationalForceField name='FEM' youngModulus='5e6' poissonRatio='0.3' method='large'/>
+		<TetrahedronGeometry name="tet_geom" mstate="@ms" topology="@tet_container" />
+		
+		<Node name='04_SubcutaneousFat_Collision'>
+			<TriangleSetTopologyContainer  name="tri_container" />
+			<TriangleSetTopologyModifier   name="tri_modifier" />
+			<TriangleSetGeometryAlgorithms name="tri_geom_algo" drawTriangles="0" template="Vec3d"/>
+			<Tetra2TriangleTopologicalMapping input="@../tet_container" output="@tri_container" />
+
+			<MechanicalObject name='ms' template="Vec3d" position='@tet_container.position'/>
+			<IdentityMapping name="mapping" input='@../ms' output='@ms'/>
+
+			<TriangleGeometry name='tri_geom' mstate='@ms' topology='@tri_container' draw='1'/>
+			<PhongTriangleNormalHandler name='tri_normals' geometry='@tri_geom'/>
+		</Node>
+		
+		<Node name='04_SubcutaneousFat_VisualModel'>
+			<MeshOBJLoader name='obj_loader' filename='mesh/04_SubcutaneousFat_visual.obj' handleSeams="1"/>
+			<OglModel name='ogl_model' src="@obj_loader" color='0.7 0.7 0.1 0.8'/>
+			<BarycentricMapping input="@../ms" output="@ogl_model"/>
+		</Node>
+		
+		<BoxROI name='StomachROI' drawBoxes='1'	box="-0.40 0.2 -0.47  0.80  1.7  -0.4
+		  -0.40  0.2  -1.60  0.80  1.7  -1.53
+		   0.72  0.2  -1.60  0.80  1.7  -0.4
+		  -0.40  0.2  -1.60 -0.30  1.7  -0.4"/>
+
+		<RestShapeSpringsForceField name="FixingSprings" stiffness='1000000' angularStiffness='1000000' points='@FixedROI.indices'/>
+		<PrecomputedConstraintCorrection printLog='1' name="ConstraintCorrection" recompute='0' fileCompliance="./compliance/04_SubcutaneousFat-2259-0.005.comp"/>
+	
+		<NearestPointROI name="AttachROI_04_SubcutaneousFat_to_03_ReticularDermis" template="Vec3d" radius="1e-2"
+		object1='@Skin/03_ReticularDermis/ms' inputIndices1='@Skin/03_ReticularDermis/ms.indices' 
+		object2='@Skin/04_SubcutaneousFat/ms' inputIndices2='@Skin/04_SubcutaneousFat/ms.indices' />
+	
+		<SpringForceField name="AttachmentSprings_04_SubcutaneousFat_to_03_ReticularDermis"
+		object1='@Skin/03_ReticularDermis/ms' springsIndices1='@AttachROI_04_SubcutaneousFat_to_03_ReticularDermis.indices1' 
+		object2='@Skin/04_SubcutaneousFat/ms' springsIndices2='@AttachROI_04_SubcutaneousFat_to_03_ReticularDermis.indices2' 
+		stiffness="1e5" damping="0" elongationOnly="0" enabled="1" lengths="@AttachROI_04_SubcutaneousFat_to_03_ReticularDermis.distances" drawMode="2" showArrowSize="3e-3"/>	
+	</Node>
+
+</Node>

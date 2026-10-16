@@ -1,0 +1,58 @@
+<Node name='NeedleAlgorithms'>
+    <Node name='0102_EpidermisPapillary_NeedleInsertionAlgorithm' activated='true'>
+        <VisualStyle displayFlags='showCollisionModels showInteractionForceFields'/>
+        <NeedleInsertionAlgorithm name='algorithm'
+                            tipGeom='@NeedleToolkit/Needle/Tip/tip_geom'
+                            shaftGeom='@NeedleToolkit/Needle/Shaft/shaft_geom'
+                            surfGeom='@/Skin/0102_EpidermisPapillary/0102_EpidermisPapillary_Collision/tri_geom'
+                            volGeom='@/Skin/0102_EpidermisPapillary/tet_geom'
+                            punctureForceThreshold='2e5'
+                            tipDistThreshold='1e-1'
+                            enableShaftCollision="0"
+                            drawcollision="0"
+        />
+        <DistanceFilter algo='@algorithm' distance='0.2'/>
+        <SecondDirection name='punctureDirection' handler="@/Skin/0102_EpidermisPapillary/0102_EpidermisPapillary_Collision/tri_normals"/>
+        <ConstraintUnilateral input='@algorithm.collisionOutput' directions='@punctureDirection' draw_scale='0.01'  mu='0.05'/>
+        <FirstDirection name='insertionDirection' handler='@NeedleToolkit/Needle/Shaft/edge_handler'/>
+        <ConstraintInsertion input='@algorithm.insertionOutput' directions='@insertionDirection' draw_scale='0.01'  frictionCoeff='5e-5'/>
+    </Node>
+
+    <Node name='03_ReticularDermis_NeedleInsertionAlgorithm' activated='true'>
+        <VisualStyle displayFlags='showCollisionModels showInteractionForceFields'/>
+        <NeedleInsertionAlgorithm name='algorithm'
+                            tipGeom='@NeedleToolkit/Needle/Tip/tip_geom'
+                            shaftGeom='@NeedleToolkit/Needle/Shaft/shaft_geom'
+                            surfGeom='@/Skin/03_ReticularDermis/03_ReticularDermis_Collision/tri_geom'
+                            volGeom='@/Skin/03_ReticularDermis/tet_geom'
+                            punctureForceThreshold='3e5'
+                            tipDistThreshold='1e-1'
+                            enableShaftCollision="0"
+                            drawcollision="0"
+        />
+        <DistanceFilter algo='@algorithm' distance='0.2'/>
+        <SecondDirection name='punctureDirection' handler="@/Skin/03_ReticularDermis/03_ReticularDermis_Collision/tri_normals"/>
+        <ConstraintUnilateral input='@algorithm.collisionOutput' directions='@punctureDirection' draw_scale='0.01'  mu='0.02'/>
+        <FirstDirection name='insertionDirection' handler='@NeedleToolkit/Needle/Shaft/edge_handler'/>
+        <ConstraintInsertion input='@algorithm.insertionOutput' directions='@insertionDirection' draw_scale='0.01'  frictionCoeff='1e-4'/>
+    </Node>
+
+    <Node name='04_SubcutaneousFat_NeedleInsertionAlgorithm' activated='true'>
+        <VisualStyle displayFlags='showCollisionModels showInteractionForceFields'/>
+        <NeedleInsertionAlgorithm name='algorithm'
+                            tipGeom='@NeedleToolkit/Needle/Tip/tip_geom'
+                            shaftGeom='@NeedleToolkit/Needle/Shaft/shaft_geom'
+                            surfGeom='@/Skin/04_SubcutaneousFat/04_SubcutaneousFat_Collision/tri_geom'
+                            volGeom='@/Skin/04_SubcutaneousFat/tet_geom'
+                            punctureForceThreshold='4e4'
+                            tipDistThreshold='1e-1'
+                            enableShaftCollision="0"
+                            drawcollision="0"
+        />
+        <DistanceFilter algo='@algorithm' distance='0.1'/>
+        <SecondDirection name='punctureDirection' handler="@/Skin/04_SubcutaneousFat/04_SubcutaneousFat_Collision/tri_normals"/>
+        <ConstraintUnilateral input='@algorithm.collisionOutput' directions='@punctureDirection' draw_scale='0.01'  mu='0.01'/>
+        <FirstDirection name='insertionDirection' handler='@NeedleToolkit/Needle/Shaft/edge_handler'/>
+        <ConstraintInsertion input='@algorithm.insertionOutput' directions='@insertionDirection' draw_scale='0.01'  frictionCoeff='0'/>
+    </Node>
+</Node>

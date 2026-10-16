@@ -1,0 +1,16 @@
+{
+    "epidermis": {
+        "filename": "mesh/forehead/Dermis_volume.msh",
+        "transformation": { "scale": [1000, 1000, 1000] },
+        "fem": "FastCorotational", "method": "large", "youngModulus": 2e7, "poissonRatio": 0.3,
+        "mass": "Diagonal", "massDensity": 1e-6,
+        "collision": { "models": ["triangle"], "groups": [1] }
+    },
+    "subcutaneous": {
+        "filename": "mesh/forehead/Subcutaneous_volume.msh",
+        "transformation": { "scale": [1000, 1000, 1000] },
+        "fem": "FastCorotational", "method": "large", "youngModulus": 3e7, "poissonRatio": 0.3,
+        "mass": "Diagonal", "massDensity": 1e-6,
+        "collision": { "models": ["triangle"], "groups": [1] }
+    }
+}

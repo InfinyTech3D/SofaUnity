@@ -15,6 +15,20 @@ namespace SofaUnity
     [ExecuteInEditMode]
     public class SofaContext : MonoBehaviour
     {
+#if UNITY_EDITOR
+        private bool IsInsidePrefabStage()
+        {
+            if (Application.isPlaying)
+                return false;
+
+            UnityEditor.SceneManagement.PrefabStage prefabStage =
+                UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage();
+
+            return prefabStage != null &&
+                   gameObject.scene == prefabStage.scene;
+        }
+#endif
+
         ////////////////////////////////////////////
         //////       SofaContext members       /////
         ////////////////////////////////////////////
@@ -74,6 +88,16 @@ namespace SofaUnity
         /// Getter of current Sofa Context API, @see m_impl
         public IntPtr GetSimuContext()
         {
+#if UNITY_EDITOR
+            if (IsInsidePrefabStage())
+            {
+                Debug.LogWarning(
+                    "SofaContext: GetSimuContext ignored while editing a prefab. " +
+                    "SOFA must not initialize inside Prefab Mode.");
+                return IntPtr.Zero;
+            }
+#endif
+
             if (m_impl == null)
                 Init();
 
@@ -155,7 +179,8 @@ namespace SofaUnity
         public bool AsyncSimulation
         {
             get { return m_asyncSimulation; }
-            set {
+            set
+            {
                 if (!Application.isPlaying)
                     m_asyncSimulation = value;
             }
@@ -195,14 +220,15 @@ namespace SofaUnity
         /// Setter to change the scene path. Will change SceneFileManager variable without any reload. Warning this assume the scene file is already loaded in SOFA and is exactly the same.
         public bool ChangeScenePath(string newPath)
         {
-            if (m_sceneFileMgr == null) {
+            if (m_sceneFileMgr == null)
+            {
                 Debug.LogError("SofaContext::ChangeScenePath: m_sceneFileMgr is null, cannot change scene path.");
                 return false;
             }
-            
+
             if (m_log)
                 Debug.Log("#### SofaContext ChangeScenePath to: " + newPath);
-            
+
             return m_sceneFileMgr.ChangeSceneFilepathNoLoad(newPath);
         }
 
@@ -240,7 +266,7 @@ namespace SofaUnity
 
         public float GetFactorUnityToSofa(int dir = -1)
         {
-            float factor = GetFactorSofaToUnity(dir);               
+            float factor = GetFactorSofaToUnity(dir);
             if (factor != 0.0f) factor = 1 / factor;
 
             return factor;
@@ -251,7 +277,7 @@ namespace SofaUnity
         ////////       Behavior methods      ///////
         ////////////////////////////////////////////
 
-        
+
         public bool breakerActivated = false;
         private int cptBreaker = 0;
         private int countDownBreaker = 10;
@@ -261,7 +287,7 @@ namespace SofaUnity
             cptBreaker = 0;
         }
 
-     
+
         public void RegisterRayCaster(SofaRayCaster obj)
         {
             if (m_casters == null)
@@ -278,11 +304,25 @@ namespace SofaUnity
         {
             m_objects.Add(obj);
         }
-       
-        
+
+
         /// Method called at GameObject creation.
         void Awake()
         {
+#if UNITY_EDITOR
+            if (IsInsidePrefabStage())
+            {
+                if (m_log)
+                {
+                    Debug.Log(
+                        "SofaContext: Prefab Mode detected. " +
+                        "Skipping SOFA initialization to prevent prefab hierarchy duplication.");
+                }
+
+                return;
+            }
+#endif
+
             if (m_log)
             {
                 if (Application.isPlaying)
@@ -313,13 +353,13 @@ namespace SofaUnity
         /// Method called at GameObject destruction.
         void OnDestroy()
         {
-            if(m_log)
+            if (m_log)
                 Debug.Log("SofaContext::OnDestroy stop called.");
 
             if (m_impl != null)
             {
                 if (m_log)
-                    Debug.Log("SofaContext::OnDestroy stop now.");                
+                    Debug.Log("SofaContext::OnDestroy stop now.");
 
                 if (m_log)
                     Debug.Log("## SofaContext status before stop: " + m_impl.contextStatus());
@@ -400,6 +440,16 @@ namespace SofaUnity
         /// Internal Method to init the SofaContext object
         void Init()
         {
+#if UNITY_EDITOR
+            if (IsInsidePrefabStage())
+            {
+                Debug.LogWarning(
+                    "SofaContext: Init ignored while editing a prefab. " +
+                    "This prevents SOFA from reconnecting/recreating the prefab hierarchy.");
+                return;
+            }
+#endif
+
             //if (this.transform.localScale.x > 0)
             //{
             //    Vector3 scale = this.transform.localScale;
@@ -421,8 +471,6 @@ namespace SofaUnity
             }
             DoCatchSofaMessages();
 
-            SofaComponentFactory.InitBaseFactoryType();
-
 
             // Create the NodeMgr
             if (m_nodeGraphMgr == null)
@@ -433,7 +481,7 @@ namespace SofaUnity
             // Create the GraphicAPI
             if (m_graphicAPI == null)
                 m_graphicAPI = new SofaGraphicAPI();
-            else 
+            else
                 Debug.LogWarning("## m_graphicAPI already created...");
 
 
@@ -447,11 +495,19 @@ namespace SofaUnity
 #if !UNITY_ANDROID
             m_pluginMgr.LoadPlugins();
 #endif
+
+            // IMPORTANT:
+            // Initialize the Unity-side SOFA component/API factory only AFTER
+            // all native plugins are loaded. In a clean standalone Player,
+            // initializing the factory before plugin loading can leave plugin
+            // component types unavailable during ReconnectSofaScene().
+            SofaComponentFactory.InitBaseFactoryType();
+
             if (m_log)
             {
                 m_pluginMgr.printAvailablePlugin();
             }
-                
+
             // start sofa instance
             if (m_log)
                 Debug.Log("## SofaContext status before start: " + m_impl.contextStatus());
@@ -476,11 +532,11 @@ namespace SofaUnity
                 // reconnect the full graph
                 ReconnectSofaScene();
             }
-                
+
 
             if (m_log)
                 Debug.Log("## SofaContext status end init: " + m_impl.contextStatus());
-            
+
             // set gravity and timestep if changed in editor
             m_impl.timeStep = m_timeStep;
             m_impl.setGravity(m_gravity);
@@ -512,7 +568,7 @@ namespace SofaUnity
             else
                 UpdateImplSync();
 
-            
+
 
             // counter if need to freeze the simulation for several iterations
             cptBreaker++;
@@ -539,7 +595,7 @@ namespace SofaUnity
             //    m_times.Add(Time.time);
             //    float sofaTime = m_impl.GetTime();
             //    m_sofaTimes.Add(sofaTime);
-                
+
             //    Debug.Log("Step: " + countStep + " | time: " + Time.time + " | SOFA: " + sofaTime);
 
             //    if (countStep == 1000)
@@ -557,7 +613,7 @@ namespace SofaUnity
             //}
             //countStep++;
         }
-                
+
 
         private float nextUpdate = 0.0f;
 
@@ -583,7 +639,7 @@ namespace SofaUnity
                 // if physics simulation async step is still running do not wait and return the control to Unity
                 if (m_impl.isAsyncStepCompleted())
                 {
-//                    Debug.Log("isAsyncStepCompleted: YES ");
+                    //                    Debug.Log("isAsyncStepCompleted: YES ");
 
                     // physics simulation step completed and is not running
                     // perform data synchronization safely (no need of synchronization locks)                        
@@ -608,7 +664,7 @@ namespace SofaUnity
                 }
                 else
                 {
-//                    Debug.Log("isAsyncStepCompleted: NO ");
+                    //                    Debug.Log("isAsyncStepCompleted: NO ");
                 }
             }
         }
@@ -625,7 +681,7 @@ namespace SofaUnity
                 m_impl.activateMessageHandler(true);
                 isMsgHandlerActivated = true;
             }
-            else if(!CatchSofaMessages && isMsgHandlerActivated)
+            else if (!CatchSofaMessages && isMsgHandlerActivated)
             {
                 m_impl.activateMessageHandler(false);
                 isMsgHandlerActivated = false;
@@ -633,11 +689,11 @@ namespace SofaUnity
 
             if (isMsgHandlerActivated)
             {
-                 m_impl.DisplayMessages();
+                m_impl.DisplayMessages();
             }
         }
 
-        
+
 
         /// Method to load a filename and create GameObject per Sofa object found.
         public void LoadSofaScene()
@@ -654,7 +710,7 @@ namespace SofaUnity
                 Debug.LogError("m_impl is null");
                 return;
             }
-            
+
             m_impl.loadScene(m_sceneFileMgr.AbsoluteFilename());
 
             // Retrieve current timestep and gravity
@@ -721,7 +777,7 @@ namespace SofaUnity
             m_impl.start();
         }
 
-        
+
         public void SofaKeyPressEvent(int keyId)
         {
             m_impl.SofaKeyPressEvent(keyId);

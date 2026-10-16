@@ -1,0 +1,46 @@
+{
+    "length": 15,
+    "numSegments": 30,
+    "basePosition": [5, 55, 130],
+    "directionVector": [0, 1, 0],
+    "radius": 0.3,
+    "youngModulus": 5e17,
+    "poissonRatio": 0.3,
+    "totalMass": 2e-5,
+    "attachmentPoint": "tip",
+    "springStiffness": 2e6,
+    "angularStiffness": 1e13,
+    "hasVisual": true,
+    "collision": { "models": ["line"], "groups": [2] },
+    "controller": {
+        "mode": "haptics",
+        "driverType": "Haply",
+
+
+        "scale": 500,
+        "positionBase": [-60, 80, 30],
+
+
+        "orientationBase": [-0.2705981, 0.6532815, -0.2705981, 0.6532815 ],
+        "calibrationOrientation": [0, -0.7071068, 0, 0.7071068],
+        "forceCoef": 2e-6,
+        "draw": true,
+        "visualization": {
+            "stylus": { "filename": "mesh/haply/Stylus.obj" },
+            "body":   { "filename": "mesh/haply/Inverse3.obj" }
+        }
+    },
+    "solvers": {
+        "odeSolver":    { "type": "EulerImplicitSolver", "firstOrder": true },
+        "linearSolver": { "type": "SparseLDLSolver", "template": "CompressedRowSparseMatrixMat3x3d" },
+        "correction":   { "type": "LinearSolverConstraintCorrection", "template": "Rigid3d" }
+    },
+    "insertion": {
+        "tipDistThreshold": 2,
+        "contactDistance": 0.1,
+        "pipeline": { "alarmDistance": 0.5, "contactDistance": 0.1, "mu": 0 },
+        "Epidermis":    { "punctureForceThreshold": 2.0e8, "mu": 0.2,  "frictionCoeff": 1e-3, "scaleComplianceMatrix": true },
+        "Subcutaneous": { "punctureForceThreshold": 3.0e8, "mu": 0.01, "frictionCoeff": 1e-5, "scaleComplianceMatrix": true},        
+        "Skull":        { "mu": 0.02 }
+    }
+}

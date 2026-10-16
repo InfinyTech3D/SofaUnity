@@ -356,6 +356,9 @@ namespace SofaUnity
             PluginManager.Instance.AddPlugin("SofaPython3");
             PluginManager.Instance.AddPlugin("Tearing");
             PluginManager.Instance.AddPlugin("MultiThreading");
+            PluginManager.Instance.AddPlugin("InfinyPrefabs");
+            PluginManager.Instance.AddPlugin("SofaHaplyRobotics");
+            PluginManager.Instance.AddPlugin("NeedleInsertion");
         }
 #endif
     }
