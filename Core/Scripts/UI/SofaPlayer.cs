@@ -148,13 +148,19 @@ namespace SofaUnity
 
         public void exitApplication()
         {
-            if (m_sofaContext != null)
-            {
-                m_sofaContext.IsSofaUpdating = false;
-                m_sofaContext.ClearSofaScene();
-            }
 
-            Application.Quit();
+            if (Application.CanStreamedLevelBeLoaded("Profile"))
+            {
+                SceneManager.LoadScene("Profile");
+               
+
+            }
+            else
+            {
+                Application.Quit();
+               
+
+            }
         }
 
         public void restartSofaSimulation()
