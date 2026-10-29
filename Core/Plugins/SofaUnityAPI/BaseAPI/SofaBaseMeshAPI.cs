@@ -435,7 +435,7 @@ namespace SofaUnityAPI
             {
                 int nbrV = sofaMeshAPI_getNbVertices(m_simu, m_name);
 
-                if (nbrV < 0)
+                if (nbrV <= 0)
                     return;
 
                 // get access to sofa buffers
@@ -775,7 +775,7 @@ namespace SofaUnityAPI
             Vector3 meanNorm = Vector3.zero;
             for (int i = 0; i < test; i++)
             {
-                int id = UnityEngine.Random.Range(1, nbrV);
+                int id = UnityEngine.Random.Range(1, nbrV-1);
                 dist = dist + (verts[id] - verts[id - 1]).magnitude;
                 meanNorm += normals[id];
             }
