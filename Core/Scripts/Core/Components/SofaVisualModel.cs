@@ -216,9 +216,7 @@ namespace SofaUnity
 #endif
 
                 m_mesh.name = "SofaVisualModel";
-                m_mesh.vertices = new Vector3[0];
                 m_sofaMeshAPI.updateMesh(m_mesh);
-
                 m_mesh.triangles = m_sofaMeshAPI.createTriangulation();
 
                 UpdateTexCoords();
