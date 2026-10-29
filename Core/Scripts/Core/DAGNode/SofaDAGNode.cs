@@ -391,7 +391,7 @@ namespace SofaUnity
                 {
                     if (!component.IsReady()) // not reconnected, need to remove old component
                     {
-                        Debug.LogWarning("Component: '" + component.DisplayName + "' under node: '" + child.name + "' not reconnected to a SOFA component. GameObject will be removed.");
+                        Debug.LogError("Component: '" + component.DisplayName + "' under node: '" + child.name + "' not reconnected to a SOFA component. GameObject will be removed.");
                         DestroyImmediate(component.gameObject);
                     }
                 }

@@ -177,7 +177,7 @@ namespace SofaUnity
             
             if (nbrNode != nodes.Length)
             {
-                Debug.LogWarning("SofaDAGNodeManager Error while reconnecting the graph: " + nodes.Length + " DAGNode found in Unity instead of : " + nbrNode + " from SOFA side.");
+                Debug.LogError("SofaDAGNodeManager Error while reconnecting the graph: " + nodes.Length + " DAGNode found in Unity instead of : " + nbrNode + " from SOFA side.");
                 RepairDAGNodeGraph();
                 return;
             }
@@ -497,7 +497,7 @@ namespace SofaUnity
             // Check if some Node are still in the map. They are no longer mapped to a SOFA node. Remove them
             foreach (KeyValuePair<string, SofaDAGNode> entry in unityNodeMap)
             {
-                Debug.LogWarning("Unity DAG Node not reconnected. Will remove it: " + entry.Key);
+                Debug.LogError("Unity DAG Node not reconnected. Will remove it: " + entry.Key);
                 entry.Value.DestroyDAGNode(true);
             }
         }
