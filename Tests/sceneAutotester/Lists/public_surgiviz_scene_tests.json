@@ -1,0 +1,75 @@
+{
+    "unity_editor": "",
+    "project_path": "",
+    "output_dir": "results_public~",
+    "defaults": {
+        "warmup": 3,
+        "duration": 5,
+        "min_fps": 0,
+        "timeout": 300,
+        "fail_on_errors": false,
+        "ignore_errors": []
+    },
+    "scenes": [
+        {
+            "name": "AuthScene",
+            "path": "Assets/SurgiViz4DServerMDB/Scenes/AuthScene.unity"
+        },
+        {
+            "name": "Profile",
+            "path": "Assets/SurgiViz4DServerMDB/Scenes/Profile.unity"
+        },
+        {
+            "name": "QuitScene",
+            "path": "Assets/SurgiViz4DServerMDB/Scenes/QuitScene.unity"
+        },
+        {
+            "name": "ColonoscopyScene",
+            "path": "Assets/SurgiViz4D/Operations/Endoscopy/Colonoscopy/ColonoscopyScene.unity"
+        },
+        {
+            "name": "UreteroscopyScene",
+            "path": "Assets/SurgiViz4D/Operations/Endoscopy/Ureteroscopy/UreteroscopyScene.unity"
+        },
+        {
+            "name": "Serveur_HepaticPreoperativePlanning",
+            "path": "Assets/SurgiViz4D/Operations/Hepatobiliary_Surgery/PreoperativePlanning/Serveur_HepaticPreoperativePlanning.unity"
+        },
+        {
+            "name": "InteractionLandmark",
+            "path": "Assets/SurgiViz4D/Features/SofaUnity/Landmark/InteractionLandmark.unity"
+        },
+        {
+            "name": "Example_01_SimpleLiver",
+            "path": "Assets/SofaUnity/Scenes/Examples/Example_01_SimpleLiver.unity"
+        },
+        {
+            "name": "Demo_02_LiverInteraction-HD",
+            "path": "Assets/SofaUnity/Scenes/Demos/Interaction/Demo_02_LiverInteraction-HD.unity"
+        },
+        {
+            "name": "Sample_Landmark",
+            "path": "Assets/SurgiViz4D/Features/SofaUnity/Landmark/Sample_Landmark.unity"
+        },
+        {
+            "name": "Demo-02_LiverInteraction",
+            "path": "Assets/SofaUnityXR/Scenes/Demo-02_LiverInteraction.unity"
+        },
+        {
+            "name": "Example_04_DeformableObjectsCollision",
+            "path": "Assets/SofaUnity/Scenes/Examples/Example_04_DeformableObjectsCollision.unity"
+        },
+        {
+            "name": "Example_10_VonMisesDisplay",
+            "path": "Assets/SofaUnity/Scenes/Examples/Example_10_VonMisesDisplay.unity"
+        },
+        {
+            "name": "Example_11_DataUI",
+            "path": "Assets/SofaUnity/Scenes/Examples/Example_11_DataUI.unity"
+        },
+        {
+            "name": "Demo_08_MouseTissuePicking",
+            "path": "Assets/SofaUnity/Scenes/Demos/Interaction/Demo_08_MouseTissuePicking.unity"
+        }
+    ]
+}

@@ -1,0 +1,343 @@
+{
+    "unity_editor": "",
+    "project_path": "",
+    "output_dir": "results_all~",
+    "defaults": {
+        "warmup": 3,
+        "duration": 5,
+        "min_fps": 0,
+        "timeout": 300,
+        "fail_on_errors": false,
+        "ignore_errors": []
+    },
+    "scenes": [
+        {
+            "name": "XRay_Caduceus",
+            "path": "Assets/SofaUnity/Modules/Fluoroscopy/Examples/XRay_Caduceus.unity"
+        },
+        {
+            "name": "XRay_CollisionMultiple",
+            "path": "Assets/SofaUnity/Modules/Fluoroscopy/Examples/XRay_CollisionMultiple.unity"
+        },
+        {
+            "name": "XRay_Liver",
+            "path": "Assets/SofaUnity/Modules/Fluoroscopy/Examples/XRay_Liver.unity"
+        },
+        {
+            "name": "XRay_SPHFluid",
+            "path": "Assets/SofaUnity/Modules/Fluoroscopy/Examples/XRay_SPHFluid.unity"
+        },
+        {
+            "name": "01-Geomagic-Motion",
+            "path": "Assets/SofaUnity/Modules/Geomagic/Examples/01-Geomagic-Motion.unity"
+        },
+        {
+            "name": "02-Geomagic-RigidContacts",
+            "path": "Assets/SofaUnity/Modules/Geomagic/Examples/02-Geomagic-RigidContacts.unity"
+        },
+        {
+            "name": "03-Geomagic-RigidCubes",
+            "path": "Assets/SofaUnity/Modules/Geomagic/Examples/03-Geomagic-RigidCubes.unity"
+        },
+        {
+            "name": "04-Geomagic-DeformableCubes",
+            "path": "Assets/SofaUnity/Modules/Geomagic/Examples/04-Geomagic-DeformableCubes.unity"
+        },
+        {
+            "name": "05-Geomagic-RigidSkull",
+            "path": "Assets/SofaUnity/Modules/Geomagic/Examples/05-Geomagic-RigidSkull.unity"
+        },
+        {
+            "name": "06-Geomagic-DeformableLiver",
+            "path": "Assets/SofaUnity/Modules/Geomagic/Examples/06-Geomagic-DeformableLiver.unity"
+        },
+        {
+            "name": "07-Geomagic-2devices-RigidSkull",
+            "path": "Assets/SofaUnity/Modules/Geomagic/Examples/07-Geomagic-2devices-RigidSkull.unity"
+        },
+        {
+            "name": "08-Geomagic-2devices-DeformableLiver",
+            "path": "Assets/SofaUnity/Modules/Geomagic/Examples/08-Geomagic-2devices-DeformableLiver.unity"
+        },
+        {
+            "name": "Inverse3-01-DeviceMotion",
+            "path": "Assets/SofaUnity/Modules/HaplyRobotics/Examples/Inverse3-01-DeviceMotion.unity"
+        },
+        {
+            "name": "Inverse3-02-RigidSphere",
+            "path": "Assets/SofaUnity/Modules/HaplyRobotics/Examples/Inverse3-02-RigidSphere.unity"
+        },
+        {
+            "name": "Inverse3-03-DeformableSphere",
+            "path": "Assets/SofaUnity/Modules/HaplyRobotics/Examples/Inverse3-03-DeformableSphere.unity"
+        },
+        {
+            "name": "Inverse3-04-RigidCube",
+            "path": "Assets/SofaUnity/Modules/HaplyRobotics/Examples/Inverse3-04-RigidCube.unity"
+        },
+        {
+            "name": "Inverse3-05-DeformableCubes",
+            "path": "Assets/SofaUnity/Modules/HaplyRobotics/Examples/Inverse3-05-DeformableCubes.unity"
+        },
+        {
+            "name": "Inverse3-06-RigidSkull",
+            "path": "Assets/SofaUnity/Modules/HaplyRobotics/Examples/Inverse3-06-RigidSkull.unity"
+        },
+        {
+            "name": "Inverse3-07-DeformableLiver",
+            "path": "Assets/SofaUnity/Modules/HaplyRobotics/Examples/Inverse3-07-DeformableLiver.unity"
+        },
+        {
+            "name": "Demo_01_SingleGrasper-motion",
+            "path": "Assets/SofaUnity/Modules/HapticAvatar/Examples/Demo_01_SingleGrasper-motion.unity"
+        },
+        {
+            "name": "Demo_02_SingleGrasper-rigidFloor",
+            "path": "Assets/SofaUnity/Modules/HapticAvatar/Examples/Demo_02_SingleGrasper-rigidFloor.unity"
+        },
+        {
+            "name": "Demo_03_SingleGrasper-RigidCube",
+            "path": "Assets/SofaUnity/Modules/HapticAvatar/Examples/Demo_03_SingleGrasper-RigidCube.unity"
+        },
+        {
+            "name": "Demo_04_SingleGrasper-DeformableCube",
+            "path": "Assets/SofaUnity/Modules/HapticAvatar/Examples/Demo_04_SingleGrasper-DeformableCube.unity"
+        },
+        {
+            "name": "Demo_05_SingleGrasper-RigidCactus",
+            "path": "Assets/SofaUnity/Modules/HapticAvatar/Examples/Demo_05_SingleGrasper-RigidCactus.unity"
+        },
+        {
+            "name": "Demo_06_SingleGrasper-DeformableCactus",
+            "path": "Assets/SofaUnity/Modules/HapticAvatar/Examples/Demo_06_SingleGrasper-DeformableCactus.unity"
+        },
+        {
+            "name": "Demo_07_SingleGrasper-DeformableLiver",
+            "path": "Assets/SofaUnity/Modules/HapticAvatar/Examples/Demo_07_SingleGrasper-DeformableLiver.unity"
+        },
+        {
+            "name": "Demo_10_DualGraspers-motion",
+            "path": "Assets/SofaUnity/Modules/HapticAvatar/Examples/Demo_10_DualGraspers-motion.unity"
+        },
+        {
+            "name": "Demo_11_DualGraspers-RigidFloor",
+            "path": "Assets/SofaUnity/Modules/HapticAvatar/Examples/Demo_11_DualGraspers-RigidFloor.unity"
+        },
+        {
+            "name": "Demo_12_DualGraspers-RigidCube",
+            "path": "Assets/SofaUnity/Modules/HapticAvatar/Examples/Demo_12_DualGraspers-RigidCube.unity"
+        },
+        {
+            "name": "Demo_13_DualGraspers-DeformableCube",
+            "path": "Assets/SofaUnity/Modules/HapticAvatar/Examples/Demo_13_DualGraspers-DeformableCube.unity"
+        },
+        {
+            "name": "Demo_14_DualGraspers-DeformableTorus",
+            "path": "Assets/SofaUnity/Modules/HapticAvatar/Examples/Demo_14_DualGraspers-DeformableTorus.unity"
+        },
+        {
+            "name": "MultiSofacontexttesting",
+            "path": "Assets/SofaUnity/Modules/Ultrasound/Examples/MultiSofacontexttesting.unity"
+        },
+        {
+            "name": "Ultrasound_IRCAD_demo_auto",
+            "path": "Assets/SofaUnity/Modules/Ultrasound/Examples/Ultrasound_IRCAD_demo_auto.unity"
+        },
+        {
+            "name": "Ultrasound_IRCAD_demo_manual",
+            "path": "Assets/SofaUnity/Modules/Ultrasound/Examples/Ultrasound_IRCAD_demo_manual.unity"
+        },
+        {
+            "name": "tototest",
+            "path": "Assets/SofaUnity/Modules/Ultrasound/Examples/tototest.unity"
+        },
+        {
+            "name": "HeatTextureTest",
+            "path": "Assets/SofaUnity/Scenes/Benchmarks/HeatTextureTest.unity"
+        },
+        {
+            "name": "Raptor-Tetra2triangle-CUDA",
+            "path": "Assets/SofaUnity/Scenes/Benchmarks/Raptor-Tetra2triangle-CUDA.unity"
+        },
+        {
+            "name": "Raptor-Tetra2triangle",
+            "path": "Assets/SofaUnity/Scenes/Benchmarks/Raptor-Tetra2triangle.unity"
+        },
+        {
+            "name": "liverHD-CUDA",
+            "path": "Assets/SofaUnity/Scenes/Benchmarks/liverHD-CUDA.unity"
+        },
+        {
+            "name": "liverHD-FastCorotational",
+            "path": "Assets/SofaUnity/Scenes/Benchmarks/liverHD-FastCorotational.unity"
+        },
+        {
+            "name": "liverHD",
+            "path": "Assets/SofaUnity/Scenes/Benchmarks/liverHD.unity"
+        },
+        {
+            "name": "BeamDemo_01_Texture",
+            "path": "Assets/SofaUnity/Scenes/Demos/Endoscopy/BeamAdapter/BeamDemo_01_Texture.unity"
+        },
+        {
+            "name": "BeamDemo_02_KV1",
+            "path": "Assets/SofaUnity/Scenes/Demos/Endoscopy/BeamAdapter/BeamDemo_02_KV1.unity"
+        },
+        {
+            "name": "BeamDemo_03_Ureteroscopy",
+            "path": "Assets/SofaUnity/Scenes/Demos/Endoscopy/BeamAdapter/BeamDemo_03_Ureteroscopy.unity"
+        },
+        {
+            "name": "BeamDemo_04_3instruments",
+            "path": "Assets/SofaUnity/Scenes/Demos/Endoscopy/BeamAdapter/BeamDemo_04_3instruments.unity"
+        },
+        {
+            "name": "Capsule_simulation_constraint",
+            "path": "Assets/SofaUnity/Scenes/Demos/Endoscopy/Virtual Capsule Endoscopy/Scenes/Capsule_simulation_constraint.unity"
+        },
+        {
+            "name": "Capsule_simulation_final",
+            "path": "Assets/SofaUnity/Scenes/Demos/Endoscopy/Virtual Capsule Endoscopy/Scenes/Capsule_simulation_final.unity"
+        },
+        {
+            "name": "Capsule_simulation_narrow_path",
+            "path": "Assets/SofaUnity/Scenes/Demos/Endoscopy/Virtual Capsule Endoscopy/Scenes/Capsule_simulation_narrow_path.unity"
+        },
+        {
+            "name": "Capsule_simulation_narrow_path_constraint",
+            "path": "Assets/SofaUnity/Scenes/Demos/Endoscopy/Virtual Capsule Endoscopy/Scenes/Capsule_simulation_narrow_path_constraint.unity"
+        },
+        {
+            "name": "Demo_01_LiverInteraction",
+            "path": "Assets/SofaUnity/Scenes/Demos/Interaction/Demo_01_LiverInteraction.unity"
+        },
+        {
+            "name": "Demo_02_LiverInteraction-HD",
+            "path": "Assets/SofaUnity/Scenes/Demos/Interaction/Demo_02_LiverInteraction-HD.unity"
+        },
+        {
+            "name": "Demo_03_CubeCarving",
+            "path": "Assets/SofaUnity/Scenes/Demos/Interaction/Demo_03_CubeCarving.unity"
+        },
+        {
+            "name": "Demo_04_CubeAdvancedCarving",
+            "path": "Assets/SofaUnity/Scenes/Demos/Interaction/Demo_04_CubeAdvancedCarving.unity"
+        },
+        {
+            "name": "Demo_05_LiverCut",
+            "path": "Assets/SofaUnity/Scenes/Demos/Interaction/Demo_05_LiverCut.unity"
+        },
+        {
+            "name": "Demo_06_LiverCut-CUDA",
+            "path": "Assets/SofaUnity/Scenes/Demos/Interaction/Demo_06_LiverCut-CUDA.unity"
+        },
+        {
+            "name": "Demo_07_MeshController",
+            "path": "Assets/SofaUnity/Scenes/Demos/Interaction/Demo_07_MeshController.unity"
+        },
+        {
+            "name": "Demo_08_MouseTissuePicking",
+            "path": "Assets/SofaUnity/Scenes/Demos/Interaction/Demo_08_MouseTissuePicking.unity"
+        },
+        {
+            "name": "Demo_09_SphereCollisionObject",
+            "path": "Assets/SofaUnity/Scenes/Demos/Interaction/Demo_09_SphereCollisionObject.unity"
+        },
+        {
+            "name": "LiverPyhon",
+            "path": "Assets/SofaUnity/Scenes/Demos/Python/LiverPyhon.unity"
+        },
+        {
+            "name": "LiverPyhonController",
+            "path": "Assets/SofaUnity/Scenes/Demos/Python/LiverPyhonController.unity"
+        },
+        {
+            "name": "Demo_01_TearingGravity",
+            "path": "Assets/SofaUnity/Scenes/Demos/Tearing/Demo_01_TearingGravity.unity"
+        },
+        {
+            "name": "Demo_02_TearingInteraction",
+            "path": "Assets/SofaUnity/Scenes/Demos/Tearing/Demo_02_TearingInteraction.unity"
+        },
+        {
+            "name": "Example_01_SimpleLiver",
+            "path": "Assets/SofaUnity/Scenes/Examples/Example_01_SimpleLiver.unity"
+        },
+        {
+            "name": "Example_02_Caduceus",
+            "path": "Assets/SofaUnity/Scenes/Examples/Example_02_Caduceus.unity"
+        },
+        {
+            "name": "Example_03_SimpleObjectsCollision",
+            "path": "Assets/SofaUnity/Scenes/Examples/Example_03_SimpleObjectsCollision.unity"
+        },
+        {
+            "name": "Example_04_DeformableObjectsCollision",
+            "path": "Assets/SofaUnity/Scenes/Examples/Example_04_DeformableObjectsCollision.unity"
+        },
+        {
+            "name": "Example_05_SoftTissue",
+            "path": "Assets/SofaUnity/Scenes/Examples/Example_05_SoftTissue.unity"
+        },
+        {
+            "name": "Example_06_BeamModels",
+            "path": "Assets/SofaUnity/Scenes/Examples/Example_06_BeamModels.unity"
+        },
+        {
+            "name": "Example_07_SPHFluid",
+            "path": "Assets/SofaUnity/Scenes/Examples/Example_07_SPHFluid.unity"
+        },
+        {
+            "name": "Example_08_SPHFluidParticles",
+            "path": "Assets/SofaUnity/Scenes/Examples/Example_08_SPHFluidParticles.unity"
+        },
+        {
+            "name": "Example_09_HeatDiffusion",
+            "path": "Assets/SofaUnity/Scenes/Examples/Example_09_HeatDiffusion.unity"
+        },
+        {
+            "name": "Example_10_VonMisesDisplay",
+            "path": "Assets/SofaUnity/Scenes/Examples/Example_10_VonMisesDisplay.unity"
+        },
+        {
+            "name": "Example_11_DataUI",
+            "path": "Assets/SofaUnity/Scenes/Examples/Example_11_DataUI.unity"
+        },
+        {
+            "name": "Testrendering_Example_01_SimpleLiver 1",
+            "path": "Assets/SofaUnity/Scenes/Examples/Testrendering_Example_01_SimpleLiver 1.unity"
+        },
+        {
+            "name": "SofaSphereCollisionObject",
+            "path": "Assets/SofaUnity/Scenes/Tutorials/SofaSphereCollisionObject.unity"
+        },
+        {
+            "name": "SurfacePressureForceField",
+            "path": "Assets/SofaUnity/Scenes/Tutorials/SurfacePressureForceField.unity"
+        },
+        {
+            "name": "UI_interface",
+            "path": "Assets/SofaUnity/Scenes/WorkInProgress/UI_interface.unity"
+        },
+        {
+            "name": "immersion_control",
+            "path": "Assets/SofaUnity/Scenes/WorkInProgress/immersion_control.unity"
+        },
+        {
+            "name": "test_room",
+            "path": "Assets/SofaUnity/Scenes/WorkInProgress/test_room.unity"
+        },
+        {
+            "name": "test_texture",
+            "path": "Assets/SofaUnity/Scenes/WorkInProgress/test_texture.unity"
+        },
+        {
+            "name": "ScenesChecker",
+            "path": "Assets/SofaUnity/Tests/ScenesChecker.unity"
+        },
+        {
+            "name": "SofaVerseAPI_ConnexionTest",
+            "path": "Assets/SofaUnity/Tests/SofaVerseAPI_ConnexionTest.unity"
+        }
+    ]
+}

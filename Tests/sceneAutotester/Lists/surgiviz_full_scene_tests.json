@@ -1,0 +1,95 @@
+{
+    "unity_editor": "",
+    "project_path": "",
+    "output_dir": "results_surgiviz_full~",
+    "defaults": {
+        "warmup": 3,
+        "duration": 5,
+        "min_fps": 0,
+        "timeout": 300,
+        "fail_on_errors": false,
+        "ignore_errors": []
+    },
+    "scenes": [
+        {
+            "name": "Serveur_HepaticPreoperativePlanning",
+            "path": "Assets/SurgiViz4D/Operations/Hepatobiliary_Surgery/PreoperativePlanning/Serveur_HepaticPreoperativePlanning.unity"
+        },
+        {
+            "name": "Multi_US_OpenHepaticSurgery",
+            "path": "Assets/SurgiViz4D/Operations/Hepatobiliary_Surgery/UltraSound/Multi_US_OpenHepaticSurgery.unity"
+        },
+        {
+            "name": "HepaticPreoperativePlanning",
+            "path": "Assets/SurgiViz4D/Operations/Hepatobiliary_Surgery/PreoperativePlanning/HepaticPreoperativePlanning.unity"
+        },
+        {
+            "name": "SessionLandmark",
+            "path": "Assets/SurgiViz4D/Features/SofaUnity/Landmark/SessionLandmark.unity"
+        },
+        {
+            "name": "InteractionLandmark",
+            "path": "Assets/SurgiViz4D/Features/SofaUnity/Landmark/InteractionLandmark.unity"
+        },
+        {
+            "name": "HapticManipulationTraining",
+            "path": "Assets/SurgiViz4D/Features/Haptics/Inverse3/Scene/HapticManipulationTraining.unity"
+        },
+        {
+            "name": "Multi_US_Haptic_OpenHepaticSurgery",
+            "path": "Assets/SurgiViz4D/Operations/Hepatobiliary_Surgery/UltraSound/Haptic/Multi_US_Haptic_OpenHepaticSurgery.unity"
+        },
+        {
+            "name": "Multi_Liver_Needle_Insertion",
+            "path": "Assets/SurgiViz4D/Operations/Hepatobiliary_Surgery/Haptics/Multi_Liver_Needle_Insertion.unity"
+        },
+        {
+            "name": "Example_02_Caduceus",
+            "path": "Assets/SofaUnity/Scenes/Examples/Example_02_Caduceus.unity"
+        },
+        {
+            "name": "Sample_US_Haptic_OpenHepaticSurgery",
+            "path": "Assets/SurgiViz4D/Operations/Hepatobiliary_Surgery/UltraSound/Haptic/Sample_US_Haptic_OpenHepaticSurgery.unity"
+        },
+        {
+            "name": "Example_01_SimpleLiver",
+            "path": "Assets/SofaUnity/Scenes/Examples/Example_01_SimpleLiver.unity"
+        },
+        {
+            "name": "Sample_Landmark",
+            "path": "Assets/SurgiViz4D/Features/SofaUnity/Landmark/Sample_Landmark.unity"
+        },
+        {
+            "name": "Demo-02_LiverInteraction",
+            "path": "Assets/SofaUnityXR/Scenes/Demo-02_LiverInteraction.unity"
+        },
+        {
+            "name": "Example_04_DeformableObjectsCollision",
+            "path": "Assets/SofaUnity/Scenes/Examples/Example_04_DeformableObjectsCollision.unity"
+        },
+        {
+            "name": "QuitScene",
+            "path": "Assets/SurgiViz4DServerMDB/Scenes/QuitScene.unity"
+        },
+        {
+            "name": "Example_10_VonMisesDisplay",
+            "path": "Assets/SofaUnity/Scenes/Examples/Example_10_VonMisesDisplay.unity"
+        },
+        {
+            "name": "Example_11_DataUI",
+            "path": "Assets/SofaUnity/Scenes/Examples/Example_11_DataUI.unity"
+        },
+        {
+            "name": "Demo_08_MouseTissuePicking",
+            "path": "Assets/SofaUnity/Scenes/Demos/Interaction/Demo_08_MouseTissuePicking.unity"
+        },
+        {
+            "name": "ColonoscopyScene",
+            "path": "Assets/SurgiViz4D/Operations/Endoscopy/Colonoscopy/ColonoscopyScene.unity"
+        },
+        {
+            "name": "UreteroscopyScene",
+            "path": "Assets/SurgiViz4D/Operations/Endoscopy/Ureteroscopy/UreteroscopyScene.unity"
+        }
+    ]
+}
