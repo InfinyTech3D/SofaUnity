@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 4559319322888466562}
   - component: {fileID: 4559319322888466563}
   - component: {fileID: 4559319322888466560}
+  - component: {fileID: 9005520955622145770}
   m_Layer: 0
   m_Name: floor
   m_TagString: Untagged
@@ -186,7 +187,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 701d9d654b84ca443ae5ceeaa267b985, type: 2}
+  - {fileID: 2100000, guid: 051050c7737ecb844925f2def67787ac, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -230,6 +231,24 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &9005520955622145770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4559319322888466566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42e8f613ecb87f44b8ff0d51ab7d0ab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_targetCamera: {fileID: 0}
+  m_resolutionScale: 0.5
+  m_clipPlaneOffset: 0.05
+  m_reflectLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &4559319323311001904
 GameObject:
   m_ObjectHideFlags: 0
