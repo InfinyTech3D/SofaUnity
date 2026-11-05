@@ -6,10 +6,9 @@ Usage:
     python run_scene_tests.py --scene Example_01_SimpleLiver
     python run_scene_tests.py --config sofaunity_all_scene_tests.json   # read from Lists/
     python run_scene_tests.py -s public_surgiviz_scene_tests   # Assets/SurgiViz4D/Tests/Lists/
-    python run_scene_tests.py -l LNR_scene_tests               # Assets/SofaLnRobotics/Tests/Lists/
 
-A bare list name is looked up in the Lists/ folder of SofaUnity (--config), SurgiViz4D (-s)
-or SofaLnRobotics (-l); ".json" is optional. A --config path with folders is used as is.
+A bare list name is looked up in the Lists/ folder of SofaUnity (--config) or SurgiViz4D (-s);
+".json" is optional. A --config path with folders is used as is.
 Result JSON files are prefixed EMPTY_ when no SofaContext was found in the scene,
 ERROR_ when the scene failed, and WARN_ when SOFA runs but errors were logged.
 
@@ -24,15 +23,15 @@ import sys
 import time
 from pathlib import Path
 
+# Naming convention: every folder used by the autotester starts with an upper case letter
+# (Lists, Results, Editor, and the output_dir of each list, e.g. Results_all~).
 SCRIPT_DIR = Path(__file__).resolve().parent
 LISTS_DIR = SCRIPT_DIR / "Lists"
-# Lists of the other projects, relative to the Unity project root
+# Lists of SurgiViz4D, relative to the Unity project root
 SURGIVIZ_LISTS_DIR = Path("Assets/SurgiViz4D/Tests/Lists")
-LNROBOTICS_LISTS_DIR = Path("Assets/SofaLnRobotics/Tests/Lists")
 # each list writes into its own output_dir in the result folder of its project (ignored by git)
-RESULT_DIR = SCRIPT_DIR / "result"
+RESULT_DIR = SCRIPT_DIR / "Results"
 SURGIVIZ_RESULT_DIR = Path("Assets/SurgiViz4D/Tests/Results")
-LNROBOTICS_RESULT_DIR = Path("Assets/SofaLnRobotics/Tests/Results")
 EXECUTE_METHOD = "SofaScripts.SofaSceneAutoTester.Run"
 CRASH_MARKERS = ("Crash!!!", "Native Crash Reporting")
 
@@ -192,16 +191,12 @@ def main():
     lists = parser.add_mutually_exclusive_group()
     lists.add_argument("--config", help="list name in SofaUnity Lists/ (default: scene_tests), or a path to a list")
     lists.add_argument("-s", "--surgiviz", metavar="LIST", help=f"list name in {SURGIVIZ_LISTS_DIR.as_posix()}/")
-    lists.add_argument("-l", "--lnrobotics", metavar="LIST", help=f"list name in {LNROBOTICS_LISTS_DIR.as_posix()}/")
     parser.add_argument("--scene", action="append", help="only run the scene(s) with this name")
     args = parser.parse_args()
 
     if args.surgiviz:
         config_path = resolve_config(args.surgiviz, find_project_path(SCRIPT_DIR) / SURGIVIZ_LISTS_DIR)
         result_dir = find_project_path(SCRIPT_DIR) / SURGIVIZ_RESULT_DIR
-    elif args.lnrobotics:
-        config_path = resolve_config(args.lnrobotics, find_project_path(SCRIPT_DIR) / LNROBOTICS_LISTS_DIR)
-        result_dir = find_project_path(SCRIPT_DIR) / LNROBOTICS_RESULT_DIR
     else:
         config_path = resolve_config(args.config or "scene_tests.json", LISTS_DIR)
         result_dir = RESULT_DIR
@@ -209,7 +204,7 @@ def main():
 
     project = Path(config["project_path"]) if config.get("project_path") else find_project_path(SCRIPT_DIR)
     unity = Path(config["unity_editor"]) if config.get("unity_editor") else find_unity_editor(project)
-    out_dir = (result_dir / config.get("output_dir", "results~")).resolve()
+    out_dir = (result_dir / config.get("output_dir", "Results~")).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
 
     if project_is_open(project):

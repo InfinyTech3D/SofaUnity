@@ -16,18 +16,17 @@ Each scene runs in its **own Unity process** in batchmode. A crash in the native
 | `Lists/` | The SofaUnity scene lists (configs): which scenes to test and with which settings. |
 | `Lists/scene_tests.json` | Small default list, used when no list option is given. |
 | `Lists/sofaunity_all_scene_tests.json` | Every `.unity` scene under `Assets/SofaUnity`. |
+| `Editor/SofaSceneAutoTester.cs` | The probe that runs inside Unity. The Python script calls it through `-executeMethod`, and it does the actual check: open the scene, turn on the `SofaContext`, measure SOFA FPS. **Required.** It only acts when Unity is started with `-sofaTestOutput`; normal editor use is not affected. |
+| `Results/` | Output of the SofaUnity lists. **Ignored by git** (`.gitignore`: `Tests/SceneAutotester/Results/`). |
+| `Results/Results~/`, `Results/Results_all~/` | One folder per list (set by `output_dir`): one `.json` and one `.log` per scene, plus `summary.json`. Unity ignores folders ending in `~`, so it doesn't import these files. |
 
-The lists of the other projects live in those projects, so each project keeps its own tests:
+The SurgiViz4D lists live in SurgiViz4D, so it keeps its own tests:
 
 | Lists folder | Results folder | Option | Lists |
 |---|---|---|---|
 | `Assets/SurgiViz4D/Tests/Lists/` | `Assets/SurgiViz4D/Tests/Results/` | `-s` / `--surgiviz` | `public_surgiviz_scene_tests` (the `PublicRelease` group), `surgiviz_full_scene_tests` (operations and samples) |
-| `Assets/SofaLnRobotics/Tests/Lists/` | `Assets/SofaLnRobotics/Tests/Results/` | `-l` / `--lnrobotics` | `LNR_scene_tests` (the `LnRobotics` group) |
 
-`Tests/Results*` is in the SurgiViz4D `.gitignore`. SofaLnRobotics is not in git.
-| `Editor/SofaSceneAutoTester.cs` | The probe that runs inside Unity. The Python script calls it through `-executeMethod`, and it does the actual check: open the scene, turn on the `SofaContext`, measure SOFA FPS. **Required.** It only acts when Unity is started with `-sofaTestOutput`; normal editor use is not affected. |
-| `result/` | Output of the SofaUnity lists. **Ignored by git** (`.gitignore`: `Tests/sceneAutotester/result/`). |
-| `result/results~/`, `result/results_all~/` | One folder per list (set by `output_dir`): one `.json` and one `.log` per scene, plus `summary.json`. Unity ignores folders ending in `~`, so it doesn't import these files. |
+`Tests/Results*` is in the SurgiViz4D `.gitignore`.
 
 ## Requirements
 
@@ -58,18 +57,16 @@ Use another list from `Lists/`, for example every SofaUnity scene:
 python run_scene_tests.py --config sofaunity_all_scene_tests.json
 ```
 
-Use a list of another project:
+Use a SurgiViz4D list:
 
 ```bash
 python run_scene_tests.py -s public_surgiviz_scene_tests
-python run_scene_tests.py -l LNR_scene_tests
 ```
 
 | Option | Looks for the list in | Writes results to |
 |---|---|---|
-| `--config <list>` (or no option) | `Tests/sceneAutotester/Lists/` | `Tests/sceneAutotester/result/` |
+| `--config <list>` (or no option) | `Tests/SceneAutotester/Lists/` | `Tests/SceneAutotester/Results/` |
 | `-s <list>`, `--surgiviz <list>` | `Assets/SurgiViz4D/Tests/Lists/` | `Assets/SurgiViz4D/Tests/Results/` |
-| `-l <list>`, `--lnrobotics <list>` | `Assets/SofaLnRobotics/Tests/Lists/` | `Assets/SofaLnRobotics/Tests/Results/` |
 
 - Use only one of these options per run.
 - The `.json` extension is optional.
@@ -149,7 +146,7 @@ Before a scene runs, every version of its result file is deleted, so only the la
 {
     "unity_editor": "",
     "project_path": "",
-    "output_dir": "results~",
+    "output_dir": "Results~",
     "defaults": {
         "warmup": 3,
         "duration": 5,
@@ -173,7 +170,7 @@ Before a scene runs, every version of its result file is deleted, so only the la
 |---|---|
 | `unity_editor` | Full path to `Unity.exe`. Leave it empty to use `C:\Program Files\Unity\Hub\Editor\<project version>\Editor\Unity.exe`. |
 | `project_path` | Path to the Unity project root (the folder that contains `Assets/` and `ProjectSettings/`). Leave it empty to find it automatically by searching up from this folder. |
-| `output_dir` | The folder inside the results folder (`result/`, or `Tests/Results/` of SurgiViz4D / SofaLnRobotics) where results and logs are written. Give each list its own folder so runs don't overwrite each other, and end the name with `~` so Unity doesn't import it. |
+| `output_dir` | The folder inside the results folder (`Results/`, or `Tests/Results/` of SurgiViz4D) where results and logs are written. Give each list its own folder so runs don't overwrite each other. Start the name with an upper case letter, like every autotester folder, and end it with `~` so Unity doesn't import it (e.g. `Results_all~`). |
 | `defaults` | Settings applied to every scene unless the scene overrides them (see below). |
 | `scenes` | The list of scenes to test. |
 
