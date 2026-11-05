@@ -12,7 +12,7 @@ namespace SofaUnity
         [InitializeOnLoadMethod]
         static void RegisterPluginDll()
         {
-            SofaUnity.PluginManager.Instance.AddPlugin("BeamAdapter");
+            SofaUnity.PluginManager.Instance.RegisterPlugin("BeamAdapter");
         }
 #endif
     }
