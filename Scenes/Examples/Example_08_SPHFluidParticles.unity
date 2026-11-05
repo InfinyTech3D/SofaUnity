@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
-  m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
-  m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 0.38
-  m_AmbientMode: 0
+  m_AmbientSkyColor: {r: 0.46, g: 0.48, b: 0.53, a: 1}
+  m_AmbientEquatorColor: {r: 0.33, g: 0.32, b: 0.31, a: 1}
+  m_AmbientGroundColor: {r: 0.16, g: 0.14, b: 0.13, a: 1}
+  m_AmbientIntensity: 1
+  m_AmbientMode: 1
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 9f9322761dd8fb94392116102b84dad8, type: 2}
   m_HaloStrength: 0.5
@@ -216,18 +216,18 @@ MonoBehaviour:
     - vector<I>
     - bool
     m_dataArray:
-    - rid: 7084183185104568849
-    - rid: 7084183185104568850
-    - rid: 7084183185104568851
-    - rid: 7084183185104568852
-    - rid: 7084183185104568853
-    - rid: 7084183185104568854
-    - rid: 7084183185104568855
-    - rid: 7084183185104568856
-    - rid: 7084183185104568857
-    - rid: 7084183185104568858
-    - rid: 7084183185104568859
-    - rid: 7084183185104568860
+    - rid: 7763657156628054108
+    - rid: 7763657156628054109
+    - rid: 7763657156628054110
+    - rid: 7763657156628054111
+    - rid: 7763657156628054112
+    - rid: 7763657156628054113
+    - rid: 7763657156628054114
+    - rid: 7763657156628054115
+    - rid: 7763657156628054116
+    - rid: 7763657156628054117
+    - rid: 7763657156628054118
+    - rid: 7763657156628054119
   m_linkArchiver:
     m_links:
     - m_owner: {fileID: 95964725}
@@ -245,7 +245,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 7084183185104568849
+    - rid: 7763657156628054108
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 95964725}
@@ -259,7 +259,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
-    - rid: 7084183185104568850
+    - rid: 7763657156628054109
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 95964725}
@@ -273,7 +273,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
-    - rid: 7084183185104568851
+    - rid: 7763657156628054110
       type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 95964725}
@@ -287,7 +287,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
-    - rid: 7084183185104568852
+    - rid: 7763657156628054111
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 95964725}
@@ -301,7 +301,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
-    - rid: 7084183185104568853
+    - rid: 7763657156628054112
       type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 95964725}
@@ -315,7 +315,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
-    - rid: 7084183185104568854
+    - rid: 7763657156628054113
       type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 95964725}
@@ -329,7 +329,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 1
-    - rid: 7084183185104568855
+    - rid: 7763657156628054114
       type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 95964725}
@@ -343,7 +343,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 1
-    - rid: 7084183185104568856
+    - rid: 7763657156628054115
       type: {class: SofaStringData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 95964725}
@@ -357,7 +357,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: unused
-    - rid: 7084183185104568857
+    - rid: 7763657156628054116
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 95964725}
@@ -371,7 +371,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
-    - rid: 7084183185104568858
+    - rid: 7763657156628054117
       type: {class: SofaVec2IntData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 95964725}
@@ -386,7 +386,7 @@ MonoBehaviour:
         m_isVector: 0
         m_value: {x: -1, y: -1}
         m_isUnsigned: 0
-    - rid: 7084183185104568859
+    - rid: 7763657156628054118
       type: {class: SofaDataVectorInt, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 95964725}
@@ -401,7 +401,7 @@ MonoBehaviour:
         m_isVector: 1
         m_vecType: int
         m_vecSize: 1
-    - rid: 7084183185104568860
+    - rid: 7763657156628054119
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 95964725}
@@ -430,6 +430,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1476066373}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &179845577
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 179845578}
+  - component: {fileID: 179845579}
+  m_Layer: 0
+  m_Name: Shadow Distance
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &179845578
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179845577}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 185814680}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &179845579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179845577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7358236c6d56a8c4a84b0aa12131590b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_shadowDistance: 22.769974
 --- !u!1 &184558543
 GameObject:
   m_ObjectHideFlags: 0
@@ -534,7 +579,7 @@ MonoBehaviour:
   CatchSofaMessages: 1
   StepbyStep: 0
   m_asyncSimulation: 0
-  m_gravity: {x: 0, y: -10, z: 0}
+  m_gravity: {x: -0, y: -10, z: 0}
   m_timeStep: 0.01
   breakerActivated: 0
   m_objects: []
@@ -558,6 +603,308 @@ Transform:
   - {fileID: 1314368876}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &185814679
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 185814680}
+  m_Layer: 0
+  m_Name: Rendering Setup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &185814680
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185814679}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 287007166}
+  - {fileID: 1663992758}
+  - {fileID: 466528768}
+  - {fileID: 179845578}
+  - {fileID: 1040812485}
+  - {fileID: 1570021763}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &185833348 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4559319322888466566, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
+  m_PrefabInstance: {fileID: 473660582}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &185833353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185833348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42e8f613ecb87f44b8ff0d51ab7d0ab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_targetCamera: {fileID: 956150258}
+  m_resolutionScale: 0.5
+  m_clipPlaneOffset: 0.05
+  m_reflectLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!1 &287007165
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 287007166}
+  - component: {fileID: 287007168}
+  - component: {fileID: 287007167}
+  m_Layer: 0
+  m_Name: Key Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &287007166
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 287007165}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.40821794, y: 0.23456973, z: -0.10938166, w: 0.8754261}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 185814680}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &287007167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 287007165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
+--- !u!108 &287007168
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 287007165}
+  m_Enabled: 1
+  serializedVersion: 11
+  m_Type: 1
+  m_Color: {r: 1, g: 0.95, b: 0.88, a: 1}
+  m_Intensity: 1.5
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 2
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 0.85
+    m_Bias: 0.05
+    m_NormalBias: 0.3
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
+--- !u!1 &466528767
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 466528768}
+  - component: {fileID: 466528770}
+  - component: {fileID: 466528769}
+  m_Layer: 0
+  m_Name: Rim Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &466528768
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 466528767}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.77742726, y: 0.55000484, z: -0.28907046, w: 0.09767233}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 185814680}
+  m_LocalEulerAnglesHint: {x: 9.562, y: 145.615, z: -112.408}
+--- !u!114 &466528769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 466528767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
+--- !u!108 &466528770
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 466528767}
+  m_Enabled: 1
+  serializedVersion: 11
+  m_Type: 1
+  m_Color: {r: 1, g: 0.82, b: 0.78, a: 1}
+  m_Intensity: 1
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
 --- !u!1001 &473660582
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -566,14 +913,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1550057432, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4559319322888466561, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
       propertyPath: m_LocalPosition.y
       value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 4559319322888466563, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4559319322888466563, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 12cdf7504fc6ee1488532f67a0ebde3c, type: 2}
+      objectReference: {fileID: 2100000, guid: 701d9d654b84ca443ae5ceeaa267b985, type: 2}
+    - target: {fileID: 4559319322888466563, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 010e3bb1be7ce704c895426a14d9eb20, type: 2}
+    - target: {fileID: 4559319323311001901, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: d392be8c9ee338e4782f36500f130ce7, type: 2}
     - target: {fileID: 4559319324350027217, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -618,10 +981,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: demo_canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4559319324415591731, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: d392be8c9ee338e4782f36500f130ce7, type: 2}
+    - target: {fileID: 4559319324610948099, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: d392be8c9ee338e4782f36500f130ce7, type: 2}
+    - target: {fileID: 4559319324657834231, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: d392be8c9ee338e4782f36500f130ce7, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4559319322888466566, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 185833353}
   m_SourcePrefab: {fileID: 100100000, guid: f84f0ef099e69684fa3c4a431e397927, type: 3}
 --- !u!1 &703536118
 GameObject:
@@ -693,20 +1071,20 @@ MonoBehaviour:
     - i
     - bool
     m_dataArray:
-    - rid: 7084183185104568830
-    - rid: 7084183185104568831
-    - rid: 7084183185104568832
-    - rid: 7084183185104568833
-    - rid: 7084183185104568834
-    - rid: 7084183185104568835
-    - rid: 7084183185104568836
-    - rid: 7084183185104568837
-    - rid: 7084183185104568838
-    - rid: 7084183185104568839
-    - rid: 7084183185104568840
-    - rid: 7084183185104568841
-    - rid: 7084183185104568842
-    - rid: 7084183185104568843
+    - rid: 7763657156628054089
+    - rid: 7763657156628054090
+    - rid: 7763657156628054091
+    - rid: 7763657156628054092
+    - rid: 7763657156628054093
+    - rid: 7763657156628054094
+    - rid: 7763657156628054095
+    - rid: 7763657156628054096
+    - rid: 7763657156628054097
+    - rid: 7763657156628054098
+    - rid: 7763657156628054099
+    - rid: 7763657156628054100
+    - rid: 7763657156628054101
+    - rid: 7763657156628054102
   m_linkArchiver:
     m_links:
     - m_owner: {fileID: 703536119}
@@ -719,7 +1097,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 7084183185104568830
+    - rid: 7763657156628054089
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 703536119}
@@ -733,7 +1111,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
-    - rid: 7084183185104568831
+    - rid: 7763657156628054090
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 703536119}
@@ -747,7 +1125,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
-    - rid: 7084183185104568832
+    - rid: 7763657156628054091
       type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 703536119}
@@ -761,7 +1139,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
-    - rid: 7084183185104568833
+    - rid: 7763657156628054092
       type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 703536119}
@@ -775,7 +1153,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0.7
-    - rid: 7084183185104568834
+    - rid: 7763657156628054093
       type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 703536119}
@@ -789,7 +1167,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 1
-    - rid: 7084183185104568835
+    - rid: 7763657156628054094
       type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 703536119}
@@ -803,7 +1181,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 1000
-    - rid: 7084183185104568836
+    - rid: 7763657156628054095
       type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 703536119}
@@ -817,7 +1195,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 25
-    - rid: 7084183185104568837
+    - rid: 7763657156628054096
       type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 703536119}
@@ -831,7 +1209,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 10
-    - rid: 7084183185104568838
+    - rid: 7763657156628054097
       type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 703536119}
@@ -845,7 +1223,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: -1000
-    - rid: 7084183185104568839
+    - rid: 7763657156628054098
       type: {class: SofaIntData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 703536119}
@@ -860,7 +1238,7 @@ MonoBehaviour:
         m_isVector: 0
         m_value: 1
         m_isUnsigned: 0
-    - rid: 7084183185104568840
+    - rid: 7763657156628054099
       type: {class: SofaIntData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 703536119}
@@ -875,7 +1253,7 @@ MonoBehaviour:
         m_isVector: 0
         m_value: 1
         m_isUnsigned: 0
-    - rid: 7084183185104568841
+    - rid: 7763657156628054100
       type: {class: SofaIntData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 703536119}
@@ -890,7 +1268,7 @@ MonoBehaviour:
         m_isVector: 0
         m_value: 2
         m_isUnsigned: 0
-    - rid: 7084183185104568842
+    - rid: 7763657156628054101
       type: {class: SofaIntData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 703536119}
@@ -905,7 +1283,7 @@ MonoBehaviour:
         m_isVector: 0
         m_value: 1
         m_isUnsigned: 0
-    - rid: 7084183185104568843
+    - rid: 7763657156628054102
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 703536119}
@@ -998,6 +1376,7 @@ GameObject:
   - component: {fileID: 956150259}
   - component: {fileID: 956150258}
   - component: {fileID: 956150257}
+  - component: {fileID: 956150260}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1079,6 +1458,115 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 20, y: 0, z: 0}
+--- !u!114 &956150260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956150256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 1
+  m_Antialiasing: 2
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+--- !u!1 &1040812484
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1040812485}
+  - component: {fileID: 1040812486}
+  m_Layer: 0
+  m_Name: Room Reflection Probe
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1040812485
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1040812484}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 185814680}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!215 &1040812486
+ReflectionProbe:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1040812484}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Type: 0
+  m_Mode: 1
+  m_RefreshMode: 0
+  m_TimeSlicingMode: 2
+  m_Resolution: 256
+  m_UpdateFrequency: 0
+  m_BoxSize: {x: 60.000015, y: 31.000004, z: 60}
+  m_BoxOffset: {x: 0, y: 11.400002, z: 0}
+  m_NearClip: 0.3
+  m_FarClip: 1000
+  m_ShadowDistance: 100
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IntensityMultiplier: 1
+  m_BlendDistance: 1
+  m_HDR: 1
+  m_BoxProjection: 1
+  m_RenderDynamicObjects: 0
+  m_UseOcclusionCulling: 1
+  m_Importance: 1
+  m_CustomBakedTexture: {fileID: 0}
 --- !u!1 &1176457419
 GameObject:
   m_ObjectHideFlags: 0
@@ -1129,11 +1617,11 @@ MonoBehaviour:
     - bool
     - bool
     m_dataArray:
-    - rid: 7084183185104568844
-    - rid: 7084183185104568845
-    - rid: 7084183185104568846
-    - rid: 7084183185104568847
-    - rid: 7084183185104568848
+    - rid: 7763657156628054103
+    - rid: 7763657156628054104
+    - rid: 7763657156628054105
+    - rid: 7763657156628054106
+    - rid: 7763657156628054107
   m_linkArchiver:
     m_links: []
     m_slaveLinks: []
@@ -1141,7 +1629,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 7084183185104568844
+    - rid: 7763657156628054103
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1176457420}
@@ -1155,7 +1643,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
-    - rid: 7084183185104568845
+    - rid: 7763657156628054104
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1176457420}
@@ -1169,7 +1657,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 1
-    - rid: 7084183185104568846
+    - rid: 7763657156628054105
       type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1176457420}
@@ -1183,7 +1671,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0.75
-    - rid: 7084183185104568847
+    - rid: 7763657156628054106
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1176457420}
@@ -1197,7 +1685,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
-    - rid: 7084183185104568848
+    - rid: 7763657156628054107
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1176457420}
@@ -1278,12 +1766,12 @@ MonoBehaviour:
     - bool
     - uint
     m_dataArray:
-    - rid: 7084183185104568816
-    - rid: 7084183185104568817
-    - rid: 7084183185104568818
-    - rid: 7084183185104568819
-    - rid: 7084183185104568820
-    - rid: 7084183185104568821
+    - rid: 7763657156628054075
+    - rid: 7763657156628054076
+    - rid: 7763657156628054077
+    - rid: 7763657156628054078
+    - rid: 7763657156628054079
+    - rid: 7763657156628054080
   m_linkArchiver:
     m_links: []
     m_slaveLinks: []
@@ -1292,7 +1780,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 7084183185104568816
+    - rid: 7763657156628054075
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1202019969}
@@ -1306,7 +1794,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
-    - rid: 7084183185104568817
+    - rid: 7763657156628054076
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1202019969}
@@ -1320,7 +1808,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
-    - rid: 7084183185104568818
+    - rid: 7763657156628054077
       type: {class: SofaStringData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1202019969}
@@ -1334,7 +1822,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 
-    - rid: 7084183185104568819
+    - rid: 7763657156628054078
       type: {class: SofaDataVectorVec3, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1202019969}
@@ -1350,7 +1838,7 @@ MonoBehaviour:
         m_vecType: Vec3
         m_vecSize: 0
         m_isDouble: 1
-    - rid: 7084183185104568820
+    - rid: 7763657156628054079
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1202019969}
@@ -1364,7 +1852,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
-    - rid: 7084183185104568821
+    - rid: 7763657156628054080
       type: {class: SofaIntData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1202019969}
@@ -1489,9 +1977,9 @@ MonoBehaviour:
     - bool
     - bool
     m_dataArray:
-    - rid: 7084183185104568806
-    - rid: 7084183185104568807
-    - rid: 7084183185104568808
+    - rid: 7763657156628054065
+    - rid: 7763657156628054066
+    - rid: 7763657156628054067
   m_linkArchiver:
     m_links:
     - m_owner: {fileID: 1314368875}
@@ -1502,7 +1990,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 7084183185104568806
+    - rid: 7763657156628054065
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1314368875}
@@ -1516,7 +2004,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
-    - rid: 7084183185104568807
+    - rid: 7763657156628054066
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1314368875}
@@ -1530,7 +2018,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
-    - rid: 7084183185104568808
+    - rid: 7763657156628054067
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1314368875}
@@ -1605,9 +2093,9 @@ MonoBehaviour:
     - bool
     - DisplayFlags
     m_dataArray:
-    - rid: 7084183185104568813
-    - rid: 7084183185104568814
-    - rid: 7084183185104568815
+    - rid: 7763657156628054072
+    - rid: 7763657156628054073
+    - rid: 7763657156628054074
   m_linkArchiver:
     m_links: []
     m_slaveLinks: []
@@ -1615,7 +2103,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 7084183185104568813
+    - rid: 7763657156628054072
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1449067681}
@@ -1629,7 +2117,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
-    - rid: 7084183185104568814
+    - rid: 7763657156628054073
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1449067681}
@@ -1643,7 +2131,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
-    - rid: 7084183185104568815
+    - rid: 7763657156628054074
       type: {class: SofaData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1449067681}
@@ -1809,20 +2297,20 @@ MonoBehaviour:
     - bool
     - vector<I>
     m_dataArray:
-    - rid: 7084183185104568861
-    - rid: 7084183185104568862
-    - rid: 7084183185104568863
-    - rid: 7084183185104568864
-    - rid: 7084183185104568865
-    - rid: 7084183185104568866
-    - rid: 7084183185104568867
-    - rid: 7084183185104568868
-    - rid: 7084183185104568869
-    - rid: 7084183185104568870
-    - rid: 7084183185104568871
-    - rid: 7084183185104568872
-    - rid: 7084183185104568873
-    - rid: 7084183185104568874
+    - rid: 7763657156628054120
+    - rid: 7763657156628054121
+    - rid: 7763657156628054122
+    - rid: 7763657156628054123
+    - rid: 7763657156628054124
+    - rid: 7763657156628054125
+    - rid: 7763657156628054126
+    - rid: 7763657156628054127
+    - rid: 7763657156628054128
+    - rid: 7763657156628054129
+    - rid: 7763657156628054130
+    - rid: 7763657156628054131
+    - rid: 7763657156628054132
+    - rid: 7763657156628054133
   m_linkArchiver:
     m_links:
     - m_owner: {fileID: 1489598374}
@@ -1835,7 +2323,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 7084183185104568861
+    - rid: 7763657156628054120
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1489598374}
@@ -1849,7 +2337,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
-    - rid: 7084183185104568862
+    - rid: 7763657156628054121
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1489598374}
@@ -1863,7 +2351,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 1
-    - rid: 7084183185104568863
+    - rid: 7763657156628054122
       type: {class: SofaIntData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1489598374}
@@ -1878,7 +2366,7 @@ MonoBehaviour:
         m_isVector: 0
         m_value: 0
         m_isUnsigned: 0
-    - rid: 7084183185104568864
+    - rid: 7763657156628054123
       type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1489598374}
@@ -1892,7 +2380,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: -1
-    - rid: 7084183185104568865
+    - rid: 7763657156628054124
       type: {class: SofaVec3Data, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1489598374}
@@ -1907,7 +2395,7 @@ MonoBehaviour:
         m_isVector: 0
         m_value: {x: -0, y: 10, z: 0}
         m_isDouble: 1
-    - rid: 7084183185104568866
+    - rid: 7763657156628054125
       type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1489598374}
@@ -1921,7 +2409,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 1
-    - rid: 7084183185104568867
+    - rid: 7763657156628054126
       type: {class: SofaDataVectorVec3, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1489598374}
@@ -1937,7 +2425,7 @@ MonoBehaviour:
         m_vecType: Vec3
         m_vecSize: 21
         m_isDouble: 1
-    - rid: 7084183185104568868
+    - rid: 7763657156628054127
       type: {class: SofaVec3Data, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1489598374}
@@ -1952,7 +2440,7 @@ MonoBehaviour:
         m_isVector: 0
         m_value: {x: -0.01, y: 0.1, z: 0.01}
         m_isDouble: 1
-    - rid: 7084183185104568869
+    - rid: 7763657156628054128
       type: {class: SofaVec3Data, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1489598374}
@@ -1967,7 +2455,7 @@ MonoBehaviour:
         m_isVector: 0
         m_value: {x: -0, y: -10, z: 0}
         m_isDouble: 1
-    - rid: 7084183185104568870
+    - rid: 7763657156628054129
       type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1489598374}
@@ -1981,7 +2469,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0.02
-    - rid: 7084183185104568871
+    - rid: 7763657156628054130
       type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1489598374}
@@ -1995,7 +2483,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: -0.1
-    - rid: 7084183185104568872
+    - rid: 7763657156628054131
       type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1489598374}
@@ -2009,7 +2497,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 4
-    - rid: 7084183185104568873
+    - rid: 7763657156628054132
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1489598374}
@@ -2023,7 +2511,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 1
-    - rid: 7084183185104568874
+    - rid: 7763657156628054133
       type: {class: SofaDataVectorInt, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1489598374}
@@ -2101,17 +2589,17 @@ MonoBehaviour:
     - bool
     - bool
     m_dataArray:
-    - rid: 7084183185104568809
-    - rid: 7084183185104568810
-    - rid: 7084183185104568811
-    - rid: 7084183185104568812
+    - rid: 7763657156628054068
+    - rid: 7763657156628054069
+    - rid: 7763657156628054070
+    - rid: 7763657156628054071
   m_linkArchiver:
     m_links: []
     m_slaveLinks: []
   references:
     version: 2
     RefIds:
-    - rid: 7084183185104568809
+    - rid: 7763657156628054068
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1552045993}
@@ -2125,7 +2613,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
-    - rid: 7084183185104568810
+    - rid: 7763657156628054069
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1552045993}
@@ -2139,7 +2627,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
-    - rid: 7084183185104568811
+    - rid: 7763657156628054070
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1552045993}
@@ -2153,7 +2641,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 1
-    - rid: 7084183185104568812
+    - rid: 7763657156628054071
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 1552045993}
@@ -2182,6 +2670,176 @@ Transform:
   m_Children: []
   m_Father: {fileID: 184558546}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1570021762
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1570021763}
+  - component: {fileID: 1570021764}
+  m_Layer: 0
+  m_Name: Post Process Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1570021763
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570021762}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 185814680}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1570021764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570021762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 10
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 9eeef5d249f9f5a4d9c11ba5d0416181, type: 2}
+--- !u!1 &1663992757
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1663992758}
+  - component: {fileID: 1663992760}
+  - component: {fileID: 1663992759}
+  m_Layer: 0
+  m_Name: Fill Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1663992758
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663992757}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.12059048, y: -0.37940955, z: 0.049950216, w: 0.91597563}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 185814680}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1663992759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663992757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
+--- !u!108 &1663992760
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663992757}
+  m_Enabled: 1
+  serializedVersion: 11
+  m_Type: 1
+  m_Color: {r: 0.75, g: 0.84, b: 1, a: 1}
+  m_Intensity: 0.35
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
 --- !u!1 &2121999903
 GameObject:
   m_ObjectHideFlags: 0
@@ -2253,14 +2911,14 @@ MonoBehaviour:
     - d
     - vector<I>
     m_dataArray:
-    - rid: 7084183185104568822
-    - rid: 7084183185104568823
-    - rid: 7084183185104568824
-    - rid: 7084183185104568825
-    - rid: 7084183185104568826
-    - rid: 7084183185104568827
-    - rid: 7084183185104568828
-    - rid: 7084183185104568829
+    - rid: 7763657156628054081
+    - rid: 7763657156628054082
+    - rid: 7763657156628054083
+    - rid: 7763657156628054084
+    - rid: 7763657156628054085
+    - rid: 7763657156628054086
+    - rid: 7763657156628054087
+    - rid: 7763657156628054088
   m_linkArchiver:
     m_links:
     - m_owner: {fileID: 2121999905}
@@ -2276,7 +2934,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 7084183185104568822
+    - rid: 7763657156628054081
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 2121999905}
@@ -2290,7 +2948,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
-    - rid: 7084183185104568823
+    - rid: 7763657156628054082
       type: {class: SofaBoolData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 2121999905}
@@ -2304,7 +2962,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 1
-    - rid: 7084183185104568824
+    - rid: 7763657156628054083
       type: {class: SofaIntData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 2121999905}
@@ -2319,7 +2977,7 @@ MonoBehaviour:
         m_isVector: 0
         m_value: 0
         m_isUnsigned: 0
-    - rid: 7084183185104568825
+    - rid: 7763657156628054084
       type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 2121999905}
@@ -2333,7 +2991,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: -1
-    - rid: 7084183185104568826
+    - rid: 7763657156628054085
       type: {class: SofaVec3Data, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 2121999905}
@@ -2348,7 +3006,7 @@ MonoBehaviour:
         m_isVector: 0
         m_value: {x: -0, y: 1, z: 0}
         m_isDouble: 1
-    - rid: 7084183185104568827
+    - rid: 7763657156628054086
       type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 2121999905}
@@ -2362,7 +3020,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: 0
-    - rid: 7084183185104568828
+    - rid: 7763657156628054087
       type: {class: SofaDoubleData, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 2121999905}
@@ -2376,7 +3034,7 @@ MonoBehaviour:
         m_isSupported: 1
         m_isVector: 0
         m_value: -1
-    - rid: 7084183185104568829
+    - rid: 7763657156628054088
       type: {class: SofaDataVectorInt, ns: SofaUnity, asm: Assembly-CSharp}
       data:
         m_owner: {fileID: 2121999905}
@@ -2398,3 +3056,4 @@ SceneRoots:
   - {fileID: 956150259}
   - {fileID: 473660582}
   - {fileID: 184558546}
+  - {fileID: 185814680}

@@ -51,14 +51,14 @@ namespace SofaUnity
     /// per scene post-processing profile, shadow distance fitted on the scene, tangent recomputation on SOFA meshes
     /// (SOFA materials are left untouched), glossy room with real time planar reflection on the floor.
     /// The room is detected (or created from demo_canvas) and fitted around the SOFA objects bounds.
-    /// Room materials are stored in SofaUnity/Core/Resources/Materials, volume profiles in SofaUnity/Core/Scripts/Rendering/Profiles.
+    /// Room materials are stored in SofaUnity/Core/Resources/Materials, volume profiles in the scene package: Assets/<Package>/Settings/RenderingProfiles.
     /// </summary>
     public static class SofaRenderingSetup
     {
         public const string RootName = "Rendering Setup";
-        private const string AssetFolder = "Assets/SofaUnity/Core/Scripts/Rendering";
+        private const string DefaultPackage = "Assets/SofaUnity";
+        private const string ProfileSubFolder = "Settings/RenderingProfiles";
         private const string MaterialFolder = "Assets/SofaUnity/Core/Resources/Materials";
-        private const string ProfileFolder = AssetFolder + "/Profiles";
         private const string RoomPrefabPath = "Assets/SofaUnity/Core/Prefabs/demo_canvas.prefab";
         private const string RoomMaterialName = "Canva-backgroundSofaInf3D";
         private const string RoomGeneratedPrefix = "Room_";
@@ -67,7 +67,6 @@ namespace SofaUnity
         public static void Apply(SofaRenderingSetupSettings settings)
         {
             EnsureFolder(MaterialFolder);
-            EnsureFolder(ProfileFolder);
 
             Camera cam = settings.m_camera != null ? settings.m_camera : FindSceneCamera();
             if (cam == null)
@@ -375,10 +374,11 @@ namespace SofaUnity
         /// One profile per scene, as the depth of field focus depends on the framing
         private static void CreateVolume(Transform parent, Camera cam, Bounds focus, SofaRenderingSetupSettings settings)
         {
-            string sceneName = SceneManager.GetActiveScene().name;
-            if (string.IsNullOrEmpty(sceneName))
-                sceneName = "Untitled";
-            string path = ProfileFolder + "/" + sceneName + "_VolumeProfile.asset";
+            Scene scene = SceneManager.GetActiveScene();
+            string sceneName = string.IsNullOrEmpty(scene.name) ? "Untitled" : scene.name;
+            string folder = GetProfileFolder(scene);
+            EnsureFolder(folder);
+            string path = folder + "/" + sceneName + "_VolumeProfile.asset";
 
             VolumeProfile profile = AssetDatabase.LoadAssetAtPath<VolumeProfile>(path);
             if (profile == null)
@@ -421,6 +421,17 @@ namespace SofaUnity
             volume.isGlobal = true;
             volume.priority = 10f;
             volume.sharedProfile = profile;
+        }
+
+        /// Profiles are stored in the package of the scene (first folder under Assets):
+        /// Assets/<Package>/Settings/RenderingProfiles. Unsaved scenes or scenes at the Assets root use SofaUnity.
+        private static string GetProfileFolder(Scene scene)
+        {
+            string package = DefaultPackage;
+            string[] parts = scene.path.Split('/');
+            if (parts.Length >= 3 && parts[0] == "Assets")
+                package = parts[0] + "/" + parts[1];
+            return package + "/" + ProfileSubFolder;
         }
 
         private static T GetOrAdd<T>(VolumeProfile profile) where T : VolumeComponent
