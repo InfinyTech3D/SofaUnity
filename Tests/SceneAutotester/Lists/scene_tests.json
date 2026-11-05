@@ -1,0 +1,27 @@
+{
+    "unity_editor": "",
+    "project_path": "",
+    "output_dir": "Results~",
+    "defaults": {
+        "warmup": 3,
+        "duration": 5,
+        "min_fps": 0,
+        "timeout": 300,
+        "fail_on_errors": false,
+        "ignore_errors": []
+    },
+    "scenes": [
+        {
+            "name": "Example_01_SimpleLiver",
+            "path": "Assets/SofaUnity/Scenes/Examples/Example_01_SimpleLiver.unity"
+        },
+        {
+            "name": "MainSalpingectomy_v2",
+            "path": "Assets/SurgiViz4D/Operations/Gynecologic_Surgery/Patients/IT3D_Patient_03/MainSalpingectomy_v2.unity"
+        },
+        {
+            "name": "Multi_US_Haptic_OpenHepaticSurgery",
+            "path": "Assets/SurgiViz4D/Operations/Hepatobiliary_Surgery/UltraSound/Haptic/Multi_US_Haptic_OpenHepaticSurgery.unity"
+        }
+    ]
+}
