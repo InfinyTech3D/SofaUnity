@@ -5,8 +5,11 @@ Usage:
     python run_scene_tests.py                      # all scenes of Lists/scene_tests.json
     python run_scene_tests.py --scene Example_01_SimpleLiver
     python run_scene_tests.py --config sofaunity_all_scene_tests.json   # read from Lists/
+    python run_scene_tests.py -s public_surgiviz_scene_tests   # Assets/SurgiViz4D/Tests/Lists/
+    python run_scene_tests.py -l LNR_scene_tests               # Assets/SofaLnRobotics/Tests/Lists/
 
-A bare --config file name is looked up in Lists/, a path with folders is used as is.
+A bare list name is looked up in the Lists/ folder of SofaUnity (--config), SurgiViz4D (-s)
+or SofaLnRobotics (-l); ".json" is optional. A --config path with folders is used as is.
 Result JSON files are prefixed EMPTY_ when no SofaContext was found in the scene,
 ERROR_ when the scene failed, and WARN_ when SOFA runs but errors were logged.
 
@@ -23,7 +26,13 @@ from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 LISTS_DIR = SCRIPT_DIR / "Lists"
-RESULT_DIR = SCRIPT_DIR / "result"  # each list writes into its own output_dir in here (ignored by git)
+# Lists of the other projects, relative to the Unity project root
+SURGIVIZ_LISTS_DIR = Path("Assets/SurgiViz4D/Tests/Lists")
+LNROBOTICS_LISTS_DIR = Path("Assets/SofaLnRobotics/Tests/Lists")
+# each list writes into its own output_dir in the result folder of its project (ignored by git)
+RESULT_DIR = SCRIPT_DIR / "result"
+SURGIVIZ_RESULT_DIR = Path("Assets/SurgiViz4D/Tests/Results")
+LNROBOTICS_RESULT_DIR = Path("Assets/SofaLnRobotics/Tests/Results")
 EXECUTE_METHOD = "SofaScripts.SofaSceneAutoTester.Run"
 CRASH_MARKERS = ("Crash!!!", "Native Crash Reporting")
 
@@ -68,10 +77,12 @@ def read_log(log_file: Path) -> str:
         return ""
 
 
-def resolve_config(arg: str) -> Path:
+def resolve_config(arg: str, lists_dir: Path) -> Path:
     path = Path(arg)
-    if not path.is_absolute() and path.parent == Path("."):  # bare file name -> Lists/
-        path = LISTS_DIR / path
+    if not path.is_absolute() and path.parent == Path("."):  # bare file name -> lists_dir
+        path = lists_dir / path
+    if path.suffix != ".json":
+        path = path.with_name(path.name + ".json")
     if not path.is_file():
         sys.exit(f"Config file not found: {path}")
     return path.resolve()
@@ -178,17 +189,27 @@ def run_scene(scene: dict, defaults: dict, unity: Path, project: Path, out_dir: 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--config", default="scene_tests.json",
-                        help="config file name in Lists/, or a path to a config file")
+    lists = parser.add_mutually_exclusive_group()
+    lists.add_argument("--config", help="list name in SofaUnity Lists/ (default: scene_tests), or a path to a list")
+    lists.add_argument("-s", "--surgiviz", metavar="LIST", help=f"list name in {SURGIVIZ_LISTS_DIR.as_posix()}/")
+    lists.add_argument("-l", "--lnrobotics", metavar="LIST", help=f"list name in {LNROBOTICS_LISTS_DIR.as_posix()}/")
     parser.add_argument("--scene", action="append", help="only run the scene(s) with this name")
     args = parser.parse_args()
 
-    config_path = resolve_config(args.config)
+    if args.surgiviz:
+        config_path = resolve_config(args.surgiviz, find_project_path(SCRIPT_DIR) / SURGIVIZ_LISTS_DIR)
+        result_dir = find_project_path(SCRIPT_DIR) / SURGIVIZ_RESULT_DIR
+    elif args.lnrobotics:
+        config_path = resolve_config(args.lnrobotics, find_project_path(SCRIPT_DIR) / LNROBOTICS_LISTS_DIR)
+        result_dir = find_project_path(SCRIPT_DIR) / LNROBOTICS_RESULT_DIR
+    else:
+        config_path = resolve_config(args.config or "scene_tests.json", LISTS_DIR)
+        result_dir = RESULT_DIR
     config = json.loads(config_path.read_text(encoding="utf-8"))
 
     project = Path(config["project_path"]) if config.get("project_path") else find_project_path(SCRIPT_DIR)
     unity = Path(config["unity_editor"]) if config.get("unity_editor") else find_unity_editor(project)
-    out_dir = (RESULT_DIR / config.get("output_dir", "results~")).resolve()
+    out_dir = (result_dir / config.get("output_dir", "results~")).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
 
     if project_is_open(project):

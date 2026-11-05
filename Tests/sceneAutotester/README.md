@@ -13,15 +13,21 @@ Each scene runs in its **own Unity process** in batchmode. A crash in the native
 | File | Role |
 |---|---|
 | `run_scene_tests.py` | Python runner. Reads the JSON config, starts Unity once per scene, enforces the timeout, classifies the result and prints a summary. |
-| `Lists/` | The scene lists (configs): which scenes to test and with which settings. |
-| `Lists/scene_tests.json` | Small default list, used when no `--config` is given. |
+| `Lists/` | The SofaUnity scene lists (configs): which scenes to test and with which settings. |
+| `Lists/scene_tests.json` | Small default list, used when no list option is given. |
 | `Lists/sofaunity_all_scene_tests.json` | Every `.unity` scene under `Assets/SofaUnity`. |
-| `Lists/public_surgiviz_scene_tests.json` | The scenes of the SurgiViz4D `PublicRelease` group. |
-| `Lists/LNR_scene_tests.json` | The scenes of the `LnRobotics` group. |
-| `Lists/surgiviz_full_scene_tests.json` | The full SurgiViz4D set: operations and samples. |
+
+The lists of the other projects live in those projects, so each project keeps its own tests:
+
+| Lists folder | Results folder | Option | Lists |
+|---|---|---|---|
+| `Assets/SurgiViz4D/Tests/Lists/` | `Assets/SurgiViz4D/Tests/Results/` | `-s` / `--surgiviz` | `public_surgiviz_scene_tests` (the `PublicRelease` group), `surgiviz_full_scene_tests` (operations and samples) |
+| `Assets/SofaLnRobotics/Tests/Lists/` | `Assets/SofaLnRobotics/Tests/Results/` | `-l` / `--lnrobotics` | `LNR_scene_tests` (the `LnRobotics` group) |
+
+`Tests/Results*` is in the SurgiViz4D `.gitignore`. SofaLnRobotics is not in git.
 | `Editor/SofaSceneAutoTester.cs` | The probe that runs inside Unity. The Python script calls it through `-executeMethod`, and it does the actual check: open the scene, turn on the `SofaContext`, measure SOFA FPS. **Required.** It only acts when Unity is started with `-sofaTestOutput`; normal editor use is not affected. |
-| `result/` | All test output. **Ignored by git** (`.gitignore`: `Tests/sceneAutotester/result/`). |
-| `result/results~/`, `result/results_all~/`, `result/results_public~/`, `result/results_lnr~/`, `result/results_surgiviz_full~/` | One folder per list (set by `output_dir`): one `.json` and one `.log` per scene, plus `summary.json`. Unity ignores folders ending in `~`, so it doesn't import these files. |
+| `result/` | Output of the SofaUnity lists. **Ignored by git** (`.gitignore`: `Tests/sceneAutotester/result/`). |
+| `result/results~/`, `result/results_all~/` | One folder per list (set by `output_dir`): one `.json` and one `.log` per scene, plus `summary.json`. Unity ignores folders ending in `~`, so it doesn't import these files. |
 
 ## Requirements
 
@@ -52,9 +58,25 @@ Use another list from `Lists/`, for example every SofaUnity scene:
 python run_scene_tests.py --config sofaunity_all_scene_tests.json
 ```
 
-A bare file name passed to `--config` is looked up in `Lists/`. If you pass a path that contains a folder (e.g. `--config C:/somewhere/my_tests.json`), it is used as is. `--config` and `--scene` can be combined.
+Use a list of another project:
 
-`output_dir` is always a folder inside `result/`.
+```bash
+python run_scene_tests.py -s public_surgiviz_scene_tests
+python run_scene_tests.py -l LNR_scene_tests
+```
+
+| Option | Looks for the list in | Writes results to |
+|---|---|---|
+| `--config <list>` (or no option) | `Tests/sceneAutotester/Lists/` | `Tests/sceneAutotester/result/` |
+| `-s <list>`, `--surgiviz <list>` | `Assets/SurgiViz4D/Tests/Lists/` | `Assets/SurgiViz4D/Tests/Results/` |
+| `-l <list>`, `--lnrobotics <list>` | `Assets/SofaLnRobotics/Tests/Lists/` | `Assets/SofaLnRobotics/Tests/Results/` |
+
+- Use only one of these options per run.
+- The `.json` extension is optional.
+- With `--config` only, a path that contains a folder (e.g. `--config C:/somewhere/my_tests.json`) is used as is.
+- Any of them can be combined with `--scene`, e.g. `python run_scene_tests.py -s surgiviz_full_scene_tests --scene QuitScene`.
+
+Results are written inside the list's `output_dir`, in the results folder that matches the option (see the table above).
 
 **Exit code:** `0` if every scene is `PASS` or `WARN`, `1` if any scene failed, so the script can be used from a scheduled task or CI.
 
@@ -151,7 +173,7 @@ Before a scene runs, every version of its result file is deleted, so only the la
 |---|---|
 | `unity_editor` | Full path to `Unity.exe`. Leave it empty to use `C:\Program Files\Unity\Hub\Editor\<project version>\Editor\Unity.exe`. |
 | `project_path` | Path to the Unity project root (the folder that contains `Assets/` and `ProjectSettings/`). Leave it empty to find it automatically by searching up from this folder. |
-| `output_dir` | The folder inside `result/` where results and logs are written. Give each list its own folder so runs don't overwrite each other, and end the name with `~` so Unity doesn't import it. |
+| `output_dir` | The folder inside the results folder (`result/`, or `Tests/Results/` of SurgiViz4D / SofaLnRobotics) where results and logs are written. Give each list its own folder so runs don't overwrite each other, and end the name with `~` so Unity doesn't import it. |
 | `defaults` | Settings applied to every scene unless the scene overrides them (see below). |
 | `scenes` | The list of scenes to test. |
 
@@ -173,7 +195,7 @@ You can put any of these in `defaults` or in a scene entry. A value set in the s
 ## Adding a new scene
 
 1. Find the scene's path from the project root, e.g. `Assets/SofaUnity/Scenes/Demos/Interaction/Demo_05_LiverCut.unity`. In Unity: right-click the scene → *Copy Path*.
-2. Add an entry to `scenes` in a list in `Lists/` (or create a new list there):
+2. Add an entry to `scenes` in a list, in the `Lists/` folder of the project the scene belongs to (or create a new list there):
 
    ```json
    {
@@ -194,7 +216,7 @@ You can put any of these in `defaults` or in a scene entry. A value set in the s
    }
    ```
 
-4. Run it on its own once to check it. Add `--config <list>.json` if it isn't in the default list:
+4. Run it on its own once to check it. Add `--config`, `-s` or `-l` with the list name if it isn't in the default list:
 
    ```bash
    python run_scene_tests.py --scene Demo_05_LiverCut
@@ -214,7 +236,7 @@ MainSalpingectomy_v2                     WARN            34.0       4  SOFA is r
 Multi_US_Haptic_OpenHepaticSurgery       HANG               -       -  No result after 300s, process killed.
 ```
 
-`result/<output_dir>/[WARN_|ERROR_|EMPTY_]<name>.json` holds the full details for one scene:
+`<results folder>/<output_dir>/[WARN_|ERROR_|EMPTY_]<name>.json` holds the full details for one scene:
 
 | Field | Meaning |
 |---|---|
@@ -231,7 +253,7 @@ Multi_US_Haptic_OpenHepaticSurgery       HANG               -       -  No result
 | `log` | Path to the full Unity log for this scene. **Look here first for CRASH, HANG and ERROR.** |
 | `result` | Path to this result file, including its prefix. |
 
-`result/<output_dir>/summary.json` is the report of the last run. Each run overwrites it. It contains:
+`<results folder>/<output_dir>/summary.json` is the report of the last run. Each run overwrites it. It contains:
 - a timestamp and the list that was run
 - the counts `tested`, `passed`, `warned` and `failed`
 - the full results of **only the scenes that did not pass**: failures first (`ERROR_`, `EMPTY_`), then warnings (`WARN_`)
