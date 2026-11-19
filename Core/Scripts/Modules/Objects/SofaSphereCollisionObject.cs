@@ -25,7 +25,7 @@ namespace SofaUnity
         /// <summary>
         /// Reference to SofaSphereCollision : commun part of  SofaSphereCollisionHand and SofaSphereCollisionObject
         /// </summary>
-        [SerializeField]
+        [field : SerializeField]
         public SofaSphereCollision SofaSphereCollision
         {
             get => m_sofaSphereCollision;
