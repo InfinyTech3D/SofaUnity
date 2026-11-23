@@ -59,7 +59,7 @@ namespace SofaUnity
 
             foreach (BeamToolEntry entry in m_tools)
             {
-                if (entry.d_tool_id == null) continue;
+                if (entry.m_tool == null) continue;
 
                 int id = entry.d_tool_id.Value;
                 if (id >= 0 && id < m_nbrDofs)
