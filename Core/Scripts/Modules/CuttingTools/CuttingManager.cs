@@ -24,7 +24,7 @@ namespace SofaUnity
         [SerializeField]
         private float m_cutDepth = 1.0f;
 
-        [SerializeField]
+        [field : SerializeField]
         public Vector3 CutPointA
         {
             get { return m_cutPointA; }
