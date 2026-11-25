@@ -26,7 +26,7 @@ To collaborate on  your own Unity projects using SOFA, reach out to InfinyTech3D
 Full description can be found [here](https://infinytech3d.com/solutions-sofaunity/)
 
 #### Compatibility:
-- Unity version > 2020.3.x (Tested with LTS: 2020.3.17 and 2021.3.19)
+- Unity version >  6000.3.28f1 LTS
 - SOFA version > 23.06 with SofaVerseAPI dll
 - Only tested on Windows for now
 
